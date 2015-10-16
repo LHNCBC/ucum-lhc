@@ -11,6 +11,24 @@ set LFORMS_NODE=node-v0.10.36_lforms.v1
 # Set path
 set path = (/depot/packages/${LFORMS_NODE}/bin /bin /usr/local/bin /usr/bin /usr/sbin /sbin /etc)
 
+# Add node_modules/.bin to the path. We can find that from `npm bin`, but that
+# tasks a second or two, and slows things down.  Instead, look in pwd for the
+# top-most directory in the containing a node_modules directory.
+set dir = `pwd`
+set node_modules_dir = ''
+if ( -e "$dir/node_modules" ) then
+  set node_modules_dir = "$dir/node_modules"
+endif
+while ( "$dir" != '/' )
+  set dir = `dirname "$dir"`
+  if ( -e "$dir/node_modules" ) then
+    set node_modules_dir = "$dir/node_modules"
+  endif
+end
+if ( "$node_modules_dir" != '') then
+  set path = ($path $node_modules_dir/.bin)
+endif
+
 # Set node in development mode
 unsetenv NODE_ENV
 
