@@ -1,99 +1,126 @@
 
 /**
- * This class embodies the pair &lt;<I>v</I>, <I><B>u</B></I>&gt; and
- * is used directly by the application programmer. It includes
+ * This class represents one unit of measure.  It includes
  * functions to cover constructor, accessor, and assignment tasks as
- * well as operators to calculate multiplication, division and raising to a
- * power.
+ * well as operators to calculate multiplication, division and raising
+ * to a power.
  *
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-"use strict";
 
-import * as Ucum from "application.js" ;
+import * as Ucum from "config.js" ;
 class Unit {
 
   /**
-   * Constructor.  This may be called with or without values for some
-   * or all of a Unit's attributes.   Attributes for which no value
-   * is specified are assigned a default value.
+   * Constructor.
    *
-   * @param attrs a hash containing values for some or all of the
-   *        unit's attributes.  Keys are the attribute names,
-   *        without a trailing underscore, e.g., name instead of
-   *        name_.  If no hash is supplied an empty one is
-   *        created.
+   * @param an optional parameter that may be:
+   *  a string, which is parsed by the unit parser, which creates
+   *  the unit from the parsed string; or
+   *  a hash containing all or some values for the attributes of
+   *  the unit, where the keys are the attribute names, without a
+   *  trailing underscore, e.g., name instead of name_; or
+   *  null, in which case an empty hash is created and used to
+   *  set the values forthe attributes.
+   *  If a hash (empty or not) is used, attributes for which no value
+   *  is specified are assigned a default value.
+   *
    */
   constructor(attrs = {}) {
 
-    // Create and assign values (from the attrs hash or defaults) to all
-    // attributes.  From Class Declarations in Understanding ECMAScript,
-    // https://leanpub.com/understandinges6/read/#leanpub-auto-class-declarations,
-    //   "Own properties, properties that occur on the instance rather than the
-    //    prototype, can only be created inside of a class constructor or method.
-    //    It’s recommended to create all possible own properties inside of the
-    //    constructor function so there’s a single place that’s responsible for
-    //    all of them."
+    // If this instance is defined by a string, use the UnitParser
+    // to create the unit
 
-    /*
-     * The unit name, e.g., meter
-     */
-    this.name_ =  attrs['name'] || '' ;
+    if (typeof attrs === 'String') {
+      let parser = new UnitParser(term);
+      try {
+        parser.parse(this);
+      }
+      catch (x) {
+        throw(`Parse error: ${x.getMessage()}`);
+      }
+      if (Ucum.caseSensitive_)
+        this.name = term;
+      else
+        this.name = term.toUpperCase();
 
-    /*
-     * The unit's case-sensitive code, e.g., m
-     */
-    this.csCode_ = attrs['csCode'] || '';
+    } // end if this instance is defined by a string
 
-    /*
-     * The unit's case-insensitive code, e.g., M
-     */
-    this.ciCode_ = attrs['ciCode'] || '';
+    else {
+      // This instance is defined by a (possibly empty) hash of values.
+      // Create and assign values (from the attrs hash or defaults) to all
+      // attributes.  From Class Declarations in Understanding ECMAScript,
+      // https://leanpub.com/understandinges6/read/#leanpub-auto-class-declarations,
+      //   "Own properties, properties that occur on the instance rather than the
+      //    prototype, can only be created inside of a class constructor or method.
+      //    Itï¿½s recommended to create all possible own properties inside of the
+      //    constructor function so thereï¿½s a single place thatï¿½s responsible for
+      //    all of them."
 
-    /*
-     * The unit's property, e.g., length
-     */
-    this.property_ = attrs['property'] || '' ;
+      /*
+       * The base unit name, e.g., meter
+       */
+      this.name_ = attrs['name'] || '';
 
-    /*
-     * The magnitude of the unit, e.g., 3 for 3 meters
-     */
-    this.magnitude_ = attrs['magnitude'] || 1 ;
+      /*
+       * The unit's case-sensitive code, e.g., m
+       */
+      this.csCode_ = attrs['csCode'] || '';
 
-    /*
-     * The dimension vector of the unit, e.g., [1, 0, 0,, 0, 0, 0, 0, 0]
-     */
-    this.dim_ = attrs['dim'] || null ;
+      /*
+       * The unit's case-insensitive code, e.g., M
+       */
+      this.ciCode_ = attrs['ciCode'] || '';
 
-    /*
-     * The dimension code of the unit, e.g., L
-     */
-    this.dimCode_ = attrs['dimCode'] || null ;
+      /*
+       * The unit's property, e.g., length
+       */
+      this.property_ = attrs['property'] || '';
 
-    /*
-     * The print symbol of the unit, e.g., m
-     */
-    this.printSym_ = attrs['printSym'] || null ;
+      /*
+       * The magnitude of the unit, e.g., 3 for
+       * 3 meters - where meters is the base unit
+       */
+      this.magnitude_ = attrs['magnitude'] || 1;
 
-    /*
-     * The class of the unit, where given, e.g., dimless
-     */
-    this.class_ = attrs['class'] ||  null ;
+      /*
+       * The Dimension object of the unit
+       */
+      this.dim_ = attrs['dim'] || null;
 
-    /*
-     * A flag indicating whether or not the unit is metric
-     */
-    this.isMetric_ = attrs['isMetric'] || true ;
-    /*
-     * The conversion function
-     */
-    this.cnv_ = attrs['cnv'] || null ;
+      /*
+       * The dimension code of the unit, e.g., L
+       */
+      this.dimCode_ = attrs['dimCode'] || null;
 
-    /*
-     * The conversion prefix
-     */
-    this.cnvPfx_ = attrs['cnvPfx'] || 1 ;
+      /*
+       * The print symbol of the unit, e.g., m
+       */
+      this.printSym_ = attrs['printSym'] || null;
+
+      /*
+       * The class of the unit, where given, e.g., dimless
+       */
+      this.class_ = attrs['class'] || null;
+
+      /*
+       * A flag indicating whether or not the unit is metric
+       */
+      this.isMetric_ = attrs['isMetric'] || true;
+
+      /*
+       * The conversion function
+       */
+      this.cnv_ = attrs['cnv'] || null;
+
+      /*
+       * The conversion prefix
+       */
+      this.cnvPfx_ = attrs['cnvPfx'] || 1;
+
+    } // end if this constructor uses a (possibly empty) hash
+      // to define the instance
 
   } // end constructor
 
@@ -115,30 +142,6 @@ class Unit {
 
 
   /**
-   * This creates a unit from a string that defines it.  Actually, since
-   * I didn't think I could create 2 constructors, to use this you would
-   * create an empty unit and then call this on it.
-   *
-   * @param term the string
-   * @return nothing; this unit object is updated
-   */
-  constructFromTerm(term) {
-    let parser = new UnitParser(term) ;
-    try {
-      parser.parse(this);
-    }
-    catch(x) {
-      throw(`Parse error: ${x.getMessage()}`);
-    }
-    if (Ucum.caseSensitive_)
-      this.name = term;
-    else
-      this.name = term.toUpperCase() ;
-
-  } // end getValsFromTerm
-
-
-  /**
    * This assigns one or more values, as provided in the hash passed in,
    * to this unit.
    *
@@ -149,7 +152,7 @@ class Unit {
    * @return nothing
    */
   assignVals(vals) {
-    for (const key in vals) {
+    for (let key in vals) {
       let uKey = (!(key.endsWith('_'))) ? key + '_' : key ;
       if this.hasOwnProperty(uKey)
         this[uKey] = vals[key];
@@ -166,12 +169,13 @@ class Unit {
    */
   clone() {
     let retUnit = new Unit() ;
-    Object.getOwnPropertyNames(this).forEach(function(val, idx, array){
+    Object.getOwnPropertyNames(this).forEach(val => {
       retUnit[val] = this[val];
     });
     return retUnit ;
 
   } // end clone
+
 
   /**
    * This assigns all properties of a unit passed to it to this unit.
@@ -180,25 +184,30 @@ class Unit {
    * @return nothing; this unit is updated
    */
   assign(unit2) {
-    Object.getOwnPropertyNames(unit2).forEach(function(val, idx, array){
-      this[val] = unit2[val] ;
+    Object.getOwnPropertyNames(unit2).forEach(val => {
+      if (this.val !== undefined)
+        this[val] = unit2[val] ;
+      else
+         throw(`Parameter error; ${val} is not a property of a Unit`) ;
     });
   } // end assign
 
 
   /**
-   * This determines whether or not all the object of the unit passed in
-   * are equal to the properties in this unit.
+   * This determines whether or not object properties of the unit
+   * passed in are equal to the corresponding properties in this unit.
+   * The following properties are the only ones checked:
+   *   magnitude_, dim_, cnv_ and cnvPfx_
    *
    * @param unit2 the unit whose properties are to be checked.
    * @return boolean indicating whether or not they match
    */
   equals(unit2) {
-    let ret = true ;
-    let u2keys = Object.keys(unit2) ;
-    for (let i = 0; i < u2keys.length && ret; i++)
-      ret = this[u2keys[i]] === unit2[u2keys[i]];
-    return ret ;
+
+    return (this.magnitude_ === unit2.getProperty('magnitude') &&
+            this.dim_ === unit2.getProperty('dim') &&
+            this.cnv_ === unit2.getProperty('cnv') &&
+            this.cnvPfx_ === unit2.getProperty('cnvPfx'));
 
   } // end equals
 
@@ -236,14 +245,13 @@ class Unit {
    */
   convertFrom(mag, fromUnit) {
     let newMag = 0.0 ;
-    let x = 0.0 ;
 
     // reject request if the dimensions are not equal
-    if (!(fromUnit.getProperty(dim).equals(this.dim_))) {
-      throw(`${fromUnit.getProperty(name)} units cannot be converted to ${this.name_} units.`)
+    if (!(fromUnit.getProperty('dim').equals(this.dim_))) {
+      throw(`${fromUnit.getProperty('name')} units cannot be converted to ${this.name_} units.`)
     }
-    let fromCnv = fromUnit.getProperty(cnv) ;
-    let fromMag = fromUnit.getProperty(magnitude) ;
+    let fromCnv = fromUnit.getProperty('cnv') ;
+    let fromMag = fromUnit.getProperty('magnitude') ;
 
     // if both units are on a ratio scale, multiply the "from" unit's magnitude
     // by the magnitude passed in and then divide that result by this unit's magnitude
@@ -252,8 +260,9 @@ class Unit {
 
     // else use a function to get the magnitude to be returned
     else {
+      let x = 0.0 ;
       if (fromCnv != null) // turn mag * fromUnit.magnitude into its ratio scale equivalent
-        x = fromCnv.f_from(mag * fromUnit.getProperty(cnvPfx)) * fromMag;
+        x = fromCnv.f_from(mag * fromUnit.getProperty('cnvPfx')) * fromMag;
       else
         x = mag * fromMag;
 
@@ -327,7 +336,10 @@ class Unit {
     this.name_ = "";
 
     // build a name as a term of coherent base units
-    for (let i = 0; i < Dimension.getMax(); i++) {
+    // This is probably ALL WRONG and a HORRIBLE MISTAKE
+    // but until we figure out what the heck UnitAtom
+    // returns it will have to stay.
+    for (let i = 0, max = Dimension.getMax(); i < max; i++) {
       let elem = this.dim_.elementAt(i);
       let uA = UnitAtom.forDimension(new Dimension(i));
       if(uA == null)
@@ -341,7 +353,7 @@ class Unit {
 
   /**
    * Mutates this unit into a unit on a ratio scale and converts a specified
-   * magnitude to appropriate value for this converted unit
+   * magnitude to an appropriate value for this converted unit
    *
    * @param mag the magnitude of this unit before it's converted
    * @return the magnitude of this unit after it's converted
@@ -390,10 +402,10 @@ class Unit {
    */
   multiplyThese(unit2) {
 
-    let u2Cnv = unit2.getProperty(cnv);
-    let u2Dim = unit2.getProperty(dim) ;
-    let u2Mag = unit2.getProperty(magnitude) ;
-    let u2Name = unit2.getProperty(name) ;
+    let u2Cnv = unit2.getProperty('cnv');
+    let u2Dim = unit2.getProperty('dim') ;
+    let u2Mag = unit2.getProperty('magnitude') ;
+    let u2Name = unit2.getProperty('name') ;
 
     if (this.cnv_ != null) {
       if (u2Cnv == null && u2Dim.isZero())
@@ -436,13 +448,13 @@ class Unit {
 
     if (this.cnv_ != null)
       throw (`Attempt to divide non-ratio unit ${this.name_}`);
-    if (unit2.getProperty(cnv) != null)
-      throw (`Attempt to divide non-ratio unit ${unit2.getProperty(name)}`);
+    if (unit2.getProperty('cnv') != null)
+      throw (`Attempt to divide non-ratio unit ${unit2.getProperty('name')}`);
 
-    this.name_ = UnitString.div(this.name_, unit2.getProperty(name));
+    this.name_ = UnitString.div(this.name_, unit2.getProperty('name'));
 
-    this.magnitude_ /= unit2.getProperty(magnitude);
-    this.dim_.sub(unit2.getProperty(dim));
+    this.magnitude_ /= unit2.getProperty('magnitude');
+    this.dim_.sub(unit2.getProperty('dim'));
     
     return this;
 
