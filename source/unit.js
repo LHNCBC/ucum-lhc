@@ -32,18 +32,19 @@ class Unit {
     // If this instance is defined by a string, use the UnitParser
     // to create the unit
 
-    if (typeof attrs === 'String') {
-      let parser = new UnitParser(term);
+    if (typeof attrs === 'string') {
+      let parser = new UnitParser(attrs);
       try {
         parser.parse(this);
       }
       catch (x) {
         throw(`Parse error: ${x.getMessage()}`);
       }
-      if (Ucum.caseSensitive_)
-        this.name = term;
-      else
-        this.name = term.toUpperCase();
+      // This doesn't make any sense.
+      //if (Ucum.caseSensitive_)
+      //  this.name = attrs;
+      //else
+      //  this.name = attrs.toUpperCase();
 
     } // end if this instance is defined by a string
 
@@ -54,8 +55,8 @@ class Unit {
       // https://leanpub.com/understandinges6/read/#leanpub-auto-class-declarations,
       //   "Own properties, properties that occur on the instance rather than the
       //    prototype, can only be created inside of a class constructor or method.
-      //    It�s recommended to create all possible own properties inside of the
-      //    constructor function so there�s a single place that�s responsible for
+      //    It's recommended to create all possible own properties inside of the
+      //    constructor function so there's a single place that's responsible for
       //    all of them."
 
       /*
@@ -90,9 +91,9 @@ class Unit {
       this.dim_ = attrs['dim'] || null;
 
       /*
-       * The dimension code of the unit, e.g., L
+       * The print symbol of the unit, e.g., L
        */
-      this.dimCode_ = attrs['dimCode'] || null;
+      this.printSymbol_ = attrs['dimCode'] || null;
 
       /*
        * The print symbol of the unit, e.g., m
@@ -337,11 +338,11 @@ class Unit {
 
     // build a name as a term of coherent base units
     // This is probably ALL WRONG and a HORRIBLE MISTAKE
-    // but until we figure out what the heck UnitAtom
-    // returns it will have to stay.
+    // but until we figure out what the heck the name being
+    // built here really is, it will have to stay.
     for (let i = 0, max = Dimension.getMax(); i < max; i++) {
       let elem = this.dim_.elementAt(i);
-      let uA = UnitAtom.forDimension(new Dimension(i));
+      let uA = UnitTables.getUnitByDim(new Dimension(i));
       if(uA == null)
         throw(`Can't find base unit for dimension ${i}`);
       this.name_ = uA.name + elem;
