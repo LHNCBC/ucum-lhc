@@ -20,12 +20,5 @@ export var Ucum = {  // Namespace for UCUM classes
    */
   dimLen_: 7 ,
 
-  /**
-   * Flag indicating whether or not an instance of the UnitAtomsTable
-   * class has been created.   Used to limit us to one instance
-   * (singleton).
-   */
-  atomsTablesCreated_: false ,
-
 }
 

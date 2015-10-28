@@ -11,41 +11,60 @@ class UnitTables {
 
 
   /**
-   * Constructor.
+   * Constructor.  This creates the empty unit tables (hashes) once. After the
+   * tables are created, it redefines this constructor to throw an error
+   * stating that the constructor is no longer available and that the
+   * getInstance function must be used.   Here's a description of the first
+   * and then all subsequent calls to this constructor.
    *
-   * This creates the empty unit tables (hashes) once.
+   * First call to constructor:
+   * 1. creates  OBJECT1
+   * 2. initializes attributes of OBJECT1
+   * 3. stores reference to OBJECT1.prototype in holdthis local variable
+   * 4. redefines OBJECT1 as a function that throws an error
+   * 5. defines the getInstance function (which is also defined outside of
+   *    the class definition - see below).
+   *
+   * All subsequent calls to constructor:
+   * 1. throw error message referring to getInstance
+   * 2. call getInstance, returns this - which is OBJECT1.
    */
   constructor() {
 
-    if (Ucum.atomsTablesCreated_ === false) {
+    /**
+     * Tracks units by name
+     * @type hash - key is the name;
+     *              value is the reference to the Unit object
+     */
+    this.unitNames_ = {};
 
-      /**
-       * Tracks units by name
-       * @type hash - key is the name;
-       *              value is the reference to the Unit object
-       */
-      this.unitNames_ = {};
+    /**
+     * Tracks units by code using case-sensitive or case-insensitive -
+     * whichever we're currently using.  See Ucum.caseSensitive_ in
+     * config.js
+     *
+     * @type hash - key is the code;
+     *              value is the reference to the Unit object
+     */
+    this.unitCodes_ = {};
 
-      /**
-       * Tracks units by code using case-sensitive or case-insensitive -
-       * whichever we're currently using.  See Ucum.caseSensitive_ in
-       * config.js
-       *
-       * @type hash - key is the code;
-       *              value is the reference to the Unit object
-       */
-      this.unitCodes_ = {};
+    /**
+     * Tracks units by Dimension vector
+     *
+     * @type hash - key is the dimension vector;
+     *              value is the reference to the Unit object
+     */
+    this.unitDims_ = {};
 
-      /**
-       * Tracks units by Dimension vector
-       *
-       * @type hash - key is the dimension vector;
-       *              value is the reference to the Unit object
-       */
-      this.unitDims_ = {};
+    // Make this a singleton - from mrme44 May 18 comment on
+    // on GitHub Gist page of SanderLi/Singleton.js.  Modified
+    // for this class.  CHECK TO SEE IF THIS WORKS WITHOUT EVAL.
 
-      Ucum.atomTablesCreated = true ;
-    }
+    eval("let holdThis = UnitTables.prototype; " +
+         "UnitTables = function(){throw 'UnitTables is a Singleton.  " +
+         "Use UnitTables.getInstance() instead.'}" +
+         "UnitTables.prototype = holdThis;" +
+         "UnitTables.getInstance = function(){return this}");
   }
 
 
@@ -66,8 +85,8 @@ class UnitTables {
 
 
   /**
-   * Adds a Unit object to the three tables (or however many fow
-   * which the unit has key values
+   * Adds a Unit object to the three tables (or however many for
+   * which the unit has key values)
    *
    * @param theUnit the unit to be added
    * @returns nothing
@@ -137,7 +156,7 @@ class UnitTables {
    */
   addUnitCode(theUnit, uCode) {
 
-    if (uCode === undefined) {
+    if (uCode === undefined || uCode === null) {
       if (Ucum.caseSensitive_ == true)
         uCode = theUnit.getProperty(csCode);
       else
@@ -230,3 +249,19 @@ class UnitTables {
   }
 
 } // end UnitTables
+
+
+/**
+ *  This function exists ONLY until the original UnitTables constructor
+ *  is called for the first time.  It's defined here in case getInstance
+ *  is called before the constructor.   This calls the constructor.
+ *
+ *  The constructor redefines the getInstance function to return the
+ *  singleton UnitTables object.  See more detail in the constructor
+ *  description.
+ *
+ *  @returns the singleton UnitTables object.
+ */
+UnitTables.getInstance(){
+  return new UnitTables();
+}

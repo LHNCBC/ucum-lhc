@@ -15,7 +15,7 @@ class Unit {
   /**
    * Constructor.
    *
-   * @param an optional parameter that may be:
+   * @param attrs an optional parameter that may be:
    *  a string, which is parsed by the unit parser, which creates
    *  the unit from the parsed string; or
    *  a hash containing all or some values for the attributes of
@@ -205,10 +205,10 @@ class Unit {
    */
   equals(unit2) {
 
-    return (this.magnitude_ === unit2.getProperty('magnitude') &&
-            this.dim_ === unit2.getProperty('dim') &&
-            this.cnv_ === unit2.getProperty('cnv') &&
-            this.cnvPfx_ === unit2.getProperty('cnvPfx'));
+    return (this.magnitude_ === unit2.magnitude_ &&
+            this.dim_.equals(unit2.dim_ &&
+            this.cnv_ === unit2.cnv_ &&
+            this.cnvPfx_ === unit2.cnvPfx_);
 
   } // end equals
 
@@ -248,11 +248,11 @@ class Unit {
     let newMag = 0.0 ;
 
     // reject request if the dimensions are not equal
-    if (!(fromUnit.getProperty('dim').equals(this.dim_))) {
-      throw(`${fromUnit.getProperty('name')} units cannot be converted to ${this.name_} units.`)
+    if (!(fromUnit.dim_.equals(this.dim_))) {
+      throw(`${fromUnit.name_} units cannot be converted to ${this.name_} units.`)
     }
-    let fromCnv = fromUnit.getProperty('cnv') ;
-    let fromMag = fromUnit.getProperty('magnitude') ;
+    let fromCnv = fromUnit.cnv_ ;
+    let fromMag = fromUnit.magnitude_ ;
 
     // if both units are on a ratio scale, multiply the "from" unit's magnitude
     // by the magnitude passed in and then divide that result by this unit's magnitude
@@ -263,7 +263,7 @@ class Unit {
     else {
       let x = 0.0 ;
       if (fromCnv != null) // turn mag * fromUnit.magnitude into its ratio scale equivalent
-        x = fromCnv.f_from(mag * fromUnit.getProperty('cnvPfx')) * fromMag;
+        x = fromCnv.f_from(mag * fromUnit.cnvPfx_) * fromMag;
       else
         x = mag * fromMag;
 
@@ -403,19 +403,14 @@ class Unit {
    */
   multiplyThese(unit2) {
 
-    let u2Cnv = unit2.getProperty('cnv');
-    let u2Dim = unit2.getProperty('dim') ;
-    let u2Mag = unit2.getProperty('magnitude') ;
-    let u2Name = unit2.getProperty('name') ;
-
     if (this.cnv_ != null) {
-      if (u2Cnv == null && u2Dim.isZero())
-	      this.cnvPfx_ *= u2Mag;
+      if (unit2.cnv_ == null && unit2.dim_.isZero())
+	      this.cnvPfx_ *= unit2.magnitude_;
       else
 	      throw (`Attempt to multiply non-ratio unit ${this.name_} failed.`);
     }
     else {
-      if (u2Cnv != null) {
+      if (unit2.cnv_ != null) {
         if (this.cnv_ == null && this.dim_.isZero()) {
           let cp = this.magnitude_;
           assign(unit2);
@@ -425,9 +420,9 @@ class Unit {
           throw (`Attempt to multiply non-ratio unit ${u2Nname}`);
       }
       else {
-        this.name_ = UnitString.mul(this.name_, u2Name);
-        this.magnitude_ *= u2Mag;
-        this.dim_.add(u2Dim);
+        this.name_ = UnitString.mul(this.name_, unit2.name_);
+        this.magnitude_ *= unit2.magnitude_;
+        this.dim_.add(unit2.dim_);
       }
     }
     return this;
@@ -449,13 +444,13 @@ class Unit {
 
     if (this.cnv_ != null)
       throw (`Attempt to divide non-ratio unit ${this.name_}`);
-    if (unit2.getProperty('cnv') != null)
-      throw (`Attempt to divide non-ratio unit ${unit2.getProperty('name')}`);
+    if (unit2.cnv_ != null)
+      throw (`Attempt to divide non-ratio unit ${unit2.name_}`);
 
-    this.name_ = UnitString.div(this.name_, unit2.getProperty('name'));
+    this.name_ = UnitString.div(this.name_, unit2.name_);
 
-    this.magnitude_ /= unit2.getProperty('magnitude');
-    this.dim_.sub(unit2.getProperty('dim'));
+    this.magnitude_ /= unit2.magnitude_;
+    this.dim_.sub(unit2.dim_);
     
     return this;
 
