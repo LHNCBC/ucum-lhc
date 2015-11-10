@@ -60,7 +60,11 @@ class Unit {
       //    all of them."
 
       /*
-       * The base unit name, e.g., meter
+       * Flag indicating whether or not this is a base unit
+       */
+      this.isBase_ = false ;
+      /*
+       * The unit name, e.g., meter
        */
       this.name_ = attrs['name'] || '';
 
@@ -88,17 +92,12 @@ class Unit {
       /*
        * The Dimension object of the unit
        */
-      this.dim_ = attrs['dim'] || null;
-
-      /*
-       * The print symbol of the unit, e.g., L
-       */
-      this.printSymbol_ = attrs['dimCode'] || null;
+      this.dim_ = attrs['dimension'] || null;
 
       /*
        * The print symbol of the unit, e.g., m
        */
-      this.printSym_ = attrs['printSym'] || null;
+      this.printSymbol_ = attrs['printSymbol'] || null;
 
       /*
        * The class of the unit, where given, e.g., dimless
@@ -111,6 +110,11 @@ class Unit {
       this.isMetric_ = attrs['isMetric'] || true;
 
       /*
+       * The "variable" - which I think is used only for base units
+       */
+      this.variable_ = attrs['dim'] || null;
+
+      /*
        * The conversion function
        */
       this.cnv_ = attrs['cnv'] || null;
@@ -119,6 +123,23 @@ class Unit {
        * The conversion prefix
        */
       this.cnvPfx_ = attrs['cnvPfx'] || 1;
+
+      /*
+       * Used to compute dimension; storing for now until we implement
+       * unit definition parsing
+       */
+      /*
+       * Case sensitive (cs) and case insensitive (ci) base unit designation,
+       * includes exponent and prefix if applicable
+       */
+      this.csBaseUnit_ = attrs['csBaseUnit'] || null ;
+      this.ciBaseUnit_ = attrs['ciBaseUnit'] || null ;
+
+      /*
+       * String and numeric versions of factor applied to base unit
+       */
+      this.baseFactorStr_ = attrs['baseFactorStr'] || null;
+      this.baseFactor_ = attrs['baseFactor'] || null;
 
     } // end if this constructor uses a (possibly empty) hash
       // to define the instance
