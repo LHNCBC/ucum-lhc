@@ -19,6 +19,6 @@ export var Ucum = {  // Namespace for UCUM classes
    *  set from that.
    */
   dimLen_: 7 ,
-
+  
 }
 
