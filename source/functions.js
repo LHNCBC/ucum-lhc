@@ -6,8 +6,6 @@
  */
 
 
-import * as Ucum from "config.js"
-
 class Functions {
 
   /**
@@ -17,9 +15,6 @@ class Functions {
    * to convert special units.
    */
   constructor(name) {
-
-    this.LN10 = 2.30258509299404568402;
-    this.LN2  = .693147180559945309417;
 
     // Create the hash containing the function pairs
     this.fs = {};
@@ -36,7 +31,7 @@ class Functions {
 
     // pH - convert to pH from moles per liter and from moles per liter to pH
     // where a mole is an amount of a substance (a count of particles)
-    this.fs['pH'] = {cnvTo  : function(x){return - Math.log(x) / this.LN10;},
+    this.fs['pH'] = {cnvTo  : function(x){return - Math.log(x) / Math.LN10;},
                      cnvFrom : function(x){return Math.pow(10, -x);}};
 
     // ln - natural logarithm (base e 2.71828) - apply (cnvTo) and invert (cnvFrom)
@@ -47,16 +42,16 @@ class Functions {
                       cnvFrom : function(x){return Math.exp(x / 2);}};
 
     // lg - the decadic logarithm (base 10)
-    this.fs['lg'] = {cnvTo : function(x){return Math.log(x) / this.LN10;},
+    this.fs['lg'] = {cnvTo : function(x){return Math.log(x) / Math.LN10;},
                      cnvFrom : function(x){return Math.pow(10, x);}};
-    this.fs['10lg'] = {cnvTo : function(x){return 10 * Math.log(x)/this.LN10;},
+    this.fs['10lg'] = {cnvTo : function(x){return 10 * Math.log(x)/Math.LN10;},
                        cnvFrom : function(x){return Math.pow(10, x / 10);}};
-    this.fs['20lg'] = {cnvTo : function(x){return 20 * Math.log(x)/this.LN10;},
+    this.fs['20lg'] = {cnvTo : function(x){return 20 * Math.log(x)/Math.LN10;},
                        cnvFrom : function(x){return Math.pow(10, x / 20);}};
-    this.fs['2lg'] = {cnvTo : function(x){return 2 * Math.log(x)/this.LN10;},
+    this.fs['2lg'] = {cnvTo : function(x){return 2 * Math.log(x)/Math.LN10;},
                       cnvFrom : function(x){return Math.pow(10, x / 2);}};
     // ld - dual logarithm (base 2)
-    this.fs['ld'] = {cnvTo : function(x){return Math.log(x)/this.LN2;},
+    this.fs['ld'] = {cnvTo : function(x){return Math.log(x)/Math.LN2;},
                      cnvFrom : function(x){return Math.pow(2, x);}};
 
     // inv - inverse

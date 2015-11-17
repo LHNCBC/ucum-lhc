@@ -19,12 +19,6 @@ export var Ucum = {  // Namespace for UCUM classes
    *  set from that.
    */
   dimLen_: 7 ,
-
-  /**
-   * Maximum absolute value for a prefix exponent (factor) when the prefix is
-   * an expression based on 10, such as a kilo, which is 10 to the third power.
-   */
-  maxPrefixExponent_ : 24
-
+  
 }
 

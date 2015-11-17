@@ -111,8 +111,9 @@ class Unit {
 
       /*
        * The "variable" - which I think is used only for base units
+       * The symbol for the variable as used in equations, e.g., s for distance
        */
-      this.variable_ = attrs['dim'] || null;
+      this.variable_ = 'TBD';  // comes from 'dim' in XML
 
       /*
        * The conversion function
@@ -257,7 +258,7 @@ class Unit {
   /**
    * Takes a measurement consisting of a magnitude and a unit and returns
    * the equivalent magnitude of this unit.  So, 15 mL would translate
-   * to 1 tablespoon.
+   * to 1 tablespoon if this object is a tablespoon.
    *
    * @param mag the magnitude for the unit to be translated (e.g. 15 for 15 mL)
    * @param fromUnit the unit to be translated to one of this type (e.g. a mL unit)
@@ -284,12 +285,12 @@ class Unit {
     else {
       let x = 0.0 ;
       if (fromCnv != null) // turn mag * fromUnit.magnitude into its ratio scale equivalent
-        x = fromCnv.f_from(mag * fromUnit.cnvPfx_) * fromMag;
+        x = fromCnv.cnvFrom(mag * fromUnit.cnvPfx_) * fromMag;
       else
         x = mag * fromMag;
 
       if (this.cnv_ != null) // turn mag * origUnit on ratio scale into a non-ratio unit
-        newMag = this.cnv_.f_to(x / this.magnitude_) / this.cnvPfx_;
+        newMag = this.cnv_.cnvTo(x / this.magnitude_) / this.cnvPfx_;
       else
         newMag = x / this.magnitude_;
     } // end if both units are NOT on a ratio scale

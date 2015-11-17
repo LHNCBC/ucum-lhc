@@ -17,27 +17,29 @@ class Prefix {
    *
    * @param code the code used for the prefix, e.g., k for kilo
    * @param name the name of the prefix, e.g., kilo
-   * @param factor when the base is 10, this is the exponent that, when applied
+   * @param exponent when the base is 10, this is the exponent that, when applied
    *  to 10, yields a single value named by the code and name, e.g., 3 for kilo
    *  (10*10*10).  When the base is 2, the actual value, such as 1024.
-   *  The absolute value of the factor for a base 10 prefix must not exceed
+   *  The absolute value of the exponent for a base 10 prefix must not exceed
    *  the Ucum.maxPrefixExponent_ defined in config.js
    *
    * @throws an error if the prefix has already been defined
    */
-  constructor(code, name, factor) {
+  constructor(code, name, exponent) {
     if (code === undefined || code === null ||
         name === undefined || name === null ||
-        factor === undefined || factor === null)
+        exponent === undefined || exponent === null) {
       throw('Prefix constructor called missing one or more parameters.  ' +
-            'Prefix codes (cs & ci), name and factor must all be specified ' +
-            'and not null.') ;
+            'Prefix codes (cs & ci), name and exponent must all be specified ' +
+            'and not null.');
+    }
 
     // Check to see if this prefix has already been defined.
 
-    if (PrefixTables.isDefined(code))
+    if (PrefixTables.isDefined(code)) {
       throw(`Prefix constructor called for prefix already defined; code ` +
             `= ${code}`);
+    }
 
     /**
      * The prefix code, e.g., k for kilo.  If we are in case-sensitive
@@ -56,20 +58,10 @@ class Prefix {
     this.name_ = name;
 
     /**
-     * The factor, which is:
-     *  when the base is 10, the exponent that, when applied to 10, yields a
-     *  single value named by the code and name, e.g., 3 for kilo (10*10*10); or
-     *  when the base is 2, the actual value, such as 1024.
+     * The exponent, which is the exponent that, when applied to 10, yields a
+     *  single value named by the code and name, e.g., 3 for kilo (10*10*10)
      */
-    this.factor_ = factor;
-
-    /**
-     * The base for the factor.  Most are base 10, e.g., kilo, which
-     * is 10 to the third power (1,000 = 10 * 10 * 10).  But there are
-     * some prefixes for the power of 2 which are used in information
-     * technology, e.g., kibi, which = 1024, 2 to the 10th power.
-     */
-    this.base_ = abs(factor) <= Ucum.maxPrefixExponent_ ? 10 : 2 ;
+    this.exponent_ = exponent;
 
     // Add this prefix to the Prefix table
 
@@ -79,37 +71,39 @@ class Prefix {
 
 
   /**
-   * Returns the factor for the prefix object with the specified code
+   * Returns the exponent for the prefix object with the specified code
    *
-   * @param code the code for the prefix whose factor is to be returned
-   * @return the factor for the prefix object with the specified code
+   * @param code the code for the prefix whose exponent is to be returned
+   * @return the exponent for the prefix object with the specified code
    * @throws error if the prefix with the specified code is not found
    * */
-  factorFor(code) {
+  exponentFor(code) {
 
     let pfx = PrefixTable.getPrefixbyCode(code);
-    if (pfx === null)
-      throw(`Factor for prefix with code ${code} requested, but prefix ` +
+    if (pfx === null) {
+      throw(`Exponent for prefix with code ${code} requested, but prefix ` +
             `is not defined.`);
+    }
     else
-      return pfx.factor_;
+      return pfx.exponent_;
   }
 
 
   /**
    * Returns the prefix string (code) for the prefix object with the
-   * specified factor.
+   * specified exponent.
    *
-   * @param factor the factor for the prefix whose code is to be returned
-   * @return the code for the prefix object with the specified factor
-   * @throws an error if the prefix with the specified factor is not found
+   * @param exponent the exponent for the prefix whose code is to be returned
+   * @return the code for the prefix object with the specified exponent
+   * @throws an error if the prefix with the specified exponent is not found
    */
-  forFactor(factor) {
+  forExponent(exponent) {
 
-    let pfx = PrefixTable.getPrefixbyFactor(factor);
-    if (pfx === null)
-      throw(`Code for prefix with factor ${factor} requested, but prefix ` +
-            `is not defined.`);
+    let pfx = PrefixTable.getPrefixbyExponent(exponent);
+    if (pfx === null) {
+      throw(`Code for prefix with exponent ${exponent} requested, but prefix ` +
+      `is not defined.`);
+    }
     else
       return pfx.code_;
   }
@@ -122,20 +116,19 @@ class Prefix {
    *  this prefix object
    * @return this prefix object
    */
-  /** Why do we want this? messes up the table???  I'm not planning to
+  /* Why do we want this? messes up the table???  I'm not planning to
    * implement this until I find a use for it.
   assign(prefix2) {
     this.code_ = prefix2.code_ ;
     this.name_ = prefix2.name_;
-    this.factor_ = prefix2.factor_;
-    this.base_ = prefix2.base_ ;
+    this.exponent_ = prefix2.exponent_;
     return this;
   }*/
 
 
   /**
    * Provides way to tell if one prefix equals another.  The second prefix
-   * must match the code, name and factor attribute values.
+   * must match the code, name and exponent attribute values.
    *
    * @param prefix2 prefix object to check for a match
    * @return true for a match; false if one or more attributes don't match
@@ -143,7 +136,7 @@ class Prefix {
   equals(prefix2) {
     return this.code_ === prefix2.code_ &&
            this.name_ === prefix2.name_ &&
-           this.factor_ === prefix2.factor_;
+           this.exponent_ === prefix2.exponent_;
   }
 } // end Prefix class
 
@@ -159,14 +152,14 @@ class PrefixTables {
   /**
    * Constructor.  This creates the empty PrefixTable hashes once.
    * There is one hash whose key is the prefix code and one whose
-   * key is the prefix factor.
+   * key is the prefix exponent.
    *
    * Implementation of this as a singleton is based on the UnitTables
    * implementation.  See that class for details.
    */
   constructor(){
     this.byCode = {} ;
-    this.byFactor = {};
+    this.byExponent = {};
 
     // Make this a singleton.  See UnitTables constructor for details.
 
@@ -185,7 +178,7 @@ class PrefixTables {
    */
   add(prefixObj){
     this.byCode[prefixObj.code_] = prefixObj;
-    this.byFactor[prefixObj.factor_] = prefixObj;
+    this.byExponent[prefixObj.exponent_] = prefixObj;
   }
 
 
@@ -215,13 +208,13 @@ class PrefixTables {
 
 
   /**
-   * Obtains a prefix object for a specified factor.
+   * Obtains a prefix object for a specified exponent.
    *
-   * @param factor the factor to be used to find the prefix object
+   * @param exponent the exponent to be used to find the prefix object
    * @return the prefix object found, or null if nothing was found
    */
-  getPrefixByFactor(factor) {
-    return this.byFactor[factor];
+  getPrefixByExponent(exponent) {
+    return this.byExponent[exponent];
   }
 
 } // end PrefixTables class

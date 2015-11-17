@@ -248,6 +248,15 @@ class UnitTables {
     return retUnit ;
   }
 
+  /**
+   * Gets a list of all unit names in the Unit tables
+   *
+   * @returns an array of the unit names
+   */
+  getAllUnitNames() {
+    return Object.keys(this.unitNames_);
+  } // end getAllUnitNames
+
 } // end UnitTables
 
 
