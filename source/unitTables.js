@@ -6,7 +6,7 @@
  *
  */
 
-import * as Ucum from "config.js" ;
+//import * as Ucum from "config.js" ;
 class UnitTables {
 
 
@@ -53,18 +53,19 @@ class UnitTables {
      *
      * @type hash - key is the dimension vector;
      *              value is the reference to the Unit object
+     * I don't think we want this.
      */
-    this.unitDims_ = {};
+    //this.unitDims_ = {};
 
     // Make this a singleton - from mrme44 May 18 comment on
     // on GitHub Gist page of SanderLi/Singleton.js.  Modified
-    // for this class.  CHECK TO SEE IF THIS WORKS WITHOUT EVAL.
+    // for this class.
 
-    eval("let holdThis = UnitTables.prototype; " +
-         "UnitTables = function(){throw 'UnitTables is a Singleton.  " +
-         "Use UnitTables.getInstance() instead.'}" +
-         "UnitTables.prototype = holdThis;" +
-         "UnitTables.getInstance = function(){return this}");
+    let holdThis = UnitTables.prototype;
+    UnitTables = function(){throw "UnitTables is a Singleton.  " +
+                                  'Use UnitTables.getInstance() instead.'};
+    UnitTables.prototype = holdThis;
+    UnitTables.getInstance = function(){return this};
   }
 
 
@@ -78,9 +79,11 @@ class UnitTables {
    *         based on the key value
    */
   resetDoWeWantThis() {
+    /* for now, do nothing
     this.unitNames_ = {} ;
     this.unitCodes_ = {} ;
     this.unitDims_ = {} ;
+    */
   }
 
 
@@ -94,24 +97,26 @@ class UnitTables {
    *         based on the key value
    */
   addUnit(theUnit) {
-    let uName = theUnit.getProperty(name) ;
+    let uName = theUnit['name_'] ;
     if (uName) {
       this.addUnitName(theUnit, uName);
     }
 
     let uCode = null ;
     if (Ucum.caseSensitive_ == true)
-      uCode = theUnit.getProperty(csCode) ;
+      uCode = theUnit['csCode_'] ;
     else
-      uCode = theUnit.getProperty(ciCode) ;
+      uCode = theUnit['ciCode_'] ;
     if (uCode) {
       this.addUnitCode(theUnit, uCode);
     }
 
-    let uDim = theUnit.getProperty(dim) ;
+    /*
+    let uDim = theUnit['dim_'] ;
     if (uDim) {
       this.addUnitDim(theUnit, uDim);
     }
+    */
   } // end addUnit
 
 
@@ -128,7 +133,7 @@ class UnitTables {
   addUnitName(theUnit, uName) {
 
     if (uName === undefined)
-      uName = theUnit.getProperty(name);
+      uName = theUnit['name_'];
 
     if (uName) {
       if (this.unitNames_[uName])
@@ -158,9 +163,9 @@ class UnitTables {
 
     if (uCode === undefined || uCode === null) {
       if (Ucum.caseSensitive_ == true)
-        uCode = theUnit.getProperty(csCode);
+        uCode = theUnit['csCode_'];
       else
-        uCode = theUnit.getProperty(ciCode);
+        uCode = theUnit['ciCode_'];
     }
     if (uCode) {
       if (this.unitCodes_[uCode])
@@ -186,21 +191,21 @@ class UnitTables {
    *         or if the unit has no dimension
    */
   addUnitDim(theUnit, uDim) {
-
+    /*
     if (uDim === undefined)
-      uDim = theUnit.getProperty(dim);
+      uDim = theUnit['dim_'];
 
     if (uDim) {
       if (this.unitDims_[uDim])
         throw(`UnitAtomsTable.addUnitDim called, already contains entry for ` +
               `unit with dim = ${uDim}`);
       else
-        this.unitNames_[uName] = theUnit;
+        this.unitDims_[uDim] = theUnit;
     }
     else
-      throw('UnitAtomsTable.addUnitDim called for unit that does not have ` +
+      throw(`UnitAtomsTable.addUnitDim called for unit that does not have ` +
             `a dimension value.`) ;
-
+    */
   } // end addUnitDim
 
 
@@ -240,6 +245,7 @@ class UnitTables {
    *  @param name the name of the unit to be returned
    *  @returns the unit object or null if it is not found
    */
+  /*
   getUnitByDim(uDim) {
     let retUnit = null ;
     if (uDim) {
@@ -247,6 +253,7 @@ class UnitTables {
     }
     return retUnit ;
   }
+  */
 
   /**
    * Gets a list of all unit names in the Unit tables
@@ -271,6 +278,6 @@ class UnitTables {
  *
  *  @returns the singleton UnitTables object.
  */
-UnitTables.getInstance(){
+UnitTables.getInstance = function(){
   return new UnitTables();
 }

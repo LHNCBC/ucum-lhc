@@ -5,7 +5,7 @@
  * The javascript for this UCUM implementation uses syntax as
  * defined by the ECMAScript 6 standard
  */
-export var Ucum = {  // Namespace for UCUM classes
+var Ucum = {  // Namespace for UCUM classes
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
@@ -19,6 +19,6 @@ export var Ucum = {  // Namespace for UCUM classes
    *  set from that.
    */
   dimLen_: 7 ,
-  
+
 }
 

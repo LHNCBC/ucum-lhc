@@ -1,7 +1,7 @@
 /**
  * Prefix objects and the table of defined prefixes are defined in this file.
  */
-import * as Ucum from "config.js"
+//import * as Ucum from "config.js"
 
 /**
  * This class implements the prefix object.  Prefixes are used as multipliers
@@ -30,15 +30,15 @@ class Prefix {
         name === undefined || name === null ||
         exponent === undefined || exponent === null) {
       throw('Prefix constructor called missing one or more parameters.  ' +
-            'Prefix codes (cs & ci), name and exponent must all be specified ' +
-            'and not null.');
+      'Prefix codes (cs & ci), name and exponent must all be specified ' +
+      'and not null.');
     }
 
     // Check to see if this prefix has already been defined.
-
-    if (PrefixTables.isDefined(code)) {
+    let ptab = PrefixTables.getInstance() ;
+    if (ptab.isDefined(code)) {
       throw(`Prefix constructor called for prefix already defined; code ` +
-            `= ${code}`);
+      `= ${code}`);
     }
 
     /**
@@ -65,7 +65,7 @@ class Prefix {
 
     // Add this prefix to the Prefix table
 
-    PrefixTables.add(this) ;
+    ptab.add(this) ;
 
   }
 
@@ -79,10 +79,11 @@ class Prefix {
    * */
   exponentFor(code) {
 
-    let pfx = PrefixTable.getPrefixbyCode(code);
+    let ptab = PrefixTables.getInstance() ;
+    let pfx = ptab.getPrefixbyCode(code);
     if (pfx === null) {
       throw(`Exponent for prefix with code ${code} requested, but prefix ` +
-            `is not defined.`);
+      `is not defined.`);
     }
     else
       return pfx.exponent_;
@@ -99,7 +100,8 @@ class Prefix {
    */
   forExponent(exponent) {
 
-    let pfx = PrefixTable.getPrefixbyExponent(exponent);
+    let ptab = PrefixTables.getInstance() ;
+    let pfx = ptab.getPrefixbyExponent(exponent);
     if (pfx === null) {
       throw(`Code for prefix with exponent ${exponent} requested, but prefix ` +
       `is not defined.`);
@@ -118,12 +120,12 @@ class Prefix {
    */
   /* Why do we want this? messes up the table???  I'm not planning to
    * implement this until I find a use for it.
-  assign(prefix2) {
-    this.code_ = prefix2.code_ ;
-    this.name_ = prefix2.name_;
-    this.exponent_ = prefix2.exponent_;
-    return this;
-  }*/
+   assign(prefix2) {
+   this.code_ = prefix2.code_ ;
+   this.name_ = prefix2.name_;
+   this.exponent_ = prefix2.exponent_;
+   return this;
+   }*/
 
 
   /**
@@ -135,8 +137,8 @@ class Prefix {
    */
   equals(prefix2) {
     return this.code_ === prefix2.code_ &&
-           this.name_ === prefix2.name_ &&
-           this.exponent_ === prefix2.exponent_;
+        this.name_ === prefix2.name_ &&
+        this.exponent_ === prefix2.exponent_;
   }
 } // end Prefix class
 
@@ -161,13 +163,14 @@ class PrefixTables {
     this.byCode = {} ;
     this.byExponent = {};
 
-    // Make this a singleton.  See UnitTables constructor for details.
+      // Make this a singleton.  See UnitTables constructor for details.
 
-    let holdThis = PrefixTable.prototype;
-    PrefixTable = function(){throw 'PrefixTable is a Singleton. ' +
-                             'Use PrefixTable.getInstance() instead.'}
-    PrefixTable.prototype = holdThis;
-    PrefixTable.getInstance = function(){return this} ;
+    let holdThis = PrefixTables.prototype;
+    PrefixTables = function(){throw 'PrefixTables is a Singleton. ' +
+                                    'Use PrefixTables.getInstance() instead.'};
+    PrefixTables.prototype = holdThis;
+    PrefixTables.getInstance = function(){return this} ;
+
   }
 
 
@@ -192,7 +195,7 @@ class PrefixTables {
    *  for the specified code
    */
   isDefined(code) {
-    return this.byCode[code] !== null ;
+    return this.byCode[code] !== null && this.byCode[code] !== undefined ;
   }
 
 
@@ -231,6 +234,8 @@ class PrefixTables {
  *
  *  @return the singleton PrefixTables object.
  */
-PrefixTables.getInstance() {
+PrefixTables.getInstance = function() {
   return new PrefixTables();
-}
+} ;
+
+

@@ -9,7 +9,7 @@
  *
  */
 
-import * as Ucum from "config.js" ;
+//import * as Ucum from "config.js" ;
 class Unit {
 
   /**
@@ -84,15 +84,18 @@ class Unit {
       this.property_ = attrs['property'] || '';
 
       /*
-       * The magnitude of the unit, e.g., 3 for
-       * 3 meters - where meters is the base unit
+       * The magnitude of the unit, e.g., 3600/3937 for a yard,
+       * where a yard - 3600/3973 * m(eter).  The Dimension
+       * property specifies the meter - which is the unit on which
+       * a yard is based, and this magnitude specifies how to figure
+       * this unit based on the base unit.
        */
       this.magnitude_ = attrs['magnitude'] || 1;
 
       /*
        * The Dimension object of the unit
        */
-      this.dim_ = attrs['dimension'] || null;
+      this.dim_ = new Dimension(attrs['dimension']) || null;
 
       /*
        * The print symbol of the unit, e.g., m
@@ -177,7 +180,7 @@ class Unit {
   assignVals(vals) {
     for (let key in vals) {
       let uKey = (!(key.endsWith('_'))) ? key + '_' : key ;
-      if this.hasOwnProperty(uKey)
+      if (this.hasOwnProperty(uKey))
         this[uKey] = vals[key];
       else
         throw(`Parameter error; ${key} is not a property of a Unit`) ;
@@ -228,7 +231,7 @@ class Unit {
   equals(unit2) {
 
     return (this.magnitude_ === unit2.magnitude_ &&
-            this.dim_.equals(unit2.dim_ &&
+            this.dim_.equals(unit2.dim_) &&
             this.cnv_ === unit2.cnv_ &&
             this.cnvPfx_ === unit2.cnvPfx_);
 
@@ -284,15 +287,24 @@ class Unit {
     // else use a function to get the magnitude to be returned
     else {
       let x = 0.0 ;
-      if (fromCnv != null) // turn mag * fromUnit.magnitude into its ratio scale equivalent
-        x = fromCnv.cnvFrom(mag * fromUnit.cnvPfx_) * fromMag;
-      else
-        x = mag * fromMag;
 
-      if (this.cnv_ != null) // turn mag * origUnit on ratio scale into a non-ratio unit
-        newMag = this.cnv_.cnvTo(x / this.magnitude_) / this.cnvPfx_;
-      else
+      if (fromCnv != null) {
+        // turn mag * fromUnit.magnitude into its ratio scale equivalent
+        let fromFunc = Ucum.functions_.forName(fromCnv);
+        x = fromFunc.cnvFrom(mag * fromUnit.cnvPfx_) * fromMag;
+      }
+      else {
+        x = mag * fromMag;
+      }
+
+      if (this.cnv_ != null) {
+        // turn mag * origUnit on ratio scale into a non-ratio unit
+        let toFunc = Ucum.functions_.forName(this.cnv_);
+        newMag = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
+      }
+      else {
         newMag = x / this.magnitude_;
+      }
     } // end if both units are NOT on a ratio scale
 
     return newMag;
