@@ -231,7 +231,7 @@ var UnitsInput = (function () {
       property: "area",
       csBaseUnit: "m2",
       ciBaseUnit: "M2",
-      baseFactorStr: "100",
+      baseFactorStr: "10000",
       magnitude: 100,
       dimension: [2, 0, 0, 0, 0, 0, 0] }, { ciCode: "L",
       csCode: "l",

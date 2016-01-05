@@ -1,6 +1,9 @@
 "use strict";
 
 /**
+ * This file contains the javascript used by the conversions test page index.html
+ */
+/**
  *  The unit tables object
  */
 Ucum.unitTables_ = null;

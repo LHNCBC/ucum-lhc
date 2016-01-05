@@ -1,6 +1,7 @@
 /* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * This class contains a subset of unit definitions, in json form.  The
+ * definitions were created manually, and the form used will be what is
+ * used for the full list of definitions, from the xml ucum essences file.
  */
 //import * as Ucum from "config.js" ;
 class UnitsInput {
@@ -97,7 +98,7 @@ class UnitsInput {
         name: "deka",
         printSymbol: "da",
         value1: "1e1",
-        value2: ">1 × 10",
+        value2: "1 × 10",
         superscript: 1 },
 
       { caseInsensCode: "D" ,
