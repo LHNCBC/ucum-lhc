@@ -14,7 +14,7 @@ class Functions {
    * Creates the singleton object that contains the list of functions used
    * to convert special units.
    */
-  constructor(name) {
+  constructor() {
 
     // Create the hash containing the function pairs
     this.fs = {};
@@ -111,6 +111,6 @@ class Functions {
  *
  *  @return the singleton Functions object.
  */
-Functions.getInstance() {
+Functions.getInstance = function(){
   return new Functions();
 }

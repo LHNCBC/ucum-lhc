@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>UCUM test page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link href="autocomplete-lhc-7.0.7/autocomplete-lhc_jQueryUI.min.css"
+          media="screen" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="conversion">Conversion test
+      <p>Select a unit to be converted:
+        <input type="text" id="convertFrom">
+      </p>
+      <p>How many units?
+        <input type="text" id="convertNum">
+      </p>
+      <p>Select the unit that it is to be converted to:
+        <input type="text" id="convertTo">
+        <button id="doConversionButton" onclick="Ucum.doConversion()"
+                type="button">Convert</button>
+      </p>
+      <p id="resultString">resultString</p>
+    </div> <!-- end conversion div -->
+    <div id="validation" style="display:none">Validation test
+    </div> <!-- end validation div -->
+      <script src="../dist/es5/config.js"></script>
+      <script src="general5.js"></script>
+      <script src="../dist/es5/dimension.js"></script>
+      <script src="../dist/es5/functions.js"></script>
+      <script src="../dist/es5/prefix.js"></script>
+      <script src="../dist/es5/unit.js"></script>
+      <script src="../dist/es5/unitsInput.js"></script>
+      <script src="../dist/es5/unitTables.js"></script>
+      <script src="autocomplete-lhc-7.0.7/autocomplete-lhc_jQuery.min.js"></script>
+    <script>
+      Ucum.init();
+      var opts = {'matchListValue': true} ;
+      new Def.Autocompleter.Prefetch('convertFrom', Ucum.unitNames_, opts) ;
+      new Def.Autocompleter.Prefetch('convertTo', Ucum.unitNames_, opts);
+    </script>
+  </body>
+</html>

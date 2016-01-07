@@ -1,0 +1,23 @@
+{
+  "name": "ucum",
+  "description": "Implements Unified Code for Units of Measure functions as javascript library",
+  "version": "0.1",
+  "main": [
+    "source/config.js",
+    "source/dimension.js",
+    "source/functions.js",
+    "source/prefix.js",
+    "source/unit.js",
+    "source/unitsInput.js",
+    "source/unitTables.js"
+  ],
+  "ignore": [
+    "coverage",
+    "cshrc.ucum",
+    "javaSource",
+    "libs",
+    "License*",
+    "nbproject",
+    "stuff",
+    "test"]
+}

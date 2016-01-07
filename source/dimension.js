@@ -41,12 +41,12 @@ class Dimension {
       this.dimVec_ = [] ;
       this.assignZero() ;
     }
-    else if (dimSetting instanceof Dimension) {
-      if (dimSetting.getProperty(dimVec).length !== Ucum.dimLen_) {
+    else if (dimSetting instanceof Array) {
+      if (dimSetting.length !== Ucum.dimLen_) {
         throw('Parameter error, incorrect length of vector passed to ' +
         'Dimension constructor');
       }
-      this.dimVec_ = this.assignDim(dimSetting.getProperty(dimVec));
+      this.dimVec_ = dimSetting;
     }
     else if (Number.isInteger(dimSetting)) {
       if (dimSetting < 0 || dimSetting >= Umuc.dimLen_) {
@@ -252,7 +252,7 @@ class Dimension {
       `${typeof dim2} instead of a Dimension object`);
     }
     let isEqual = true ;
-    let dimVec2 = dim2.getProperty(dimVec)
+    let dimVec2 = dim2.dimVec_;
     for (let i = 0; isEqual && i < Ucum.dimLen_; i++)
       isEqual = (this.dimVec_[i] === dimVec2[i]) ;
 
