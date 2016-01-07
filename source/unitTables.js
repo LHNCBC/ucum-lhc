@@ -99,7 +99,7 @@ class UnitTables {
   addUnit(theUnit) {
     let uName = theUnit['name_'] ;
     if (uName) {
-      this.addUnitName(theUnit, uName);
+      this.addUnitName(theUnit);
     }
 
     let uCode = null ;
@@ -108,15 +108,8 @@ class UnitTables {
     else
       uCode = theUnit['ciCode_'] ;
     if (uCode) {
-      this.addUnitCode(theUnit, uCode);
+      this.addUnitCode(theUnit);
     }
-
-    /*
-    let uDim = theUnit['dim_'] ;
-    if (uDim) {
-      this.addUnitDim(theUnit, uDim);
-    }
-    */
   } // end addUnit
 
 
@@ -124,16 +117,13 @@ class UnitTables {
    * Adds a Unit object to the unitNames_ table.
    *
    * @param theUnit the unit to be added
-   * @param uName the name of the unit; optional, will be acquired from
-   *        the unit object if not supplied
    * @returns nothing
    * @throws an error if table already contains a unit with the name,
    *         or if the unit has no name
    */
-  addUnitName(theUnit, uName) {
+  addUnitName(theUnit) {
 
-    if (uName === undefined)
-      uName = theUnit['name_'];
+    let uName = theUnit['name_'];
 
     if (uName) {
       if (this.unitNames_[uName])
@@ -152,21 +142,18 @@ class UnitTables {
    * Adds a Unit object to the unitCodes_ table.
    *
    * @param theUnit the unit to be added
-   * @param uCode the for the unit; optional, will be acquired from
-   *        the unit object if not supplied using either the case-sensitive
-   *        or the case-insensitive code, based on Ucum.caseSensitive_.
    * @returns nothing
    * @throws an error if the table already contains a unit with the code,
    *         or if the unit has no code of the type currently in use
    */
-  addUnitCode(theUnit, uCode) {
+  addUnitCode(theUnit) {
 
-    if (uCode === undefined || uCode === null) {
-      if (Ucum.caseSensitive_ == true)
-        uCode = theUnit['csCode_'];
-      else
-        uCode = theUnit['ciCode_'];
-    }
+    let uCode = null;
+    if (Ucum.caseSensitive_ == true)
+      uCode = theUnit['csCode_'];
+    else
+      uCode = theUnit['ciCode_'];
+
     if (uCode) {
       if (this.unitCodes_[uCode])
         throw(`UnitAtomsTable.addUnitCode called, already contains entry for ` +
@@ -178,35 +165,6 @@ class UnitTables {
       throw('UnitAtomsTable.addUnitCode called for unit that has no code.') ;
 
   } // end addUnitCode
-
-
-  /**
-   * Adds a Unit object to the unitDims_ table
-   *
-   * @param theUnit the unit to be added
-   * @param uDim the dimension of the unit; optional, will be acquired from
-   *        the unit object if not supplied
-   * @returns nothing
-   * @throws an error if the table already contains a unit with the dimension,
-   *         or if the unit has no dimension
-   */
-  addUnitDim(theUnit, uDim) {
-    /*
-    if (uDim === undefined)
-      uDim = theUnit['dim_'];
-
-    if (uDim) {
-      if (this.unitDims_[uDim])
-        throw(`UnitAtomsTable.addUnitDim called, already contains entry for ` +
-              `unit with dim = ${uDim}`);
-      else
-        this.unitDims_[uDim] = theUnit;
-    }
-    else
-      throw(`UnitAtomsTable.addUnitDim called for unit that does not have ` +
-            `a dimension value.`) ;
-    */
-  } // end addUnitDim
 
 
   /**

@@ -558,7 +558,7 @@ class UnitsInput {
       let pfx = this.prefixesInput_[i];
       let theCode = Ucum.caseSensitive ? pfx.caseSensCode : pfx.caseInsensCode;
       let theFactor = pfx.superscript ? pfx.superscript : pfx.value2;
-      let np = new Prefix(theCode, pfx.name, theFactor);
+      new Prefix(theCode, pfx.name, theFactor);
     }
   } // end loadPrefixes
 

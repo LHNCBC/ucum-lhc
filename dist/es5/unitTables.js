@@ -113,29 +113,20 @@ var UnitTables = (function () {
     value: function addUnit(theUnit) {
       var uName = theUnit['name_'];
       if (uName) {
-        this.addUnitName(theUnit, uName);
+        this.addUnitName(theUnit);
       }
 
       var uCode = null;
       if (Ucum.caseSensitive_ == true) uCode = theUnit['csCode_'];else uCode = theUnit['ciCode_'];
       if (uCode) {
-        this.addUnitCode(theUnit, uCode);
+        this.addUnitCode(theUnit);
       }
-
-      /*
-      let uDim = theUnit['dim_'] ;
-      if (uDim) {
-        this.addUnitDim(theUnit, uDim);
-      }
-      */
     } // end addUnit
 
     /**
      * Adds a Unit object to the unitNames_ table.
      *
      * @param theUnit the unit to be added
-     * @param uName the name of the unit; optional, will be acquired from
-     *        the unit object if not supplied
      * @returns nothing
      * @throws an error if table already contains a unit with the name,
      *         or if the unit has no name
@@ -143,9 +134,9 @@ var UnitTables = (function () {
 
   }, {
     key: 'addUnitName',
-    value: function addUnitName(theUnit, uName) {
+    value: function addUnitName(theUnit) {
 
-      if (uName === undefined) uName = theUnit['name_'];
+      var uName = theUnit['name_'];
 
       if (uName) {
         if (this.unitNames_[uName]) throw 'UnitAtomsTable.addUnitName called, already contains entry for ' + ('unit with name = ' + uName);else this.unitNames_[uName] = theUnit;
@@ -156,9 +147,6 @@ var UnitTables = (function () {
      * Adds a Unit object to the unitCodes_ table.
      *
      * @param theUnit the unit to be added
-     * @param uCode the for the unit; optional, will be acquired from
-     *        the unit object if not supplied using either the case-sensitive
-     *        or the case-insensitive code, based on Ucum.caseSensitive_.
      * @returns nothing
      * @throws an error if the table already contains a unit with the code,
      *         or if the unit has no code of the type currently in use
@@ -166,45 +154,15 @@ var UnitTables = (function () {
 
   }, {
     key: 'addUnitCode',
-    value: function addUnitCode(theUnit, uCode) {
+    value: function addUnitCode(theUnit) {
 
-      if (uCode === undefined || uCode === null) {
-        if (Ucum.caseSensitive_ == true) uCode = theUnit['csCode_'];else uCode = theUnit['ciCode_'];
-      }
+      var uCode = null;
+      if (Ucum.caseSensitive_ == true) uCode = theUnit['csCode_'];else uCode = theUnit['ciCode_'];
+
       if (uCode) {
         if (this.unitCodes_[uCode]) throw 'UnitAtomsTable.addUnitCode called, already contains entry for ' + ('unit with code = ' + uCode);else this.unitCodes_[uCode] = theUnit;
       } else throw 'UnitAtomsTable.addUnitCode called for unit that has no code.';
     } // end addUnitCode
-
-    /**
-     * Adds a Unit object to the unitDims_ table
-     *
-     * @param theUnit the unit to be added
-     * @param uDim the dimension of the unit; optional, will be acquired from
-     *        the unit object if not supplied
-     * @returns nothing
-     * @throws an error if the table already contains a unit with the dimension,
-     *         or if the unit has no dimension
-     */
-
-  }, {
-    key: 'addUnitDim',
-    value: function addUnitDim(theUnit, uDim) {}
-    /*
-    if (uDim === undefined)
-      uDim = theUnit['dim_'];
-     if (uDim) {
-      if (this.unitDims_[uDim])
-        throw(`UnitAtomsTable.addUnitDim called, already contains entry for ` +
-              `unit with dim = ${uDim}`);
-      else
-        this.unitDims_[uDim] = theUnit;
-    }
-    else
-      throw(`UnitAtomsTable.addUnitDim called for unit that does not have ` +
-            `a dimension value.`) ;
-    */
-    // end addUnitDim
 
     /**
      *  Returns a unit object based on the unit's name
