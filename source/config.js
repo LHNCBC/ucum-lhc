@@ -5,7 +5,11 @@
  * The javascript for this UCUM implementation uses syntax as
  * defined by the ECMAScript 6 standard
  */
-var Ucum = {  // Namespace for UCUM classes
+
+var Utab = require('/home/lmericle/ucum/dist/es5/unitTables.js');
+var Pfx = require('/home/lmericle/ucum/dist/es5/prefix.js');
+
+export var Ucum = {  // Namespace for UCUM classes
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
@@ -21,4 +25,8 @@ var Ucum = {  // Namespace for UCUM classes
   dimLen_: 7 ,
 
 }
+
+export var unitTabs_ = Utab.UnitTables.getInstance();
+
+export var prefixTab_ = Pfx.PrefixTables.getInstance() ;
 

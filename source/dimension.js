@@ -6,8 +6,9 @@
  *
  * @author Lee Mericle, based on java version by Gunther Schadow
  */
-
-class Dimension {
+var UC = require('/home/lmericle/ucum/dist/es5/config.js');
+var isInteger = require("is-integer");
+export class Dimension {
 
   /**
    * Constructor.
@@ -33,27 +34,32 @@ class Dimension {
    */
   constructor(dimSetting) {
 
-    if (Ucum.dimLen_ === 0) {
+    if (UC.Ucum.dimLen_ === 0) {
       throw('Dimension.setDimensionLen must be called before ' +
       'Dimension constructor');
     }
     if (dimSetting === null) {
-      this.dimVec_ = [] ;
+      this.dimVec_ = new Array(UC.Ucum.dimLen_) ;
       this.assignZero() ;
     }
     else if (dimSetting instanceof Array) {
-      if (dimSetting.length !== Ucum.dimLen_) {
+      if (dimSetting.length !== UC.Ucum.dimLen_) {
         throw('Parameter error, incorrect length of vector passed to ' +
         'Dimension constructor');
       }
-      this.dimVec_ = dimSetting;
+      this.dimVec_ = [];
+      for (let d = 0; d < UC.Ucum.dimLen_; d++)
+        this.dimVec_[d] = dimSetting[d];
     }
-    else if (Number.isInteger(dimSetting)) {
-      if (dimSetting < 0 || dimSetting >= Umuc.dimLen_) {
+    // In es6 this should be Number.isInteger(dimSetting).  But Babel
+    // doesn't transpile that correctly, so we need to use the isInteger
+    // module.  :0
+    else if (isInteger(dimSetting)) {
+      if (dimSetting < 0 || dimSetting >= UC.Ucum.dimLen_) {
         throw('Parameter error, invalid element number specified for ' +
         'Dimension constructor');
       }
-      this.dimVec_ = [];
+      this.dimVec_ = new Array(UC.Ucum.dimLen_);
       this.assignZero() ;
       this.dimVec_[dimSetting] = 1;
     }
@@ -88,11 +94,11 @@ class Dimension {
    * @throws an error if the value has not yet been set
    */
   getDimensionLen() {
-    if (Ucum.dimLen_ == 0) {
+    if (UC.Ucum.dimLen_ == 0) {
       throw('Dimension.setDimensionLen must be called before it can be ' +
       'by Dimension.getLen');
     }
-    return Ucum.dimLen_;
+    return UC.Ucum.dimLen_;
   }
   
 
@@ -106,7 +112,7 @@ class Dimension {
   setElementAt(indexPos) {
 
     if (!Number.isInteger(indexPos) ||
-        indexPos < 0 || indexPos >= Ucum.dimLen_) {
+        indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
       throw(`Dimension.setElementAt called with an invalid index ` +
       `position (${indexPos})`);
     }
@@ -124,7 +130,7 @@ class Dimension {
    **/
   getElementAt(indexPos) {
     if (!Number.isInteger(indexPos) ||
-        indexPos < 0 || indexPos >= Ucum.dimLen_) {
+        indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
       throw(`Dimension.getElementAt called with an invalid index ` +
       `position (${indexPos})`);
     }
@@ -163,7 +169,10 @@ class Dimension {
    *         by a comma and a space
    **/
   toString() {
-    return ('[' + this.dimVec_.join(', ') + ']');
+    let ret = null ;
+    if (this.dimVec_)
+      ret = '[' + this.dimVec_.join(', ') + ']';
+    return ret
   }
 
 
@@ -181,8 +190,8 @@ class Dimension {
       throw(`Dimension.add called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`);
     }
-    for (let i = 0; i < Ucum.dimLen_; i++)
-      this.dimVec_[i] += dim2.getProperty(dimVec)[i];
+    for (let i = 0; i < UC.Ucum.dimLen_; i++)
+      this.dimVec_[i] += dim2.dimVec_[i];
     return this;
   }
 
@@ -200,8 +209,8 @@ class Dimension {
       throw(`Dimension.sub called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`);
     }
-    for (let i = 0; i < Ucum.dimLen_; i++)
-      this.dimVec_[i] -= dim2.getProperty(dimVec)[i];
+    for (let i = 0; i < UC.Ucum.dimLen_; i++)
+      this.dimVec_[i] -= dim2.dimVec_[i];
     return this;
   }
 
@@ -213,7 +222,7 @@ class Dimension {
    * @return this object
    **/
   minus() {
-    for (let i = 0; i < Ucum.dimLen_; i++)
+    for (let i = 0; i < UC.Ucum.dimLen_; i++)
       this.dimVec_[i] = -this.dimVec_[i];
     return this;
   }
@@ -228,11 +237,11 @@ class Dimension {
    * @throws an exception if s is not a number
    */
   mul(s) {
-    if (!Number.isInteger(s)) {
+    if (!isInteger(s)) {
       throw(`Dimension.sub called with an invalid parameter - ` +
       `${typeof dim2} instead of a number`);
     }
-    for (let i = 0; i < Ucum.dimLen_; i++)
+    for (let i = 0; i < UC.Ucum.dimLen_; i++)
       this.dimVec_[i] *= s;
     return this;
   }
@@ -253,7 +262,7 @@ class Dimension {
     }
     let isEqual = true ;
     let dimVec2 = dim2.dimVec_;
-    for (let i = 0; isEqual && i < Ucum.dimLen_; i++)
+    for (let i = 0; isEqual && i < UC.Ucum.dimLen_; i++)
       isEqual = (this.dimVec_[i] === dimVec2[i]) ;
 
     return isEqual;
@@ -274,8 +283,8 @@ class Dimension {
       throw(`Dimension.assignDim called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`);
     }
-    let dimVec2 = dim2.getProperty(dimVec);
-    for (let i = 0; i < Ucum.dimLen_; i++)
+    let dimVec2 = dim2.dimVec_;
+    for (let i = 0; i < UC.Ucum.dimLen_; i++)
       this.dimVec_[i] = dimVec2[i];
     return this;
   }
@@ -287,8 +296,9 @@ class Dimension {
    * @return this object (not sure why)
    */
   assignZero() {
-    for (let i = 0; i < Ucum.dimLen_; i++)
+    for (let i = 0; i < UC.Ucum.dimLen_; i++) {
       this.dimVec_[i] = 0;
+    }
     return this;
   }
 
@@ -302,7 +312,7 @@ class Dimension {
    */
   isZero() {
     let allZero = true;
-    for (let i = 0; allZero && i < Ucum.dimLen_; i++)
+    for (let i = 0; allZero && i < UC.Ucum.dimLen_; i++)
       allZero = this.dimVec_[i] === 0 ;
 
     return allZero;

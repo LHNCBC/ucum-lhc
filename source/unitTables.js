@@ -6,8 +6,9 @@
  *
  */
 
-//import * as Ucum from "config.js" ;
-class UnitTables {
+var UC = require('/home/lmericle/ucum/dist/es5/config.js');
+
+export class UnitTables {
 
 
   /**
@@ -48,6 +49,8 @@ class UnitTables {
      */
     this.unitCodes_ = {};
 
+    this.codeOrder_ = [] ;
+
     /**
      * Tracks units by Dimension vector
      *
@@ -86,6 +89,9 @@ class UnitTables {
     */
   }
 
+  entries() {
+    return Object.keys(this.unitCodes_).length ;
+  }
 
   /**
    * Adds a Unit object to the three tables (or however many for
@@ -103,7 +109,7 @@ class UnitTables {
     }
 
     let uCode = null ;
-    if (Ucum.caseSensitive_ == true)
+    if (UC.Ucum.caseSensitive_ == true)
       uCode = theUnit['csCode_'] ;
     else
       uCode = theUnit['ciCode_'] ;
@@ -126,11 +132,13 @@ class UnitTables {
     let uName = theUnit['name_'];
 
     if (uName) {
-      if (this.unitNames_[uName])
-        throw(`UnitAtomsTable.addUnitName called, already contains entry for ` +
-        `unit with name = ${uName}`);
-      else
-        this.unitNames_[uName] = theUnit;
+      if (this.unitNames_[uName]) {
+        console.log(`UnitAtomsTable.addUnitName called, already contains an ` +
+            `entry for unit with name = ${uName}; appending (2) to ` +
+            `name`);
+        uName = uName + ' (2)';
+      }
+      this.unitNames_[uName] = theUnit;
     }
     else
       throw('UnitAtomsTable.addUnitName called for a unit with no name.');
@@ -149,7 +157,7 @@ class UnitTables {
   addUnitCode(theUnit) {
 
     let uCode = null;
-    if (Ucum.caseSensitive_ == true)
+    if (UC.Ucum.caseSensitive_ == true)
       uCode = theUnit['csCode_'];
     else
       uCode = theUnit['ciCode_'];
@@ -158,8 +166,10 @@ class UnitTables {
       if (this.unitCodes_[uCode])
         throw(`UnitAtomsTable.addUnitCode called, already contains entry for ` +
         `unit with code = ${uCode}`);
-      else
+      else {
         this.unitCodes_[uCode] = theUnit;
+        this.codeOrder_.push(uCode);
+      }
     }
     else
       throw('UnitAtomsTable.addUnitCode called for unit that has no code.') ;
@@ -221,6 +231,32 @@ class UnitTables {
   getAllUnitNames() {
     return Object.keys(this.unitNames_);
   } // end getAllUnitNames
+
+  /**
+   * Gets a list of all unit codes in the Unit tables
+   *
+   * @returns an array of the unit names
+   */
+  getAllUnitCodes() {
+    return Object.keys(this.unitCodes_);
+  } // end getAllUnitNames
+
+  printUnits() {
+    let codeList = '';
+    let uLen = this.codeOrder_.length ;
+    for (let u = 0; u < uLen; u++) {
+      let curUnit = this.getUnitByCode(this.codeOrder_[u]);
+      let unitString = this.codeOrder_[u] + '; ' +
+                       curUnit.getProperty('name') +
+                       '; ' + curUnit.getProperty('magnitude_') +
+                       '; ' + curUnit.getProperty('dim_');
+      if (curUnit.csBaseUnit_)
+        unitString += '; ' + curUnit.csBaseUnit_ + '; ' +
+                      curUnit.baseFactor_;
+      codeList += unitString + '\n' ;
+    }
+    return codeList ;
+  }
 
 } // end UnitTables
 

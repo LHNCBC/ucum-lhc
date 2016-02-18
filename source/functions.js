@@ -29,6 +29,13 @@ class Functions {
     this.fs['degf'] = {cnvTo   : function(x){return x - 459.67;},
                        cnvFrom : function(x){return x + 459.67;}};
 
+    // Reaumur - convert between Reaumur and Kelvin.   Because of the way the
+    // calling code in the Units class is set up (in the convertFrom method),
+    // what is given here as the convertTo function is actually the convert
+    // from method and vice versa.
+    this.fs['degRe'] = {cnvTo   : function(x){return x + 273.15;},
+                        cnvFrom : function(x){return x - 273.15;}};
+
     // pH - convert to pH from moles per liter and from moles per liter to pH
     // where a mole is an amount of a substance (a count of particles)
     this.fs['pH'] = {cnvTo  : function(x){return - Math.log(x) / Math.LN10;},
@@ -48,8 +55,13 @@ class Functions {
                        cnvFrom : function(x){return Math.pow(10, x / 10);}};
     this.fs['20lg'] = {cnvTo : function(x){return 20 * Math.log(x)/Math.LN10;},
                        cnvFrom : function(x){return Math.pow(10, x / 20);}};
+    // The plain text ucum units file uses '2lg'
     this.fs['2lg'] = {cnvTo : function(x){return 2 * Math.log(x)/Math.LN10;},
-                      cnvFrom : function(x){return Math.pow(10, x / 2);}};
+                           cnvFrom : function(x){return Math.pow(10, x / 2);}};
+    // The xml essence ucum file uses lgTimes2
+    this.fs['lgTimes2'] = {cnvTo : function(x){return 2 * Math.log(x)/Math.LN10;},
+      cnvFrom : function(x){return Math.pow(10, x / 2);}};
+
     // ld - dual logarithm (base 2)
     this.fs['ld'] = {cnvTo : function(x){return Math.log(x)/Math.LN2;},
                      cnvFrom : function(x){return Math.pow(2, x);}};

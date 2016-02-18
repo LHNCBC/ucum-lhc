@@ -1,7 +1,6 @@
 /**
  * Prefix objects and the table of defined prefixes are defined in this file.
  */
-//import * as Ucum from "config.js"
 
 /**
  * This class implements the prefix object.  Prefixes are used as multipliers
@@ -10,32 +9,32 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-class Prefix {
+var Ucum = require('/home/lmericle/ucum/dist/es5/config.js');
+
+export class Prefix {
 
   /**
    * Creates a single prefix object and adds it to the PrefixTables singleton.
    *
    * @param code the code used for the prefix, e.g., k for kilo
    * @param name the name of the prefix, e.g., kilo
-   * @param exponent when the base is 10, this is the exponent that, when applied
-   *  to 10, yields a single value named by the code and name, e.g., 3 for kilo
-   *  (10*10*10).  When the base is 2, the actual value, such as 1024.
-   *  The absolute value of the exponent for a base 10 prefix must not exceed
-   *  the Ucum.maxPrefixExponent_ defined in config.js
+   * @param value the value to use in multiplying the magnitude of an object,
+   *  e.g., for a prefix of c the value will be .01.
    *
    * @throws an error if the prefix has already been defined
    */
-  constructor(code, name, exponent) {
+  constructor(code, name, value) {
     if (code === undefined || code === null ||
         name === undefined || name === null ||
-        exponent === undefined || exponent === null) {
+        value === undefined || value === null) {
       throw('Prefix constructor called missing one or more parameters.  ' +
-      'Prefix codes (cs & ci), name and exponent must all be specified ' +
+      'Prefix codes (cs or ci), name and value must all be specified ' +
       'and not null.');
     }
 
     // Check to see if this prefix has already been defined.
-    let ptab = PrefixTables.getInstance() ;
+    //let ptab = PrefixTables.getInstance() ;
+    let ptab = Ucum.prefixTab_ ;
     if (ptab.isDefined(code)) {
       throw(`Prefix constructor called for prefix already defined; code ` +
       `= ${code}`);
@@ -58,10 +57,9 @@ class Prefix {
     this.name_ = name;
 
     /**
-     * The exponent, which is the exponent that, when applied to 10, yields a
-     *  single value named by the code and name, e.g., 3 for kilo (10*10*10)
+     * The value to use in multiplying the magnitude of a unit
      */
-    this.exponent_ = exponent;
+    this.value_ = parseInt(value);
 
     // Add this prefix to the Prefix table
 
@@ -71,66 +69,26 @@ class Prefix {
 
 
   /**
-   * Returns the exponent for the prefix object with the specified code
-   *
-   * @param code the code for the prefix whose exponent is to be returned
-   * @return the exponent for the prefix object with the specified code
-   * @throws error if the prefix with the specified code is not found
+   * Returns the value for the current prefix object
+   * @return the value for the prefix object with the specified code
    * */
-  exponentFor(code) {
-
-    let ptab = PrefixTables.getInstance() ;
-    let pfx = ptab.getPrefixbyCode(code);
-    if (pfx === null) {
-      throw(`Exponent for prefix with code ${code} requested, but prefix ` +
-      `is not defined.`);
-    }
-    else
-      return pfx.exponent_;
+  getValue() {
+    return this.value_;
   }
 
 
   /**
-   * Returns the prefix string (code) for the prefix object with the
-   * specified exponent.
-   *
-   * @param exponent the exponent for the prefix whose code is to be returned
-   * @return the code for the prefix object with the specified exponent
-   * @throws an error if the prefix with the specified exponent is not found
+   * Returns the prefix string (code) for the current prefix object
+   * @return the code for the current prefix object
    */
-  forExponent(exponent) {
-
-    let ptab = PrefixTables.getInstance() ;
-    let pfx = ptab.getPrefixbyExponent(exponent);
-    if (pfx === null) {
-      throw(`Code for prefix with exponent ${exponent} requested, but prefix ` +
-      `is not defined.`);
-    }
-    else
-      return pfx.code_;
+  getCode() {
+    return this.code_;
   }
 
 
-  /**
-   * Assigns the values of the prefix object passed in to this object
-   *
-   * @param prefix2 the prefix object whose values are to be assigned to
-   *  this prefix object
-   * @return this prefix object
-   */
-  /* Why do we want this? messes up the table???  I'm not planning to
-   * implement this until I find a use for it.
-   assign(prefix2) {
-   this.code_ = prefix2.code_ ;
-   this.name_ = prefix2.name_;
-   this.exponent_ = prefix2.exponent_;
-   return this;
-   }*/
-
-
-  /**
+   /**
    * Provides way to tell if one prefix equals another.  The second prefix
-   * must match the code, name and exponent attribute values.
+   * must match the code, name and value attribute values.
    *
    * @param prefix2 prefix object to check for a match
    * @return true for a match; false if one or more attributes don't match
@@ -138,7 +96,7 @@ class Prefix {
   equals(prefix2) {
     return this.code_ === prefix2.code_ &&
         this.name_ === prefix2.name_ &&
-        this.exponent_ === prefix2.exponent_;
+        this.value_ === prefix2.value_;
   }
 } // end Prefix class
 
@@ -149,19 +107,19 @@ class Prefix {
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-class PrefixTables {
+export class PrefixTables {
 
   /**
    * Constructor.  This creates the empty PrefixTable hashes once.
    * There is one hash whose key is the prefix code and one whose
-   * key is the prefix exponent.
+   * key is the prefix value.
    *
    * Implementation of this as a singleton is based on the UnitTables
    * implementation.  See that class for details.
    */
   constructor(){
     this.byCode = {} ;
-    this.byExponent = {};
+    this.byValue = {};
 
       // Make this a singleton.  See UnitTables constructor for details.
 
@@ -170,7 +128,15 @@ class PrefixTables {
                                     'Use PrefixTables.getInstance() instead.'};
     PrefixTables.prototype = holdThis;
     PrefixTables.getInstance = function(){return this} ;
+  }
 
+
+  /**
+   * Provides the number of prefix objects in each table
+   * @returns count of the number of prefix objects in each table
+   */
+  entries() {
+    return Object.keys(this.byCode).length ;
   }
 
 
@@ -181,7 +147,7 @@ class PrefixTables {
    */
   add(prefixObj){
     this.byCode[prefixObj.code_] = prefixObj;
-    this.byExponent[prefixObj.exponent_] = prefixObj;
+    this.byValue[prefixObj.value_] = prefixObj;
   }
 
 
@@ -211,13 +177,13 @@ class PrefixTables {
 
 
   /**
-   * Obtains a prefix object for a specified exponent.
+   * Obtains a prefix object for a specified value.
    *
-   * @param exponent the exponent to be used to find the prefix object
+   * @param value the value to be used to find the prefix object
    * @return the prefix object found, or null if nothing was found
    */
-  getPrefixByExponent(exponent) {
-    return this.byExponent[exponent];
+  getPrefixByValue(value) {
+    return this.byValue[value];
   }
 
 } // end PrefixTables class
@@ -234,8 +200,8 @@ class PrefixTables {
  *
  *  @return the singleton PrefixTables object.
  */
-PrefixTables.getInstance = function() {
+PrefixTables.getInstance = function(){
   return new PrefixTables();
-} ;
+}
 
 
