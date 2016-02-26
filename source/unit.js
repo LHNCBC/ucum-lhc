@@ -8,9 +8,13 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
+var Ucum = require('./config.js');
+var Dim = require('./dimension.js');
+var Us = require("./unitString.js");
+var Fx = require("./functions.js");
+var isInteger = require("is-integer");
 
-//import * as Ucum from "config.js" ;
-class Unit {
+export class Unit {
 
   /**
    * Constructor.
@@ -30,22 +34,15 @@ class Unit {
   constructor(attrs = {}) {
 
     // If this instance is defined by a string, use the UnitParser
-    // to create the unit
-
+    // to create the unit.  Haven't tested this yet.
     if (typeof attrs === 'string') {
       let parser = new UnitParser(attrs);
       try {
-        parser.parse(this);
+        parser.parse(attrs);
       }
       catch (x) {
         throw(`Parse error: ${x.getMessage()}`);
       }
-      // This doesn't make any sense.
-      //if (Ucum.caseSensitive_)
-      //  this.name = attrs;
-      //else
-      //  this.name = attrs.toUpperCase();
-
     } // end if this instance is defined by a string
 
     else {
@@ -62,7 +59,8 @@ class Unit {
       /*
        * Flag indicating whether or not this is a base unit
        */
-      this.isBase_ = false ;
+      this.isBase_ = attrs['isBase'] || false ;
+
       /*
        * The unit name, e.g., meter
        */
@@ -95,7 +93,23 @@ class Unit {
       /*
        * The Dimension object of the unit
        */
-      this.dim_ = new Dimension(attrs['dimension']) || null;
+      if (attrs['dimension'] !== null) {
+        if (attrs['dimension'] instanceof Array) {
+          this.dim_ = new Dim.Dimension(attrs['dimension']);
+        }
+        else if (attrs['dimension'] instanceof Dim.Dimension) {
+          this.dim_ = attrs['dimension'];
+        }
+        else if (isInteger(attrs['dimension'])) {
+          this.dim_ = new Dim.Dimension(attrs['dimension']) ;
+        }
+        else {
+          this.dim_ = new Dim.Dimension(attrs['dimension']);
+        }
+      }
+      else {
+        this.dim_ = new Dim.Dimension(null);
+      }
 
       /*
        * The print symbol of the unit, e.g., m
@@ -110,13 +124,13 @@ class Unit {
       /*
        * A flag indicating whether or not the unit is metric
        */
-      this.isMetric_ = attrs['isMetric'] || true;
+      this.isMetric_ = attrs['isMetric'] || false;
 
       /*
        * The "variable" - which I think is used only for base units
        * The symbol for the variable as used in equations, e.g., s for distance
        */
-      this.variable_ = 'TBD';  // comes from 'dim' in XML
+      this.variable_ = attrs['variable'] || null ;  // comes from 'dim' in XML
 
       /*
        * The conversion function
@@ -129,18 +143,32 @@ class Unit {
       this.cnvPfx_ = attrs['cnvPfx'] || 1;
 
       /*
-       * Used to compute dimension; storing for now until we implement
+       * Flag indicating whether or not this is a "special" unit, i.e., is
+       * constructed using a function specific to the measurement, e.g.,
+       * fahrenheit and celsius
+       */
+      this.isSpecial_ = attrs['isSpecial'] || false ;
+
+      /*
+       * Flag indicating whether or not this is an arbitrary unit
+       */
+      this.isArbitrary_ = attrs['isArbitrary'] || false;
+
+      /*
+       * Used to compute dimension; storing for now until I complete
        * unit definition parsing
        */
       /*
        * Case sensitive (cs) and case insensitive (ci) base unit designation,
-       * includes exponent and prefix if applicable
+       * includes exponent and prefix if applicable - specified in
+       * <value Unit=x UNIT=X value="nnn">nnn</value> -- the unit part
        */
       this.csBaseUnit_ = attrs['csBaseUnit'] || null ;
       this.ciBaseUnit_ = attrs['ciBaseUnit'] || null ;
 
       /*
-       * String and numeric versions of factor applied to base unit
+       * String and numeric versions of factor applied to base unit specified in
+       * <value Unit=x UNIT=X value="nnn">nnn</value> -- the value part
        */
       this.baseFactorStr_ = attrs['baseFactorStr'] || null;
       this.baseFactor_ = attrs['baseFactor'] || null;
@@ -179,7 +207,7 @@ class Unit {
    */
   assignVals(vals) {
     for (let key in vals) {
-      let uKey = (!(key.endsWith('_'))) ? key + '_' : key ;
+      let uKey = !(key.charAt(key.length - 1)) === '_' ? key + '_' : key ;
       if (this.hasOwnProperty(uKey))
         this[uKey] = vals[key];
       else
@@ -196,7 +224,12 @@ class Unit {
   clone() {
     let retUnit = new Unit() ;
     Object.getOwnPropertyNames(this).forEach(val => {
-      retUnit[val] = this[val];
+      if (val === 'dim_') {
+        retUnit['dim_'] = new Dim.Dimension(this.dim_.dimVec_);
+      }
+      else {
+        retUnit[val] = this[val];
+      }
     });
     return retUnit ;
 
@@ -211,8 +244,14 @@ class Unit {
    */
   assign(unit2) {
     Object.getOwnPropertyNames(unit2).forEach(val => {
-      if (this.val !== undefined)
-        this[val] = unit2[val] ;
+      if (this.val !== undefined) {
+        if (val === 'dim_') {
+          this['dim_'] = new Dim.Dimension(this.dim_.dimVec_);
+        }
+        else {
+          this[val] = this[val];
+        }
+      }
       else
          throw(`Parameter error; ${val} is not a property of a Unit`) ;
     });
@@ -248,8 +287,8 @@ class Unit {
    * @throws an error if the property is not found for this unit
    */
   getProperty(propertyName) {
-    let uProp = (!(propertyName.endsWith('_'))) ? propertyName + '_' :
-                                                  propertyName ;
+    let uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName :
+                                             propertyName + '_' ;
     if (!(this.hasOwnProperty(uProp)))
       throw(`Unit does not have requested property (${propertyName}`);
     else
@@ -259,18 +298,18 @@ class Unit {
 
 
   /**
-   * Takes a measurement consisting of a magnitude and a unit and returns
-   * the equivalent magnitude of this unit.  So, 15 mL would translate
+   * Takes a measurement consisting of a number of units and a unit and returns
+   * the equivalent number of this unit.  So, 15 mL would translate
    * to 1 tablespoon if this object is a tablespoon.
    *
-   * @param mag the magnitude for the unit to be translated (e.g. 15 for 15 mL)
+   * @param num the numnitude for the unit to be translated (e.g. 15 for 15 mL)
    * @param fromUnit the unit to be translated to one of this type (e.g. a mL unit)
    *
-   * @return the converted magnitude value (e.g. 1 for 1 tablespoon)
+   * @return the number of converted units (e.g. 1 for 1 tablespoon)
    * @throws an error if the dimension of the fromUnit differs from this unit's dimension
    */
-  convertFrom(mag, fromUnit) {
-    let newMag = 0.0 ;
+  convertFrom(num, fromUnit) {
+    let newNum = 0.0 ;
 
     // reject request if the dimensions are not equal
     if (!(fromUnit.dim_.equals(this.dim_))) {
@@ -280,89 +319,92 @@ class Unit {
     let fromMag = fromUnit.magnitude_ ;
 
     // if both units are on a ratio scale, multiply the "from" unit's magnitude
-    // by the magnitude passed in and then divide that result by this unit's magnitude
+    // by the number passed in and then divide that result by this unit's magnitude
     if (fromCnv == null && this.cnv_ == null)
-      newMag = (mag * fromMag)/this.magnitude_;
+      newNum = (num * fromMag)/this.magnitude_;
 
-    // else use a function to get the magnitude to be returned
+    // else use a function to get the number to be returned
     else {
       let x = 0.0 ;
-
+      let funcs = Fx.Functions.getInstance();
       if (fromCnv != null) {
-        // turn mag * fromUnit.magnitude into its ratio scale equivalent
-        let fromFunc = Ucum.functions_.forName(fromCnv);
-        x = fromFunc.cnvFrom(mag * fromUnit.cnvPfx_) * fromMag;
+        // turn num * fromUnit.magnitude into its ratio scale equivalent
+        let fromFunc = funcs.forName(fromCnv);
+        x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
       }
       else {
-        x = mag * fromMag;
+        x = num * fromMag;
       }
 
       if (this.cnv_ != null) {
         // turn mag * origUnit on ratio scale into a non-ratio unit
-        let toFunc = Ucum.functions_.forName(this.cnv_);
-        newMag = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
+        let toFunc = funcs.forName(this.cnv_);
+        newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
       }
       else {
-        newMag = x / this.magnitude_;
+        newNum = x / this.magnitude_;
       }
     } // end if both units are NOT on a ratio scale
 
-    return newMag;
+    return newNum;
 
   } // end convertFrom
 
 
   /**
-   * Takes a magnitude and a target unit and returns the magnitude for a measurement
-   * of this unit that corresponds to the magnitude of the target unit passed in.
-   * So, 1 tablespoon (where this unit represents a tablespoon) would translate to 15 mL.
+   * Takes a number and a target unit and returns the number for a measurement
+   * of this unit that corresponds to the number of the target unit passed in.
+   * So, 1 tablespoon (where this unit represents a tablespoon) would translate
+   * to 15 mL.
    *
    * @param mag the magnitude for this unit (e.g. 1 for 1 tablespoon)
-   * @param toUnit the unit to which this unit is to be translated (e.g. an mL unit)
+   * @param toUnit the unit to which this unit is to be translated
+   *  (e.g. an mL unit)
    *
-   * @return the converted magnitude value (e.g. 15 mL)
-   * @throws an error if the dimension of the toUnit differs from this unit's dimension
+   * @return the converted number value (e.g. 15 mL)
+   * @throws an error if the dimension of the toUnit differs from this unit's
+   *   dimension
    */
-  convertTo(mag, toUnit) {
+  convertTo(num, toUnit) {
 
-    return toUnit.convertFrom(mag, this) ;
+    return toUnit.convertFrom(num, this) ;
 
   } // end convertTo
 
 
   /**
-   * Takes a given magnitude of this unit returns the magnitude of this unit
+   * Takes a given number of this unit returns the number of this unit
    * if it is converted into a coherent unit.  Does not change this unit.
    *
-   * If this is a coherent unit already, just gives back the magnitude
+   * If this is a coherent unit already, just gives back the number
    * passed in.
    *
-   * @param mag the magnitude for the coherent version of this unit
-   * @return the magnitude for the coherent version of this unit
+   * @param num the number for the coherent version of this unit
+   * @return the number for the coherent version of this unit
    */
-  convertCoherent(mag) {
+  convertCoherent(num) {
 
-    // convert mag' * u' into canonical mag * u on ratio scale
+    // convert mag' * u' into canonical number * u on ratio scale
     if(this.cnv_ == null)
-      mag = this.cnv_.f_from(mag / this.cnvPfx_) * this.magnitude_;
+      num = this.cnv_.f_from(num / this.cnvPfx_) * this.magnitude_;
 
-    return mag;
+    return num;
 
   } // end convertCoherent
 
 
   /**
-   * Mutates this unit into a coherent unit and converts a given magnitude
-   * to the appropriate value for this unit as a coherent unit
+   * Mutates this unit into a coherent unit and converts a given number of
+   * units to the appropriate value for this unit as a coherent unit
    *
-   * @param mag the magnitude for this unit before conversion
-   * @return the magnitude of this unit after conversion
+   * @param num the number for this unit before conversion
+   * @return the number of this unit after conversion
    * @throws an error if the dimensions differ
    */
-  mutateCoherent(mag) {
+  mutateCoherent(num) {
 
     // convert mu' * u' into canonical mu * u on ratio scale
-    mag = this.convertCoherent(mag) ;
+    num = this.convertCoherent(num) ;
 
     // mutate to coherent unit
     this.magnitude_ = 1;
@@ -381,24 +423,24 @@ class Unit {
         throw(`Can't find base unit for dimension ${i}`);
       this.name_ = uA.name + elem;
     }
-    return mag;
+    return num;
 
   } // end mutateCoherent
 
 
   /**
    * Mutates this unit into a unit on a ratio scale and converts a specified
-   * magnitude to an appropriate value for this converted unit
+   * number of units to an appropriate value for this converted unit
    *
-   * @param mag the magnitude of this unit before it's converted
+   * @param num the number of this unit before it's converted
    * @return the magnitude of this unit after it's converted
    * @throw an error if the dimensions differ
    */
-  mutateRatio(mag) {
+  mutateRatio(num) {
     if (this.cnv_ == null)
-      return this.mutateCoherent(mag);
+      return this.mutateCoherent(num);
     else
-      return mag;
+      return num;
 
   } // end mutateRatio
 
@@ -436,7 +478,6 @@ class Unit {
    *         and the other is not dimensionless.
    */
   multiplyThese(unit2) {
-
     if (this.cnv_ != null) {
       if (unit2.cnv_ == null && unit2.dim_.isZero())
 	      this.cnvPfx_ *= unit2.magnitude_;
@@ -454,7 +495,8 @@ class Unit {
           throw (`Attempt to multiply non-ratio unit ${u2Nname}`);
       }
       else {
-        this.name_ = UnitString.mul(this.name_, unit2.name_);
+        let uString = new Us.UnitString();
+        this.name_ = uString.mulString(this.name_, unit2.name_);
         this.magnitude_ *= unit2.magnitude_;
         this.dim_.add(unit2.dim_);
       }
@@ -481,7 +523,8 @@ class Unit {
     if (unit2.cnv_ != null)
       throw (`Attempt to divide non-ratio unit ${unit2.name_}`);
 
-    this.name_ = UnitString.div(this.name_, unit2.name_);
+    let uString = new Us.UnitString();
+    this.name_ = uString.divString(this.name_, unit2.name_);
 
     this.magnitude_ /= unit2.magnitude_;
     this.dim_.sub(unit2.dim_);
