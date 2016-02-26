@@ -6,7 +6,7 @@
  *
  * @author Lee Mericle, based on java version by Gunther Schadow
  */
-var UC = require('/home/lmericle/ucum/dist/es5/config.js');
+var UC = require('/./config.js');
 var isInteger = require("is-integer");
 export class Dimension {
 
@@ -38,7 +38,7 @@ export class Dimension {
       throw('Dimension.setDimensionLen must be called before ' +
       'Dimension constructor');
     }
-    if (dimSetting === null) {
+    if (dimSetting === undefined || dimSetting === null) {
       this.dimVec_ = new Array(UC.Ucum.dimLen_) ;
       this.assignZero() ;
     }
@@ -172,7 +172,7 @@ export class Dimension {
     let ret = null ;
     if (this.dimVec_)
       ret = '[' + this.dimVec_.join(', ') + ']';
-    return ret
+    return ret ;
   }
 
 

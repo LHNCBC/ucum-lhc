@@ -8,9 +8,10 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var Ucum = require('/home/lmericle/ucum/dist/es5/config.js');
-var Dim = require('/home/lmericle/ucum/dist/es5/dimension.js');
-var Us = require("/home/lmericle/ucum/dist/es5/unitString.js");
+var Ucum = require('./config.js');
+var Dim = require('./dimension.js');
+var Us = require("./unitString.js");
+var Fx = require("./functions.js");
 var isInteger = require("is-integer");
 
 export class Unit {
@@ -325,10 +326,10 @@ export class Unit {
     // else use a function to get the number to be returned
     else {
       let x = 0.0 ;
-
+      let funcs = Fx.Functions.getInstance();
       if (fromCnv != null) {
         // turn num * fromUnit.magnitude into its ratio scale equivalent
-        let fromFunc = Ucum.functions_.forName(fromCnv);
+        let fromFunc = funcs.forName(fromCnv);
         x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
       }
       else {
@@ -337,7 +338,7 @@ export class Unit {
 
       if (this.cnv_ != null) {
         // turn mag * origUnit on ratio scale into a non-ratio unit
-        let toFunc = Ucum.functions_.forName(this.cnv_);
+        let toFunc = funcs.forName(this.cnv_);
         newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
       }
       else {

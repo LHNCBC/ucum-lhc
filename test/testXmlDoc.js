@@ -8,9 +8,9 @@
  * Then un from the command line, i.e., node testXmlDoc5.js
  */
 
-var xdoc = require("/home/lmericle/ucum/dist/es5/ucumXmlDocument.js");
-var pfx = require("/home/lmericle/ucum/dist/es5/prefix.js");
-var unit = require("/home/lmericle/ucum/dist/es5/unit.js");
+var xdoc = require("../dist/es5/ucumXmlDocument.js");
+var pfx = require("../dist/es5/prefix.js");
+var unit = require("../dist/es5/unit.js");
 
 var docObj = new xdoc.UcumXmlDocument() ;
 docObj.parseXml();

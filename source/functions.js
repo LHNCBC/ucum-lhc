@@ -5,7 +5,6 @@
  *
  */
 
-
 class Functions {
 
   /**
@@ -72,10 +71,13 @@ class Functions {
 
     // Make this a singleton.  See UnitTables constructor for details.
     let holdThis = Functions.prototype;
+    if (exports)
+      exports.Functions = Functions ;
     Functions = function(){throw 'Functions is a Singleton. ' +
                            'Use Functions.getInstance() instead.'}
     Functions.prototype = holdThis;
-    Functions.getInstance = function(){return this} ;
+    let self = this ;
+    Functions.getInstance = function(){return self} ;
 
   } // end of constructor
 

@@ -6,8 +6,8 @@
  * defined by the ECMAScript 6 standard
  */
 
-var Utab = require('/home/lmericle/ucum/dist/es5/unitTables.js');
-var Pfx = require('/home/lmericle/ucum/dist/es5/prefix.js');
+//var Utab = require('/home/lmericle/ucum/dist/es5/unitTables.js');
+//var Pfx = require('/home/lmericle/ucum/dist/es5/prefix.js');
 
 export var Ucum = {  // Namespace for UCUM classes
 
@@ -22,11 +22,11 @@ export var Ucum = {  // Namespace for UCUM classes
    *  of loading the unit definitions from a file, this value will be
    *  set from that.
    */
-  dimLen_: 7 ,
+  dimLen_: 7
 
 }
 
-export var unitTabs_ = Utab.UnitTables.getInstance();
+//export var unitTabs_ = Utab.UnitTables.getInstance();
 
-export var prefixTab_ = Pfx.PrefixTables.getInstance() ;
+//export var prefixTab_ = Pfx.PrefixTables.getInstance() ;
 

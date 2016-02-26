@@ -6,17 +6,18 @@
  *
  */
 
-var Ucum = require('/home/lmericle/ucum/dist/es5/config.js');
-var Pfx = require("/home/lmericle/ucum//dist/es5/prefix.js");
-var Un = require("/home/lmericle/ucum/dist/es5/unit.js");
-var Us = require("/home/lmericle/ucum/dist/es5/unitString.js");
-var Utab = require('/home/lmericle/ucum/dist/es5/unitTables.js');
+var Ucum = require('./config.js');
+var Pfx = require("./prefix.js");
+var PfxT = require("./prefixTables.js");
+var Un = require("./unit.js");
+var Us = require("./unitString.js");
+var Utab = require('./unitTables.js');
 
-var xmldoc = require('/home/lmericle/ucum/node_modules/xmldoc/lib/xmldoc');
+var xmldoc = require('../../node_modules/xmldoc/lib/xmldoc');
 var fs = require('fs');
 var path = require('path');
 
-var essenceFile_ = '/home/lmericle/ucum/data/ucum-essence.xml';
+var essenceFile_ = '/proj/defExtra/ucum/ucum-essence.xml';
 
 /**
  * The full xml document
@@ -35,10 +36,9 @@ export class UcumXmlDocument {
    *
    */
   constructor() {
-
+    // read the XML file and create an xmlDocument object from it.
     let data = fs.readFileSync(essenceFile_);
     xmlInput_ = new xmldoc.XmlDocument(data);
-
   }
 
 
@@ -67,6 +67,7 @@ export class UcumXmlDocument {
    * @returns nothing
    */
   parsePrefixes(prefixes) {
+
 
     let plen = prefixes.length ;
 
@@ -97,9 +98,17 @@ export class UcumXmlDocument {
       else
         pVal = pValNode.val ;
 
-      // Create the prefix object.  This will also take care of adding
-      // the object to the prefix tables.
-      new Pfx.Prefix(pCode, pName, pVal);
+      // Make sure the prefix has not already been created.  If it hasn't,
+      // create the prefix object and then add it to the prefix tables.
+      let ptab = PfxT.PrefixTables.getInstance();
+      if (ptab.isDefined(pCode)) {
+        throw(`Prefix constructor called for prefix already defined; code ` +
+              `= ${pCode}`);
+      }
+      else {
+        let newPref = new Pfx.Prefix(pCode, pName, pVal);
+        ptab.add(newPref);
+      }
     }
   } // end parsePrefixes
 
@@ -116,7 +125,7 @@ export class UcumXmlDocument {
    */
   parseBaseUnits(baseUnits) {
     let blen = baseUnits.length ;
-    let utab = Ucum.unitTabs_ ;
+    let utab = Utab.UnitTables.getInstance() ;
     for (let b = 0; b < blen; b++) {
       let curBUnit = baseUnits[b];
       let attrs = {} ;
@@ -128,7 +137,6 @@ export class UcumXmlDocument {
       attrs['variable'] = curBUnit.attr.dim ;
       attrs['printSymbol'] = curBUnit.childNamed('printSymbol').val;
       attrs['dimension'] = b ;
-      console.log('passing ' + b + ' to unit construction for dimension')
       let newUnit = new Un.Unit(attrs);
       utab.addUnit(newUnit) ;
     }
@@ -147,7 +155,7 @@ export class UcumXmlDocument {
    */
   parseUnitAtoms(unitAtoms) {
 
-    let utab = Ucum.unitTabs_ ;
+    let utab = Utab.UnitTables.getInstance() ;
     let uStrParser = new Us.UnitString();
     let alen = unitAtoms.length ;
     for (let a = 0; a < alen; a++) {

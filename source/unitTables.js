@@ -6,7 +6,7 @@
  *
  */
 
-var UC = require('/home/lmericle/ucum/dist/es5/config.js');
+var UC = require('./config.js');
 
 export class UnitTables {
 
@@ -67,8 +67,11 @@ export class UnitTables {
     let holdThis = UnitTables.prototype;
     UnitTables = function(){throw "UnitTables is a Singleton.  " +
                                   'Use UnitTables.getInstance() instead.'};
+    if (exports)
+      exports.UnitTables = UnitTables ;
     UnitTables.prototype = holdThis;
-    UnitTables.getInstance = function(){return this};
+    let self = this;
+    UnitTables.getInstance = function(){return self};
   }
 
 
@@ -89,7 +92,11 @@ export class UnitTables {
     */
   }
 
-  entries() {
+  /**
+   * Provides the number of unit objects in each table
+   * @returns count of the number of unit objects in each table
+   */
+  unitsCount() {
     return Object.keys(this.unitCodes_).length ;
   }
 
@@ -241,6 +248,13 @@ export class UnitTables {
     return Object.keys(this.unitCodes_);
   } // end getAllUnitNames
 
+  /**
+   * This prints a list of all units in the tables.  It uses the byCode
+   * table, and uses the codeOrder_ array to determine the order in which
+   * the units are listed.
+   *
+   * @returns {string} buffer containing all the listings
+   */
   printUnits() {
     let codeList = '';
     let uLen = this.codeOrder_.length ;

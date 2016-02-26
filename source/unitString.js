@@ -1,10 +1,11 @@
 /**
  * This class handles the parsing of a unit string into a unit object
  */
-var Ucum = require('/home/lmericle/ucum/dist/es5/config.js');
-var Dim = require('/home/lmericle/ucum/dist/es5/dimension.js') ;
-var Utab = require('/home/lmericle/ucum/dist/es5/unitTables.js');
-var Pfx = require('/home/lmericle/ucum/dist/es5/prefix.js');
+var Ucum = require('./config.js');
+var Dim = require('./dimension.js') ;
+var Utab = require('./unitTables.js');
+var Pfx = require('./prefixTables.js');
+
 export class UnitString{
 
   /**
@@ -22,8 +23,8 @@ export class UnitString{
    */
   parseString(uStr) {
 
-    let pt = Ucum.prefixTab_;
-    let ut = Ucum.unitTabs_;
+    let pt = Pfx.PrefixTables.getInstance();
+    let ut = Utab.UnitTables.getInstance() ;
 
     // Check for parentheses in unit strings.   We think that they only occur in
     // unit strings for special units (ones that use functions to perform
@@ -124,7 +125,10 @@ export class UnitString{
       // If the first "un" element is a number - or is 4 (don't know why
       // this didn't work, but leave for now, don't try to handle yet.
       // Need to figure out what to start with since it's not a unit object.
-      if (typeof finalUnit !== 'number' && finalUnit != 4) {
+      if (typeof finalUnit === 'number' || finalUnit === 4) {
+        bypass = true;
+      }
+      else {
         for (var u2 = 1; u2 < uLen; u2++) {
           if (!bypass) {
             if (typeof uArray[u2]['un'] !== 'number') {
@@ -148,7 +152,6 @@ export class UnitString{
               else {
                 // Otherwise do the multiplication
                 if (typeof uArray[u2]['un'] !== 'number') {
-                  console.log('type of un = ' + typeof uArray[u2]['un']);
                   finalUnit = finalUnit.multiplyThese(uArray[u2]['un']);
                 }
                 else {
@@ -188,7 +191,7 @@ export class UnitString{
 
       // check for a prefix.  If we find one, move it and its value out of
       // the uCode string
-      let pfxTabs = Ucum.prefixTab_;
+      let pfxTabs = Pfx.PrefixTables.getInstance();
       let firstChar = uCode.charAt(0);
       if (pfxTabs.isDefined(firstChar)) {
         let pfxObj = pfxTabs.getPrefixByCode(firstChar);
@@ -203,7 +206,7 @@ export class UnitString{
         let ulen = uCode.length;
         // check for an exponent working from the end of the code
         let lastChar = parseInt(uCode[ulen - 1]);
-        if (lastChar != '' && typeof lastChar == 'number' && !isNaN(lastChar)) {
+        if (typeof lastChar == 'number' && !isNaN(lastChar)) {
           exp = lastChar + exp;
           uCode = uCode.substring(0, ulen - 1);
           ulen = uCode.length;
@@ -223,7 +226,7 @@ export class UnitString{
         }
       }
     }
-    let utabs = Ucum.unitTabs_;
+    let utabs = Utab.UnitTables.getInstance();
 
     // go get the unit for the code (without prefix or exponent)
     let origUnit = utabs.getUnitByCode(uCode);
@@ -254,9 +257,6 @@ export class UnitString{
         theMag *= pfxVal;
         retUnit.assignVals({'magnitude_': theMag})
       }
-    }
-    else {
-      console.log('UNIT NOT FOUND for uCode = ' + uCode);
     }
     return retUnit ;
   } // ret makeUnit
