@@ -14,14 +14,14 @@ var Ucum = require('./config.js');
 export class Prefix {
 
   /**
-   * Creates a single prefix object and adds it to the PrefixTables singleton.
+   * Creates a single prefix object.
    *
    * @param code the code used for the prefix, e.g., k for kilo
    * @param name the name of the prefix, e.g., kilo
    * @param value the value to use in multiplying the magnitude of an object,
    *  e.g., for a prefix of c the value will be .01.
    *
-   * @throws an error if the prefix has already been defined
+   * @throws an error if the not all required parameters are provided
    */
   constructor(code, name, value) {
     if (code === undefined || code === null ||
@@ -31,16 +31,6 @@ export class Prefix {
       'Prefix codes (cs or ci), name and value must all be specified ' +
       'and not null.');
     }
-
-    // Check to see if this prefix has already been defined.
-    //let ptab = PrefixTables.getInstance() ;
-    //console.log(PrefixTables.getInstance.toString());
-    //let ptab = PrefixTables.getInstance() ;
-    //console.log(ptab);
-    //if (ptab.isDefined(code)) {
-    //  throw(`Prefix constructor called for prefix already defined; code ` +
-    //  `= ${code}`);
-    //}
 
     /**
      * The prefix code, e.g., k for kilo.  If we are in case-sensitive
@@ -61,15 +51,9 @@ export class Prefix {
     /**
      * The value to use in multiplying the magnitude of a unit
      */
-    this.value_ = parseInt(value);
+    this.value_ = parseFloat(value);
 
-    // Add this prefix to the Prefix table
-
-    //ptab.add(this) ;
-    //console.log('in prefix constructor, prefix tables allKeys = ' +
-    //            ptab.allKeys());
-    //console.log(ptab);
-  }
+  } // end constructor
 
 
   /**
@@ -90,7 +74,7 @@ export class Prefix {
   }
 
 
-   /**
+  /**
    * Provides way to tell if one prefix equals another.  The second prefix
    * must match the code, name and value attribute values.
    *
@@ -103,5 +87,3 @@ export class Prefix {
         this.value_ === prefix2.value_;
   }
 } // end Prefix class
-
-

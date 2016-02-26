@@ -127,24 +127,19 @@ export class UnitTables {
 
 
   /**
-   * Adds a Unit object to the unitNames_ table.
+   * Adds a Unit object to the unitNames_ table.  We don't check for duplicate
+   * names here, since there are units with the same name, e.g., foot - which
+   * is used for a british foot, a us foot, and an international foot.
    *
    * @param theUnit the unit to be added
    * @returns nothing
-   * @throws an error if table already contains a unit with the name,
-   *         or if the unit has no name
+   * @throws an error if the unit has no name
    */
   addUnitName(theUnit) {
 
     let uName = theUnit['name_'];
 
     if (uName) {
-      if (this.unitNames_[uName]) {
-        console.log(`UnitAtomsTable.addUnitName called, already contains an ` +
-            `entry for unit with name = ${uName}; appending (2) to ` +
-            `name`);
-        uName = uName + ' (2)';
-      }
       this.unitNames_[uName] = theUnit;
     }
     else
@@ -248,12 +243,22 @@ export class UnitTables {
     return Object.keys(this.unitCodes_);
   } // end getAllUnitNames
 
+<<<<<<< Updated upstream
   /**
    * This prints a list of all units in the tables.  It uses the byCode
    * table, and uses the codeOrder_ array to determine the order in which
    * the units are listed.
    *
    * @returns {string} buffer containing all the listings
+=======
+
+  /**
+   * This writes the units currently in the unitTables - specificaly the
+   * table indexed by code - to a buffer that can then be printed out. Right
+   * now it's used for debugging.
+   *
+   * @returns {string}
+>>>>>>> Stashed changes
    */
   printUnits() {
     let codeList = '';

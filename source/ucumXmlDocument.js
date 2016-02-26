@@ -181,6 +181,7 @@ export class UcumXmlDocument {
         attrs['class'] = curUA.attr.class;
       }
       let valNode = curUA.childNamed('value');
+
       if (curUA.attr.isSpecial) {
         attrs['isSpecial'] = curUA.attr.isSpecial === "yes";
         let funcNode = valNode.childNamed('function');
@@ -202,7 +203,10 @@ export class UcumXmlDocument {
         // the new unit, e.g., 3 for a yard that is based in the definition
         // of feet.
         attrs['baseFactorStr'] = valNode.attr.value;
-        attrs['baseFactor'] = valNode.val;
+        if (attrs['csCode'] === '[pi]')
+          attrs['baseFactor'] = parseFloat(attrs['baseFactorStr']) ;
+        else
+          attrs['baseFactor'] = valNode.val;
 
         // units with class = "dimless" don't have dimension arrays.
         // They're things like the number pi or the number 10 or percent.

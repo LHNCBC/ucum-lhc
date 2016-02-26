@@ -61,7 +61,7 @@ export class UnitString{
     // elements connected by the multiplication operator (.), set the
     // units array unit attribute (un) to the one element and the operator
     // attribute (op) to nothing.
-    if (dLen <= 1 && dArray[0].indexOf('.') < 0) {
+    if (dLen === 1 && dArray[0].indexOf('.') < 0) {
       uArray[0] = {un: dArray[0], op: ''};
     }
 
@@ -160,8 +160,8 @@ export class UnitString{
                   finalUnit.assignVals({'magnitude_': fMag});
                 }
               }
-            }
-          } // end if not bypass
+            } // end if not bypass
+          }
         }
       }
       if (bypass)
@@ -185,9 +185,11 @@ export class UnitString{
     let exp = '';
     let pfxVal = null;
     let pfxCode = null;
+    let ulen = uCode.length ;
 
-    // if the code is only one character, no parsing needed
-    if (uCode.length > 1) {
+    // if the code is only one character, no parsing needed. Also block ones
+    // that begin with 10 for now.
+    if (ulen > 1 && uCode.substr(0,2) != "10") {
 
       // check for a prefix.  If we find one, move it and its value out of
       // the uCode string
@@ -198,15 +200,17 @@ export class UnitString{
         pfxVal = pfxObj.getValue();
         pfxCode = pfxObj.getCode();
         uCode = uCode.substr(1);
+        ulen -= 1;
       }
 
       // if the uCode begins with 10, e.g., 10*23 don't look for an exponent.
       // Not sure what to do with these yet.
       if (uCode.substr(0, 2) != "10") {
         let ulen = uCode.length;
+
         // check for an exponent working from the end of the code
         let lastChar = parseInt(uCode[ulen - 1]);
-        if (typeof lastChar == 'number' && !isNaN(lastChar)) {
+        while (lastChar != '' && typeof lastChar == 'number' && !isNaN(lastChar)) {
           exp = lastChar + exp;
           uCode = uCode.substring(0, ulen - 1);
           ulen = uCode.length;
@@ -218,9 +222,10 @@ export class UnitString{
             pfxCode = null;
             lastChar = '';
           }
-        }
+        }  // end looking for exponent digits
+
         // check for a sign for the exponent
-        if (exp && (uCode[ulen- 1] == '-' || uCode[ulen - 1] == '+')) {
+        if (exp && (uCode[ulen - 1] == '-' || uCode[ulen - 1] == '+')) {
           exp = uCode[ulen - 1] + exp;
           uCode = uCode.substring(0, ulen - 1);
         }
@@ -244,18 +249,32 @@ export class UnitString{
       // clone the unit we just got and then apply any exponent and/or prefix
       // to it
       retUnit = origUnit.clone();
+      let theDim = retUnit.getProperty('dim_');
+      let theMag = retUnit.getProperty('magnitude_');
+      let theName = retUnit.getProperty('name_');
+      if (theName === 'meter') {
+        console.log('processing meter; magnitude starts as ' + theMag +
+                    '; dim starts as ' + theDim + '; exp = ' + exp +
+                    '; pfxVal = ' + pfxVal);
+      }
       if (exp) {
-        exp = parseInt(exp);
-        let theDim = retUnit.getProperty('dim_');
+        exp = parseFloat(exp);
         theDim = theDim.mul(exp);
-        retUnit.assignVals({'dim_': theDim});
+        theMag = Math.pow(theMag, exp);
+        retUnit.assignVals({'magnitude_': theMag});
+        if (retUnit.getProperty('name_') === 'liter') {
+          console.log('has exponent, magnitude now set to ' + theMag +
+                      '; dim set to ' + theDim );
+        }
         if (pfxVal)
-          pfxVal *= exp;
+          pfxVal = Math.pow(pfxVal, exp);
       }
       if (pfxVal) {
-        let theMag = retUnit.getProperty('magnitude');
-        theMag *= pfxVal;
+        theMag *= pfxVal ;
         retUnit.assignVals({'magnitude_': theMag})
+        if (retUnit.getProperty('name_') === 'liter') {
+          console.log('has prefix, magnitude now set to ' + theMag);
+        }
       }
     }
     return retUnit ;
