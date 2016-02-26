@@ -6,7 +6,7 @@
  *
  * @author Lee Mericle, based on java version by Gunther Schadow
  */
-var UC = require('/./config.js');
+var UC = require('./config.js');
 var isInteger = require("is-integer");
 export class Dimension {
 
