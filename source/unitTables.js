@@ -35,7 +35,10 @@ export class UnitTables {
     /**
      * Tracks units by name
      * @type hash - key is the name;
-     *              value is the reference to the Unit object
+     *              value is an array of references to the Unit objects
+     *              with the name.  More than one unit may have the same
+     *              name, e.g., "second", which is shared by the base unit
+     *              with the code = "s' and the unit with code = "'".
      */
     this.unitNames_ = {};
 
@@ -45,10 +48,17 @@ export class UnitTables {
      * config.js
      *
      * @type hash - key is the code;
-     *              value is the reference to the Unit object
+     *              value is the reference to the Unit object  Codes must
+     *              be unique.
      */
     this.unitCodes_ = {};
 
+    /**
+     * Keeps track of the order in which units are defined.  The order is
+     * important because unit definitions build on previous definitions.
+     *
+     * @type {Array}
+     */
     this.codeOrder_ = [] ;
 
     /**
@@ -56,7 +66,8 @@ export class UnitTables {
      *
      * @type hash - key is the dimension vector;
      *              value is the reference to the Unit object
-     * I don't think we want this.
+     * I don't think we want this.  Leave this here just in case it turns
+     * out that we do.
      */
     //this.unitDims_ = {};
 
@@ -76,38 +87,22 @@ export class UnitTables {
 
 
   /**
-   * Clears all the atom tables.  Not sure if we really want this so
-   * if there's no crying need for it, let's dump it.
+   * Provides the number of unit objects written to the tables, using the
+   * codes table since codes must be unique.
    *
-   * @param theUnit the unit to be added
-   * @returns nothing
-   * @throws an error if any of the tables already contain the unit
-   *         based on the key value
-   */
-  resetDoWeWantThis() {
-    /* for now, do nothing
-    this.unitNames_ = {} ;
-    this.unitCodes_ = {} ;
-    this.unitDims_ = {} ;
-    */
-  }
-
-  /**
-   * Provides the number of unit objects in each table
-   * @returns count of the number of unit objects in each table
+   * @returns count of the number of unit objects in the unitCodes_ table.
    */
   unitsCount() {
     return Object.keys(this.unitCodes_).length ;
   }
 
+
   /**
-   * Adds a Unit object to the three tables (or however many for
-   * which the unit has key values)
+   * Adds a Unit object to the tables.
    *
    * @param theUnit the unit to be added
    * @returns nothing
-   * @throws an error if any of the tables already contain the unit
-   *         based on the key value
+   * @throws passes on an error if one is thrown by the called functions
    */
   addUnit(theUnit) {
     let uName = theUnit['name_'] ;
@@ -127,9 +122,12 @@ export class UnitTables {
 
 
   /**
-   * Adds a Unit object to the unitNames_ table.  We don't check for duplicate
-   * names here, since there are units with the same name, e.g., foot - which
-   * is used for a british foot, a us foot, and an international foot.
+   * Adds a Unit object to the unitNames_ table.  More than one unit
+   * can have the same name, e.g., the two units with the name "second",
+   * where the code for one of them is 's' and the code for the other is
+   * "'".  Because of this, an array of unit objects is stored for the
+   * name.  In most cases it will be an array of one object, but this
+   * clarifies that there may be more than one.
    *
    * @param theUnit the unit to be added
    * @returns nothing
@@ -140,21 +138,26 @@ export class UnitTables {
     let uName = theUnit['name_'];
 
     if (uName) {
-      this.unitNames_[uName] = theUnit;
+      if (this.unitNames_[uName])
+        this.unitNames_[uName].push(theUnit);
+      else
+        this.unitNames_[uName] = [theUnit];
     }
     else
-      throw('UnitAtomsTable.addUnitName called for a unit with no name.');
+      throw('UnitTables.addUnitName called for a unit with no name.  ' +
+            `Unit code = ${theUnit['csCode_']}.`);
 
   } // end addUnitName
 
 
   /**
-   * Adds a Unit object to the unitCodes_ table.
+   * Adds a Unit object to the unitCodes_ table and to the codeOrder_ table.
    *
    * @param theUnit the unit to be added
    * @returns nothing
    * @throws an error if the table already contains a unit with the code,
-   *         or if the unit has no code of the type currently in use
+   *         or if the unit has no code of the type currently in use (case
+   *         sensitive or insensitive)
    */
   addUnitCode(theUnit) {
 
@@ -166,8 +169,8 @@ export class UnitTables {
 
     if (uCode) {
       if (this.unitCodes_[uCode])
-        throw(`UnitAtomsTable.addUnitCode called, already contains entry for ` +
-        `unit with code = ${uCode}`);
+        throw(`UnitTables.addUnitCode called, already contains entry for ` +
+              `unit with code = ${uCode}`);
       else {
         this.unitCodes_[uCode] = theUnit;
         this.codeOrder_.push(uCode);
@@ -180,7 +183,9 @@ export class UnitTables {
 
 
   /**
-   *  Returns a unit object based on the unit's name
+   *  Returns a array of unit objects based on the unit's name.  Usually this
+   *  will be an array of one, but there may be more, since unit names are'
+   *  not necessarily unique.
    *
    *  @param name the name of the unit to be returned
    *  @returns the unit object or null if it is not found
@@ -210,22 +215,6 @@ export class UnitTables {
 
 
   /**
-   *  Returns a unit object based on the unit's dimension
-   *
-   *  @param name the name of the unit to be returned
-   *  @returns the unit object or null if it is not found
-   */
-  /*
-  getUnitByDim(uDim) {
-    let retUnit = null ;
-    if (uDim) {
-      retUnit = this.unitDims_[uDim] ;
-    }
-    return retUnit ;
-  }
-  */
-
-  /**
    * Gets a list of all unit names in the Unit tables
    *
    * @returns an array of the unit names
@@ -233,6 +222,7 @@ export class UnitTables {
   getAllUnitNames() {
     return Object.keys(this.unitNames_);
   } // end getAllUnitNames
+
 
   /**
    * Gets a list of all unit codes in the Unit tables
@@ -243,22 +233,13 @@ export class UnitTables {
     return Object.keys(this.unitCodes_);
   } // end getAllUnitNames
 
-<<<<<<< Updated upstream
+
   /**
    * This prints a list of all units in the tables.  It uses the byCode
    * table, and uses the codeOrder_ array to determine the order in which
    * the units are listed.
    *
    * @returns {string} buffer containing all the listings
-=======
-
-  /**
-   * This writes the units currently in the unitTables - specificaly the
-   * table indexed by code - to a buffer that can then be printed out. Right
-   * now it's used for debugging.
-   *
-   * @returns {string}
->>>>>>> Stashed changes
    */
   printUnits() {
     let codeList = '';
