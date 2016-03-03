@@ -19,17 +19,19 @@ export class Prefix {
    * @param code the code used for the prefix, e.g., k for kilo
    * @param name the name of the prefix, e.g., kilo
    * @param value the value to use in multiplying the magnitude of an object,
-   *  e.g., for a prefix of c the value will be .01.
+   *  e.g., for a prefix of c the value will be .01.  Will be stored as
+   *  a float.
    *
    * @throws an error if the not all required parameters are provided
    */
-  constructor(code, name, value) {
+  constructor(code, name, value, exp) {
     if (code === undefined || code === null ||
         name === undefined || name === null ||
-        value === undefined || value === null) {
+        value === undefined || value === null ||
+        exp === undefined) {
       throw('Prefix constructor called missing one or more parameters.  ' +
-      'Prefix codes (cs or ci), name and value must all be specified ' +
-      'and not null.');
+      'Prefix codes (cs or ci), name, value and exponent must all be specified ' +
+      'and all but the exponent must not be null.');
     }
 
     /**
@@ -53,6 +55,12 @@ export class Prefix {
      */
     this.value_ = parseFloat(value);
 
+    /**
+     * The exponent used to create the value from 10.  For prefixes that are
+     * not based on 10, this will be null.
+     */
+    this.exp_ = exp ;
+
   } // end constructor
 
 
@@ -75,6 +83,15 @@ export class Prefix {
 
 
   /**
+   * Returns the exponent for the current prefix object
+   * @return the exponent for the current prefix object
+   */
+  getExp() {
+    return this.exp_;
+  }
+
+
+  /**
    * Provides way to tell if one prefix equals another.  The second prefix
    * must match the code, name and value attribute values.
    *
@@ -84,6 +101,7 @@ export class Prefix {
   equals(prefix2) {
     return this.code_ === prefix2.code_ &&
         this.name_ === prefix2.name_ &&
-        this.value_ === prefix2.value_;
+        this.value_ === prefix2.value_ &&
+        this.exp_ === prefix2.exp_ ;
   }
 } // end Prefix class

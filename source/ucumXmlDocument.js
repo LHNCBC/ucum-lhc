@@ -93,10 +93,14 @@ export class UcumXmlDocument {
       let pValNode = curPfx.childNamed('value') ;
       let pVal = null;
       let pSup = pValNode.childNamed('sup');
-      if (pSup)
-        pVal = Math.pow(10, pSup.val);
-      else
-        pVal = pValNode.val ;
+      if (pSup) {
+        pSup = pSup.val;
+        pVal = Math.pow(10, pSup);
+      }
+      else {
+        pVal = pValNode.val;
+        pSup = null;
+      }
 
       // Make sure the prefix has not already been created.  If it hasn't,
       // create the prefix object and then add it to the prefix tables.
@@ -106,7 +110,7 @@ export class UcumXmlDocument {
               `= ${pCode}`);
       }
       else {
-        let newPref = new Pfx.Prefix(pCode, pName, pVal);
+        let newPref = new Pfx.Prefix(pCode, pName, pVal, pSup);
         ptab.add(newPref);
       }
     }
