@@ -25,8 +25,7 @@ export class UnitString{
 
     let pt = Pfx.PrefixTables.getInstance();
     let ut = Utab.UnitTables.getInstance() ;
-    let isLiter = uStr === 'dm3' ;
-    let isAre = uStr == 'm2' ;
+
     // Check for parentheses in unit strings.   We think that they only occur in
     // unit strings for special units (ones that use functions to perform
     // conversions, e.g., fahrenheit and celsius.  We're not currently
@@ -103,7 +102,7 @@ export class UnitString{
         // if the current unit string is NOT a number, call makeUnit to create
         // the unit object for it
         if (isNaN(curCodeNum)) {
-          uArray[u1]['un'] = this.makeUnit(curCode, isLiter, isAre);
+          uArray[u1]['un'] = this.makeUnit(curCode);
         }
         // Otherwise write the numeric version of the number back to
         // the uArray 'un' element
@@ -182,7 +181,7 @@ export class UnitString{
    * @params uCode the string defining the unit
    * @returns a unit object, or null if problems creating the unit
    */
-  makeUnit(uCode, isLiter, isAre) {
+  makeUnit(uCode) {
     let exp = '';
     let pfxVal = null;
     let pfxCode = null;
