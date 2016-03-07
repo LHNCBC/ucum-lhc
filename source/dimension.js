@@ -39,8 +39,9 @@ export class Dimension {
       'Dimension constructor');
     }
     if (dimSetting === undefined || dimSetting === null) {
-      this.dimVec_ = new Array(UC.Ucum.dimLen_) ;
-      this.assignZero() ;
+      //this.dimVec_ = new Array(UC.Ucum.dimLen_) ;
+      //this.assignZero() ;
+      this.dimVec_ = null ;
     }
     else if (dimSetting instanceof Array) {
       if (dimSetting.length !== UC.Ucum.dimLen_) {
