@@ -197,7 +197,7 @@ export class UcumXmlDocument {
         else {
           let slashPos = attrs['csBaseUnit'].indexOf('/');
 
-          // unit = K/9 or K/4 or mol/1 or m2/s4/Hz
+          //base unit = K/9 or K/4 or mol/1 or m2/s4/Hz
           if (slashPos >= 0) {
             let ar = attrs['csBaseUnit'].split('/');
             if (ar.length === 2) {
@@ -209,7 +209,7 @@ export class UcumXmlDocument {
               attrs['baseFactor'] = funcNode.attr.value;
             }
           }
-          // K, deg, 10*-5.PAL, V, mV, uV, nV, W, kW
+          // base unit K, deg, 10*-5.PAL, V, mV, uV, nV, W, kW
           else {
             attrs['baseFactor'] = funcNode.attr.value;
             //if (attrs['csBaseUnit'] === '10*-5.Pa') {

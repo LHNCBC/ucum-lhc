@@ -38,7 +38,7 @@ export class UnitTables {
      *              value is an array of references to the Unit objects
      *              with the name.  More than one unit may have the same
      *              name, e.g., "second", which is shared by the base unit
-     *              with the code = "s' and the unit with code = "'".
+     *              with the code = "s" and the unit with code = "'".
      */
     this.unitNames_ = {};
 
@@ -48,7 +48,7 @@ export class UnitTables {
      * config.js
      *
      * @type hash - key is the code;
-     *              value is the reference to the Unit object  Codes must
+     *              value is the reference to the Unit object.  Codes must
      *              be unique.
      */
     this.unitCodes_ = {};
@@ -184,7 +184,7 @@ export class UnitTables {
 
   /**
    *  Returns a array of unit objects based on the unit's name.  Usually this
-   *  will be an array of one, but there may be more, since unit names are'
+   *  will be an array of one, but there may be more, since unit names are
    *  not necessarily unique.
    *
    *  @param name the name of the unit to be returned
