@@ -207,6 +207,7 @@ export class UcumXmlDocument {
         else {
           let slashPos = attrs['csBaseUnit'].indexOf('/');
           let ar = [];
+
           // base unit = K/9 or K/4 or mol/1 or m2/s4/Hz
           if (slashPos >= 0) {
             ar = attrs['csBaseUnit'].split('/');
