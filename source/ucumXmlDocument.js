@@ -12,12 +12,15 @@ var PfxT = require("./prefixTables.js");
 var Un = require("./unit.js");
 var Us = require("./unitString.js");
 var Utab = require('./unitTables.js');
+var jsonfile = require('jsonfile');
 
 var xmldoc = require('../../node_modules/xmldoc/lib/xmldoc');
 var fs = require('fs');
 var path = require('path');
 
 var essenceFile_ = '/proj/defExtra/ucum/ucum-essence.xml';
+//var jsonFile_ = '/proj/defExtra/ucum/ucumDefs.json'
+var jsonFile_ = '../dist/data/ucumDefs.json';
 
 /**
  * The full xml document
@@ -54,6 +57,10 @@ export class UcumXmlDocument {
     this.parsePrefixes(xmlInput_.childrenNamed("prefix"));
     this.parseBaseUnits(xmlInput_.childrenNamed("base-unit")) ;
     this.parseUnitAtoms(xmlInput_.childrenNamed("unit")) ;
+
+    // Create the json file of the prefix and unit definitions
+    this.writeJsonFile();
+
   }
 
 
@@ -186,35 +193,38 @@ export class UcumXmlDocument {
       }
       let valNode = curUA.childNamed('value');
 
+      // Process special units
+      let parseBaseString = true ;
       if (curUA.attr.isSpecial) {
         attrs['isSpecial'] = curUA.attr.isSpecial === "yes";
         let funcNode = valNode.childNamed('function');
         attrs['cnv'] = funcNode.attr.name;
         attrs['csBaseUnit'] = funcNode.attr.Unit;
         if (attrs['csBaseUnit'] === '1') {
-
+          attrs['baseFactor'] = 1 ;
+          parseBaseString = false ;
         }
         else {
           let slashPos = attrs['csBaseUnit'].indexOf('/');
-
-          // unit = K/9 or K/4 or mol/1 or m2/s4/Hz
+          let ar = [];
+          // base unit = K/9 or K/4 or mol/1 or m2/s4/Hz
           if (slashPos >= 0) {
-            let ar = attrs['csBaseUnit'].split('/');
-            if (ar.length === 2) {
-              attrs['csBaseUnit'] = ar[0];
-              attrs['baseFactor'] =
-                  parseInt(funcNode.attr.value + '/' + ar[1]);
-            }
-            else {
-              attrs['baseFactor'] = funcNode.attr.value;
-            }
+            ar = attrs['csBaseUnit'].split('/');
           }
-          // K, deg, 10*-5.PAL, V, mV, uV, nV, W, kW
+          // base unit = K/9 or K/4 or mol/1
+          if ((slashPos >= 0) && (ar.length === 2)) {
+            attrs['csBaseUnit'] = ar[0];
+            attrs['baseFactor'] =
+                  parseInt(funcNode.attr.value + '/' + ar[1]);
+          }
+          // base unit = 10*-5.Pa
+          else if (attrs['csCode'] === 'B[SPL]') {
+            attrs['baseFactor'] =  Math.pow(10, -5) * 2 ;
+            attrs['csBaseUnit'] = "Pa" ;
+          }
+          // base unit = m1/s4/Hz, K, deg, V, mV, uV, nV, W, kW
           else {
             attrs['baseFactor'] = funcNode.attr.value;
-            //if (attrs['csBaseUnit'] === '10*-5.Pa') {
-            //  ; // not sure what to do with this.
-            //}
           }
         } // end if the base unit is not 1
       } // end if the unit is special
@@ -277,16 +287,48 @@ export class UcumXmlDocument {
         }
         // else I don't know what it is.
         else {
+          attrs['defError_'] = true ;
           console.log('unexpected dimless unit definition, unit code ' +
                       'is ' + attrs['csCode']) ;
         }
       } // end if this is a unit with class = dimless
 
+      // Handle carat of gold alloys - which doesn't get a dimension
+      //
+      else if (attrs['csCode'] === "[car_Au]") {
+        attrs['magnitude'] = 1/24
+      }
       else {
 
         // Make sure there's a unit string to base the new unit on.  There
         // should be, but I'm just checking here to make sure.
         if (attrs['csBaseUnit'] && attrs['csBaseUnit'] !== '1') {
+
+          // Handle some special cases
+          // 1. the Oersted unit, whose string is /[pi].A/m and whose
+          //    value is 250.  Set the baseFactor to 250/[pi] and
+          //    the unit string to A/m
+          if (attrs['csCode'] === 'Oe') {
+            attrs['baseFactor'] = 250/Math.PI ;
+            attrs['csBaseUnit'] = "A/m"
+          }
+          // 2.  Strings that start with '/'.  Set the function to
+          //     the inverse function and trim the '/' off the front
+          //     of the string.
+          else if (attrs['csBaseUnit'][0] === '/') {
+            attrs['cnv'] = 'inv' ;
+            attrs['csBaseUnit'] = attrs['csBaseUnit'].substr(1) ;
+          }
+          // 3.  the Svedberg unit, whose string is 10*-13.s.  Set the
+          //     base factor to 10*-13 and the unit string to s.
+          else if (attrs['csCode'] === '[S]') {
+            attrs['baseFactor'] = Math.pow(10, -13);
+            attrs['csBaseUnit'] = 's';
+          }
+          else if (attrs['csCode'] === '[mu_0]') {
+            attrs['baseFactor'] = 4 * Math.PI * Math.pow(10, -7);
+            attrs['csBaseUnit'] = 'N/A2';
+          }
           // The unit string parser will use the unit(s) named in the
           // string to create a new unit with the appropriate dimension
           // object and magnitude before it's multiplied by the one
@@ -298,15 +340,15 @@ export class UcumXmlDocument {
           // assign them to the attributes we'll use to create the
           // unit for this listing.
           if (ret) {
+            attrs['dimension'] = ret.getProperty('dim');
             let newMag = ret.getProperty('magnitude');
             newMag *= attrs['baseFactor'];
-            attrs['magnitude'] = newMag;
-            attrs['dimension'] = ret.getProperty('dim');
+            attrs['magnitude'] = newMag ;
           }
           // if there's no unit string, report an error
           else {
-            console.log('unit definition missing base string; code = ' +
-                attrs['csCode']);
+            attrs['defError_'] = true ;
+            console.log('unit definition error; code = ' + attrs['csCode']);
             attrs['dimension'] = null;
             attrs['magnitude'] = null;
           }
@@ -319,20 +361,39 @@ export class UcumXmlDocument {
       let newUnit = new Un.Unit(attrs);
       utab.addUnit(newUnit) ;
 
-      // for now, add the unit created to the list we're writing out to
-      // a file for debugging.  The file is overwritten each time here.
-      // I'm doing this here instead of after all units are written
-      // because I'm still running into errors that cause the program
-      // to crash.
-      let uList = '\n' + 'after adding ' + newUnit.csCode_ + '\n' +
-                  utab.printUnits();
-
-      fs.writeFileSync('/home/lmericle/ucum/test/UnitsList.txt', uList,
-                       {encoding: 'utf8', mode: 0o666, flag: 'w'} );
     } // end for a => - to alen
-    // let newUnit = new Un.Unit(attrs);
+
+    // for now, create a list of the units created and save it to a file
+    // for debugging.  This is a temporary file.
+    let uList = utab.printUnits();
+    fs.writeFileSync('/home/lmericle/ucum/test/UnitsList.txt', uList,
+        {encoding: 'utf8', mode: 0o666, flag: 'w'} );
 
   } // end parseUnitAtoms
+
+
+  /**
+   * Get an array containing all prefix objects and returns it in a hash
+   * with the key being "prefixes" and the value being the array.
+   *
+   * @returns hash object
+   */
+  writeJsonFile() {
+
+    let pfxTabs = PfxT.PrefixTables.getInstance() ;
+    let pfxArray = pfxTabs.allPrefixesByCode();
+    let uTabs = Utab.UnitTables.getInstance();
+    let uArray = uTabs.allUnitsByDef();
+
+    let defsHash = { 'prefixes' : pfxArray,
+                     'units' : uArray}
+
+    jsonfile.writeFileSync(jsonFile_, defsHash,
+                          {encoding: 'utf8', mode: 0o666, flag: 'w'});
+    //fs.writeFileSync('/home/lmericle/ucum/test/UnitsList.txt', uList,
+    //    {encoding: 'utf8', mode: 0o666, flag: 'w'} );
+  } // end writeJsonFile
+
 
 } // end UcumXmlDocument
 

@@ -173,6 +173,20 @@ export class Unit {
       this.baseFactorStr_ = attrs['baseFactorStr'] || null;
       this.baseFactor_ = attrs['baseFactor'] || null;
 
+      /*
+       * Flag used to indicate units where the definition process failed
+       * when parsing units from the official units definitions file
+       * (currently using the ucum-essence.xml file).  We keep these
+       * so that we can use them to at least validate them as valid
+       * units, but we don't try to convert them.   This is temporary
+       * and only to account for instances where the code does not
+       * take into account various special cases in the xml file.
+       *
+       * This is NOT used when trying to validate a unit string
+       * submitted during a conversion or validation attempt.
+       */
+      this.defError_ = attrs['defError'] || false ;
+
     } // end if this constructor uses a (possibly empty) hash
       // to define the instance
 

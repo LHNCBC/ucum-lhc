@@ -38,7 +38,7 @@ export class UnitTables {
      *              value is an array of references to the Unit objects
      *              with the name.  More than one unit may have the same
      *              name, e.g., "second", which is shared by the base unit
-     *              with the code = "s' and the unit with code = "'".
+     *              with the code = "s" and the unit with code = "'".
      */
     this.unitNames_ = {};
 
@@ -48,7 +48,7 @@ export class UnitTables {
      * config.js
      *
      * @type hash - key is the code;
-     *              value is the reference to the Unit object  Codes must
+     *              value is the reference to the Unit object.  Codes must
      *              be unique.
      */
     this.unitCodes_ = {};
@@ -184,7 +184,7 @@ export class UnitTables {
 
   /**
    *  Returns a array of unit objects based on the unit's name.  Usually this
-   *  will be an array of one, but there may be more, since unit names are'
+   *  will be an array of one, but there may be more, since unit names are
    *  not necessarily unique.
    *
    *  @param name the name of the unit to be returned
@@ -232,6 +232,25 @@ export class UnitTables {
   getAllUnitCodes() {
     return Object.keys(this.unitCodes_);
   } // end getAllUnitNames
+
+
+  /**
+   * This is used to get all unit objects.  Currently it is used
+   * to get the objects to write to the json ucum definitions file
+   * that is used to provide prefix and unit definition objects for
+   * conversions and validations.
+   *
+   * @returns an array containing all unit objects, ordered by definition
+   * order
+   */
+  allUnitsByDef() {
+    let unitsList = [];
+    let uLen = this.codeOrder_.length ;
+    for (let u = 0; u < uLen; u++) {
+      unitsList.push(this.getUnitByCode(this.codeOrder_[u]));
+    }
+    return unitsList ;
+  } // end allUnitsByDef
 
 
   /**
