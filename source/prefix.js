@@ -93,7 +93,7 @@ export class Prefix {
 
   /**
    * Provides way to tell if one prefix equals another.  The second prefix
-   * must match the code, name and value attribute values.
+   * must all attribute values.
    *
    * @param prefix2 prefix object to check for a match
    * @return true for a match; false if one or more attributes don't match
