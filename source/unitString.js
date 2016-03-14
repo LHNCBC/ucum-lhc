@@ -61,7 +61,7 @@ export class UnitString{
     // elements connected by the multiplication operator (.), set the
     // units array unit attribute (un) to the one element and the operator
     // attribute (op) to nothing.
-    if (dLen <= 1 && dArray[0].indexOf('.') < 0) {
+    if (dLen === 1 && dArray[0].indexOf('.') < 0) {
       uArray[0] = {un: dArray[0], op: ''};
     }
 
@@ -160,8 +160,8 @@ export class UnitString{
                   finalUnit.assignVals({'magnitude_': fMag});
                 }
               }
-            }
-          } // end if not bypass
+            } // end if not bypass
+          }
         }
       }
       if (bypass)
@@ -185,9 +185,12 @@ export class UnitString{
     let exp = '';
     let pfxVal = null;
     let pfxCode = null;
+    let pfxExp = null ;
+    let ulen = uCode.length ;
 
-    // if the code is only one character, no parsing needed
-    if (uCode.length > 1) {
+    // if the code is only one character, no parsing needed. Also block ones
+    // that begin with 10 for now.
+    if (ulen > 1 && uCode.substr(0,2) != "10") {
 
       // check for a prefix.  If we find one, move it and its value out of
       // the uCode string
@@ -196,17 +199,19 @@ export class UnitString{
       if (pfxTabs.isDefined(firstChar)) {
         let pfxObj = pfxTabs.getPrefixByCode(firstChar);
         pfxVal = pfxObj.getValue();
-        pfxCode = pfxObj.getCode();
+        pfxCode = firstChar;
+        pfxExp = pfxObj.getExp();
         uCode = uCode.substr(1);
+        ulen -= 1;
       }
-
       // if the uCode begins with 10, e.g., 10*23 don't look for an exponent.
       // Not sure what to do with these yet.
       if (uCode.substr(0, 2) != "10") {
         let ulen = uCode.length;
+
         // check for an exponent working from the end of the code
         let lastChar = parseInt(uCode[ulen - 1]);
-        if (typeof lastChar == 'number' && !isNaN(lastChar)) {
+        while (typeof lastChar == 'number' && !isNaN(lastChar)) {
           exp = lastChar + exp;
           uCode = uCode.substring(0, ulen - 1);
           ulen = uCode.length;
@@ -216,11 +221,14 @@ export class UnitString{
           if (uCode.length == 0 && pfxCode) {
             uCode = pfxCode;
             pfxCode = null;
+            pfxVal = null ;
+            pfxExp = null ;
             lastChar = '';
           }
-        }
+        }  // end looking for exponent digits
+
         // check for a sign for the exponent
-        if (exp && (uCode[ulen- 1] == '-' || uCode[ulen - 1] == '+')) {
+        if (exp && (uCode[ulen - 1] == '-' || uCode[ulen - 1] == '+')) {
           exp = uCode[ulen - 1] + exp;
           uCode = uCode.substring(0, ulen - 1);
         }
@@ -237,6 +245,7 @@ export class UnitString{
       uCode = pfxCode + uCode ;
       pfxCode = null;
       pfxVal = null ;
+      pfxExp = null ;
       origUnit = utabs.getUnitByCode(uCode) ;
     }
     let retUnit = null;
@@ -244,20 +253,47 @@ export class UnitString{
       // clone the unit we just got and then apply any exponent and/or prefix
       // to it
       retUnit = origUnit.clone();
+      let theDim = retUnit.getProperty('dim_');
+      let theMag = retUnit.getProperty('magnitude_');
+      let theName = retUnit.getProperty('name_');
+
+      // If there is an exponent for the unit, apply it to the dimension
+      // and magnitude now
       if (exp) {
         exp = parseInt(exp);
-        let theDim = retUnit.getProperty('dim_');
         theDim = theDim.mul(exp);
-        retUnit.assignVals({'dim_': theDim});
-        if (pfxVal)
-          pfxVal *= exp;
-      }
+        theMag = Math.pow(theMag, exp);
+        retUnit.assignVals({'magnitude_': theMag});
+
+        // If there is also a prefix, apply the exponent to the prefix.
+        if (pfxVal) {
+
+          // if the prefix base is 10 it will have an exponent.  Multiply the
+          // current prefix exponent by the exponent for the unit we're
+          // working with.  Then raise the prefix value to the level
+          // defined by the exponent.
+          if (pfxExp) {
+            exp *= pfxExp;
+            pfxVal = Math.pow(10, exp);
+          }
+          // if the prefix base is not 10, it won't have an exponent.
+          // At the moment I don't see any units using the prefixes
+          // that aren't base 10.   Put out a warning if we come across
+          // one.
+          else {
+            console.log('unit with prefix that is not base 10 ' +
+                        'found; uCode = ' + uCode + '; prefix = ' +
+                         pfxCode) ;
+          }
+        } // end if there's a prefix as well as the exponent
+      } // end if there's an exponent
+
+      // Now apply the prefix, if there is one, to the magnitude
       if (pfxVal) {
-        let theMag = retUnit.getProperty('magnitude');
-        theMag *= pfxVal;
+        theMag *= pfxVal ;
         retUnit.assignVals({'magnitude_': theMag})
       }
-    }
+    } // end if we found a unit object
     return retUnit ;
   } // ret makeUnit
 

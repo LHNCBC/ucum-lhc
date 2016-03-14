@@ -498,7 +498,11 @@ export class Unit {
         let uString = new Us.UnitString();
         this.name_ = uString.mulString(this.name_, unit2.name_);
         this.magnitude_ *= unit2.magnitude_;
-        this.dim_.add(unit2.dim_);
+        // for now, putting in this safeguard to get around a known error.
+        // need to put in error handling later.
+        if (unit2.dim_ && unit2.dim_.dimVec_ &&
+            this.dim_ && this.dim_.dimVec_)
+          this.dim_.add(unit2.dim_);
       }
     }
     return this;
@@ -527,7 +531,11 @@ export class Unit {
     this.name_ = uString.divString(this.name_, unit2.name_);
 
     this.magnitude_ /= unit2.magnitude_;
-    this.dim_.sub(unit2.dim_);
+    // for now, putting in this safeguard to get around a known error.
+    // need to put in error handling later.
+    if (unit2.dim_ && unit2.dim_.dimVec_ &&
+        this.dim_ && this.dim_.dimVec_)
+      this.dim_.sub(unit2.dim_);
     
     return this;
 
