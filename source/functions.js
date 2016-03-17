@@ -58,8 +58,7 @@ class Functions {
     this.fs['2lg'] = {cnvTo : function(x){return 2 * Math.log(x)/Math.LN10;},
                            cnvFrom : function(x){return Math.pow(10, x / 2);}};
     // The xml essence ucum file uses lgTimes2
-    this.fs['lgTimes2'] = {cnvTo : function(x){return 2 * Math.log(x)/Math.LN10;},
-      cnvFrom : function(x){return Math.pow(10, x / 2);}};
+    this.fs['lgTimes2'] = this.fs['2lg'];
 
     // ld - dual logarithm (base 2)
     this.fs['ld'] = {cnvTo : function(x){return Math.log(x)/Math.LN2;},

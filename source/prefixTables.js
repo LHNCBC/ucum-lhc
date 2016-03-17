@@ -2,9 +2,6 @@
  * The tables of defined prefixes is defined in this file.
  */
 
-var Ucum = require('./config.js');
-var Pfx = require('./prefix.js');
-
 /**
  * This class implements the table of multiplier prefixes.
  *

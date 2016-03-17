@@ -1,8 +1,6 @@
 /**
  * This class handles the parsing of a unit string into a unit object
  */
-var Ucum = require('./config.js');
-var Dim = require('./dimension.js') ;
 var Utab = require('./unitTables.js');
 var Pfx = require('./prefixTables.js');
 
