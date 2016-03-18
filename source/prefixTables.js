@@ -2,9 +2,6 @@
  * The tables of defined prefixes is defined in this file.
  */
 
-var Ucum = require('./config.js');
-var Pfx = require('./prefix.js');
-
 /**
  * This class implements the table of multiplier prefixes.
  *
@@ -57,6 +54,7 @@ export class PrefixTables {
   allPrefixesByCode() {
     let prefixList = [];
     let pList = Object.keys(this.byCode_);
+    pList.sort() ;
     let pLen = pList.length;
     for (let p = 0; p < pLen; p++) {
       prefixList.push(this.getPrefixByCode(pList[p])) ;
