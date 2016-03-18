@@ -25,7 +25,7 @@ export class PrefixTables {
     this.byCode_ = {} ;
     this.byValue_ = {};
 
-      // Make this a singleton.  See UnitTables constructor for details.
+    // Make this a singleton.  See UnitTables constructor for details.
 
     let holdThis = PrefixTables.prototype;
     PrefixTables = function(){throw 'PrefixTables is a Singleton. ' +

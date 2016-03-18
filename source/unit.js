@@ -35,6 +35,7 @@ export class Unit {
 
     // If this instance is defined by a string, use the UnitParser
     // to create the unit.  Haven't tested this yet.
+    // I don't know if we'll even need it.
     if (typeof attrs === 'string') {
       let parser = new UnitParser(attrs);
       try {
@@ -59,27 +60,27 @@ export class Unit {
       /*
        * Flag indicating whether or not this is a base unit
        */
-      this.isBase_ = attrs['isBase'] || false ;
+      this.isBase_ = attrs['isBase_'] || false ;
 
       /*
        * The unit name, e.g., meter
        */
-      this.name_ = attrs['name'] || '';
+      this.name_ = attrs['name_'] || '';
 
       /*
        * The unit's case-sensitive code, e.g., m
        */
-      this.csCode_ = attrs['csCode'] || '';
+      this.csCode_ = attrs['csCode_'] || '';
 
       /*
        * The unit's case-insensitive code, e.g., M
        */
-      this.ciCode_ = attrs['ciCode'] || '';
+      this.ciCode_ = attrs['ciCode_'] || '';
 
       /*
        * The unit's property, e.g., length
        */
-      this.property_ = attrs['property'] || '';
+      this.property_ = attrs['property_'] || '';
 
       /*
        * The magnitude of the unit, e.g., 3600/3937 for a yard,
@@ -88,24 +89,39 @@ export class Unit {
        * a yard is based, and this magnitude specifies how to figure
        * this unit based on the base unit.
        */
-      this.magnitude_ = attrs['magnitude'] || 1;
+      this.magnitude_ = attrs['magnitude_'] || 1;
 
       /*
        * The Dimension object of the unit
        */
-      if (attrs['dimension'] !== null) {
-        if (attrs['dimension'] instanceof Array) {
-          this.dim_ = new Dim.Dimension(attrs['dimension']);
+      console.log('creating unit for csCode = ' + this.csCode_ +
+                  '; dim_ = ' + attrs['dim_']);
+      if (attrs['dim_'] !== null && attrs['dim_]' !== undefined]) {
+        console.log('recognized as not null') ;
+        if (attrs['dim_'] instanceof Array) {
+          console.log('recognized as array') ;
+          this.dim_ = new Dim.Dimension(attrs['dim_']);
         }
-        else if (attrs['dimension'] instanceof Dim.Dimension) {
-          this.dim_ = attrs['dimension'];
+        else if (attrs['dim_'] instanceof Dim.Dimension) {
+          console.log('recognized as a Dimension object') ;
+          this.dim_ = attrs['dim_'];
         }
-        else if (isInteger(attrs['dimension'])) {
-          this.dim_ = new Dim.Dimension(attrs['dimension']) ;
+        else if (isInteger(attrs['dim_'])) {
+          console.log('recognized as an integer') ;
+          this.dim_ = new Dim.Dimension(attrs['dim_']) ;
         }
         else {
-          this.dim_ = new Dim.Dimension(attrs['dimension']);
+          console.log('did not recognize, just gave it a try');
+          if (attrs['dim_'].dimVec_) {
+            console.log('dimVec_ = ' + attrs['dim_'].dimVec_)
+            this.dim_ = new Dim.Dimension(attrs['dim_'].dimVec_);
+          }
+          else
+            this.dim_ = new Dim.Dimension(attrs['dim_']);
         }
+      }
+      if (this.csCode_ === '[smoot]') {
+        console.log('dim for smoot = ' + this.dim_);
       }
       else {
         this.dim_ = new Dim.Dimension(null);
@@ -114,45 +130,45 @@ export class Unit {
       /*
        * The print symbol of the unit, e.g., m
        */
-      this.printSymbol_ = attrs['printSymbol'] || null;
+      this.printSymbol_ = attrs['printSymbol_'] || null;
 
       /*
        * The class of the unit, where given, e.g., dimless
        */
-      this.class_ = attrs['class'] || null;
+      this.class_ = attrs['class_'] || null;
 
       /*
        * A flag indicating whether or not the unit is metric
        */
-      this.isMetric_ = attrs['isMetric'] || false;
+      this.isMetric_ = attrs['isMetric_'] || false;
 
       /*
        * The "variable" - which I think is used only for base units
        * The symbol for the variable as used in equations, e.g., s for distance
        */
-      this.variable_ = attrs['variable'] || null ;  // comes from 'dim' in XML
+      this.variable_ = attrs['variable_'] || null ;  // comes from 'dim' in XML
 
       /*
        * The conversion function
        */
-      this.cnv_ = attrs['cnv'] || null;
+      this.cnv_ = attrs['cnv_'] || null;
 
       /*
        * The conversion prefix
        */
-      this.cnvPfx_ = attrs['cnvPfx'] || 1;
+      this.cnvPfx_ = attrs['cnvPfx_'] || 1;
 
       /*
        * Flag indicating whether or not this is a "special" unit, i.e., is
        * constructed using a function specific to the measurement, e.g.,
        * fahrenheit and celsius
        */
-      this.isSpecial_ = attrs['isSpecial'] || false ;
+      this.isSpecial_ = attrs['isSpecial_'] || false ;
 
       /*
        * Flag indicating whether or not this is an arbitrary unit
        */
-      this.isArbitrary_ = attrs['isArbitrary'] || false;
+      this.isArbitrary_ = attrs['isArbitrary_'] || false;
 
       /*
        * Used to compute dimension; storing for now until I complete
@@ -163,15 +179,15 @@ export class Unit {
        * includes exponent and prefix if applicable - specified in
        * <value Unit=x UNIT=X value="nnn">nnn</value> -- the unit part
        */
-      this.csBaseUnit_ = attrs['csBaseUnit'] || null ;
-      this.ciBaseUnit_ = attrs['ciBaseUnit'] || null ;
+      this.csBaseUnit_ = attrs['csBaseUnit_'] || null ;
+      this.ciBaseUnit_ = attrs['ciBaseUnit_'] || null ;
 
       /*
        * String and numeric versions of factor applied to base unit specified in
        * <value Unit=x UNIT=X value="nnn">nnn</value> -- the value part
        */
-      this.baseFactorStr_ = attrs['baseFactorStr'] || null;
-      this.baseFactor_ = attrs['baseFactor'] || null;
+      this.baseFactorStr_ = attrs['baseFactorStr_'] || null;
+      this.baseFactor_ = attrs['baseFactor_'] || null;
 
       /*
        * Flag used to indicate units where the definition process failed
@@ -185,7 +201,7 @@ export class Unit {
        * This is NOT used when trying to validate a unit string
        * submitted during a conversion or validation attempt.
        */
-      this.defError_ = attrs['defError'] || false ;
+      this.defError_ = attrs['defError_'] || false ;
 
     } // end if this constructor uses a (possibly empty) hash
       // to define the instance
@@ -598,7 +614,8 @@ export class Unit {
 
     this.name_ = UnitString.pow(this.name_, p);
     this.magnitude_ = Math.pow(this.magnitude_, p);
-    this.dim_.mul(p);
+    if (this.dim_)
+      this.dim_.mul(p);
     return this;
 
   } // end power

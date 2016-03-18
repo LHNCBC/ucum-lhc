@@ -22,6 +22,7 @@ export class UnitString{
    * @returns a unit object, or null if problems creating the unit
    */
   parseString(uStr) {
+    console.log('parseString called for uStr = ' + uStr);
 
     let pt = Pfx.PrefixTables.getInstance();
     let ut = Utab.UnitTables.getInstance() ;
@@ -146,6 +147,8 @@ export class UnitString{
                 else {
                   // Otherwise do the multiplication
                   if (typeof uArray[u2]['un'] !== 'number') {
+                    console.log('about to call multiply on unit with string = ' +
+                    uStr);
                     finalUnit = finalUnit.multiplyThese(uArray[u2]['un']);
                   }
                   else {
