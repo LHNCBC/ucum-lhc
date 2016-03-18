@@ -235,6 +235,25 @@ export class UnitTables {
 
 
   /**
+   * This is used to get all unit objects.  Currently it is used
+   * to get the objects to write to the json ucum definitions file
+   * that is used to provide prefix and unit definition objects for
+   * conversions and validations.
+   *
+   * @returns an array containing all unit objects, ordered by definition
+   * order
+   */
+  allUnitsByDef() {
+    let unitsList = [];
+    let uLen = this.codeOrder_.length ;
+    for (let u = 0; u < uLen; u++) {
+      unitsList.push(this.getUnitByCode(this.codeOrder_[u]));
+    }
+    return unitsList ;
+  } // end allUnitsByDef
+
+
+  /**
    * This prints a list of all units in the tables.  It uses the byCode
    * table, and uses the codeOrder_ array to determine the order in which
    * the units are listed.

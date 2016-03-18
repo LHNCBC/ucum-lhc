@@ -2,9 +2,6 @@
  * The tables of defined prefixes is defined in this file.
  */
 
-var Ucum = require('./config.js');
-var Pfx = require('./prefix.js');
-
 /**
  * This class implements the table of multiplier prefixes.
  *
@@ -22,8 +19,8 @@ export class PrefixTables {
    * implementation.  See that class for details.
    */
   constructor(){
-    this.byCode = {} ;
-    this.byValue = {};
+    this.byCode_ = {} ;
+    this.byValue_ = {};
 
       // Make this a singleton.  See UnitTables constructor for details.
 
@@ -43,11 +40,26 @@ export class PrefixTables {
    * @returns count of the number of prefix objects in each table
    */
   prefixCount() {
-    return Object.keys(this.byCode).length ;
+    return Object.keys(this.byCode_).length ;
   }
 
-  allKeys() {
-    return Object.keys(this.byCode) ;
+  /**
+   * This is used to get all prefix objects.  Currently it is used
+   * to get the objects to write to the json ucum definitions file
+   * that is used to provide prefix and unit definition objects for
+   * conversions and validations.
+   *
+   * @returns an array containing all prefix objects, ordered by code.
+   */
+  allPrefixesByCode() {
+    let prefixList = [];
+    let pList = Object.keys(this.byCode_);
+    pList.sort() ;
+    let pLen = pList.length;
+    for (let p = 0; p < pLen; p++) {
+      prefixList.push(this.getPrefixByCode(pList[p])) ;
+    }
+    return prefixList ;
   }
 
   /**
@@ -56,8 +68,8 @@ export class PrefixTables {
    * @param prefixObj the object to be added to the tables
    */
   add(prefixObj){
-    this.byCode[prefixObj.getCode()] = prefixObj;
-    this.byValue[prefixObj.getValue()] = prefixObj;
+    this.byCode_[prefixObj.getCode()] = prefixObj;
+    this.byValue_[prefixObj.getValue()] = prefixObj;
   }
 
 
@@ -71,7 +83,7 @@ export class PrefixTables {
    *  for the specified code
    */
   isDefined(code) {
-    return this.byCode[code] !== null && this.byCode[code] !== undefined ;
+    return this.byCode_[code] !== null && this.byCode_[code] !== undefined ;
   }
 
 
@@ -82,7 +94,7 @@ export class PrefixTables {
    * @return the prefix object found, or null if nothing was found
    */
   getPrefixByCode(code) {
-    return this.byCode[code];
+    return this.byCode_[code];
   }
 
 
@@ -93,7 +105,7 @@ export class PrefixTables {
    * @return the prefix object found, or null if nothing was found
    */
   getPrefixByValue(value) {
-    return this.byValue[value];
+    return this.byValue_[value];
   }
 
 } // end PrefixTables class
