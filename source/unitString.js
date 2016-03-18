@@ -26,7 +26,8 @@ export class UnitString{
     let finalUnit = null ;
 
     // Check for parentheses in unit strings. We assume there aren't any,
-    // so if some turn up we need to know so they can be parsed.
+    // so if some turn up we need to know so they can be parsed.  For now,
+    // block further processing of strings with parentheses.
     let pCount = 0;
     let pArray = uStr.split('(') ;
     if (pArray.length > 1) {
@@ -76,8 +77,8 @@ export class UnitString{
             for (let m = 0; m < mLen; m++, u++) {
               uArray[u] = {un: mArray[m], op: '.'};
             }
-            // back the units array index down one.  It gets incremented one
-            // too many times here.
+            // drop u back one element - or we end up with empty cells in
+            // uArray if we write anything else to it.
             u -= 1;
           } // end for each element from the multiplication split
         } // end for each element from the division split
@@ -90,7 +91,6 @@ export class UnitString{
         let curCode = uArray[u1]['un'];
         if (curCode) {
           let curCodeNum = Number(curCode);
-
           // if the current unit string is NOT a number, call makeUnit to create
           // the unit object for it
           if (isNaN(curCodeNum)) {
@@ -123,38 +123,36 @@ export class UnitString{
         else {
           for (var u2 = 1; u2 < uLen; u2++) {
             if (!bypass) {
-              if (typeof uArray[u2]['un'] !== 'number') {
-                let nextUnit = uArray[u2]['un'];
-                if (!nextUnit.getProperty) {
+              let nextUnit = uArray[u2]['un'] ;
+              if ((typeof nextUnit !== 'number') && (!nextUnit.getProperty)) {
                   bypass = true;
-                }
               }
               if (!bypass) {
                 // If the operation for the next unit/number is division,
                 // do that now, applying the operation to the finalUnit
                 if (uArray[u2]['op'] == '/') {
-                  if (typeof uArray[u2]['un'] !== 'number')
-                    finalUnit = finalUnit.divide(uArray[u2]['un']);
+                  if (typeof nextUnit !== 'number')
+                    finalUnit = finalUnit.divide(nextUnit);
                   else {
                     let fMag = finalUnit.getProperty('magnitude_');
-                    fMag /= uArray[u2]['un'];
+                    fMag /= nextUnit;
                     finalUnit.assignVals({'magnitude_': fMag});
                   }
                 }
                 else {
                   // Otherwise do the multiplication
-                  if (typeof uArray[u2]['un'] !== 'number') {
-                    finalUnit = finalUnit.multiplyThese(uArray[u2]['un']);
+                  if (typeof nextUnit !== 'number') {
+                    finalUnit = finalUnit.multiplyThese(nextUnit);
                   }
                   else {
                     let fMag = finalUnit.getProperty('magnitude_');
-                    fMag *= uArray[u2]['un'];
+                    fMag *= nextUnit;
                     finalUnit.assignVals({'magnitude_': fMag});
                   }
                 }
               } // end if not bypass
-            }
-          }
+            } // also end if not bypass
+          } // end do fo the units
         }
         if (bypass)
           finalUnit = null;

@@ -54,6 +54,7 @@ export class PrefixTables {
   allPrefixesByCode() {
     let prefixList = [];
     let pList = Object.keys(this.byCode_);
+    pList.sort() ;
     let pLen = pList.length;
     for (let p = 0; p < pLen; p++) {
       prefixList.push(this.getPrefixByCode(pList[p])) ;

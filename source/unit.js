@@ -398,9 +398,8 @@ export class Unit {
    */
   convertCoherent(num) {
 
-    let num = null;
     // convert mag' * u' into canonical number * u on ratio scale
-    if(this.cnv_ == null)
+    if(this.cnv_ !== null)
       num = this.cnv_.f_from(num / this.cnvPfx_) * this.magnitude_;
 
     return num;

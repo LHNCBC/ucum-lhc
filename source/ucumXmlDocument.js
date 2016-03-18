@@ -362,13 +362,14 @@ export class UcumXmlDocument {
       let newUnit = new Un.Unit(attrs);
       utab.addUnit(newUnit) ;
 
-    } // end for a => - to alen
+
 
     // for now, create a list of the units created and save it to a file
     // for debugging.  This is a temporary file.
     let uList = utab.printUnits();
     fs.writeFileSync('/home/lmericle/ucum/test/UnitsList.txt', uList,
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
+    } // end for a => - to alen
 
   } // end parseUnitAtoms
 
