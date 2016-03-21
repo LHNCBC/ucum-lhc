@@ -94,34 +94,23 @@ export class Unit {
       /*
        * The Dimension object of the unit
        */
-      console.log('creating unit for csCode = ' + this.csCode_ +
-                  '; dim_ = ' + attrs['dim_']);
-      if (attrs['dim_'] !== null && attrs['dim_]' !== undefined]) {
-        console.log('recognized as not null') ;
+      if (attrs['dim_'] !== null && attrs['dim_'] !== undefined) {
         if (attrs['dim_'] instanceof Array) {
-          console.log('recognized as array') ;
           this.dim_ = new Dim.Dimension(attrs['dim_']);
         }
         else if (attrs['dim_'] instanceof Dim.Dimension) {
-          console.log('recognized as a Dimension object') ;
           this.dim_ = attrs['dim_'];
         }
         else if (isInteger(attrs['dim_'])) {
-          console.log('recognized as an integer') ;
           this.dim_ = new Dim.Dimension(attrs['dim_']) ;
         }
         else {
-          console.log('did not recognize, just gave it a try');
           if (attrs['dim_'].dimVec_) {
-            console.log('dimVec_ = ' + attrs['dim_'].dimVec_)
             this.dim_ = new Dim.Dimension(attrs['dim_'].dimVec_);
           }
           else
             this.dim_ = new Dim.Dimension(attrs['dim_']);
         }
-      }
-      if (this.csCode_ === '[smoot]') {
-        console.log('dim for smoot = ' + this.dim_);
       }
       else {
         this.dim_ = new Dim.Dimension(null);
@@ -320,7 +309,8 @@ export class Unit {
     let uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName :
                                              propertyName + '_' ;
     if (!(this.hasOwnProperty(uProp)))
-      throw(`Unit does not have requested property (${propertyName}`);
+      throw(`Unit does not have requested property (${propertyName}), unit ` +
+            `code = ${this.csCode_}`);
     else
       return this[uProp] ;
 

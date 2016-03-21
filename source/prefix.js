@@ -24,11 +24,12 @@ export class Prefix {
    *
    * @throws an error if the not all required parameters are provided
    */
-  constructor(code, name, value, exp) {
-    if (code === undefined || code === null ||
-        name === undefined || name === null ||
-        value === undefined || value === null ||
-        exp === undefined) {
+  constructor(attrs) {
+
+    if (attrs['code_'] === undefined || attrs['code_'] === null ||
+        attrs['name_'] === undefined || attrs['name_'] === null ||
+        attrs['value_'] === undefined || attrs['value_'] === null ||
+        attrs['exp_'] === undefined) {
       throw('Prefix constructor called missing one or more parameters.  ' +
       'Prefix codes (cs or ci), name, value and exponent must all be specified ' +
       'and all but the exponent must not be null.');
@@ -43,23 +44,26 @@ export class Prefix {
      * codes are also all uppercase), we'll just have to believe that the
      * right one was passed in.
      */
-    this.code_ = code;
+    this.code_ = attrs['code_'];
 
     /**
      * The prefix name, e.g., kilo
      */
-    this.name_ = name;
+    this.name_ = attrs['name_'];
 
     /**
      * The value to use in multiplying the magnitude of a unit
      */
-    this.value_ = parseFloat(value);
+    if (typeof attrs['value_'] === 'string')
+      this.value_ = parseFloat(attrs['value_']);
+    else
+      this.value_ = attrs['value_'] ;
 
     /**
      * The exponent used to create the value from 10.  For prefixes that are
      * not based on 10, this will be null.
      */
-    this.exp_ = exp ;
+    this.exp_ = attrs['exp_'] ;
 
   } // end constructor
 
