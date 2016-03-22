@@ -55,7 +55,7 @@ export class UcumXmlDocument {
     this.parsePrefixes(xmlInput_.childrenNamed("prefix"));
     this.parseBaseUnits(xmlInput_.childrenNamed("base-unit")) ;
     this.parseUnitAtoms(xmlInput_.childrenNamed("unit")) ;
-    console.log('about to call writeJsonFile');
+
     // Create the json file of the prefix and unit definitions
     this.writeJsonFile();
 

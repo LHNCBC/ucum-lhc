@@ -20,7 +20,6 @@ export class UnitString{
    * @returns a unit object, or null if problems creating the unit
    */
   parseString(uStr) {
-    console.log('parseString called for uStr = ' + uStr);
 
     let pt = Pfx.PrefixTables.getInstance();
     let ut = Utab.UnitTables.getInstance() ;
