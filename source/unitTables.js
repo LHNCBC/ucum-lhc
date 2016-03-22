@@ -267,11 +267,22 @@ export class UnitTables {
       let curUnit = this.getUnitByCode(this.codeOrder_[u]);
       let unitString = this.codeOrder_[u] + '; ' +
                        curUnit.getProperty('name') +
-                       '; ' + curUnit.getProperty('magnitude_') +
-                       '; ' + curUnit.getProperty('dim_');
+                       '; ' + curUnit.getProperty('magnitude_') ;
+      let curDim = curUnit.getProperty('dim_');
+      if (curDim) {
+        unitString += '; ' + curDim.dimVec_ ;
+      }
+      else {
+        unitString += '; null';
+      }
+
       if (curUnit.csBaseUnit_)
         unitString += '; ' + curUnit.csBaseUnit_ + '; ' +
                       curUnit.baseFactor_;
+      if (curUnit.cnv_)
+        unitString += '; ' + curUnit.cnv_ + '; ' + curUnit.cnvPfx_ ;
+      if (curUnit.defError_)
+        unitString += '; problem parsing this one, deferred to later.' ;
       codeList += unitString + '\n' ;
     }
     return codeList ;

@@ -19,8 +19,6 @@ var fs = require('fs');
 var path = require('path');
 
 var essenceFile_ = '/proj/defExtra/ucum/ucum-essence.xml';
-//var jsonFile_ = '/proj/defExtra/ucum/ucumDefs.json'
-var jsonFile_ = '../dist/data/ucumDefs.json';
 
 /**
  * The full xml document
@@ -80,17 +78,17 @@ export class UcumXmlDocument {
 
     for (let p = 0; p < plen; p++) {
       let curPfx = prefixes[p];
-      let pCode = null;
+      let attrs = {} ;
 
       // use the version (case sensitive or case insensitive) of the
       // prefix code as indicated by the caseSensitive_ flag in the
       // configuration file
       if (Ucum.Ucum.caseSensitive_)
-        pCode = curPfx.attr.Code;
+        attrs["code_"] = curPfx.attr.Code;
       else
-        pCode = curPfx.attr.CODE;
+        attrs["code_"] = curPfx.attr.CODE;
 
-      let pName = curPfx.childNamed('name').val;
+      attrs["name_"] = curPfx.childNamed('name').val;
 
       // Set the prefix value.  If there is a <sup> element in the
       // value node, then this is a base 10 based prefix (10 to the x power).
@@ -98,26 +96,26 @@ export class UcumXmlDocument {
       // Otherwise this is not 10 based and the value contains the
       // actual value for the prefix.
       let pValNode = curPfx.childNamed('value') ;
-      let pVal = null;
-      let pSup = pValNode.childNamed('sup');
-      if (pSup) {
-        pSup = pSup.val;
-        pVal = Math.pow(10, pSup);
+      attrs["value_"] = null;
+      attrs["exp_"] = pValNode.childNamed('sup');
+      if (attrs["exp_"] != null) {
+        attrs["exp_"] = attrs["exp_"].val;
+        attrs["value_"] = Math.pow(10, attrs["exp_"]);
       }
       else {
-        pVal = pValNode.val;
-        pSup = null;
+        attrs["value_"] = pValNode.val;
+        attrs["exp_"] = null;
       }
 
       // Make sure the prefix has not already been created.  If it hasn't,
       // create the prefix object and then add it to the prefix tables.
       let ptab = PfxT.PrefixTables.getInstance();
-      if (ptab.isDefined(pCode)) {
+      if (ptab.isDefined(attrs["code_"])) {
         throw(`Prefix constructor called for prefix already defined; code ` +
-              `= ${pCode}`);
+              `= ${attrs["code_"]}`);
       }
       else {
-        let newPref = new Pfx.Prefix(pCode, pName, pVal, pSup);
+        let newPref = new Pfx.Prefix(attrs);
         ptab.add(newPref);
       }
     }
@@ -140,14 +138,14 @@ export class UcumXmlDocument {
     for (let b = 0; b < blen; b++) {
       let curBUnit = baseUnits[b];
       let attrs = {} ;
-      attrs['isBase'] = true ;
-      attrs['name'] = curBUnit.childNamed('name').val ;
-      attrs['csCode'] = curBUnit.attr.Code ;
-      attrs['ciCode'] = curBUnit.attr.CODE ;
-      attrs['property'] = curBUnit.childNamed('property').val;
-      attrs['variable'] = curBUnit.attr.dim ;
-      attrs['printSymbol'] = curBUnit.childNamed('printSymbol').val;
-      attrs['dimension'] = b ;
+      attrs['isBase_'] = true ;
+      attrs['name_'] = curBUnit.childNamed('name').val ;
+      attrs['csCode_'] = curBUnit.attr.Code ;
+      attrs['ciCode_'] = curBUnit.attr.CODE ;
+      attrs['property_'] = curBUnit.childNamed('property').val;
+      attrs['variable_'] = curBUnit.attr.dim ;
+      attrs['printSymbol_'] = curBUnit.childNamed('printSymbol').val;
+      attrs['dim_'] = b ;
       let newUnit = new Un.Unit(attrs);
       utab.addUnit(newUnit) ;
     }
@@ -172,60 +170,60 @@ export class UcumXmlDocument {
     for (let a = 0; a < alen; a++) {
       let curUA = unitAtoms[a];
       let attrs = {};
-      attrs['isBase'] = false;
-      attrs['name'] = curUA.childNamed('name').val;
-      attrs['csCode'] = curUA.attr.Code;
-      attrs['ciCode'] = curUA.attr.CODE;
-      attrs['property'] = curUA.childNamed('property').val;
+      attrs['isBase_'] = false;
+      attrs['name_'] = curUA.childNamed('name').val;
+      attrs['csCode_'] = curUA.attr.Code;
+      attrs['ciCode_'] = curUA.attr.CODE;
+      attrs['property_'] = curUA.childNamed('property').val;
       if (curUA.childNamed('printSymbol')) {
-        attrs['printSymbol'] = curUA.childNamed('printSymbol').val;
+        attrs['printSymbol_'] = curUA.childNamed('printSymbol').val;
       }
       if (curUA.attr.isMetric === "yes")
-        attrs['isMetric'] = true ;
+        attrs['isMetric_'] = true ;
       else
-        attrs['isMetric'] = false ;
+        attrs['isMetric_'] = false ;
       if (curUA.attr.isArbitrary)
-        attrs['isArbitrary'] = true ;
+        attrs['isArbitrary_'] = true ;
       else
-        attrs['isArbitrary'] = false ;
+        attrs['isArbitrary_'] = false ;
       if (curUA.attr.class) {
-        attrs['class'] = curUA.attr.class;
+        attrs['class_'] = curUA.attr.class;
       }
       let valNode = curUA.childNamed('value');
 
       // Process special units
       let parseBaseString = true ;
       if (curUA.attr.isSpecial) {
-        attrs['isSpecial'] = curUA.attr.isSpecial === "yes";
+        attrs['isSpecial_'] = curUA.attr.isSpecial === "yes";
         let funcNode = valNode.childNamed('function');
-        attrs['cnv'] = funcNode.attr.name;
-        attrs['csBaseUnit'] = funcNode.attr.Unit;
-        if (attrs['csBaseUnit'] === '1') {
-          attrs['baseFactor'] = 1 ;
+        attrs['cnv_'] = funcNode.attr.name;
+        attrs['csBaseUnit_'] = funcNode.attr.Unit;
+        if (attrs['csBaseUnit_'] === '1') {
+          attrs['baseFactor_'] = 1 ;
           parseBaseString = false ;
         }
         else {
-          let slashPos = attrs['csBaseUnit'].indexOf('/');
+          let slashPos = attrs['csBaseUnit_'].indexOf('/');
           let ar = [];
 
           // base unit = K/9 or K/4 or mol/1 or m2/s4/Hz
           if (slashPos >= 0) {
-            ar = attrs['csBaseUnit'].split('/');
+            ar = attrs['csBaseUnit_'].split('/');
           }
           // base unit = K/9 or K/4 or mol/1
           if ((slashPos >= 0) && (ar.length === 2)) {
-            attrs['csBaseUnit'] = ar[0];
-            attrs['baseFactor'] =
+            attrs['csBaseUnit_'] = ar[0];
+            attrs['baseFactor_'] =
                   parseInt(funcNode.attr.value + '/' + ar[1]);
           }
           // base unit = 10*-5.Pa
-          else if (attrs['csCode'] === 'B[SPL]') {
-            attrs['baseFactor'] =  Math.pow(10, -5) * 2 ;
-            attrs['csBaseUnit'] = "Pa" ;
+          else if (attrs['csCode_'] === 'B[SPL]') {
+            attrs['baseFactor_'] =  Math.pow(10, -5) * 2 ;
+            attrs['csBaseUnit_'] = "Pa" ;
           }
           // base unit = m1/s4/Hz, K, deg, V, mV, uV, nV, W, kW
           else {
-            attrs['baseFactor'] = funcNode.attr.value;
+            attrs['baseFactor_'] = funcNode.attr.value;
           }
         } // end if the base unit is not 1
       } // end if the unit is special
@@ -235,18 +233,18 @@ export class UcumXmlDocument {
         // unit based on other units, e.g., rad2 (radian squared) to define
         // a steradian unit.  It's not necessarily a proper base unit, although
         // it ultimately builds on base units.
-        attrs['csBaseUnit'] = valNode.attr.Unit;
-        attrs['ciBaseUnit'] = valNode.attr.UNIT;
+        attrs['csBaseUnit_'] = valNode.attr.Unit;
+        attrs['ciBaseUnit_'] = valNode.attr.UNIT;
 
         // what I'm calling the factor here (string and number versions)
         // is the magnitude used in conjunction with the base unit to define
         // the new unit, e.g., 3 for a yard that is based in the definition
         // of feet.
-        attrs['baseFactorStr'] = valNode.attr.value;
-        if (attrs['csCode'] === '[pi]')
-          attrs['baseFactor'] = parseFloat(attrs['baseFactorStr']);
+        attrs['baseFactorStr_'] = valNode.attr.value;
+        if (attrs['csCode_'] === '[pi]')
+          attrs['baseFactor_'] = parseFloat(attrs['baseFactorStr_']);
         else
-          attrs['baseFactor'] = valNode.val;
+          attrs['baseFactor_'] = valNode.val;
       } // end if this is not a special unit
 
       // Arbitrary units are defined in the UCUM spec as "not of any
@@ -257,101 +255,110 @@ export class UcumXmlDocument {
       // base unit is the "international unit" with a code of [iU],
       // which is also an arbitrary unit - with a base unit of 1.
       // So I am assuming [IU] is just another code for the same unit.
-      if (attrs['isArbitrary'] === true) {
-        attrs['magnitude'] = 1;
-        attrs['dimension'] = null;
+      if (attrs['isArbitrary_'] === true) {
+        attrs['magnitude_'] = 1;
+        attrs['dim_'] = null;
       }
 
       // units with class = "dimless" don't have dimension arrays.
       // They're things like the number pi or the number 10 or percent.
       // Haven't figured out how to handle them yet.
-      else if (attrs['class'] === 'dimless' ||
-               attrs['csCode'] === 'mol') {
-        attrs['dimension'] = null ;
+      else if (attrs['class_'] === 'dimless' ||
+               attrs['csCode_'] === 'mol') {
+        attrs['dim_'] = null ;
         // figure the magnitude based on the base unit
         // if it's 1, the magnitude is the value specified for
         // the base factor, e.g., 3.141592653589793238462 ... for pi
-        if (attrs['csBaseUnit'] === '1') {
-          attrs['magnitude'] = attrs['baseFactor'];
+        if (attrs['csBaseUnit_'] === '1') {
+          attrs['magnitude_'] = attrs['baseFactor_'];
         }
         // else if the base unit starts with 10*, the magnitude is
         // 10 to the power specified following 10* e.g., unit = 10*-2
         // for the "%" unit.  Except for the mole, which is that
         // multiplied by the base factor, which in this case (only,
         // I think) is not 1.
-        else if (attrs['csBaseUnit'].substr(0,3) == "10*") {
-          let exp = parseInt(attrs['csBaseUnit'].substr(3));
-          attrs['magnitude'] = Math.pow(10, exp) ;
-          if (attrs['baseFactor'] !== '1') {
-            attrs['magnitude'] *= attrs['baseFactor'];
+        else if (attrs['csBaseUnit_'].substr(0,3) == "10*") {
+          let exp = parseInt(attrs['csBaseUnit_'].substr(3));
+          attrs['magnitude_'] = Math.pow(10, exp) ;
+          if (attrs['baseFactor_'] !== '1') {
+            attrs['magnitude_'] *= attrs['baseFactor_'];
           }
         }
         // else I don't know what it is.
         else {
           attrs['defError_'] = true ;
           console.log('unexpected dimless unit definition, unit code ' +
-                      'is ' + attrs['csCode']) ;
+                      'is ' + attrs['csCode_']) ;
         }
       } // end if this is a unit with class = dimless
 
       // Handle carat of gold alloys - which doesn't get a dimension
       //
-      else if (attrs['csCode'] === "[car_Au]") {
-        attrs['magnitude'] = 1/24
+      else if (attrs['csCode_'] === "[car_Au]") {
+        attrs['magnitude_'] = 1/24
+      }
+      // units with magnitude defined by 1 x 10 and a <sup> node for
+      // the exponent.  Not quite sure how I want to do those yet.
+      else if (valNode.childNamed('sup')){
+        parseBaseString = false ;
+        attrs['defError_'] = true ;
+        console.log('unit definition error; code = ' + attrs['csCode_']);
       }
       else {
 
         // Make sure there's a unit string to base the new unit on.  There
         // should be, but I'm just checking here to make sure.
-        if (attrs['csBaseUnit'] && attrs['csBaseUnit'] !== '1') {
+        if (attrs['csBaseUnit_'] && attrs['csBaseUnit_'] !== '1') {
 
           // Handle some special cases
           // 1. the Oersted unit, whose string is /[pi].A/m and whose
           //    value is 250.  Set the baseFactor to 250/[pi] and
           //    the unit string to A/m
-          if (attrs['csCode'] === 'Oe') {
-            attrs['baseFactor'] = 250/Math.PI ;
-            attrs['csBaseUnit'] = "A/m"
+          if (attrs['csCode_'] === 'Oe') {
+            attrs['baseFactor_'] = 250/Math.PI ;
+            attrs['csBaseUnit_'] = "A/m"
           }
           // 2.  Strings that start with '/'.  Set the function to
           //     the inverse function and trim the '/' off the front
           //     of the string.
-          else if (attrs['csBaseUnit'][0] === '/') {
-            attrs['cnv'] = 'inv' ;
-            attrs['csBaseUnit'] = attrs['csBaseUnit'].substr(1) ;
+          else if (attrs['csBaseUnit_'][0] === '/') {
+            attrs['cnv_'] = 'inv' ;
+            attrs['csBaseUnit_'] = attrs['csBaseUnit_'].substr(1) ;
           }
           // 3.  the Svedberg unit, whose string is 10*-13.s.  Set the
           //     base factor to 10*-13 and the unit string to s.
-          else if (attrs['csCode'] === '[S]') {
-            attrs['baseFactor'] = Math.pow(10, -13);
-            attrs['csBaseUnit'] = 's';
+          else if (attrs['csCode_'] === '[S]') {
+            attrs['baseFactor_'] = Math.pow(10, -13);
+            attrs['csBaseUnit_'] = 's';
           }
-          else if (attrs['csCode'] === '[mu_0]') {
-            attrs['baseFactor'] = 4 * Math.PI * Math.pow(10, -7);
-            attrs['csBaseUnit'] = 'N/A2';
+          else if (attrs['csCode_'] === '[mu_0]') {
+            attrs['baseFactor_'] = 4 * Math.PI * Math.pow(10, -7);
+            attrs['csBaseUnit_'] = 'N/A2';
           }
           // The unit string parser will use the unit(s) named in the
           // string to create a new unit with the appropriate dimension
           // object and magnitude before it's multiplied by the one
           // specified in the input node.
-          let ret = uStrParser.parseString(attrs['csBaseUnit']);
+          let ret = uStrParser.parseString(attrs['csBaseUnit_']);
 
           // Get the dimension object and magnitude (and adjust by
           // specified magnitude factor) from the unit created and
           // assign them to the attributes we'll use to create the
           // unit for this listing.
           if (ret) {
-            attrs['dimension'] = ret.getProperty('dim');
-            let newMag = ret.getProperty('magnitude');
-            newMag *= attrs['baseFactor'];
-            attrs['magnitude'] = newMag ;
+            attrs['dim_'] = ret.getProperty('dim_');
+            console.log('writing dim to ' + attrs['csCode_'] +
+                        '; dim = ' + attrs['dim_']);
+            let newMag = ret.getProperty('magnitude_');
+            newMag *= attrs['baseFactor_'];
+            attrs['magnitude_'] = newMag ;
           }
           // if there's no unit string, report an error
           else {
             attrs['defError_'] = true ;
-            console.log('unit definition error; code = ' + attrs['csCode']);
-            attrs['dimension'] = null;
-            attrs['magnitude'] = null;
+            console.log('unit definition error; code = ' + attrs['csCode_']);
+            attrs['dim_'] = null;
+            attrs['magnitude_'] = null;
           }
         } // end if there is a base string to parse
       } // end if this is not a dimless unit
@@ -367,6 +374,7 @@ export class UcumXmlDocument {
     // for now, create a list of the units created and save it to a file
     // for debugging.  This is a temporary file.
     let uList = utab.printUnits();
+    console.log('about to write UnitsList.txt');
     fs.writeFileSync('/home/lmericle/ucum/test/UnitsList.txt', uList,
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
     } // end for a => - to alen
@@ -390,10 +398,8 @@ export class UcumXmlDocument {
     let defsHash = { 'prefixes' : pfxArray,
                      'units' : uArray}
 
-    jsonfile.writeFileSync(jsonFile_, defsHash,
+    jsonfile.writeFileSync('../dist/data/ucumDefs.json', defsHash,
                           {encoding: 'utf8', mode: 0o666, flag: 'w'});
-    //fs.writeFileSync('/home/lmericle/ucum/test/UnitsList.txt', uList,
-    //    {encoding: 'utf8', mode: 0o666, flag: 'w'} );
   } // end writeJsonFile
 
 
