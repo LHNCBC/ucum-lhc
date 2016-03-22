@@ -16,11 +16,16 @@ export class Prefix {
   /**
    * Creates a single prefix object.
    *
-   * @param code the code used for the prefix, e.g., k for kilo
-   * @param name the name of the prefix, e.g., kilo
-   * @param value the value to use in multiplying the magnitude of an object,
-   *  e.g., for a prefix of c the value will be .01.  Will be stored as
-   *  a float.
+   * @param attrs a hash of the values to use in creating the prefix object.
+   *  They should be:
+   *   code_ - which is the code used for the prefix, e.g., k for kilo
+   *   name_ - which is the name of the prefix, e.g., kilo
+   *   value_ - which is teh value to use in multiplying the magnitude of
+   *    a unit, e.g., for a prefix of c the value will be .01.
+   *   exp_ - which is the exponent used to get the value. For decimal based
+   *    prefixes the base is 10 and the exp_ is applied to 10, e.g., for a
+   *    prefix of c, the exponent will be -2.  For prefixes that are not
+   *    decimal based, this will be null (but must not be undefined).
    *
    * @throws an error if the not all required parameters are provided
    */
