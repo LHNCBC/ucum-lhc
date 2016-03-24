@@ -4,7 +4,6 @@
  * @author Lee Mericle
  *
  */
-
 var Ucum = require('./config.js');
 var Defs = require('./ucumJsonDefs.js') ;
 var PfxT = require("./prefixTables.js");
@@ -22,10 +21,12 @@ export class UcumLhcUtils {
    */
   constructor() {
 
+    console.log('in UcumLhcUtils constructor');
+
     // Load the prefix and unit objects
     let uDefs = Defs.UcumJsonDefs.getInstance();
     uDefs.loadJsonDefs() ;
-
+    console.log('just loaded defs');
     // Make this a singleton.  See UnitTables constructor for details.
 
     let holdThis = UcumLhcUtils.prototype;
@@ -82,6 +83,7 @@ export class UcumLhcUtils {
    * Print a list of the units
    */
   printUnits() {
+    console.log('in ucumLhcUtils.printUnits');
     // for now, create a list of the units created and save it to a file
     // for debugging.  This is a temporary file.
     let utab = Utab.UnitTables.getInstance();
@@ -108,4 +110,3 @@ export class UcumLhcUtils {
 UcumLhcUtils.getInstance = function(){
   return new UcumLhcUtils();
 }
-

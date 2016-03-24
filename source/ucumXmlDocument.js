@@ -14,7 +14,7 @@ var Us = require("./unitString.js");
 var Utab = require('./unitTables.js');
 var jsonfile = require('jsonfile');
 
-var xmldoc = require('../../node_modules/xmldoc/lib/xmldoc');
+var xmldoc = require('../node_modules/xmldoc/lib/xmldoc.js');
 var fs = require('fs');
 var path = require('path');
 
