@@ -17,7 +17,7 @@ var util = require('util');
 var fs = require('fs');
 var path = require('path');
 
-// requiring the file willtake care of opening it for use
+// requiring the file will take care of opening it for use
 var jsonDefs_ = require('../dist/data/ucumDefs.json');
 
 export class UcumJsonDefs {

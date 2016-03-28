@@ -87,11 +87,10 @@ export class UcumLhcUtils {
     // call Unit.convertFrom on it
     let toMag = toUnit.convertFrom(fromMag, fromUnit);
 
+    // put result on page
     let resultString = document.getElementById("resultString");
     resultString.innerHTML = fromMag.toString() + " " + fromName + " units = " +
         toMag.toString() + " " + toName + " units"
-
-    // put result on page
 
   } // end convertUnit
 
@@ -119,7 +118,7 @@ export class UcumLhcUtils {
    * Print a list of the units
    */
   printUnits() {
-    console.log('in ucumLhcUtils.printUnits');
+
     // for now, create a list of the units created and save it to a file
     // for debugging.  This is a temporary file.
     let utab = Utab.UnitTables.getInstance();
