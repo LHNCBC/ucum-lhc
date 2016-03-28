@@ -126,4 +126,8 @@ PrefixTables.getInstance = function(){
   return new PrefixTables();
 }
 
+// Perform the first request for the tables object, to get the
+// getInstance method set.
+PrefixTables.getInstance();
+
 

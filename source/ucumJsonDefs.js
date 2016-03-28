@@ -17,6 +17,7 @@ var util = require('util');
 var fs = require('fs');
 var path = require('path');
 
+// requiring the file willtake care of opening it for use
 var jsonDefs_ = require('../dist/data/ucumDefs.json');
 
 export class UcumJsonDefs {
@@ -27,17 +28,6 @@ export class UcumJsonDefs {
    *
    */
   constructor() {
-    console.log('in UcumJsonDefs constructor, about to read file');
-
-    // Read the JSON file into a string
-    //this.jsonDefs_  = jsonfile.readFileSync('../dist/data/ucumDefs.json') ;
-                                  //{encoding: 'utf8', mode: 0o666, flag: 'r'});
-    console.log('just read file - well, not really');
-    // Parse the definitions string into an object containing two elements.
-    // One element will be the prefixes, where the key is "prefixes" and the
-    // value is an array of prefix objects.  The other will be the units,
-    // with the key = "units" and the value the array of unit objects.
-    //this.jsonDefs_ = JSON.parse(defsString) ;
 
     // Make this a singleton.  See UnitTables constructor for details.
 

@@ -7,10 +7,13 @@
 var Ucum = require('./config.js');
 var Defs = require('./ucumJsonDefs.js') ;
 var PfxT = require("./prefixTables.js");
-var Utab = require('./unitTables.js');
+var UnitTables = require('./unitTables.js').UnitTables;
+var Unit = require('./unit.js').Unit;
+var Fx = require('./functions.js');
 var fs = require('fs');
 var path = require('path');
 
+//var utilsInstance = null;
 
 export class UcumLhcUtils {
 
@@ -21,20 +24,26 @@ export class UcumLhcUtils {
    */
   constructor() {
 
-    console.log('in UcumLhcUtils constructor');
+      console.log('in UcumLhcUtils constructor');
+      if (UnitTables.getInstance().unitsCount() === 0) {
 
-    // Load the prefix and unit objects
-    let uDefs = Defs.UcumJsonDefs.getInstance();
-    uDefs.loadJsonDefs() ;
-    console.log('just loaded defs');
-    // Make this a singleton.  See UnitTables constructor for details.
+        // Load the prefix and unit objects
+        let uDefs = Defs.UcumJsonDefs.getInstance();
+        uDefs.loadJsonDefs();
+        console.log('just loaded defs');
+      }
+      // Make this a singleton.  See UnitTables constructor for details.
 
-    let holdThis = UcumLhcUtils.prototype;
-    UcumLhcUtils = function(){throw 'UcumLhcUtils is a Singleton. ' +
-                                    'Use UcumLhcUtils.getInstance() instead.'};
-    if (exports)
-      exports.UcumLhcUtils = UcumLhcUtils;
-    UcumLhcUtils.prototype = holdThis;
+      let holdThis = UcumLhcUtils.prototype;
+      UcumLhcUtils = function () {
+        throw 'UcumLhcUtils is a Singleton. ' +
+        'Use UcumLhcUtils.getInstance() instead.'
+      };
+      if (exports)
+        exports.UcumLhcUtils = UcumLhcUtils;
+      UcumLhcUtils.prototype = holdThis;
+
+
     let self = this ;
     UcumLhcUtils.getInstance = function(){return self} ;
 
@@ -56,9 +65,36 @@ export class UcumLhcUtils {
    * This method converts one unit to another
    *
    */
+
   convertUnit() {
 
+    let fromName = document.getElementById("convertFrom").value ;
+    // I am using parseFloat here because using parseInt cuts down 12.2222222 ...
+    let fromMag = parseFloat(document.getElementById("convertNum").value);
+    let toName = document.getElementById("convertTo").value;
+    // create a from unit
+    let utab = UnitTables.getInstance();
+    let fromUnit = utab.getUnitByName(fromName) ;
+    if (fromUnit === null || !(fromUnit instanceof Unit)) {
+      console.log('error getting fromUnit');
+    }
+    let toUnit = utab.getUnitByName(toName) ;
+    if (toUnit === null || !(toUnit instanceof Unit)) {
+      console.log('error getting toUnit');
+    }
+
+
+    // call Unit.convertFrom on it
+    let toMag = toUnit.convertFrom(fromMag, fromUnit);
+
+    let resultString = document.getElementById("resultString");
+    resultString.innerHTML = fromMag.toString() + " " + fromName + " units = " +
+        toMag.toString() + " " + toName + " units"
+
+    // put result on page
+
   } // end convertUnit
+
 
   /**
    *  This provides a list of all unit codes.  The list is either case
@@ -110,3 +146,7 @@ export class UcumLhcUtils {
 UcumLhcUtils.getInstance = function(){
   return new UcumLhcUtils();
 }
+
+// Perform the first request for the utils object, to get the
+// getInstance method set.
+UcumLhcUtils.getInstance();

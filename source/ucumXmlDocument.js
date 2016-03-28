@@ -347,8 +347,6 @@ export class UcumXmlDocument {
           // unit for this listing.
           if (ret) {
             attrs['dim_'] = ret.getProperty('dim_');
-            console.log('writing dim to ' + attrs['csCode_'] +
-                        '; dim = ' + attrs['dim_']);
             let newMag = ret.getProperty('magnitude_');
             newMag *= attrs['baseFactor_'];
             attrs['magnitude_'] = newMag ;
@@ -374,7 +372,6 @@ export class UcumXmlDocument {
     // for now, create a list of the units created and save it to a file
     // for debugging.  This is a temporary file.
     let uList = utab.printUnits();
-    console.log('about to write UnitsList.txt');
     fs.writeFileSync('/home/lmericle/ucum/test/UnitsList.txt', uList,
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
     } // end for a => - to alen
