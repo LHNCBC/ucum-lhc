@@ -14,9 +14,11 @@ var Utab = require('./unitTables.js');
 
 var jsonfile = require('jsonfile');
 var util = require('util');
-//var fs = require('fs');
-//var path = require('path');
+var fs = require('fs');
+var path = require('path');
 
+// requiring the file will take care of opening it for use
+var jsonDefs_ = require('../dist/data/ucumDefs.json');
 
 export class UcumJsonDefs {
 
@@ -26,16 +28,6 @@ export class UcumJsonDefs {
    *
    */
   constructor() {
-
-    // Read the JSON file into a string
-    this.jsonDefs_  = jsonfile.readFileSync('../dist/data/ucumDefs.json') ;
-                                  //{encoding: 'utf8', mode: 0o666, flag: 'r'});
-
-    // Parse the definitions string into an object containing two elements.
-    // One element will be the prefixes, where the key is "prefixes" and the
-    // value is an array of prefix objects.  The other will be the units,
-    // with the key = "units" and the value the array of unit objects.
-    //this.jsonDefs_ = JSON.parse(defsString) ;
 
     // Make this a singleton.  See UnitTables constructor for details.
 
@@ -60,7 +52,7 @@ export class UcumJsonDefs {
   loadJsonDefs() {
 
     let pTab = PfxT.PrefixTables.getInstance() ;
-    let prefixes = this.jsonDefs_["prefixes"];
+    let prefixes = jsonDefs_["prefixes"];
     let plen = prefixes.length ;
 
     for (let p = 0; p < plen; p++) {
@@ -69,7 +61,7 @@ export class UcumJsonDefs {
     }
 
     let uTab = Utab.UnitTables.getInstance();
-    let units = this.jsonDefs_["units"];
+    let units = jsonDefs_["units"];
     let ulen = units.length ;
 
     for (let u = 0; u < ulen; u++) {

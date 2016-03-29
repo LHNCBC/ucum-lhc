@@ -187,14 +187,50 @@ export class UnitTables {
    *  will be an array of one, but there may be more, since unit names are
    *  not necessarily unique.
    *
-   *  @param name the name of the unit to be returned
-   *  @returns the unit object or null if it is not found
+   *  @param name the name of the unit to be returned.  If more than one
+   *  unit has the same name, append the csCode of the unit you want to
+   *  the end of the name, enclosed in parentheses, e.g., inch ([in_i]) vs.
+   *  inch ([in_us]).
+   *  @returns null if no unit was found for the specified name OR an array of
+   *  unit objects with the specified name.  Normally this will be an array
+   *  of one object.
    */
   getUnitByName(uName) {
+
     let retUnit = null ;
     if (uName) {
-      retUnit = this.unitNames_[uName] ;
-    }
+      let unitsArray = this.unitNames_[uName] ;
+      if (unitsArray !== undefined && unitsArray !== null) {
+        retUnit = unitsArray;
+      }
+      // Else we didn't find an entry with the specified name.  That should be
+      // because the name has a code in parentheses after it.  Separate the
+      // name and the code and try again.
+      else {
+        let parenPos = uName.indexOf('(');
+        if (parenPos < 1) {
+          console.log('error on finding unit by name with name = ' +
+                      uName + ' and no parentheses (or paren at the start');
+        }
+        else {
+          let dupName = uName.substring(0, parenPos - 1);
+          let nameCode = uName.substring(parenPos + 1, uName.length - 1);
+          unitsArray = this.unitNames_[dupName] ;
+          if (unitsArray.length < 2)
+            console.log('error on finding unit by name with name = ' + uName);
+          else {
+            let u = 0;
+            let aLen = unitsArray.length;
+            for (; unitsArray[u].csCode_ !== nameCode && u < aLen; u++);
+            if (u < aLen)
+              retUnit = unitsArray;
+            else
+              console.log('error on finding unit by name with dupName = ' +
+                  dupName + '; nameCode = ' + nameCode);
+          }
+        } // end if we found parentheses in the name
+      } // end if we didn't find anything with the original name passed in
+    } // end if a name was passed in
     return retUnit ;
   }
 
@@ -222,6 +258,35 @@ export class UnitTables {
   getAllUnitNames() {
     return Object.keys(this.unitNames_);
   } // end getAllUnitNames
+
+
+  /**
+   * Gets a list of all unit names in the tables.  Where more than one
+   * unit has the same name, the unit code, in parentheses, is appended
+   * to the end of the name.
+   *
+   * @returns {Array}
+   */
+  getUnitNamesList() {
+    let nameList = [];
+    let keys = this.getAllUnitNames();
+    keys.sort() ;
+    let uLen = keys.length;
+    for (let i = 0, n = 0; i < uLen; i++, n++) {
+      let curKeyAry = this.unitNames_[keys[i]];
+      if (curKeyAry.length === 1)
+        nameList[n] = keys[i];
+      else {
+        let kLen = curKeyAry.length ;
+        for (let k = 0; k < kLen; k++) {
+          nameList[n++] = keys[i] + ' (' +
+              curKeyAry[k].csCode_ + ')';
+        }
+        n -= 1;
+      } // end for names with multiple codes
+    } // end do for each name
+    return nameList ;
+  }
 
 
   /**
@@ -304,4 +369,8 @@ export class UnitTables {
  */
 UnitTables.getInstance = function(){
   return new UnitTables();
-}
+} ;
+
+// Perform the first request for the tables object, to get the
+// getInstance method set.
+UnitTables.getInstance();
