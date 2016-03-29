@@ -187,8 +187,15 @@ export class UnitTables {
    *  will be an array of one, but there may be more, since unit names are
    *  not necessarily unique.
    *
-   *  @param name the name of the unit to be returned
-   *  @returns the unit object or null if it is not found
+   *  @param name the name of the unit to be returned.  If more than one
+   *  unit has the same name, append the csCode of the unit you want to
+   *  the end of the name, enclosed in parentheses, e.g., inch ([in_i]) vs.
+   *  inch ([in_us]).
+   *  @returns null if no unit was found for the specified name OR the unit
+   *  object for the specified name OR an array of unit objects with the
+   *  specified name, where the specific object wanted couldn't be determined
+   *  because no unit code was included and the name is shared by multiple
+   *  units (see the name parameter description).
    */
   getUnitByName(uName) {
 
@@ -196,7 +203,8 @@ export class UnitTables {
     if (uName) {
       let unitsArray = this.unitNames_[uName] ;
       if (unitsArray !== undefined && unitsArray !== null) {
-        // if we got one unit back (oh happy day) set retunit to that and be
+
+        // if we got one unit back (oh happy day) set retUnit to that and be
         // done with it.  This should be the majority of cases.
         if (unitsArray.length === 1) {
           retUnit = unitsArray[0];
@@ -267,7 +275,7 @@ export class UnitTables {
 
   /**
    * Gets a list of all unit names in the tables.  Where more than one
-   * unit has them same name, The unit code, in parentheses, is appended
+   * unit has the same name, the unit code, in parentheses, is appended
    * to the end of the name.
    *
    * @returns {Array}

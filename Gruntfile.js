@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             }]
           ],
           browserifyOptions: {
-            standalone: "zzz"
+            standalone: "ucumPkg"
           }
         },
         files: {
