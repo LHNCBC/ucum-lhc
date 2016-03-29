@@ -35,5 +35,5 @@
     "url": "ssh://git@git-scm.nlm.nih.gov:7999/lfor/ucum.git"
   },
   "author": "Lee Mericle",
-  "license": "ISC"
+  "license": "See LICENSE.md"
 }
