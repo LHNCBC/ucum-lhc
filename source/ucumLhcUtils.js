@@ -74,15 +74,23 @@ export class UcumLhcUtils {
     let toName = document.getElementById("convertTo").value;
     // create a from unit
     let utab = UnitTables.getInstance();
-    let fromUnit = utab.getUnitByName(fromName) ;
-    if (fromUnit === null || !(fromUnit instanceof Unit)) {
-      console.log('error getting fromUnit');
+    let fromUnit = null ;
+    let fromUnitAry = utab.getUnitByName(fromName) ;
+    if (fromUnitAry === null || fromUnitAry.length > 1 ||
+        fromUnitAry.length === 0) {
+      console.log('error getting fromUnit from list');
     }
-    let toUnit = utab.getUnitByName(toName) ;
-    if (toUnit === null || !(toUnit instanceof Unit)) {
+    else {
+      fromUnit = fromUnitAry[0];
+    }
+    let toUnit = null ;
+    let toUnitAry = utab.getUnitByName(toName) ;
+    if (toUnitAry === null || toUnitAry.length > 1 || toUnitAry.length === 0) {
       console.log('error getting toUnit');
     }
-
+    else {
+      toUnit = toUnitAry[0];
+    }
 
     // call Unit.convertFrom on it
     let toMag = toUnit.convertFrom(fromMag, fromUnit);
