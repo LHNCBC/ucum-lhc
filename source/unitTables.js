@@ -191,11 +191,9 @@ export class UnitTables {
    *  unit has the same name, append the csCode of the unit you want to
    *  the end of the name, enclosed in parentheses, e.g., inch ([in_i]) vs.
    *  inch ([in_us]).
-   *  @returns null if no unit was found for the specified name OR the unit
-   *  object for the specified name OR an array of unit objects with the
-   *  specified name, where the specific object wanted couldn't be determined
-   *  because no unit code was included and the name is shared by multiple
-   *  units (see the name parameter description).
+   *  @returns null if no unit was found for the specified name OR an array of
+   *  unit objects with the specified name.  Normally this will be an array
+   *  of one object.
    */
   getUnitByName(uName) {
 
@@ -203,18 +201,7 @@ export class UnitTables {
     if (uName) {
       let unitsArray = this.unitNames_[uName] ;
       if (unitsArray !== undefined && unitsArray !== null) {
-
-        // if we got one unit back (oh happy day) set retUnit to that and be
-        // done with it.  This should be the majority of cases.
-        if (unitsArray.length === 1) {
-          retUnit = unitsArray[0];
-        }
-        // Else we got more than one back, and don't have a code value to
-        // figure out which one we want.  Set retUnit to the array and let
-        // the caller figure it out.
-        else {
-          retUnit = unitsArray;
-        }
+        retUnit = unitsArray;
       }
       // Else we didn't find an entry with the specified name.  That should be
       // because the name has a code in parentheses after it.  Separate the
@@ -236,7 +223,7 @@ export class UnitTables {
             let aLen = unitsArray.length;
             for (; unitsArray[u].csCode_ !== nameCode && u < aLen; u++);
             if (u < aLen)
-              retUnit = unitsArray[u];
+              retUnit = unitsArray;
             else
               console.log('error on finding unit by name with dupName = ' +
                   dupName + '; nameCode = ' + nameCode);

@@ -1,17 +1,12 @@
 /**
- * This runs the code that reads in the JSON definitions file
- * and provides access to the data.
- *
- * Babel is used to translate this to ECMA 5 code, i.e.,
- * babel testXmlDoc.js --out-file testJsonDoc5.js
- *
- * Then un from the command line, i.e., node testXmlDoc5.js
+ * This is the code entry point for the demo web page.  It coordinates the
+ * loading of the prefix and unit objects from the json definitions file and
+ * populating the autocompleter unit lists.
  */
 
 export var UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
 export var UnitTables = require("./unitTables.js").UnitTables;
-var pfx = require("./prefix.js");
-var unit = require("./unit.js");
+
 
 export function startup () {
   var utils = UcumLhcUtils.getInstance();
