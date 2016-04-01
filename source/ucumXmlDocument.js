@@ -14,7 +14,8 @@ var Us = require("./unitString.js");
 var Utab = require('./unitTables.js');
 var jsonfile = require('jsonfile');
 
-var xmldoc = require('../node_modules/xmldoc/lib/xmldoc.js');
+//var xmldoc = require('../node_modules/xmldoc/lib/xmldoc.js');
+var xmldoc = require('xmldoc');
 var fs = require('fs');
 var path = require('path');
 
@@ -176,7 +177,22 @@ export class UcumXmlDocument {
       attrs['ciCode_'] = curUA.attr.CODE;
       attrs['property_'] = curUA.childNamed('property').val;
       if (curUA.childNamed('printSymbol')) {
-        attrs['printSymbol_'] = curUA.childNamed('printSymbol').val;
+        let sym = curUA.childNamed('printSymbol') ;
+        let symVal = sym.val;
+        symVal = symVal.replace(/\n/g, "");
+        symVal = symVal.trim();
+        let symI = sym.childNamed('i');
+        if (symI)
+          //symVal = '<i>' + symI.val + '</>';
+          symVal = symI.toString({compressed:true});
+        let sub = sym.childNamed('sub');
+        let sup = sym.childNamed('sup');
+        if (sub)
+          symVal += sub.toString({compressed:true});
+        if (sup)
+          symVal += sup.toString({compressed:true});
+
+        attrs['printSymbol_'] = symVal;
       }
       if (curUA.attr.isMetric === "yes")
         attrs['isMetric_'] = true ;
@@ -202,19 +218,21 @@ export class UcumXmlDocument {
           attrs['baseFactor_'] = 1 ;
           parseBaseString = false ;
         }
+        else if (attrs['csCode_'] === '[pH]') {
+          attrs['baseFactor_'] = funcNode.attr.value ;
+        }
         else {
           let slashPos = attrs['csBaseUnit_'].indexOf('/');
           let ar = [];
 
-          // base unit = K/9 or K/4 or mol/1 or m2/s4/Hz
+          // base unit = K/9 or K/4 or m2/s4/Hz
           if (slashPos >= 0) {
             ar = attrs['csBaseUnit_'].split('/');
           }
-          // base unit = K/9 or K/4 or mol/1
+          // base unit = K/9 or K/4
           if ((slashPos >= 0) && (ar.length === 2)) {
             attrs['csBaseUnit_'] = ar[0];
-            attrs['baseFactor_'] =
-                  parseInt(funcNode.attr.value + '/' + ar[1]);
+            attrs['baseFactor_'] = parseFloat(funcNode.attr.value/ar[1]);
           }
           // base unit = 10*-5.Pa
           else if (attrs['csCode_'] === 'B[SPL]') {
@@ -240,11 +258,16 @@ export class UcumXmlDocument {
         // is the magnitude used in conjunction with the base unit to define
         // the new unit, e.g., 3 for a yard that is based in the definition
         // of feet.
+
         attrs['baseFactorStr_'] = valNode.attr.value;
         if (attrs['csCode_'] === '[pi]')
           attrs['baseFactor_'] = parseFloat(attrs['baseFactorStr_']);
-        else
+        else if (valNode.childNamed('sup')) {
+          attrs['baseFactor_'] = parseFloat(valNode.attr.value) ;
+        }
+        else {
           attrs['baseFactor_'] = valNode.val;
+        }
       } // end if this is not a special unit
 
       // Arbitrary units are defined in the UCUM spec as "not of any
@@ -296,13 +319,6 @@ export class UcumXmlDocument {
       //
       else if (attrs['csCode_'] === "[car_Au]") {
         attrs['magnitude_'] = 1/24
-      }
-      // units with magnitude defined by 1 x 10 and a <sup> node for
-      // the exponent.  Not quite sure how I want to do those yet.
-      else if (valNode.childNamed('sup')){
-        parseBaseString = false ;
-        attrs['defError_'] = true ;
-        console.log('unit definition error; code = ' + attrs['csCode_']);
       }
       else {
 

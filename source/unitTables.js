@@ -325,29 +325,67 @@ export class UnitTables {
    *
    * @returns {string} buffer containing all the listings
    */
-  printUnits() {
+  printUnits(doLong) {
+    if (doLong === undefined)
+      doLong = false ;
     let codeList = '';
     let uLen = this.codeOrder_.length ;
+    let unitString = 'csCode; ' ;
+    if (doLong) {
+      unitString += 'ciCode; ' ;
+    }
+    unitString += 'name; ' ;
+    if (doLong)
+      unitString += 'isBase; ' ;
+    unitString += 'magnitude; dimension; from unit(s); value; function; ' ;
+    if (doLong)
+      unitString += 'property; printSymbol; class; isMetric; variable; ' +
+                    'isSpecial; isAbitrary; '
+    unitString += 'comment'
+    codeList = unitString + '\n' ;
+
     for (let u = 0; u < uLen; u++) {
       let curUnit = this.getUnitByCode(this.codeOrder_[u]);
-      let unitString = this.codeOrder_[u] + '; ' +
-                       curUnit.getProperty('name') +
-                       '; ' + curUnit.getProperty('magnitude_') ;
+      unitString = this.codeOrder_[u] + '; ' ;
+      if (doLong) {
+        unitString += curUnit.getProperty('ciCode_') + '; ' ;
+      }
+      unitString += curUnit.getProperty('name_') + '; ' ;
+      if (doLong) {
+        if (curUnit.getProperty('isBase_'))
+          unitString += 'true; ' ;
+        else
+          unitString += 'false; ';
+      }
+      unitString += curUnit.getProperty('magnitude_')  + '; ';
       let curDim = curUnit.getProperty('dim_');
       if (curDim) {
-        unitString += '; ' + curDim.dimVec_ ;
+        unitString += curDim.dimVec_ + '; ';
       }
       else {
-        unitString += '; null';
+        unitString += 'null; ';
       }
-
       if (curUnit.csBaseUnit_)
-        unitString += '; ' + curUnit.csBaseUnit_ + '; ' +
-                      curUnit.baseFactor_;
+        unitString += curUnit.csBaseUnit_ + '; ' + curUnit.baseFactor_ + '; ';
+      else
+        unitString += 'null; null; ';
+
       if (curUnit.cnv_)
-        unitString += '; ' + curUnit.cnv_ + '; ' + curUnit.cnvPfx_ ;
+        unitString += curUnit.cnv_ + '; ' ;
+      else
+        unitString += 'null; ' ;
+
+      if (doLong) {
+        unitString += curUnit.getProperty('property_') + '; ' +
+                      curUnit.getProperty('printSymbol_') + '; ' +
+                      curUnit.getProperty('class_') + '; ' +
+                      curUnit.getProperty('isMetric_') + '; ' +
+                      curUnit.getProperty('variable_') + '; ' +
+                      curUnit.getProperty('isSpecial_') + '; ' +
+                      curUnit.getProperty('isArbitrary_') + '; ' ;
+      }
       if (curUnit.defError_)
-        unitString += '; problem parsing this one, deferred to later.' ;
+        unitString += 'problem parsing this one, deferred to later.' ;
       codeList += unitString + '\n' ;
     }
     return codeList ;

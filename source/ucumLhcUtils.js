@@ -4,7 +4,7 @@
  * @author Lee Mericle
  *
  */
-var Ucum = require('./config.js');
+var Ucum = require('./config.js').Ucum;
 var Defs = require('./ucumJsonDefs.js') ;
 var PfxT = require("./prefixTables.js");
 var UnitTables = require('./unitTables.js').UnitTables;
@@ -24,13 +24,11 @@ export class UcumLhcUtils {
    */
   constructor() {
 
-      console.log('in UcumLhcUtils constructor');
       if (UnitTables.getInstance().unitsCount() === 0) {
 
         // Load the prefix and unit objects
         let uDefs = Defs.UcumJsonDefs.getInstance();
         uDefs.loadJsonDefs();
-        console.log('just loaded defs');
       }
       // Make this a singleton.  See UnitTables constructor for details.
 
@@ -66,7 +64,10 @@ export class UcumLhcUtils {
    *
    */
 
-  convertUnit() {
+  convertUnit(decDigits) {
+
+    if (decDigits === undefined)
+      decDigits = Ucum.decDigits_;
 
     let fromName = document.getElementById("convertFrom").value ;
     // I am using parseFloat here because using parseInt cuts down 12.2222222 ...
@@ -94,6 +95,8 @@ export class UcumLhcUtils {
 
     // call Unit.convertFrom on it
     let toMag = toUnit.convertFrom(fromMag, fromUnit);
+    toMag = toMag.toFixed(decDigits).replace(/\.?0+$/, "");
+
 
     // put result on page
     let resultString = document.getElementById("resultString");
@@ -129,9 +132,9 @@ export class UcumLhcUtils {
 
     // for now, create a list of the units created and save it to a file
     // for debugging.  This is a temporary file.
-    let utab = Utab.UnitTables.getInstance();
+    let utab = UnitTables.getInstance();
     let uct = utab.unitsCount();
-    let uList = utab.printUnits();
+    let uList = utab.printUnits(true);
     console.log('in ucumLhcUtils.printUnits, about to write file.  uList ' +
                 'length = ' + uList.length + '; uct = ' + uct);
     fs.writeFileSync('/home/lmericle/ucum/test/JsonUnitsList.txt', uList,

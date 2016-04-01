@@ -22,11 +22,13 @@ export var Ucum = {  // Namespace for UCUM classes
    *  of loading the unit definitions from a file, this value will be
    *  set from that.
    */
-  dimLen_: 7
+  dimLen_: 7,
+
+  /**
+   *  The number of decimal digits to be displayed for a unit amount
+   */
+  decDigits_ : 3
 
 }
 
-//export var unitTabs_ = Utab.UnitTables.getInstance();
-
-//export var prefixTab_ = Pfx.PrefixTables.getInstance() ;
 
