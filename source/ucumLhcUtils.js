@@ -127,7 +127,7 @@ export class UcumLhcUtils {
   }
 
   /**
-   * Print a list of the units
+   * Creates a file containing a list of the units
    */
   printUnits() {
 
