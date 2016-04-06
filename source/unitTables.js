@@ -319,7 +319,7 @@ export class UnitTables {
 
 
   /**
-   * This prints a list of all units in the tables.  It uses the byCode
+   * This creates a list of all units in the tables.  It uses the byCode
    * table, and uses the codeOrder_ array to determine the order in which
    * the units are listed.
    *

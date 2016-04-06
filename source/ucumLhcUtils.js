@@ -62,8 +62,9 @@ export class UcumLhcUtils {
   /**
    * This method converts one unit to another
    *
+   * @param decDigits the maximum number of decimal digits to be displayed
+   *  for the converted unit.
    */
-
   convertUnit(decDigits) {
 
     if (decDigits === undefined)
