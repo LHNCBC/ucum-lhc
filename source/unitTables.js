@@ -319,10 +319,13 @@ export class UnitTables {
 
 
   /**
-   * This prints a list of all units in the tables.  It uses the byCode
+   * This creates a list of all units in the tables.  It uses the byCode
    * table, and uses the codeOrder_ array to determine the order in which
    * the units are listed.
    *
+   * @param doLong boolean indicating how much to output.  If true, all data
+   *  from the unit objects is included.   If false, only a few major values
+   *  are included.
    * @returns {string} buffer containing all the listings
    */
   printUnits(doLong) {
