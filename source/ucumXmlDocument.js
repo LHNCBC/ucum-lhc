@@ -347,6 +347,8 @@ export class UcumXmlDocument {
             attrs['baseFactor_'] = Math.pow(10, -13);
             attrs['csBaseUnit_'] = 's';
           }
+          // 4.  permeability of vaccuum - code [mu_0], unit given is
+          //     4.[pi].10*-7.N/A2
           else if (attrs['csCode_'] === '[mu_0]') {
             attrs['baseFactor_'] = 4 * Math.PI * Math.pow(10, -7);
             attrs['csBaseUnit_'] = 'N/A2';

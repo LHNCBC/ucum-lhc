@@ -5,9 +5,9 @@
  *
  */
 var Ucum = require('./config.js').Ucum;
-var Defs = require('./ucumJsonDefs.js') ;
-var PfxT = require("./prefixTables.js");
+var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs ;
 var UnitTables = require('./unitTables.js').UnitTables;
+var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
 var Fx = require('./functions.js');
 var fs = require('fs');
@@ -27,7 +27,7 @@ export class UcumLhcUtils {
       if (UnitTables.getInstance().unitsCount() === 0) {
 
         // Load the prefix and unit objects
-        let uDefs = Defs.UcumJsonDefs.getInstance();
+        let uDefs = UcumJsonDefs.getInstance();
         uDefs.loadJsonDefs();
       }
       // Make this a singleton.  See UnitTables constructor for details.
@@ -53,8 +53,15 @@ export class UcumLhcUtils {
    *
    * @returns nothing
    */
-  validateString() {
+  validateString(uStr) {
 
+    let uStrParser = new UnitString();
+    let retUnit = null;    try {
+      retUnit = uStrParser.parseString(attrs['csBaseUnit_']);
+    }
+    catch(err) {
+      // issue message err.message
+    }
 
   } // end validateString
 
@@ -148,10 +155,10 @@ export class UcumLhcUtils {
  *  is called before the constructor.   This calls the constructor.
  *
  *  The constructor redefines the getInstance function to return the
- *  singleton UcumJsonDefs object.  This is based on the UnitTables singleton
+ *  singleton UcumLhcUtils object.  This is based on the UnitTables singleton
  *  implementation; see more detail in the UnitTables constructor description.
  *
- *  @return the singleton UcumJsonDefs object.
+ *  @return the singleton UcumLhcUtils object.
  */
 UcumLhcUtils.getInstance = function(){
   return new UcumLhcUtils();
