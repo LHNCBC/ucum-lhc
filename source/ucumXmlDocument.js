@@ -169,6 +169,7 @@ export class UcumXmlDocument {
     let uStrParser = new Us.UnitString();
     let alen = unitAtoms.length ;
     for (let a = 0; a < alen; a++) {
+      let haveUnit = true;
       let curUA = unitAtoms[a];
       let attrs = {};
       attrs['isBase_'] = false;
@@ -323,23 +324,26 @@ export class UcumXmlDocument {
       else {
 
         // Make sure there's a unit string to base the new unit on.  There
-        // should be, but I'm just checking here to make sure.
-        if (attrs['csBaseUnit_'] && attrs['csBaseUnit_'] !== '1') {
+        // should be, but I'm just checking here to make sure.  And omit
+        // ones with a base unit of 1.  That won't do us any good.
+        if (attrs['csBaseUnit_'] && attrs['csBaseUnit_'] !== '1' &&
+            attrs['csBaseUnit_'] !== 1) {
 
+          haveUnit = false;
           // Handle some special cases
           // 1. the Oersted unit, whose string is /[pi].A/m and whose
           //    value is 250.  Set the baseFactor to 250/[pi] and
           //    the unit string to A/m
           if (attrs['csCode_'] === 'Oe') {
-            attrs['baseFactor_'] = 250/Math.PI ;
+            attrs['baseFactor_'] = 250 / Math.PI;
             attrs['csBaseUnit_'] = "A/m"
           }
           // 2.  Strings that start with '/'.  Set the function to
           //     the inverse function and trim the '/' off the front
           //     of the string.
           else if (attrs['csBaseUnit_'][0] === '/') {
-            attrs['cnv_'] = 'inv' ;
-            attrs['csBaseUnit_'] = attrs['csBaseUnit_'].substr(1) ;
+            attrs['cnv_'] = 'inv';
+            attrs['csBaseUnit_'] = attrs['csBaseUnit_'].substr(1);
           }
           // 3.  the Svedberg unit, whose string is 10*-13.s.  Set the
           //     base factor to 10*-13 and the unit string to s.
@@ -357,41 +361,48 @@ export class UcumXmlDocument {
           // string to create a new unit with the appropriate dimension
           // object and magnitude before it's multiplied by the one
           // specified in the input node.
-          let ret = uStrParser.parseString(attrs['csBaseUnit_']);
+          try {
+            let ret = uStrParser.parseString(attrs['csBaseUnit_']);
 
-          // Get the dimension object and magnitude (and adjust by
-          // specified magnitude factor) from the unit created and
-          // assign them to the attributes we'll use to create the
-          // unit for this listing.
-          if (ret) {
-            attrs['dim_'] = ret.getProperty('dim_');
-            let newMag = ret.getProperty('magnitude_');
-            newMag *= attrs['baseFactor_'];
-            attrs['magnitude_'] = newMag ;
+            // Get the dimension object and magnitude (and adjust by
+            // specified magnitude factor) from the unit created and
+            // assign them to the attributes we'll use to create the
+            // unit for this listing.
+            if (ret) {
+              attrs['dim_'] = ret.getProperty('dim_');
+              let newMag = ret.getProperty('magnitude_');
+              newMag *= attrs['baseFactor_'];
+              attrs['magnitude_'] = newMag;
+              haveUnit = true ;
+            }
+            // if there's no unit string, report an error
+            else {
+              attrs['defError_'] = true;
+              console.log('unit definition error; code = ' + attrs['csCode_']);
+              attrs['dim_'] = null;
+              attrs['magnitude_'] = null;
+            }
           }
-          // if there's no unit string, report an error
-          else {
-            attrs['defError_'] = true ;
-            console.log('unit definition error; code = ' + attrs['csCode_']);
-            attrs['dim_'] = null;
-            attrs['magnitude_'] = null;
+          catch(err) {
+            console.log('error thrown from unit parsing code for unit name ' +
+                        attrs['name_'] + '\n' + err.message);
           }
         } // end if there is a base string to parse
       } // end if this is not a dimless unit
 
-      // Now create the unit we want based on the attributes we've
-      // accumulated from the xml input and from figuring the dimension
-      // and magnitude.  Add it to the unit tables
-      let newUnit = new Un.Unit(attrs);
-      utab.addUnit(newUnit) ;
+      if (haveUnit) {
+        // Now create the unit we want based on the attributes we've
+        // accumulated from the xml input and from figuring the dimension
+        // and magnitude.  Add it to the unit tables
+        let newUnit = new Un.Unit(attrs);
+        utab.addUnit(newUnit);
 
-
-
-    // for now, create a list of the units created and save it to a file
-    // for debugging.  This is a temporary file.
-    let uList = utab.printUnits();
-    fs.writeFileSync('/home/lmericle/ucum/test/UnitsList.txt', uList,
-        {encoding: 'utf8', mode: 0o666, flag: 'w'} );
+        // for now, create a list of the units created and save it to a file
+        // for debugging.  This is a temporary file.
+        let uList = utab.printUnits();
+        fs.writeFileSync('/home/lmericle/ucum/test/UnitsList.txt', uList,
+            {encoding: 'utf8', mode: 0o666, flag: 'w'});
+      } // end if have a parsed unit
     } // end for a => - to alen
 
   } // end parseUnitAtoms

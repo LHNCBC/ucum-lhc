@@ -123,7 +123,7 @@ export class UnitString{
         let nextUnit = uArray[u2]['un'];
         if ((typeof nextUnit !== 'number') && (!nextUnit.getProperty)) {
           throw (new Error(`Unit string (${uStr}) contains unrecognized ` +
-                `element [${nextUnit.toString()}]; could not parse full ` +
+                `element (${nextUnit.toString()}); could not parse full ` +
                 'string.  Sorry'));
         }
 
@@ -211,7 +211,7 @@ export class UnitString{
         pfxCode = null;
 
       // Now look for an exponent, working from the end of the code
-      let ulen = uCode.length;
+      ulen = uCode.length;
       let lastChar = parseInt(uCode[ulen - 1]);
 
       while (typeof lastChar == 'number' && !isNaN(lastChar)) {

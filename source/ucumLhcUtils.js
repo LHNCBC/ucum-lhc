@@ -53,16 +53,27 @@ export class UcumLhcUtils {
    *
    * @returns nothing
    */
-  validateString(uStr) {
+  validateString(elementID) {
+
+    let uStr = document.getElementById(elementID).value;
 
     let uStrParser = new UnitString();
-    let retUnit = null;    try {
-      retUnit = uStrParser.parseString(attrs['csBaseUnit_']);
+    let retUnit = null;
+    let valResult = null ;
+    try {
+      retUnit = uStrParser.parseString(uStr);
+      if (retUnit)
+        valResult = "This is a valid unit string"
     }
     catch(err) {
-      // issue message err.message
+      valResult = 'This is NOT a valid unit string.  Error thrown = ' +
+                  err.message
     }
 
+    let valString = document.getElementById("validationString");
+    valString.innerHTML = valResult ;
+
+   //******************* STOPPED HERE ********************************
   } // end validateString
 
 
