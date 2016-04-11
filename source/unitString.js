@@ -41,11 +41,10 @@ export class UnitString{
     let dLen = dArray.length ;
 
     // if there's nothing in the first element it means that the string
-    // started with '/'.  I thought I'd dealt with all those, so if we come
-    // upon another here, don't continue with this one.
-    if (dArray[0] && dArray[0] == "") {
-      throw (new Error(`Unit string (${uStr}) starts with a slash(/) which ` +
-             'is not handled yet by this package.  Sorry'));
+    // started with '/'.  Set the first dArray element to a 1, which will
+    // cause the correct computation to be performed (inversion).
+    if (dArray[0] == "") {
+      dArray[0] = "1";
     }
     // If we only have one element after the split - and it's not multiple
     // elements connected by the multiplication operator (.), set the
@@ -140,11 +139,11 @@ export class UnitString{
           }
           // finalUnit is a number; nextUnit is a unit object
           else {
-            let fMag = nextUnit.getProperty('magnitude)');
-            isDiv ? fMag = finalUnit * (1 / fMag) :
-                    fMag *= finalUnit ;
+            let nMag = nextUnit.getProperty('magnitude_');
+            isDiv ? nMag = finalUnit * (1 / nMag) :
+                    nMag *= finalUnit ;
             finalUnit = nextUnit;
-            finalUnit.assignVals({'magnitude_': fMag});
+            finalUnit.assignVals({'magnitude_': nMag});
           }
         } // end if nextUnit is not a number
         else {
@@ -188,8 +187,8 @@ export class UnitString{
 
     // if the code is only one character, no parsing needed. Also block ones
     // that begin with 10 for now.
-    if (ulen > 1 && uCode.substr(0,2) != "10") {
-
+    //if (ulen > 1 && uCode.substr(0,2) != "10") {
+    if (ulen > 1) {
       // check for a prefix.  If we find one, move it and its value out of
       // the uCode string.  Try for a single character prefix first and then
       // try for a 2-character prefix if a single character prefix is not found.
