@@ -4,7 +4,7 @@
  * @author Lee Mericle
  *
  */
-var Ucum = require('./config.js');
+var Ucum = require('./config.js').Ucum;
 var Defs = require('./ucumJsonDefs.js') ;
 var PfxT = require("./prefixTables.js");
 var UnitTables = require('./unitTables.js').UnitTables;
@@ -24,13 +24,11 @@ export class UcumLhcUtils {
    */
   constructor() {
 
-      console.log('in UcumLhcUtils constructor');
       if (UnitTables.getInstance().unitsCount() === 0) {
 
         // Load the prefix and unit objects
         let uDefs = Defs.UcumJsonDefs.getInstance();
         uDefs.loadJsonDefs();
-        console.log('just loaded defs');
       }
       // Make this a singleton.  See UnitTables constructor for details.
 
@@ -64,9 +62,13 @@ export class UcumLhcUtils {
   /**
    * This method converts one unit to another
    *
+   * @param decDigits the maximum number of decimal digits to be displayed
+   *  for the converted unit.
    */
+  convertUnit(decDigits) {
 
-  convertUnit() {
+    if (decDigits === undefined)
+      decDigits = Ucum.decDigits_;
 
     let fromName = document.getElementById("convertFrom").value ;
     // I am using parseFloat here because using parseInt cuts down 12.2222222 ...
@@ -94,6 +96,9 @@ export class UcumLhcUtils {
 
     // call Unit.convertFrom on it
     let toMag = toUnit.convertFrom(fromMag, fromUnit);
+    toMag = toMag.toFixed(decDigits).replace(/\.?0+$/, "");
+    //toMag = toMag.toPrecision(sigDigits).replace(/\.?0+$/, "");
+
 
     // put result on page
     let resultString = document.getElementById("resultString");
@@ -123,15 +128,15 @@ export class UcumLhcUtils {
   }
 
   /**
-   * Print a list of the units
+   * Creates a file containing a list of the units
    */
   printUnits() {
 
     // for now, create a list of the units created and save it to a file
     // for debugging.  This is a temporary file.
-    let utab = Utab.UnitTables.getInstance();
+    let utab = UnitTables.getInstance();
     let uct = utab.unitsCount();
-    let uList = utab.printUnits();
+    let uList = utab.printUnits(true);
     console.log('in ucumLhcUtils.printUnits, about to write file.  uList ' +
                 'length = ' + uList.length + '; uct = ' + uct);
     fs.writeFileSync('/home/lmericle/ucum/test/JsonUnitsList.txt', uList,
