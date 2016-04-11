@@ -97,6 +97,7 @@ export class UcumLhcUtils {
     // call Unit.convertFrom on it
     let toMag = toUnit.convertFrom(fromMag, fromUnit);
     toMag = toMag.toFixed(decDigits).replace(/\.?0+$/, "");
+    //toMag = toMag.toPrecision(sigDigits).replace(/\.?0+$/, "");
 
 
     // put result on page
