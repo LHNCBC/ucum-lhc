@@ -27,7 +27,7 @@ export var Ucum = {  // Namespace for UCUM classes
   /**
    *  The number of decimal digits to be displayed for a unit amount
    */
-  decDigits_ : 3
+  decDigits_ : 4
 
 }
 
