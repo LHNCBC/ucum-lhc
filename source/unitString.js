@@ -115,54 +115,51 @@ export class UnitString{
 
     finalUnit = uArray[0]['un'];
 
+    // Perform the arithmetic for the units, starting with the first 2.
     // We only need to do the arithmetic if we have more than one unit
-    if (uLen > 1) {
+    for (var u2 = 1; u2 < uLen; u2++) {
+      let nextUnit = uArray[u2]['un'];
+      if ((typeof nextUnit !== 'number') && (!nextUnit.getProperty)) {
+        throw (new Error(`Unit string (${uStr}) contains unrecognized ` +
+            `element (${nextUnit.toString()}); could not parse full ` +
+            'string.  Sorry'));
+      }
 
-      for (var u2 = 1; u2 < uLen; u2++) {
-        let nextUnit = uArray[u2]['un'];
-        if ((typeof nextUnit !== 'number') && (!nextUnit.getProperty)) {
-          throw (new Error(`Unit string (${uStr}) contains unrecognized ` +
-                `element (${nextUnit.toString()}); could not parse full ` +
-                'string.  Sorry'));
+      // Is the operation division?
+      let isDiv = uArray[u2]['op'] === '/' ;
+
+      // Perform the operation based on the type(s) of the operands
+
+      if (typeof nextUnit !== 'number') {
+        // both are unit objects
+        if (typeof finalUnit !== 'number') {
+          isDiv ? finalUnit = finalUnit.divide(nextUnit) :
+              finalUnit = finalUnit.multiplyThese(nextUnit);
         }
-
-        // Is the operation specified division?
-        let isDiv = uArray[u2]['op'] == '/' ;
-
-        // Perform the operation based on the type(s) of the operands
-
-        if (typeof nextUnit !== 'number') {
-          // both are unit objects
-          if (typeof finalUnit !== 'number') {
-            isDiv ? finalUnit = finalUnit.divide(nextUnit) :
-                    finalUnit = finalUnit.multiplyThese(nextUnit);
-          }
-          // finalUnit is a number; nextUnit is a unit object
-          else {
-            let nMag = nextUnit.getProperty('magnitude_');
-            isDiv ? nMag = finalUnit * (1 / nMag) :
-                    nMag *= finalUnit ;
-            finalUnit = nextUnit;
-            finalUnit.assignVals({'magnitude_': nMag});
-          }
-        } // end if nextUnit is not a number
+        // finalUnit is a number; nextUnit is a unit object
         else {
-          // nextUnit is a number; finalUnit is a unit object
-          if (typeof finalUnit !== 'number') {
-            let fMag = finalUnit.getProperty('magnitude_');
-            isDiv ? fMag /= nextUnit :
-                    fMag *= nextUnit;
-            finalUnit.assignVals({'magnitude_': fMag});
-          }
-          // both are numbers
-          else {
-            isDiv ? finalUnit /= nextUnit :
-                    finalUnit *= nextUnit ;
-          }
-        } // end if nextUnit is a number
+          let nMag = nextUnit.getProperty('magnitude_');
+          isDiv ? nMag = finalUnit/nMag : nMag *= finalUnit ;
+          finalUnit = nextUnit;
+          finalUnit.assignVals({'magnitude_': nMag});
+        }
+      } // end if nextUnit is not a number
+      else {
+        // nextUnit is a number; finalUnit is a unit object
+        if (typeof finalUnit !== 'number') {
+          let fMag = finalUnit.getProperty('magnitude_');
+          isDiv ? fMag /= nextUnit :
+              fMag *= nextUnit;
+          finalUnit.assignVals({'magnitude_': fMag});
+        }
+        // both are numbers
+        else {
+          isDiv ? finalUnit /= nextUnit :
+              finalUnit *= nextUnit ;
+        }
+      } // end if nextUnit is a number
 
-      } // end do for each unit
-    } // end if there is more than one unit
+    } // end do for each unit after the first one
 
     return finalUnit;
   } // end parseString
@@ -179,7 +176,7 @@ export class UnitString{
    * @returns a unit object, or null if problems creating the unit
    */
   makeUnit(uCode) {
-    let exp = '';
+    let exp = null;
     let pfxVal = null;
     let pfxCode = null;
     let pfxExp = null ;
@@ -195,8 +192,8 @@ export class UnitString{
       let pfxTabs = PrefixTables.getInstance();
       pfxCode = uCode.charAt(0);
       let pfxObj = pfxTabs.getPrefixByCode(pfxCode);
-      if (!pfxObj && uCode.length === 2) {
-        pfxCode = uCode ;
+      if (!pfxObj && uCode.length >= 2) {
+        pfxCode = uCode.substr(0, 2) ;
         pfxObj = pfxTabs.getPrefixByCode(pfxCode);
       }
       if (pfxObj) {
@@ -209,30 +206,19 @@ export class UnitString{
       else
         pfxCode = null;
 
-      // Now look for an exponent, working from the end of the code
-      ulen = uCode.length;
-      let lastChar = parseInt(uCode[ulen - 1]);
-
-      while (typeof lastChar == 'number' && !isNaN(lastChar)) {
-        exp = lastChar + exp;
-        uCode = uCode.substring(0, ulen - 1);
-        ulen = uCode.length;
-        lastChar = parseInt(uCode.charAt(ulen - 1));
-        // check for something like m2 or the code being just a number
-        // in the case of m2, m was interpreted as a prefix (see fix below).
-        if (uCode.length == 0 && pfxCode) {
-          uCode = pfxCode;
-          pfxCode = null;
-          pfxVal = null ;
-          pfxExp = null ;
-          lastChar = '';
-        }
-      }  // end looking for exponent digits
-      // check for a sign for the exponent
-      if (exp && exp !== '' &&
-          (uCode[ulen - 1] === '-' || uCode[ulen - 1] === '+')) {
-        exp = uCode[ulen - 1] + exp;
-        uCode = uCode.substring(0, ulen - 1);
+      // Now look for an exponent at the end of the unit
+      let res = uCode.match(/(.*?)([-+?\d*])/);
+      uCode = res[1];
+      if (res[2] !== '')
+        exp = res[2];
+  
+      // check for something like m2 or the code being just a number
+      // in the case of m2, m was interpreted as a prefix (see fix below).
+      if (typeof uCode === 'number' && pfxCode) {
+        uCode = pfxCode;
+        pfxCode = null;
+        pfxVal = null ;
+        pfxExp = null ;
       }
     } // end if the unit code is longer than one character
 

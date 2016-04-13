@@ -51,9 +51,13 @@ export class UcumLhcUtils {
   /**
    * This method validates a string as representing a valid unit
    *
+   * @param elementID the ID of the web page element that contains the
+   *  string to be validated
+   * @param returnElementID the ID of the web page element to receive the
+   *  return validation message
    * @returns nothing
    */
-  validateString(elementID) {
+  validateString(elementID, returnElementID) {
 
     let uStr = document.getElementById(elementID).value;
 
@@ -70,10 +74,9 @@ export class UcumLhcUtils {
                   err.message
     }
 
-    let valString = document.getElementById("validationString");
+    let valString = document.getElementById(returnElementID);
     valString.innerHTML = valResult ;
 
-   //******************* STOPPED HERE ********************************
   } // end validateString
 
 
