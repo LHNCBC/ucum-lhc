@@ -207,7 +207,7 @@ export class UnitString{
         pfxCode = null;
 
       // Now look for an exponent at the end of the unit
-      let res = uCode.match(/(.*?)([-+?\d*])/);
+      let res = uCode.match(/(.+?)([-+]?\d*)/);
       uCode = res[1];
       if (res[2] !== '')
         exp = res[2];

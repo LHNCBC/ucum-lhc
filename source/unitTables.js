@@ -6,7 +6,7 @@
  *
  */
 
-var UC = require('./config.js');
+var Ucum = require('./config.js').Ucum;
 
 export class UnitTables {
 
@@ -111,7 +111,7 @@ export class UnitTables {
     }
 
     let uCode = null ;
-    if (UC.Ucum.caseSensitive_ == true)
+    if (Ucum.caseSensitive_ == true)
       uCode = theUnit['csCode_'] ;
     else
       uCode = theUnit['ciCode_'] ;
@@ -162,7 +162,7 @@ export class UnitTables {
   addUnitCode(theUnit) {
 
     let uCode = null;
-    if (UC.Ucum.caseSensitive_ == true)
+    if (Ucum.caseSensitive_ == true)
       uCode = theUnit['csCode_'];
     else
       uCode = theUnit['ciCode_'];
@@ -198,41 +198,34 @@ export class UnitTables {
   getUnitByName(uName) {
 
     let retUnit = null ;
-    if (uName) {
-      let unitsArray = this.unitNames_[uName] ;
-      if (unitsArray !== undefined && unitsArray !== null) {
-        retUnit = unitsArray;
-      }
-      // Else we didn't find an entry with the specified name.  That should be
-      // because the name has a code in parentheses after it.  Separate the
-      // name and the code and try again.
-      else {
-        let parenPos = uName.indexOf('(');
-        if (parenPos < 1) {
-          console.log('error on finding unit by name with name = ' +
-                      uName + ' and no parentheses (or paren at the start');
-        }
-        else {
-          let dupName = uName.substring(0, parenPos - 1);
-          let nameCode = uName.substring(parenPos + 1, uName.length - 1);
-          unitsArray = this.unitNames_[dupName] ;
-          if (unitsArray.length < 2)
-            console.log('error on finding unit by name with name = ' + uName);
-          else {
-            let u = 0;
-            let aLen = unitsArray.length;
-            for (; unitsArray[u].csCode_ !== nameCode && u < aLen; u++);
-            if (u < aLen)
-              retUnit = unitsArray;
-            else
-              console.log('error on finding unit by name with dupName = ' +
-                  dupName + '; nameCode = ' + nameCode);
-          }
-        } // end if we found parentheses in the name
-      } // end if we didn't find anything with the original name passed in
-    } // end if a name was passed in
+    if (uName === null || uName === undefined) {
+      throw (new Error('Unable to find unit by name when no name was provided.'));
+    }
+    let sepPos = uName.indexOf(Ucum.codeSep_);
+    let uCode = null;
+    if (sepPos) {
+      uCode = uName.substr(0, sepPos);
+      uName = uName.substr(sepPos + Ucum.codeSep_.length);
+    }
+    let unitsArray = this.unitNames_[uName] ;
+    if (unitsArray === undefined || unitsArray === null) {
+      throw (new Error(`Unable to find unit with name = ${uName}`));
+    }
+    let uLen = unitsArray.length;
+    if (uLen === 1)
+      retUnit = unitsArray[0] ;
+    else {
+      let i = 0;
+      for (; unitsArray[i].csCode_ !== uCode && i < uLen; i++);
+      if (i < uLen)
+        retUnit = unitsArray[i];
+      else
+        throw (new Error(`Unable to find unit with name = ${uName} amd ` +
+            `unit code = ${uCode}`));
+    }
     return retUnit ;
-  }
+
+  } // end getUnitByName
 
 
   /**
@@ -245,6 +238,8 @@ export class UnitTables {
     let retUnit = null ;
     if (uCode) {
       retUnit = this.unitCodes_[uCode] ;
+      if (retUnit === undefined)
+        retUnit = null;
     }
     return retUnit ;
   }
@@ -269,25 +264,23 @@ export class UnitTables {
    */
   getUnitNamesList() {
     let nameList = [];
-    let keys = this.getAllUnitNames();
-    keys.sort() ;
-    let uLen = keys.length;
-    for (let i = 0, n = 0; i < uLen; i++, n++) {
-      let curKeyAry = this.unitNames_[keys[i]];
-      if (curKeyAry.length === 1)
-        nameList[n] = keys[i];
-      else {
-        let kLen = curKeyAry.length ;
-        for (let k = 0; k < kLen; k++) {
-          nameList[n++] = keys[i] + ' (' +
-              curKeyAry[k].csCode_ + ')';
-        }
-        n -= 1;
-      } // end for names with multiple codes
-    } // end do for each name
+    let codes = Object.keys(this.unitCodes_);
+    codes.sort(this.compareCodes) ;
+    let uLen = codes.length;
+    for (let i = 0; i < uLen; i++) {
+      let uName = this.unitCodes_[codes[i]].name_
+      nameList[i] = codes[i] + Ucum.codeSep_ + uName ;
+    } // end do for each code
     return nameList ;
   }
 
+  compareCodes(a, b) {
+    a = a.replace(/[\[\]]/g, '');
+    a = a.toLowerCase();
+    b = b.replace(/[\[\]]/g, '');
+    b = b.toLowerCase();
+    return (a < b) ? -1 : 1 ;
+  }
 
   /**
    * Gets a list of all unit codes in the Unit tables

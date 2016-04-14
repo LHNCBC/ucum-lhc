@@ -57,27 +57,45 @@ export class UcumLhcUtils {
    *  return validation message
    * @returns nothing
    */
-  validateString(elementID, returnElementID) {
+  reportUnitStringValidity(elementID, returnElementID) {
 
     let uStr = document.getElementById(elementID).value;
+    let valFld = document.getElementById(returnElementID);
 
     let uStrParser = new UnitString();
-    let retUnit = null;
-    let valResult = null ;
+
     try {
-      retUnit = uStrParser.parseString(uStr);
-      if (retUnit)
-        valResult = "This is a valid unit string"
+      let retUnit = this.getUnitFromString(uStr);
+      if (retUnit) {
+        valFld.innerHTML = `${uStr} is a valid unit string.`;
+      }
     }
     catch(err) {
-      valResult = 'This is NOT a valid unit string.  Error thrown = ' +
-                  err.message
+      valFld.innerHTML = err.message
     }
 
-    let valString = document.getElementById(returnElementID);
-    valString.innerHTML = valResult ;
+  } // end reportUnitStringValidity
 
-  } // end validateString
+
+  getUnitFromString(uStr) {
+
+    let retUnit = null;
+    let utab = UnitTables.getInstance();
+    try {
+      retUnit = utab.getUnitByCode(uStr);
+
+      if (retUnit === null || retUnit === undefined) {
+        let uStrParser = new UnitString();
+        retUnit = uStrParser.parseString(uStr);
+      }
+    }
+    catch(err) {
+      console.log(`Unit requested for unit string ${uStr}.` +
+                  'request unsuccessful; error thrown = ' + err.message);
+      throw(new Error(`${uStr} is not a valid unit string.`)) ;
+    }
+    return retUnit ;
+  }
 
 
   /**
@@ -97,35 +115,27 @@ export class UcumLhcUtils {
     let toName = document.getElementById("convertTo").value;
     // create a from unit
     let utab = UnitTables.getInstance();
-    let fromUnit = null ;
-    let fromUnitAry = utab.getUnitByName(fromName) ;
-    if (fromUnitAry === null || fromUnitAry.length > 1 ||
-        fromUnitAry.length === 0) {
-      console.log('error getting fromUnit from list');
+    let fromUnit = utab.getUnitByName(fromName) ;
+    if (fromUnit === null) {
+      fromUnit = this.getUnitFromString(fromName);
     }
-    else {
-      fromUnit = fromUnitAry[0];
-    }
-    let toUnit = null ;
-    let toUnitAry = utab.getUnitByName(toName) ;
-    if (toUnitAry === null || toUnitAry.length > 1 || toUnitAry.length === 0) {
-      console.log('error getting toUnit');
-    }
-    else {
-      toUnit = toUnitAry[0];
+    let toUnit = utab.getUnitByName(toName)  ;
+    if (toUnit === null) {
+      toUnit = this.getUnitFromString(toName);
     }
 
-    // call Unit.convertFrom on it
-    let toMag = toUnit.convertFrom(fromMag, fromUnit);
-    toMag = toMag.toFixed(decDigits).replace(/\.?0+$/, "");
-    //toMag = toMag.toPrecision(sigDigits).replace(/\.?0+$/, "");
-
-
-    // put result on page
     let resultString = document.getElementById("resultString");
-    resultString.innerHTML = fromMag.toString() + " " + fromName + " units = " +
-        toMag.toString() + " " + toName + " units"
+    try {
+      let toMag = toUnit.convertFrom(fromMag, fromUnit);
+      toMag = toMag.toFixed(decDigits).replace(/\.?0+$/, "");
 
+      // put result on page
+      resultString.innerHTML = fromMag.toString() + " " + fromName + " units = " +
+          toMag.toString() + " " + toName + " units"
+    }
+    catch(err) {
+      resultString.innerHTML = err.message;
+    }
   } // end convertUnit
 
 

@@ -28,7 +28,9 @@
         <input type="text" id="valString">
       </p>
       <button id="doValidationButton"
-              onclick="ucumPkg.UcumLhcUtils.getInstance().validateString('valString')"
+              onclick=
+       "ucumPkg.UcumLhcUtils.getInstance().reportUnitStringValidity('valString',
+                                                            'validationString')"
               type="button">Validate</button>
       <p id="validationString">validation result</p>
     </div> <!-- end validation div -->
