@@ -5,9 +5,9 @@
  *
  */
 var Ucum = require('./config.js').Ucum;
-var Defs = require('./ucumJsonDefs.js') ;
-var PfxT = require("./prefixTables.js");
+var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs ;
 var UnitTables = require('./unitTables.js').UnitTables;
+var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
 var Fx = require('./functions.js');
 var fs = require('fs');
@@ -27,7 +27,7 @@ export class UcumLhcUtils {
       if (UnitTables.getInstance().unitsCount() === 0) {
 
         // Load the prefix and unit objects
-        let uDefs = Defs.UcumJsonDefs.getInstance();
+        let uDefs = UcumJsonDefs.getInstance();
         uDefs.loadJsonDefs();
       }
       // Make this a singleton.  See UnitTables constructor for details.
@@ -51,10 +51,31 @@ export class UcumLhcUtils {
   /**
    * This method validates a string as representing a valid unit
    *
+   * @param elementID the ID of the web page element that contains the
+   *  string to be validated
+   * @param returnElementID the ID of the web page element to receive the
+   *  return validation message
    * @returns nothing
    */
-  validateString() {
+  validateString(elementID, returnElementID) {
 
+    let uStr = document.getElementById(elementID).value;
+
+    let uStrParser = new UnitString();
+    let retUnit = null;
+    let valResult = null ;
+    try {
+      retUnit = uStrParser.parseString(uStr);
+      if (retUnit)
+        valResult = "This is a valid unit string"
+    }
+    catch(err) {
+      valResult = 'This is NOT a valid unit string.  Error thrown = ' +
+                  err.message
+    }
+
+    let valString = document.getElementById(returnElementID);
+    valString.innerHTML = valResult ;
 
   } // end validateString
 
@@ -150,10 +171,10 @@ export class UcumLhcUtils {
  *  is called before the constructor.   This calls the constructor.
  *
  *  The constructor redefines the getInstance function to return the
- *  singleton UcumJsonDefs object.  This is based on the UnitTables singleton
+ *  singleton UcumLhcUtils object.  This is based on the UnitTables singleton
  *  implementation; see more detail in the UnitTables constructor description.
  *
- *  @return the singleton UcumJsonDefs object.
+ *  @return the singleton UcumLhcUtils object.
  */
 UcumLhcUtils.getInstance = function(){
   return new UcumLhcUtils();

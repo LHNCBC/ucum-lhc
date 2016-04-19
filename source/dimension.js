@@ -104,7 +104,8 @@ export class Dimension {
   
 
   /**
-   * Sets the element at the specified position to 1
+   * Sets the element at the specified position to 1 if the dimension vector
+   * is not null; else nothing is changed.
    *
    * @param indexPos the index of the element to be set
    * @throws an exception if the specified position is invalid, i.e., not a
@@ -117,7 +118,9 @@ export class Dimension {
       throw(`Dimension.setElementAt called with an invalid index ` +
       `position (${indexPos})`);
     }
-    this.dimVec_[indexPos] = 1;
+
+    if (this.dimVec_)
+      this.dimVec_[indexPos] = 1;
   }
 
 
@@ -125,7 +128,8 @@ export class Dimension {
    * Gets the value of the element at the specified position
    *
    * @param indexPos the index of the element whose value is to be returned
-   * @return the value of the element at indexPos
+   * @return the value of the element at indexPos, or null if the dimension
+   *  vector is null
    * @throws an exception if the specified position is invalid, i.e., not a
    *   number or is less than 0 or greater than Ucum.dimLen_
    **/
@@ -135,7 +139,10 @@ export class Dimension {
       throw(`Dimension.getElementAt called with an invalid index ` +
       `position (${indexPos})`);
     }
-    return this.dimVec_[indexPos];
+    let ret = null;
+    if (this.dimVec_)
+      ret = this.dimVec_[indexPos];
+    return ret;
   }
 
 
@@ -163,7 +170,8 @@ export class Dimension {
 
 
   /**
-   * Return a string that represents the dimension vector
+   * Return a string that represents the dimension vector.  Returns null if
+   * the dimension vector is null.
    *
    * @return the string that represents the dimension vector.  The
    *         values are enclosed in square brackets, each separated
@@ -180,6 +188,7 @@ export class Dimension {
   /**
    * Adds the vector of the dimension object passed in to this
    * dimension object's vector.  This object's vector is changed.
+   * If either dimension vector is null, no changes are made to this object.
    *
    *
    * @param dim2 the dimension whose vector is to be added to this one
@@ -191,8 +200,10 @@ export class Dimension {
       throw(`Dimension.add called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`);
     }
-    for (let i = 0; i < UC.Ucum.dimLen_; i++)
-      this.dimVec_[i] += dim2.dimVec_[i];
+    if (this.dimVec_ && dim2.dimVec_) {
+      for (let i = 0; i < UC.Ucum.dimLen_; i++)
+        this.dimVec_[i] += dim2.dimVec_[i];
+    }
     return this;
   }
 
@@ -200,6 +211,7 @@ export class Dimension {
   /**
    * Subtracts the vector of the dimension object passed in to this
    * dimension object's vector.  This object's vector is changed.
+   * If either dimension vector is null, no changes are made to this object.
    *
    * @param dim2 the dimension whose vector is to be subtraced from this one
    * @return this object
@@ -210,28 +222,34 @@ export class Dimension {
       throw(`Dimension.sub called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`);
     }
-    for (let i = 0; i < UC.Ucum.dimLen_; i++)
-      this.dimVec_[i] -= dim2.dimVec_[i];
+    if (this.dimVec_ && dim2.dimVec_) {
+      for (let i = 0; i < UC.Ucum.dimLen_; i++)
+        this.dimVec_[i] -= dim2.dimVec_[i];
+    }
     return this;
   }
 
 
   /**
    * Inverts this dimension object's vector (by multiplying each element
-   * by negative 1).  This object's vector is changed.
+   * by negative 1).  This object's vector is changed - unless it is null,
+   * in which case it stays that way.
    *
    * @return this object
    **/
   minus() {
-    for (let i = 0; i < UC.Ucum.dimLen_; i++)
-      this.dimVec_[i] = -this.dimVec_[i];
+    if (this.dimVec_) {
+      for (let i = 0; i < UC.Ucum.dimLen_; i++)
+        this.dimVec_[i] = -this.dimVec_[i];
+    }
     return this;
   }
 
 
   /**
    * Multiplies this dimension object's vector with a scalar.  This is used
-   * when a unit is raised to a power.  This object's vector is changed.
+   * when a unit is raised to a power.  This object's vector is changed unless
+   * the vector is null, in which case it stays that way.
    *
    * @param s the scalar to use
    * @return this object
@@ -242,15 +260,19 @@ export class Dimension {
       throw(`Dimension.sub called with an invalid parameter - ` +
       `${typeof dim2} instead of a number`);
     }
-    for (let i = 0; i < UC.Ucum.dimLen_; i++)
-      this.dimVec_[i] *= s;
+    if (this.dimVec_) {
+      for (let i = 0; i < UC.Ucum.dimLen_; i++)
+        this.dimVec_[i] *= s;
+    }
     return this;
   }
 
 
   /**
    * Tests for equality of this dimension object's vector and that of
-   * the dimension object passed in.
+   * the dimension object passed in.  If the dimension vector for one of
+   * the objects is null, the dimension vector for the other object must
+   * also be null for the two to be equal.  (I know - duh.  still)
    *
    * @param dim2 the dimension object whose vector is to be compared to this one
    * @return true if the two vectors are equal; false otherwise.
@@ -263,16 +285,23 @@ export class Dimension {
     }
     let isEqual = true ;
     let dimVec2 = dim2.dimVec_;
-    for (let i = 0; isEqual && i < UC.Ucum.dimLen_; i++)
-      isEqual = (this.dimVec_[i] === dimVec2[i]) ;
-
+    if (this.dimVec_ && dimVec2) {
+      for (let i = 0; isEqual && i < UC.Ucum.dimLen_; i++)
+        isEqual = (this.dimVec_[i] === dimVec2[i]);
+    }
+    else {
+      isEqual = (this.dimVec_ === null && dimVec2 === null);
+    }
     return isEqual;
   }
 
 
   /**
    * Assigns the contents of the vector belonging to the dimension object
-   * passed in to this dimension's vector.
+   * passed in to this dimension's vector.  If this dimension vector is null
+   * and the other is not, this one will get the contents of the other.  If
+   * this dimension vector is not null but the one passed in is null, this
+   * one will be set to null.
    *
    * @param dim2 the dimension object with the vector whose contents are
    *  to be assigned to this dimension's vector
@@ -285,18 +314,32 @@ export class Dimension {
       `${typeof dim2} instead of a Dimension object`);
     }
     let dimVec2 = dim2.dimVec_;
-    for (let i = 0; i < UC.Ucum.dimLen_; i++)
-      this.dimVec_[i] = dimVec2[i];
+    if (this.dimVec_ === null && dimVec2 !== null) {
+      this.dimVec = [] ;
+    }
+
+    if (this.dimVec_ && dimVec2) {
+      for (let i = 0; i < UC.Ucum.dimLen_; i++)
+        this.dimVec_[i] = dimVec2[i];
+    }
+    else { // dimVec2_ === null, this.dimVec_ may or may not be null
+      this.dimVec_ = null ;
+    }
+
     return this;
   }
 
 
   /**
    * Sets all elements of this dimension object's vector to zero.
+   * If this object's vector is null, it is created as a zero-filled vector.
    *
    * @return this object (not sure why)
    */
   assignZero() {
+    if (this.dimVec_ === null)
+      this.dimVec_ = [];
+
     for (let i = 0; i < UC.Ucum.dimLen_; i++) {
       this.dimVec_[i] = 0;
     }
@@ -312,9 +355,11 @@ export class Dimension {
    *
    */
   isZero() {
-    let allZero = true;
-    for (let i = 0; allZero && i < UC.Ucum.dimLen_; i++)
-      allZero = this.dimVec_[i] === 0 ;
+    let allZero = this.dimVec_ !== null ;
+    if (this.dimVec_) {
+      for (let i = 0; allZero && i < UC.Ucum.dimLen_; i++)
+        allZero = this.dimVec_[i] === 0;
+    }
 
     return allZero;
   }
