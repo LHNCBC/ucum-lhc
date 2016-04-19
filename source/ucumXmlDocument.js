@@ -425,7 +425,7 @@ export class UcumXmlDocument {
                      'units' : uArray}
 
     jsonfile.writeFileSync('../dist/data/ucumDefs.json', defsHash,
-                          {encoding: 'utf8', mode: 0o666, flag: 'w'});
+                          {encoding: 'utf8', mode: 0o644, flag: 'w'});
   } // end writeJsonFile
 
 
