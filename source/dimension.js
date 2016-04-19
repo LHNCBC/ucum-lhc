@@ -170,7 +170,7 @@ export class Dimension {
 
 
   /**
-   * Return a string that represents the dimension vector.  Returns null is
+   * Return a string that represents the dimension vector.  Returns null if
    * the dimension vector is null.
    *
    * @return the string that represents the dimension vector.  The

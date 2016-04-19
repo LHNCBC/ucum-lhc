@@ -31,73 +31,33 @@ export class UnitString{
              'are not handled yet by this package.  Sorry'));
     }
 
-    // separate string into pieces based on delimiters / (division) and .
-    // (multiplication).  The idea is to get an array of units on which we
-    // can then perform any operations (prefixes, multiplication, division).
-    let uArray = [] ;
-
-    // split the string on the division separator
-    let dArray = uStr.split('/') ;
-    let dLen = dArray.length ;
-
-    // if there's nothing in the first element it means that the string
-    // started with '/'.  Set the first dArray element to a 1, which will
-    // cause the correct computation to be performed (inversion).
-    if (dArray[0] == "") {
-      dArray[0] = "1";
-    }
-    // If we only have one element after the split - and it's not multiple
-    // elements connected by the multiplication operator (.), set the
-    // units array unit attribute (un) to the one element and the operator
-    // attribute (op) to nothing.
-    if (dLen === 1 && dArray[0].indexOf('.') < 0) {
-      uArray[0] = {un: dArray[0], op: ''};
-    }
-    // Otherwise split each element from the division split by the multiplication
-    // operator (.).
-    else {
-      for (let d = 0, u = 0; d < dLen; d++, u++) {
-        // create the current division array element and then try splitting
-        // the unit string
-        dArray[d] = {un: dArray[d], op: '/'};
-        let mArray = dArray[d]['un'].split('.');
-        let mLen = mArray.length;
-        // if there was no multiplication operator in the division string,
-        // transfer the object (string and operator) to the units array
-        if (mLen == 1) {
-          uArray[u] = dArray[d];
-        }
-        // Otherwise write each element from the split to the units array
-        else {
-          for (let m = 0; m < mLen; m++, u++) {
-            uArray[u] = {un: mArray[m], op: '.'};
-          }
-          // drop u back one element - or we end up with empty cells in
-          // uArray if we write anything else to it.
-          u -= 1;
-        } // end for each element from the multiplication split
-      } // end for each element from the division split
-    } // end if the division split gave more than one element
+    let uArray = this.makeUnitsArray(uStr);
 
     // create a unit object out of each un element
     let uLen = uArray.length;
+    console.log('back from makeUnitsArray, uArray = ' +
+                 JSON.stringify(uArray) + '; length = ' + uLen);
     for (let u1 = 0; u1 < uLen; u1++) {
       let curCode = uArray[u1]['un'];
+      console.log('curCode = ' + curCode);
       if (curCode) {
         let curCodeNum = Number(curCode);
         // if the current unit string is NOT a number, call makeUnit to create
         // the unit object for it
         if (isNaN(curCodeNum)) {
+          console.log('calling makeUnit for curCode = ' + curCode);
           uArray[u1]['un'] = this.makeUnit(curCode);
         }
         // Otherwise write the numeric version of the number back to
         // the uArray 'un' element
         else {
+          console.log('about to write curCodeNum = ' + curCodeNum +
+                      ' to ' + uArray[u1]['un]']);
           uArray[u1]['un'] = curCodeNum;
         }
       }
     }
-
+    console.log('got units, uLen = ' + uLen);
     // Process the units (and numbers) to create one final unit object
 
     if (uArray[0] == null || uArray == "'" || uArray[0]['un'] === undefined ||
@@ -114,11 +74,15 @@ export class UnitString{
     }
 
     finalUnit = uArray[0]['un'];
-
+    console.log('after assign uArray[0][un] to finalUnit.  uArray = ' +
+                JSON.stringify(uArray));
     // Perform the arithmetic for the units, starting with the first 2.
     // We only need to do the arithmetic if we have more than one unit
     for (var u2 = 1; u2 < uLen; u2++) {
       let nextUnit = uArray[u2]['un'];
+      if (nextUnit === null)
+        console.log('nextUnit is null; u2 = ' + u2 + '; uArray[u2][un] = ' +
+                    JSON.stringify(uArray[u2]['un']));
       if ((typeof nextUnit !== 'number') && (!nextUnit.getProperty)) {
         throw (new Error(`Unit string (${uStr}) contains unrecognized ` +
             `element (${nextUnit.toString()}); could not parse full ` +
@@ -165,6 +129,76 @@ export class UnitString{
   } // end parseString
 
 
+  /**
+   * Breaks the unit string into an array of units
+   */
+  makeUnitsArray(uStr) {
+    // separate string into pieces based on delimiters / (division) and .
+    // (multiplication).  The idea is to get an array of units on which we
+    // can then perform any operations (prefixes, multiplication, division).
+    console.log('');
+    console.log('makeUnitsArray, uStr = ' + uStr)
+    let uArray1 = uStr.match(/([./]|[^./]+)/g) ;
+    console.log('uArray1 = ' + JSON.stringify(uArray1))
+    let uArray2 = [] ;
+
+    // split the string on the division separator
+    let dArray = uStr.split('/') ;
+    let dLen = dArray.length ;
+
+    // if there's nothing in the first element it means that the string
+    // started with '/'.  Set the first dArray element to a 1, which will
+    // cause the correct computation to be performed (inversion).
+    if (dArray[0] == "") {
+      dArray[0] = "1";
+      uArray1.unshift("1");
+    }
+
+    let u1 = uArray1.length ;
+    let uArray = [{un: uArray1[0], op: ""}] ;
+    for (let n = 1; n < u1; n++) {
+      uArray.push({op: uArray1[n++], un: uArray1[n]});
+      console.log('uArray = ' + JSON.stringify(uArray));
+    }
+
+    // If we only have one element after the split - and it's not multiple
+    // elements connected by the multiplication operator (.), set the
+    // units array unit attribute (un) to the one element and the operator
+    // attribute (op) to nothing.
+    if (dLen === 1 && dArray[0].indexOf('.') < 0) {
+      uArray2[0] = {un: dArray[0], op: ''};
+    }
+    // Otherwise split each element from the division split by the multiplication
+    // operator (.).
+    else {
+      for (let d = 0, u = 0; d < dLen; d++, u++) {
+        // create the current division array element and then try splitting
+        // the unit string
+        dArray[d] = {un: dArray[d], op: '/'};
+        let mArray = dArray[d]['un'].split('.');
+        let mLen = mArray.length;
+        // if there was no multiplication operator in the division string,
+        // transfer the object (string and operator) to the units array
+        if (mLen == 1) {
+          uArray2[u] = dArray[d];
+        }
+        // Otherwise write each element from the split to the units array
+        else {
+          for (let m = 0; m < mLen; m++, u++) {
+            uArray2[u] = {un: mArray[m], op: '.'};
+          }
+          // drop u back one element - or we end up with empty cells in
+          // uArray if we write anything else to it.
+          u -= 1;
+        } // end for each element from the multiplication split
+      } // end for each element from the division split
+    } // end if the division split gave more than one element
+    if (uArray != uArray2) {
+      console.log('uArray ' + JSON.stringify(uArray) + ' != uArray2 ' +
+                  JSON.stringify(uArray2));
+    }
+    return uArray ;
+  }
 
   /**
    * Creates a unit object from a string defining one unit.  The string
@@ -181,6 +215,7 @@ export class UnitString{
     let pfxCode = null;
     let pfxExp = null ;
     let ulen = uCode.length ;
+    console.log('in makeUnit, uCode = ' + uCode + '; ulen = ' + ulen)
 
     // if the code is only one character, no parsing needed. Also block ones
     // that begin with 10 for now.
@@ -193,38 +228,46 @@ export class UnitString{
       pfxCode = uCode.charAt(0);
       let pfxObj = pfxTabs.getPrefixByCode(pfxCode);
       if (!pfxObj && uCode.length >= 2) {
-        pfxCode = uCode.substr(0, 2) ;
+        pfxCode = uCode.substr(0, 2);
         pfxObj = pfxTabs.getPrefixByCode(pfxCode);
       }
       if (pfxObj) {
+        console.log('got prefix, pfxCode = ' + pfxCode)
         pfxVal = pfxObj.getValue();
         pfxExp = pfxObj.getExp();
-        let pCodeLen = pfxCode.length
+        let pCodeLen = pfxCode.length;
         uCode = uCode.substr(pCodeLen);
         ulen -= pCodeLen;
       }
-      else
+      else {
+        console.log('did not get prefix');
         pfxCode = null;
+      }
 
       // Now look for an exponent at the end of the unit
-      let res = uCode.match(/(.*?)([-+?\d*])/);
-      uCode = res[1];
-      if (res[2] !== '')
-        exp = res[2];
-  
-      // check for something like m2 or the code being just a number
-      // in the case of m2, m was interpreted as a prefix (see fix below).
-      if (typeof uCode === 'number' && pfxCode) {
-        uCode = pfxCode;
-        pfxCode = null;
-        pfxVal = null ;
-        pfxExp = null ;
-      }
-    } // end if the unit code is longer than one character
+      //let res = uCode.match(/(.+?)([-+]?\d*)/);
+      let res = uCode.match(/([^-+\d]*)([-+\d]*)/);
+      console.log('looking for exponent, res = ' + JSON.stringify(res));
+      if (res && res[2] && res[2] !== "") {
+        uCode = res[1];
+        if (res[2] !== '')
+          exp = res[2];
+
+        // check for something like m2 or the code being just a number
+        // in the case of m2, m was interpreted as a prefix (see fix below).
+        if (typeof uCode === 'number' && pfxCode) {
+          uCode = pfxCode;
+          pfxCode = null;
+          pfxVal = null;
+          pfxExp = null;
+        }
+      } // end if the unit code is longer than one character
+    } // end if we got a return from the exponent match search
 
     let utabs = UnitTables.getInstance();
 
     // go get the unit for the code (without prefix or exponent)
+    console.log('looking for unit with code ' + uCode);
     let origUnit = utabs.getUnitByCode(uCode);
     // if we didn't find the unit but we do have a prefix, see if we're
     // looking at a case where a base unit code was interpreted as a prefix,
@@ -239,13 +282,14 @@ export class UnitString{
     }
     let retUnit = null;
     if (origUnit) {
+      console.log('have origUnit, csCode_ = ' + origUnit.csCode_);
       // clone the unit we just got and then apply any exponent and/or prefix
       // to it
       retUnit = origUnit.clone();
       let theDim = retUnit.getProperty('dim_');
       let theMag = retUnit.getProperty('magnitude_');
       let theName = retUnit.getProperty('name_');
-
+      console.log('have retUnit, csCode_ = ' + retUnit.csCode_)
       // If there is an exponent for the unit, apply it to the dimension
       // and magnitude now
       if (exp) {
@@ -279,6 +323,8 @@ export class UnitString{
         retUnit.assignVals({'magnitude_': theMag})
       }
     } // end if we found a unit object
+    else
+      console.log('did not find a unit');
     return retUnit ;
   } // ret makeUnit
 
