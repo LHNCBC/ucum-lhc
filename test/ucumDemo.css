@@ -1,0 +1,116 @@
+/* Styles for the header */
+
+#header {
+  margin-bottom: 20px;
+  position: relative;
+  font-size: 12px;
+  font-family: 'Droid Sans',Arial,Helvetica,sans-serif;
+  color: #202020;
+  border-top: 2px solid #0BACB6;
+  border-bottom: 7px solid #17b4e3;
+  line-height: normal;
+  padding-bottom: 22px;
+}
+#fine-print, #header {
+  border-top: 2px solid #0bacb6;
+}
+#logo {
+  position: relative;
+  top: 5px;
+  font-size: 18px;
+  display: block;
+  margin-bottom: 5px;
+}
+#header a {
+  color: #1E4193;
+  text-decoration: none;
+}
+#logo img {
+  float: left;
+  margin-right: 10px;
+  margin-left: 20px;
+  border-right: 1px solid #0BACB6;
+  padding-right: 0.75em;
+}
+#logo, #log img {
+  display: block;
+}
+#logo .site-name-slogan {
+  font-size: 14px;
+  position: relative;
+  top: 10px;
+  left: -2px;
+}
+#logo .site-name-slogan span {
+  display: block;
+  font-size: 24px;
+  position: relative;
+  left: -2px;
+}
+#logo .site-name-slogan .slogan {
+  color: #202020;
+  font-size: 12px;
+  position: relative;
+  left: 1px;
+}
+#siteNameBox {
+  margin-top: 1em;
+}
+#siteName {
+  font-size: 300%;
+}
+/* End of styles for the header */
+
+/* Styles for the footer */
+#fine-print {
+  border-top: 2px solid #0BACB6;
+  clear: left;
+  text-align: center;
+  font-size: 11px;
+  padding-top: 10px;
+}
+#fine-print ul.horz-list li {
+  list-style-type: none;
+  display: inline;
+  padding-left: 8px;
+  padding-right: 10px;
+  border-right: 1px solid #999;
+}
+#fine-print ul.horz-list li.last-item {
+  border-right: none;
+}
+#usagov {
+  margin-bottom: -2px;
+  vertical-align: bottom;
+}
+/* End of styles for the footer */
+
+
+
+body {
+  font-family: "sans-serif";
+  margin: 0px 20px 20px 20px;
+  color: #1E4193;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+  color: black;
+}
+
+h4 {
+  text-align: center;
+}
+
+.section {
+  border: 3px solid #ddd;
+  border-radius: 25px;
+  margin: 25px;
+  padding: 15px 25px;
+  width: auto;
+
+}
+
+

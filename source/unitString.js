@@ -170,10 +170,9 @@ export class UnitString{
     let pfxExp = null ;
     let ulen = uCode.length ;
 
-    // if the code is only one character, no parsing needed. Also block ones
-    // that begin with 10 for now.
-    //if (ulen > 1 && uCode.substr(0,2) != "10") {
-    if (ulen > 1) {
+    // if the code is only one character, no parsing needed. Also block m[H2O]
+    // because it just doesn't parse well and is a unit code in itself
+    if (ulen > 1 && uCode !== 'm[H2O]') {
       // check for a prefix.  If we find one, move it and its value out of
       // the uCode string.  Try for a single character prefix first and then
       // try for a 2-character prefix if a single character prefix is not found.

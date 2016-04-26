@@ -13,8 +13,9 @@ export function startup () {
   var utab = UnitTables.getInstance();
   var unames = utab.getUnitNamesList();
   var opts = {'matchListValue': true};
-  new Def.Autocompleter.Prefetch('convertFrom', unames); //, opts);
-  new Def.Autocompleter.Prefetch('convertTo', unames); //opts);
+  var autoFrom = new Def.Autocompleter.Prefetch('convertFrom', unames); //, opts);
+  var autoTo = new Def.Autocompleter.Prefetch('convertTo', unames); //opts);
+  utils.setAutocompleters(autoFrom, autoTo);
 };
 
 startup();

@@ -25,8 +25,8 @@ export class PrefixTables {
     // Make this a singleton.  See UnitTables constructor for details.
 
     let holdThis = PrefixTables.prototype;
-    PrefixTables = function(){throw 'PrefixTables is a Singleton. ' +
-                                    'Use PrefixTables.getInstance() instead.'};
+    PrefixTables = function(){throw(new Error('PrefixTables is a Singleton. ' +
+                                    'Use PrefixTables.getInstance() instead.'))};
     if (exports)
       exports.PrefixTables = PrefixTables;
     PrefixTables.prototype = holdThis;

@@ -35,9 +35,9 @@ export class Prefix {
         attrs['name_'] === undefined || attrs['name_'] === null ||
         attrs['value_'] === undefined || attrs['value_'] === null ||
         attrs['exp_'] === undefined) {
-      throw('Prefix constructor called missing one or more parameters.  ' +
+      throw(new Error('Prefix constructor called missing one or more parameters.  ' +
       'Prefix codes (cs or ci), name, value and exponent must all be specified ' +
-      'and all but the exponent must not be null.');
+      'and all but the exponent must not be null.'));
     }
 
     /**

@@ -74,8 +74,8 @@ class Functions {
     let holdThis = Functions.prototype;
     if (exports)
       exports.Functions = Functions ;
-    Functions = function(){throw 'Functions is a Singleton. ' +
-                           'Use Functions.getInstance() instead.'}
+    Functions = function(){throw (new Error('Functions is a Singleton. ' +
+                           'Use Functions.getInstance() instead.'))};
     Functions.prototype = holdThis;
     let self = this ;
     Functions.getInstance = function(){return self} ;
@@ -95,7 +95,7 @@ class Functions {
     
     let f = this.fs[fname] ;
     if (f === null)
-      throw(`Requested function ${fname} is not defined`) ;
+      throw(new Error(`Requested function ${fname} is not defined`));
     return f;
   }
 

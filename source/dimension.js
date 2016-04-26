@@ -35,8 +35,8 @@ export class Dimension {
   constructor(dimSetting) {
 
     if (UC.Ucum.dimLen_ === 0) {
-      throw('Dimension.setDimensionLen must be called before ' +
-      'Dimension constructor');
+      throw(new Error('Dimension.setDimensionLen must be called before ' +
+      'Dimension constructor'));
     }
     if (dimSetting === undefined || dimSetting === null) {
       //this.dimVec_ = new Array(UC.Ucum.dimLen_) ;
@@ -45,8 +45,8 @@ export class Dimension {
     }
     else if (dimSetting instanceof Array) {
       if (dimSetting.length !== UC.Ucum.dimLen_) {
-        throw('Parameter error, incorrect length of vector passed to ' +
-        'Dimension constructor');
+        throw(new Error('Parameter error, incorrect length of vector passed to ' +
+        'Dimension constructor'));
       }
       this.dimVec_ = [];
       for (let d = 0; d < UC.Ucum.dimLen_; d++)
@@ -57,8 +57,8 @@ export class Dimension {
     // module.  :0
     else if (isInteger(dimSetting)) {
       if (dimSetting < 0 || dimSetting >= UC.Ucum.dimLen_) {
-        throw('Parameter error, invalid element number specified for ' +
-        'Dimension constructor');
+        throw(new Error('Parameter error, invalid element number specified for ' +
+        'Dimension constructor'));
       }
       this.dimVec_ = new Array(UC.Ucum.dimLen_);
       this.assignZero() ;
@@ -96,8 +96,8 @@ export class Dimension {
    */
   getDimensionLen() {
     if (UC.Ucum.dimLen_ == 0) {
-      throw('Dimension.setDimensionLen must be called before it can be ' +
-      'by Dimension.getLen');
+      throw(new Error('Dimension.setDimensionLen must be called before it can be ' +
+      'by Dimension.getLen'));
     }
     return UC.Ucum.dimLen_;
   }
@@ -115,8 +115,8 @@ export class Dimension {
 
     if (!Number.isInteger(indexPos) ||
         indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
-      throw(`Dimension.setElementAt called with an invalid index ` +
-      `position (${indexPos})`);
+      throw(new Error(`Dimension.setElementAt called with an invalid index ` +
+      `position (${indexPos})`));
     }
 
     if (this.dimVec_)
@@ -136,8 +136,8 @@ export class Dimension {
   getElementAt(indexPos) {
     if (!Number.isInteger(indexPos) ||
         indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
-      throw(`Dimension.getElementAt called with an invalid index ` +
-      `position (${indexPos})`);
+      throw(new Error(`Dimension.getElementAt called with an invalid index ` +
+      `position (${indexPos})`));
     }
     let ret = null;
     if (this.dimVec_)
@@ -162,7 +162,8 @@ export class Dimension {
     let uProp = (!(propertyName.endsWith('_'))) ? propertyName + '_' :
         propertyName ;
     if (!(this.hasOwnProperty(uProp)))
-      throw(`Dimension does not have requested property (${propertyName}`);
+      throw(new Error('Dimension does not have requested property ' +
+                      `(${propertyName})`));
     else
       return this[uProp] ;
 
@@ -197,8 +198,8 @@ export class Dimension {
    **/
   add(dim2) {
     if (!dim2 instanceof Dimension) {
-      throw(`Dimension.add called with an invalid parameter - ` +
-      `${typeof dim2} instead of a Dimension object`);
+      throw(new Error(`Dimension.add called with an invalid parameter - ` +
+      `${typeof dim2} instead of a Dimension object`));
     }
     if (this.dimVec_ && dim2.dimVec_) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++)
@@ -219,8 +220,8 @@ export class Dimension {
    **/
   sub(dim2) {
     if (!dim2 instanceof Dimension) {
-      throw(`Dimension.sub called with an invalid parameter - ` +
-      `${typeof dim2} instead of a Dimension object`);
+      throw(new Error(`Dimension.sub called with an invalid parameter - ` +
+      `${typeof dim2} instead of a Dimension object`));
     }
     if (this.dimVec_ && dim2.dimVec_) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++)
@@ -257,8 +258,8 @@ export class Dimension {
    */
   mul(s) {
     if (!isInteger(s)) {
-      throw(`Dimension.sub called with an invalid parameter - ` +
-      `${typeof dim2} instead of a number`);
+      throw(new Error(`Dimension.sub called with an invalid parameter - ` +
+      `${typeof dim2} instead of a number`));
     }
     if (this.dimVec_) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++)
@@ -280,8 +281,8 @@ export class Dimension {
    */
   equals(dim2) {
     if (!dim2 instanceof Dimension) {
-      throw(`Dimension.equals called with an invalid parameter - ` +
-      `${typeof dim2} instead of a Dimension object`);
+      throw(new Error(`Dimension.equals called with an invalid parameter - ` +
+      `${typeof dim2} instead of a Dimension object`));
     }
     let isEqual = true ;
     let dimVec2 = dim2.dimVec_;
@@ -310,8 +311,8 @@ export class Dimension {
    */
   assignDim(dim2) {
     if (!dim2 instanceof Dimension) {
-      throw(`Dimension.assignDim called with an invalid parameter - ` +
-      `${typeof dim2} instead of a Dimension object`);
+      throw(new Error(`Dimension.assignDim called with an invalid parameter - ` +
+      `${typeof dim2} instead of a Dimension object`));
     }
     let dimVec2 = dim2.dimVec_;
     if (this.dimVec_ === null && dimVec2 !== null) {
