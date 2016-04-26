@@ -3007,12 +3007,27 @@ module.exports = Number.isInteger || function(val) {
 };
 
 },{"is-finite":15}],17:[function(require,module,exports){
-var fs = require('fs')
+var _fs = require('fs')
 
 function readFile (file, options, callback) {
   if (callback == null) {
     callback = options
     options = {}
+  }
+
+  if (typeof options === 'string') {
+    options = {encoding: options}
+  }
+
+  options = options || {}
+  var fs = options.fs || _fs
+
+  var shouldThrow = true
+  // DO NOT USE 'passParsingErrors' THE NAME WILL CHANGE!!!, use 'throws' instead
+  if ('passParsingErrors' in options) {
+    shouldThrow = options.passParsingErrors
+  } else if ('throws' in options) {
+    shouldThrow = options.throws
   }
 
   fs.readFile(file, options, function (err, data) {
@@ -3022,8 +3037,12 @@ function readFile (file, options, callback) {
     try {
       obj = JSON.parse(data, options ? options.reviver : null)
     } catch (err2) {
-      err2.message = file + ': ' + err2.message
-      return callback(err2)
+      if (shouldThrow) {
+        err2.message = file + ': ' + err2.message
+        return callback(err2)
+      } else {
+        return callback(null, null)
+      }
     }
 
     callback(null, obj)
@@ -3036,7 +3055,16 @@ function readFileSync (file, options) {
     options = {encoding: options}
   }
 
-  var shouldThrow = 'throws' in options ? options.throws : true
+  var fs = options.fs || _fs
+
+  var shouldThrow = true
+  // DO NOT USE 'passParsingErrors' THE NAME WILL CHANGE!!!, use 'throws' instead
+  if ('passParsingErrors' in options) {
+    shouldThrow = options.passParsingErrors
+  } else if ('throws' in options) {
+    shouldThrow = options.throws
+  }
+
   var content = fs.readFileSync(file, options)
 
   try {
@@ -3056,6 +3084,8 @@ function writeFile (file, obj, options, callback) {
     callback = options
     options = {}
   }
+  options = options || {}
+  var fs = options.fs || _fs
 
   var spaces = typeof options === 'object' && options !== null
     ? 'spaces' in options
@@ -3074,6 +3104,7 @@ function writeFile (file, obj, options, callback) {
 
 function writeFileSync (file, obj, options) {
   options = options || {}
+  var fs = options.fs || _fs
 
   var spaces = typeof options === 'object' && options !== null
     ? 'spaces' in options
