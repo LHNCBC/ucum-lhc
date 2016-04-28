@@ -1281,7 +1281,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var fromMag = parseFloat(document.getElementById(numField).value);
       var toName = document.getElementById(toField).value;
       var codePos = toName.indexOf(Ucum.codeSep_);
-      if (codePos > 1) toName = toName.substr(0, codePos);
+      if (codePos > 0) toName = toName.substr(0, codePos);
       // create a from unit
       var resultMsg = '';
 
@@ -2334,7 +2334,7 @@ var UnitString = exports.UnitString = function () {
       // If that didn't work, peel off the exponent and try it
       // Don't look for an exponent for H2O - the regex expression pulls
       // out the 2 and messes this stuff up.
-      if (!origUnit && uCode.substr('m[H2O]') < 0) {
+      if (!origUnit && uCode.indexOf('m[H2O]') < 0) {
         var res = uCode.match(/([^-+\d]*)([-+\d]*)/);
 
         // if we got an exponent, separate it from the unit and try
