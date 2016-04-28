@@ -1224,13 +1224,13 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       try {
         var ret = this.getSpecifiedUnit(uStr);
         if (ret['unit']) {
-          retMsg = uStr + ' is a valid unit string';
+          retMsg = uStr + ' ';
           if (Array.isArray(ret['unit'])) {
             var aLen = ret['unit'].length;
             if (aLen === 1) {
-              retMsg += ' and is used, with a magnitude of ' + ret['unit'][0]['mag'] + ' to define the unit ' + ret['unit'][0]['unit']['name_'] + '.';
+              retMsg += ' is a valid unit string and is used, with a ' + 'magnitude of ' + ret['unit'][0]['mag'] + ' to define the unit ' + ret['unit'][0]['unit']['name_'] + '.';
             } else {
-              retMsg += ' and is used, with the magnitude shown, to define the ' + 'following units:';
+              retMsg += ' is a valid unit string and is used, with the ' + 'magnitude shown, to define the following units:';
               listMsg = '<table><th>magnitude</th><th>unit</th>';
 
               for (var i = 0; i < aLen; i++) {
@@ -1243,11 +1243,11 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
               valListFld.innerHTML = listMsg;
             }
           } else {
+
             if (ret['unit']['csUnitString_'] !== uStr) {
-              retMsg += ' and is used to define ' + ret['unit']['name_'];
-            } else {
-              retMsg += '.';
-            } // end if the returned unit is a predefined unit
+              retMsg += ' - ' + ret['unit']['name_'] + ' - ';
+            } // end if the returned unit is a predefined unit        }
+            retMsg += ' is a valid unit string.';
           } // end if the returned unit is/is not an array
         } else retMsg = ret['msg'];
       } catch (err) {
