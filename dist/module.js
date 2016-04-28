@@ -1455,12 +1455,16 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
           var commUnits = null;
           var utab = UnitTables.getInstance();
           if (dimVec) commUnits = utab.getUnitsByDimension(dimVec);
-          if (!commUnits) throw new Error(fromName + ' can not be converted to another UCUM unit.');
-          var cLen = commUnits.length;
-          var commNames = [];
-          for (var i = 0; i < cLen; i++) {
-            commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ + commUnits[i].getProperty('name_');
-          }this.toAuto_.setList(commNames);
+          // If we can't find any, don't panic.  The user could still enter one
+          // that's not on our list but is commensurable.  So if none are found,
+          // just move on.   Nothin' to see here.
+          if (commUnits) {
+            var cLen = commUnits.length;
+            var commNames = [];
+            for (var i = 0; i < cLen; i++) {
+              commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ + commUnits[i].getProperty('name_');
+            }this.toAuto_.setList(commNames);
+          }
         } catch (err) {
           resultMsg = err.message;
         }
