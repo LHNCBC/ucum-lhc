@@ -2345,10 +2345,17 @@ var UnitString = exports.UnitString = function () {
         // if we got an exponent, separate it from the unit and try
         // to get the unit again
         if (res && res[2] && res[2] !== "") {
-          uCode = res[1];
-          if (res[2] !== '') exp = res[2];
-
-          origUnit = utabs.getUnitByCode(uCode);
+          // Make sure that there were no characters after the last digit.
+          // If there are, the reassembled string ends at the last digit,
+          // dropping off everything after that.  Characters after an
+          // exponent (except for subsequent units after a division or
+          // multiplication operator) are invalid.
+          var reassemble = res[1] + res[2];
+          if (reassemble === uCode) {
+            uCode = res[1];
+            exp = res[2];
+            origUnit = utabs.getUnitByCode(uCode);
+          } // end if nothing followed the exponent (if there was one)
         } // end if we got an exponent
       } // end if we didn't get a unit for the full unit code
 
