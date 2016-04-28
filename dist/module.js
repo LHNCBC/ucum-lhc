@@ -1338,6 +1338,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     key: 'getSpecifiedUnit',
     value: function getSpecifiedUnit(uName) {
 
+      uName = uName.trim();
       var utab = UnitTables.getInstance();
       var retMsg = '';
       var theUnit = null;
