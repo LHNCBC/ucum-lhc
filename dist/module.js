@@ -677,8 +677,9 @@ function startup() {
   var utab = UnitTables.getInstance();
   var unames = utab.getUnitNamesList();
   var opts = { 'matchListValue': true };
-  var autoFrom = new Def.Autocompleter.Prefetch('convertFrom', unames); //, opts);
-  var autoTo = new Def.Autocompleter.Prefetch('convertTo', unames); //opts);
+  var autoFrom = new Def.Autocompleter.Prefetch('convertFrom', []); //, opts);
+  var autoTo = new Def.Autocompleter.Prefetch('convertTo', []); //opts);
+  var autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
   utils.setAutocompleters(autoFrom, autoTo);
 };
 
@@ -776,7 +777,7 @@ var Prefix = exports.Prefix = function () {
     }
 
     /**
-     * Returns the prefix string (code) for the current prefix object
+     * Returns the prefix code for the current prefix object
      * @return the code for the current prefix object
      */
 
@@ -784,6 +785,17 @@ var Prefix = exports.Prefix = function () {
     key: 'getCode',
     value: function getCode() {
       return this.code_;
+    }
+
+    /**
+     * Returns the prefix name for the current prefix object
+     * @return the name for the current prefix object
+     */
+
+  }, {
+    key: 'getName',
+    value: function getName() {
+      return this.name_;
     }
 
     /**
@@ -1205,6 +1217,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var uStr = document.getElementById(elementID).value;
       var valFld = document.getElementById(returnElementID);
       var valListFld = document.getElementById(validListID);
+      valFld.innerHTML = '';
       valListFld.innerHTML = '';
       var retMsg = '';
       var listMsg = '';
@@ -1231,7 +1244,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
             }
           } else {
             if (ret['unit']['csUnitString_'] !== uStr) {
-              retMsg += ' and is used to define ' + ret['unit']['name_'] + '.';
+              retMsg += ' and is used to define ' + ret['unit']['name_'];
             } else {
               retMsg += '.';
             } // end if the returned unit is a predefined unit
@@ -1267,6 +1280,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var fromName = document.getElementById(fromField).value;
       var fromMag = parseFloat(document.getElementById(numField).value);
       var toName = document.getElementById(toField).value;
+      var codePos = toName.indexOf(Ucum.codeSep_);
+      if (codePos > 1) toName = toName.substr(0, codePos);
       // create a from unit
       var resultMsg = '';
 
@@ -1327,12 +1342,24 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var retMsg = '';
       var theUnit = null;
 
-      // try first by unit name
+      // try parsing as a unit string
       try {
-        theUnit = utab.getUnitByName(uName);
+        var uStrParser = new UnitString();
+        theUnit = uStrParser.parseString(uName);
       } catch (err) {
         console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-        retMsg = 'An error occurred when trying to find ' + uName + '.';
+        if (retMsg !== '') retMsg += ' and ';
+        retMsg += uName + ' is not a valid unit.';
+      }
+
+      // then try by unit name
+      if ((theUnit === null || theUnit === undefined) && retMsg === '') {
+        try {
+          theUnit = utab.getUnitByName(uName);
+        } catch (err) {
+          console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
+          retMsg = 'An error occurred when trying to find ' + uName + '.';
+        }
       }
 
       // if that didn't work, try by unit code
@@ -1357,17 +1384,20 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         }
       } // end if no unit nor an error on attempt to find by name or code
 
-      // and finally, try parsing as a unit string
-      if ((theUnit === null || theUnit === undefined) && retMsg === '') {
-        try {
-          var uStrParser = new UnitString();
-          theUnit = uStrParser.parseString(uName);
-        } catch (err) {
-          console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-          if (retMsg !== '') retMsg += ' and ';
-          retMsg += uName + ' is not a valid unit.';
-        }
-      }
+      /*  // and finally, try parsing as a unit string
+        if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
+          try {
+            let uStrParser = new UnitString();
+            theUnit = uStrParser.parseString(uName);
+          }
+          catch(err) {
+            console.log(`Unit requested for unit string ${uName}.` +
+                'request unsuccessful; error thrown = ' + err.message);
+            if (retMsg !== '')
+              retMsg += ' and ';
+            retMsg += `${uName} is not a valid unit.` ;
+          }
+        }*/
       if ((theUnit === null || theUnit === undefined) && retMsg === '') {
         retMsg = 'Unable to find unit for name = ' + uName + '.';
       }
@@ -1397,6 +1427,9 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     value: function getCommensurables(fromField, toField, resultField) {
       var toFld = document.getElementById(toField);
       toFld.innerHTML = '';
+      this.toAuto_.setList('');
+      var resultString = document.getElementById(resultField);
+      resultString.innerHTML = '';
 
       var fromName = document.getElementById(fromField).value;
       var fromUnit = null;
@@ -1433,7 +1466,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         }
       } // end if we found a unit
       if (resultMsg) {
-        var resultString = document.getElementById(resultField);
         resultString.innerHTML = resultMsg;
       }
     } // end getCommensurables
@@ -2289,64 +2321,62 @@ var UnitString = exports.UnitString = function () {
       var pfxVal = null;
       var pfxCode = null;
       var pfxExp = null;
+      var pfxName = null;
       var ulen = uCode.length;
+      var origUnit = null;
+      var retUnit = null;
 
-      // if the code is only one character, no parsing needed. Also block m[H2O]
-      // because it just doesn't parse well and is a unit code in itself
-      if (ulen > 1 && uCode !== 'm[H2O]') {
-        // check for a prefix.  If we find one, move it and its value out of
-        // the uCode string.  Try for a single character prefix first and then
-        // try for a 2-character prefix if a single character prefix is not found.
-        var pfxTabs = PrefixTables.getInstance();
-        pfxCode = uCode.charAt(0);
-        var pfxObj = pfxTabs.getPrefixByCode(pfxCode);
-        if (!pfxObj && uCode.length >= 2) {
-          pfxCode = uCode.substr(0, 2);
-          pfxObj = pfxTabs.getPrefixByCode(pfxCode);
-        }
-        if (pfxObj) {
-          pfxVal = pfxObj.getValue();
-          pfxExp = pfxObj.getExp();
-          var pCodeLen = pfxCode.length;
-          uCode = uCode.substr(pCodeLen);
-          ulen -= pCodeLen;
-        } else {
-          pfxCode = null;
-        }
+      var utabs = UnitTables.getInstance();
 
-        // Now look for an exponent at the end of the unit
+      // First look for the full string
+      origUnit = utabs.getUnitByCode(uCode);
+
+      // If that didn't work, peel off the exponent and try it
+      if (!origUnit) {
         var res = uCode.match(/([^-+\d]*)([-+\d]*)/);
+
+        // if we got an exponent, separate it from the unit and try
+        // to get the unit again
         if (res && res[2] && res[2] !== "") {
           uCode = res[1];
           if (res[2] !== '') exp = res[2];
 
-          // check for something like m2 or the code being just a number
-          // in the case of m2, m was interpreted as a prefix (see fix below).
-          if (typeof uCode === 'number' && pfxCode) {
-            uCode = pfxCode;
-            pfxCode = null;
-            pfxVal = null;
-            pfxExp = null;
-          }
-        } // end if the unit code is longer than one character
-      } // end if we got a return from the exponent match search
+          origUnit = utabs.getUnitByCode(uCode);
+        } // end if we got an exponent
+      } // end if we didn't get a unit for the full unit code
 
-      var utabs = UnitTables.getInstance();
+      // if we still don't have a unit, separate out the prefix
+      // and try without it.
 
-      // go get the unit for the code (without prefix or exponent)
-      var origUnit = utabs.getUnitByCode(uCode);
-      // if we didn't find the unit but we do have a prefix, see if we're
-      // looking at a case where a base unit code was interpreted as a prefix,
-      // e.g., m2 or cd - Hm - this is not going to work for cd when the user
-      // enters it.   TODO.
-      if (!origUnit && pfxCode) {
-        uCode = pfxCode + uCode;
-        pfxCode = null;
-        pfxVal = null;
-        pfxExp = null;
-        origUnit = utabs.getUnitByCode(uCode);
-      }
-      var retUnit = null;
+      if (!origUnit) {
+
+        // Try for a single character prefix first and then
+        // try for a 2-character prefix if a single character prefix is not found.
+        var pfxTabs = PrefixTables.getInstance();
+        pfxCode = uCode.charAt(0);
+        var pfxObj = pfxTabs.getPrefixByCode(pfxCode);
+        if (!pfxObj && uCode.length > 2) {
+          pfxCode = uCode.substr(0, 2);
+          pfxObj = pfxTabs.getPrefixByCode(pfxCode);
+        }
+
+        // if we got a prefix, get its info and remove it from the unit code
+        if (pfxObj) {
+          pfxVal = pfxObj.getValue();
+          pfxExp = pfxObj.getExp();
+          pfxName = pfxObj.getName();
+          var pCodeLen = pfxCode.length;
+          uCode = uCode.substr(pCodeLen);
+          ulen -= pCodeLen;
+
+          // now try one more time for the unit
+          origUnit = utabs.getUnitByCode(uCode);
+        } // end if we found a prefix
+      } // end if we didn't get a unit after removing an exponent
+
+      // now, if we found a unit object, clone it and then apply the prefix
+      // and exponent, if any, to it.
+
       if (origUnit) {
         // clone the unit we just got and then apply any exponent and/or prefix
         // to it
@@ -2358,6 +2388,7 @@ var UnitString = exports.UnitString = function () {
         // and magnitude now
         if (exp) {
           exp = parseInt(exp);
+          var expMul = exp;
           theDim = theDim.mul(exp);
           theMag = Math.pow(theMag, exp);
           retUnit.assignVals({ 'magnitude_': theMag });
@@ -2370,8 +2401,8 @@ var UnitString = exports.UnitString = function () {
             // working with.  Then raise the prefix value to the level
             // defined by the exponent.
             if (pfxExp) {
-              exp *= pfxExp;
-              pfxVal = Math.pow(10, exp);
+              expMul *= pfxExp;
+              pfxVal = Math.pow(10, expMul);
             }
             // if the prefix base is not 10, it won't have an exponent.
             // At the moment I don't see any units using the prefixes
@@ -2385,6 +2416,16 @@ var UnitString = exports.UnitString = function () {
         if (pfxVal) {
           theMag *= pfxVal;
           retUnit.assignVals({ 'magnitude_': theMag });
+        }
+
+        // if we have a prefix and/or an exponent, add them to the unit name
+        if (pfxVal) {
+          theName = pfxName + theName;
+          retUnit.assignVals({ 'name_': theName });
+        }
+        if (exp) {
+          theName = theName + '<sup>' + exp.toString() + '</sup>';
+          retUnit.assignVals({ 'name_': theName });
         }
       } // end if we found a unit object
       return retUnit;
@@ -2420,6 +2461,12 @@ var UnitString = exports.UnitString = function () {
     value: function divString(s1, s2) {
       var ret = null;
       if (s2.length == 0) ret = s1;else {
+        var supPos = s2.indexOf('<sup>');
+        var s2Sup = null;
+        if (supPos > 0) {
+          s2Sup = s2.substr(supPos);
+          s2 = s2.substr(0, supPos);
+        }
         var t = s2.replace('/', '1').replace('.', '/').replace('1', '.');
 
         switch (t[0]) {
@@ -2432,6 +2479,7 @@ var UnitString = exports.UnitString = function () {
           default:
             ret = s1 + "/" + t;
         }
+        if (s2Sup) ret += s2Sup;
       }
       return ret;
     }
@@ -2829,8 +2877,7 @@ var UnitTables = exports.UnitTables = function () {
       codes.sort(this.compareCodes);
       var uLen = codes.length;
       for (var i = 0; i < uLen; i++) {
-        var uName = this.unitCodes_[codes[i]].name_;
-        nameList[i] = codes[i] + Ucum.codeSep_ + uName;
+        nameList[i] = codes[i] + Ucum.codeSep_ + this.unitCodes_[codes[i]].name_;
       } // end do for each code
       return nameList;
     }
