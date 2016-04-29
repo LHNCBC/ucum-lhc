@@ -2178,7 +2178,13 @@ var UnitString = exports.UnitString = function () {
    * Parses a unit string, returns a unit
    *
    * @params uStr the string defining the unit
-   * @returns a unit object, or null if problems creating the unit
+   * @returns a unit object, or null if there were problems creating the unit
+   * @throws an error if the unit string contains parentheses (not handled yet)
+   *  an error if at least one valid unit could not be derived from the string
+   *  an error if a non-unit & non-number was parsed as an individual element
+   *    from the string (shouldn't happen, but this is a safeguard)
+   *  any errors thrown by called methods (see makeUnit,
+   *  unit object division, multiplication, and getProperty)
    */
 
 
@@ -2220,8 +2226,7 @@ var UnitString = exports.UnitString = function () {
 
       // Process the units (and numbers) to create one final unit object
       if (uArray[0] == null || uArray == "'" || uArray[0]['un'] === undefined || uArray[0]['un'] == null) {
-        // assume this is an instance of /number or /something, e.g. "/24"
-        // not sure what to do with this yet
+        // not sure what this might be, but this is a safeguard
         throw new Error('Unit string (' + uStr + ') did not contain anything that ' + 'could be used to create a unit, or else something that is not ' + 'handled yet by this package.  Sorry');
       }
 
@@ -2236,7 +2241,8 @@ var UnitString = exports.UnitString = function () {
         }
 
         // Is the operation division?
-        var isDiv = uArray[u2]['op'] === '/';
+        var thisOp = uArray[u2]['op'];
+        var isDiv = thisOp === '/';
 
         // Perform the operation based on the type(s) of the operands
 
@@ -2249,20 +2255,26 @@ var UnitString = exports.UnitString = function () {
           else {
               var nMag = nextUnit.getProperty('magnitude_');
               isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
+              var theName = finalUnit.toString() + thisOp + nextUnit.getProperty('name_');
               finalUnit = nextUnit;
-              finalUnit.assignVals({ 'magnitude_': nMag });
+              finalUnit.assignVals({ 'name_': theName, 'magnitude_': nMag });
             }
         } // end if nextUnit is not a number
+
         else {
             // nextUnit is a number; finalUnit is a unit object
             if (typeof finalUnit !== 'number') {
               var fMag = finalUnit.getProperty('magnitude_');
               isDiv ? fMag /= nextUnit : fMag *= nextUnit;
-              finalUnit.assignVals({ 'magnitude_': fMag });
+              var _theName = finalUnit.getProperty('name_') + thisOp + nextUnit.toString();
+              finalUnit.assignVals({ 'name_': _theName, 'magnitude_': fMag });
             }
             // both are numbers
             else {
                 isDiv ? finalUnit /= nextUnit : finalUnit *= nextUnit;
+                var _theName2 = finalUnit.toString() + thisOp + nextUnit.toString();
+                // well great - now what?  I don't have anywhere to put this.
+                // TODO: figure out where the heck to put this.
               }
           } // end if nextUnit is a number
       } // end do for each unit after the first one
