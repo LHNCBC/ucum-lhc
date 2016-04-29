@@ -91,23 +91,24 @@ export class UcumLhcUtils {
     let uStr = document.getElementById(elementID).value;
     let valFld = document.getElementById(returnElementID);
     let valListFld = document.getElementById(validListID);
+    valFld.innerHTML = '';
     valListFld.innerHTML = '';
     let retMsg = '';
     let listMsg = '';
     try {
       let ret = this.getSpecifiedUnit(uStr);
       if (ret['unit']) {
-        retMsg = `${uStr} is a valid unit string`;
+        retMsg = `${uStr} `;
         if (Array.isArray(ret['unit'])) {
           let aLen = ret['unit'].length ;
           if (aLen === 1) {
-            retMsg += ' and is used, with a magnitude of ' +
-                      ret['unit'][0]['mag'] + ' to define the unit ' +
-                      ret['unit'][0]['unit']['name_'] + '.';
+            retMsg += ' is a valid unit string and is used, with a ' +
+                      'magnitude of ' + ret['unit'][0]['mag'] +
+                      ' to define the unit ' + ret['unit'][0]['unit']['name_'] + '.';
           }
           else {
-            retMsg += ' and is used, with the magnitude shown, to define the ' +
-                'following units:';
+            retMsg += ' is a valid unit string and is used, with the ' +
+                      'magnitude shown, to define the following units:';
             listMsg = '<table><th>magnitude</th><th>unit</th>';
 
             for (let i = 0; i < aLen; i++) {
@@ -123,12 +124,12 @@ export class UcumLhcUtils {
           }
         }
         else {
+
           if (ret['unit']['csUnitString_'] !== uStr) {
-            retMsg += ' and is used to define ' + ret['unit']['name_'] + '.';
-          }
-          else {
-            retMsg += '.';
-          } // end if the returned unit is a predefined unit
+            retMsg += ' - ' + ret['unit']['name_'] + ' - ' ;
+          } // end if the returned unit is a predefined unit        }
+          retMsg += ' is a valid unit string.';
+
         } // end if the returned unit is/is not an array
       }
       else
@@ -141,7 +142,6 @@ export class UcumLhcUtils {
     valFld.innerHTML = retMsg;
 
   } // end reportUnitStringValidity
-
 
 
   /**
@@ -165,6 +165,9 @@ export class UcumLhcUtils {
     let fromName = document.getElementById(fromField).value ;
     let fromMag = parseFloat(document.getElementById(numField).value);
     let toName = document.getElementById(toField).value;
+    let codePos = toName.indexOf(Ucum.codeSep_);
+    if (codePos > 0)
+      toName = toName.substr(0, codePos);
     // create a from unit
     let resultMsg = '';
 
@@ -221,21 +224,38 @@ export class UcumLhcUtils {
    * @returns {{unit: the unit found for the string or null if not found,
    *            msg: a message indicating success or failure, with details}}
    */
-
   getSpecifiedUnit(uName) {
 
+    uName = uName.trim();
     let utab = UnitTables.getInstance();
     let retMsg = '';
     let theUnit = null;
 
-    // try first by unit name
+    // try parsing as a unit string
     try {
-      theUnit = utab.getUnitByName(uName)
+      let uStrParser = new UnitString();
+      theUnit = uStrParser.parseString(uName);
     }
     catch(err) {
       console.log(`Unit requested for unit string ${uName}.` +
           'request unsuccessful; error thrown = ' + err.message);
-      retMsg = `An error occurred when trying to find ${uName}.`;
+      if (retMsg !== '')
+        retMsg += ' and ';
+      retMsg += `${uName} is not a valid unit.` ;
+    }
+
+    // ACTUALLY - we're not using the rest of the checks at this point,
+    // but I'm leaving them in to see if we will at some poin.
+    // then try by unit name
+    if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
+      try {
+        theUnit = utab.getUnitByName(uName)
+      }
+      catch (err) {
+        console.log(`Unit requested for unit string ${uName}.` +
+            'request unsuccessful; error thrown = ' + err.message);
+        retMsg = `An error occurred when trying to find ${uName}.`;
+      }
     }
 
     // if that didn't work, try by unit code
@@ -266,20 +286,6 @@ export class UcumLhcUtils {
       }
     } // end if no unit nor an error on attempt to find by name or code
 
-    // and finally, try parsing as a unit string
-    if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
-      try {
-        let uStrParser = new UnitString();
-        theUnit = uStrParser.parseString(uName);
-      }
-      catch(err) {
-        console.log(`Unit requested for unit string ${uName}.` +
-            'request unsuccessful; error thrown = ' + err.message);
-        if (retMsg !== '')
-          retMsg += ' and ';
-        retMsg += `${uName} is not a valid unit.` ;
-      }
-    }
     if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
       retMsg = `Unable to find unit for name = ${uName}.`;
     }
@@ -309,6 +315,9 @@ export class UcumLhcUtils {
   getCommensurables(fromField, toField, resultField) {
     let toFld = document.getElementById(toField);
     toFld.innerHTML = '';
+    this.toAuto_.setList('');
+    let resultString = document.getElementById(resultField);
+    resultString.innerHTML = '';
 
     let fromName = document.getElementById(fromField).value;
     let fromUnit = null;
@@ -336,21 +345,23 @@ export class UcumLhcUtils {
         let utab = UnitTables.getInstance();
         if (dimVec)
           commUnits = utab.getUnitsByDimension(dimVec);
-        if (!commUnits)
-          throw (new Error(`${fromName} can not be converted to another UCUM unit.`));
-        let cLen = commUnits.length;
-        let commNames = [];
-        for (let i = 0; i < cLen; i++)
-          commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ +
-              commUnits[i].getProperty('name_');
-        this.toAuto_.setList(commNames)
+        // If we can't find any, don't panic.  The user could still enter one
+        // that's not on our list but is commensurable.  So if none are found,
+        // just move on.   Nothin' to see here.
+        if (commUnits) {
+          let cLen = commUnits.length;
+          let commNames = [];
+          for (let i = 0; i < cLen; i++)
+            commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ +
+                commUnits[i].getProperty('name_');
+          this.toAuto_.setList(commNames)
+        }
       }
       catch (err) {
         resultMsg = err.message;
       }
     } // end if we found a unit
     if (resultMsg) {
-      let resultString = document.getElementById(resultField);
       resultString.innerHTML = resultMsg ;
     }
   } // end getCommensurables

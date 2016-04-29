@@ -394,8 +394,7 @@ export class UnitTables {
     codes.sort(this.compareCodes) ;
     let uLen = codes.length;
     for (let i = 0; i < uLen; i++) {
-      let uName = this.unitCodes_[codes[i]].name_
-      nameList[i] = codes[i] + Ucum.codeSep_ + uName ;
+      nameList[i] = codes[i] + Ucum.codeSep_ + this.unitCodes_[codes[i]].name_
     } // end do for each code
     return nameList ;
   }

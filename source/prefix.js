@@ -83,11 +83,20 @@ export class Prefix {
 
 
   /**
-   * Returns the prefix string (code) for the current prefix object
+   * Returns the prefix code for the current prefix object
    * @return the code for the current prefix object
    */
   getCode() {
     return this.code_;
+  }
+
+
+  /**
+   * Returns the prefix name for the current prefix object
+   * @return the name for the current prefix object
+   */
+  getName() {
+    return this.name_;
   }
 
 
