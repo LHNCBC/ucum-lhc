@@ -121,6 +121,8 @@ export class UnitString{
           let theName = finalUnit.toString() + thisOp + nextUnit.toString();
           // well great - now what?  I don't have anywhere to put this.
           // TODO: figure out where the heck to put this.
+          throw (new Error(`Unit string (${uStr}) contains 2 adjoining ` +
+                 `elements that are numbers.  At least one must be a unit.`));
         }
       } // end if nextUnit is a number
     } // end do for each unit after the first one
