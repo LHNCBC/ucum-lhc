@@ -54,8 +54,8 @@ export class UcumXmlDocument {
   parseXml() {
 
     this.parsePrefixes(xmlInput_.childrenNamed("prefix"));
-    this.parseUnitStrings(xmlInput_.childrenNamed("base-unit")) ;
-    this.parseUnitAtoms(xmlInput_.childrenNamed("unit")) ;
+    this.parseBaseUnits(xmlInput_.childrenNamed("base-unit")) ;
+    this.parseUnitStrings(xmlInput_.childrenNamed("unit")) ;
 
     // Create the json file of the prefix and unit definitions
     this.writeJsonFile();
@@ -127,17 +127,17 @@ export class UcumXmlDocument {
    * Creates base unit objects from the xml nodes passed in and adds
    * them to the unit tables.
    *
-   * @params UnitStrings the array of base unit nodes from the xml file, in the
+   * @params unitNodes the array of base unit nodes from the xml file, in the
    *  order in which the nodes are defined in that file.  (Order is important
    *  for all units).
    *
    * @returns nothing
    */
-  parseUnitStrings(unitStrings) {
-    let blen = unitStrings.length ;
+  parseBaseUnits(unitNodes) {
+    let blen = unitNodes.length ;
     let utab = Utab.UnitTables.getInstance() ;
     for (let b = 0; b < blen; b++) {
-      let curBUnit = unitStrings[b];
+      let curBUnit = unitNodes[b];
       let attrs = {} ;
       attrs['isBase_'] = true ;
       attrs['name_'] = curBUnit.childNamed('name').val ;
@@ -150,24 +150,24 @@ export class UcumXmlDocument {
       let newUnit = new Un.Unit(attrs);
       utab.addUnit(newUnit) ;
     }
-  } // end parseUnitStrings
+  } // end parseBaseUnits
 
 
   /**
    * Creates non-base unit objects from the xml nodes passed in and adds
    * them to the unit tables.
    *
-   * @params unitAtoms the array of non-base unit nodes from the xml file, in the
+   * @params unitStrings the array of non-base unit nodes from the xml file, in the
    *  order in which the nodes are defined in that file.  (Order is important
    *  for all units).
    *
    * @returns nothing
    */
-  parseUnitAtoms(unitAtoms) {
+  parseUnitStrings(unitStrings) {
 
     let utab = Utab.UnitTables.getInstance() ;
     let uStrParser = new Us.UnitString();
-    let alen = unitAtoms.length ;
+    let alen = unitStrings.length ;
     for (let a = 0; a < alen; a++) {
       let haveUnit = true;
       let curUA = unitAtoms[a];
@@ -405,7 +405,7 @@ export class UcumXmlDocument {
       } // end if have a parsed unit
     } // end for a => - to alen
 
-  } // end parseUnitAtoms
+  } // end parseUnitStrings
 
 
   /**

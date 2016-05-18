@@ -73,7 +73,7 @@ export class UnitTables {
     /**
      * Tracks units by Dimension vector
      *
-     * @type hash - key is the dimension vector (not the objeect, just the
+     * @type hash - key is the dimension vector (not the object, just the
      *              vector);
      *              value is an array of references to the Unit objects
      *              with that vector.  More than one unit may have the same
@@ -113,7 +113,8 @@ export class UnitTables {
    *
    * @param theUnit the unit to be added
    * @returns nothing
-   * @throws passes on an error if one is thrown by the called functions
+   * @throws passes on an error if one is thrown by the called functions for
+   *  a problem with the unit code or unit name
    */
   addUnit(theUnit) {
 
@@ -131,6 +132,7 @@ export class UnitTables {
     }
     catch(err){
       // do nothing - throws error if the property is null
+      // and that's OK here.
     }
 
   } // end addUnit
@@ -370,7 +372,6 @@ export class UnitTables {
   } // end getUnitsByDimension
 
 
-
   /**
    * Gets a list of all unit names in the Unit tables
    *
@@ -399,6 +400,15 @@ export class UnitTables {
     return nameList ;
   }
 
+
+  /**
+   * This provides a sort function for unit codes so that sorting ignores
+   * square brackets and case.
+   *
+   * @param a first value
+   * @param b second value
+   * @returns -1 if a is should fall before b; otherwise 1.
+   */
   compareCodes(a, b) {
     a = a.replace(/[\[\]]/g, '');
     a = a.toLowerCase();
@@ -406,6 +416,7 @@ export class UnitTables {
     b = b.toLowerCase();
     return (a < b) ? -1 : 1 ;
   }
+
 
   /**
    * Gets a list of all unit codes in the Unit tables

@@ -18,12 +18,12 @@ export class UnitString{
    *
    * @params uStr the string defining the unit
    * @returns a unit object, or null if there were problems creating the unit
-   * @throws an error if the unit string contains parentheses (not handled yet)
-   *  an error if at least one valid unit could not be derived from the string
+   * @throws an error if the unit string contains parentheses (not handled yet);
+   *  an error if at least one valid unit could not be derived from the string;
    *  an error if a non-unit & non-number was parsed as an individual element
-   *    from the string (shouldn't happen, but this is a safeguard)
+   *    from the string (shouldn't happen, but this is a safeguard);
    *  any errors thrown by called methods (see makeUnit,
-   *  unit object division, multiplication, and getProperty)
+   *    unit object division, multiplication, and getProperty).
    */
   parseString(uStr) {
     let finalUnit = null ;

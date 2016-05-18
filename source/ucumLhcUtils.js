@@ -82,65 +82,24 @@ export class UcumLhcUtils {
    *  string to be validated
    * @param returnElementID the ID of the web page element to receive the
    *  return validation message
-   * @param validListID the ID of the web page element to receive a list
-   *  of units that match the string when there are multiple elements
    * @returns nothing
    */
-  reportUnitStringValidity(elementID, returnElementID, validListID) {
+  reportUnitStringValidity(elementID, returnElementID) {
 
     let uStr = document.getElementById(elementID).value;
     let valFld = document.getElementById(returnElementID);
-    let valListFld = document.getElementById(validListID);
     valFld.innerHTML = '';
-    valListFld.innerHTML = '';
     let retMsg = '';
-    let listMsg = '';
+
     try {
       let ret = this.getSpecifiedUnit(uStr);
-      if (ret['unit']) {
-        retMsg = `${uStr} `;
-        if (Array.isArray(ret['unit'])) {
-          let aLen = ret['unit'].length ;
-          if (aLen === 1) {
-            retMsg += ' is a valid unit string and is used, with a ' +
-                      'magnitude of ' + ret['unit'][0]['mag'] +
-                      ' to define the unit ' + ret['unit'][0]['unit']['name_'] + '.';
-          }
-          else {
-            retMsg += ' is a valid unit string and is used, with the ' +
-                      'magnitude shown, to define the following units:';
-            listMsg = '<table><th>magnitude</th><th>unit</th>';
-
-            for (let i = 0; i < aLen; i++) {
-              let aHash = ret['unit'][i];
-              if (aHash['unit'])
-                aHash = aHash['unit'];
-              listMsg += '<tr><td>' + aHash['magnitude_'] + '</td>';
-              listMsg += '<td>' + aHash['csCode_'] + ' - ' +
-                  aHash['name_'] + '</td></tr>';
-            }
-            listMsg += '</table>';
-            valListFld.innerHTML = listMsg;
-          }
-        }
-        else {
-
-          if (ret['unit']['csUnitString_'] !== uStr) {
-            retMsg += ' - ' + ret['unit']['name_'] + ' - ' ;
-          } // end if the returned unit is a predefined unit        }
-          retMsg += ' is a valid unit string.';
-
-        } // end if the returned unit is/is not an array
-      }
-      else
-        retMsg = ret['msg'];
+      if (ret)
+        retMsg = `${uStr} is a valid unit.` ;
     }
     catch(err) {
       retMsg = err.message
     }
-
     valFld.innerHTML = retMsg;
-
   } // end reportUnitStringValidity
 
 
@@ -173,22 +132,11 @@ export class UcumLhcUtils {
 
     try {
       let fromUnit = null;
-      fromUnit = this.getSpecifiedUnit(fromName)['unit'];
-      if (Array.isArray(fromUnit)) {
-        fromUnit = fromUnit[0];
-        if (fromUnit['unit']) {
-          fromUnit = fromUnit['unit']
-        }
-      }
+      fromUnit = this.getSpecifiedUnit(fromName);
 
       let toUnit = null;
-      toUnit = this.getSpecifiedUnit(toName)['unit'];
-      if (Array.isArray(toUnit)) {
-        toUnit = toUnit[0];
-        if (toUnit['unit']) {
-          toUnit = toUnit['unit'];
-        }
-      }
+      toUnit = this.getSpecifiedUnit(toName);
+
       if (fromUnit && toUnit) {
         try {
           let toMag = toUnit.convertFrom(fromMag, fromUnit);
@@ -214,15 +162,12 @@ export class UcumLhcUtils {
 
 
   /**
-   * This method takes a unit string and gets (or tries to get) the unit
-   * represented by the string.   Using the string as the search criteria, it
-   * tries the unit names table first.  If not found there, it tries the
-   * unit codes table. If not found there it tries the unit strings table.
-   * And if not found there, it tries to parse the string into a valid unit.
+   * This method parses a unit string to gets (or try to get) the unit
+   * represented by the string.
    *
    * @param uName the string representing the unit
-   * @returns {{unit: the unit found for the string or null if not found,
-   *            msg: a message indicating success or failure, with details}}
+   * @returns the unit found for the string or null if not found
+   * @throws a message if the unit is not found
    */
   getSpecifiedUnit(uName) {
 
@@ -244,55 +189,14 @@ export class UcumLhcUtils {
       retMsg += `${uName} is not a valid unit.` ;
     }
 
-    // ACTUALLY - we're not using the rest of the checks at this point,
-    // but I'm leaving them in to see if we will at some poin.
-    // then try by unit name
-    if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
-      try {
-        theUnit = utab.getUnitByName(uName)
-      }
-      catch (err) {
-        console.log(`Unit requested for unit string ${uName}.` +
-            'request unsuccessful; error thrown = ' + err.message);
-        retMsg = `An error occurred when trying to find ${uName}.`;
-      }
-    }
-
-    // if that didn't work, try by unit code
-    if (theUnit === null && retMsg === '') {
-      try {
-        theUnit = utab.getUnitByCode(uName);
-      }
-      catch(err) {
-        console.log(`Unit requested for unit string ${uName}.` +
-            'request unsuccessful; error thrown = ' + err.message);
-        if (retMsg !== '')
-          retMsg += ' and ';
-        retMsg += `${uName} is not a valid unit.` ;
-      }
-    } // end if no unit nor an error on attempt to find by name
-
-    // if that didn't work, try by unit string
-    if ((theUnit === null || theUnit === undefined) && retMsg === '') {
-      try {
-        theUnit = utab.getUnitByString(uName);
-      }
-      catch(err) {
-        console.log(`Unit requested for unit string ${uName}.` +
-            'request unsuccessful; error thrown = ' + err.message);
-        if (retMsg !== '')
-          retMsg += ' and ';
-        retMsg += `${uName} is not a valid unit.` ;
-      }
-    } // end if no unit nor an error on attempt to find by name or code
-
+    // if no error was thrown but no unit was found, create a not found message
     if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
       retMsg = `Unable to find unit for name = ${uName}.`;
     }
     if (retMsg !== '')
       throw (new Error(retMsg));
 
-    return {'unit': theUnit, 'msg': retMsg};
+    return theUnit;
 
   } // end getSpecifiedUnit
 
@@ -323,13 +227,7 @@ export class UcumLhcUtils {
     let fromUnit = null;
     let resultMsg = null;
     try {
-      fromUnit = this.getSpecifiedUnit(fromName)['unit'];
-      if (Array.isArray(fromUnit)) {
-        fromUnit = fromUnit[0];
-        if (fromUnit['unit']) {
-          fromUnit = fromUnit['unit']
-        }
-      }
+      fromUnit = this.getSpecifiedUnit(fromName);
       if (!fromUnit) {
         throw (new Error(`Could not find unit ${fromName}.`));
       }
