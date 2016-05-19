@@ -6,7 +6,7 @@
  *
  */
 
-var UC = require('./config.js');
+var Ucum = require('./config.js').Ucum;
 
 export class UnitTables {
 
@@ -62,22 +62,33 @@ export class UnitTables {
     this.codeOrder_ = [] ;
 
     /**
+     * Tracks units by unit strings, e.g., cm-1
+     *
+     * @type hash - key is the unit string
+     *              value is an array of magnitude/unit reference objects
+     *              with that unit string.
+     */
+    this.unitStrings_ = {};
+
+    /**
      * Tracks units by Dimension vector
      *
-     * @type hash - key is the dimension vector;
-     *              value is the reference to the Unit object
-     * I don't think we want this.  Leave this here just in case it turns
-     * out that we do.
+     * @type hash - key is the dimension vector (not the object, just the
+     *              vector);
+     *              value is an array of references to the Unit objects
+     *              with that vector.  More than one unit may have the same
+     *              unit vector, and this can be used to provide a list
+     *              of commensurable units.
      */
-    //this.unitDims_ = {};
+    this.unitDimensions_ = {};
 
     // Make this a singleton - from mrme44 May 18 comment on
     // on GitHub Gist page of SanderLi/Singleton.js.  Modified
     // for this class.
 
     let holdThis = UnitTables.prototype;
-    UnitTables = function(){throw "UnitTables is a Singleton.  " +
-                                  'Use UnitTables.getInstance() instead.'};
+    UnitTables = function(){throw (new Error("UnitTables is a Singleton.  " +
+                                  'Use UnitTables.getInstance() instead.'))};
     if (exports)
       exports.UnitTables = UnitTables ;
     UnitTables.prototype = holdThis;
@@ -102,22 +113,28 @@ export class UnitTables {
    *
    * @param theUnit the unit to be added
    * @returns nothing
-   * @throws passes on an error if one is thrown by the called functions
+   * @throws passes on an error if one is thrown by the called functions for
+   *  a problem with the unit code or unit name
    */
   addUnit(theUnit) {
+
     let uName = theUnit['name_'] ;
     if (uName) {
       this.addUnitName(theUnit);
     }
 
-    let uCode = null ;
-    if (UC.Ucum.caseSensitive_ == true)
-      uCode = theUnit['csCode_'] ;
-    else
-      uCode = theUnit['ciCode_'] ;
-    if (uCode) {
-      this.addUnitCode(theUnit);
+    this.addUnitCode(theUnit);
+    this.addUnitString(theUnit);
+
+    try {
+      if (theUnit['dim_'].getProperty('dimVec_'))
+        this.addUnitDimension(theUnit);
     }
+    catch(err){
+      // do nothing - throws error if the property is null
+      // and that's OK here.
+    }
+
   } // end addUnit
 
 
@@ -144,8 +161,8 @@ export class UnitTables {
         this.unitNames_[uName] = [theUnit];
     }
     else
-      throw('UnitTables.addUnitName called for a unit with no name.  ' +
-            `Unit code = ${theUnit['csCode_']}.`);
+      throw(new Error('UnitTables.addUnitName called for a unit with no name.  ' +
+            `Unit code = ${theUnit['csCode_']}.`));
 
   } // end addUnitName
 
@@ -162,77 +179,80 @@ export class UnitTables {
   addUnitCode(theUnit) {
 
     let uCode = null;
-    if (UC.Ucum.caseSensitive_ == true)
+    if (Ucum.caseSensitive_ == true)
       uCode = theUnit['csCode_'];
     else
       uCode = theUnit['ciCode_'];
 
     if (uCode) {
       if (this.unitCodes_[uCode])
-        throw(`UnitTables.addUnitCode called, already contains entry for ` +
-              `unit with code = ${uCode}`);
+        throw(new Error(`UnitTables.addUnitCode called, already contains entry for ` +
+              `unit with code = ${uCode}`));
       else {
         this.unitCodes_[uCode] = theUnit;
         this.codeOrder_.push(uCode);
       }
     }
     else
-      throw('UnitAtomsTable.addUnitCode called for unit that has no code.') ;
+      throw(new Error('UnitAtomsTable.addUnitCode called for unit that has ' +
+                      'no code.')) ;
 
   } // end addUnitCode
 
 
   /**
-   *  Returns a array of unit objects based on the unit's name.  Usually this
-   *  will be an array of one, but there may be more, since unit names are
-   *  not necessarily unique.
+   * Adds a magnitude:unit object to the unitStrings_ table.  More than one unit
+   * can have the same string, so an array of magnitude:unit objects is stored
+   * for the string.
    *
-   *  @param name the name of the unit to be returned.  If more than one
-   *  unit has the same name, append the csCode of the unit you want to
-   *  the end of the name, enclosed in parentheses, e.g., inch ([in_i]) vs.
-   *  inch ([in_us]).
-   *  @returns null if no unit was found for the specified name OR an array of
-   *  unit objects with the specified name.  Normally this will be an array
-   *  of one object.
+   * If the unit has no string, nothing is stored and no error is reported.
+   *
+   * @param theUnit the unit to be added
+   * @returns nothing
    */
-  getUnitByName(uName) {
+  addUnitString(theUnit) {
 
-    let retUnit = null ;
-    if (uName) {
-      let unitsArray = this.unitNames_[uName] ;
-      if (unitsArray !== undefined && unitsArray !== null) {
-        retUnit = unitsArray;
-      }
-      // Else we didn't find an entry with the specified name.  That should be
-      // because the name has a code in parentheses after it.  Separate the
-      // name and the code and try again.
-      else {
-        let parenPos = uName.indexOf('(');
-        if (parenPos < 1) {
-          console.log('error on finding unit by name with name = ' +
-                      uName + ' and no parentheses (or paren at the start');
-        }
-        else {
-          let dupName = uName.substring(0, parenPos - 1);
-          let nameCode = uName.substring(parenPos + 1, uName.length - 1);
-          unitsArray = this.unitNames_[dupName] ;
-          if (unitsArray.length < 2)
-            console.log('error on finding unit by name with name = ' + uName);
-          else {
-            let u = 0;
-            let aLen = unitsArray.length;
-            for (; unitsArray[u].csCode_ !== nameCode && u < aLen; u++);
-            if (u < aLen)
-              retUnit = unitsArray;
-            else
-              console.log('error on finding unit by name with dupName = ' +
-                  dupName + '; nameCode = ' + nameCode);
-          }
-        } // end if we found parentheses in the name
-      } // end if we didn't find anything with the original name passed in
-    } // end if a name was passed in
-    return retUnit ;
-  }
+    let uString = null;
+    if (Ucum.caseSensitive_ == true)
+      uString = theUnit['csUnitString_'];
+    else
+      uString = theUnit['ciUnitString_'];
+
+    if (uString) {
+      let uEntry = {mag: theUnit['baseFactorStr_'], unit: theUnit};
+      if (this.unitStrings_[uString])
+        this.unitStrings_[uString].push(uEntry);
+      else
+        this.unitStrings_[uString] = [uEntry];
+    }
+  } // end addUnitString
+
+
+  /**
+   * Adds a Unit object to the unitDimensions_ table.  More than one unit
+   * can have the same dimension (commensurable units have the same dimension).
+   * Because of this, an array of unit objects is stored for the
+   * dimension.
+   *
+   * @param theUnit the unit to be added
+   * @returns nothing
+   * @throws an error if the unit has no dimension
+   */
+  addUnitDimension(theUnit) {
+
+    let uDim = theUnit['dim_'].getProperty('dimVec_');
+
+    if (uDim) {
+      if (this.unitDimensions_[uDim])
+        this.unitDimensions_[uDim].push(theUnit);
+      else
+        this.unitDimensions_[uDim] = [theUnit];
+    }
+    else
+      throw(new Error('UnitTables.addUnitDimension called for a unit with no dimension.  ' +
+          `Unit code = ${theUnit['csCode_']}.`));
+
+  } // end addUnitDimension
 
 
   /**
@@ -245,9 +265,111 @@ export class UnitTables {
     let retUnit = null ;
     if (uCode) {
       retUnit = this.unitCodes_[uCode] ;
+      if (retUnit === undefined)
+        retUnit = null;
     }
     return retUnit ;
   }
+
+
+  /**
+   *  Returns a array of unit objects based on the unit's name.  Usually this
+   *  will be an array of one, but there may be more, since unit names are
+   *  not necessarily unique.
+   *
+   *  @param uName the name of the unit to be returned.  If more than one
+   *  unit has the same name, append the csCode of the unit you want to
+   *  the end of the name, enclosed in parentheses, e.g., inch ([in_i]) vs.
+   *  inch ([in_us]).
+   *  @returns null if no unit was found for the specified name OR an array of
+   *  unit objects with the specified name.  Normally this will be an array
+   *  of one object.
+   *  @throws an error if no name is provided to search on
+   *  logs an error to the console if no unit is found
+   */
+  getUnitByName(uName) {
+
+    let retUnit = null ;
+    if (uName === null || uName === undefined) {
+      throw (new Error('Unable to find unit by because when no name was provided.'));
+    }
+    let sepPos = uName.indexOf(Ucum.codeSep_);
+    let uCode = null;
+    if (sepPos >= 1) {
+      uCode = uName.substr(0, sepPos);
+      uName = uName.substr(sepPos + Ucum.codeSep_.length);
+    }
+    let unitsArray = this.unitNames_[uName] ;
+    if (unitsArray === undefined || unitsArray === null) {
+      console.log(`Unable to find unit with name = ${uName}`);
+    }
+    else {
+      let uLen = unitsArray.length;
+      if (uLen === 1)
+        retUnit = unitsArray[0];
+      else if (uCode === null) {
+        retUnit = unitsArray;
+      }
+      else {
+        let i = 0;
+        for (; unitsArray[i].csCode_ !== uCode && i < uLen; i++);
+        if (i < uLen)
+          retUnit = unitsArray[i];
+        else
+          console.log(`Unable to find unit with name = ${uName} amd ` +
+                      `unit code = ${uCode}`);
+      }
+    }
+    return retUnit ;
+
+  } // end getUnitByName
+
+
+  /**
+   *  Returns an array of unit objects with the specified unit string.
+   *  The array may contain one or more magnitude:unit reference objects.
+   *  Or none, if no units have a matching unit string (which is not
+   *  considered an error)
+   *
+   *  @param name the name of the unit to be returned
+   *  @returns the array of magnitude:unit references or null if none were found
+   */
+  getUnitByString(uString) {
+    let retAry = null ;
+    if (uString) {
+      retAry = this.unitStrings_[uString] ;
+      if (retAry === undefined)
+        retAry = null;
+    }
+    return retAry ;
+  }
+
+
+  /**
+   *  Returns a array of unit objects based on the unit's dimension vector.
+   *
+   *  @param uName the deimension vector of the units to be returned.
+   *
+   *  @returns null if no unit was found for the specified vector OR an array of
+   *  unit objects with the specified vector.
+   *  @throws an error if no vector is provided to search on
+   *  logs an error to the console if no unit is found
+   */
+  getUnitsByDimension(uDim) {
+
+    let unitsArray = null ;
+    if (uDim === null || uDim === undefined) {
+      throw (new Error('Unable to find unit by because when no dimension ' +
+                       'vector was provided.'));
+    }
+
+    unitsArray = this.unitDimensions_[uDim] ;
+    if (unitsArray === undefined || unitsArray === null) {
+      console.log(`Unable to find unit with dimension = ${uDim}`);
+    }
+    return unitsArray ;
+
+  } // end getUnitsByDimension
 
 
   /**
@@ -269,23 +391,30 @@ export class UnitTables {
    */
   getUnitNamesList() {
     let nameList = [];
-    let keys = this.getAllUnitNames();
-    keys.sort() ;
-    let uLen = keys.length;
-    for (let i = 0, n = 0; i < uLen; i++, n++) {
-      let curKeyAry = this.unitNames_[keys[i]];
-      if (curKeyAry.length === 1)
-        nameList[n] = keys[i];
-      else {
-        let kLen = curKeyAry.length ;
-        for (let k = 0; k < kLen; k++) {
-          nameList[n++] = keys[i] + ' (' +
-              curKeyAry[k].csCode_ + ')';
-        }
-        n -= 1;
-      } // end for names with multiple codes
-    } // end do for each name
+    let codes = Object.keys(this.unitCodes_);
+    codes.sort(this.compareCodes) ;
+    let uLen = codes.length;
+    for (let i = 0; i < uLen; i++) {
+      nameList[i] = codes[i] + Ucum.codeSep_ + this.unitCodes_[codes[i]].name_
+    } // end do for each code
     return nameList ;
+  }
+
+
+  /**
+   * This provides a sort function for unit codes so that sorting ignores
+   * square brackets and case.
+   *
+   * @param a first value
+   * @param b second value
+   * @returns -1 if a is should fall before b; otherwise 1.
+   */
+  compareCodes(a, b) {
+    a = a.replace(/[\[\]]/g, '');
+    a = a.toLowerCase();
+    b = b.replace(/[\[\]]/g, '');
+    b = b.toLowerCase();
+    return (a < b) ? -1 : 1 ;
   }
 
 
@@ -368,8 +497,8 @@ export class UnitTables {
       else {
         unitString += 'null; ';
       }
-      if (curUnit.csBaseUnit_)
-        unitString += curUnit.csBaseUnit_ + '; ' + curUnit.baseFactor_ + '; ';
+      if (curUnit.csUnitString_)
+        unitString += curUnit.csUnitString_ + '; ' + curUnit.baseFactor_ + '; ';
       else
         unitString += 'null; null; ';
 

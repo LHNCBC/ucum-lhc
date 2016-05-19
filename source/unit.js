@@ -42,7 +42,7 @@ export class Unit {
         parser.parse(attrs);
       }
       catch (x) {
-        throw(`Parse error: ${x.getMessage()}`);
+        throw(new Error(`Parse error: ${x.getMessage()}`));
       }
     } // end if this instance is defined by a string
 
@@ -164,12 +164,14 @@ export class Unit {
        * unit definition parsing
        */
       /*
-       * Case sensitive (cs) and case insensitive (ci) base unit designation,
+       * Case sensitive (cs) and case insensitive (ci) unit strings,
        * includes exponent and prefix if applicable - specified in
-       * <value Unit=x UNIT=X value="nnn">nnn</value> -- the unit part
+       * <value Unit=x UNIT=X value="nnn">nnn</value> -- the unit part --
+       * in the ucum-essence.xml file, and may be specified by a user
+       * when requesting conversion or validation of a unit string.
        */
-      this.csBaseUnit_ = attrs['csBaseUnit_'] || null ;
-      this.ciBaseUnit_ = attrs['ciBaseUnit_'] || null ;
+      this.csUnitString_ = attrs['csUnitString_'] || null ;
+      this.ciUnitString_ = attrs['ciUnitString_'] || null ;
 
       /*
        * String and numeric versions of factor applied to base unit specified in
@@ -230,7 +232,7 @@ export class Unit {
       if (this.hasOwnProperty(uKey))
         this[uKey] = vals[key];
       else
-        throw(`Parameter error; ${key} is not a property of a Unit`) ;
+        throw(new Error(`Parameter error; ${key} is not a property of a Unit`));
     }
   } // end assignVals
 
@@ -272,7 +274,7 @@ export class Unit {
         }
       }
       else
-         throw(`Parameter error; ${val} is not a property of a Unit`) ;
+         throw(new Error(`Parameter error; ${val} is not a property of a Unit`));
     });
   } // end assign
 
@@ -309,8 +311,8 @@ export class Unit {
     let uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName :
                                              propertyName + '_' ;
     if (!(this.hasOwnProperty(uProp)))
-      throw(`Unit does not have requested property (${propertyName}), unit ` +
-            `code = ${this.csCode_}`);
+      throw(new Error(`Unit does not have requested property (${propertyName}),  ` +
+            `unit code = ${this.csCode_}`));
     else
       return this[uProp] ;
 
@@ -333,7 +335,8 @@ export class Unit {
 
     // reject request if the dimensions are not equal
     if (!(fromUnit.dim_.equals(this.dim_))) {
-      throw(`${fromUnit.name_} units cannot be converted to ${this.name_} units.`)
+      throw(new Error(`Sorry.  ${fromUnit.name_} units cannot be converted ` +
+                      `to ${this.name_} units.`));
     }
     let fromCnv = fromUnit.cnv_ ;
     let fromMag = fromUnit.magnitude_ ;
@@ -440,7 +443,7 @@ export class Unit {
       let elem = this.dim_.elementAt(i);
       let uA = UnitTables.getUnitByDim(new Dimension(i));
       if(uA == null)
-        throw(`Can't find base unit for dimension ${i}`);
+        throw(new Error(`Can't find base unit for dimension ${i}`));
       this.name_ = uA.name + elem;
     }
     return num;
@@ -502,7 +505,8 @@ export class Unit {
       if (unit2.cnv_ == null && unit2.dim_.isZero())
 	      this.cnvPfx_ *= unit2.magnitude_;
       else
-	      throw (`Attempt to multiply non-ratio unit ${this.name_} failed.`);
+	      throw (new Error(`Attempt to multiply non-ratio unit ${this.name_} ` +
+                         'failed.'));
     }
     else {
       if (unit2.cnv_ != null) {
@@ -512,7 +516,7 @@ export class Unit {
           this.cnvPfx_ *= cp;
         }
         else
-          throw (`Attempt to multiply non-ratio unit ${u2Nname}`);
+          throw (new Error(`Attempt to multiply non-ratio unit ${u2Nname}`));
       }
       else {
         let uString = new Us.UnitString();
@@ -543,9 +547,9 @@ export class Unit {
   divide(unit2) {
 
     if (this.cnv_ != null)
-      throw (`Attempt to divide non-ratio unit ${this.name_}`);
+      throw (new Error(`Attempt to divide non-ratio unit ${this.name_}`));
     if (unit2.cnv_ != null)
-      throw (`Attempt to divide non-ratio unit ${unit2.name_}`);
+      throw (new Error(`Attempt to divide non-ratio unit ${unit2.name_}`));
 
     let uString = new Us.UnitString();
     this.name_ = uString.divString(this.name_, unit2.name_);
@@ -575,7 +579,7 @@ export class Unit {
   invert() {
 
     if (this.cnv_ != null)
-      throw (`Attempt to invert a non-ratio unit - ${this.name_}`);
+      throw (new Error(`Attempt to invert a non-ratio unit - ${this.name_}`));
 
     this.name_ = UnitString.inv(this.name_);
 
@@ -600,7 +604,8 @@ export class Unit {
   power(p) {
 
     if (this.cnv_ != null)
-      throw (`Attempt to raise a non-ratio unit, ${this.name_}, to a power.`);
+      throw (new Error(`Attempt to raise a non-ratio unit, ${this.name_}, ` +
+                       'to a power.'));
 
     this.name_ = UnitString.pow(this.name_, p);
     this.magnitude_ = Math.pow(this.magnitude_, p);

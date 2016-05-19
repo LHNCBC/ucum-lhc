@@ -32,8 +32,8 @@ export class UcumJsonDefs {
     // Make this a singleton.  See UnitTables constructor for details.
 
     let holdThis = UcumJsonDefs.prototype;
-    UcumJsonDefs = function(){throw 'UcumJsonDefs is a Singleton. ' +
-                                    'Use UcumJsonDefs.getInstance() instead.'};
+    UcumJsonDefs = function(){throw (new Error('UcumJsonDefs is a Singleton. ' +
+                                    'Use UcumJsonDefs.getInstance() instead.'))};
     if (exports)
       exports.UcumJsonDefs = UcumJsonDefs;
     UcumJsonDefs.prototype = holdThis;

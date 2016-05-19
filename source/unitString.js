@@ -17,7 +17,13 @@ export class UnitString{
    * Parses a unit string, returns a unit
    *
    * @params uStr the string defining the unit
-   * @returns a unit object, or null if problems creating the unit
+   * @returns a unit object, or null if there were problems creating the unit
+   * @throws an error if the unit string contains parentheses (not handled yet);
+   *  an error if at least one valid unit could not be derived from the string;
+   *  an error if a non-unit & non-number was parsed as an individual element
+   *    from the string (shouldn't happen, but this is a safeguard);
+   *  any errors thrown by called methods (see makeUnit,
+   *    unit object division, multiplication, and getProperty).
    */
   parseString(uStr) {
     let finalUnit = null ;
@@ -57,12 +63,10 @@ export class UnitString{
     // Process the units (and numbers) to create one final unit object
     if (uArray[0] == null || uArray == "'" || uArray[0]['un'] === undefined ||
         uArray[0]['un'] == null) {
-      // assume this is an instance of /number or /something, e.g. "/24"
-      // not sure what to do with this yet
+      // not sure what this might be, but this is a safeguard
       throw (new Error(`Unit string (${uStr}) did not contain anything that ` +
              'could be used to create a unit, or else something that is not ' +
              'handled yet by this package.  Sorry'));
-
     }
 
     finalUnit = uArray[0]['un'];
@@ -78,7 +82,8 @@ export class UnitString{
       }
 
       // Is the operation division?
-      let isDiv = uArray[u2]['op'] === '/' ;
+      let thisOp = uArray[u2]['op'] ;
+      let isDiv = thisOp === '/' ;
 
       // Perform the operation based on the type(s) of the operands
 
@@ -92,25 +97,34 @@ export class UnitString{
         else {
           let nMag = nextUnit.getProperty('magnitude_');
           isDiv ? nMag = finalUnit/nMag : nMag *= finalUnit ;
+          let theName = finalUnit.toString() + thisOp +
+                        nextUnit.getProperty('name_') ;
           finalUnit = nextUnit;
-          finalUnit.assignVals({'magnitude_': nMag});
+          finalUnit.assignVals({'name_': theName, 'magnitude_': nMag});
         }
       } // end if nextUnit is not a number
+
       else {
         // nextUnit is a number; finalUnit is a unit object
         if (typeof finalUnit !== 'number') {
           let fMag = finalUnit.getProperty('magnitude_');
           isDiv ? fMag /= nextUnit :
               fMag *= nextUnit;
-          finalUnit.assignVals({'magnitude_': fMag});
+          let theName = finalUnit.getProperty('name_') + thisOp +
+                        nextUnit.toString();
+          finalUnit.assignVals({'name_': theName, 'magnitude_': fMag});
         }
         // both are numbers
         else {
           isDiv ? finalUnit /= nextUnit :
               finalUnit *= nextUnit ;
+          let theName = finalUnit.toString() + thisOp + nextUnit.toString();
+          // well great - now what?  I don't have anywhere to put this.
+          // TODO: figure out where the heck to put this.
+          throw (new Error(`Unit string (${uStr}) contains 2 adjoining ` +
+                 `elements that are numbers.  At least one must be a unit.`));
         }
       } // end if nextUnit is a number
-
     } // end do for each unit after the first one
 
     return finalUnit;
@@ -167,68 +181,72 @@ export class UnitString{
     let exp = null;
     let pfxVal = null;
     let pfxCode = null;
-    let pfxExp = null ;
-    let ulen = uCode.length ;
+    let pfxExp = null;
+    let pfxName = null;
+    let ulen = uCode.length;
+    let origUnit = null;
+    let retUnit = null;
 
-    // if the code is only one character, no parsing needed. Also block ones
-    // that begin with 10 for now.
-    //if (ulen > 1 && uCode.substr(0,2) != "10") {
-    if (ulen > 1) {
-      // check for a prefix.  If we find one, move it and its value out of
-      // the uCode string.  Try for a single character prefix first and then
+    let utabs = UnitTables.getInstance();
+
+    // First look for the full string
+    origUnit = utabs.getUnitByCode(uCode);
+
+    // If that didn't work, peel off the exponent and try it
+    // Don't look for an exponent for H2O - the regex expression pulls
+    // out the 2 and messes this stuff up.
+    if ((!origUnit && uCode.indexOf('m[H2O]') < 0)) {
+      let res = uCode.match(/([^\-\+]+)([\-\+\d]+)?/);
+
+      // if we got an exponent, separate it from the unit and try
+      // to get the unit again
+      if (res && res[2] && res[2] !== "") {
+        // Make sure that there were no characters after the last digit.
+        // If there are, the reassembled string ends at the last digit,
+        // dropping off everything after that.  Characters after an
+        // exponent (except for subsequent units after a division or
+        // multiplication operator) are invalid.
+        let reassemble = res[1] + res[2];
+        if (reassemble === uCode) {
+          uCode = res[1];
+          exp = res[2];
+          origUnit = utabs.getUnitByCode(uCode);
+        } // end if nothing followed the exponent (if there was one)
+      } // end if we got an exponent
+    } // end if we didn't get a unit for the full unit code
+
+    // if we still don't have a unit, separate out the prefix
+    // and try without it.
+
+    if (!origUnit) {
+
+      // Try for a single character prefix first and then
       // try for a 2-character prefix if a single character prefix is not found.
       let pfxTabs = PrefixTables.getInstance();
       pfxCode = uCode.charAt(0);
       let pfxObj = pfxTabs.getPrefixByCode(pfxCode);
-      if (!pfxObj && uCode.length >= 2) {
+      if (!pfxObj && uCode.length > 2) {
         pfxCode = uCode.substr(0, 2);
         pfxObj = pfxTabs.getPrefixByCode(pfxCode);
       }
+
+      // if we got a prefix, get its info and remove it from the unit code
       if (pfxObj) {
         pfxVal = pfxObj.getValue();
         pfxExp = pfxObj.getExp();
+        pfxName = pfxObj.getName();
         let pCodeLen = pfxCode.length;
         uCode = uCode.substr(pCodeLen);
         ulen -= pCodeLen;
-      }
-      else {
-        pfxCode = null;
-      }
 
-      // Now look for an exponent at the end of the unit
-      let res = uCode.match(/([^-+\d]*)([-+\d]*)/);
-      if (res && res[2] && res[2] !== "") {
-        uCode = res[1];
-        if (res[2] !== '')
-          exp = res[2];
+        // now try one more time for the unit
+        origUnit = utabs.getUnitByCode(uCode);
+      } // end if we found a prefix
+    } // end if we didn't get a unit after removing an exponent
 
-        // check for something like m2 or the code being just a number
-        // in the case of m2, m was interpreted as a prefix (see fix below).
-        if (typeof uCode === 'number' && pfxCode) {
-          uCode = pfxCode;
-          pfxCode = null;
-          pfxVal = null;
-          pfxExp = null;
-        }
-      } // end if the unit code is longer than one character
-    } // end if we got a return from the exponent match search
+    // now, if we found a unit object, clone it and then apply the prefix
+    // and exponent, if any, to it.
 
-    let utabs = UnitTables.getInstance();
-
-    // go get the unit for the code (without prefix or exponent)
-    let origUnit = utabs.getUnitByCode(uCode);
-    // if we didn't find the unit but we do have a prefix, see if we're
-    // looking at a case where a base unit code was interpreted as a prefix,
-    // e.g., m2 or cd - Hm - this is not going to work for cd when the user
-    // enters it.   TODO.
-    if (!origUnit && pfxCode) {
-      uCode = pfxCode + uCode ;
-      pfxCode = null;
-      pfxVal = null ;
-      pfxExp = null ;
-      origUnit = utabs.getUnitByCode(uCode) ;
-    }
-    let retUnit = null;
     if (origUnit) {
       // clone the unit we just got and then apply any exponent and/or prefix
       // to it
@@ -240,6 +258,7 @@ export class UnitString{
       // and magnitude now
       if (exp) {
         exp = parseInt(exp);
+        let expMul = exp;
         theDim = theDim.mul(exp);
         theMag = Math.pow(theMag, exp);
         retUnit.assignVals({'magnitude_': theMag});
@@ -252,8 +271,8 @@ export class UnitString{
           // working with.  Then raise the prefix value to the level
           // defined by the exponent.
           if (pfxExp) {
-            exp *= pfxExp;
-            pfxVal = Math.pow(10, exp);
+            expMul *= pfxExp;
+            pfxVal = Math.pow(10, expMul);
           }
           // if the prefix base is not 10, it won't have an exponent.
           // At the moment I don't see any units using the prefixes
@@ -267,6 +286,16 @@ export class UnitString{
       if (pfxVal) {
         theMag *= pfxVal ;
         retUnit.assignVals({'magnitude_': theMag})
+      }
+
+      // if we have a prefix and/or an exponent, add them to the unit name
+      if (pfxVal) {
+        theName = pfxName + theName ;
+        retUnit.assignVals({'name_': theName});
+      }
+      if (exp) {
+        theName = theName + '<sup>' + exp.toString() + '</sup>' ;
+        retUnit.assignVals({'name_': theName});
       }
     } // end if we found a unit object
     return retUnit ;
@@ -300,6 +329,12 @@ export class UnitString{
     if(s2.length == 0)
       ret = s1;
     else {
+      let supPos = s2.indexOf('<sup>') ;
+      let s2Sup = null;
+      if (supPos > 0) {
+        s2Sup = s2.substr(supPos) ;
+        s2 = s2.substr(0, supPos);
+      }
       let t = s2.replace('/','1').replace('.','/').replace('1','.');
 
       switch (t[0]) {
@@ -312,6 +347,8 @@ export class UnitString{
         default:
           ret = s1 + "/" + t;
       }
+      if (s2Sup)
+        ret += s2Sup;
     }
     return ret ;
   }

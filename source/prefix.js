@@ -35,9 +35,9 @@ export class Prefix {
         attrs['name_'] === undefined || attrs['name_'] === null ||
         attrs['value_'] === undefined || attrs['value_'] === null ||
         attrs['exp_'] === undefined) {
-      throw('Prefix constructor called missing one or more parameters.  ' +
+      throw(new Error('Prefix constructor called missing one or more parameters.  ' +
       'Prefix codes (cs or ci), name, value and exponent must all be specified ' +
-      'and all but the exponent must not be null.');
+      'and all but the exponent must not be null.'));
     }
 
     /**
@@ -83,11 +83,20 @@ export class Prefix {
 
 
   /**
-   * Returns the prefix string (code) for the current prefix object
+   * Returns the prefix code for the current prefix object
    * @return the code for the current prefix object
    */
   getCode() {
     return this.code_;
+  }
+
+
+  /**
+   * Returns the prefix name for the current prefix object
+   * @return the name for the current prefix object
+   */
+  getName() {
+    return this.name_;
   }
 
 

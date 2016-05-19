@@ -30,12 +30,16 @@ export class UcumLhcUtils {
         let uDefs = UcumJsonDefs.getInstance();
         uDefs.loadJsonDefs();
       }
+
+      this.fromAuto_ = null;
+      this.toAuto_ = null;
+
       // Make this a singleton.  See UnitTables constructor for details.
 
       let holdThis = UcumLhcUtils.prototype;
       UcumLhcUtils = function () {
-        throw 'UcumLhcUtils is a Singleton. ' +
-        'Use UcumLhcUtils.getInstance() instead.'
+        throw (new Error('UcumLhcUtils is a Singleton. ' +
+        'Use UcumLhcUtils.getInstance() instead.'));
       };
       if (exports)
         exports.UcumLhcUtils = UcumLhcUtils;
@@ -49,7 +53,30 @@ export class UcumLhcUtils {
 
 
   /**
-   * This method validates a string as representing a valid unit
+   * This is used to retain a reference to the autocompleters used in the
+   * "from" and "to" unit fields for unit conversions.  The list for the
+   * "to" unit field is updated with commensurable units when a "from" unit
+   * is specified.
+   *
+   * The autocompleters are set up in the main.js code and this is called
+   * after they are first set up.
+   *
+   * @param from a reference to the autocompleter used for the "from" unit field
+   * @param to a reference to the autocompleter used for the "to" unit field
+   * @returns nothing
+   */
+  setAutocompleters(from, to) {
+    this.fromAuto_ = from ;
+    this.toAuto_ = to ;
+  }
+
+
+  /**
+   * This method validates a string that is supposed to be representing a valid
+   * unit. It indicates whether or not the string translates to a valid unit,
+   * and if so, if that unit is a predefined UCUM unit or a combination of
+   * them.  If the string resolves to multiple units, those are shown with
+   * their magnitudes (which should in theory differ, but don't always).
    *
    * @param elementID the ID of the web page element that contains the
    *  string to be validated
@@ -57,80 +84,189 @@ export class UcumLhcUtils {
    *  return validation message
    * @returns nothing
    */
-  validateString(elementID, returnElementID) {
+  reportUnitStringValidity(elementID, returnElementID) {
 
     let uStr = document.getElementById(elementID).value;
+    let valFld = document.getElementById(returnElementID);
+    valFld.innerHTML = '';
+    let retMsg = '';
 
-    let uStrParser = new UnitString();
-    let retUnit = null;
-    let valResult = null ;
     try {
-      retUnit = uStrParser.parseString(uStr);
-      if (retUnit)
-        valResult = "This is a valid unit string"
+      let ret = this.getSpecifiedUnit(uStr);
+      if (ret)
+        retMsg = `${uStr} is a valid unit.` ;
     }
     catch(err) {
-      valResult = 'This is NOT a valid unit string.  Error thrown = ' +
-                  err.message
+      retMsg = err.message
     }
-
-    let valString = document.getElementById(returnElementID);
-    valString.innerHTML = valResult ;
-
-  } // end validateString
+    valFld.innerHTML = retMsg;
+  } // end reportUnitStringValidity
 
 
   /**
    * This method converts one unit to another
    *
+   * @param fromField the ID of the field containing the name of the unit to
+   *  be converted
+   * @param numField the ID of the field containing the number of "from" units
+   *  to be converted to "to" units
+   * @param toField the ID of the field containing the name of the unit that
+   *  the from field is to be converted to
    * @param decDigits the maximum number of decimal digits to be displayed
-   *  for the converted unit.
+   *  for the converted unit.  If not specified, the UCUM.decDigits_ value
+   *  (defined in config.js) is used.
    */
-  convertUnit(decDigits) {
+  convertUnit(fromField, numField, toField, decDigits) {
 
     if (decDigits === undefined)
       decDigits = Ucum.decDigits_;
 
-    let fromName = document.getElementById("convertFrom").value ;
-    // I am using parseFloat here because using parseInt cuts down 12.2222222 ...
-    let fromMag = parseFloat(document.getElementById("convertNum").value);
-    let toName = document.getElementById("convertTo").value;
+    let fromName = document.getElementById(fromField).value ;
+    let fromMag = parseFloat(document.getElementById(numField).value);
+    let toName = document.getElementById(toField).value;
+    let codePos = toName.indexOf(Ucum.codeSep_);
+    if (codePos > 0)
+      toName = toName.substr(0, codePos);
     // create a from unit
-    let utab = UnitTables.getInstance();
-    let fromUnit = null ;
-    let fromUnitAry = utab.getUnitByName(fromName) ;
-    if (fromUnitAry === null || fromUnitAry.length > 1 ||
-        fromUnitAry.length === 0) {
-      console.log('error getting fromUnit from list');
+    let resultMsg = '';
+
+    try {
+      let fromUnit = null;
+      fromUnit = this.getSpecifiedUnit(fromName);
+
+      let toUnit = null;
+      toUnit = this.getSpecifiedUnit(toName);
+
+      if (fromUnit && toUnit) {
+        try {
+          let toMag = toUnit.convertFrom(fromMag, fromUnit);
+          toMag = toMag.toFixed(decDigits).replace(/\.?0+$/, "");
+
+          resultMsg = fromMag.toString() + " " + fromUnit.getProperty('name_') +
+                      " units = " + toMag.toString() + " " +
+                      toUnit.getProperty('name_') + " units."
+        }
+        catch (err) {
+          resultMsg = err.message;
+        }
+      }  // end if we have the from and to units
     }
-    else {
-      fromUnit = fromUnitAry[0];
-    }
-    let toUnit = null ;
-    let toUnitAry = utab.getUnitByName(toName) ;
-    if (toUnitAry === null || toUnitAry.length > 1 || toUnitAry.length === 0) {
-      console.log('error getting toUnit');
-    }
-    else {
-      toUnit = toUnitAry[0];
+    catch (err) {
+      resultMsg = err.message;
     }
 
-    // call Unit.convertFrom on it
-    let toMag = toUnit.convertFrom(fromMag, fromUnit);
-    toMag = toMag.toFixed(decDigits).replace(/\.?0+$/, "");
-    //toMag = toMag.toPrecision(sigDigits).replace(/\.?0+$/, "");
-
-
-    // put result on page
+    // Put the message - conversion or error - on the page
     let resultString = document.getElementById("resultString");
-    resultString.innerHTML = fromMag.toString() + " " + fromName + " units = " +
-        toMag.toString() + " " + toName + " units"
-
+    resultString.innerHTML = resultMsg;
   } // end convertUnit
 
 
   /**
-   *  This provides a list of all unit codes.  The list is either case
+   * This method parses a unit string to gets (or try to get) the unit
+   * represented by the string.
+   *
+   * @param uName the string representing the unit
+   * @returns the unit found for the string or null if not found
+   * @throws a message if the unit is not found
+   */
+  getSpecifiedUnit(uName) {
+
+    uName = uName.trim();
+    let utab = UnitTables.getInstance();
+    let retMsg = '';
+    let theUnit = null;
+
+    // try parsing as a unit string
+    try {
+      let uStrParser = new UnitString();
+      theUnit = uStrParser.parseString(uName);
+    }
+    catch(err) {
+      console.log(`Unit requested for unit string ${uName}.` +
+          'request unsuccessful; error thrown = ' + err.message);
+      if (retMsg !== '')
+        retMsg += ' and ';
+      retMsg += `${uName} is not a valid unit.` ;
+    }
+
+    // if no error was thrown but no unit was found, create a not found message
+    if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
+      retMsg = `Unable to find unit for name = ${uName}.`;
+    }
+    if (retMsg !== '')
+      throw (new Error(retMsg));
+
+    return theUnit;
+
+  } // end getSpecifiedUnit
+
+
+  /**
+   * This method retrieves a list of unit commensurable, i.e., that can be
+   * converted from and to, a specified unit.  Throws an error if the "from"
+   * unit cannot be found or if no commensurable units are found.
+   *
+   * @param fromField the ID of the field where the "from" unit is specified
+   * @param toField the ID of the field to receive the list of commensurable
+   *  units
+   * @param resultField the ID of the field to receive an error message if one
+   *  is thrown
+   * @returns nothing but sets the autocompleter list in the "toField" to the
+   *   commensurable units if any were found
+   *  @throws an error if the "from" unit is not found or if no commensurable
+   *   units were found
+   */
+  getCommensurables(fromField, toField, resultField) {
+    let toFld = document.getElementById(toField);
+    toFld.innerHTML = '';
+    this.toAuto_.setList('');
+    let resultString = document.getElementById(resultField);
+    resultString.innerHTML = '';
+
+    let fromName = document.getElementById(fromField).value;
+    let fromUnit = null;
+    let resultMsg = null;
+    try {
+      fromUnit = this.getSpecifiedUnit(fromName);
+      if (!fromUnit) {
+        throw (new Error(`Could not find unit ${fromName}.`));
+      }
+    }
+    catch (err){
+      resultMsg = err.message ;
+    }
+    if (fromUnit) {
+      try {
+        let fromDim = fromUnit.getProperty('dim_');
+        let dimVec = fromDim.getProperty('dimVec_');
+        let commUnits = null;
+        let utab = UnitTables.getInstance();
+        if (dimVec)
+          commUnits = utab.getUnitsByDimension(dimVec);
+        // If we can't find any, don't panic.  The user could still enter one
+        // that's not on our list but is commensurable.  So if none are found,
+        // just move on.   Nothin' to see here.
+        if (commUnits) {
+          let cLen = commUnits.length;
+          let commNames = [];
+          for (let i = 0; i < cLen; i++)
+            commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ +
+                commUnits[i].getProperty('name_');
+          this.toAuto_.setList(commNames)
+        }
+      }
+      catch (err) {
+        resultMsg = err.message;
+      }
+    } // end if we found a unit
+    if (resultMsg) {
+      resultString.innerHTML = resultMsg ;
+    }
+  } // end getCommensurables
+
+
+  /**
+   *  TODO: This provides a list of all unit codes.  The list is either case
    *  sensitive or case-insensitive, depending on the configuration
    *  setting in config.js
    */
@@ -139,7 +275,7 @@ export class UcumLhcUtils {
   }
 
   /**
-   *  This provides a list of all unit names (descriptions).  The names
+   *  TODO: This provides a list of all unit names (descriptions).  The names
    *  are returned as an array of names.  For most units the array will
    *  contain one name, but because names are sometimes duplicated, not
    *  all of the arrays returned will contain just one entry.
@@ -164,6 +300,7 @@ export class UcumLhcUtils {
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
   }
 } // end UcumLhcUtils class
+
 
 /**
  *  This function exists ONLY until the original UcumLhcUtils constructor
