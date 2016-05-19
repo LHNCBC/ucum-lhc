@@ -5,7 +5,6 @@
  *
  */
 
-
 class Functions {
 
   /**
@@ -29,9 +28,18 @@ class Functions {
     this.fs['degf'] = {cnvTo   : function(x){return x - 459.67;},
                        cnvFrom : function(x){return x + 459.67;}};
 
+    // Reaumur - convert between Reaumur and Kelvin.   Because of the way the
+    // calling code in the Units class is set up (in the convertFrom method),
+    // what is given here as the convertTo function is actually the convert
+    // from method and vice versa.
+    //this.fs['degre'] = {cnvTo   : function(x){return x + 273.15;},
+    //                    cnvFrom : function(x){return x - 273.15;}};
+    this.fs['degre'] = {cnvTo   : function(x){return x - 273.15;},
+                        cnvFrom : function(x){return x + 273.15;}};
+
     // pH - convert to pH from moles per liter and from moles per liter to pH
     // where a mole is an amount of a substance (a count of particles)
-    this.fs['pH'] = {cnvTo  : function(x){return - Math.log(x) / Math.LN10;},
+    this.fs['ph'] = {cnvTo  : function(x){return - Math.log(x) / Math.LN10;},
                      cnvFrom : function(x){return Math.pow(10, -x);}};
 
     // ln - natural logarithm (base e 2.71828) - apply (cnvTo) and invert (cnvFrom)
@@ -48,8 +56,12 @@ class Functions {
                        cnvFrom : function(x){return Math.pow(10, x / 10);}};
     this.fs['20lg'] = {cnvTo : function(x){return 20 * Math.log(x)/Math.LN10;},
                        cnvFrom : function(x){return Math.pow(10, x / 20);}};
+    // The plain text ucum units file uses '2lg'
     this.fs['2lg'] = {cnvTo : function(x){return 2 * Math.log(x)/Math.LN10;},
-                      cnvFrom : function(x){return Math.pow(10, x / 2);}};
+                           cnvFrom : function(x){return Math.pow(10, x / 2);}};
+    // The xml essence ucum file uses lgTimes2
+    this.fs['lgtimes2'] = this.fs['2lg'];
+
     // ld - dual logarithm (base 2)
     this.fs['ld'] = {cnvTo : function(x){return Math.log(x)/Math.LN2;},
                      cnvFrom : function(x){return Math.pow(2, x);}};
@@ -60,10 +72,13 @@ class Functions {
 
     // Make this a singleton.  See UnitTables constructor for details.
     let holdThis = Functions.prototype;
-    Functions = function(){throw 'Functions is a Singleton. ' +
-                           'Use Functions.getInstance() instead.'}
+    if (exports)
+      exports.Functions = Functions ;
+    Functions = function(){throw (new Error('Functions is a Singleton. ' +
+                           'Use Functions.getInstance() instead.'))};
     Functions.prototype = holdThis;
-    Functions.getInstance = function(){return this} ;
+    let self = this ;
+    Functions.getInstance = function(){return self} ;
 
   } // end of constructor
 
@@ -80,7 +95,7 @@ class Functions {
     
     let f = this.fs[fname] ;
     if (f === null)
-      throw(`Requested function ${fname} is not defined`) ;
+      throw(new Error(`Requested function ${fname} is not defined`));
     return f;
   }
 
@@ -114,3 +129,4 @@ class Functions {
 Functions.getInstance = function(){
   return new Functions();
 }
+Functions.getInstance();

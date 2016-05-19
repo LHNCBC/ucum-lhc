@@ -5,7 +5,11 @@
  * The javascript for this UCUM implementation uses syntax as
  * defined by the ECMAScript 6 standard
  */
-var Ucum = {  // Namespace for UCUM classes
+
+//var Utab = require('/home/lmericle/ucum/dist/es5/unitTables.js');
+//var Pfx = require('/home/lmericle/ucum/dist/es5/prefix.js');
+
+export var Ucum = {  // Namespace for UCUM classes
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
@@ -18,7 +22,19 @@ var Ucum = {  // Namespace for UCUM classes
    *  of loading the unit definitions from a file, this value will be
    *  set from that.
    */
-  dimLen_: 7 ,
+  dimLen_: 7,
+
+  /**
+   *  The number of decimal digits to be displayed for a unit amount
+   */
+  decDigits_ : 4,
+
+  /**
+   * The string used to separate a unit code and unit name when they
+   * are displayed together
+   */
+  codeSep_ : ' - '
 
 }
+
 

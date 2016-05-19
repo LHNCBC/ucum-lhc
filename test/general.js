@@ -34,7 +34,7 @@ Ucum.init = function() {
   // Load the input data into the unit tables
   new UnitsInput();
 
-  // create the array of unit names
+  // create the array of unit names - HM = POSSIBLE DUPLICATES HERE.
   Ucum.unitNames_ = Ucum.unitTables_.getAllUnitNames() ;
 
 

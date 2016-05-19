@@ -33,7 +33,7 @@ Ucum.init = function () {
   // create the UnitTables singleton
   Ucum.unitTables_ = new UnitTables();
 
-  // Load the input data
+  // Load the input data into the unit tables
   new UnitsInput();
 
   // create the array of unit names
@@ -42,7 +42,7 @@ Ucum.init = function () {
 
 Ucum.doConversion = function () {
   var fromName = document.getElementById("convertFrom").value;
-  // using parseInt cuts down 12.2222222 ...
+  // I am using parseFloat here because using parseInt cuts down 12.2222222 ...
   var fromMag = parseFloat(document.getElementById("convertNum").value);
   var toName = document.getElementById("convertTo").value;
   // create a from unit
