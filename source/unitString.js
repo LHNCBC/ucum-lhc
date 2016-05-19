@@ -196,7 +196,7 @@ export class UnitString{
     // Don't look for an exponent for H2O - the regex expression pulls
     // out the 2 and messes this stuff up.
     if ((!origUnit && uCode.indexOf('m[H2O]') < 0)) {
-      let res = uCode.match(/([^-+\d]*)([-+\d]*)/);
+      let res = uCode.match(/([^\-\+]+)([\-\+\d]+)?/);
 
       // if we got an exponent, separate it from the unit and try
       // to get the unit again
