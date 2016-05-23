@@ -422,7 +422,7 @@ export class UcumXmlDocument {
     let uArray = uTabs.allUnitsByDef();
 
     let defsHash = { 'prefixes' : pfxArray,
-                     'units' : uArray}
+                     'units' : uArray};
 
     jsonfile.writeFileSync('../dist/data/ucumDefs.json', defsHash,
                           {encoding: 'utf8', mode: 0o644, flag: 'w'});

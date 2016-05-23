@@ -193,9 +193,7 @@ export class UnitString{
     origUnit = utabs.getUnitByCode(uCode);
 
     // If that didn't work, peel off the exponent and try it
-    // Don't look for an exponent for H2O - the regex expression pulls
-    // out the 2 and messes this stuff up.
-    if ((!origUnit && uCode.indexOf('m[H2O]') < 0)) {
+    if (!origUnit) {
       let res = uCode.match(/([^\-\+]+)([\-\+\d]+)?/);
 
       // if we got an exponent, separate it from the unit and try
