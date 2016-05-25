@@ -2,15 +2,16 @@ module.exports = function(grunt) {
   grunt.initConfig({
     babel: {
       options: {
+        compact: false,
         sourceMap: true,
         presets: ['es2015']
       },
       dist: {
         files: [{
           expand: true,
-          cwd: './source',
+          cwd: '.',
           flatten: false,
-          src: ['*.js'],
+          src: ['./source/*.js', './demo/*.js'],
           dest: 'dist/es5'
         }]
       }
@@ -28,13 +29,14 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "./dist/module.js": ["./dist/es5/main.js"]
+          "./dist/module.js": ["./dist/es5/demo/main.js"],
+          "./demo/module.js": ["./dist/es5/demo/main.js"]
         }
       }
     },
     watch: {
       scripts: {
-        files: ["./source/*.js"],
+        files: ["./source/*.js", "./demo/*.js"],
         tasks: ["browserify"]
       }
     }
