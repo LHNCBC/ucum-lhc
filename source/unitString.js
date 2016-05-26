@@ -194,7 +194,7 @@ export class UnitString{
 
     // If that didn't work, peel off the exponent and try it
     if (!origUnit) {
-      let res = uCode.match(/([^\-\+]+)([\-\+\d]+)?/);
+      let res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
 
       // if we got an exponent, separate it from the unit and try
       // to get the unit again
