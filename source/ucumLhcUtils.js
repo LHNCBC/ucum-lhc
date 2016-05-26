@@ -115,7 +115,7 @@ export class UcumLhcUtils {
 
 
   /**
-   * This method parses a unit string to gets (or try to get) the unit
+   * This method parses a unit string to get (or try to get) the unit
    * represented by the string.
    *
    * @param uName the string representing the unit
@@ -193,7 +193,7 @@ export class UcumLhcUtils {
 
 
   /**
-   *  This toggles the display of a give form element.  It changes the
+   *  This toggles the display of a given form element.  It changes the
    *  style display state from "none" to "block" or "block" to "none"
    *  depending on its current state.
    *
