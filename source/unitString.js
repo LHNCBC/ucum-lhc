@@ -194,6 +194,13 @@ export class UnitString{
 
     // If that didn't work, peel off the exponent and try it
     if (!origUnit) {
+      // This particular regex has been tweaked several times.  This one
+      // works with the following test strings:
+      // "m[H2O]-21] gives ["m{H2O]-21", "m[H2)]", "-21"]
+      // "m[H2O]+21] gives ["m{H2O]+21", "m[H2)]", "+21"]
+      // "m[H2O]21] gives ["m{H2O]-21", "m[H2)]", "21"]
+      // "s2" gives ["s2", "s, "2"]
+      // "kg" gives null
       let res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
 
       // if we got an exponent, separate it from the unit and try
