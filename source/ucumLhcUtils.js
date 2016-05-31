@@ -56,7 +56,7 @@ export class UcumLhcUtils {
    * @param uStr the string to be validated
    * @returns true for a valid string; false for an invalid string
    */
-  validUnitString(euStr) {
+  validUnitString(uStr) {
 
     let retUnit = this.getSpecifiedUnit(uStr);
     return retUnit !== null ;
@@ -191,42 +191,6 @@ export class UcumLhcUtils {
     return commUnits ;
   } // end commensurablesList
 
-
-  /**
-   *  This toggles the display of a given form element.  It changes the
-   *  style display state from "none" to "block" or "block" to "none"
-   *  depending on its current state.
-   *
-   *  It also can change the text on the button specified.  This is optional.
-   *
-   * @param elementID the ID of the target element
-   * @param buttonID the ID of the button whose text is to be changed.  This
-   *  is optional, but if specified the following 2 text parameters must be
-   *  supplied
-   * @param blockText the text that shows on the button when the target element
-   *  is currently not displayed (before being toggled).
-   * @param noneText the text that shows on the button when the target element
-   *  is currently displayed (before being toggled).
-   *
-   */
-  toggleDisplay(elementID, buttonID, blockText, noneText) {
-    let theElement = document.getElementById(elementID);
-    let theButton = null;
-    if (buttonID)
-      theButton = document.getElementById(buttonID);
-    if (theElement) {
-      if (theElement.style.display === "none") {
-        theElement.style.display = "block";
-        if (theButton)
-          theButton.innerText = theButton.innerText.replace(noneText, blockText);
-      }
-      else {
-        theElement.style.display = "none";
-        if (theButton)
-          theButton.innerText = theButton.innerText.replace(blockText, noneText);
-      }
-    }
-  }
 
 
   /**

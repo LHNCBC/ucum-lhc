@@ -373,6 +373,7 @@ export class UnitTables {
     if (unitsArray === undefined || unitsArray === null) {
       console.log(`Unable to find unit with dimension = ${uDim}`);
     }
+
     return unitsArray ;
 
   } // end getUnitsByDimension

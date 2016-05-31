@@ -96,7 +96,8 @@ var UcumDemo = exports.UcumDemo = function () {
       var retMsg = '';
 
       try {
-        var ret = UcumLhcUtils.validUnitString(uStr);
+        var utils = UcumLhcUtils.getInstance();
+        var ret = utils.validUnitString(uStr);
         if (ret) retMsg = uStr + " is a valid unit.";
       } catch (err) {
         retMsg = err.message;
@@ -130,7 +131,8 @@ var UcumDemo = exports.UcumDemo = function () {
       var codePos = toName.indexOf(Ucum.codeSep_);
       if (codePos > 0) toName = toName.substr(0, codePos);
 
-      var resultMsg = UcumLhcUtils.convertUnitTo(fromName, fromVal, toName, decDigits);
+      var utils = UcumLhcUtils.getInstance();
+      var resultMsg = utils.convertUnitTo(fromName, fromVal, toName, decDigits);
 
       // Put the message - conversion or error - on the page
       var resultString = document.getElementById("resultString");
@@ -176,7 +178,9 @@ var UcumDemo = exports.UcumDemo = function () {
           var commNames = [];
           for (var i = 0; i < cLen; i++) {
             commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ + commUnits[i].getProperty('name_');
-          }this.toAuto_.setList(commNames);
+          }var utabs = UnitTables.getInstance();
+          commNames.sort(utabs.compareCodes);
+          this.toAuto_.setList(commNames);
         }
       } catch (err) {
         resultMsg = err.message;
@@ -186,6 +190,40 @@ var UcumDemo = exports.UcumDemo = function () {
       }
     } // end getCommensurables
 
+    /**
+     *  This toggles the display of a given form element.  It changes the
+     *  style display state from "none" to "block" or "block" to "none"
+     *  depending on its current state.
+     *
+     *  It also can change the text on the button specified.  This is optional.
+     *
+     * @param elementID the ID of the target element
+     * @param buttonID the ID of the button whose text is to be changed.  This
+     *  is optional, but if specified the following 2 text parameters must be
+     *  supplied
+     * @param blockText the text that shows on the button when the target element
+     *  is currently not displayed (before being toggled).
+     * @param noneText the text that shows on the button when the target element
+     *  is currently displayed (before being toggled).
+     *
+     */
+
+  }, {
+    key: "toggleDisplay",
+    value: function toggleDisplay(elementID, buttonID, blockText, noneText) {
+      var theElement = document.getElementById(elementID);
+      var theButton = null;
+      if (buttonID) theButton = document.getElementById(buttonID);
+      if (theElement) {
+        if (theElement.style.display === "none") {
+          theElement.style.display = "block";
+          if (theButton) theButton.innerText = theButton.innerText.replace(noneText, blockText);
+        } else {
+          theElement.style.display = "none";
+          if (theButton) theButton.innerText = theButton.innerText.replace(blockText, noneText);
+        }
+      }
+    }
   }]);
 
   return UcumDemo;
@@ -1363,7 +1401,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
   _createClass(UcumLhcUtils, [{
     key: 'validUnitString',
-    value: function validUnitString(euStr) {
+    value: function validUnitString(uStr) {
 
       var retUnit = this.getSpecifiedUnit(uStr);
       return retUnit !== null;
@@ -1490,41 +1528,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       }
       return commUnits;
     } // end commensurablesList
-
-    /**
-     *  This toggles the display of a given form element.  It changes the
-     *  style display state from "none" to "block" or "block" to "none"
-     *  depending on its current state.
-     *
-     *  It also can change the text on the button specified.  This is optional.
-     *
-     * @param elementID the ID of the target element
-     * @param buttonID the ID of the button whose text is to be changed.  This
-     *  is optional, but if specified the following 2 text parameters must be
-     *  supplied
-     * @param blockText the text that shows on the button when the target element
-     *  is currently not displayed (before being toggled).
-     * @param noneText the text that shows on the button when the target element
-     *  is currently displayed (before being toggled).
-     *
-     */
-
-  }, {
-    key: 'toggleDisplay',
-    value: function toggleDisplay(elementID, buttonID, blockText, noneText) {
-      var theElement = document.getElementById(elementID);
-      var theButton = null;
-      if (buttonID) theButton = document.getElementById(buttonID);
-      if (theElement) {
-        if (theElement.style.display === "none") {
-          theElement.style.display = "block";
-          if (theButton) theButton.innerText = theButton.innerText.replace(noneText, blockText);
-        } else {
-          theElement.style.display = "none";
-          if (theButton) theButton.innerText = theButton.innerText.replace(blockText, noneText);
-        }
-      }
-    }
 
     /**
      *  TODO: This provides a list of all unit codes.  The list is either case
@@ -2938,6 +2941,7 @@ var UnitTables = exports.UnitTables = function () {
       if (unitsArray === undefined || unitsArray === null) {
         console.log('Unable to find unit with dimension = ' + uDim);
       }
+
       return unitsArray;
     } // end getUnitsByDimension
 

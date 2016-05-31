@@ -6,7 +6,7 @@
  * populating the autocompleter unit lists.
  */
 
-var Ucum = require('../source/config.js').Ucum
+var Ucum = require('../source/config.js').Ucum;
 var UcumLhcUtils = require("../source/ucumLhcUtils.js").UcumLhcUtils;
 var UnitTables = require("../source/unitTables.js").UnitTables;
 
@@ -62,7 +62,8 @@ export class UcumDemo {
     let retMsg = '';
 
     try {
-      let ret = UcumLhcUtils.validUnitString(uStr);
+      let utils = UcumLhcUtils.getInstance();
+      let ret = utils.validUnitString(uStr);
       if (ret)
         retMsg = `${uStr} is a valid unit.` ;
     }
@@ -98,7 +99,8 @@ export class UcumDemo {
     if (codePos > 0)
       toName = toName.substr(0, codePos);
 
-    let resultMsg = UcumLhcUtils.convertUnitTo(fromName, fromVal,
+    let utils = UcumLhcUtils.getInstance();
+    let resultMsg = utils.convertUnitTo(fromName, fromVal,
                                                toName, decDigits);
 
     // Put the message - conversion or error - on the page
@@ -144,6 +146,8 @@ export class UcumDemo {
         for (let i = 0; i < cLen; i++)
           commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ +
               commUnits[i].getProperty('name_');
+        let utabs = UnitTables.getInstance();
+        commNames.sort(utabs.compareCodes);
         this.toAuto_.setList(commNames)
       }
     }
@@ -155,6 +159,42 @@ export class UcumDemo {
     }
   } // end getCommensurables
 
+
+  /**
+   *  This toggles the display of a given form element.  It changes the
+   *  style display state from "none" to "block" or "block" to "none"
+   *  depending on its current state.
+   *
+   *  It also can change the text on the button specified.  This is optional.
+   *
+   * @param elementID the ID of the target element
+   * @param buttonID the ID of the button whose text is to be changed.  This
+   *  is optional, but if specified the following 2 text parameters must be
+   *  supplied
+   * @param blockText the text that shows on the button when the target element
+   *  is currently not displayed (before being toggled).
+   * @param noneText the text that shows on the button when the target element
+   *  is currently displayed (before being toggled).
+   *
+   */
+  toggleDisplay(elementID, buttonID, blockText, noneText) {
+    let theElement = document.getElementById(elementID);
+    let theButton = null;
+    if (buttonID)
+      theButton = document.getElementById(buttonID);
+    if (theElement) {
+      if (theElement.style.display === "none") {
+        theElement.style.display = "block";
+        if (theButton)
+          theButton.innerText = theButton.innerText.replace(noneText, blockText);
+      }
+      else {
+        theElement.style.display = "none";
+        if (theButton)
+          theButton.innerText = theButton.innerText.replace(blockText, noneText);
+      }
+    }
+  }
 
 } // end class UcumDemo
 
