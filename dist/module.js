@@ -1415,7 +1415,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     } // end convertUnitTo
 
     /**
-     * This method parses a unit string to gets (or try to get) the unit
+     * This method parses a unit string to get (or try to get) the unit
      * represented by the string.
      *
      * @param uName the string representing the unit
@@ -1492,7 +1492,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     } // end commensurablesList
 
     /**
-     *  This toggles the display of a give form element.  It changes the
+     *  This toggles the display of a given form element.  It changes the
      *  style display state from "none" to "block" or "block" to "none"
      *  depending on its current state.
      *
@@ -2402,7 +2402,14 @@ var UnitString = exports.UnitString = function () {
 
       // If that didn't work, peel off the exponent and try it
       if (!origUnit) {
-        var res = uCode.match(/([^\-\+]+)([\-\+\d]+)?/);
+        // This particular regex has been tweaked several times.  This one
+        // works with the following test strings:
+        // "m[H2O]-21] gives ["m{H2O]-21", "m[H2)]", "-21"]
+        // "m[H2O]+21] gives ["m{H2O]+21", "m[H2)]", "+21"]
+        // "m[H2O]21] gives ["m{H2O]-21", "m[H2)]", "21"]
+        // "s2" gives ["s2", "s, "2"]
+        // "kg" gives null
+        var res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
 
         // if we got an exponent, separate it from the unit and try
         // to get the unit again
@@ -2832,9 +2839,9 @@ var UnitTables = exports.UnitTables = function () {
         retUnit = this.unitCodes_[uCode];
         if (retUnit === undefined) {
           retUnit = this.unitCodes_[uCode.toLowerCase()];
-        }
-        if (retUnit === undefined) {
-          retUnit = null;
+          if (retUnit === undefined) {
+            retUnit = null;
+          }
         }
       }
       return retUnit;

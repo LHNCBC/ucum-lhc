@@ -269,9 +269,9 @@ export class UnitTables {
       retUnit = this.unitCodes_[uCode] ;
       if (retUnit === undefined) {
         retUnit = this.unitCodes_[uCode.toLowerCase()];
-      }
-      if (retUnit === undefined) {
-        retUnit = null;
+        if (retUnit === undefined) {
+          retUnit = null;
+        }
       }
     }
     return retUnit ;
