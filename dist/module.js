@@ -1205,55 +1205,24 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      *  string to be validated
      * @param returnElementID the ID of the web page element to receive the
      *  return validation message
-     * @param validListID the ID of the web page element to receive a list
-     *  of units that match the string when there are multiple elements
      * @returns nothing
      */
 
   }, {
     key: 'reportUnitStringValidity',
-    value: function reportUnitStringValidity(elementID, returnElementID, validListID) {
+    value: function reportUnitStringValidity(elementID, returnElementID) {
 
       var uStr = document.getElementById(elementID).value;
       var valFld = document.getElementById(returnElementID);
-      var valListFld = document.getElementById(validListID);
       valFld.innerHTML = '';
-      valListFld.innerHTML = '';
       var retMsg = '';
-      var listMsg = '';
+
       try {
         var ret = this.getSpecifiedUnit(uStr);
-        if (ret['unit']) {
-          retMsg = uStr + ' ';
-          if (Array.isArray(ret['unit'])) {
-            var aLen = ret['unit'].length;
-            if (aLen === 1) {
-              retMsg += ' is a valid unit string and is used, with a ' + 'magnitude of ' + ret['unit'][0]['mag'] + ' to define the unit ' + ret['unit'][0]['unit']['name_'] + '.';
-            } else {
-              retMsg += ' is a valid unit string and is used, with the ' + 'magnitude shown, to define the following units:';
-              listMsg = '<table><th>magnitude</th><th>unit</th>';
-
-              for (var i = 0; i < aLen; i++) {
-                var aHash = ret['unit'][i];
-                if (aHash['unit']) aHash = aHash['unit'];
-                listMsg += '<tr><td>' + aHash['magnitude_'] + '</td>';
-                listMsg += '<td>' + aHash['csCode_'] + ' - ' + aHash['name_'] + '</td></tr>';
-              }
-              listMsg += '</table>';
-              valListFld.innerHTML = listMsg;
-            }
-          } else {
-
-            if (ret['unit']['csUnitString_'] !== uStr) {
-              retMsg += ' - ' + ret['unit']['name_'] + ' - ';
-            } // end if the returned unit is a predefined unit        }
-            retMsg += ' is a valid unit string.';
-          } // end if the returned unit is/is not an array
-        } else retMsg = ret['msg'];
+        if (ret) retMsg = uStr + ' is a valid unit.';
       } catch (err) {
         retMsg = err.message;
       }
-
       valFld.innerHTML = retMsg;
     } // end reportUnitStringValidity
 
@@ -1287,22 +1256,11 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
       try {
         var fromUnit = null;
-        fromUnit = this.getSpecifiedUnit(fromName)['unit'];
-        if (Array.isArray(fromUnit)) {
-          fromUnit = fromUnit[0];
-          if (fromUnit['unit']) {
-            fromUnit = fromUnit['unit'];
-          }
-        }
+        fromUnit = this.getSpecifiedUnit(fromName);
 
         var toUnit = null;
-        toUnit = this.getSpecifiedUnit(toName)['unit'];
-        if (Array.isArray(toUnit)) {
-          toUnit = toUnit[0];
-          if (toUnit['unit']) {
-            toUnit = toUnit['unit'];
-          }
-        }
+        toUnit = this.getSpecifiedUnit(toName);
+
         if (fromUnit && toUnit) {
           try {
             var toMag = toUnit.convertFrom(fromMag, fromUnit);
@@ -1323,15 +1281,12 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     } // end convertUnit
 
     /**
-     * This method takes a unit string and gets (or tries to get) the unit
-     * represented by the string.   Using the string as the search criteria, it
-     * tries the unit names table first.  If not found there, it tries the
-     * unit codes table. If not found there it tries the unit strings table.
-     * And if not found there, it tries to parse the string into a valid unit.
+     * This method parses a unit string to get (or try to get) the unit
+     * represented by the string.
      *
      * @param uName the string representing the unit
-     * @returns {{unit: the unit found for the string or null if not found,
-     *            msg: a message indicating success or failure, with details}}
+     * @returns the unit found for the string or null if not found
+     * @throws a message if the unit is not found
      */
 
   }, {
@@ -1341,70 +1296,30 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       uName = uName.trim();
       var utab = UnitTables.getInstance();
       var retMsg = '';
-      var theUnit = null;
 
-      // try parsing as a unit string
-      try {
-        var uStrParser = new UnitString();
-        theUnit = uStrParser.parseString(uName);
-      } catch (err) {
-        console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-        if (retMsg !== '') retMsg += ' and ';
-        retMsg += uName + ' is not a valid unit.';
-      }
+      // go ahead and just try using the name as the code.  This may or may not
+      // work, but if it does, it cuts out a lot of parsing.
+      var theUnit = utab.getUnitByCode(uName);
 
-      // then try by unit name
-      if ((theUnit === null || theUnit === undefined) && retMsg === '') {
+      // If we didn't find it, try parsing as a unit string
+      if (!theUnit) {
         try {
-          theUnit = utab.getUnitByName(uName);
-        } catch (err) {
-          console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-          retMsg = 'An error occurred when trying to find ' + uName + '.';
-        }
-      }
-
-      // if that didn't work, try by unit code
-      if (theUnit === null && retMsg === '') {
-        try {
-          theUnit = utab.getUnitByCode(uName);
+          var uStrParser = new UnitString();
+          theUnit = uStrParser.parseString(uName);
         } catch (err) {
           console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
           if (retMsg !== '') retMsg += ' and ';
           retMsg += uName + ' is not a valid unit.';
         }
-      } // end if no unit nor an error on attempt to find by name
+      }
 
-      // if that didn't work, try by unit string
-      if ((theUnit === null || theUnit === undefined) && retMsg === '') {
-        try {
-          theUnit = utab.getUnitByString(uName);
-        } catch (err) {
-          console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-          if (retMsg !== '') retMsg += ' and ';
-          retMsg += uName + ' is not a valid unit.';
-        }
-      } // end if no unit nor an error on attempt to find by name or code
-
-      /*  // and finally, try parsing as a unit string
-        if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
-          try {
-            let uStrParser = new UnitString();
-            theUnit = uStrParser.parseString(uName);
-          }
-          catch(err) {
-            console.log(`Unit requested for unit string ${uName}.` +
-                'request unsuccessful; error thrown = ' + err.message);
-            if (retMsg !== '')
-              retMsg += ' and ';
-            retMsg += `${uName} is not a valid unit.` ;
-          }
-        }*/
+      // if no error was thrown but no unit was found, create a not found message
       if ((theUnit === null || theUnit === undefined) && retMsg === '') {
         retMsg = 'Unable to find unit for name = ' + uName + '.';
       }
       if (retMsg !== '') throw new Error(retMsg);
 
-      return { 'unit': theUnit, 'msg': retMsg };
+      return theUnit;
     } // end getSpecifiedUnit
 
     /**
@@ -1436,13 +1351,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var fromUnit = null;
       var resultMsg = null;
       try {
-        fromUnit = this.getSpecifiedUnit(fromName)['unit'];
-        if (Array.isArray(fromUnit)) {
-          fromUnit = fromUnit[0];
-          if (fromUnit['unit']) {
-            fromUnit = fromUnit['unit'];
-          }
-        }
+        fromUnit = this.getSpecifiedUnit(fromName);
         if (!fromUnit) {
           throw new Error('Could not find unit ' + fromName + '.');
         }
@@ -1474,6 +1383,41 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         resultString.innerHTML = resultMsg;
       }
     } // end getCommensurables
+
+    /**
+     *  This toggles the display of a given form element.  It changes the
+     *  style display state from "none" to "block" or "block" to "none"
+     *  depending on its current state.
+     *
+     *  It also can change the text on the button specified.  This is optional.
+     *
+     * @param elementID the ID of the target element
+     * @param buttonID the ID of the button whose text is to be changed.  This
+     *  is optional, but if specified the following 2 text parameters must be
+     *  supplied
+     * @param blockText the text that shows on the button when the target element
+     *  is currently not displayed (before being toggled).
+     * @param noneText the text that shows on the button when the target element
+     *  is currently displayed (before being toggled).
+     *
+     */
+
+  }, {
+    key: 'toggleDisplay',
+    value: function toggleDisplay(elementID, buttonID, blockText, noneText) {
+      var theElement = document.getElementById(elementID);
+      var theButton = null;
+      if (buttonID) theButton = document.getElementById(buttonID);
+      if (theElement) {
+        if (theElement.style.display === "none") {
+          theElement.style.display = "block";
+          if (theButton) theButton.innerText = theButton.innerText.replace(noneText, blockText);
+        } else {
+          theElement.style.display = "none";
+          if (theButton) theButton.innerText = theButton.innerText.replace(blockText, noneText);
+        }
+      }
+    }
 
     /**
      *  TODO: This provides a list of all unit codes.  The list is either case
@@ -2179,12 +2123,12 @@ var UnitString = exports.UnitString = function () {
    *
    * @params uStr the string defining the unit
    * @returns a unit object, or null if there were problems creating the unit
-   * @throws an error if the unit string contains parentheses (not handled yet)
-   *  an error if at least one valid unit could not be derived from the string
+   * @throws an error if the unit string contains parentheses (not handled yet);
+   *  an error if at least one valid unit could not be derived from the string;
    *  an error if a non-unit & non-number was parsed as an individual element
-   *    from the string (shouldn't happen, but this is a safeguard)
+   *    from the string (shouldn't happen, but this is a safeguard);
    *  any errors thrown by called methods (see makeUnit,
-   *  unit object division, multiplication, and getProperty)
+   *    unit object division, multiplication, and getProperty).
    */
 
 
@@ -2275,6 +2219,7 @@ var UnitString = exports.UnitString = function () {
                 var _theName2 = finalUnit.toString() + thisOp + nextUnit.toString();
                 // well great - now what?  I don't have anywhere to put this.
                 // TODO: figure out where the heck to put this.
+                throw new Error('Unit string (' + uStr + ') contains 2 adjoining ' + 'elements that are numbers.  At least one must be a unit.');
               }
           } // end if nextUnit is a number
       } // end do for each unit after the first one
@@ -2349,10 +2294,15 @@ var UnitString = exports.UnitString = function () {
       origUnit = utabs.getUnitByCode(uCode);
 
       // If that didn't work, peel off the exponent and try it
-      // Don't look for an exponent for H2O - the regex expression pulls
-      // out the 2 and messes this stuff up.
-      if (!origUnit && uCode.indexOf('m[H2O]') < 0) {
-        var res = uCode.match(/([^-+\d]*)([-+\d]*)/);
+      if (!origUnit) {
+        // This particular regex has been tweaked several times.  This one
+        // works with the following test strings:
+        // "m[H2O]-21] gives ["m{H2O]-21", "m[H2)]", "-21"]
+        // "m[H2O]+21] gives ["m{H2O]+21", "m[H2)]", "+21"]
+        // "m[H2O]21] gives ["m{H2O]-21", "m[H2)]", "21"]
+        // "s2" gives ["s2", "s, "2"]
+        // "kg" gives null
+        var res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
 
         // if we got an exponent, separate it from the unit and try
         // to get the unit again
@@ -2602,7 +2552,7 @@ var UnitTables = exports.UnitTables = function () {
     /**
      * Tracks units by Dimension vector
      *
-     * @type hash - key is the dimension vector (not the objeect, just the
+     * @type hash - key is the dimension vector (not the object, just the
      *              vector);
      *              value is an array of references to the Unit objects
      *              with that vector.  More than one unit may have the same
@@ -2646,7 +2596,8 @@ var UnitTables = exports.UnitTables = function () {
      *
      * @param theUnit the unit to be added
      * @returns nothing
-     * @throws passes on an error if one is thrown by the called functions
+     * @throws passes on an error if one is thrown by the called functions for
+     *  a problem with the unit code or unit name
      */
 
   }, {
@@ -2665,6 +2616,7 @@ var UnitTables = exports.UnitTables = function () {
         if (theUnit['dim_'].getProperty('dimVec_')) this.addUnitDimension(theUnit);
       } catch (err) {
         // do nothing - throws error if the property is null
+        // and that's OK here.
       }
     } // end addUnit
 
@@ -2764,9 +2716,11 @@ var UnitTables = exports.UnitTables = function () {
     } // end addUnitDimension
 
     /**
-     *  Returns a unit object based on the unit's code
+     *  Returns a unit object based on the unit's code.  Tries first on
+     *  the code as passed in and then, if the unit is not found, on a
+     *  lowerCase version of the code
      *
-     *  @param name the name of the unit to be returned
+     *  @param uCode the code of the unit to be returned
      *  @returns the unit object or null if it is not found
      */
 
@@ -2776,7 +2730,12 @@ var UnitTables = exports.UnitTables = function () {
       var retUnit = null;
       if (uCode) {
         retUnit = this.unitCodes_[uCode];
-        if (retUnit === undefined) retUnit = null;
+        if (retUnit === undefined) {
+          retUnit = this.unitCodes_[uCode.toLowerCase()];
+          if (retUnit === undefined) {
+            retUnit = null;
+          }
+        }
       }
       return retUnit;
     }
@@ -2907,6 +2866,16 @@ var UnitTables = exports.UnitTables = function () {
       } // end do for each code
       return nameList;
     }
+
+    /**
+     * This provides a sort function for unit codes so that sorting ignores
+     * square brackets and case.
+     *
+     * @param a first value
+     * @param b second value
+     * @returns -1 if a is should fall before b; otherwise 1.
+     */
+
   }, {
     key: 'compareCodes',
     value: function compareCodes(a, b) {

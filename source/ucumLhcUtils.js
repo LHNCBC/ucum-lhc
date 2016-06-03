@@ -162,7 +162,7 @@ export class UcumLhcUtils {
 
 
   /**
-   * This method parses a unit string to gets (or try to get) the unit
+   * This method parses a unit string to get (or try to get) the unit
    * represented by the string.
    *
    * @param uName the string representing the unit
@@ -174,19 +174,24 @@ export class UcumLhcUtils {
     uName = uName.trim();
     let utab = UnitTables.getInstance();
     let retMsg = '';
-    let theUnit = null;
 
-    // try parsing as a unit string
-    try {
-      let uStrParser = new UnitString();
-      theUnit = uStrParser.parseString(uName);
-    }
-    catch(err) {
-      console.log(`Unit requested for unit string ${uName}.` +
-          'request unsuccessful; error thrown = ' + err.message);
-      if (retMsg !== '')
-        retMsg += ' and ';
-      retMsg += `${uName} is not a valid unit.` ;
+    // go ahead and just try using the name as the code.  This may or may not
+    // work, but if it does, it cuts out a lot of parsing.
+    let theUnit = utab.getUnitByCode(uName);
+
+    // If we didn't find it, try parsing as a unit string
+    if (!theUnit) {
+      try {
+        let uStrParser = new UnitString();
+        theUnit = uStrParser.parseString(uName);
+      }
+      catch (err) {
+        console.log(`Unit requested for unit string ${uName}.` +
+            'request unsuccessful; error thrown = ' + err.message);
+        if (retMsg !== '')
+          retMsg += ' and ';
+        retMsg += `${uName} is not a valid unit.`;
+      }
     }
 
     // if no error was thrown but no unit was found, create a not found message
@@ -266,6 +271,43 @@ export class UcumLhcUtils {
 
 
   /**
+   *  This toggles the display of a given form element.  It changes the
+   *  style display state from "none" to "block" or "block" to "none"
+   *  depending on its current state.
+   *
+   *  It also can change the text on the button specified.  This is optional.
+   *
+   * @param elementID the ID of the target element
+   * @param buttonID the ID of the button whose text is to be changed.  This
+   *  is optional, but if specified the following 2 text parameters must be
+   *  supplied
+   * @param blockText the text that shows on the button when the target element
+   *  is currently not displayed (before being toggled).
+   * @param noneText the text that shows on the button when the target element
+   *  is currently displayed (before being toggled).
+   *
+   */
+  toggleDisplay(elementID, buttonID, blockText, noneText) {
+    let theElement = document.getElementById(elementID);
+    let theButton = null;
+    if (buttonID)
+      theButton = document.getElementById(buttonID);
+    if (theElement) {
+      if (theElement.style.display === "none") {
+        theElement.style.display = "block";
+        if (theButton)
+          theButton.innerText = theButton.innerText.replace(noneText, blockText);
+      }
+      else {
+        theElement.style.display = "none";
+        if (theButton)
+          theButton.innerText = theButton.innerText.replace(blockText, noneText);
+      }
+    }
+  }
+
+
+  /**
    *  TODO: This provides a list of all unit codes.  The list is either case
    *  sensitive or case-insensitive, depending on the configuration
    *  setting in config.js
@@ -273,6 +315,7 @@ export class UcumLhcUtils {
   allUnitCodes() {
 
   }
+
 
   /**
    *  TODO: This provides a list of all unit names (descriptions).  The names

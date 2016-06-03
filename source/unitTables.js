@@ -256,17 +256,23 @@ export class UnitTables {
 
 
   /**
-   *  Returns a unit object based on the unit's code
+   *  Returns a unit object based on the unit's code.  Tries first on
+   *  the code as passed in and then, if the unit is not found, on a
+   *  lowerCase version of the code
    *
-   *  @param name the name of the unit to be returned
+   *  @param uCode the code of the unit to be returned
    *  @returns the unit object or null if it is not found
    */
   getUnitByCode(uCode) {
     let retUnit = null ;
     if (uCode) {
       retUnit = this.unitCodes_[uCode] ;
-      if (retUnit === undefined)
-        retUnit = null;
+      if (retUnit === undefined) {
+        retUnit = this.unitCodes_[uCode.toLowerCase()];
+        if (retUnit === undefined) {
+          retUnit = null;
+        }
+      }
     }
     return retUnit ;
   }
