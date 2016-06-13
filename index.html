@@ -34,7 +34,7 @@
       <h4>Convert values from one UCUM unit to another</h4>
       <p>Enter a valid UCUM code for the unit you want to convert:
         <input type="text" id="convertFrom"
-         onblur="ucumPkg.UcumLhcUtils.getInstance().getCommensurables('convertFrom',
+         onblur="ucumPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                       'convertTo',
                                                                       'resultString')">
         &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
@@ -45,7 +45,7 @@
       <p>Enter or Select the unit that it is to be converted to:
       <input type="text" id="convertTo">
       <p>&nbsp;&nbsp;  <button id="doConversionButton"
-         onclick="ucumPkg.UcumLhcUtils.getInstance().convertUnit('convertFrom',
+         onclick="ucumPkg.UcumDemo.getInstance().convertUnit('convertFrom',
                                                                  'convertNum',
                                                                  'convertTo')"
                 type="button">Convert</button>
@@ -59,14 +59,14 @@
         <input type="text" id="valString">&nbsp; &nbsp; &nbsp; &nbsp;
         <button id="toggleHints"
                 onclick="
-                ucumPkg.UcumLhcUtils.getInstance().toggleDisplay('hints',
+                ucumPkg.UcumDemo.getInstance().toggleDisplay('hints',
                                                                  'toggleHints',
                                                                  'Hide', 'Show')"
         type="button">Show entry hints</button>
       </p>&nbsp;&nbsp;
       <button id="doValidationButton"
               onclick=
-                  "ucumPkg.UcumLhcUtils.getInstance().reportUnitStringValidity('valString',
+                  "ucumPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                             'validationString', 'validList')"
               type="button">Validate</button>
       <p id="validationString">&nbsp;&nbsp;</p>
