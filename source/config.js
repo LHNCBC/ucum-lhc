@@ -13,8 +13,11 @@ export var Ucum = {  // Namespace for UCUM classes
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
+   *  I don't think we need this.  I think we're just going with
+   *  case sensitive, per Clem.   Gunther's code has this flag, but I
+   *  am removing it, at least for now.  lm, 6/2016
    */
-  caseSensitive_: true ,
+  //caseSensitive_: true ,
 
   /**
    *  The number of elements in a Dimension array.   Currently this

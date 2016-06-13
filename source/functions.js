@@ -66,9 +66,36 @@ class Functions {
     this.fs['ld'] = {cnvTo : function(x){return Math.log(x)/Math.LN2;},
                      cnvFrom : function(x){return Math.pow(2, x);}};
 
+    // tan - tangent
+    this.fs['100tan'] = {cnvTo : function(x){return Math.tan(x) * 100;},
+                         cnvFrom : function(x){return Math.atan(x/100);}};
+    // the xml essence ucum file uses both 100tan and tanTimes100
+    this.fs['tanTimes100'] = this.fs['100tan'] ;
+
+    // sqrt - square root
+    this.fs['sqrt'] = {cnvTo : function(x){return Math.sqrt(x);},
+                       cnvFrom : function(x){return x*x;}};
+
     // inv - inverse
     this.fs['inv'] = {cnvTo : function(x){return 1.0 / x;},
                       cnvFrom : function(x){return 1.0 / x;}};
+
+    // homeopathic potency functions
+    this.fs['hpX'] = {cnvTo : function(x){return -(this.fs['lg'](x));},
+                      cnvFrom : function(x){return Math.pow(10, -x);}};
+
+    this.fs['hpC'] = {cnvTo : function(x){
+                              return -(this.fs['ln'](x))/this.fs['ln'](100);},
+                       cnvFrom : function(x){return Math.pow(100, -x);}};
+
+    this.fs['hpM'] = {cnvTo : function(x){
+                              return -(this.fs['ln'](x))/this.fs['ln'](1000);},
+                      cnvFrom : function(x){return Math.pow(1000, -x);}};
+
+    this.fs['hpQ'] = {cnvTo : function(x){
+                              return -(this.fs['ln'](x))/this.fs['ln'](50000);},
+                      cnvFrom : function(x){return Math.pow(50000, -x);}};
+
 
     // Make this a singleton.  See UnitTables constructor for details.
     let holdThis = Functions.prototype;

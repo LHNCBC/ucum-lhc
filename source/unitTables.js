@@ -43,15 +43,33 @@ export class UnitTables {
     this.unitNames_ = {};
 
     /**
-     * Tracks units by code using case-sensitive or case-insensitive -
-     * whichever we're currently using.  See Ucum.caseSensitive_ in
-     * config.js
+     * Tracks units by code using case-sensitive version.
      *
      * @type hash - key is the code;
      *              value is the reference to the Unit object.  Codes must
      *              be unique.
      */
     this.unitCodes_ = {};
+
+    /**
+     * Tracks units by code using an uppercase version, e.g., MG instead of
+     * mg.  Searched if the code is not found in the unitCodes_ table.
+     *
+     * @type hash - key is the uppercase version of code;
+     *              value is the reference to the Unit object.  Codes must
+     *              be unique.
+     */
+    this.unitUcCodes_ = {};
+
+    /**
+     * Tracks units by code using an lowercase version, e.g., [ph] instead of
+     * [pH].  Searched if the code is not found in the unitCodes_ table.
+     *
+     * @type hash - key is the lowercase version of code;
+     *              value is the reference to the Unit object.  Codes must
+     *              be unique.
+     */
+    this.unitLcCodes_ = {};
 
     /**
      * Keeps track of the order in which units are defined.  The order is
@@ -168,28 +186,28 @@ export class UnitTables {
 
 
   /**
-   * Adds a Unit object to the unitCodes_ table and to the codeOrder_ table.
+   * Adds a Unit object to the unitCodes_, unitUcCodes_, unitLcCodes_ and
+   * codeOrder_ tables.
    *
    * @param theUnit the unit to be added
    * @returns nothing
-   * @throws an error if the table already contains a unit with the code,
-   *         or if the unit has no code of the type currently in use (case
-   *         sensitive or insensitive)
+   * @throws an error if theunitCodes_ table already contains a unit with the code
    */
   addUnitCode(theUnit) {
 
-    let uCode = null;
-    if (Ucum.caseSensitive_ == true)
-      uCode = theUnit['csCode_'];
-    else
-      uCode = theUnit['ciCode_'];
-
+    let uCode = theUnit['csCode_'];
     if (uCode) {
+
+      let upCode = uCode.toUpperCase();
+      let downCode = uCode.toLowerCase();
+
       if (this.unitCodes_[uCode])
         throw(new Error(`UnitTables.addUnitCode called, already contains entry for ` +
               `unit with code = ${uCode}`));
       else {
         this.unitCodes_[uCode] = theUnit;
+        this.unitUcCodes_[upCode] = theUnit;
+        this.unitLcCodes_[downCode] = theUnit;
         this.codeOrder_.push(uCode);
       }
     }
@@ -258,7 +276,7 @@ export class UnitTables {
   /**
    *  Returns a unit object based on the unit's code.  Tries first on
    *  the code as passed in and then, if the unit is not found, on a
-   *  lowerCase version of the code
+   *  lower case version of the code and then an upper case version.
    *
    *  @param uCode the code of the unit to be returned
    *  @returns the unit object or null if it is not found
@@ -268,9 +286,11 @@ export class UnitTables {
     if (uCode) {
       retUnit = this.unitCodes_[uCode] ;
       if (retUnit === undefined) {
-        retUnit = this.unitCodes_[uCode.toLowerCase()];
+        retUnit = this.unitLcCodes_[uCode.toLowerCase()];
         if (retUnit === undefined) {
-          retUnit = null;
+          retUnit = this.unitUcCodes_[uCode.toUpperCase()];
+          if (retUnit === undefined)
+            retUnit = null;
         }
       }
     }

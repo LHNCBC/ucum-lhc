@@ -64,7 +64,6 @@ export class UcumLhcUtils {
   } // end validUnitString
 
 
-
   /**
    * This method converts one unit to another
    *
@@ -143,7 +142,7 @@ export class UcumLhcUtils {
             'request unsuccessful; error thrown = ' + err.message);
         if (retMsg !== '')
           retMsg += ' and ';
-        retMsg += `${uName} is not a valid unit.`;
+        retMsg += `${uName} is not a valid unit.  ${err.message}`;
       }
     }
 
@@ -191,27 +190,6 @@ export class UcumLhcUtils {
     return commUnits ;
   } // end commensurablesList
 
-
-
-  /**
-   *  TODO: This provides a list of all unit codes.  The list is either case
-   *  sensitive or case-insensitive, depending on the configuration
-   *  setting in config.js
-   */
-  allUnitCodes() {
-
-  }
-
-
-  /**
-   *  TODO: This provides a list of all unit names (descriptions).  The names
-   *  are returned as an array of names.  For most units the array will
-   *  contain one name, but because names are sometimes duplicated, not
-   *  all of the arrays returned will contain just one entry.
-   */
-  allUnitNames() {
-
-  }
 
   /**
    * Creates a file containing a list of the units

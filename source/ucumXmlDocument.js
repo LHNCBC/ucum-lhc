@@ -81,14 +81,7 @@ export class UcumXmlDocument {
       let curPfx = prefixes[p];
       let attrs = {} ;
 
-      // use the version (case sensitive or case insensitive) of the
-      // prefix code as indicated by the caseSensitive_ flag in the
-      // configuration file
-      if (Ucum.Ucum.caseSensitive_)
-        attrs["code_"] = curPfx.attr.Code;
-      else
-        attrs["code_"] = curPfx.attr.CODE;
-
+      attrs["code_"] = curPfx.attr.Code;
       attrs["name_"] = curPfx.childNamed('name').val;
 
       // Set the prefix value.  If there is a <sup> element in the

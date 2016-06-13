@@ -272,8 +272,11 @@ var Ucum = exports.Ucum = { // Namespace for UCUM classes
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
+   *  I don't think we need this.  I think we're just going with
+   *  case sensitive, per Clem.   Gunther's code has this flag, but I
+   *  am removing it, at least for now.  lm, 6/2016
    */
-  caseSensitive_: true,
+  //caseSensitive_: true ,
 
   /**
    *  The number of elements in a Dimension array.   Currently this
@@ -828,12 +831,59 @@ var Functions = function () {
         return Math.pow(2, x);
       } };
 
+    // tan - tangent
+    this.fs['100tan'] = { cnvTo: function cnvTo(x) {
+        return Math.tan(x) * 100;
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.atan(x / 100);
+      } };
+    // the xml essence ucum file uses both 100tan and tanTimes100
+    this.fs['tanTimes100'] = this.fs['100tan'];
+
+    // sqrt - square root
+    this.fs['sqrt'] = { cnvTo: function cnvTo(x) {
+        return Math.sqrt(x);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return x * x;
+      } };
+
     // inv - inverse
     this.fs['inv'] = { cnvTo: function cnvTo(x) {
         return 1.0 / x;
       },
       cnvFrom: function cnvFrom(x) {
         return 1.0 / x;
+      } };
+
+    // homeopathic potency functions
+    this.fs['hpX'] = { cnvTo: function cnvTo(x) {
+        return -this.fs['lg'](x);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.pow(10, -x);
+      } };
+
+    this.fs['hpC'] = { cnvTo: function cnvTo(x) {
+        return -this.fs['ln'](x) / this.fs['ln'](100);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.pow(100, -x);
+      } };
+
+    this.fs['hpM'] = { cnvTo: function cnvTo(x) {
+        return -this.fs['ln'](x) / this.fs['ln'](1000);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.pow(1000, -x);
+      } };
+
+    this.fs['hpQ'] = { cnvTo: function cnvTo(x) {
+        return -this.fs['ln'](x) / this.fs['ln'](50000);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.pow(50000, -x);
       } };
 
     // Make this a singleton.  See UnitTables constructor for details.
@@ -957,10 +1007,9 @@ var Prefix = exports.Prefix = function () {
     }
 
     /**
-     * The prefix code, e.g., k for kilo.  If we are in case-sensitive
-     * mode (Ucum.caseSensitive_ is true), this should be the case-sensitive
-     * code, and if we're not, it should be the case-insensitive code.  Since
-     * there's no way to check to see if it's the right one (because although
+     * The prefix code, e.g., k for kilo.  This should be the case-sensitive
+     * code.  Since there's no way to check to see if it's the case-sensitive
+     * one as opposed to the case-insensitive one (because although
      * case-insensitive codes all seem to be uppercase, some case-sensitive
      * codes are also all uppercase), we'll just have to believe that the
      * right one was passed in.
@@ -1481,7 +1530,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         } catch (err) {
           console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
           if (retMsg !== '') retMsg += ' and ';
-          retMsg += uName + ' is not a valid unit.';
+          retMsg += uName + ' is not a valid unit.  ' + err.message;
         }
       }
 
@@ -1528,27 +1577,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       }
       return commUnits;
     } // end commensurablesList
-
-    /**
-     *  TODO: This provides a list of all unit codes.  The list is either case
-     *  sensitive or case-insensitive, depending on the configuration
-     *  setting in config.js
-     */
-
-  }, {
-    key: 'allUnitCodes',
-    value: function allUnitCodes() {}
-
-    /**
-     *  TODO: This provides a list of all unit names (descriptions).  The names
-     *  are returned as an array of names.  For most units the array will
-     *  contain one name, but because names are sometimes duplicated, not
-     *  all of the arrays returned will contain just one entry.
-     */
-
-  }, {
-    key: 'allUnitNames',
-    value: function allUnitNames() {}
 
     /**
      * Creates a file containing a list of the units
@@ -2132,7 +2160,7 @@ var Unit = exports.Unit = function () {
     value: function divide(unit2) {
 
       if (this.cnv_ != null) throw new Error('Attempt to divide non-ratio unit ' + this.name_);
-      if (unit2.cnv_ != null) throw new Error('Attempt to divide non-ratio unit ' + unit2.name_);
+      if (unit2.cnv_ != null) throw new Error('Attempt to divide by non-ratio unit ' + unit2.name_);
 
       var uString = new Us.UnitString();
       this.name_ = uString.divString(this.name_, unit2.name_);
@@ -2233,8 +2261,8 @@ var UnitString = exports.UnitString = function () {
    *
    * @params uStr the string defining the unit
    * @returns a unit object, or null if there were problems creating the unit
-   * @throws an error if the unit string contains parentheses (not handled yet);
-   *  an error if at least one valid unit could not be derived from the string;
+   * @throws an error if at least one valid unit could not be derived from the
+   *  string;
    *  an error if a non-unit & non-number was parsed as an individual element
    *    from the string (shouldn't happen, but this is a safeguard);
    *  any errors thrown by called methods (see makeUnit,
@@ -2247,39 +2275,104 @@ var UnitString = exports.UnitString = function () {
     value: function parseString(uStr) {
       var finalUnit = null;
 
-      // Check for parentheses in unit strings. We assume there aren't any,
-      // so if some turn up we need to know so they can be parsed.  For now,
-      // block further processing of strings with parentheses.
-      var pArray = uStr.split('(');
-      if (pArray.length > 1) {
-        throw new Error('Unit string (' + uStr + ') contains parentheses, which ' + 'are not handled yet by this package.  Sorry');
-      }
+      // Check for parentheses in unit strings.  If found, isolate a parenthesized
+      // group and pass it to a recursive call of this method.  If it contains
+      // a nested parenthetical group, that will be handled in the same way.
+      // Units returned by a recursive call to this method are stored in the
+      // parensUnits array, and a placeholder is placed in the units array
+      // (uArray) which is reassembled after all parenthetical groups in the
+      // current string are processed.  The placeholder consists of a pound sign
+      // (#) followed by the index of the unit in the parensUnits array.
+
+      var uArray = [];
+      var uPos = 0;
+
+      var parensUnits = [];
+      var pu = 0;
+      while (uStr !== "") {
+        var openCt = 0;
+        var closeCt = 0;
+        var openPos = uStr.indexOf('(');
+
+        // If an opening parenthesis was not found, transfer the unit string (uStr)
+        // to the current uArray element.
+        if (openPos < 0) {
+          uArray[uPos] = uStr;
+          uStr = "";
+        }
+
+        // Otherwise process the string that includes the parenthetical group
+        else {
+            openCt += 1;
+            // Write the text before the parentheses (if any) to the units array
+            var _uLen = uStr.length;
+            if (openPos > 0) {
+              uArray[uPos++] = uStr.substr(0, openPos);
+            }
+
+            // Find the matching closePos, i.e., the one that closes the
+            // parenthetical group that this one opens.
+            var closePos = 0;
+            var c = openPos + 1;
+            for (; c < _uLen && openCt != closeCt; c++) {
+              if (uStr[c] === '(') openCt += 1;else if (uStr[c] === ')') closeCt += 1;
+            }
+
+            // Put a placeholder for the group in the units array and recursively
+            // call this method for the parenthetical group.  Put the unit returned
+            // in the parensUnit array.  Set the unit string to whatever follows
+            // the position of the closing parenthesis for this group, to be
+            // processed by the next iteration of this loop.  If there's nothing
+            // left uStr is set to "".
+            if (openCt === closeCt) {
+              closePos = c;
+              uArray[uPos++] = '#' + pu.toString();
+              parensUnits[pu++] = this.parseString(uStr.substring(openPos + 1, closePos - 1));
+              uStr = uStr.substr(closePos);
+            } else {
+              // TODO - mismatched parentheses
+            }
+          } // end if an opening parenthesis was found
+      } // end do while the input string is not empty
+
+      // Join all the unit array elements back into one string with no separators.
+      uStr = uArray.join('');
 
       // Call makeUnitsArray to convert the string to an array of unit
       // descriptors with operators.
-      var uArray = this.makeUnitsArray(uStr);
+      uArray = this.makeUnitsArray(uStr);
 
       // create a unit object out of each un element
       var uLen = uArray.length;
       for (var u1 = 0; u1 < uLen; u1++) {
         var curCode = uArray[u1]['un'];
-        if (curCode) {
-          var curCodeNum = Number(curCode);
-          // if the current unit string is NOT a number, call makeUnit to create
-          // the unit object for it
-          if (isNaN(curCodeNum)) {
-            uArray[u1]['un'] = this.makeUnit(curCode);
-          }
-          // Otherwise write the numeric version of the number back to
-          // the uArray 'un' element
-          else {
-              uArray[u1]['un'] = curCodeNum;
-            }
+
+        // If the current unit array element is a unit stored in the parensUnits
+        // array (from a parenthesized string), get that unit and put it in the
+        /// units array.
+        if (curCode[0] === '#') {
+          var uIdx = curCode.substr(1);
+          uArray[u1]['un'] = parensUnits[uIdx];
         }
+
+        // Else if it's not a number, call makeUnit to create a unit for it.
+        else {
+            var curCodeNum = Number(curCode);
+            // if the current unit string is NOT a number, call makeUnit to create
+            // the unit object for it
+            if (isNaN(curCodeNum)) {
+              uArray[u1]['un'] = this.makeUnit(curCode);
+            }
+            // Otherwise write the numeric version of the number back to
+            // the uArray 'un' element
+            else {
+                uArray[u1]['un'] = curCodeNum;
+              }
+          }
       }
 
       // Process the units (and numbers) to create one final unit object
-      if (uArray[0] == null || uArray == "'" || uArray[0]['un'] === undefined || uArray[0]['un'] == null) {
+      if (uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined || uArray[0]['un'] == null) {
         // not sure what this might be, but this is a safeguard
         throw new Error('Unit string (' + uStr + ') did not contain anything that ' + 'could be used to create a unit, or else something that is not ' + 'handled yet by this package.  Sorry');
       }
@@ -2290,7 +2383,7 @@ var UnitString = exports.UnitString = function () {
       // We only need to do the arithmetic if we have more than one unit
       for (var u2 = 1; u2 < uLen; u2++) {
         var nextUnit = uArray[u2]['un'];
-        if (typeof nextUnit !== 'number' && !nextUnit.getProperty) {
+        if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
           throw new Error('Unit string (' + uStr + ') contains unrecognized ' + ('element (' + nextUnit.toString() + '); could not parse full ') + 'string.  Sorry');
         }
 
@@ -2355,9 +2448,9 @@ var UnitString = exports.UnitString = function () {
       var uArray1 = uStr.match(/([./]|[^./]+)/g);
 
       // If the first element in the array is a division operator (/), the
-      // string started with '/'.  Add A first element containing 1 to the
+      // string started with '/'.  Add a first element containing 1 to the
       // array, which will cause the correct computation to be performed (inversion).
-      if (uArray1[0] == "/") {
+      if (uArray1[0] === "/") {
         uArray1.unshift("1");
       }
 
@@ -2460,60 +2553,63 @@ var UnitString = exports.UnitString = function () {
         } // end if we found a prefix
       } // end if we didn't get a unit after removing an exponent
 
-      // now, if we found a unit object, clone it and then apply the prefix
+      // If we didn't find a unit, throw an error
+      if (!origUnit) {
+        throw new Error('Unable to find unit for ' + uCode);
+      }
+      // Otherwise we found a unit object.  Clone it and then apply the prefix
       // and exponent, if any, to it.
 
-      if (origUnit) {
-        // clone the unit we just got and then apply any exponent and/or prefix
-        // to it
-        retUnit = origUnit.clone();
-        var theDim = retUnit.getProperty('dim_');
-        var theMag = retUnit.getProperty('magnitude_');
-        var theName = retUnit.getProperty('name_');
-        // If there is an exponent for the unit, apply it to the dimension
-        // and magnitude now
-        if (exp) {
-          exp = parseInt(exp);
-          var expMul = exp;
-          theDim = theDim.mul(exp);
-          theMag = Math.pow(theMag, exp);
-          retUnit.assignVals({ 'magnitude_': theMag });
+      // clone the unit we just got and then apply any exponent and/or prefix
+      // to it
+      retUnit = origUnit.clone();
+      var theDim = retUnit.getProperty('dim_');
+      var theMag = retUnit.getProperty('magnitude_');
+      var theName = retUnit.getProperty('name_');
+      // If there is an exponent for the unit, apply it to the dimension
+      // and magnitude now
+      if (exp) {
+        exp = parseInt(exp);
+        var expMul = exp;
+        theDim = theDim.mul(exp);
+        theMag = Math.pow(theMag, exp);
+        retUnit.assignVals({ 'magnitude_': theMag });
 
-          // If there is also a prefix, apply the exponent to the prefix.
-          if (pfxVal) {
-
-            // if the prefix base is 10 it will have an exponent.  Multiply the
-            // current prefix exponent by the exponent for the unit we're
-            // working with.  Then raise the prefix value to the level
-            // defined by the exponent.
-            if (pfxExp) {
-              expMul *= pfxExp;
-              pfxVal = Math.pow(10, expMul);
-            }
-            // if the prefix base is not 10, it won't have an exponent.
-            // At the moment I don't see any units using the prefixes
-            // that aren't base 10.   But if we get one the prefix value
-            // will be applied to the magnitude (below), which is what
-            // we want anyway.
-          } // end if there's a prefix as well as the exponent
-        } // end if there's an exponent
-
-        // Now apply the prefix, if there is one, to the magnitude
+        // If there is also a prefix, apply the exponent to the prefix.
         if (pfxVal) {
-          theMag *= pfxVal;
-          retUnit.assignVals({ 'magnitude_': theMag });
-        }
 
-        // if we have a prefix and/or an exponent, add them to the unit name
-        if (pfxVal) {
-          theName = pfxName + theName;
-          retUnit.assignVals({ 'name_': theName });
-        }
-        if (exp) {
-          theName = theName + '<sup>' + exp.toString() + '</sup>';
-          retUnit.assignVals({ 'name_': theName });
-        }
-      } // end if we found a unit object
+          // if the prefix base is 10 it will have an exponent.  Multiply the
+          // current prefix exponent by the exponent for the unit we're
+          // working with.  Then raise the prefix value to the level
+          // defined by the exponent.
+          if (pfxExp) {
+            expMul *= pfxExp;
+            pfxVal = Math.pow(10, expMul);
+          }
+          // if the prefix base is not 10, it won't have an exponent.
+          // At the moment I don't see any units using the prefixes
+          // that aren't base 10.   But if we get one the prefix value
+          // will be applied to the magnitude (below), which is what
+          // we want anyway.
+        } // end if there's a prefix as well as the exponent
+      } // end if there's an exponent
+
+      // Now apply the prefix, if there is one, to the magnitude
+      if (pfxVal) {
+        theMag *= pfxVal;
+        retUnit.assignVals({ 'magnitude_': theMag });
+      }
+
+      // if we have a prefix and/or an exponent, add them to the unit name
+      if (pfxVal) {
+        theName = pfxName + theName;
+        retUnit.assignVals({ 'name_': theName });
+      }
+      if (exp) {
+        theName = theName + '<sup>' + exp.toString() + '</sup>';
+        retUnit.assignVals({ 'name_': theName });
+      }
+
       return retUnit;
     } // ret makeUnit
 
@@ -2632,15 +2728,33 @@ var UnitTables = exports.UnitTables = function () {
     this.unitNames_ = {};
 
     /**
-     * Tracks units by code using case-sensitive or case-insensitive -
-     * whichever we're currently using.  See Ucum.caseSensitive_ in
-     * config.js
+     * Tracks units by code using case-sensitive version.
      *
      * @type hash - key is the code;
      *              value is the reference to the Unit object.  Codes must
      *              be unique.
      */
     this.unitCodes_ = {};
+
+    /**
+     * Tracks units by code using an uppercase version, e.g., MG instead of
+     * mg.  Searched if the code is not found in the unitCodes_ table.
+     *
+     * @type hash - key is the uppercase version of code;
+     *              value is the reference to the Unit object.  Codes must
+     *              be unique.
+     */
+    this.unitUcCodes_ = {};
+
+    /**
+     * Tracks units by code using an lowercase version, e.g., [ph] instead of
+     * [pH].  Searched if the code is not found in the unitCodes_ table.
+     *
+     * @type hash - key is the lowercase version of code;
+     *              value is the reference to the Unit object.  Codes must
+     *              be unique.
+     */
+    this.unitLcCodes_ = {};
 
     /**
      * Keeps track of the order in which units are defined.  The order is
@@ -2755,25 +2869,28 @@ var UnitTables = exports.UnitTables = function () {
     } // end addUnitName
 
     /**
-     * Adds a Unit object to the unitCodes_ table and to the codeOrder_ table.
+     * Adds a Unit object to the unitCodes_, unitUcCodes_, unitLcCodes_ and
+     * codeOrder_ tables.
      *
      * @param theUnit the unit to be added
      * @returns nothing
-     * @throws an error if the table already contains a unit with the code,
-     *         or if the unit has no code of the type currently in use (case
-     *         sensitive or insensitive)
+     * @throws an error if theunitCodes_ table already contains a unit with the code
      */
 
   }, {
     key: 'addUnitCode',
     value: function addUnitCode(theUnit) {
 
-      var uCode = null;
-      if (Ucum.caseSensitive_ == true) uCode = theUnit['csCode_'];else uCode = theUnit['ciCode_'];
-
+      var uCode = theUnit['csCode_'];
       if (uCode) {
+
+        var upCode = uCode.toUpperCase();
+        var downCode = uCode.toLowerCase();
+
         if (this.unitCodes_[uCode]) throw new Error('UnitTables.addUnitCode called, already contains entry for ' + ('unit with code = ' + uCode));else {
           this.unitCodes_[uCode] = theUnit;
+          this.unitUcCodes_[upCode] = theUnit;
+          this.unitLcCodes_[downCode] = theUnit;
           this.codeOrder_.push(uCode);
         }
       } else throw new Error('UnitAtomsTable.addUnitCode called for unit that has ' + 'no code.');
@@ -2828,7 +2945,7 @@ var UnitTables = exports.UnitTables = function () {
     /**
      *  Returns a unit object based on the unit's code.  Tries first on
      *  the code as passed in and then, if the unit is not found, on a
-     *  lowerCase version of the code
+     *  lower case version of the code and then an upper case version.
      *
      *  @param uCode the code of the unit to be returned
      *  @returns the unit object or null if it is not found
@@ -2841,9 +2958,10 @@ var UnitTables = exports.UnitTables = function () {
       if (uCode) {
         retUnit = this.unitCodes_[uCode];
         if (retUnit === undefined) {
-          retUnit = this.unitCodes_[uCode.toLowerCase()];
+          retUnit = this.unitLcCodes_[uCode.toLowerCase()];
           if (retUnit === undefined) {
-            retUnit = null;
+            retUnit = this.unitUcCodes_[uCode.toUpperCase()];
+            if (retUnit === undefined) retUnit = null;
           }
         }
       }
