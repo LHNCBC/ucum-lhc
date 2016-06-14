@@ -68,7 +68,7 @@ export class UcumLhcUtils {
    * This method converts one unit to another
    *
    * @param fromName the name of the unit to be converted
-   * @param numVal the number of "from" units to be converted to "to" units
+   * @param fromVal the number of "from" units to be converted to "to" units
    * @param toName the name of the unit that the from field is to be converted to
    * @param decDigits the maximum number of decimal digits to be displayed
    *  for the converted unit.  If not specified, the UCUM.decDigits_ value
@@ -118,7 +118,7 @@ export class UcumLhcUtils {
    * represented by the string.
    *
    * @param uName the string representing the unit
-   * @returns the unit found for the string or null if not found
+   * @returns the unit found for the string
    * @throws a message if the unit is not found
    */
   getSpecifiedUnit(uName) {
