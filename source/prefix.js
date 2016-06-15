@@ -41,10 +41,9 @@ export class Prefix {
     }
 
     /**
-     * The prefix code, e.g., k for kilo.  If we are in case-sensitive
-     * mode (Ucum.caseSensitive_ is true), this should be the case-sensitive
-     * code, and if we're not, it should be the case-insensitive code.  Since
-     * there's no way to check to see if it's the right one (because although
+     * The prefix code, e.g., k for kilo.  This should be the case-sensitive
+     * code.  Since there's no way to check to see if it's the case-sensitive
+     * one as opposed to the case-insensitive one (because although
      * case-insensitive codes all seem to be uppercase, some case-sensitive
      * codes are also all uppercase), we'll just have to believe that the
      * right one was passed in.

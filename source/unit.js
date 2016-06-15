@@ -549,7 +549,7 @@ export class Unit {
     if (this.cnv_ != null)
       throw (new Error(`Attempt to divide non-ratio unit ${this.name_}`));
     if (unit2.cnv_ != null)
-      throw (new Error(`Attempt to divide non-ratio unit ${unit2.name_}`));
+      throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
 
     let uString = new Us.UnitString();
     this.name_ = uString.divString(this.name_, unit2.name_);
