@@ -28,10 +28,10 @@ module.exports = function(grunt) {
             standalone: "ucumPkg"
           }
         },
-        files: {
-          "./dist/module.js": ["./dist/es5/demo/main.js"],
-          "./demo/module.js": ["./dist/es5/demo/main.js"]
-        }
+        files: [
+              {dest: "./dist/module.js", src: ["./dist/es5/*.js"]},
+              {dest: "./demo/module.js", src: ["./dist/es5/demo/main.js"]}
+        ]
       }
     },
     watch: {

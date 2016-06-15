@@ -150,9 +150,8 @@ var UcumDemo = exports.UcumDemo = function () {
      * @param resultField the ID of the field to receive an error message if one
      *  is thrown
      * @returns nothing but sets the autocompleter list in the "toField" to the
-     *   commensurable units if any were found
-     *  @throws an error if the "from" unit is not found or if no commensurable
-     *   units were found
+     *   commensurable units if any were found.  If an error from one of the
+     *   functions called by this is caught, fills the result field with the error
      */
 
   }, {
@@ -1460,7 +1459,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * This method converts one unit to another
      *
      * @param fromName the name of the unit to be converted
-     * @param numVal the number of "from" units to be converted to "to" units
+     * @param fromVal the number of "from" units to be converted to "to" units
      * @param toName the name of the unit that the from field is to be converted to
      * @param decDigits the maximum number of decimal digits to be displayed
      *  for the converted unit.  If not specified, the UCUM.decDigits_ value
@@ -1506,7 +1505,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * represented by the string.
      *
      * @param uName the string representing the unit
-     * @returns the unit found for the string or null if not found
+     * @returns the unit found for the string
      * @throws a message if the unit is not found
      */
 
