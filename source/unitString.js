@@ -87,7 +87,8 @@ export class UnitString{
           uStr = uStr.substr(closePos);
         }
         else {
-          // TODO - mismatched parentheses
+          throw (new Error(`Missing close parenthesis for open parenthesis ` +
+                           `at  ${uStr.substring(openPos)}`));
         }
       } // end if an opening parenthesis was found
     } // end do while the input string is not empty
