@@ -120,9 +120,8 @@ export class UcumDemo {
    * @param resultField the ID of the field to receive an error message if one
    *  is thrown
    * @returns nothing but sets the autocompleter list in the "toField" to the
-   *   commensurable units if any were found
-   *  @throws an error if the "from" unit is not found or if no commensurable
-   *   units were found
+   *   commensurable units if any were found.  If an error from one of the
+   *   functions called by this is caught, fills the result field with the error
    */
   getCommensurables(fromField, toField, resultField) {
     let toFld = document.getElementById(toField);
