@@ -1,6 +1,7 @@
 /**
  * This class handles the parsing of a unit string into a unit object
  */
+var Ucum = require('./config.js').Ucum;
 var UnitTables = require('./unitTables.js').UnitTables;
 var PrefixTables = require('./prefixTables.js').PrefixTables;
 
@@ -10,23 +11,75 @@ export class UnitString{
    * Constructor
    */
   constructor() {
-    // nothing really to do here.
+
+    // Set emphasis characters to those defined in config.ls.  These are
+    // used to emphasize certain characters or strings in user messages.
+    // They should be used when output will go to a web page and overridden
+    // when output will go to a file.  See parseString method.
+    this.openEmph_ = Ucum.openEmph_;
+    this.closeEmph_ = Ucum.closeEmph_ ;
+    this.bracesMsg_ = Ucum.bracesMsg_ ;
+
+    // Set the flags used, with indices, as place holders in unit strings
+    // for parenthetical strings and strings within braces.
+    this.parensFlag_ = '##';
+    this.braceFlag_ = '||';
   }
 
   /**
    * Parses a unit string, returns a unit
    *
    * @params uStr the string defining the unit
-   * @returns a unit object, or null if there were problems creating the unit
-   * @throws an error if at least one valid unit could not be derived from the
-   *  string;
-   *  an error if a non-unit & non-number was parsed as an individual element
-   *    from the string (shouldn't happen, but this is a safeguard);
-   *  any errors thrown by called methods (see makeUnit,
-   *    unit object division, multiplication, and getProperty).
+   * @params msgEmph flag indicating whether or not to add emphasis codes
+   *  defined in config.us to emphasize portions of user messages; set to
+   *  false if not provided.
+   * @params origString the original unit string passed in; used when this is
+   *  called recursively; set to uStr if not provided.
+   * @returns an array containing: 1) the unit object (or null if there were
+   *  problems creating the unit); and 2) an array of user messages (error or
+   *  warning).
+   * @throws an error if nothing was specified.
    */
-  parseString(uStr) {
+  parseString(uStr, msgEmph, origString) {
+
+    // if the message emphasis flag is not specified or is false, override
+    // the emphasis values by setting them each to "".
+    if (msgEmph === undefined)
+      msgEmph = false ;
+
+    if (msgEmph === false) {
+      this.openEmph_ = "" ;
+      this.closeEmph_ = "";
+      this.bracesMsg_ = "*";
+    }
+    // Used in error messages to provide context for messages
+    if (origString === undefined)
+      origString = uStr ;
+
+    // Make sure we have something to work with
+    if (origString === '' || origString === null) {
+      throw (new Error('Please specify a unit string to be validated.'));
+    }
+
+    let firstCall = (uStr === origString) ;
+
+    // Unit to be returned
     let finalUnit = null ;
+
+    // An array of messages (warnings and errors) to be returned
+    let retMsg = [];
+
+    // Flag used to block further processing on an unrecoverable error
+    let endProcessing = false ;
+
+    // Extract any annotations, i.e., text enclosed in braces ({}) from the
+    // string before further processing.  Store each one in the annotations
+    // array and put a placeholder in the string for the annotation.  Do
+    // this before other processing in case an annotation contains characters
+    // that will be interpreted as parenthetical markers or operators in
+    // subsequent processing.
+    let annotations = [];
+    uStr = this.getAnnotations(uStr, annotations, retMsg) ;
 
     // Check for parentheses in unit strings.  If found, isolate a parenthesized
     // group and pass it to a recursive call of this method.  If it contains
@@ -34,27 +87,61 @@ export class UnitString{
     // Units returned by a recursive call to this method are stored in the
     // parensUnits array, and a placeholder is placed in the units array
     // (uArray) which is reassembled after all parenthetical groups in the
-    // current string are processed.  The placeholder consists of a pound sign
-    // (#) followed by the index of the unit in the parensUnits array.
+    // current string are processed.  The placeholder consists of the parenthesis
+    // flag (this.parensFlag_) followed by the index of the unit in the
+    // parensUnits array followed by the parensFlag_.
 
+    // Units array and index
     let uArray = [];
     let uPos = 0;
 
+    // Array of parenthetical strings and index
     let parensUnits = [];
     let pu = 0;
-    while (uStr !== "") {
+
+    // count of characters trimmed off the beginning of the unit string (uStr)
+    // as units are removed from it; used for error messages, to provide
+    // context.
+    let trimmedCt = 0 ;
+
+    // Break the unit string into pieces that consist of text outside of
+    // parenthetical strings and placeholders for the parenthetical units.
+    // This method is call recursively for parenthetical strings and the units
+    // returned are stored in teh parensUnits array.
+    while (uStr !== "" && !endProcessing) {
       let openCt = 0;
       let closeCt = 0;
       let openPos = uStr.indexOf('(');
 
-      // If an opening parenthesis was not found, transfer the unit string (uStr)
-      // to the current uArray element.
+      // If an opening parenthesis was not found, check for an unmatched
+      // close parenthesis.  If one was found report the error and end
+      // processing.
       if (openPos < 0) {
-        uArray[uPos] = uStr;
-        uStr = "";
+        let closePos = uStr.indexOf(')');
+        if (closePos >= 0) {
+          let theMsg  = `Missing open parenthesis for close ` +
+              `parenthesis at ${origString.substring(0, closePos + trimmedCt)}` +
+              `${this.openEmph_}${uStr.substr(closePos,1)}${this.closeEmph_}` ;
+          if (closePos < uStr.length - 1) {
+            theMsg += `${uStr.substr(closePos + 1)}.`;
+          }
+          else {
+            theMsg += '.';
+          }
+          retMsg.push(theMsg);
+          endProcessing = true ;
+        }
+        // If no parentheses were found in the current unit string, transfer
+        // it to the units array and blank out the string, which will end
+        // the search for parenthetical units.
+        else {
+          uArray[uPos] = uStr;
+          uStr = "";
+        }
       }
 
-      // Otherwise process the string that includes the parenthetical group
+      // Otherwise and open parenthesis was found. Process the string that
+      // includes the parenthetical group
       else {
         openCt += 1;
         // Write the text before the parentheses (if any) to the units array
@@ -64,7 +151,12 @@ export class UnitString{
         }
 
         // Find the matching closePos, i.e., the one that closes the
-        // parenthetical group that this one opens.
+        // parenthetical group that this one opens.  Look also for
+        // another open parenthesis, in case this includes nested parenthetical
+        // strings.  This continues until it finds the same number of close
+        // parentheses as open parentheses, or runs out of string to check.
+        // In the case of neste parentheses this will identify the outer set
+        // of parentheses.
         let closePos = 0;
         let c = openPos + 1;
         for (; c < uLen && openCt != closeCt; c++) {
@@ -82,123 +174,254 @@ export class UnitString{
         // left uStr is set to "".
         if (openCt === closeCt) {
           closePos = c;
-          uArray[uPos++] = '#' + pu.toString();
-          parensUnits[pu++] = this.parseString(uStr.substring(openPos + 1, closePos - 1));
+          uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
+          let parseResp = this.parseString(
+                               uStr.substring(openPos + 1, closePos - 1),
+                               msgEmph, origString);
+          parensUnits[pu++] = parseResp[0];
+          if (parseResp[1] != '')
+            retMsg.push(parseResp[1]);
           uStr = uStr.substr(closePos);
+          trimmedCt = closePos;
         }
+        // If the number of open and close parentheses doesn't match, indicate
+        // an error.
         else {
-          throw (new Error(`Missing close parenthesis for open parenthesis ` +
-                           `at  ${uStr.substring(openPos)}`));
+          retMsg.push(`Missing close parenthesis for open parenthesis at ` +
+                      `${origString.substring(0, openPos + trimmedCt)}` +
+                      `${this.openEmph_}${uStr.substr(openPos,1)}` +
+                      `${this.closeEmph_}${uStr.substr(openPos + 1)}.`);
+          endProcessing = true ;
         }
       } // end if an opening parenthesis was found
     } // end do while the input string is not empty
 
-    // Join all the unit array elements back into one string with no separators.
-    uStr = uArray.join('');
+    // Continue if we didn't hit a problem
+    if (!endProcessing) {
+      // Join all the unit array elements back into one string with no separators.
+      uStr = uArray.join('');
 
-    // Call makeUnitsArray to convert the string to an array of unit
-    // descriptors with operators.
-    uArray = this.makeUnitsArray(uStr);
+      // Call makeUnitsArray to convert the string to an array of unit
+      // descriptors with operators.
+      uArray = this.makeUnitsArray(uStr);
 
-    // create a unit object out of each un element
-    let uLen = uArray.length;
-    for (let u1 = 0; u1 < uLen; u1++) {
-      let curCode = uArray[u1]['un'];
+      // Create a unit object out of each un element
+      let uLen = uArray.length;
+      for (let u1 = 0; u1 < uLen; u1++) {
+        let curCode = uArray[u1]['un'];
 
-      // If the current unit array element is a unit stored in the parensUnits
-      // array (from a parenthesized string), get that unit and put it in the
-      /// units array.
-      if (curCode[0] === '#') {
-        let uIdx = curCode.substr(1);
-        uArray[u1]['un'] = parensUnits[uIdx];
-      }
+        // If the current unit array element is a unit stored in the parensUnits
+        // array (from a parenthesized string), get that unit and put it in the
+        /// units array.
+        let pfLen = this.parensFlag_.length;
+        let anno = '';
 
-      // Else if it's not a number, call makeUnit to create a unit for it.
-      else {
-        let curCodeNum = Number(curCode);
-        // if the current unit string is NOT a number, call makeUnit to create
-        // the unit object for it
-        if (isNaN(curCodeNum)) {
-          uArray[u1]['un'] = this.makeUnit(curCode);
-        }
-        // Otherwise write the numeric version of the number back to
-        // the uArray 'un' element
+        // If the parentheses flag is found at the beginning of the curCode,
+        // make sure there is nothing following the parenthetical string (as
+        // indicated by the index into the parensUnit array); throw an error
+        // if there is - which will happen if there'a an operator missing
+        // before the parenthetical string; transfer the unit to the uArray if
+        // there is not.
+        if (curCode.substr(0, pfLen) === this.parensFlag_) {
+          // get the parenthetical index
+          let sIdx = curCode.substr(pfLen);
+          let endFlag = sIdx.lastIndexOf(this.parensFlag_);
+          let pIdx = sIdx.substring(0, endFlag) ;
+          sIdx = sIdx.substr(endFlag + pfLen) ;
+          if (endFlag < sIdx.length - pfLen) {
+            // first check to see if it's an annotation
+            let braceStart = sIdx.indexOf(this.braceFlag_) ;
+            if (braceStart >= 0) {
+              let anLen = this.braceFlag_.length;
+              let braceEnd = sIdx.lastIndexOf(this.braceFlag_) ;
+              let aIdx = sIdx.substr(anLen, braceEnd - anLen);
+              anno = annotations[aIdx];
+              // check to see if text follows the annotation
+              if ((braceEnd + anLen) < sIdx.length) {
+                sIdx = sIdx.substr(braceEnd + anLen);
+                let mString = origString.replace(`)${sIdx}`, `)${this.openEmph_}` +
+                    `${sIdx}${this.closeEmph_}`);
+                let mString2 = `Missing operator before ${this.openEmph_}` +
+                    `${sIdx}${this.closeEmph_} in ${mString}`;
+                retMsg.push(mString2);
+                endProcessing = true;
+              } // end if there is text following the annotation
+              else {
+                //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
+                //let wString = origString.replace(anno, `${this.openEmph_}` +
+                //                                 `${anno}${this.closeEmph_}`);
+                //let w2String = origString.replace(anno, '');
+                //retMsg.push(`${wString} is interpreted as ${lead1}${w2String}`);
+                let dup = false ;
+                for (let r = 0; !dup && r < retMsg.length; r++) {
+                  dup = (retMsg[r] === this.bracesMsg_) ;
+                }
+                if (!dup)
+                  retMsg.push(this.bracesMsg_);
+              }
+            } // end if the text following the parentheses is an annotation
+          } // end if the ending parenthesis is not at the end of the code
+
+          // If we're good, put the unit in the uArray
+          if (!endProcessing) {
+            let nIdx = parseInt(pIdx);
+            uArray[u1]['un'] = parensUnits[nIdx];
+          }
+        } // end if the parentheses flag is found at the beginning of curCode
+
+        // Else if characters precede a parentheses flag, an operator is
+        // missing between the characters and the unit referenced by the index.
+        else if (curCode.indexOf(this.parensFlag_) > 0) {
+          let pIdx = curCode.indexOf(this.parensFlag_);
+          let msAfter = curCode.substr(0, pIdx);
+          let mString = origString.replace(`${msAfter}(`, `${this.openEmph_}` +
+              `${msAfter}${this.closeEmph_}(`);
+          retMsg.push(`Missing operator after ${this.openEmph_}${msAfter}` +
+                      `${this.closeEmph_} in ${mString}`);
+          endProcessing = true ;
+        } // end if we found the parentheses flag in the wrong place
+
+        // Else it's not a parenthetical unit.  If it's not a number, call
+        // makeUnit to create a unit for it.
         else {
-          uArray[u1]['un'] = curCodeNum;
+          let curCodeNum = Number(curCode);
+          // if the current unit string is NOT a number, call makeUnit to create
+          // the unit object for it.  Stop processing if no unit was returned.
+          if (isNaN(curCodeNum)) {
+            uArray[u1]['un'] = this.makeUnit(curCode, annotations,
+                                             retMsg, origString);
+            endProcessing = uArray[u1]['un'] == null;
+          }
+          // Otherwise write the numeric version of the number back to
+          // the uArray 'un' element
+          else {
+            uArray[u1]['un'] = curCodeNum;
+          }
         }
       }
     }
+    // If we're still good, continue
+    if (!endProcessing) {
 
-    // Process the units (and numbers) to create one final unit object
-    if (uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined ||
-        uArray[0]['un'] == null) {
-      // not sure what this might be, but this is a safeguard
-      throw (new Error(`Unit string (${uStr}) did not contain anything that ` +
-             'could be used to create a unit, or else something that is not ' +
-             'handled yet by this package.  Sorry'));
+      // Process the units (and numbers) to create one final unit object
+      if (uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined ||
+          uArray[0]['un'] == null) {
+        // not sure what this might be, but this is a safeguard
+        retMsg.push(`Unit string (${origString}) did not contain anything that ` +
+            'could be used to create a unit, or else something that is not ' +
+            'handled yet by this package.  Sorry');
+        endProcessing = true;
+      }
+    }
+    if (!endProcessing) {
+
+      finalUnit = uArray[0]['un'];
+      let uLen = uArray.length ;
+
+      // Perform the arithmetic for the units, starting with the first 2 units.
+      // We only need to do the arithmetic if we have more than one unit.
+      for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
+        let nextUnit = uArray[u2]['un'];
+        if (nextUnit === null ||
+            ((typeof nextUnit !== 'number') && (!nextUnit.getProperty))) {
+          retMsg.push(`Unit string (${origString}) contains unrecognized ` +
+                      `element (${this.openEmph_}${nextUnit.toString()}` +
+                      `${this.closeEmph_}); could not parse full string.  Sorry`);
+          endProcessing = true;
+        }
+        if (!endProcessing) {
+          try {
+            // Is the operation division?
+            let thisOp = uArray[u2]['op'];
+            let isDiv = thisOp === '/';
+
+            // Perform the operation based on the type(s) of the operands
+
+            if (typeof nextUnit !== 'number') {
+              // both are unit objects
+              if (typeof finalUnit !== 'number') {
+                isDiv ? finalUnit = finalUnit.divide(nextUnit) :
+                    finalUnit = finalUnit.multiplyThese(nextUnit);
+              }
+              // finalUnit is a number; nextUnit is a unit object
+              else {
+                let nMag = nextUnit.getProperty('magnitude_');
+                isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
+                let theName = finalUnit.toString() + thisOp +
+                    nextUnit.getProperty('name_');
+                finalUnit = nextUnit;
+                finalUnit.assignVals({'name_': theName, 'magnitude_': nMag});
+              }
+            } // end if nextUnit is not a number
+
+            else {
+              // nextUnit is a number; finalUnit is a unit object
+              if (typeof finalUnit !== 'number') {
+                let fMag = finalUnit.getProperty('magnitude_');
+                isDiv ? fMag /= nextUnit :
+                    fMag *= nextUnit;
+                let theName = finalUnit.getProperty('name_') + thisOp +
+                    nextUnit.toString();
+                finalUnit.assignVals({'name_': theName, 'magnitude_': fMag});
+              }
+              // both are numbers
+              else {
+                isDiv ? finalUnit /= nextUnit :
+                    finalUnit *= nextUnit;
+              }
+            } // end if nextUnit is a number
+          }
+          catch (err) {
+            retMsg.unshift(err.message) ;
+            endProcessing = true ;
+            finalUnit = null ;
+          }
+        } // end if not endProceesing
+      } // end do for each unit after the first one
     }
 
-    finalUnit = uArray[0]['un'];
+    // Do a final check to make sure that finalUnit is a unit and not
+    // just a number.  Something like "1/{HCP}" will return a "unit" of 1
+    // - which is not a unit.  Do this only when this is the first/outer
+    // call to this method.
+    if (firstCall && !isNaN(finalUnit) && finalUnit !== 1)
+      finalUnit = null ;
 
-    // Perform the arithmetic for the units, starting with the first 2.
-    // We only need to do the arithmetic if we have more than one unit
-    for (var u2 = 1; u2 < uLen; u2++) {
-      let nextUnit = uArray[u2]['un'];
-      if (nextUnit === null ||
-          ((typeof nextUnit !== 'number') && (!nextUnit.getProperty))) {
-        throw (new Error(`Unit string (${uStr}) contains unrecognized ` +
-            `element (${nextUnit.toString()}); could not parse full ` +
-            'string.  Sorry'));
-      }
-
-      // Is the operation division?
-      let thisOp = uArray[u2]['op'] ;
-      let isDiv = thisOp === '/' ;
-
-      // Perform the operation based on the type(s) of the operands
-
-      if (typeof nextUnit !== 'number') {
-        // both are unit objects
-        if (typeof finalUnit !== 'number') {
-          isDiv ? finalUnit = finalUnit.divide(nextUnit) :
-              finalUnit = finalUnit.multiplyThese(nextUnit);
-        }
-        // finalUnit is a number; nextUnit is a unit object
-        else {
-          let nMag = nextUnit.getProperty('magnitude_');
-          isDiv ? nMag = finalUnit/nMag : nMag *= finalUnit ;
-          let theName = finalUnit.toString() + thisOp +
-                        nextUnit.getProperty('name_') ;
-          finalUnit = nextUnit;
-          finalUnit.assignVals({'name_': theName, 'magnitude_': nMag});
-        }
-      } // end if nextUnit is not a number
-
-      else {
-        // nextUnit is a number; finalUnit is a unit object
-        if (typeof finalUnit !== 'number') {
-          let fMag = finalUnit.getProperty('magnitude_');
-          isDiv ? fMag /= nextUnit :
-              fMag *= nextUnit;
-          let theName = finalUnit.getProperty('name_') + thisOp +
-                        nextUnit.toString();
-          finalUnit.assignVals({'name_': theName, 'magnitude_': fMag});
-        }
-        // both are numbers
-        else {
-          isDiv ? finalUnit /= nextUnit :
-              finalUnit *= nextUnit ;
-          let theName = finalUnit.toString() + thisOp + nextUnit.toString();
-          // well great - now what?  I don't have anywhere to put this.
-          // TODO: figure out where the heck to put this.
-          throw (new Error(`Unit string (${uStr}) contains 2 adjoining ` +
-                 `elements that are numbers.  At least one must be a unit.`));
-        }
-      } // end if nextUnit is a number
-    } // end do for each unit after the first one
-
-    return finalUnit;
+    return [finalUnit, retMsg];
   } // end parseString
+
+
+  /**
+   * Extracts all annotations from a unit string, replacing them with
+   * placeholders for later evaluation.  The annotations are stored in the
+   * annotations array.
+   *
+   * @param uStr the unit string being parsed
+   * @param annotations the array to contain the extracted annotations
+   * @param retMsg the array to contain any user messages (error and warning)
+   * @returns the string after the annotations are replaced with placeholders
+   */
+  getAnnotations(uString, annotations, retMsg) {
+    let openBrace = uString.indexOf('{');
+    while (openBrace >= 0) {
+
+      let closeBrace = uString.indexOf('}');
+      if (closeBrace < 0) {
+        retMsg.push('Missing closing brace for annotation starting at ' +
+            this.openEmph_ + uString.substr(openBrace) +
+            this.closeEmph_);
+      }
+      else {
+        let braceStr = uString.substring(openBrace, closeBrace + 1);
+        let aIdx = annotations.length.toString();
+        uString = uString.replace(braceStr, this.braceFlag_ + aIdx +
+            this.braceFlag_);
+        annotations.push(braceStr);
+        openBrace = uString.indexOf('{');
+      }
+    } // end do while we have an opening brace
+    return uString ;
+  } // end getAnnotations
 
 
   /**
@@ -223,19 +446,21 @@ export class UnitString{
     }
 
     // Create an array of unit/operator objects.  The unit is, for now, the
-    // alphanumeric description of the unit (e.g., Hz for hertz) including
+    // string containing the unit code (e.g., Hz for hertz) including
     // a possible prefix and exponent.   The operator is the operator to be
     // applied to that unit and the one preceding it.  So, a.b would give
     // us two objects.  The first will have a unit of a, and a blank operator
     // (because it's the first unit).  The second would have a unit of b
-    // and the multiplication operator (.).
+    // and the multiplication operator (.).  REDO
     let u1 = uArray1.length ;
-    let uArray = [{un: uArray1[0], op: ""}] ;
+    let uArray = [{op: "", un: uArray1[0]}] ;
     for (let n = 1; n < u1; n++) {
       uArray.push({op: uArray1[n++], un: uArray1[n]});
     }
     return uArray ;
   } // end makeUnitsArray
+
+
 
 
   /**
@@ -245,9 +470,13 @@ export class UnitString{
    * (centimeter squared).
    *
    * @params uCode the string defining the unit
-   * @returns a unit object, or null if problems creating the unit
+   * @param annotations the array to contain the extracted annotations
+   * @param retMsg the array to contain any user messages (error and warning)
+   * @param origString the original string to be parsed; used to provide
+   *  context for messages
+   * @returns a unit object, or null if there were problems creating the unit
    */
-  makeUnit(uCode) {
+  makeUnit(uCode, annotations, retMsg, origString) {
     let exp = null;
     let pfxVal = null;
     let pfxCode = null;
@@ -256,126 +485,250 @@ export class UnitString{
     let ulen = uCode.length;
     let origUnit = null;
     let retUnit = null;
+    let endProcessing = false ;
 
-    let utabs = UnitTables.getInstance();
+    // check annotations:
+    // If it's JUST an annotation, replace with 1.  If we find text following
+    // the annotation, mark it as an error.   Otherwise just remove it - the
+    // placeholder, that is.
+    // In any case, put a message in the retMsg array explaining either the
+    // problem or how the annotation is interpreted.
 
-    // First look for the full string
-    origUnit = utabs.getUnitByCode(uCode);
 
-    // If that didn't work, peel off the exponent and try it
-    if (!origUnit) {
-      // This particular regex has been tweaked several times.  This one
-      // works with the following test strings:
-      // "m[H2O]-21] gives ["m{H2O]-21", "m[H2)]", "-21"]
-      // "m[H2O]+21] gives ["m{H2O]+21", "m[H2)]", "+21"]
-      // "m[H2O]21] gives ["m{H2O]-21", "m[H2)]", "21"]
-      // "s2" gives ["s2", "s, "2"]
-      // "kg" gives null
-      let res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
+    let anLen = this.braceFlag_.length;
 
-      // if we got an exponent, separate it from the unit and try
-      // to get the unit again
-      if (res && res[2] && res[2] !== "") {
-        // Make sure that there were no characters after the last digit.
-        // If there are, the reassembled string ends at the last digit,
-        // dropping off everything after that.  Characters after an
-        // exponent (except for subsequent units after a division or
-        // multiplication operator) are invalid.
-        let reassemble = res[1] + res[2];
-        if (reassemble === uCode) {
-          uCode = res[1];
-          exp = res[2];
-          origUnit = utabs.getUnitByCode(uCode);
-        } // end if nothing followed the exponent (if there was one)
-      } // end if we got an exponent
-    } // end if we didn't get a unit for the full unit code
+    let anOpen = uCode.indexOf(this.braceFlag_) ;
+    if (anOpen >= 0) {
+      let anClose = uCode.substr(anOpen + 1).indexOf(this.braceFlag_) +
+                    anOpen + 1;
 
-    // if we still don't have a unit, separate out the prefix
-    // and try without it.
-
-    if (!origUnit) {
-
-      // Try for a single character prefix first and then
-      // try for a 2-character prefix if a single character prefix is not found.
-      let pfxTabs = PrefixTables.getInstance();
-      pfxCode = uCode.charAt(0);
-      let pfxObj = pfxTabs.getPrefixByCode(pfxCode);
-      if (!pfxObj && uCode.length > 2) {
-        pfxCode = uCode.substr(0, 2);
-        pfxObj = pfxTabs.getPrefixByCode(pfxCode);
+      // If no closing flag was found, we have a problem somewhere.
+      if (anClose <= 0) {
+        retMsg.push('Problem processing annotation; please check syntax');
+        endProcessing = true ;
       }
+      else {
+        let anIdx = parseInt(uCode.substring(anOpen + anLen, anClose));
+        let anText = annotations[anIdx] ;
 
-      // if we got a prefix, get its info and remove it from the unit code
-      if (pfxObj) {
-        pfxVal = pfxObj.getValue();
-        pfxExp = pfxObj.getExp();
-        pfxName = pfxObj.getName();
-        let pCodeLen = pfxCode.length;
-        uCode = uCode.substr(pCodeLen);
-        ulen -= pCodeLen;
+        // If the closing flag is not at the end of the uCode, text
+        // follows the annotation - which is invalid.
+        if (anClose + anLen < uCode.length) {
+          let wString = origString.replace(anText, this.openEmph_ + anText +
+                                                   this.closeEmph_);
+          retMsg.push(`Text following annotation ${anText} in ${wString} ` +
+                      'is invalid.');
+          endProcessing = true;
+        } // end if text follows the annotation
 
-        // now try one more time for the unit
-        origUnit = utabs.getUnitByCode(uCode);
-      } // end if we found a prefix
-    } // end if we didn't get a unit after removing an exponent
+        // Else if there is no text preceding the opening flag, the
+        // annotation is interpreted as 1.  Warn the user
+        else if (anOpen === 0) {
+          uCode = 1 ;
+          //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
+          //let wString = origString.replace(anText, this.openEmph_ + anText +
+          //                                         this.closeEmph_) ;
+          //let w2String = origString.replace(anText, this.openEmph_ + '1' +
+          //                                          this.closeEmph_);
+          //origString = origString.replace(anText, '1');
+          //retMsg.push(`${wString} is interpreted as ${lead1}${w2String}.  ` +
+          //            `Is this what you meant?`);
+          let dup = false ;
+          for (let r = 0; !dup && r < retMsg.length; r++) {
+            dup = (retMsg[r] === this.bracesMsg_) ;
+          }
+          if (!dup)
+            retMsg.push(this.bracesMsg_);
+          retUnit = 1 ;
+          endProcessing = true ;
+        } // end if the annotation is a standalone
 
-    // If we didn't find a unit, throw an error
-    if (!origUnit) {
-      throw (new Error(`Unable to find unit for ${uCode}`));
+        // Else we have an annotation that follows a unit expression (probably).
+        // Put in an interpretation note and trim the annotation off the uCode.
+        else {
+          //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
+          //let wString = origString.replace(anText, this.openEmph_ + anText +
+          //                                         this.closeEmph_) ;
+          origString = origString.replace(anText, '');
+          //let updateExisting = false ;
+          //for (let r = 0; r < retMsg.length; r++) {
+          //  let idx1 = retMsg[r].indexOf(anText);
+          //  if (idx1 >= 0) {
+          //    // we've found the first one - emphasize it
+          //    retMsg[r] = retMsg[r].replace(anText,
+          //                     `${this.openEmph_}${anText}${this.closeEmph_}`);
+          //    // now find the next one
+          //    let idx2 = retMsg[r].lastIndexOf(anText) ;
+          //    if (idx2 > idx1) {
+          //      //let str2 = retMsg[r].substr(idx2);
+          //      //let str2a = str2.replace(anText, '');
+          //      retMsg[r] = retMsg[r].substr(0, idx2) +
+          //                  retMsg[r].substr(idx2).replace(anText, '');
+          //    }
+          //    updateExisting = true ;
+          //  }
+
+          //if (!updateExisting) {
+          //  retMsg.push(`${wString} is interpreted as ${lead1}${origString}.`);
+          //}
+          let dup = false ;
+          for (let r = 0; !dup && r < retMsg.length; r++) {
+            dup = (retMsg[r] === this.bracesMsg_) ;
+          }
+          if (!dup)
+            retMsg.push(this.bracesMsg_);
+          uCode = uCode.substr(0, anOpen);
+        } // end if the annotation follows the unit expression
+      } // end if we found an open and a close brace
+    } // end if we found an open brace
+
+
+    // Continue if we did not hit an annotation error
+    if (!endProcessing) {
+
+      // Check to make sure that the uCode is not simply a number.  This can
+      // happen if an annotation was stripped off, or if the uCode was JUST
+      // an annotation.  In either case, digits are not units.
+      endProcessing = !isNaN(uCode);
     }
-    // Otherwise we found a unit object.  Clone it and then apply the prefix
-    // and exponent, if any, to it.
+    if (!endProcessing) {
+      ulen = uCode.length;
+      let utabs = UnitTables.getInstance();
 
+      // First look for the full string
+      origUnit = utabs.getUnitByCode(uCode);
 
-    // clone the unit we just got and then apply any exponent and/or prefix
-    // to it
-    retUnit = origUnit.clone();
-    let theDim = retUnit.getProperty('dim_');
-    let theMag = retUnit.getProperty('magnitude_');
-    let theName = retUnit.getProperty('name_');
-    // If there is an exponent for the unit, apply it to the dimension
-    // and magnitude now
-    if (exp) {
-      exp = parseInt(exp);
-      let expMul = exp;
-      theDim = theDim.mul(exp);
-      theMag = Math.pow(theMag, exp);
-      retUnit.assignVals({'magnitude_': theMag});
+      // If that didn't work, peel off the exponent and try it
+      if (!origUnit) {
+        // This particular regex has been tweaked several times.  This one
+        // works with the following test strings:
+        // "m[H2O]-21] gives ["m{H2O]-21", "m[H2)]", "-21"]
+        // "m[H2O]+21] gives ["m{H2O]+21", "m[H2)]", "+21"]
+        // "m[H2O]21] gives ["m{H2O]-21", "m[H2)]", "21"]
+        // "s2" gives ["s2", "s, "2"]
+        // "kg" gives null
+        let res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
 
-      // If there is also a prefix, apply the exponent to the prefix.
-      if (pfxVal) {
+        // if we got an exponent, separate it from the unit and try
+        // to get the unit again
+        if (res && res[2] && res[2] !== "") {
+          // Make sure that there were no characters after the last digit.
+          // If there are, the reassembled string ends at the last digit,
+          // dropping off everything after that.  Characters after an
+          // exponent (except for subsequent units after a division or
+          // multiplication operator) are invalid.
+          let reassemble = res[1] + res[2];
+          if (reassemble === uCode) {
+            uCode = res[1];
+            exp = res[2];
+            origUnit = utabs.getUnitByCode(uCode);
+          } // end if nothing followed the exponent (if there was one)
+        } // end if we got an exponent
+      } // end if we didn't get a unit for the full unit code
 
-        // if the prefix base is 10 it will have an exponent.  Multiply the
-        // current prefix exponent by the exponent for the unit we're
-        // working with.  Then raise the prefix value to the level
-        // defined by the exponent.
-        if (pfxExp) {
-          expMul *= pfxExp;
-          pfxVal = Math.pow(10, expMul);
+      // if we still don't have a unit, separate out the prefix
+      // and try without it.
+
+      if (!origUnit) {
+
+        // Try for a single character prefix first.
+        let pfxTabs = PrefixTables.getInstance();
+        pfxCode = uCode.charAt(0);
+        let pfxObj = pfxTabs.getPrefixByCode(pfxCode);
+
+        // if we got a prefix, get its info and remove it from the unit code
+        if (pfxObj) {
+          pfxVal = pfxObj.getValue();
+          pfxExp = pfxObj.getExp();
+          pfxName = pfxObj.getName();
+          let pCodeLen = pfxCode.length;
+          uCode = uCode.substr(pCodeLen);
+          ulen -= pCodeLen;
+
+          // try again for the unit
+          origUnit = utabs.getUnitByCode(uCode);
+
+          // If we still don't have a unit, see if the prefix could be the
+          // two character "da" (deka) prefix.  That's the only prefix with
+          // two characters, and without this check it's interpreted as "d"
+          // (deci) and the "a" is considered part of the unit code.
+
+          if (!origUnit && pfxCode == 'd' && uCode.substr(0,1) == 'a') {
+            pfxCode = 'da';
+            pfxObj = pfxTabs.getPrefixByCode(pfxCode);
+            pfxVal = pfxObj.getValue();
+            pfxExp = pfxObj.getExp();
+            pfxName = pfxObj.getName();
+            uCode = uCode.substr(1);
+            ulen -= 1;
+
+            // try one more time for the unit
+            origUnit = utabs.getUnitByCode(uCode);
+          }
+
+        } // end if we found a prefix
+      } // end if we didn't get a unit after removing an exponent
+
+      // If we didn't find a unit, signal an error.  (We tried with the full
+      // unit string, with the unit string without the exponent, and the
+      // unit string without a prefix.  That's all we can try).
+      if (!origUnit) {
+        retMsg.push(`Unable to find unit for ${uCode}`);
+        endProcessing = true ;
+      }
+      if (!endProcessing) {
+        // Otherwise we found a unit object.  Clone it and then apply the prefix
+        // and exponent, if any, to it.
+
+        retUnit = origUnit.clone();
+        let theDim = retUnit.getProperty('dim_');
+        let theMag = retUnit.getProperty('magnitude_');
+        let theName = retUnit.getProperty('name_');
+        // If there is an exponent for the unit, apply it to the dimension
+        // and magnitude now
+        if (exp) {
+          exp = parseInt(exp);
+          let expMul = exp;
+          theDim = theDim.mul(exp);
+          theMag = Math.pow(theMag, exp);
+          retUnit.assignVals({'magnitude_': theMag});
+
+          // If there is also a prefix, apply the exponent to the prefix.
+          if (pfxVal) {
+
+            // if the prefix base is 10 it will have an exponent.  Multiply the
+            // current prefix exponent by the exponent for the unit we're
+            // working with.  Then raise the prefix value to the level
+            // defined by the exponent.
+            if (pfxExp) {
+              expMul *= pfxExp;
+              pfxVal = Math.pow(10, expMul);
+            }
+            // if the prefix base is not 10, it won't have an exponent.
+            // At the moment I don't see any units using the prefixes
+            // that aren't base 10.   But if we get one the prefix value
+            // will be applied to the magnitude (below), which is what
+            // we want anyway.
+          } // end if there's a prefix as well as the exponent
+        } // end if there's an exponent
+
+        // Now apply the prefix, if there is one, to the magnitude
+        if (pfxVal) {
+          theMag *= pfxVal;
+          retUnit.assignVals({'magnitude_': theMag})
         }
-        // if the prefix base is not 10, it won't have an exponent.
-        // At the moment I don't see any units using the prefixes
-        // that aren't base 10.   But if we get one the prefix value
-        // will be applied to the magnitude (below), which is what
-        // we want anyway.
-      } // end if there's a prefix as well as the exponent
-    } // end if there's an exponent
 
-    // Now apply the prefix, if there is one, to the magnitude
-    if (pfxVal) {
-      theMag *= pfxVal ;
-      retUnit.assignVals({'magnitude_': theMag})
-    }
-
-    // if we have a prefix and/or an exponent, add them to the unit name
-    if (pfxVal) {
-      theName = pfxName + theName ;
-      retUnit.assignVals({'name_': theName});
-    }
-    if (exp) {
-      theName = theName + '<sup>' + exp.toString() + '</sup>' ;
-      retUnit.assignVals({'name_': theName});
-    }
+        // if we have a prefix and/or an exponent, add them to the unit name
+        if (pfxVal) {
+          theName = pfxName + theName;
+          retUnit.assignVals({'name_': theName});
+        }
+        if (exp) {
+          theName = theName + '<sup>' + exp.toString() + '</sup>';
+          retUnit.assignVals({'name_': theName});
+        }
+      } // end if not endProcessing set from no unit found
+    } // end if not endProcessing set from annotation error
 
     return retUnit ;
   } // ret makeUnit
@@ -430,7 +783,7 @@ export class UnitString{
         ret += s2Sup;
     }
     return ret ;
-  }
+  } // end divString
 
 } // end class UnitString
 

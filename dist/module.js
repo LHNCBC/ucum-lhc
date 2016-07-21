@@ -1,5 +1,6 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ucumPkg = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-module.exports={"prefixes":[{"code_":"E","name_":"exa","value_":1000000000000000000,"exp_":"18"},{"code_":"G","name_":"giga","value_":1000000000,"exp_":"9"},{"code_":"Gi","name_":"gibi","value_":1073741824,"exp_":null},{"code_":"Ki","name_":"kibi","value_":1024,"exp_":null},{"code_":"M","name_":"mega","value_":1000000,"exp_":"6"},{"code_":"Mi","name_":"mebi","value_":1048576,"exp_":null},{"code_":"P","name_":"peta","value_":1000000000000000,"exp_":"15"},{"code_":"T","name_":"tera","value_":1000000000000,"exp_":"12"},{"code_":"Ti","name_":"tebi","value_":1099511627776,"exp_":null},{"code_":"Y","name_":"yotta","value_":1e+24,"exp_":"24"},{"code_":"Z","name_":"zetta","value_":1e+21,"exp_":"21"},{"code_":"a","name_":"atto","value_":1e-18,"exp_":"-18"},{"code_":"c","name_":"centi","value_":0.01,"exp_":"-2"},{"code_":"d","name_":"deci","value_":0.1,"exp_":"-1"},{"code_":"da","name_":"deka","value_":10,"exp_":"1"},{"code_":"f","name_":"femto","value_":1e-15,"exp_":"-15"},{"code_":"h","name_":"hecto","value_":100,"exp_":"2"},{"code_":"k","name_":"kilo","value_":1000,"exp_":"3"},{"code_":"m","name_":"milli","value_":0.001,"exp_":"-3"},{"code_":"n","name_":"nano","value_":1e-9,"exp_":"-9"},{"code_":"p","name_":"pico","value_":1e-12,"exp_":"-12"},{"code_":"u","name_":"micro","value_":0.000001,"exp_":"-6"},{"code_":"y","name_":"yocto","value_":1.0000000000000001e-24,"exp_":"-24"},{"code_":"z","name_":"zepto","value_":1e-21,"exp_":"-21"}],"units":[{"isBase_":true,"name_":"meter","csCode_":"m","ciCode_":"M","property_":"length","magnitude_":1,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"m","class_":null,"isMetric_":false,"variable_":"L","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"second","csCode_":"s","ciCode_":"S","property_":"time","magnitude_":1,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"s","class_":null,"isMetric_":false,"variable_":"T","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"gram","csCode_":"g","ciCode_":"G","property_":"mass","magnitude_":1,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"g","class_":null,"isMetric_":false,"variable_":"M","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"radian","csCode_":"rad","ciCode_":"RAD","property_":"plane angle","magnitude_":1,"dim_":{"dimVec_":[0,0,0,1,0,0,0]},"printSymbol_":"rad","class_":null,"isMetric_":false,"variable_":"A","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"kelvin","csCode_":"K","ciCode_":"K","property_":"temperature","magnitude_":1,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"K","class_":null,"isMetric_":false,"variable_":"C","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"coulomb","csCode_":"C","ciCode_":"C","property_":"electric charge","magnitude_":1,"dim_":{"dimVec_":[0,0,0,0,0,1,0]},"printSymbol_":"C","class_":null,"isMetric_":false,"variable_":"Q","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"candela","csCode_":"cd","ciCode_":"CD","property_":"luminous intensity","magnitude_":1,"dim_":{"dimVec_":[0,0,0,0,0,0,1]},"printSymbol_":"cd","class_":null,"isMetric_":false,"variable_":"F","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":false,"name_":"the number ten for arbitrary powers","csCode_":"10*","ciCode_":"10*","property_":"number","magnitude_":"10","dim_":{"dimVec_":null},"printSymbol_":"10","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"10","baseFactor_":"10","defError_":false},{"isBase_":false,"name_":"the number ten for arbitrary powers","csCode_":"10^","ciCode_":"10^","property_":"number","magnitude_":"10","dim_":{"dimVec_":null},"printSymbol_":"10","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"10","baseFactor_":"10","defError_":false},{"isBase_":false,"name_":"the number pi","csCode_":"[pi]","ciCode_":"[PI]","property_":"number","magnitude_":3.141592653589793,"dim_":{"dimVec_":null},"printSymbol_":"π","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"3.1415926535897932384626433832795028841971693993751058209749445923","baseFactor_":3.141592653589793,"defError_":false},{"isBase_":false,"name_":"percent","csCode_":"%","ciCode_":"%","property_":"fraction","magnitude_":0.01,"dim_":{"dimVec_":null},"printSymbol_":"%","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-2","ciUnitString_":"10*-2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"parts per thousand","csCode_":"[ppth]","ciCode_":"[PPTH]","property_":"fraction","magnitude_":0.001,"dim_":{"dimVec_":null},"printSymbol_":"ppth","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-3","ciUnitString_":"10*-3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"parts per million","csCode_":"[ppm]","ciCode_":"[PPM]","property_":"fraction","magnitude_":0.000001,"dim_":{"dimVec_":null},"printSymbol_":"ppm","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-6","ciUnitString_":"10*-6","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"parts per billion","csCode_":"[ppb]","ciCode_":"[PPB]","property_":"fraction","magnitude_":1e-9,"dim_":{"dimVec_":null},"printSymbol_":"ppb","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-9","ciUnitString_":"10*-9","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"parts per trillion","csCode_":"[pptr]","ciCode_":"[PPTR]","property_":"fraction","magnitude_":1e-12,"dim_":{"dimVec_":null},"printSymbol_":"pptr","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-12","ciUnitString_":"10*-12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"mole","csCode_":"mol","ciCode_":"MOL","property_":"amount of substance","magnitude_":6.0221367e+23,"dim_":{"dimVec_":null},"printSymbol_":"mol","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*23","ciUnitString_":"10*23","baseFactorStr_":"6.0221367","baseFactor_":"6.0221367","defError_":false},{"isBase_":false,"name_":"steradian","csCode_":"sr","ciCode_":"SR","property_":"solid angle","magnitude_":1,"dim_":{"dimVec_":[0,0,0,2,0,0,0]},"printSymbol_":"sr","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"rad2","ciUnitString_":"RAD2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"hertz","csCode_":"Hz","ciCode_":"HZ","property_":"frequency","magnitude_":1,"dim_":{"dimVec_":[0,-1,0,0,0,0,0]},"printSymbol_":"Hz","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s-1","ciUnitString_":"S-1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"newton","csCode_":"N","ciCode_":"N","property_":"force","magnitude_":1000,"dim_":{"dimVec_":[1,-2,1,0,0,0,0]},"printSymbol_":"N","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kg.m/s2","ciUnitString_":"KG.M/S2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pascal","csCode_":"Pa","ciCode_":"PAL","property_":"pressure","magnitude_":1000,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"Pa","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"N/m2","ciUnitString_":"N/M2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"joule","csCode_":"J","ciCode_":"J","property_":"energy","magnitude_":1000,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"J","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"N.m","ciUnitString_":"N.M","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"watt","csCode_":"W","ciCode_":"W","property_":"power","magnitude_":1000,"dim_":{"dimVec_":[2,-3,1,0,0,0,0]},"printSymbol_":"W","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/s","ciUnitString_":"J/S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ampère","csCode_":"A","ciCode_":"A","property_":"electric current","magnitude_":1,"dim_":{"dimVec_":[0,-1,0,0,0,1,0]},"printSymbol_":"A","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"C/s","ciUnitString_":"C/S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"volt","csCode_":"V","ciCode_":"V","property_":"electric potential","magnitude_":1000,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"V","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/C","ciUnitString_":"J/C","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"farad","csCode_":"F","ciCode_":"F","property_":"electric capacitance","magnitude_":0.001,"dim_":{"dimVec_":[-2,2,-1,0,0,2,0]},"printSymbol_":"F","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"C/V","ciUnitString_":"C/V","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ohm","csCode_":"Ohm","ciCode_":"OHM","property_":"electric resistance","magnitude_":1000,"dim_":{"dimVec_":[2,-1,1,0,0,-2,0]},"printSymbol_":"Ω","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"V/A","ciUnitString_":"V/A","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"siemens","csCode_":"S","ciCode_":"SIE","property_":"electric conductance","magnitude_":0.001,"dim_":{"dimVec_":[-2,1,-1,0,0,2,0]},"printSymbol_":"S","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Ohm-1","ciUnitString_":"OHM-1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"weber","csCode_":"Wb","ciCode_":"WB","property_":"magentic flux","magnitude_":1000,"dim_":{"dimVec_":[2,-1,1,0,0,-1,0]},"printSymbol_":"Wb","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"V.s","ciUnitString_":"V.S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"degree Celsius","csCode_":"Cel","ciCode_":"CEL","property_":"temperature","magnitude_":1,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"°C","class_":"si","isMetric_":true,"variable_":null,"cnv_":"Cel","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"K","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"tesla","csCode_":"T","ciCode_":"T","property_":"magnetic flux density","magnitude_":1000,"dim_":{"dimVec_":[0,-1,1,0,0,-1,0]},"printSymbol_":"T","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Wb/m2","ciUnitString_":"WB/M2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"henry","csCode_":"H","ciCode_":"H","property_":"inductance","magnitude_":1000,"dim_":{"dimVec_":[2,0,1,0,0,-2,0]},"printSymbol_":"H","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Wb/A","ciUnitString_":"WB/A","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"lumen","csCode_":"lm","ciCode_":"LM","property_":"luminous flux","magnitude_":1,"dim_":{"dimVec_":[0,0,0,2,0,0,1]},"printSymbol_":"lm","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cd.sr","ciUnitString_":"CD.SR","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"lux","csCode_":"lx","ciCode_":"LX","property_":"illuminance","magnitude_":1,"dim_":{"dimVec_":[-2,0,0,2,0,0,1]},"printSymbol_":"lx","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"lm/m2","ciUnitString_":"LM/M2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"becquerel","csCode_":"Bq","ciCode_":"BQ","property_":"radioactivity","magnitude_":1,"dim_":{"dimVec_":[0,-1,0,0,0,0,0]},"printSymbol_":"Bq","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s-1","ciUnitString_":"S-1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gray","csCode_":"Gy","ciCode_":"GY","property_":"energy dose","magnitude_":1,"dim_":{"dimVec_":[2,-2,0,0,0,0,0]},"printSymbol_":"Gy","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/kg","ciUnitString_":"J/KG","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"sievert","csCode_":"Sv","ciCode_":"SV","property_":"dose equivalent","magnitude_":1,"dim_":{"dimVec_":[2,-2,0,0,0,0,0]},"printSymbol_":"Sv","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/kg","ciUnitString_":"J/KG","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"degree","csCode_":"deg","ciCode_":"DEG","property_":"plane angle","magnitude_":0.017453292519943295,"dim_":{"dimVec_":null},"printSymbol_":"°","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pi].rad/360","ciUnitString_":"[PI].RAD/360","baseFactorStr_":"2","baseFactor_":"2","defError_":false},{"isBase_":false,"name_":"gon","csCode_":"gon","ciCode_":"GON","property_":"plane angle","magnitude_":0.015707963267948967,"dim_":{"dimVec_":null},"printSymbol_":"□<sup>g</sup>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"deg","ciUnitString_":"DEG","baseFactorStr_":"0.9","baseFactor_":"0.9","defError_":false},{"isBase_":false,"name_":"minute","csCode_":"'","ciCode_":"'","property_":"plane angle","magnitude_":0.0002908882086657216,"dim_":{"dimVec_":null},"printSymbol_":"'","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"deg/60","ciUnitString_":"DEG/60","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"second","csCode_":"''","ciCode_":"''","property_":"plane angle","magnitude_":0.00000484813681109536,"dim_":{"dimVec_":null},"printSymbol_":"''","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"'/60","ciUnitString_":"'/60","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"liter","csCode_":"l","ciCode_":"L","property_":"volume","magnitude_":0.001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"l","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"dm3","ciUnitString_":"DM3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"liter","csCode_":"L","ciCode_":"","property_":"volume","magnitude_":0.001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"L","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"l","ciUnitString_":null,"baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"are","csCode_":"ar","ciCode_":"AR","property_":"area","magnitude_":100,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":"a","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m2","ciUnitString_":"M2","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"minute","csCode_":"min","ciCode_":"MIN","property_":"time","magnitude_":60,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"min","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s","ciUnitString_":"S","baseFactorStr_":"60","baseFactor_":"60","defError_":false},{"isBase_":false,"name_":"hour","csCode_":"h","ciCode_":"HR","property_":"time","magnitude_":3600,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"h","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"min","ciUnitString_":"MIN","baseFactorStr_":"60","baseFactor_":"60","defError_":false},{"isBase_":false,"name_":"day","csCode_":"d","ciCode_":"D","property_":"time","magnitude_":86400,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"d","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"h","ciUnitString_":"HR","baseFactorStr_":"24","baseFactor_":"24","defError_":false},{"isBase_":false,"name_":"tropical year","csCode_":"a_t","ciCode_":"ANN_T","property_":"time","magnitude_":31556925.216,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"a<sub>t</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"365.24219","baseFactor_":"365.24219","defError_":false},{"isBase_":false,"name_":"mean Julian year","csCode_":"a_j","ciCode_":"ANN_J","property_":"time","magnitude_":31557600,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"a<sub>j</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"365.25","baseFactor_":"365.25","defError_":false},{"isBase_":false,"name_":"mean Gregorian year","csCode_":"a_g","ciCode_":"ANN_G","property_":"time","magnitude_":31556952,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"a<sub>g</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"365.2425","baseFactor_":"365.2425","defError_":false},{"isBase_":false,"name_":"year","csCode_":"a","ciCode_":"ANN","property_":"time","magnitude_":31557600,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"a","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"a_j","ciUnitString_":"ANN_J","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"week","csCode_":"wk","ciCode_":"WK","property_":"time","magnitude_":604800,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"wk","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"7","baseFactor_":"7","defError_":false},{"isBase_":false,"name_":"synodal month","csCode_":"mo_s","ciCode_":"MO_S","property_":"time","magnitude_":2551442.976,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"mo<sub>s</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"29.53059","baseFactor_":"29.53059","defError_":false},{"isBase_":false,"name_":"mean Julian month","csCode_":"mo_j","ciCode_":"MO_J","property_":"time","magnitude_":2629800,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"mo<sub>j</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"a_j/12","ciUnitString_":"ANN_J/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"mean Gregorian month","csCode_":"mo_g","ciCode_":"MO_G","property_":"time","magnitude_":2629746,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"mo<sub>g</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"a_g/12","ciUnitString_":"ANN_G/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"month","csCode_":"mo","ciCode_":"MO","property_":"time","magnitude_":2629800,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"mo","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mo_j","ciUnitString_":"MO_J","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"tonne","csCode_":"t","ciCode_":"TNE","property_":"mass","magnitude_":1000000,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"t","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kg","ciUnitString_":"KG","baseFactorStr_":"1e3","baseFactor_":1000,"defError_":false},{"isBase_":false,"name_":"bar","csCode_":"bar","ciCode_":"BAR","property_":"pressure","magnitude_":3.15576e+27,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"bar","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Pa","ciUnitString_":"PAL","baseFactorStr_":"1e5","baseFactor_":100000,"defError_":false},{"isBase_":false,"name_":"unified atomic mass unit","csCode_":"u","ciCode_":"AMU","property_":"mass","magnitude_":1.6605402e-24,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"u","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"G","baseFactorStr_":"1.6605402e-24","baseFactor_":1.6605402e-24,"defError_":false},{"isBase_":false,"name_":"astronomic unit","csCode_":"AU","ciCode_":"ASU","property_":"length","magnitude_":149597870691,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"AU","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Mm","ciUnitString_":"MAM","baseFactorStr_":"149597.870691","baseFactor_":"149597.870691","defError_":false},{"isBase_":false,"name_":"parsec","csCode_":"pc","ciCode_":"PRS","property_":"length","magnitude_":30856780000000000,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"pc","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m","ciUnitString_":"M","baseFactorStr_":"3.085678e16","baseFactor_":30856780000000000,"defError_":false},{"isBase_":false,"name_":"velocity of light","csCode_":"[c]","ciCode_":"[C]","property_":"velocity","magnitude_":299792458,"dim_":{"dimVec_":[1,-1,0,0,0,0,0]},"printSymbol_":"<i>c</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m/s","ciUnitString_":"M/S","baseFactorStr_":"299792458","baseFactor_":"299792458","defError_":false},{"isBase_":false,"name_":"Planck constant","csCode_":"[h]","ciCode_":"[H]","property_":"action","magnitude_":6.6260755e-31,"dim_":{"dimVec_":[2,-1,1,0,0,0,0]},"printSymbol_":"<i>h</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J.s","ciUnitString_":"J.S","baseFactorStr_":"6.6260755e-34","baseFactor_":6.6260755e-34,"defError_":false},{"isBase_":false,"name_":"Boltzmann constant","csCode_":"[k]","ciCode_":"[K]","property_":"(unclassified)","magnitude_":1.380658e-20,"dim_":{"dimVec_":[2,-2,1,0,-1,0,0]},"printSymbol_":"<i>k</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/K","ciUnitString_":"J/K","baseFactorStr_":"1.380658e-23","baseFactor_":1.380658e-23,"defError_":false},{"isBase_":false,"name_":"permittivity of vacuum","csCode_":"[eps_0]","ciCode_":"[EPS_0]","property_":"electric permittivity","magnitude_":8.854187817000001e-15,"dim_":{"dimVec_":[-3,2,-1,0,0,2,0]},"printSymbol_":"<i>ε<sub><r>0</r></sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"F/m","ciUnitString_":"F/M","baseFactorStr_":"8.854187817e-12","baseFactor_":8.854187817e-12,"defError_":false},{"isBase_":false,"name_":"permeability of vacuum","csCode_":"[mu_0]","ciCode_":"[MU_0]","property_":"magnetic permeability","magnitude_":0.0012566370614359172,"dim_":{"dimVec_":[1,0,1,0,0,-2,0]},"printSymbol_":"<i>μ<sub><r>0</r></sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"N/A2","ciUnitString_":"4.[PI].10*-7.N/A2","baseFactorStr_":"1","baseFactor_":0.0000012566370614359173,"defError_":false},{"isBase_":false,"name_":"elementary charge","csCode_":"[e]","ciCode_":"[E]","property_":"electric charge","magnitude_":1.60217733e-19,"dim_":{"dimVec_":[0,0,0,0,0,1,0]},"printSymbol_":"<i>e</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"C","ciUnitString_":"C","baseFactorStr_":"1.60217733e-19","baseFactor_":1.60217733e-19,"defError_":false},{"isBase_":false,"name_":"electronvolt","csCode_":"eV","ciCode_":"EV","property_":"energy","magnitude_":1.60217733e-16,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"eV","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[e].V","ciUnitString_":"[E].V","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"electron mass","csCode_":"[m_e]","ciCode_":"[M_E]","property_":"mass","magnitude_":9.1093897e-28,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"<i>m<sub><r>e</r></sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"g","baseFactorStr_":"9.1093897e-28","baseFactor_":9.1093897e-28,"defError_":false},{"isBase_":false,"name_":"proton mass","csCode_":"[m_p]","ciCode_":"[M_P]","property_":"mass","magnitude_":1.6726231e-24,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"<i>m<sub><r>p</r></sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"g","baseFactorStr_":"1.6726231e-24","baseFactor_":1.6726231e-24,"defError_":false},{"isBase_":false,"name_":"Newtonian constant of gravitation","csCode_":"[G]","ciCode_":"[GC]","property_":"(unclassified)","magnitude_":6.67259e-14,"dim_":{"dimVec_":[3,-2,-1,0,0,0,0]},"printSymbol_":"<i>G</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m3.kg-1.s-2","ciUnitString_":"M3.KG-1.S-2","baseFactorStr_":"6.67259e-11","baseFactor_":6.67259e-11,"defError_":false},{"isBase_":false,"name_":"standard acceleration of free fall","csCode_":"[g]","ciCode_":"[G]","property_":"acceleration","magnitude_":9.80665,"dim_":{"dimVec_":[1,-2,0,0,0,0,0]},"printSymbol_":"<i>g<sub>n</sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m/s2","ciUnitString_":"M/S2","baseFactorStr_":"980665e-5","baseFactor_":"9.80665","defError_":false},{"isBase_":false,"name_":"standard atmosphere","csCode_":"atm","ciCode_":"ATM","property_":"pressure","magnitude_":3.19757382e+27,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"atm","class_":"const","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Pa","ciUnitString_":"PAL","baseFactorStr_":"101325","baseFactor_":"101325","defError_":false},{"isBase_":false,"name_":"light-year","csCode_":"[ly]","ciCode_":"[LY]","property_":"length","magnitude_":9460730472580800,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"l.y.","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[c].a_j","ciUnitString_":"[C].ANN_J","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gram-force","csCode_":"gf","ciCode_":"GF","property_":"force","magnitude_":9.80665,"dim_":{"dimVec_":[1,-2,1,0,0,0,0]},"printSymbol_":"gf","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g.[g]","ciUnitString_":"G.[G]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Kayser","csCode_":"Ky","ciCode_":"KY","property_":"lineic number","magnitude_":100,"dim_":{"dimVec_":[-1,0,0,0,0,0,0]},"printSymbol_":"K","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm-1","ciUnitString_":"CM-1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Gal","csCode_":"Gal","ciCode_":"GL","property_":"acceleration","magnitude_":0.01,"dim_":{"dimVec_":[1,-2,0,0,0,0,0]},"printSymbol_":"Gal","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm/s2","ciUnitString_":"CM/S2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"dyne","csCode_":"dyn","ciCode_":"DYN","property_":"force","magnitude_":0.01,"dim_":{"dimVec_":[1,-2,1,0,0,0,0]},"printSymbol_":"dyn","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g.cm/s2","ciUnitString_":"G.CM/S2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"erg","csCode_":"erg","ciCode_":"ERG","property_":"energy","magnitude_":0.0001,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"erg","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"dyn.cm","ciUnitString_":"DYN.CM","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Poise","csCode_":"P","ciCode_":"P","property_":"dynamic viscosity","magnitude_":100,"dim_":{"dimVec_":[-1,-1,1,0,0,0,0]},"printSymbol_":"P","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"dyn.s/cm2","ciUnitString_":"DYN.S/CM2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Biot","csCode_":"Bi","ciCode_":"BI","property_":"electric current","magnitude_":10,"dim_":{"dimVec_":[0,-1,0,0,0,1,0]},"printSymbol_":"Bi","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"A","ciUnitString_":"A","baseFactorStr_":"10","baseFactor_":"10","defError_":false},{"isBase_":false,"name_":"Stokes","csCode_":"St","ciCode_":"ST","property_":"kinematic viscosity","magnitude_":0.0001,"dim_":{"dimVec_":[2,-1,0,0,0,0,0]},"printSymbol_":"St","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm2/s","ciUnitString_":"CM2/S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Maxwell","csCode_":"Mx","ciCode_":"MX","property_":"flux of magnetic induction","magnitude_":0.00001,"dim_":{"dimVec_":[2,-1,1,0,0,-1,0]},"printSymbol_":"Mx","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Wb","ciUnitString_":"WB","baseFactorStr_":"1e-8","baseFactor_":1e-8,"defError_":false},{"isBase_":false,"name_":"Gauss","csCode_":"G","ciCode_":"GS","property_":"magnetic flux density","magnitude_":0.1,"dim_":{"dimVec_":[0,-1,1,0,0,-1,0]},"printSymbol_":"Gs","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"T","ciUnitString_":"T","baseFactorStr_":"1e-4","baseFactor_":0.0001,"defError_":false},{"isBase_":false,"name_":"Oersted","csCode_":"Oe","ciCode_":"OE","property_":"magnetic field intensity","magnitude_":79.57747154594767,"dim_":{"dimVec_":[-1,-1,0,0,0,1,0]},"printSymbol_":"Oe","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"A/m","ciUnitString_":"/[PI].A/M","baseFactorStr_":"250","baseFactor_":79.57747154594767,"defError_":false},{"isBase_":false,"name_":"Gilbert","csCode_":"Gb","ciCode_":"GB","property_":"magnetic tension","magnitude_":0.7957747154594768,"dim_":{"dimVec_":[0,-1,0,0,0,1,0]},"printSymbol_":"Gb","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Oe.cm","ciUnitString_":"OE.CM","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"stilb","csCode_":"sb","ciCode_":"SB","property_":"lum. intensity density","magnitude_":8640000,"dim_":{"dimVec_":[-2,1,0,0,0,0,0]},"printSymbol_":"sb","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cd/cm2","ciUnitString_":"CD/CM2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Lambert","csCode_":"Lmb","ciCode_":"LMB","property_":"brightness","magnitude_":2750197.4166279514,"dim_":{"dimVec_":[-2,1,0,0,0,0,0]},"printSymbol_":"L","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cd/cm2/[pi]","ciUnitString_":"CD/CM2/[PI]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"phot","csCode_":"ph","ciCode_":"PHT","property_":"illuminance","magnitude_":0.0001,"dim_":{"dimVec_":[-2,0,0,2,0,0,1]},"printSymbol_":"ph","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"lx","ciUnitString_":"LX","baseFactorStr_":"1e-4","baseFactor_":0.0001,"defError_":false},{"isBase_":false,"name_":"Curie","csCode_":"Ci","ciCode_":"CI","property_":"radioactivity","magnitude_":37000000000,"dim_":{"dimVec_":[0,-1,0,0,0,0,0]},"printSymbol_":"Ci","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Bq","ciUnitString_":"BQ","baseFactorStr_":"37e9","baseFactor_":37000000000,"defError_":false},{"isBase_":false,"name_":"Roentgen","csCode_":"R","ciCode_":"ROE","property_":"ion dose","magnitude_":2.58e-7,"dim_":{"dimVec_":[0,0,-1,0,0,1,0]},"printSymbol_":"R","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"C/kg","ciUnitString_":"C/KG","baseFactorStr_":"2.58e-4","baseFactor_":0.000258,"defError_":false},{"isBase_":false,"name_":"radiation absorbed dose","csCode_":"RAD","ciCode_":"[RAD]","property_":"energy dose","magnitude_":0.01,"dim_":{"dimVec_":[2,-2,0,0,0,0,0]},"printSymbol_":"RAD","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"erg/g","ciUnitString_":"ERG/G","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"radiation equivalent man","csCode_":"REM","ciCode_":"[REM]","property_":"dose equivalent","magnitude_":0.01,"dim_":{"dimVec_":[2,-2,0,0,0,0,0]},"printSymbol_":"REM","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"RAD","ciUnitString_":"[RAD]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"inch","csCode_":"[in_i]","ciCode_":"[IN_I]","property_":"length","magnitude_":0.025400000000000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"in","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm","ciUnitString_":"CM","baseFactorStr_":"254e-2","baseFactor_":"2.54","defError_":false},{"isBase_":false,"name_":"foot","csCode_":"[ft_i]","ciCode_":"[FT_I]","property_":"length","magnitude_":0.3048,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"ft","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"yard","csCode_":"[yd_i]","ciCode_":"[YD_I]","property_":"length","magnitude_":0.9144000000000001,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"yd","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]","ciUnitString_":"[FT_I]","baseFactorStr_":"3","baseFactor_":"3","defError_":false},{"isBase_":false,"name_":"mile","csCode_":"[mi_i]","ciCode_":"[MI_I]","property_":"length","magnitude_":1609.344,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"mi","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]","ciUnitString_":"[FT_I]","baseFactorStr_":"5280","baseFactor_":"5280","defError_":false},{"isBase_":false,"name_":"fathom","csCode_":"[fth_i]","ciCode_":"[FTH_I]","property_":"depth of water","magnitude_":1.8288000000000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"fth","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]","ciUnitString_":"[FT_I]","baseFactorStr_":"6","baseFactor_":"6","defError_":false},{"isBase_":false,"name_":"nautical mile","csCode_":"[nmi_i]","ciCode_":"[NMI_I]","property_":"length","magnitude_":1852,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"n.mi","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m","ciUnitString_":"M","baseFactorStr_":"1852","baseFactor_":"1852","defError_":false},{"isBase_":false,"name_":"knot","csCode_":"[kn_i]","ciCode_":"[KN_I]","property_":"velocity","magnitude_":0.5144444444444445,"dim_":{"dimVec_":[1,-1,0,0,0,0,0]},"printSymbol_":"knot","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[nmi_i]/h","ciUnitString_":"[NMI_I]/H","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"square inch","csCode_":"[sin_i]","ciCode_":"[SIN_I]","property_":"area","magnitude_":0.0006451600000000001,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]2","ciUnitString_":"[IN_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"square foot","csCode_":"[sft_i]","ciCode_":"[SFT_I]","property_":"area","magnitude_":0.09290304,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]2","ciUnitString_":"[FT_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"square yard","csCode_":"[syd_i]","ciCode_":"[SYD_I]","property_":"area","magnitude_":0.8361273600000002,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[yd_i]2","ciUnitString_":"[YD_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cubic inch","csCode_":"[cin_i]","ciCode_":"[CIN_I]","property_":"volume","magnitude_":0.000016387064000000003,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]3","ciUnitString_":"[IN_I]3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cubic foot","csCode_":"[cft_i]","ciCode_":"[CFT_I]","property_":"volume","magnitude_":0.028316846592000004,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]3","ciUnitString_":"[FT_I]3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cubic yard","csCode_":"[cyd_i]","ciCode_":"[CYD_I]","property_":"volume","magnitude_":0.7645548579840002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"cu.yd","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[yd_i]3","ciUnitString_":"[YD_I]3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"board foot","csCode_":"[bf_i]","ciCode_":"[BF_I]","property_":"volume","magnitude_":0.002359737216,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]3","ciUnitString_":"[IN_I]3","baseFactorStr_":"144","baseFactor_":"144","defError_":false},{"isBase_":false,"name_":"cord","csCode_":"[cr_i]","ciCode_":"[CR_I]","property_":"volume","magnitude_":3.6245563637760005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]3","ciUnitString_":"[FT_I]3","baseFactorStr_":"128","baseFactor_":"128","defError_":false},{"isBase_":false,"name_":"mil","csCode_":"[mil_i]","ciCode_":"[MIL_I]","property_":"length","magnitude_":0.000025400000000000004,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"mil","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"1e-3","baseFactor_":0.001,"defError_":false},{"isBase_":false,"name_":"circular mil","csCode_":"[cml_i]","ciCode_":"[CML_I]","property_":"area","magnitude_":5.067074790974979e-10,"dim_":{"dimVec_":null},"printSymbol_":"circ.mil","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pi]/4.[mil_i]2","ciUnitString_":"[PI]/4.[MIL_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"hand","csCode_":"[hd_i]","ciCode_":"[HD_I]","property_":"height of horses","magnitude_":0.10160000000000001,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"hd","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"foot","csCode_":"[ft_us]","ciCode_":"[FT_US]","property_":"length","magnitude_":0.3048006096012192,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"ft<sub>us</sub>","class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m/3937","ciUnitString_":"M/3937","baseFactorStr_":"1200","baseFactor_":"1200","defError_":false},{"isBase_":false,"name_":"yard","csCode_":"[yd_us]","ciCode_":"[YD_US]","property_":"length","magnitude_":0.9144018288036575,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]","ciUnitString_":"[FT_US]","baseFactorStr_":"3","baseFactor_":"3","defError_":false},{"isBase_":false,"name_":"inch","csCode_":"[in_us]","ciCode_":"[IN_US]","property_":"length","magnitude_":0.0254000508001016,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]/12","ciUnitString_":"[FT_US]/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"rod","csCode_":"[rd_us]","ciCode_":"[RD_US]","property_":"length","magnitude_":5.029210058420117,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]","ciUnitString_":"[FT_US]","baseFactorStr_":"16.5","baseFactor_":"16.5","defError_":false},{"isBase_":false,"name_":"Gunter's chain","csCode_":"[ch_us]","ciCode_":"[CH_US]","property_":"length","magnitude_":20.116840233680467,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_us]","ciUnitString_":"[RD_US]","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"link for Gunter's chain","csCode_":"[lk_us]","ciCode_":"[LK_US]","property_":"length","magnitude_":0.20116840233680466,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ch_us]/100","ciUnitString_":"[CH_US]/100","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Ramden's chain","csCode_":"[rch_us]","ciCode_":"[RCH_US]","property_":"length","magnitude_":30.480060960121918,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]","ciUnitString_":"[FT_US]","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"link for Ramden's chain","csCode_":"[rlk_us]","ciCode_":"[RLK_US]","property_":"length","magnitude_":0.3048006096012192,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rch_us]/100","ciUnitString_":"[RCH_US]/100","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fathom","csCode_":"[fth_us]","ciCode_":"[FTH_US]","property_":"length","magnitude_":1.828803657607315,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]","ciUnitString_":"[FT_US]","baseFactorStr_":"6","baseFactor_":"6","defError_":false},{"isBase_":false,"name_":"furlong","csCode_":"[fur_us]","ciCode_":"[FUR_US]","property_":"length","magnitude_":201.16840233680466,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_us]","ciUnitString_":"[RD_US]","baseFactorStr_":"40","baseFactor_":"40","defError_":false},{"isBase_":false,"name_":"mile","csCode_":"[mi_us]","ciCode_":"[MI_US]","property_":"length","magnitude_":1609.3472186944373,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[fur_us]","ciUnitString_":"[FUR_US]","baseFactorStr_":"8","baseFactor_":"8","defError_":false},{"isBase_":false,"name_":"acre","csCode_":"[acr_us]","ciCode_":"[ACR_US]","property_":"area","magnitude_":4046.872609874252,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_us]2","ciUnitString_":"[RD_US]2","baseFactorStr_":"160","baseFactor_":"160","defError_":false},{"isBase_":false,"name_":"square rod","csCode_":"[srd_us]","ciCode_":"[SRD_US]","property_":"area","magnitude_":25.292953811714074,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_us]2","ciUnitString_":"[RD_US]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"square mile","csCode_":"[smi_us]","ciCode_":"[SMI_US]","property_":"area","magnitude_":2589998.470319521,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[mi_us]2","ciUnitString_":"[MI_US]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"section","csCode_":"[sct]","ciCode_":"[SCT]","property_":"area","magnitude_":2589998.470319521,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[mi_us]2","ciUnitString_":"[MI_US]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"township","csCode_":"[twp]","ciCode_":"[TWP]","property_":"area","magnitude_":93239944.93150276,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[sct]","ciUnitString_":"[SCT]","baseFactorStr_":"36","baseFactor_":"36","defError_":false},{"isBase_":false,"name_":"mil","csCode_":"[mil_us]","ciCode_":"[MIL_US]","property_":"length","magnitude_":0.0000254000508001016,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_us]","ciUnitString_":"[IN_US]","baseFactorStr_":"1e-3","baseFactor_":0.001,"defError_":false},{"isBase_":false,"name_":"inch","csCode_":"[in_br]","ciCode_":"[IN_BR]","property_":"length","magnitude_":0.025399980000000003,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm","ciUnitString_":"CM","baseFactorStr_":"2.539998","baseFactor_":"2.539998","defError_":false},{"isBase_":false,"name_":"foot","csCode_":"[ft_br]","ciCode_":"[FT_BR]","property_":"length","magnitude_":0.30479976000000003,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_br]","ciUnitString_":"[IN_BR]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"rod","csCode_":"[rd_br]","ciCode_":"[RD_BR]","property_":"length","magnitude_":5.02919604,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"16.5","baseFactor_":"16.5","defError_":false},{"isBase_":false,"name_":"Gunter's chain","csCode_":"[ch_br]","ciCode_":"[CH_BR]","property_":"length","magnitude_":20.11678416,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_br]","ciUnitString_":"[RD_BR]","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"link for Gunter's chain","csCode_":"[lk_br]","ciCode_":"[LK_BR]","property_":"length","magnitude_":0.2011678416,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ch_br]/100","ciUnitString_":"[CH_BR]/100","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fathom","csCode_":"[fth_br]","ciCode_":"[FTH_BR]","property_":"length","magnitude_":1.82879856,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"6","baseFactor_":"6","defError_":false},{"isBase_":false,"name_":"pace","csCode_":"[pc_br]","ciCode_":"[PC_BR]","property_":"length","magnitude_":0.7619994000000001,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"2.5","baseFactor_":"2.5","defError_":false},{"isBase_":false,"name_":"yard","csCode_":"[yd_br]","ciCode_":"[YD_BR]","property_":"length","magnitude_":0.91439928,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"3","baseFactor_":"3","defError_":false},{"isBase_":false,"name_":"mile","csCode_":"[mi_br]","ciCode_":"[MI_BR]","property_":"length","magnitude_":1609.3427328000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"5280","baseFactor_":"5280","defError_":false},{"isBase_":false,"name_":"nautical mile","csCode_":"[nmi_br]","ciCode_":"[NMI_BR]","property_":"length","magnitude_":1853.1825408000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"6080","baseFactor_":"6080","defError_":false},{"isBase_":false,"name_":"knot","csCode_":"[kn_br]","ciCode_":"[KN_BR]","property_":"velocity","magnitude_":0.5147729280000001,"dim_":{"dimVec_":[1,-1,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[nmi_br]/h","ciUnitString_":"[NMI_BR]/H","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"acre","csCode_":"[acr_br]","ciCode_":"[ACR_BR]","property_":"area","magnitude_":4046.850049400269,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[yd_br]2","ciUnitString_":"[YD_BR]2","baseFactorStr_":"4840","baseFactor_":"4840","defError_":false},{"isBase_":false,"name_":"Queen Anne's wine gallon","csCode_":"[gal_us]","ciCode_":"[GAL_US]","property_":"fluid volume","magnitude_":0.0037854117840000006,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]3","ciUnitString_":"[IN_I]3","baseFactorStr_":"231","baseFactor_":"231","defError_":false},{"isBase_":false,"name_":"barrel","csCode_":"[bbl_us]","ciCode_":"[BBL_US]","property_":"fluid volume","magnitude_":0.158987294928,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gal_us]","ciUnitString_":"[GAL_US]","baseFactorStr_":"42","baseFactor_":"42","defError_":false},{"isBase_":false,"name_":"quart","csCode_":"[qt_us]","ciCode_":"[QT_US]","property_":"fluid volume","magnitude_":0.0009463529460000001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gal_us]/4","ciUnitString_":"[GAL_US]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pint","csCode_":"[pt_us]","ciCode_":"[PT_US]","property_":"fluid volume","magnitude_":0.00047317647300000007,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[qt_us]/2","ciUnitString_":"[QT_US]/2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gill","csCode_":"[gil_us]","ciCode_":"[GIL_US]","property_":"fluid volume","magnitude_":0.00011829411825000002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pt_us]/4","ciUnitString_":"[PT_US]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fluid ounce","csCode_":"[foz_us]","ciCode_":"[FOZ_US]","property_":"fluid volume","magnitude_":0.000029573529562500005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"oz fl","class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gil_us]/4","ciUnitString_":"[GIL_US]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fluid dram","csCode_":"[fdr_us]","ciCode_":"[FDR_US]","property_":"fluid volume","magnitude_":0.0000036966911953125006,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[foz_us]/8","ciUnitString_":"[FOZ_US]/8","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"minim","csCode_":"[min_us]","ciCode_":"[MIN_US]","property_":"fluid volume","magnitude_":6.1611519921875e-8,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[fdr_us]/60","ciUnitString_":"[FDR_US]/60","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cord","csCode_":"[crd_us]","ciCode_":"[CRD_US]","property_":"fluid volume","magnitude_":3.6245563637760005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]3","ciUnitString_":"[FT_I]3","baseFactorStr_":"128","baseFactor_":"128","defError_":false},{"isBase_":false,"name_":"bushel","csCode_":"[bu_us]","ciCode_":"[BU_US]","property_":"dry volume","magnitude_":0.03523907016688001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]3","ciUnitString_":"[IN_I]3","baseFactorStr_":"2150.42","baseFactor_":"2150.42","defError_":false},{"isBase_":false,"name_":"historical winchester gallon","csCode_":"[gal_wi]","ciCode_":"[GAL_WI]","property_":"dry volume","magnitude_":0.004404883770860001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[bu_us]/8","ciUnitString_":"[BU_US]/8","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"peck","csCode_":"[pk_us]","ciCode_":"[PK_US]","property_":"dry volume","magnitude_":0.008809767541720002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[bu_us]/4","ciUnitString_":"[BU_US]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"dry quart","csCode_":"[dqt_us]","ciCode_":"[DQT_US]","property_":"dry volume","magnitude_":0.0011012209427150002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pk_us]/8","ciUnitString_":"[PK_US]/8","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"dry pint","csCode_":"[dpt_us]","ciCode_":"[DPT_US]","property_":"dry volume","magnitude_":0.0005506104713575001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[dqt_us]/2","ciUnitString_":"[DQT_US]/2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"tablespoon","csCode_":"[tbs_us]","ciCode_":"[TBS_US]","property_":"volume","magnitude_":0.000014786764781250002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[foz_us]/2","ciUnitString_":"[FOZ_US]/2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"teaspoon","csCode_":"[tsp_us]","ciCode_":"[TSP_US]","property_":"volume","magnitude_":0.0000049289215937500005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[tbs_us]/3","ciUnitString_":"[TBS_US]/3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cup","csCode_":"[cup_us]","ciCode_":"[CUP_US]","property_":"volume","magnitude_":0.00023658823650000004,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[tbs_us]","ciUnitString_":"[TBS_US]","baseFactorStr_":"16","baseFactor_":"16","defError_":false},{"isBase_":false,"name_":"metric fluid ounce","csCode_":"[foz_m]","ciCode_":"[FOZ_M]","property_":"fluid volume","magnitude_":0.000029999999999999997,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"oz fl","class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL","ciUnitString_":"ML","baseFactorStr_":"30","baseFactor_":"30","defError_":false},{"isBase_":false,"name_":"metric cup","csCode_":"[cup_m]","ciCode_":"[CUP_M]","property_":"volume","magnitude_":0.00023999999999999998,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL","ciUnitString_":"ML","baseFactorStr_":"240","baseFactor_":"240","defError_":false},{"isBase_":false,"name_":"metric teaspoon","csCode_":"[tsp_m]","ciCode_":"[TSP_M]","property_":"volume","magnitude_":0.0000049999999999999996,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL","ciUnitString_":"mL","baseFactorStr_":"5","baseFactor_":"5","defError_":false},{"isBase_":false,"name_":"metric tablespoon","csCode_":"[tbs_m]","ciCode_":"[TBS_M]","property_":"volume","magnitude_":0.000014999999999999999,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL","ciUnitString_":"mL","baseFactorStr_":"15","baseFactor_":"15","defError_":false},{"isBase_":false,"name_":"gallon","csCode_":"[gal_br]","ciCode_":"[GAL_BR]","property_":"volume","magnitude_":0.004546090000000001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"l","ciUnitString_":"L","baseFactorStr_":"4.54609","baseFactor_":"4.54609","defError_":false},{"isBase_":false,"name_":"peck","csCode_":"[pk_br]","ciCode_":"[PK_BR]","property_":"volume","magnitude_":0.009092180000000002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gal_br]","ciUnitString_":"[GAL_BR]","baseFactorStr_":"2","baseFactor_":"2","defError_":false},{"isBase_":false,"name_":"bushel","csCode_":"[bu_br]","ciCode_":"[BU_BR]","property_":"volume","magnitude_":0.03636872000000001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pk_br]","ciUnitString_":"[PK_BR]","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"quart","csCode_":"[qt_br]","ciCode_":"[QT_BR]","property_":"volume","magnitude_":0.0011365225000000002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gal_br]/4","ciUnitString_":"[GAL_BR]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pint","csCode_":"[pt_br]","ciCode_":"[PT_BR]","property_":"volume","magnitude_":0.0005682612500000001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[qt_br]/2","ciUnitString_":"[QT_BR]/2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gill","csCode_":"[gil_br]","ciCode_":"[GIL_BR]","property_":"volume","magnitude_":0.00014206531250000003,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pt_br]/4","ciUnitString_":"[PT_BR]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fluid ounce","csCode_":"[foz_br]","ciCode_":"[FOZ_BR]","property_":"volume","magnitude_":0.000028413062500000005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gil_br]/5","ciUnitString_":"[GIL_BR]/5","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fluid dram","csCode_":"[fdr_br]","ciCode_":"[FDR_BR]","property_":"volume","magnitude_":0.0000035516328125000006,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[foz_br]/8","ciUnitString_":"[FOZ_BR]/8","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"minim","csCode_":"[min_br]","ciCode_":"[MIN_BR]","property_":"volume","magnitude_":5.919388020833334e-8,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[fdr_br]/60","ciUnitString_":"[FDR_BR]/60","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"grain","csCode_":"[gr]","ciCode_":"[GR]","property_":"mass","magnitude_":0.06479891,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mg","ciUnitString_":"MG","baseFactorStr_":"64.79891","baseFactor_":"64.79891","defError_":false},{"isBase_":false,"name_":"pound","csCode_":"[lb_av]","ciCode_":"[LB_AV]","property_":"mass","magnitude_":453.59237,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"lb","class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gr]","ciUnitString_":"[GR]","baseFactorStr_":"7000","baseFactor_":"7000","defError_":false},{"isBase_":false,"name_":"pound force","csCode_":"[lbf_av]","ciCode_":"[LBF_AV]","property_":"force","magnitude_":4448.2216152605,"dim_":{"dimVec_":[1,-2,1,0,0,0,0]},"printSymbol_":"lbf","class_":"const","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av].[g]","ciUnitString_":"[LB_AV].[G]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ounce","csCode_":"[oz_av]","ciCode_":"[OZ_AV]","property_":"mass","magnitude_":28.349523125,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"oz","class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av]/16","ciUnitString_":"[LB_AV]/16","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"dram","csCode_":"[dr_av]","ciCode_":"[DR_AV]","property_":"mass","magnitude_":1.7718451953125,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[oz_av]/16","ciUnitString_":"[OZ_AV]/16","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"short hundredweight","csCode_":"[scwt_av]","ciCode_":"[SCWT_AV]","property_":"mass","magnitude_":45359.237,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av]","ciUnitString_":"[LB_AV]","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"long hunderdweight","csCode_":"[lcwt_av]","ciCode_":"[LCWT_AV]","property_":"mass","magnitude_":50802.345440000005,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av]","ciUnitString_":"[LB_AV]","baseFactorStr_":"112","baseFactor_":"112","defError_":false},{"isBase_":false,"name_":"short ton","csCode_":"[ston_av]","ciCode_":"[STON_AV]","property_":"mass","magnitude_":907184.74,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[scwt_av]","ciUnitString_":"[SCWT_AV]","baseFactorStr_":"20","baseFactor_":"20","defError_":false},{"isBase_":false,"name_":"long ton","csCode_":"[lton_av]","ciCode_":"[LTON_AV]","property_":"mass","magnitude_":1016046.9088000001,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lcwt_av]","ciUnitString_":"[LCWT_AV]","baseFactorStr_":"20","baseFactor_":"20","defError_":false},{"isBase_":false,"name_":"stone","csCode_":"[stone_av]","ciCode_":"[STONE_AV]","property_":"mass","magnitude_":6350.293180000001,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av]","ciUnitString_":"[LB_AV]","baseFactorStr_":"14","baseFactor_":"14","defError_":false},{"isBase_":false,"name_":"pennyweight","csCode_":"[pwt_tr]","ciCode_":"[PWT_TR]","property_":"mass","magnitude_":1.5551738400000001,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"troy","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gr]","ciUnitString_":"[GR]","baseFactorStr_":"24","baseFactor_":"24","defError_":false},{"isBase_":false,"name_":"ounce","csCode_":"[oz_tr]","ciCode_":"[OZ_TR]","property_":"mass","magnitude_":31.103476800000003,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"troy","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pwt_tr]","ciUnitString_":"[PWT_TR]","baseFactorStr_":"20","baseFactor_":"20","defError_":false},{"isBase_":false,"name_":"pound","csCode_":"[lb_tr]","ciCode_":"[LB_TR]","property_":"mass","magnitude_":373.2417216,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"troy","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[oz_tr]","ciUnitString_":"[OZ_TR]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"scruple","csCode_":"[sc_ap]","ciCode_":"[SC_AP]","property_":"mass","magnitude_":1.2959782,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gr]","ciUnitString_":"[GR]","baseFactorStr_":"20","baseFactor_":"20","defError_":false},{"isBase_":false,"name_":"dram","csCode_":"[dr_ap]","ciCode_":"[DR_AP]","property_":"mass","magnitude_":3.8879346,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[sc_ap]","ciUnitString_":"[SC_AP]","baseFactorStr_":"3","baseFactor_":"3","defError_":false},{"isBase_":false,"name_":"ounce","csCode_":"[oz_ap]","ciCode_":"[OZ_AP]","property_":"mass","magnitude_":31.1034768,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[dr_ap]","ciUnitString_":"[DR_AP]","baseFactorStr_":"8","baseFactor_":"8","defError_":false},{"isBase_":false,"name_":"pound","csCode_":"[lb_ap]","ciCode_":"[LB_AP]","property_":"mass","magnitude_":373.2417216,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[oz_ap]","ciUnitString_":"[OZ_AP]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"metric ounce","csCode_":"[oz_m]","ciCode_":"[OZ_M]","property_":"mass","magnitude_":28,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"g","baseFactorStr_":"28","baseFactor_":"28","defError_":false},{"isBase_":false,"name_":"line","csCode_":"[lne]","ciCode_":"[LNE]","property_":"length","magnitude_":0.002116666666666667,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]/12","ciUnitString_":"[IN_I]/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"point","csCode_":"[pnt]","ciCode_":"[PNT]","property_":"length","magnitude_":0.0003527777777777778,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lne]/6","ciUnitString_":"[LNE]/6","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pica","csCode_":"[pca]","ciCode_":"[PCA]","property_":"length","magnitude_":0.004233333333333334,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pnt]","ciUnitString_":"[PNT]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"Printer's point","csCode_":"[pnt_pr]","ciCode_":"[PNT_PR]","property_":"length","magnitude_":0.00035145980000000004,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"0.013837","baseFactor_":"0.013837","defError_":false},{"isBase_":false,"name_":"Printer's pica","csCode_":"[pca_pr]","ciCode_":"[PCA_PR]","property_":"length","magnitude_":0.004217517600000001,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pnt_pr]","ciUnitString_":"[PNT_PR]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"pied","csCode_":"[pied]","ciCode_":"[PIED]","property_":"length","magnitude_":0.3248,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm","ciUnitString_":"CM","baseFactorStr_":"32.48","baseFactor_":"32.48","defError_":false},{"isBase_":false,"name_":"pouce","csCode_":"[pouce]","ciCode_":"[POUCE]","property_":"length","magnitude_":0.027066666666666666,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pied]/12","ciUnitString_":"[PIED]/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ligne","csCode_":"[ligne]","ciCode_":"[LIGNE]","property_":"length","magnitude_":0.0022555555555555554,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pouce]/12","ciUnitString_":"[POUCE]/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"didot","csCode_":"[didot]","ciCode_":"[DIDOT]","property_":"length","magnitude_":0.0003759259259259259,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ligne]/6","ciUnitString_":"[LIGNE]/6","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cicero","csCode_":"[cicero]","ciCode_":"[CICERO]","property_":"length","magnitude_":0.004511111111111111,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[didot]","ciUnitString_":"[DIDOT]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"degree Fahrenheit","csCode_":"[degF]","ciCode_":"[DEGF]","property_":"temperature","magnitude_":0.5555555555555556,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"°F","class_":"heat","isMetric_":false,"variable_":null,"cnv_":"degF","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"K","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":0.5555555555555556,"defError_":false},{"isBase_":false,"name_":"degree Rankine","csCode_":"[degR]","ciCode_":"[degR]","property_":"temperature","magnitude_":0.5555555555555556,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"°R","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"K/9","ciUnitString_":"K/9","baseFactorStr_":"5","baseFactor_":"5","defError_":false},{"isBase_":false,"name_":"degree Réaumur","csCode_":"[degRe]","ciCode_":"[degRe]","property_":"temperature","magnitude_":1.25,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"°Ré","class_":"heat","isMetric_":false,"variable_":null,"cnv_":"degRe","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"K","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1.25,"defError_":false},{"isBase_":false,"name_":"calorie at 15 °C","csCode_":"cal_[15]","ciCode_":"CAL_[15]","property_":"energy","magnitude_":4185.8,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>15°C</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.18580","baseFactor_":"4.18580","defError_":false},{"isBase_":false,"name_":"calorie at 20 °C","csCode_":"cal_[20]","ciCode_":"CAL_[20]","property_":"energy","magnitude_":4181.9,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>20°C</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.18190","baseFactor_":"4.18190","defError_":false},{"isBase_":false,"name_":"mean calorie","csCode_":"cal_m","ciCode_":"CAL_M","property_":"energy","magnitude_":4190.0199999999995,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>m</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.19002","baseFactor_":"4.19002","defError_":false},{"isBase_":false,"name_":"international table calorie","csCode_":"cal_IT","ciCode_":"CAL_IT","property_":"energy","magnitude_":4186.8,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>IT</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.1868","baseFactor_":"4.1868","defError_":false},{"isBase_":false,"name_":"thermochemical calorie","csCode_":"cal_th","ciCode_":"CAL_TH","property_":"energy","magnitude_":4184,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>th</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.184","baseFactor_":"4.184","defError_":false},{"isBase_":false,"name_":"calorie","csCode_":"cal","ciCode_":"CAL","property_":"energy","magnitude_":4184,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cal_th","ciUnitString_":"CAL_TH","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"nutrition label Calories","csCode_":"[Cal]","ciCode_":"[CAL]","property_":"energy","magnitude_":4184000,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Cal","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kcal_th","ciUnitString_":"KCAL_TH","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"British thermal unit at 39 °F","csCode_":"[Btu_39]","ciCode_":"[BTU_39]","property_":"energy","magnitude_":1059670,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>39°F</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05967","baseFactor_":"1.05967","defError_":false},{"isBase_":false,"name_":"British thermal unit at 59 °F","csCode_":"[Btu_59]","ciCode_":"[BTU_59]","property_":"energy","magnitude_":1054800,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>59°F</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05480","baseFactor_":"1.05480","defError_":false},{"isBase_":false,"name_":"British thermal unit at 60 °F","csCode_":"[Btu_60]","ciCode_":"[BTU_60]","property_":"energy","magnitude_":1054680,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>60°F</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05468","baseFactor_":"1.05468","defError_":false},{"isBase_":false,"name_":"mean British thermal unit","csCode_":"[Btu_m]","ciCode_":"[BTU_M]","property_":"energy","magnitude_":1055870,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>m</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05587","baseFactor_":"1.05587","defError_":false},{"isBase_":false,"name_":"international table British thermal unit","csCode_":"[Btu_IT]","ciCode_":"[BTU_IT]","property_":"energy","magnitude_":1055055.85262,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>IT</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05505585262","baseFactor_":"1.05505585262","defError_":false},{"isBase_":false,"name_":"thermochemical British thermal unit","csCode_":"[Btu_th]","ciCode_":"[BTU_TH]","property_":"energy","magnitude_":1054350,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>th</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.054350","baseFactor_":"1.054350","defError_":false},{"isBase_":false,"name_":"British thermal unit","csCode_":"[Btu]","ciCode_":"[BTU]","property_":"energy","magnitude_":1054350,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"btu","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[Btu_th]","ciUnitString_":"[BTU_TH]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"horsepower","csCode_":"[HP]","ciCode_":"[HP]","property_":"power","magnitude_":745699.8715822703,"dim_":{"dimVec_":[2,-3,1,0,0,0,0]},"printSymbol_":null,"class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i].[lbf_av]/s","ciUnitString_":"[FT_I].[LBF_AV]/S","baseFactorStr_":"550","baseFactor_":"550","defError_":false},{"isBase_":false,"name_":"tex","csCode_":"tex","ciCode_":"TEX","property_":"linear mass density (of textile thread)","magnitude_":0.001,"dim_":{"dimVec_":[-1,0,1,0,0,0,0]},"printSymbol_":"tex","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g/km","ciUnitString_":"G/KM","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Denier","csCode_":"[den]","ciCode_":"[DEN]","property_":"linear mass density (of textile thread)","magnitude_":0.0001111111111111111,"dim_":{"dimVec_":[-1,0,1,0,0,0,0]},"printSymbol_":"den","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g/9/km","ciUnitString_":"G/9/KM","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"meter of water column","csCode_":"m[H2O]","ciCode_":"M[H2O]","property_":"pressure","magnitude_":9806650,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"m HO<sub><r>2</r></sub>","class_":"clinical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kPa","ciUnitString_":"KPAL","baseFactorStr_":"980665e-5","baseFactor_":"9.80665","defError_":false},{"isBase_":false,"name_":"meter of mercury column","csCode_":"m[Hg]","ciCode_":"M[HG]","property_":"pressure","magnitude_":133322000,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"m Hg","class_":"clinical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kPa","ciUnitString_":"KPAL","baseFactorStr_":"133.3220","baseFactor_":"133.3220","defError_":false},{"isBase_":false,"name_":"inch of water column","csCode_":"[in_i'H2O]","ciCode_":"[IN_I'H2O]","property_":"pressure","magnitude_":249088.91000000003,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"in HO<sub><r>2</r></sub>","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m[H2O].[in_i]/m","ciUnitString_":"M[H2O].[IN_I]/M","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"inch of mercury column","csCode_":"[in_i'Hg]","ciCode_":"[IN_I'HG]","property_":"pressure","magnitude_":3386378.8000000003,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"in Hg","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m[Hg].[in_i]/m","ciUnitString_":"M[HG].[IN_I]/M","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"peripheral vascular resistance unit","csCode_":"[PRU]","ciCode_":"[PRU]","property_":"fluid resistance","magnitude_":133322000000,"dim_":{"dimVec_":[-4,-1,1,0,0,0,0]},"printSymbol_":"P.R.U.","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mm[Hg].s/ml","ciUnitString_":"MM[HG].S/ML","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Wood unit","csCode_":"[wood'U]","ciCode_":"[WOOD'U]","property_":"fluid resistance","magnitude_":7999320000,"dim_":{"dimVec_":[-4,-1,1,0,0,0,0]},"printSymbol_":"Wood U.","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mm[Hg].min/L","ciUnitString_":"MM[HG].MIN/L","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"diopter","csCode_":"[diop]","ciCode_":"[DIOP]","property_":"refraction of a lens","magnitude_":1,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"dpt","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"inv","cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m","ciUnitString_":"/M","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"prism diopter","csCode_":"[p'diop]","ciCode_":"[P'DIOP]","property_":"refraction of a prism","magnitude_":0.017453292519943295,"dim_":{"dimVec_":null},"printSymbol_":"PD","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"tanTimes100","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"deg","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"percent of slope","csCode_":"%[slope]","ciCode_":"%[SLOPE]","property_":"slope","magnitude_":0.017453292519943295,"dim_":{"dimVec_":null},"printSymbol_":"%","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"100tan","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"deg","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"mesh","csCode_":"[mesh_i]","ciCode_":"[MESH_I]","property_":"lineic number","magnitude_":0.025400000000000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"inv","cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"/[IN_I]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Charrière","csCode_":"[Ch]","ciCode_":"[CH]","property_":"gauge of catheters","magnitude_":0.0003333333333333333,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"Ch","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mm/3","ciUnitString_":"MM/3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"drop","csCode_":"[drp]","ciCode_":"[DRP]","property_":"volume","magnitude_":5e-8,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"drp","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"ml/20","ciUnitString_":"ML/20","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Hounsfield unit","csCode_":"[hnsf'U]","ciCode_":"[HNSF'U]","property_":"x-ray attenuation","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"HF","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"metabolic equivalent","csCode_":"[MET]","ciCode_":"[MET]","property_":"metabolic cost of physical activity","magnitude_":5.833333333333334e-11,"dim_":{"dimVec_":[3,-1,-1,0,0,0,0]},"printSymbol_":"MET","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL/min/kg","ciUnitString_":"ML/MIN/KG","baseFactorStr_":"3.5","baseFactor_":"3.5","defError_":false},{"isBase_":false,"name_":"homeopathic potency of decimal series (retired)","csCode_":"[hp'_X]","ciCode_":"[HP'_X]","property_":"homeopathic potency (retired)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"X","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"hpX","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"homeopathic potency of centesimal series (retired)","csCode_":"[hp'_C]","ciCode_":"[HP'_C]","property_":"homeopathic potency (retired)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"C","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"hpC","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"homeopathic potency of millesimal series (retired)","csCode_":"[hp'_M]","ciCode_":"[HP'_M]","property_":"homeopathic potency (retired)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"M","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"hpM","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"homeopathic potency of quintamillesimal series (retired)","csCode_":"[hp'_Q]","ciCode_":"[HP'_Q]","property_":"homeopathic potency (retired)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Q","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"hpQ","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"homeopathic potency of decimal hahnemannian series","csCode_":"[hp_X]","ciCode_":"[HP_X]","property_":"homeopathic potency (Hahnemann)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"X","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of centesimal hahnemannian series","csCode_":"[hp_C]","ciCode_":"[HP_C]","property_":"homeopathic potency (Hahnemann)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"C","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of millesimal hahnemannian series","csCode_":"[hp_M]","ciCode_":"[HP_M]","property_":"homeopathic potency (Hahnemann)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"M","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of quintamillesimal hahnemannian series","csCode_":"[hp_Q]","ciCode_":"[HP_Q]","property_":"homeopathic potency (Hahnemann)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Q","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of decimal korsakovian series","csCode_":"[kp_X]","ciCode_":"[KP_X]","property_":"homeopathic potency (Korsakov)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"X","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of centesimal korsakovian series","csCode_":"[kp_C]","ciCode_":"[KP_C]","property_":"homeopathic potency (Korsakov)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"C","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of millesimal korsakovian series","csCode_":"[kp_M]","ciCode_":"[KP_M]","property_":"homeopathic potency (Korsakov)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"M","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of quintamillesimal korsakovian series","csCode_":"[kp_Q]","ciCode_":"[KP_Q]","property_":"homeopathic potency (Korsakov)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Q","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"equivalents","csCode_":"eq","ciCode_":"EQ","property_":"amount of substance","magnitude_":6.0221367e+23,"dim_":{"dimVec_":null},"printSymbol_":"eq","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mol","ciUnitString_":"MOL","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"osmole","csCode_":"osm","ciCode_":"OSM","property_":"amount of substance (dissolved particles)","magnitude_":6.0221367e+23,"dim_":{"dimVec_":null},"printSymbol_":"osm","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mol","ciUnitString_":"MOL","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pH","csCode_":"[pH]","ciCode_":"[PH]","property_":"acidity","magnitude_":6.0221366999999994e+26,"dim_":{"dimVec_":null},"printSymbol_":"pH","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":"pH","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"mol/l","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gram percent","csCode_":"g%","ciCode_":"G%","property_":"mass concentration","magnitude_":10000,"dim_":{"dimVec_":[-3,0,1,0,0,0,0]},"printSymbol_":"g%","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g/dl","ciUnitString_":"G/DL","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Svedberg unit","csCode_":"[S]","ciCode_":"[S]","property_":"sedimentation coefficient","magnitude_":1e-13,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"S","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s","ciUnitString_":"10*-13.S","baseFactorStr_":"1","baseFactor_":1e-13,"defError_":false},{"isBase_":false,"name_":"high power field","csCode_":"[HPF]","ciCode_":"[HPF]","property_":"view area in microscope","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"HPF","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"low power field","csCode_":"[LPF]","ciCode_":"[LPF]","property_":"view area in microscope","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"LPF","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"katal","csCode_":"kat","ciCode_":"KAT","property_":"catalytic activity","magnitude_":6.0221367e+23,"dim_":{"dimVec_":null},"printSymbol_":"kat","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mol/s","ciUnitString_":"MOL/S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Unit","csCode_":"U","ciCode_":"U","property_":"catalytic activity","magnitude_":10036894500000000,"dim_":{"dimVec_":null},"printSymbol_":"U","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"umol/min","ciUnitString_":"UMOL/MIN","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"international unit","csCode_":"[iU]","ciCode_":"[IU]","property_":"arbitrary","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"IU","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"international unit","csCode_":"[IU]","ciCode_":"[IU]","property_":"arbitrary","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"i.U.","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"[iU]","ciUnitString_":"[IU]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"arbitary unit","csCode_":"[arb'U]","ciCode_":"[ARB'U]","property_":"arbitrary","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"arb. U","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"United States Pharmacopeia unit","csCode_":"[USP'U]","ciCode_":"[USP'U]","property_":"arbitrary","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"U.S.P.","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"GPL unit","csCode_":"[GPL'U]","ciCode_":"[GPL'U]","property_":"biologic activity of anticardiolipin IgG","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"MPL unit","csCode_":"[MPL'U]","ciCode_":"[MPL'U]","property_":"biologic activity of anticardiolipin IgM","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"APL unit","csCode_":"[APL'U]","ciCode_":"[APL'U]","property_":"biologic activity of anticardiolipin IgA","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Bethesda unit","csCode_":"[beth'U]","ciCode_":"[BETH'U]","property_":"biologic activity of factor VIII inhibitor","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"anti factor Xa unit","csCode_":"[anti'Xa'U]","ciCode_":"[ANTI'XA'U]","property_":"biologic activity of factor Xa inhibitor (heparin)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Todd unit","csCode_":"[todd'U]","ciCode_":"[TODD'U]","property_":"biologic activity antistreptolysin O","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Dye unit","csCode_":"[dye'U]","ciCode_":"[DYE'U]","property_":"biologic activity of amylase","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Somogyi unit","csCode_":"[smgy'U]","ciCode_":"[SMGY'U]","property_":"biologic activity of amylase","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Bodansky unit","csCode_":"[bdsk'U]","ciCode_":"[BDSK'U]","property_":"biologic activity of phosphatase","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"King-Armstrong unit","csCode_":"[ka'U]","ciCode_":"[KA'U]","property_":"biologic activity of phosphatase","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Kunkel unit","csCode_":"[knk'U]","ciCode_":"[KNK'U]","property_":"arbitrary biologic activity","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Mac Lagan unit","csCode_":"[mclg'U]","ciCode_":"[MCLG'U]","property_":"arbitrary biologic activity","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"tuberculin unit","csCode_":"[tb'U]","ciCode_":"[TB'U]","property_":"biologic activity of tuberculin","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"50% cell culture infectious dose","csCode_":"[CCID_50]","ciCode_":"[CCID_50]","property_":"biologic activity (infectivity) of an infectious agent preparation","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"CCID<sub>50</sub>","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"50% tissue culture infectious dose","csCode_":"[TCID_50]","ciCode_":"[TCID_50]","property_":"biologic activity (infectivity) of an infectious agent preparation","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"TCID<sub>50</sub>","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"50% embryo infectious dose","csCode_":"[EID_50]","ciCode_":"[EID_50]","property_":"biologic activity (infectivity) of an infectious agent preparation","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"EID<sub>50</sub>","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"plaque forming units","csCode_":"[PFU]","ciCode_":"[PFU]","property_":"amount of an infectious agent","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"PFU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"focus forming units","csCode_":"[FFU]","ciCode_":"[FFU]","property_":"amount of an infectious agent","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"FFU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"colony forming units","csCode_":"[CFU]","ciCode_":"[CFU]","property_":"amount of a proliferating organism","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"CFU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"index of reactivity","csCode_":"[IR]","ciCode_":"[IR]","property_":"amount of an allergen callibrated through in-vivo testing using the Stallergenes® method.","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"IR","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bioequivalent allergen unit","csCode_":"[BAU]","ciCode_":"[BAU]","property_":"amount of an allergen callibrated through in-vivo testing based on the ID50EAL method of (intradermal dilution for 50mm sum of erythema diameters","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"BAU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"allergen unit","csCode_":"[AU]","ciCode_":"[AU]","property_":"procedure defined amount of an allergen using some reference standard","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"AU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"allergen unit for Ambrosia artemisiifolia","csCode_":"[Amb'a'1'U]","ciCode_":"[AMB'A'1'U]","property_":"procedure defined amount of the major allergen of ragweed.","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Amb a 1 U","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"protein nitrogen unit","csCode_":"[PNU]","ciCode_":"[PNU]","property_":"procedure defined amount of a protein substance","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"PNU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Limit of flocculation","csCode_":"[Lf]","ciCode_":"[LF]","property_":"procedure defined amount of an antigen substance","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Lf","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"D-antigen unit","csCode_":"[D'ag'U]","ciCode_":"[D'AG'U]","property_":"procedure defined amount of a poliomyelitis d-antigen substance","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fibrinogen equivalent unit","csCode_":"[FEU]","ciCode_":"[FEU]","property_":"amount of fibrinogen broken down into the measured d-dimers","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ELISA unit","csCode_":"[ELU]","ciCode_":"[ELU]","property_":"arbitrary ELISA unit","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Ehrlich unit","csCode_":"[EU]","ciCode_":"[EU]","property_":"Ehrlich unit","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"neper","csCode_":"Np","ciCode_":"NEP","property_":"level","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Np","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"ln","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"bel","csCode_":"B","ciCode_":"B","property_":"level","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"B","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lg","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"bel sound pressure","csCode_":"B[SPL]","ciCode_":"B[SPL]","property_":"pressure level","magnitude_":631152000000000100,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"B(SPL)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"Pa","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":0.00002,"defError_":false},{"isBase_":false,"name_":"bel volt","csCode_":"B[V]","ciCode_":"B[V]","property_":"electric potential level","magnitude_":1000,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"B(V)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"V","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bel millivolt","csCode_":"B[mV]","ciCode_":"B[MV]","property_":"electric potential level","magnitude_":1,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"B(mV)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"mV","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bel microvolt","csCode_":"B[uV]","ciCode_":"B[UV]","property_":"electric potential level","magnitude_":0.001,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"B(μV)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"uV","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bel 10 nanovolt","csCode_":"B[10.nV]","ciCode_":"B[10.NV]","property_":"electric potential level","magnitude_":0.000010000000000000003,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"B(10 nV)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"nV","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"10","defError_":false},{"isBase_":false,"name_":"bel watt","csCode_":"B[W]","ciCode_":"B[W]","property_":"power level","magnitude_":1000,"dim_":{"dimVec_":[2,-3,1,0,0,0,0]},"printSymbol_":"B(W)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lg","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"W","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bel kilowatt","csCode_":"B[kW]","ciCode_":"B[KW]","property_":"power level","magnitude_":1000000,"dim_":{"dimVec_":[2,-3,1,0,0,0,0]},"printSymbol_":"B(kW)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lg","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"kW","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"stere","csCode_":"st","ciCode_":"STR","property_":"volume","magnitude_":1,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"st","class_":"misc","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m3","ciUnitString_":"M3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Ångström","csCode_":"Ao","ciCode_":"AO","property_":"length","magnitude_":1.0000000000000002e-10,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"Å","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"nm","ciUnitString_":"NM","baseFactorStr_":"0.1","baseFactor_":"0.1","defError_":false},{"isBase_":false,"name_":"barn","csCode_":"b","ciCode_":"BRN","property_":"action area","magnitude_":9.999999999999999e-29,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":"b","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"fm2","ciUnitString_":"FM2","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"technical atmosphere","csCode_":"att","ciCode_":"ATT","property_":"pressure","magnitude_":98066499.99999999,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"at","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kgf/cm2","ciUnitString_":"KGF/CM2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"mho","csCode_":"mho","ciCode_":"MHO","property_":"electric conductance","magnitude_":0.001,"dim_":{"dimVec_":[-2,1,-1,0,0,2,0]},"printSymbol_":"mho","class_":"misc","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"S","ciUnitString_":"S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pound per sqare inch","csCode_":"[psi]","ciCode_":"[PSI]","property_":"pressure","magnitude_":6894757.293168359,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"psi","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lbf_av]/[in_i]2","ciUnitString_":"[LBF_AV]/[IN_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"circle","csCode_":"circ","ciCode_":"CIRC","property_":"plane angle","magnitude_":6.283185307179586,"dim_":{"dimVec_":null},"printSymbol_":"circ","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pi].rad","ciUnitString_":"[PI].RAD","baseFactorStr_":"2","baseFactor_":"2","defError_":false},{"isBase_":false,"name_":"spere","csCode_":"sph","ciCode_":"SPH","property_":"solid angle","magnitude_":12.566370614359172,"dim_":{"dimVec_":null},"printSymbol_":"sph","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pi].sr","ciUnitString_":"[PI].SR","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"metric carat","csCode_":"[car_m]","ciCode_":"[CAR_M]","property_":"mass","magnitude_":0.2,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"ct<sub>m</sub>","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"G","baseFactorStr_":"2e-1","baseFactor_":"0.2","defError_":false},{"isBase_":false,"name_":"carat of gold alloys","csCode_":"[car_Au]","ciCode_":"[CAR_AU]","property_":"mass fraction","magnitude_":0.041666666666666664,"dim_":{"dimVec_":null},"printSymbol_":"ct<sub><r>Au</r></sub>","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"/24","ciUnitString_":"/24","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Smoot","csCode_":"[smoot]","ciCode_":"[SMOOT]","property_":"length","magnitude_":1.7018000000000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"67","baseFactor_":"67","defError_":false},{"isBase_":false,"name_":"meter per square seconds per square root of hertz","csCode_":"[m/s2/Hz^(1/2)]","ciCode_":"[M/S2/HZ^(1/2)]","property_":"amplitude spectral density","magnitude_":1,"dim_":{"dimVec_":[2,-3,0,0,0,0,0]},"printSymbol_":null,"class_":"misc","isMetric_":false,"variable_":null,"cnv_":"sqrt","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"m2/s4/Hz","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bit","csCode_":"bit_s","ciCode_":"BIT_S","property_":"amount of information","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"bit<sub>s</sub>","class_":"infotech","isMetric_":false,"variable_":null,"cnv_":"ld","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"bit","csCode_":"bit","ciCode_":"BIT","property_":"amount of information","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"bit","class_":"infotech","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"byte","csCode_":"By","ciCode_":"BY","property_":"amount of information","magnitude_":8,"dim_":{"dimVec_":null},"printSymbol_":"B","class_":"infotech","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"bit","ciUnitString_":"bit","baseFactorStr_":"8","baseFactor_":"8","defError_":false},{"isBase_":false,"name_":"baud","csCode_":"Bd","ciCode_":"BD","property_":"signal transmission rate","magnitude_":1,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"Bd","class_":"infotech","isMetric_":true,"variable_":null,"cnv_":"inv","cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s","ciUnitString_":"/s","baseFactorStr_":"1","baseFactor_":"1","defError_":false}]}
+module.exports={"prefixes":[{"code_":"E","name_":"exa","value_":1000000000000000000,"exp_":"18"},{"code_":"G","name_":"giga","value_":1000000000,"exp_":"9"},{"code_":"Gi","name_":"gibi","value_":1073741824,"exp_":null},{"code_":"Ki","name_":"kibi","value_":1024,"exp_":null},{"code_":"M","name_":"mega","value_":1000000,"exp_":"6"},{"code_":"Mi","name_":"mebi","value_":1048576,"exp_":null},{"code_":"P","name_":"peta","value_":1000000000000000,"exp_":"15"},{"code_":"T","name_":"tera","value_":1000000000000,"exp_":"12"},{"code_":"Ti","name_":"tebi","value_":1099511627776,"exp_":null},{"code_":"Y","name_":"yotta","value_":1e+24,"exp_":"24"},{"code_":"Z","name_":"zetta","value_":1e+21,"exp_":"21"},{"code_":"a","name_":"atto","value_":1e-18,"exp_":"-18"},{"code_":"c","name_":"centi","value_":0.01,"exp_":"-2"},{"code_":"d","name_":"deci","value_":0.1,"exp_":"-1"},{"code_":"da","name_":"deka","value_":10,"exp_":"1"},{"code_":"f","name_":"femto","value_":1e-15,"exp_":"-15"},{"code_":"h","name_":"hecto","value_":100,"exp_":"2"},{"code_":"k","name_":"kilo","value_":1000,"exp_":"3"},{"code_":"m","name_":"milli","value_":0.001,"exp_":"-3"},{"code_":"n","name_":"nano","value_":1e-9,"exp_":"-9"},{"code_":"p","name_":"pico","value_":1e-12,"exp_":"-12"},{"code_":"u","name_":"micro","value_":0.000001,"exp_":"-6"},{"code_":"y","name_":"yocto","value_":1.0000000000000001e-24,"exp_":"-24"},{"code_":"z","name_":"zepto","value_":1e-21,"exp_":"-21"}],"units":[{"isBase_":true,"name_":"meter","csCode_":"m","ciCode_":"M","property_":"length","magnitude_":1,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"m","class_":null,"isMetric_":false,"variable_":"L","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"second","csCode_":"s","ciCode_":"S","property_":"time","magnitude_":1,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"s","class_":null,"isMetric_":false,"variable_":"T","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"gram","csCode_":"g","ciCode_":"G","property_":"mass","magnitude_":1,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"g","class_":null,"isMetric_":false,"variable_":"M","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"radian","csCode_":"rad","ciCode_":"RAD","property_":"plane angle","magnitude_":1,"dim_":{"dimVec_":[0,0,0,1,0,0,0]},"printSymbol_":"rad","class_":null,"isMetric_":false,"variable_":"A","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"kelvin","csCode_":"K","ciCode_":"K","property_":"temperature","magnitude_":1,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"K","class_":null,"isMetric_":false,"variable_":"C","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"coulomb","csCode_":"C","ciCode_":"C","property_":"electric charge","magnitude_":1,"dim_":{"dimVec_":[0,0,0,0,0,1,0]},"printSymbol_":"C","class_":null,"isMetric_":false,"variable_":"Q","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":true,"name_":"candela","csCode_":"cd","ciCode_":"CD","property_":"luminous intensity","magnitude_":1,"dim_":{"dimVec_":[0,0,0,0,0,0,1]},"printSymbol_":"cd","class_":null,"isMetric_":false,"variable_":"F","cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":null,"ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":null,"defError_":false},{"isBase_":false,"name_":"the number ten for arbitrary powers","csCode_":"10*","ciCode_":"10*","property_":"number","magnitude_":"10","dim_":{"dimVec_":null},"printSymbol_":"10","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"10","baseFactor_":"10","defError_":false},{"isBase_":false,"name_":"the number ten for arbitrary powers","csCode_":"10^","ciCode_":"10^","property_":"number","magnitude_":"10","dim_":{"dimVec_":null},"printSymbol_":"10","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"10","baseFactor_":"10","defError_":false},{"isBase_":false,"name_":"the number pi","csCode_":"[pi]","ciCode_":"[PI]","property_":"number","magnitude_":3.141592653589793,"dim_":{"dimVec_":null},"printSymbol_":"π","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"3.1415926535897932384626433832795028841971693993751058209749445923","baseFactor_":3.141592653589793,"defError_":false},{"isBase_":false,"name_":"percent","csCode_":"%","ciCode_":"%","property_":"fraction","magnitude_":0.01,"dim_":{"dimVec_":null},"printSymbol_":"%","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-2","ciUnitString_":"10*-2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"parts per thousand","csCode_":"[ppth]","ciCode_":"[PPTH]","property_":"fraction","magnitude_":0.001,"dim_":{"dimVec_":null},"printSymbol_":"ppth","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-3","ciUnitString_":"10*-3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"parts per million","csCode_":"[ppm]","ciCode_":"[PPM]","property_":"fraction","magnitude_":0.000001,"dim_":{"dimVec_":null},"printSymbol_":"ppm","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-6","ciUnitString_":"10*-6","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"parts per billion","csCode_":"[ppb]","ciCode_":"[PPB]","property_":"fraction","magnitude_":1e-9,"dim_":{"dimVec_":null},"printSymbol_":"ppb","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-9","ciUnitString_":"10*-9","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"parts per trillion","csCode_":"[pptr]","ciCode_":"[PPTR]","property_":"fraction","magnitude_":1e-12,"dim_":{"dimVec_":null},"printSymbol_":"pptr","class_":"dimless","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*-12","ciUnitString_":"10*-12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"mole","csCode_":"mol","ciCode_":"MOL","property_":"amount of substance","magnitude_":6.0221367e+23,"dim_":{"dimVec_":null},"printSymbol_":"mol","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"10*23","ciUnitString_":"10*23","baseFactorStr_":"6.0221367","baseFactor_":"6.0221367","defError_":false},{"isBase_":false,"name_":"steradian","csCode_":"sr","ciCode_":"SR","property_":"solid angle","magnitude_":1,"dim_":{"dimVec_":[0,0,0,2,0,0,0]},"printSymbol_":"sr","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"rad2","ciUnitString_":"RAD2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"hertz","csCode_":"Hz","ciCode_":"HZ","property_":"frequency","magnitude_":1,"dim_":{"dimVec_":[0,-1,0,0,0,0,0]},"printSymbol_":"Hz","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s-1","ciUnitString_":"S-1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"newton","csCode_":"N","ciCode_":"N","property_":"force","magnitude_":1000,"dim_":{"dimVec_":[1,-2,1,0,0,0,0]},"printSymbol_":"N","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kg.m/s2","ciUnitString_":"KG.M/S2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},
+  {"isBase_":false,"name_":"pascal","csCode_":"Pa","ciCode_":"PAL","property_":"pressure","magnitude_":1000,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"Pa","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"N/m2","ciUnitString_":"N/M2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"joule","csCode_":"J","ciCode_":"J","property_":"energy","magnitude_":1000,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"J","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"N.m","ciUnitString_":"N.M","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"watt","csCode_":"W","ciCode_":"W","property_":"power","magnitude_":1000,"dim_":{"dimVec_":[2,-3,1,0,0,0,0]},"printSymbol_":"W","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/s","ciUnitString_":"J/S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ampère","csCode_":"A","ciCode_":"A","property_":"electric current","magnitude_":1,"dim_":{"dimVec_":[0,-1,0,0,0,1,0]},"printSymbol_":"A","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"C/s","ciUnitString_":"C/S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"volt","csCode_":"V","ciCode_":"V","property_":"electric potential","magnitude_":1000,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"V","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/C","ciUnitString_":"J/C","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"farad","csCode_":"F","ciCode_":"F","property_":"electric capacitance","magnitude_":0.001,"dim_":{"dimVec_":[-2,2,-1,0,0,2,0]},"printSymbol_":"F","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"C/V","ciUnitString_":"C/V","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ohm","csCode_":"Ohm","ciCode_":"OHM","property_":"electric resistance","magnitude_":1000,"dim_":{"dimVec_":[2,-1,1,0,0,-2,0]},"printSymbol_":"Ω","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"V/A","ciUnitString_":"V/A","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"siemens","csCode_":"S","ciCode_":"SIE","property_":"electric conductance","magnitude_":0.001,"dim_":{"dimVec_":[-2,1,-1,0,0,2,0]},"printSymbol_":"S","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Ohm-1","ciUnitString_":"OHM-1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"weber","csCode_":"Wb","ciCode_":"WB","property_":"magentic flux","magnitude_":1000,"dim_":{"dimVec_":[2,-1,1,0,0,-1,0]},"printSymbol_":"Wb","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"V.s","ciUnitString_":"V.S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"degree Celsius","csCode_":"Cel","ciCode_":"CEL","property_":"temperature","magnitude_":1,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"°C","class_":"si","isMetric_":true,"variable_":null,"cnv_":"Cel","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"K","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"tesla","csCode_":"T","ciCode_":"T","property_":"magnetic flux density","magnitude_":1000,"dim_":{"dimVec_":[0,-1,1,0,0,-1,0]},"printSymbol_":"T","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Wb/m2","ciUnitString_":"WB/M2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"henry","csCode_":"H","ciCode_":"H","property_":"inductance","magnitude_":1000,"dim_":{"dimVec_":[2,0,1,0,0,-2,0]},"printSymbol_":"H","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Wb/A","ciUnitString_":"WB/A","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"lumen","csCode_":"lm","ciCode_":"LM","property_":"luminous flux","magnitude_":1,"dim_":{"dimVec_":[0,0,0,2,0,0,1]},"printSymbol_":"lm","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cd.sr","ciUnitString_":"CD.SR","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"lux","csCode_":"lx","ciCode_":"LX","property_":"illuminance","magnitude_":1,"dim_":{"dimVec_":[-2,0,0,2,0,0,1]},"printSymbol_":"lx","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"lm/m2","ciUnitString_":"LM/M2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"becquerel","csCode_":"Bq","ciCode_":"BQ","property_":"radioactivity","magnitude_":1,"dim_":{"dimVec_":[0,-1,0,0,0,0,0]},"printSymbol_":"Bq","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s-1","ciUnitString_":"S-1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gray","csCode_":"Gy","ciCode_":"GY","property_":"energy dose","magnitude_":1,"dim_":{"dimVec_":[2,-2,0,0,0,0,0]},"printSymbol_":"Gy","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/kg","ciUnitString_":"J/KG","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"sievert","csCode_":"Sv","ciCode_":"SV","property_":"dose equivalent","magnitude_":1,"dim_":{"dimVec_":[2,-2,0,0,0,0,0]},"printSymbol_":"Sv","class_":"si","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/kg","ciUnitString_":"J/KG","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"degree","csCode_":"deg","ciCode_":"DEG","property_":"plane angle","magnitude_":0.017453292519943295,"dim_":{"dimVec_":null},"printSymbol_":"°","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pi].rad/360","ciUnitString_":"[PI].RAD/360","baseFactorStr_":"2","baseFactor_":"2","defError_":false},{"isBase_":false,"name_":"gon","csCode_":"gon","ciCode_":"GON","property_":"plane angle","magnitude_":0.015707963267948967,"dim_":{"dimVec_":null},"printSymbol_":"□<sup>g</sup>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"deg","ciUnitString_":"DEG","baseFactorStr_":"0.9","baseFactor_":"0.9","defError_":false},{"isBase_":false,"name_":"minute","csCode_":"'","ciCode_":"'","property_":"plane angle","magnitude_":0.0002908882086657216,"dim_":{"dimVec_":null},"printSymbol_":"'","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"deg/60","ciUnitString_":"DEG/60","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"second","csCode_":"''","ciCode_":"''","property_":"plane angle","magnitude_":0.00000484813681109536,"dim_":{"dimVec_":null},"printSymbol_":"''","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"'/60","ciUnitString_":"'/60","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"liter","csCode_":"l","ciCode_":"L","property_":"volume","magnitude_":0.001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"l","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"dm3","ciUnitString_":"DM3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"liter","csCode_":"L","ciCode_":"","property_":"volume","magnitude_":0.001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"L","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"l","ciUnitString_":null,"baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"are","csCode_":"ar","ciCode_":"AR","property_":"area","magnitude_":100,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":"a","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m2","ciUnitString_":"M2","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"minute","csCode_":"min","ciCode_":"MIN","property_":"time","magnitude_":60,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"min","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s","ciUnitString_":"S","baseFactorStr_":"60","baseFactor_":"60","defError_":false},{"isBase_":false,"name_":"hour","csCode_":"h","ciCode_":"HR","property_":"time","magnitude_":3600,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"h","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"min","ciUnitString_":"MIN","baseFactorStr_":"60","baseFactor_":"60","defError_":false},{"isBase_":false,"name_":"day","csCode_":"d","ciCode_":"D","property_":"time","magnitude_":86400,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"d","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"h","ciUnitString_":"HR","baseFactorStr_":"24","baseFactor_":"24","defError_":false},{"isBase_":false,"name_":"tropical year","csCode_":"a_t","ciCode_":"ANN_T","property_":"time","magnitude_":31556925.216,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"a<sub>t</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"365.24219","baseFactor_":"365.24219","defError_":false},{"isBase_":false,"name_":"mean Julian year","csCode_":"a_j","ciCode_":"ANN_J","property_":"time","magnitude_":31557600,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"a<sub>j</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"365.25","baseFactor_":"365.25","defError_":false},{"isBase_":false,"name_":"mean Gregorian year","csCode_":"a_g","ciCode_":"ANN_G","property_":"time","magnitude_":31556952,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"a<sub>g</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"365.2425","baseFactor_":"365.2425","defError_":false},{"isBase_":false,"name_":"year","csCode_":"a","ciCode_":"ANN","property_":"time","magnitude_":31557600,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"a","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"a_j","ciUnitString_":"ANN_J","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"week","csCode_":"wk","ciCode_":"WK","property_":"time","magnitude_":604800,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"wk","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"7","baseFactor_":"7","defError_":false},{"isBase_":false,"name_":"synodal month","csCode_":"mo_s","ciCode_":"MO_S","property_":"time","magnitude_":2551442.976,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"mo<sub>s</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"d","ciUnitString_":"D","baseFactorStr_":"29.53059","baseFactor_":"29.53059","defError_":false},{"isBase_":false,"name_":"mean Julian month","csCode_":"mo_j","ciCode_":"MO_J","property_":"time","magnitude_":2629800,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"mo<sub>j</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"a_j/12","ciUnitString_":"ANN_J/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"mean Gregorian month","csCode_":"mo_g","ciCode_":"MO_G","property_":"time","magnitude_":2629746,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"mo<sub>g</sub>","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"a_g/12","ciUnitString_":"ANN_G/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"month","csCode_":"mo","ciCode_":"MO","property_":"time","magnitude_":2629800,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"mo","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mo_j","ciUnitString_":"MO_J","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"tonne","csCode_":"t","ciCode_":"TNE","property_":"mass","magnitude_":1000000,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"t","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kg","ciUnitString_":"KG","baseFactorStr_":"1e3","baseFactor_":1000,"defError_":false},{"isBase_":false,"name_":"bar","csCode_":"bar","ciCode_":"BAR","property_":"pressure","magnitude_":3.15576e+27,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"bar","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Pa","ciUnitString_":"PAL","baseFactorStr_":"1e5","baseFactor_":100000,"defError_":false},{"isBase_":false,"name_":"unified atomic mass unit","csCode_":"u","ciCode_":"AMU","property_":"mass","magnitude_":1.6605402e-24,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"u","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"G","baseFactorStr_":"1.6605402e-24","baseFactor_":1.6605402e-24,"defError_":false},{"isBase_":false,"name_":"astronomic unit","csCode_":"AU","ciCode_":"ASU","property_":"length","magnitude_":149597870691,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"AU","class_":"iso1000","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Mm","ciUnitString_":"MAM","baseFactorStr_":"149597.870691","baseFactor_":"149597.870691","defError_":false},{"isBase_":false,"name_":"parsec","csCode_":"pc","ciCode_":"PRS","property_":"length","magnitude_":30856780000000000,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"pc","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m","ciUnitString_":"M","baseFactorStr_":"3.085678e16","baseFactor_":30856780000000000,"defError_":false},{"isBase_":false,"name_":"velocity of light","csCode_":"[c]","ciCode_":"[C]","property_":"velocity","magnitude_":299792458,"dim_":{"dimVec_":[1,-1,0,0,0,0,0]},"printSymbol_":"<i>c</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m/s","ciUnitString_":"M/S","baseFactorStr_":"299792458","baseFactor_":"299792458","defError_":false},{"isBase_":false,"name_":"Planck constant","csCode_":"[h]","ciCode_":"[H]","property_":"action","magnitude_":6.6260755e-31,"dim_":{"dimVec_":[2,-1,1,0,0,0,0]},"printSymbol_":"<i>h</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J.s","ciUnitString_":"J.S","baseFactorStr_":"6.6260755e-34","baseFactor_":6.6260755e-34,"defError_":false},{"isBase_":false,"name_":"Boltzmann constant","csCode_":"[k]","ciCode_":"[K]","property_":"(unclassified)","magnitude_":1.380658e-20,"dim_":{"dimVec_":[2,-2,1,0,-1,0,0]},"printSymbol_":"<i>k</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J/K","ciUnitString_":"J/K","baseFactorStr_":"1.380658e-23","baseFactor_":1.380658e-23,"defError_":false},{"isBase_":false,"name_":"permittivity of vacuum","csCode_":"[eps_0]","ciCode_":"[EPS_0]","property_":"electric permittivity","magnitude_":8.854187817000001e-15,"dim_":{"dimVec_":[-3,2,-1,0,0,2,0]},"printSymbol_":"<i>ε<sub><r>0</r></sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"F/m","ciUnitString_":"F/M","baseFactorStr_":"8.854187817e-12","baseFactor_":8.854187817e-12,"defError_":false},{"isBase_":false,"name_":"permeability of vacuum","csCode_":"[mu_0]","ciCode_":"[MU_0]","property_":"magnetic permeability","magnitude_":0.0012566370614359172,"dim_":{"dimVec_":[1,0,1,0,0,-2,0]},"printSymbol_":"<i>μ<sub><r>0</r></sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"N/A2","ciUnitString_":"4.[PI].10*-7.N/A2","baseFactorStr_":"1","baseFactor_":0.0000012566370614359173,"defError_":false},{"isBase_":false,"name_":"elementary charge","csCode_":"[e]","ciCode_":"[E]","property_":"electric charge","magnitude_":1.60217733e-19,"dim_":{"dimVec_":[0,0,0,0,0,1,0]},"printSymbol_":"<i>e</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"C","ciUnitString_":"C","baseFactorStr_":"1.60217733e-19","baseFactor_":1.60217733e-19,"defError_":false},{"isBase_":false,"name_":"electronvolt","csCode_":"eV","ciCode_":"EV","property_":"energy","magnitude_":1.60217733e-16,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"eV","class_":"iso1000","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[e].V","ciUnitString_":"[E].V","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"electron mass","csCode_":"[m_e]","ciCode_":"[M_E]","property_":"mass","magnitude_":9.1093897e-28,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"<i>m<sub><r>e</r></sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"g","baseFactorStr_":"9.1093897e-28","baseFactor_":9.1093897e-28,"defError_":false},{"isBase_":false,"name_":"proton mass","csCode_":"[m_p]","ciCode_":"[M_P]","property_":"mass","magnitude_":1.6726231e-24,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"<i>m<sub><r>p</r></sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"g","baseFactorStr_":"1.6726231e-24","baseFactor_":1.6726231e-24,"defError_":false},{"isBase_":false,"name_":"Newtonian constant of gravitation","csCode_":"[G]","ciCode_":"[GC]","property_":"(unclassified)","magnitude_":6.67259e-14,"dim_":{"dimVec_":[3,-2,-1,0,0,0,0]},"printSymbol_":"<i>G</i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m3.kg-1.s-2","ciUnitString_":"M3.KG-1.S-2","baseFactorStr_":"6.67259e-11","baseFactor_":6.67259e-11,"defError_":false},{"isBase_":false,"name_":"standard acceleration of free fall","csCode_":"[g]","ciCode_":"[G]","property_":"acceleration","magnitude_":9.80665,"dim_":{"dimVec_":[1,-2,0,0,0,0,0]},"printSymbol_":"<i>g<sub>n</sub></i>","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m/s2","ciUnitString_":"M/S2","baseFactorStr_":"980665e-5","baseFactor_":"9.80665","defError_":false},{"isBase_":false,"name_":"Torr","csCode_":"Torr","ciCode_":"Torr","property_":"pressure","magnitude_":3.19757382e+27,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"Torr","class_":"const","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Pa","ciUnitString_":"PAL","baseFactorStr_":"133.322","baseFactor_":"133.322","defError_":false},{"isBase_":false,"name_":"standard atmosphere","csCode_":"atm","ciCode_":"ATM","property_":"pressure","magnitude_":3.19757382e+27,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"atm","class_":"const","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Pa","ciUnitString_":"PAL","baseFactorStr_":"101325","baseFactor_":"101325","defError_":false},{"isBase_":false,"name_":"light-year","csCode_":"[ly]","ciCode_":"[LY]","property_":"length","magnitude_":9460730472580800,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"l.y.","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[c].a_j","ciUnitString_":"[C].ANN_J","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gram-force","csCode_":"gf","ciCode_":"GF","property_":"force","magnitude_":9.80665,"dim_":{"dimVec_":[1,-2,1,0,0,0,0]},"printSymbol_":"gf","class_":"const","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g.[g]","ciUnitString_":"G.[G]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Kayser","csCode_":"Ky","ciCode_":"KY","property_":"lineic number","magnitude_":100,"dim_":{"dimVec_":[-1,0,0,0,0,0,0]},"printSymbol_":"K","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm-1","ciUnitString_":"CM-1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Gal","csCode_":"Gal","ciCode_":"GL","property_":"acceleration","magnitude_":0.01,"dim_":{"dimVec_":[1,-2,0,0,0,0,0]},"printSymbol_":"Gal","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm/s2","ciUnitString_":"CM/S2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"dyne","csCode_":"dyn","ciCode_":"DYN","property_":"force","magnitude_":0.01,"dim_":{"dimVec_":[1,-2,1,0,0,0,0]},"printSymbol_":"dyn","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g.cm/s2","ciUnitString_":"G.CM/S2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"erg","csCode_":"erg","ciCode_":"ERG","property_":"energy","magnitude_":0.0001,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"erg","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"dyn.cm","ciUnitString_":"DYN.CM","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Poise","csCode_":"P","ciCode_":"P","property_":"dynamic viscosity","magnitude_":100,"dim_":{"dimVec_":[-1,-1,1,0,0,0,0]},"printSymbol_":"P","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"dyn.s/cm2","ciUnitString_":"DYN.S/CM2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Biot","csCode_":"Bi","ciCode_":"BI","property_":"electric current","magnitude_":10,"dim_":{"dimVec_":[0,-1,0,0,0,1,0]},"printSymbol_":"Bi","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"A","ciUnitString_":"A","baseFactorStr_":"10","baseFactor_":"10","defError_":false},{"isBase_":false,"name_":"Stokes","csCode_":"St","ciCode_":"ST","property_":"kinematic viscosity","magnitude_":0.0001,"dim_":{"dimVec_":[2,-1,0,0,0,0,0]},"printSymbol_":"St","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm2/s","ciUnitString_":"CM2/S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Maxwell","csCode_":"Mx","ciCode_":"MX","property_":"flux of magnetic induction","magnitude_":0.00001,"dim_":{"dimVec_":[2,-1,1,0,0,-1,0]},"printSymbol_":"Mx","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Wb","ciUnitString_":"WB","baseFactorStr_":"1e-8","baseFactor_":1e-8,"defError_":false},{"isBase_":false,"name_":"Gauss","csCode_":"G","ciCode_":"GS","property_":"magnetic flux density","magnitude_":0.1,"dim_":{"dimVec_":[0,-1,1,0,0,-1,0]},"printSymbol_":"Gs","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"T","ciUnitString_":"T","baseFactorStr_":"1e-4","baseFactor_":0.0001,"defError_":false},{"isBase_":false,"name_":"Oersted","csCode_":"Oe","ciCode_":"OE","property_":"magnetic field intensity","magnitude_":79.57747154594767,"dim_":{"dimVec_":[-1,-1,0,0,0,1,0]},"printSymbol_":"Oe","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"A/m","ciUnitString_":"/[PI].A/M","baseFactorStr_":"250","baseFactor_":79.57747154594767,"defError_":false},{"isBase_":false,"name_":"Gilbert","csCode_":"Gb","ciCode_":"GB","property_":"magnetic tension","magnitude_":0.7957747154594768,"dim_":{"dimVec_":[0,-1,0,0,0,1,0]},"printSymbol_":"Gb","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Oe.cm","ciUnitString_":"OE.CM","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"stilb","csCode_":"sb","ciCode_":"SB","property_":"lum. intensity density","magnitude_":8640000,"dim_":{"dimVec_":[-2,1,0,0,0,0,0]},"printSymbol_":"sb","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cd/cm2","ciUnitString_":"CD/CM2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Lambert","csCode_":"Lmb","ciCode_":"LMB","property_":"brightness","magnitude_":2750197.4166279514,"dim_":{"dimVec_":[-2,1,0,0,0,0,0]},"printSymbol_":"L","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cd/cm2/[pi]","ciUnitString_":"CD/CM2/[PI]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"phot","csCode_":"ph","ciCode_":"PHT","property_":"illuminance","magnitude_":0.0001,"dim_":{"dimVec_":[-2,0,0,2,0,0,1]},"printSymbol_":"ph","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"lx","ciUnitString_":"LX","baseFactorStr_":"1e-4","baseFactor_":0.0001,"defError_":false},{"isBase_":false,"name_":"Curie","csCode_":"Ci","ciCode_":"CI","property_":"radioactivity","magnitude_":37000000000,"dim_":{"dimVec_":[0,-1,0,0,0,0,0]},"printSymbol_":"Ci","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"Bq","ciUnitString_":"BQ","baseFactorStr_":"37e9","baseFactor_":37000000000,"defError_":false},{"isBase_":false,"name_":"Roentgen","csCode_":"R","ciCode_":"ROE","property_":"ion dose","magnitude_":2.58e-7,"dim_":{"dimVec_":[0,0,-1,0,0,1,0]},"printSymbol_":"R","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"C/kg","ciUnitString_":"C/KG","baseFactorStr_":"2.58e-4","baseFactor_":0.000258,"defError_":false},{"isBase_":false,"name_":"radiation absorbed dose","csCode_":"RAD","ciCode_":"[RAD]","property_":"energy dose","magnitude_":0.01,"dim_":{"dimVec_":[2,-2,0,0,0,0,0]},"printSymbol_":"RAD","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"erg/g","ciUnitString_":"ERG/G","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"radiation equivalent man","csCode_":"REM","ciCode_":"[REM]","property_":"dose equivalent","magnitude_":0.01,"dim_":{"dimVec_":[2,-2,0,0,0,0,0]},"printSymbol_":"REM","class_":"cgs","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"RAD","ciUnitString_":"[RAD]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"inch","csCode_":"[in_i]","ciCode_":"[IN_I]","property_":"length","magnitude_":0.025400000000000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"in","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm","ciUnitString_":"CM","baseFactorStr_":"254e-2","baseFactor_":"2.54","defError_":false},{"isBase_":false,"name_":"foot","csCode_":"[ft_i]","ciCode_":"[FT_I]","property_":"length","magnitude_":0.3048,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"ft","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"yard","csCode_":"[yd_i]","ciCode_":"[YD_I]","property_":"length","magnitude_":0.9144000000000001,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"yd","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]","ciUnitString_":"[FT_I]","baseFactorStr_":"3","baseFactor_":"3","defError_":false},{"isBase_":false,"name_":"mile","csCode_":"[mi_i]","ciCode_":"[MI_I]","property_":"length","magnitude_":1609.344,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"mi","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]","ciUnitString_":"[FT_I]","baseFactorStr_":"5280","baseFactor_":"5280","defError_":false},{"isBase_":false,"name_":"fathom","csCode_":"[fth_i]","ciCode_":"[FTH_I]","property_":"depth of water","magnitude_":1.8288000000000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"fth","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]","ciUnitString_":"[FT_I]","baseFactorStr_":"6","baseFactor_":"6","defError_":false},{"isBase_":false,"name_":"nautical mile","csCode_":"[nmi_i]","ciCode_":"[NMI_I]","property_":"length","magnitude_":1852,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"n.mi","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m","ciUnitString_":"M","baseFactorStr_":"1852","baseFactor_":"1852","defError_":false},{"isBase_":false,"name_":"knot","csCode_":"[kn_i]","ciCode_":"[KN_I]","property_":"velocity","magnitude_":0.5144444444444445,"dim_":{"dimVec_":[1,-1,0,0,0,0,0]},"printSymbol_":"knot","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[nmi_i]/h","ciUnitString_":"[NMI_I]/H","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"square inch","csCode_":"[sin_i]","ciCode_":"[SIN_I]","property_":"area","magnitude_":0.0006451600000000001,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]2","ciUnitString_":"[IN_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"square foot","csCode_":"[sft_i]","ciCode_":"[SFT_I]","property_":"area","magnitude_":0.09290304,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]2","ciUnitString_":"[FT_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"square yard","csCode_":"[syd_i]","ciCode_":"[SYD_I]","property_":"area","magnitude_":0.8361273600000002,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[yd_i]2","ciUnitString_":"[YD_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cubic inch","csCode_":"[cin_i]","ciCode_":"[CIN_I]","property_":"volume","magnitude_":0.000016387064000000003,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]3","ciUnitString_":"[IN_I]3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cubic foot","csCode_":"[cft_i]","ciCode_":"[CFT_I]","property_":"volume","magnitude_":0.028316846592000004,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]3","ciUnitString_":"[FT_I]3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cubic yard","csCode_":"[cyd_i]","ciCode_":"[CYD_I]","property_":"volume","magnitude_":0.7645548579840002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"cu.yd","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[yd_i]3","ciUnitString_":"[YD_I]3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"board foot","csCode_":"[bf_i]","ciCode_":"[BF_I]","property_":"volume","magnitude_":0.002359737216,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]3","ciUnitString_":"[IN_I]3","baseFactorStr_":"144","baseFactor_":"144","defError_":false},{"isBase_":false,"name_":"cord","csCode_":"[cr_i]","ciCode_":"[CR_I]","property_":"volume","magnitude_":3.6245563637760005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]3","ciUnitString_":"[FT_I]3","baseFactorStr_":"128","baseFactor_":"128","defError_":false},{"isBase_":false,"name_":"mil","csCode_":"[mil_i]","ciCode_":"[MIL_I]","property_":"length","magnitude_":0.000025400000000000004,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"mil","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"1e-3","baseFactor_":0.001,"defError_":false},{"isBase_":false,"name_":"circular mil","csCode_":"[cml_i]","ciCode_":"[CML_I]","property_":"area","magnitude_":5.067074790974979e-10,"dim_":{"dimVec_":null},"printSymbol_":"circ.mil","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pi]/4.[mil_i]2","ciUnitString_":"[PI]/4.[MIL_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"hand","csCode_":"[hd_i]","ciCode_":"[HD_I]","property_":"height of horses","magnitude_":0.10160000000000001,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"hd","class_":"intcust","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"foot","csCode_":"[ft_us]","ciCode_":"[FT_US]","property_":"length","magnitude_":0.3048006096012192,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"ft<sub>us</sub>","class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m/3937","ciUnitString_":"M/3937","baseFactorStr_":"1200","baseFactor_":"1200","defError_":false},{"isBase_":false,"name_":"yard","csCode_":"[yd_us]","ciCode_":"[YD_US]","property_":"length","magnitude_":0.9144018288036575,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]","ciUnitString_":"[FT_US]","baseFactorStr_":"3","baseFactor_":"3","defError_":false},{"isBase_":false,"name_":"inch","csCode_":"[in_us]","ciCode_":"[IN_US]","property_":"length","magnitude_":0.0254000508001016,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]/12","ciUnitString_":"[FT_US]/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"rod","csCode_":"[rd_us]","ciCode_":"[RD_US]","property_":"length","magnitude_":5.029210058420117,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]","ciUnitString_":"[FT_US]","baseFactorStr_":"16.5","baseFactor_":"16.5","defError_":false},{"isBase_":false,"name_":"Gunter's chain","csCode_":"[ch_us]","ciCode_":"[CH_US]","property_":"length","magnitude_":20.116840233680467,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_us]","ciUnitString_":"[RD_US]","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"link for Gunter's chain","csCode_":"[lk_us]","ciCode_":"[LK_US]","property_":"length","magnitude_":0.20116840233680466,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ch_us]/100","ciUnitString_":"[CH_US]/100","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Ramden's chain","csCode_":"[rch_us]","ciCode_":"[RCH_US]","property_":"length","magnitude_":30.480060960121918,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]","ciUnitString_":"[FT_US]","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"link for Ramden's chain","csCode_":"[rlk_us]","ciCode_":"[RLK_US]","property_":"length","magnitude_":0.3048006096012192,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rch_us]/100","ciUnitString_":"[RCH_US]/100","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fathom","csCode_":"[fth_us]","ciCode_":"[FTH_US]","property_":"length","magnitude_":1.828803657607315,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_us]","ciUnitString_":"[FT_US]","baseFactorStr_":"6","baseFactor_":"6","defError_":false},{"isBase_":false,"name_":"furlong","csCode_":"[fur_us]","ciCode_":"[FUR_US]","property_":"length","magnitude_":201.16840233680466,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_us]","ciUnitString_":"[RD_US]","baseFactorStr_":"40","baseFactor_":"40","defError_":false},{"isBase_":false,"name_":"mile","csCode_":"[mi_us]","ciCode_":"[MI_US]","property_":"length","magnitude_":1609.3472186944373,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[fur_us]","ciUnitString_":"[FUR_US]","baseFactorStr_":"8","baseFactor_":"8","defError_":false},{"isBase_":false,"name_":"acre","csCode_":"[acr_us]","ciCode_":"[ACR_US]","property_":"area","magnitude_":4046.872609874252,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_us]2","ciUnitString_":"[RD_US]2","baseFactorStr_":"160","baseFactor_":"160","defError_":false},{"isBase_":false,"name_":"square rod","csCode_":"[srd_us]","ciCode_":"[SRD_US]","property_":"area","magnitude_":25.292953811714074,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_us]2","ciUnitString_":"[RD_US]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"square mile","csCode_":"[smi_us]","ciCode_":"[SMI_US]","property_":"area","magnitude_":2589998.470319521,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[mi_us]2","ciUnitString_":"[MI_US]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"section","csCode_":"[sct]","ciCode_":"[SCT]","property_":"area","magnitude_":2589998.470319521,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[mi_us]2","ciUnitString_":"[MI_US]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"township","csCode_":"[twp]","ciCode_":"[TWP]","property_":"area","magnitude_":93239944.93150276,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[sct]","ciUnitString_":"[SCT]","baseFactorStr_":"36","baseFactor_":"36","defError_":false},{"isBase_":false,"name_":"mil","csCode_":"[mil_us]","ciCode_":"[MIL_US]","property_":"length","magnitude_":0.0000254000508001016,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-lengths","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_us]","ciUnitString_":"[IN_US]","baseFactorStr_":"1e-3","baseFactor_":0.001,"defError_":false},{"isBase_":false,"name_":"inch","csCode_":"[in_br]","ciCode_":"[IN_BR]","property_":"length","magnitude_":0.025399980000000003,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm","ciUnitString_":"CM","baseFactorStr_":"2.539998","baseFactor_":"2.539998","defError_":false},{"isBase_":false,"name_":"foot","csCode_":"[ft_br]","ciCode_":"[FT_BR]","property_":"length","magnitude_":0.30479976000000003,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_br]","ciUnitString_":"[IN_BR]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"rod","csCode_":"[rd_br]","ciCode_":"[RD_BR]","property_":"length","magnitude_":5.02919604,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"16.5","baseFactor_":"16.5","defError_":false},{"isBase_":false,"name_":"Gunter's chain","csCode_":"[ch_br]","ciCode_":"[CH_BR]","property_":"length","magnitude_":20.11678416,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[rd_br]","ciUnitString_":"[RD_BR]","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"link for Gunter's chain","csCode_":"[lk_br]","ciCode_":"[LK_BR]","property_":"length","magnitude_":0.2011678416,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ch_br]/100","ciUnitString_":"[CH_BR]/100","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fathom","csCode_":"[fth_br]","ciCode_":"[FTH_BR]","property_":"length","magnitude_":1.82879856,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"6","baseFactor_":"6","defError_":false},{"isBase_":false,"name_":"pace","csCode_":"[pc_br]","ciCode_":"[PC_BR]","property_":"length","magnitude_":0.7619994000000001,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"2.5","baseFactor_":"2.5","defError_":false},{"isBase_":false,"name_":"yard","csCode_":"[yd_br]","ciCode_":"[YD_BR]","property_":"length","magnitude_":0.91439928,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"3","baseFactor_":"3","defError_":false},{"isBase_":false,"name_":"mile","csCode_":"[mi_br]","ciCode_":"[MI_BR]","property_":"length","magnitude_":1609.3427328000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"5280","baseFactor_":"5280","defError_":false},{"isBase_":false,"name_":"nautical mile","csCode_":"[nmi_br]","ciCode_":"[NMI_BR]","property_":"length","magnitude_":1853.1825408000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_br]","ciUnitString_":"[FT_BR]","baseFactorStr_":"6080","baseFactor_":"6080","defError_":false},{"isBase_":false,"name_":"knot","csCode_":"[kn_br]","ciCode_":"[KN_BR]","property_":"velocity","magnitude_":0.5147729280000001,"dim_":{"dimVec_":[1,-1,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[nmi_br]/h","ciUnitString_":"[NMI_BR]/H","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"acre","csCode_":"[acr_br]","ciCode_":"[ACR_BR]","property_":"area","magnitude_":4046.850049400269,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-length","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[yd_br]2","ciUnitString_":"[YD_BR]2","baseFactorStr_":"4840","baseFactor_":"4840","defError_":false},{"isBase_":false,"name_":"Queen Anne's wine gallon","csCode_":"[gal_us]","ciCode_":"[GAL_US]","property_":"fluid volume","magnitude_":0.0037854117840000006,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]3","ciUnitString_":"[IN_I]3","baseFactorStr_":"231","baseFactor_":"231","defError_":false},{"isBase_":false,"name_":"barrel","csCode_":"[bbl_us]","ciCode_":"[BBL_US]","property_":"fluid volume","magnitude_":0.158987294928,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gal_us]","ciUnitString_":"[GAL_US]","baseFactorStr_":"42","baseFactor_":"42","defError_":false},{"isBase_":false,"name_":"quart","csCode_":"[qt_us]","ciCode_":"[QT_US]","property_":"fluid volume","magnitude_":0.0009463529460000001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gal_us]/4","ciUnitString_":"[GAL_US]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pint","csCode_":"[pt_us]","ciCode_":"[PT_US]","property_":"fluid volume","magnitude_":0.00047317647300000007,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[qt_us]/2","ciUnitString_":"[QT_US]/2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gill","csCode_":"[gil_us]","ciCode_":"[GIL_US]","property_":"fluid volume","magnitude_":0.00011829411825000002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pt_us]/4","ciUnitString_":"[PT_US]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fluid ounce","csCode_":"[foz_us]","ciCode_":"[FOZ_US]","property_":"fluid volume","magnitude_":0.000029573529562500005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"oz fl","class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gil_us]/4","ciUnitString_":"[GIL_US]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fluid dram","csCode_":"[fdr_us]","ciCode_":"[FDR_US]","property_":"fluid volume","magnitude_":0.0000036966911953125006,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[foz_us]/8","ciUnitString_":"[FOZ_US]/8","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"minim","csCode_":"[min_us]","ciCode_":"[MIN_US]","property_":"fluid volume","magnitude_":6.1611519921875e-8,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[fdr_us]/60","ciUnitString_":"[FDR_US]/60","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cord","csCode_":"[crd_us]","ciCode_":"[CRD_US]","property_":"fluid volume","magnitude_":3.6245563637760005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i]3","ciUnitString_":"[FT_I]3","baseFactorStr_":"128","baseFactor_":"128","defError_":false},{"isBase_":false,"name_":"bushel","csCode_":"[bu_us]","ciCode_":"[BU_US]","property_":"dry volume","magnitude_":0.03523907016688001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]3","ciUnitString_":"[IN_I]3","baseFactorStr_":"2150.42","baseFactor_":"2150.42","defError_":false},{"isBase_":false,"name_":"historical winchester gallon","csCode_":"[gal_wi]","ciCode_":"[GAL_WI]","property_":"dry volume","magnitude_":0.004404883770860001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[bu_us]/8","ciUnitString_":"[BU_US]/8","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"peck","csCode_":"[pk_us]","ciCode_":"[PK_US]","property_":"dry volume","magnitude_":0.008809767541720002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[bu_us]/4","ciUnitString_":"[BU_US]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"dry quart","csCode_":"[dqt_us]","ciCode_":"[DQT_US]","property_":"dry volume","magnitude_":0.0011012209427150002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pk_us]/8","ciUnitString_":"[PK_US]/8","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"dry pint","csCode_":"[dpt_us]","ciCode_":"[DPT_US]","property_":"dry volume","magnitude_":0.0005506104713575001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[dqt_us]/2","ciUnitString_":"[DQT_US]/2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"tablespoon","csCode_":"[tbs_us]","ciCode_":"[TBS_US]","property_":"volume","magnitude_":0.000014786764781250002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[foz_us]/2","ciUnitString_":"[FOZ_US]/2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"teaspoon","csCode_":"[tsp_us]","ciCode_":"[TSP_US]","property_":"volume","magnitude_":0.0000049289215937500005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[tbs_us]/3","ciUnitString_":"[TBS_US]/3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cup","csCode_":"[cup_us]","ciCode_":"[CUP_US]","property_":"volume","magnitude_":0.00023658823650000004,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[tbs_us]","ciUnitString_":"[TBS_US]","baseFactorStr_":"16","baseFactor_":"16","defError_":false},{"isBase_":false,"name_":"metric fluid ounce","csCode_":"[foz_m]","ciCode_":"[FOZ_M]","property_":"fluid volume","magnitude_":0.000029999999999999997,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"oz fl","class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL","ciUnitString_":"ML","baseFactorStr_":"30","baseFactor_":"30","defError_":false},{"isBase_":false,"name_":"metric cup","csCode_":"[cup_m]","ciCode_":"[CUP_M]","property_":"volume","magnitude_":0.00023999999999999998,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL","ciUnitString_":"ML","baseFactorStr_":"240","baseFactor_":"240","defError_":false},{"isBase_":false,"name_":"metric teaspoon","csCode_":"[tsp_m]","ciCode_":"[TSP_M]","property_":"volume","magnitude_":0.0000049999999999999996,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL","ciUnitString_":"mL","baseFactorStr_":"5","baseFactor_":"5","defError_":false},{"isBase_":false,"name_":"metric tablespoon","csCode_":"[tbs_m]","ciCode_":"[TBS_M]","property_":"volume","magnitude_":0.000014999999999999999,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"us-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL","ciUnitString_":"mL","baseFactorStr_":"15","baseFactor_":"15","defError_":false},{"isBase_":false,"name_":"gallon","csCode_":"[gal_br]","ciCode_":"[GAL_BR]","property_":"volume","magnitude_":0.004546090000000001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"l","ciUnitString_":"L","baseFactorStr_":"4.54609","baseFactor_":"4.54609","defError_":false},{"isBase_":false,"name_":"peck","csCode_":"[pk_br]","ciCode_":"[PK_BR]","property_":"volume","magnitude_":0.009092180000000002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gal_br]","ciUnitString_":"[GAL_BR]","baseFactorStr_":"2","baseFactor_":"2","defError_":false},{"isBase_":false,"name_":"bushel","csCode_":"[bu_br]","ciCode_":"[BU_BR]","property_":"volume","magnitude_":0.03636872000000001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pk_br]","ciUnitString_":"[PK_BR]","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"quart","csCode_":"[qt_br]","ciCode_":"[QT_BR]","property_":"volume","magnitude_":0.0011365225000000002,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gal_br]/4","ciUnitString_":"[GAL_BR]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pint","csCode_":"[pt_br]","ciCode_":"[PT_BR]","property_":"volume","magnitude_":0.0005682612500000001,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[qt_br]/2","ciUnitString_":"[QT_BR]/2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gill","csCode_":"[gil_br]","ciCode_":"[GIL_BR]","property_":"volume","magnitude_":0.00014206531250000003,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pt_br]/4","ciUnitString_":"[PT_BR]/4","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fluid ounce","csCode_":"[foz_br]","ciCode_":"[FOZ_BR]","property_":"volume","magnitude_":0.000028413062500000005,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gil_br]/5","ciUnitString_":"[GIL_BR]/5","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fluid dram","csCode_":"[fdr_br]","ciCode_":"[FDR_BR]","property_":"volume","magnitude_":0.0000035516328125000006,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[foz_br]/8","ciUnitString_":"[FOZ_BR]/8","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"minim","csCode_":"[min_br]","ciCode_":"[MIN_BR]","property_":"volume","magnitude_":5.919388020833334e-8,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":null,"class_":"brit-volumes","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[fdr_br]/60","ciUnitString_":"[FDR_BR]/60","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"grain","csCode_":"[gr]","ciCode_":"[GR]","property_":"mass","magnitude_":0.06479891,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mg","ciUnitString_":"MG","baseFactorStr_":"64.79891","baseFactor_":"64.79891","defError_":false},{"isBase_":false,"name_":"pound","csCode_":"[lb_av]","ciCode_":"[LB_AV]","property_":"mass","magnitude_":453.59237,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"lb","class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gr]","ciUnitString_":"[GR]","baseFactorStr_":"7000","baseFactor_":"7000","defError_":false},{"isBase_":false,"name_":"pound force","csCode_":"[lbf_av]","ciCode_":"[LBF_AV]","property_":"force","magnitude_":4448.2216152605,"dim_":{"dimVec_":[1,-2,1,0,0,0,0]},"printSymbol_":"lbf","class_":"const","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av].[g]","ciUnitString_":"[LB_AV].[G]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ounce","csCode_":"[oz_av]","ciCode_":"[OZ_AV]","property_":"mass","magnitude_":28.349523125,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"oz","class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av]/16","ciUnitString_":"[LB_AV]/16","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"dram","csCode_":"[dr_av]","ciCode_":"[DR_AV]","property_":"mass","magnitude_":1.7718451953125,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[oz_av]/16","ciUnitString_":"[OZ_AV]/16","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"short hundredweight","csCode_":"[scwt_av]","ciCode_":"[SCWT_AV]","property_":"mass","magnitude_":45359.237,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av]","ciUnitString_":"[LB_AV]","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"long hunderdweight","csCode_":"[lcwt_av]","ciCode_":"[LCWT_AV]","property_":"mass","magnitude_":50802.345440000005,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av]","ciUnitString_":"[LB_AV]","baseFactorStr_":"112","baseFactor_":"112","defError_":false},{"isBase_":false,"name_":"short ton","csCode_":"[ston_av]","ciCode_":"[STON_AV]","property_":"mass","magnitude_":907184.74,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[scwt_av]","ciUnitString_":"[SCWT_AV]","baseFactorStr_":"20","baseFactor_":"20","defError_":false},{"isBase_":false,"name_":"long ton","csCode_":"[lton_av]","ciCode_":"[LTON_AV]","property_":"mass","magnitude_":1016046.9088000001,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lcwt_av]","ciUnitString_":"[LCWT_AV]","baseFactorStr_":"20","baseFactor_":"20","defError_":false},{"isBase_":false,"name_":"stone","csCode_":"[stone_av]","ciCode_":"[STONE_AV]","property_":"mass","magnitude_":6350.293180000001,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"avoirdupois","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lb_av]","ciUnitString_":"[LB_AV]","baseFactorStr_":"14","baseFactor_":"14","defError_":false},{"isBase_":false,"name_":"pennyweight","csCode_":"[pwt_tr]","ciCode_":"[PWT_TR]","property_":"mass","magnitude_":1.5551738400000001,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"troy","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gr]","ciUnitString_":"[GR]","baseFactorStr_":"24","baseFactor_":"24","defError_":false},{"isBase_":false,"name_":"ounce","csCode_":"[oz_tr]","ciCode_":"[OZ_TR]","property_":"mass","magnitude_":31.103476800000003,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"troy","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pwt_tr]","ciUnitString_":"[PWT_TR]","baseFactorStr_":"20","baseFactor_":"20","defError_":false},{"isBase_":false,"name_":"pound","csCode_":"[lb_tr]","ciCode_":"[LB_TR]","property_":"mass","magnitude_":373.2417216,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"troy","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[oz_tr]","ciUnitString_":"[OZ_TR]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"scruple","csCode_":"[sc_ap]","ciCode_":"[SC_AP]","property_":"mass","magnitude_":1.2959782,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[gr]","ciUnitString_":"[GR]","baseFactorStr_":"20","baseFactor_":"20","defError_":false},{"isBase_":false,"name_":"dram","csCode_":"[dr_ap]","ciCode_":"[DR_AP]","property_":"mass","magnitude_":3.8879346,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[sc_ap]","ciUnitString_":"[SC_AP]","baseFactorStr_":"3","baseFactor_":"3","defError_":false},{"isBase_":false,"name_":"ounce","csCode_":"[oz_ap]","ciCode_":"[OZ_AP]","property_":"mass","magnitude_":31.1034768,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[dr_ap]","ciUnitString_":"[DR_AP]","baseFactorStr_":"8","baseFactor_":"8","defError_":false},{"isBase_":false,"name_":"pound","csCode_":"[lb_ap]","ciCode_":"[LB_AP]","property_":"mass","magnitude_":373.2417216,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[oz_ap]","ciUnitString_":"[OZ_AP]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"metric ounce","csCode_":"[oz_m]","ciCode_":"[OZ_M]","property_":"mass","magnitude_":28,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":null,"class_":"apoth","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"g","baseFactorStr_":"28","baseFactor_":"28","defError_":false},{"isBase_":false,"name_":"line","csCode_":"[lne]","ciCode_":"[LNE]","property_":"length","magnitude_":0.002116666666666667,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]/12","ciUnitString_":"[IN_I]/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"point","csCode_":"[pnt]","ciCode_":"[PNT]","property_":"length","magnitude_":0.0003527777777777778,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lne]/6","ciUnitString_":"[LNE]/6","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pica","csCode_":"[pca]","ciCode_":"[PCA]","property_":"length","magnitude_":0.004233333333333334,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pnt]","ciUnitString_":"[PNT]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"Printer's point","csCode_":"[pnt_pr]","ciCode_":"[PNT_PR]","property_":"length","magnitude_":0.00035145980000000004,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"0.013837","baseFactor_":"0.013837","defError_":false},{"isBase_":false,"name_":"Printer's pica","csCode_":"[pca_pr]","ciCode_":"[PCA_PR]","property_":"length","magnitude_":0.004217517600000001,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pnt_pr]","ciUnitString_":"[PNT_PR]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"pied","csCode_":"[pied]","ciCode_":"[PIED]","property_":"length","magnitude_":0.3248,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cm","ciUnitString_":"CM","baseFactorStr_":"32.48","baseFactor_":"32.48","defError_":false},{"isBase_":false,"name_":"pouce","csCode_":"[pouce]","ciCode_":"[POUCE]","property_":"length","magnitude_":0.027066666666666666,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pied]/12","ciUnitString_":"[PIED]/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ligne","csCode_":"[ligne]","ciCode_":"[LIGNE]","property_":"length","magnitude_":0.0022555555555555554,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pouce]/12","ciUnitString_":"[POUCE]/12","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"didot","csCode_":"[didot]","ciCode_":"[DIDOT]","property_":"length","magnitude_":0.0003759259259259259,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ligne]/6","ciUnitString_":"[LIGNE]/6","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"cicero","csCode_":"[cicero]","ciCode_":"[CICERO]","property_":"length","magnitude_":0.004511111111111111,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"typeset","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[didot]","ciUnitString_":"[DIDOT]","baseFactorStr_":"12","baseFactor_":"12","defError_":false},{"isBase_":false,"name_":"degree Fahrenheit","csCode_":"[degF]","ciCode_":"[DEGF]","property_":"temperature","magnitude_":0.5555555555555556,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"°F","class_":"heat","isMetric_":false,"variable_":null,"cnv_":"degF","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"K","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":0.5555555555555556,"defError_":false},{"isBase_":false,"name_":"degree Rankine","csCode_":"[degR]","ciCode_":"[degR]","property_":"temperature","magnitude_":0.5555555555555556,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"°R","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"K/9","ciUnitString_":"K/9","baseFactorStr_":"5","baseFactor_":"5","defError_":false},{"isBase_":false,"name_":"degree Réaumur","csCode_":"[degRe]","ciCode_":"[degRe]","property_":"temperature","magnitude_":1.25,"dim_":{"dimVec_":[0,0,0,0,1,0,0]},"printSymbol_":"°Ré","class_":"heat","isMetric_":false,"variable_":null,"cnv_":"degRe","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"K","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1.25,"defError_":false},{"isBase_":false,"name_":"calorie at 15 °C","csCode_":"cal_[15]","ciCode_":"CAL_[15]","property_":"energy","magnitude_":4185.8,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>15°C</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.18580","baseFactor_":"4.18580","defError_":false},{"isBase_":false,"name_":"calorie at 20 °C","csCode_":"cal_[20]","ciCode_":"CAL_[20]","property_":"energy","magnitude_":4181.9,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>20°C</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.18190","baseFactor_":"4.18190","defError_":false},{"isBase_":false,"name_":"mean calorie","csCode_":"cal_m","ciCode_":"CAL_M","property_":"energy","magnitude_":4190.0199999999995,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>m</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.19002","baseFactor_":"4.19002","defError_":false},{"isBase_":false,"name_":"international table calorie","csCode_":"cal_IT","ciCode_":"CAL_IT","property_":"energy","magnitude_":4186.8,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>IT</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.1868","baseFactor_":"4.1868","defError_":false},{"isBase_":false,"name_":"thermochemical calorie","csCode_":"cal_th","ciCode_":"CAL_TH","property_":"energy","magnitude_":4184,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal<sub>th</sub>","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"J","ciUnitString_":"J","baseFactorStr_":"4.184","baseFactor_":"4.184","defError_":false},{"isBase_":false,"name_":"calorie","csCode_":"cal","ciCode_":"CAL","property_":"energy","magnitude_":4184,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"cal","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"cal_th","ciUnitString_":"CAL_TH","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"nutrition label Calories","csCode_":"[Cal]","ciCode_":"[CAL]","property_":"energy","magnitude_":4184000,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Cal","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kcal_th","ciUnitString_":"KCAL_TH","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"British thermal unit at 39 °F","csCode_":"[Btu_39]","ciCode_":"[BTU_39]","property_":"energy","magnitude_":1059670,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>39°F</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05967","baseFactor_":"1.05967","defError_":false},{"isBase_":false,"name_":"British thermal unit at 59 °F","csCode_":"[Btu_59]","ciCode_":"[BTU_59]","property_":"energy","magnitude_":1054800,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>59°F</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05480","baseFactor_":"1.05480","defError_":false},{"isBase_":false,"name_":"British thermal unit at 60 °F","csCode_":"[Btu_60]","ciCode_":"[BTU_60]","property_":"energy","magnitude_":1054680,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>60°F</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05468","baseFactor_":"1.05468","defError_":false},{"isBase_":false,"name_":"mean British thermal unit","csCode_":"[Btu_m]","ciCode_":"[BTU_M]","property_":"energy","magnitude_":1055870,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>m</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05587","baseFactor_":"1.05587","defError_":false},{"isBase_":false,"name_":"international table British thermal unit","csCode_":"[Btu_IT]","ciCode_":"[BTU_IT]","property_":"energy","magnitude_":1055055.85262,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>IT</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.05505585262","baseFactor_":"1.05505585262","defError_":false},{"isBase_":false,"name_":"thermochemical British thermal unit","csCode_":"[Btu_th]","ciCode_":"[BTU_TH]","property_":"energy","magnitude_":1054350,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"Btu<sub>th</sub>","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kJ","ciUnitString_":"kJ","baseFactorStr_":"1.054350","baseFactor_":"1.054350","defError_":false},{"isBase_":false,"name_":"British thermal unit","csCode_":"[Btu]","ciCode_":"[BTU]","property_":"energy","magnitude_":1054350,"dim_":{"dimVec_":[2,-2,1,0,0,0,0]},"printSymbol_":"btu","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[Btu_th]","ciUnitString_":"[BTU_TH]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"horsepower","csCode_":"[HP]","ciCode_":"[HP]","property_":"power","magnitude_":745699.8715822703,"dim_":{"dimVec_":[2,-3,1,0,0,0,0]},"printSymbol_":null,"class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[ft_i].[lbf_av]/s","ciUnitString_":"[FT_I].[LBF_AV]/S","baseFactorStr_":"550","baseFactor_":"550","defError_":false},{"isBase_":false,"name_":"tex","csCode_":"tex","ciCode_":"TEX","property_":"linear mass density (of textile thread)","magnitude_":0.001,"dim_":{"dimVec_":[-1,0,1,0,0,0,0]},"printSymbol_":"tex","class_":"heat","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g/km","ciUnitString_":"G/KM","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Denier","csCode_":"[den]","ciCode_":"[DEN]","property_":"linear mass density (of textile thread)","magnitude_":0.0001111111111111111,"dim_":{"dimVec_":[-1,0,1,0,0,0,0]},"printSymbol_":"den","class_":"heat","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g/9/km","ciUnitString_":"G/9/KM","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"meter of water column","csCode_":"m[H2O]","ciCode_":"M[H2O]","property_":"pressure","magnitude_":9806650,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"m HO<sub><r>2</r></sub>","class_":"clinical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kPa","ciUnitString_":"KPAL","baseFactorStr_":"980665e-5","baseFactor_":"9.80665","defError_":false},{"isBase_":false,"name_":"meter of mercury column","csCode_":"m[Hg]","ciCode_":"M[HG]","property_":"pressure","magnitude_":133322000,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"m Hg","class_":"clinical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kPa","ciUnitString_":"KPAL","baseFactorStr_":"133.3220","baseFactor_":"133.3220","defError_":false},{"isBase_":false,"name_":"inch of water column","csCode_":"[in_i'H2O]","ciCode_":"[IN_I'H2O]","property_":"pressure","magnitude_":249088.91000000003,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"in HO<sub><r>2</r></sub>","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m[H2O].[in_i]/m","ciUnitString_":"M[H2O].[IN_I]/M","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"inch of mercury column","csCode_":"[in_i'Hg]","ciCode_":"[IN_I'HG]","property_":"pressure","magnitude_":3386378.8000000003,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"in Hg","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m[Hg].[in_i]/m","ciUnitString_":"M[HG].[IN_I]/M","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"peripheral vascular resistance unit","csCode_":"[PRU]","ciCode_":"[PRU]","property_":"fluid resistance","magnitude_":133322000000,"dim_":{"dimVec_":[-4,-1,1,0,0,0,0]},"printSymbol_":"P.R.U.","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mm[Hg].s/ml","ciUnitString_":"MM[HG].S/ML","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Wood unit","csCode_":"[wood'U]","ciCode_":"[WOOD'U]","property_":"fluid resistance","magnitude_":7999320000,"dim_":{"dimVec_":[-4,-1,1,0,0,0,0]},"printSymbol_":"Wood U.","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mm[Hg].min/L","ciUnitString_":"MM[HG].MIN/L","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"diopter","csCode_":"[diop]","ciCode_":"[DIOP]","property_":"refraction of a lens","magnitude_":1,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"dpt","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"inv","cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m","ciUnitString_":"/M","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"prism diopter","csCode_":"[p'diop]","ciCode_":"[P'DIOP]","property_":"refraction of a prism","magnitude_":0.017453292519943295,"dim_":{"dimVec_":null},"printSymbol_":"PD","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"tanTimes100","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"deg","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"percent of slope","csCode_":"%[slope]","ciCode_":"%[SLOPE]","property_":"slope","magnitude_":0.017453292519943295,"dim_":{"dimVec_":null},"printSymbol_":"%","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"100tan","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"deg","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"mesh","csCode_":"[mesh_i]","ciCode_":"[MESH_I]","property_":"lineic number","magnitude_":0.025400000000000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"inv","cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"/[IN_I]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Charrière","csCode_":"[Ch]","ciCode_":"[CH]","property_":"gauge of catheters","magnitude_":0.0003333333333333333,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"Ch","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mm/3","ciUnitString_":"MM/3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"drop","csCode_":"[drp]","ciCode_":"[DRP]","property_":"volume","magnitude_":5e-8,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"drp","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"ml/20","ciUnitString_":"ML/20","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Hounsfield unit","csCode_":"[hnsf'U]","ciCode_":"[HNSF'U]","property_":"x-ray attenuation","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"HF","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"metabolic equivalent","csCode_":"[MET]","ciCode_":"[MET]","property_":"metabolic cost of physical activity","magnitude_":5.833333333333334e-11,"dim_":{"dimVec_":[3,-1,-1,0,0,0,0]},"printSymbol_":"MET","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mL/min/kg","ciUnitString_":"ML/MIN/KG","baseFactorStr_":"3.5","baseFactor_":"3.5","defError_":false},{"isBase_":false,"name_":"homeopathic potency of decimal series (retired)","csCode_":"[hp'_X]","ciCode_":"[HP'_X]","property_":"homeopathic potency (retired)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"X","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"hpX","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"homeopathic potency of centesimal series (retired)","csCode_":"[hp'_C]","ciCode_":"[HP'_C]","property_":"homeopathic potency (retired)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"C","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"hpC","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"homeopathic potency of millesimal series (retired)","csCode_":"[hp'_M]","ciCode_":"[HP'_M]","property_":"homeopathic potency (retired)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"M","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"hpM","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"homeopathic potency of quintamillesimal series (retired)","csCode_":"[hp'_Q]","ciCode_":"[HP'_Q]","property_":"homeopathic potency (retired)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Q","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":"hpQ","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"homeopathic potency of decimal hahnemannian series","csCode_":"[hp_X]","ciCode_":"[HP_X]","property_":"homeopathic potency (Hahnemann)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"X","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of centesimal hahnemannian series","csCode_":"[hp_C]","ciCode_":"[HP_C]","property_":"homeopathic potency (Hahnemann)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"C","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of millesimal hahnemannian series","csCode_":"[hp_M]","ciCode_":"[HP_M]","property_":"homeopathic potency (Hahnemann)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"M","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of quintamillesimal hahnemannian series","csCode_":"[hp_Q]","ciCode_":"[HP_Q]","property_":"homeopathic potency (Hahnemann)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Q","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of decimal korsakovian series","csCode_":"[kp_X]","ciCode_":"[KP_X]","property_":"homeopathic potency (Korsakov)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"X","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of centesimal korsakovian series","csCode_":"[kp_C]","ciCode_":"[KP_C]","property_":"homeopathic potency (Korsakov)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"C","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of millesimal korsakovian series","csCode_":"[kp_M]","ciCode_":"[KP_M]","property_":"homeopathic potency (Korsakov)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"M","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"homeopathic potency of quintamillesimal korsakovian series","csCode_":"[kp_Q]","ciCode_":"[KP_Q]","property_":"homeopathic potency (Korsakov)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Q","class_":"clinical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"equivalents","csCode_":"eq","ciCode_":"EQ","property_":"amount of substance","magnitude_":6.0221367e+23,"dim_":{"dimVec_":null},"printSymbol_":"eq","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mol","ciUnitString_":"MOL","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"osmole","csCode_":"osm","ciCode_":"OSM","property_":"amount of substance (dissolved particles)","magnitude_":6.0221367e+23,"dim_":{"dimVec_":null},"printSymbol_":"osm","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mol","ciUnitString_":"MOL","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pH","csCode_":"[pH]","ciCode_":"[PH]","property_":"acidity","magnitude_":6.0221366999999994e+26,"dim_":{"dimVec_":null},"printSymbol_":"pH","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":"pH","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"mol/l","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"gram percent","csCode_":"g%","ciCode_":"G%","property_":"mass concentration","magnitude_":10000,"dim_":{"dimVec_":[-3,0,1,0,0,0,0]},"printSymbol_":"g%","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g/dl","ciUnitString_":"G/DL","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Svedberg unit","csCode_":"[S]","ciCode_":"[S]","property_":"sedimentation coefficient","magnitude_":1e-13,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"S","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s","ciUnitString_":"10*-13.S","baseFactorStr_":"1","baseFactor_":1e-13,"defError_":false},{"isBase_":false,"name_":"high power field","csCode_":"[HPF]","ciCode_":"[HPF]","property_":"view area in microscope","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"HPF","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"low power field","csCode_":"[LPF]","ciCode_":"[LPF]","property_":"view area in microscope","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"LPF","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"katal","csCode_":"kat","ciCode_":"KAT","property_":"catalytic activity","magnitude_":6.0221367e+23,"dim_":{"dimVec_":null},"printSymbol_":"kat","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"mol/s","ciUnitString_":"MOL/S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Unit","csCode_":"U","ciCode_":"U","property_":"catalytic activity","magnitude_":10036894500000000,"dim_":{"dimVec_":null},"printSymbol_":"U","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"umol/min","ciUnitString_":"UMOL/MIN","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"international unit","csCode_":"[iU]","ciCode_":"[IU]","property_":"arbitrary","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"IU","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"international unit","csCode_":"[IU]","ciCode_":"[IU]","property_":"arbitrary","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"i.U.","class_":"chemical","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"[iU]","ciUnitString_":"[IU]","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"arbitary unit","csCode_":"[arb'U]","ciCode_":"[ARB'U]","property_":"arbitrary","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"arb. U","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"United States Pharmacopeia unit","csCode_":"[USP'U]","ciCode_":"[USP'U]","property_":"arbitrary","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"U.S.P.","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"GPL unit","csCode_":"[GPL'U]","ciCode_":"[GPL'U]","property_":"biologic activity of anticardiolipin IgG","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"MPL unit","csCode_":"[MPL'U]","ciCode_":"[MPL'U]","property_":"biologic activity of anticardiolipin IgM","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"APL unit","csCode_":"[APL'U]","ciCode_":"[APL'U]","property_":"biologic activity of anticardiolipin IgA","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Bethesda unit","csCode_":"[beth'U]","ciCode_":"[BETH'U]","property_":"biologic activity of factor VIII inhibitor","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"anti factor Xa unit","csCode_":"[anti'Xa'U]","ciCode_":"[ANTI'XA'U]","property_":"biologic activity of factor Xa inhibitor (heparin)","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Todd unit","csCode_":"[todd'U]","ciCode_":"[TODD'U]","property_":"biologic activity antistreptolysin O","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Dye unit","csCode_":"[dye'U]","ciCode_":"[DYE'U]","property_":"biologic activity of amylase","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Somogyi unit","csCode_":"[smgy'U]","ciCode_":"[SMGY'U]","property_":"biologic activity of amylase","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Bodansky unit","csCode_":"[bdsk'U]","ciCode_":"[BDSK'U]","property_":"biologic activity of phosphatase","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"King-Armstrong unit","csCode_":"[ka'U]","ciCode_":"[KA'U]","property_":"biologic activity of phosphatase","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Kunkel unit","csCode_":"[knk'U]","ciCode_":"[KNK'U]","property_":"arbitrary biologic activity","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Mac Lagan unit","csCode_":"[mclg'U]","ciCode_":"[MCLG'U]","property_":"arbitrary biologic activity","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"tuberculin unit","csCode_":"[tb'U]","ciCode_":"[TB'U]","property_":"biologic activity of tuberculin","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"50% cell culture infectious dose","csCode_":"[CCID_50]","ciCode_":"[CCID_50]","property_":"biologic activity (infectivity) of an infectious agent preparation","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"CCID<sub>50</sub>","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"50% tissue culture infectious dose","csCode_":"[TCID_50]","ciCode_":"[TCID_50]","property_":"biologic activity (infectivity) of an infectious agent preparation","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"TCID<sub>50</sub>","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"50% embryo infectious dose","csCode_":"[EID_50]","ciCode_":"[EID_50]","property_":"biologic activity (infectivity) of an infectious agent preparation","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"EID<sub>50</sub>","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"plaque forming units","csCode_":"[PFU]","ciCode_":"[PFU]","property_":"amount of an infectious agent","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"PFU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"focus forming units","csCode_":"[FFU]","ciCode_":"[FFU]","property_":"amount of an infectious agent","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"FFU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"colony forming units","csCode_":"[CFU]","ciCode_":"[CFU]","property_":"amount of a proliferating organism","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"CFU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"index of reactivity","csCode_":"[IR]","ciCode_":"[IR]","property_":"amount of an allergen callibrated through in-vivo testing using the Stallergenes® method.","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"IR","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bioequivalent allergen unit","csCode_":"[BAU]","ciCode_":"[BAU]","property_":"amount of an allergen callibrated through in-vivo testing based on the ID50EAL method of (intradermal dilution for 50mm sum of erythema diameters","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"BAU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"allergen unit","csCode_":"[AU]","ciCode_":"[AU]","property_":"procedure defined amount of an allergen using some reference standard","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"AU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"allergen unit for Ambrosia artemisiifolia","csCode_":"[Amb'a'1'U]","ciCode_":"[AMB'A'1'U]","property_":"procedure defined amount of the major allergen of ragweed.","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Amb a 1 U","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"protein nitrogen unit","csCode_":"[PNU]","ciCode_":"[PNU]","property_":"procedure defined amount of a protein substance","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"PNU","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Limit of flocculation","csCode_":"[Lf]","ciCode_":"[LF]","property_":"procedure defined amount of an antigen substance","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Lf","class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"D-antigen unit","csCode_":"[D'ag'U]","ciCode_":"[D'AG'U]","property_":"procedure defined amount of a poliomyelitis d-antigen substance","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"fibrinogen equivalent unit","csCode_":"[FEU]","ciCode_":"[FEU]","property_":"amount of fibrinogen broken down into the measured d-dimers","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"ELISA unit","csCode_":"[ELU]","ciCode_":"[ELU]","property_":"arbitrary ELISA unit","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Ehrlich unit","csCode_":"[EU]","ciCode_":"[EU]","property_":"Ehrlich unit","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":null,"class_":"chemical","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":true,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"neper","csCode_":"Np","ciCode_":"NEP","property_":"level","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"Np","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"ln","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"bel","csCode_":"B","ciCode_":"B","property_":"level","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"B","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lg","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"bel sound pressure","csCode_":"B[SPL]","ciCode_":"B[SPL]","property_":"pressure level","magnitude_":631152000000000100,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"B(SPL)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"Pa","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":0.00002,"defError_":false},{"isBase_":false,"name_":"bel volt","csCode_":"B[V]","ciCode_":"B[V]","property_":"electric potential level","magnitude_":1000,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"B(V)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"V","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bel millivolt","csCode_":"B[mV]","ciCode_":"B[MV]","property_":"electric potential level","magnitude_":1,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"B(mV)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"mV","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bel microvolt","csCode_":"B[uV]","ciCode_":"B[UV]","property_":"electric potential level","magnitude_":0.001,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"B(μV)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"uV","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bel 10 nanovolt","csCode_":"B[10.nV]","ciCode_":"B[10.NV]","property_":"electric potential level","magnitude_":0.000010000000000000003,"dim_":{"dimVec_":[2,-2,1,0,0,-1,0]},"printSymbol_":"B(10 nV)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lgTimes2","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"nV","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"10","defError_":false},{"isBase_":false,"name_":"bel watt","csCode_":"B[W]","ciCode_":"B[W]","property_":"power level","magnitude_":1000,"dim_":{"dimVec_":[2,-3,1,0,0,0,0]},"printSymbol_":"B(W)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lg","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"W","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bel kilowatt","csCode_":"B[kW]","ciCode_":"B[KW]","property_":"power level","magnitude_":1000000,"dim_":{"dimVec_":[2,-3,1,0,0,0,0]},"printSymbol_":"B(kW)","class_":"levels","isMetric_":true,"variable_":null,"cnv_":"lg","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"kW","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"stere","csCode_":"st","ciCode_":"STR","property_":"volume","magnitude_":1,"dim_":{"dimVec_":[3,0,0,0,0,0,0]},"printSymbol_":"st","class_":"misc","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"m3","ciUnitString_":"M3","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Ångström","csCode_":"Ao","ciCode_":"AO","property_":"length","magnitude_":1.0000000000000002e-10,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":"Å","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"nm","ciUnitString_":"NM","baseFactorStr_":"0.1","baseFactor_":"0.1","defError_":false},{"isBase_":false,"name_":"barn","csCode_":"b","ciCode_":"BRN","property_":"action area","magnitude_":9.999999999999999e-29,"dim_":{"dimVec_":[2,0,0,0,0,0,0]},"printSymbol_":"b","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"fm2","ciUnitString_":"FM2","baseFactorStr_":"100","baseFactor_":"100","defError_":false},{"isBase_":false,"name_":"technical atmosphere","csCode_":"att","ciCode_":"ATT","property_":"pressure","magnitude_":98066499.99999999,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"at","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"kgf/cm2","ciUnitString_":"KGF/CM2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"mho","csCode_":"mho","ciCode_":"MHO","property_":"electric conductance","magnitude_":0.001,"dim_":{"dimVec_":[-2,1,-1,0,0,2,0]},"printSymbol_":"mho","class_":"misc","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"S","ciUnitString_":"S","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"pound per sqare inch","csCode_":"[psi]","ciCode_":"[PSI]","property_":"pressure","magnitude_":6894757.293168359,"dim_":{"dimVec_":[-1,-2,1,0,0,0,0]},"printSymbol_":"psi","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[lbf_av]/[in_i]2","ciUnitString_":"[LBF_AV]/[IN_I]2","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"circle","csCode_":"circ","ciCode_":"CIRC","property_":"plane angle","magnitude_":6.283185307179586,"dim_":{"dimVec_":null},"printSymbol_":"circ","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pi].rad","ciUnitString_":"[PI].RAD","baseFactorStr_":"2","baseFactor_":"2","defError_":false},{"isBase_":false,"name_":"spere","csCode_":"sph","ciCode_":"SPH","property_":"solid angle","magnitude_":12.566370614359172,"dim_":{"dimVec_":null},"printSymbol_":"sph","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[pi].sr","ciUnitString_":"[PI].SR","baseFactorStr_":"4","baseFactor_":"4","defError_":false},{"isBase_":false,"name_":"metric carat","csCode_":"[car_m]","ciCode_":"[CAR_M]","property_":"mass","magnitude_":0.2,"dim_":{"dimVec_":[0,0,1,0,0,0,0]},"printSymbol_":"ct<sub>m</sub>","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"g","ciUnitString_":"G","baseFactorStr_":"2e-1","baseFactor_":"0.2","defError_":false},{"isBase_":false,"name_":"carat of gold alloys","csCode_":"[car_Au]","ciCode_":"[CAR_AU]","property_":"mass fraction","magnitude_":0.041666666666666664,"dim_":{"dimVec_":null},"printSymbol_":"ct<sub><r>Au</r></sub>","class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"/24","ciUnitString_":"/24","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"Smoot","csCode_":"[smoot]","ciCode_":"[SMOOT]","property_":"length","magnitude_":1.7018000000000002,"dim_":{"dimVec_":[1,0,0,0,0,0,0]},"printSymbol_":null,"class_":"misc","isMetric_":false,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"[in_i]","ciUnitString_":"[IN_I]","baseFactorStr_":"67","baseFactor_":"67","defError_":false},{"isBase_":false,"name_":"meter per square seconds per square root of hertz","csCode_":"[m/s2/Hz^(1/2)]","ciCode_":"[M/S2/HZ^(1/2)]","property_":"amplitude spectral density","magnitude_":1,"dim_":{"dimVec_":[2,-3,0,0,0,0,0]},"printSymbol_":null,"class_":"misc","isMetric_":false,"variable_":null,"cnv_":"sqrt","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"m2/s4/Hz","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"bit","csCode_":"bit_s","ciCode_":"BIT_S","property_":"amount of information","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"bit<sub>s</sub>","class_":"infotech","isMetric_":false,"variable_":null,"cnv_":"ld","cnvPfx_":1,"isSpecial_":true,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":null,"baseFactorStr_":null,"baseFactor_":1,"defError_":false},{"isBase_":false,"name_":"bit","csCode_":"bit","ciCode_":"BIT","property_":"amount of information","magnitude_":1,"dim_":{"dimVec_":null},"printSymbol_":"bit","class_":"infotech","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"1","ciUnitString_":"1","baseFactorStr_":"1","baseFactor_":"1","defError_":false},{"isBase_":false,"name_":"byte","csCode_":"By","ciCode_":"BY","property_":"amount of information","magnitude_":8,"dim_":{"dimVec_":null},"printSymbol_":"B","class_":"infotech","isMetric_":true,"variable_":null,"cnv_":null,"cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"bit","ciUnitString_":"bit","baseFactorStr_":"8","baseFactor_":"8","defError_":false},{"isBase_":false,"name_":"baud","csCode_":"Bd","ciCode_":"BD","property_":"signal transmission rate","magnitude_":1,"dim_":{"dimVec_":[0,1,0,0,0,0,0]},"printSymbol_":"Bd","class_":"infotech","isMetric_":true,"variable_":null,"cnv_":"inv","cnvPfx_":1,"isSpecial_":false,"isArbitrary_":false,"csUnitString_":"s","ciUnitString_":"/s","baseFactorStr_":"1","baseFactor_":"1","defError_":false}]}
 
 },{}],2:[function(require,module,exports){
 'use strict';
@@ -22,8 +23,11 @@ var Ucum = exports.Ucum = { // Namespace for UCUM classes
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
+   *  I don't think we need this.  I think we're just going with
+   *  case sensitive, per Clem.   Gunther's code has this flag, but I
+   *  am removing it, at least for now.  lm, 6/2016
    */
-  caseSensitive_: true,
+  //caseSensitive_: true ,
 
   /**
    *  The number of elements in a Dimension array.   Currently this
@@ -42,11 +46,85 @@ var Ucum = exports.Ucum = { // Namespace for UCUM classes
    * The string used to separate a unit code and unit name when they
    * are displayed together
    */
-  codeSep_: ' - '
+  codeSep_: ' - ',
+
+  /**
+   * Opening HTML used to emphasize portions of error messages.  Used when
+   * displaying messages on a web site; should be overridden when output is
+   * to a file.  See UnitString.parseString for override example.
+   */
+  openEmph_: '<span class="emphSpan">',
+
+  /**
+   * Closing HTML used to emphasize portions of error messages.  Used when
+   * displaying messages on a web site; should be overridden when output is
+   * to a file.  See UnitString.parseString for override example.
+   */
+  closeEmph_: '</span>',
+
+  /**
+   * Message that is displayed when annotations are included in a unit
+   * string, to let the user know how they are interpreted.
+   */
+  bracesMsg_: 'Annotations (text in curley braces {}) have no influence ' + 'on the processing of a unit string.'
 
 };
 
+
 },{}],3:[function(require,module,exports){
+'use strict';
+
+/**
+ * Created by lmericle on 6/15/16.
+ */
+var Ucum = require('./config.js').Ucum;
+var fs = require('fs');
+
+var parse = require('csv-parse');
+var transform = require('stream-transform');
+var stringify = require('csv-stringify');
+var UcumLhcUtils = require("/home/lmericle/ucum/dist/es5/source/ucumLhcUtils.js").UcumLhcUtils;
+
+var output = [];
+var parser = parse({ columns: true });
+var input = fs.createReadStream('/home/lmericle/ucum/dist/data/RegenstriefCodes.csv');
+var output = fs.createWriteStream('/home/lmericle/ucum/dist/data/RegenstriefCodesValidations.csv');
+
+var transformer = transform(function (record) {
+  // read value in sourceCol
+  // validate it
+  // place results in resultCol
+  //
+  var utils = UcumLhcUtils.getInstance();
+  var retMsg = [];
+  var uStr = record[sourceCol];
+  var parseResp = [];
+  record[unitTestedCol] = uStr;
+  try {
+    var _parseResp = utils.validUnitString(uStr, false);
+    if (_parseResp[0]) record[resultCol] = "Valid UCUM unit.";else record[resultCol] = "Not valid UCUM unit.";
+    if (_parseResp[1].length > 0) record[commentCol] = _parseResp[1].join(' - ');else record[commentCol] = '';
+  } catch (err) {
+    record[resultCol] = 'ERROR';
+    record[commentCol] = err.message;
+  }
+  return record;
+});
+
+var stringifier = stringify({ header: true });
+
+var sourceCol = 'UCUM_CODE';
+var unitTestedCol = 'Unit String Tested';
+var resultCol = 'Validation Result';
+var commentCol = 'Notes';
+
+output.write('*' + Ucum.bracesMsg_ + '\r\n');
+// read the first line, get column numbers (source and result)
+// pass them to the transformer?
+input.pipe(parser).pipe(transformer).pipe(stringifier).pipe(output);
+
+
+},{"./config.js":2,"/home/lmericle/ucum/dist/es5/source/ucumLhcUtils.js":9,"csv-parse":20,"csv-stringify":21,"fs":16,"stream-transform":49}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -455,7 +533,8 @@ var Dimension = exports.Dimension = function () {
   return Dimension;
 }(); // end Dimension class
 
-},{"./config.js":2,"is-integer":25}],4:[function(require,module,exports){
+
+},{"./config.js":2,"is-integer":27}],5:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -576,12 +655,59 @@ var Functions = function () {
         return Math.pow(2, x);
       } };
 
+    // tan - tangent
+    this.fs['100tan'] = { cnvTo: function cnvTo(x) {
+        return Math.tan(x) * 100;
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.atan(x / 100);
+      } };
+    // the xml essence ucum file uses both 100tan and tanTimes100
+    this.fs['tanTimes100'] = this.fs['100tan'];
+
+    // sqrt - square root
+    this.fs['sqrt'] = { cnvTo: function cnvTo(x) {
+        return Math.sqrt(x);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return x * x;
+      } };
+
     // inv - inverse
     this.fs['inv'] = { cnvTo: function cnvTo(x) {
         return 1.0 / x;
       },
       cnvFrom: function cnvFrom(x) {
         return 1.0 / x;
+      } };
+
+    // homeopathic potency functions
+    this.fs['hpX'] = { cnvTo: function cnvTo(x) {
+        return -this.fs['lg'](x);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.pow(10, -x);
+      } };
+
+    this.fs['hpC'] = { cnvTo: function cnvTo(x) {
+        return -this.fs['ln'](x) / this.fs['ln'](100);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.pow(100, -x);
+      } };
+
+    this.fs['hpM'] = { cnvTo: function cnvTo(x) {
+        return -this.fs['ln'](x) / this.fs['ln'](1000);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.pow(1000, -x);
+      } };
+
+    this.fs['hpQ'] = { cnvTo: function cnvTo(x) {
+        return -this.fs['ln'](x) / this.fs['ln'](50000);
+      },
+      cnvFrom: function cnvFrom(x) {
+        return Math.pow(50000, -x);
       } };
 
     // Make this a singleton.  See UnitTables constructor for details.
@@ -653,37 +779,8 @@ Functions.getInstance = function () {
 };
 Functions.getInstance();
 
-},{}],5:[function(require,module,exports){
-"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.startup = startup;
-/**
- * This is the code entry point for the demo web page.  It coordinates the
- * loading of the prefix and unit objects from the json definitions file and
- * populating the autocompleter unit lists.
- */
-
-var UcumLhcUtils = exports.UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
-var UnitTables = exports.UnitTables = require("./unitTables.js").UnitTables;
-
-function startup() {
-  var utils = UcumLhcUtils.getInstance();
-  var utab = UnitTables.getInstance();
-  var unames = utab.getUnitNamesList();
-  var opts = { 'matchListValue': true };
-  var autoFrom = new Def.Autocompleter.Prefetch('convertFrom', []); //, opts);
-  var autoTo = new Def.Autocompleter.Prefetch('convertTo', []); //opts);
-  var autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
-  utils.setAutocompleters(autoFrom, autoTo);
-};
-
-startup();
-
-
-},{"./ucumLhcUtils.js":9,"./unitTables.js":13}],6:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -734,10 +831,9 @@ var Prefix = exports.Prefix = function () {
     }
 
     /**
-     * The prefix code, e.g., k for kilo.  If we are in case-sensitive
-     * mode (Ucum.caseSensitive_ is true), this should be the case-sensitive
-     * code, and if we're not, it should be the case-insensitive code.  Since
-     * there's no way to check to see if it's the right one (because although
+     * The prefix code, e.g., k for kilo.  This should be the case-sensitive
+     * code.  Since there's no way to check to see if it's the case-sensitive
+     * one as opposed to the case-insensitive one (because although
      * case-insensitive codes all seem to be uppercase, some case-sensitive
      * codes are also all uppercase), we'll just have to believe that the
      * right one was passed in.
@@ -823,6 +919,7 @@ var Prefix = exports.Prefix = function () {
 
   return Prefix;
 }(); // end Prefix class
+
 
 },{"./config.js":2}],7:[function(require,module,exports){
 'use strict';
@@ -991,6 +1088,7 @@ PrefixTables.getInstance = function () {
 // getInstance method set.
 PrefixTables.getInstance();
 
+
 },{}],8:[function(require,module,exports){
 "use strict";
 
@@ -1102,7 +1200,8 @@ UcumJsonDefs.getInstance = function () {
   return new UcumJsonDefs();
 };
 
-},{"../../data/ucumDefs.json":1,"./config.js":2,"./prefix.js":6,"./prefixTables.js":7,"./unit.js":11,"./unitTables.js":13,"fs":16,"jsonfile":26,"path":28,"util":47}],9:[function(require,module,exports){
+
+},{"../../data/ucumDefs.json":1,"./config.js":2,"./prefix.js":6,"./prefixTables.js":7,"./unit.js":11,"./unitTables.js":13,"fs":16,"jsonfile":28,"path":33,"util":53}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1169,59 +1268,75 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
    * valid unit string.
    *
    * @param uStr the string to be validated
+   * @param useEmph use HTML emphasis style in user messages; set to false
+   *  if not defined
    * @returns true for a valid string; false for an invalid string
    */
 
 
   _createClass(UcumLhcUtils, [{
     key: 'validUnitString',
-    value: function validUnitString(uStr) {
+    value: function validUnitString(uStr, useEmph) {
 
-      var retUnit = this.getSpecifiedUnit(uStr);
-      return retUnit !== null;
+      if (useEmph === undefined) useEmph = false;
+
+      //let retUnit = this.getSpecifiedUnit(uStr, useEmph);
+      //return retUnit !== null ;
+
+      return this.getSpecifiedUnit(uStr, useEmph);
     } // end validUnitString
 
     /**
      * This method converts one unit to another
      *
      * @param fromName the name of the unit to be converted
-     * @param numVal the number of "from" units to be converted to "to" units
+     * @param fromVal the number of "from" units to be converted to "to" units
      * @param toName the name of the unit that the from field is to be converted to
      * @param decDigits the maximum number of decimal digits to be displayed
      *  for the converted unit.  If not specified, the UCUM.decDigits_ value
      *  (defined in config.js) is used.
-     *
+     * @param useEmph use HTML emphasis style in user messages; set to false
+     *  if undefined
      * @returns a message indicating either the result of the conversion or an
      *  error message if an error occurred.
      */
 
   }, {
     key: 'convertUnitTo',
-    value: function convertUnitTo(fromName, fromVal, toName, decDigits) {
+    value: function convertUnitTo(fromName, fromVal, toName, decDigits, useEmph) {
 
       if (decDigits === undefined) decDigits = Ucum.decDigits_;
 
-      var resultMsg = '';
+      if (useEmph === undefined) useEmph = false;
+
+      var resultMsg = [];
 
       try {
+        var parseResp = [];
         var fromUnit = null;
-        fromUnit = this.getSpecifiedUnit(fromName);
+
+        parseResp = this.getSpecifiedUnit(fromName, useEmph);
+        fromUnit = parseResp[0];
+        if (parseResp[1].length > 0) resultMsg = parseResp[1];
 
         var toUnit = null;
-        toUnit = this.getSpecifiedUnit(toName);
+        parseResp = this.getSpecifiedUnit(toName, useEmph);
+        toUnit = parseResp[0];
+        if (parseResp[1].length > 0) {
+          if (resultMsg.length > 0) resultMsg = resultMsg.concat(parseResp[1]);else resultMsg = parseResp[1];
+        }
 
         if (fromUnit && toUnit) {
           try {
             var toVal = toUnit.convertFrom(fromVal, fromUnit);
             toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
-
-            resultMsg = fromVal.toString() + " " + fromUnit.getProperty('name_') + " units = " + toVal.toString() + " " + toUnit.getProperty('name_') + " units.";
+            resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('name_') + " units = " + toVal.toString() + " " + toUnit.getProperty('name_') + " units.");
           } catch (err) {
-            resultMsg = err.message;
+            resultMsg.push(err.message);
           }
         } // end if we have the from and to units
       } catch (err) {
-        resultMsg = err.message;
+        resultMsg.push(err.message);
       }
       return resultMsg;
     } // end convertUnitTo
@@ -1231,17 +1346,22 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * represented by the string.
      *
      * @param uName the string representing the unit
-     * @returns the unit found for the string or null if not found
+     * @param useEmph use HTML emphasis style in user messages; set to false
+     *  if undefined
+     * @returns the unit found for the string
      * @throws a message if the unit is not found
      */
 
   }, {
     key: 'getSpecifiedUnit',
-    value: function getSpecifiedUnit(uName) {
+    value: function getSpecifiedUnit(uName, useEmph) {
 
       uName = uName.trim();
+
+      if (useEmph === undefined) useEmph = false;
+
       var utab = UnitTables.getInstance();
-      var retMsg = '';
+      var retMsg = [];
 
       // go ahead and just try using the name as the code.  This may or may not
       // work, but if it does, it cuts out a lot of parsing.
@@ -1251,21 +1371,21 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       if (!theUnit) {
         try {
           var uStrParser = new UnitString();
-          theUnit = uStrParser.parseString(uName);
+          var parseResp = uStrParser.parseString(uName, useEmph);
+          theUnit = parseResp[0];
+          retMsg = parseResp[1];
         } catch (err) {
           console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-          if (retMsg !== '') retMsg += ' and ';
-          retMsg += uName + ' is not a valid unit.';
+          if (uName !== '' && uName !== null) retMsg.unshift(uName + ' is not a valid unit.  ' + err.message);else retMsg.unshift(err.message);
         }
       }
 
       // if no error was thrown but no unit was found, create a not found message
       if ((theUnit === null || theUnit === undefined) && retMsg === '') {
-        retMsg = 'Unable to find unit for name = ' + uName + '.';
+        retMsg.unshift('Unable to find unit for name = ' + uName + '.');
       }
-      if (retMsg !== '') throw new Error(retMsg);
 
-      return theUnit;
+      return [theUnit, retMsg];
     } // end getSpecifiedUnit
 
     /**
@@ -1273,24 +1393,26 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * converted from and to, a specified unit.  Throws an error if the "from"
      * unit cannot be found or if no commensurable units are found.
      *
-     * @param fromField the ID of the field where the "from" unit is specified
-     * @param toField the ID of the field to receive the list of commensurable
-     *  units
-     * @param resultField the ID of the field to receive an error message if one
-     *  is thrown
-     * @returns nothing but sets the autocompleter list in the "toField" to the
-     *   commensurable units if any were found
+     * @param fromName the name/unit string of the "from" unit
+     * @param useEmph use HTML emphasis style in user messages; set to false
+     *  if undefined
+     * @returns the list of commensurable units if any were found
      *  @throws an error if the "from" unit is not found or if no commensurable
      *   units were found
      */
 
   }, {
     key: 'commensurablesList',
-    value: function commensurablesList(fromName) {
+    value: function commensurablesList(fromName, useEmph) {
 
-      var fromUnit = this.getSpecifiedUnit(fromName);
+      if (useEmph === undefined) useEmph = false;
+      var retMsg = [];
+
+      var parseResp = this.getSpecifiedUnit(fromName, useEmph);
+      var fromUnit = parseResp[0];
+      if (parseResp[1].length > 0) retMsg = parseResp[1];
       if (!fromUnit) {
-        throw new Error('Could not find unit ' + fromName + '.');
+        retMsg.push('Could not find unit ' + fromName + '.');
       }
 
       var commUnits = null;
@@ -1300,29 +1422,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         var utab = UnitTables.getInstance();
         commUnits = utab.getUnitsByDimension(dimVec);
       }
-      return commUnits;
+      return [commUnits, retMsg];
     } // end commensurablesList
-
-    /**
-     *  TODO: This provides a list of all unit codes.  The list is either case
-     *  sensitive or case-insensitive, depending on the configuration
-     *  setting in config.js
-     */
-
-  }, {
-    key: 'allUnitCodes',
-    value: function allUnitCodes() {}
-
-    /**
-     *  TODO: This provides a list of all unit names (descriptions).  The names
-     *  are returned as an array of names.  For most units the array will
-     *  contain one name, but because names are sometimes duplicated, not
-     *  all of the arrays returned will contain just one entry.
-     */
-
-  }, {
-    key: 'allUnitNames',
-    value: function allUnitNames() {}
 
     /**
      * Creates a file containing a list of the units
@@ -1366,7 +1467,8 @@ UcumLhcUtils.getInstance = function () {
 // getInstance method set.
 UcumLhcUtils.getInstance();
 
-},{"./config.js":2,"./functions.js":4,"./ucumJsonDefs.js":8,"./unit.js":11,"./unitString.js":12,"./unitTables.js":13,"fs":16,"path":28}],10:[function(require,module,exports){
+
+},{"./config.js":2,"./functions.js":5,"./ucumJsonDefs.js":8,"./unit.js":11,"./unitString.js":12,"./unitTables.js":13,"fs":16,"path":33}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1465,11 +1567,7 @@ var UcumXmlDocument = exports.UcumXmlDocument = function () {
         var curPfx = prefixes[p];
         var attrs = {};
 
-        // use the version (case sensitive or case insensitive) of the
-        // prefix code as indicated by the caseSensitive_ flag in the
-        // configuration file
-        if (Ucum.Ucum.caseSensitive_) attrs["code_"] = curPfx.attr.Code;else attrs["code_"] = curPfx.attr.CODE;
-
+        attrs["code_"] = curPfx.attr.Code;
         attrs["name_"] = curPfx.childNamed('name').val;
 
         // Set the prefix value.  If there is a <sup> element in the
@@ -1795,7 +1893,8 @@ var UcumXmlDocument = exports.UcumXmlDocument = function () {
   return UcumXmlDocument;
 }(); // end UcumXmlDocument
 
-},{"./config.js":2,"./prefix.js":6,"./prefixTables.js":7,"./unit.js":11,"./unitString.js":12,"./unitTables.js":13,"fs":16,"jsonfile":26,"path":28,"xmldoc":48}],11:[function(require,module,exports){
+
+},{"./config.js":2,"./prefix.js":6,"./prefixTables.js":7,"./unit.js":11,"./unitString.js":12,"./unitTables.js":13,"fs":16,"jsonfile":28,"path":33,"xmldoc":54}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2334,7 +2433,7 @@ var Unit = exports.Unit = function () {
     value: function divide(unit2) {
 
       if (this.cnv_ != null) throw new Error('Attempt to divide non-ratio unit ' + this.name_);
-      if (unit2.cnv_ != null) throw new Error('Attempt to divide non-ratio unit ' + unit2.name_);
+      if (unit2.cnv_ != null) throw new Error('Attempt to divide by non-ratio unit ' + unit2.name_);
 
       var uString = new Us.UnitString();
       this.name_ = uString.divString(this.name_, unit2.name_);
@@ -2400,7 +2499,8 @@ var Unit = exports.Unit = function () {
   return Unit;
 }(); // end Unit class
 
-},{"./config.js":2,"./dimension.js":3,"./functions.js":4,"./unitString.js":12,"is-integer":25}],12:[function(require,module,exports){
+
+},{"./config.js":2,"./dimension.js":4,"./functions.js":5,"./unitString.js":12,"is-integer":27}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2414,6 +2514,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * This class handles the parsing of a unit string into a unit object
  */
+var Ucum = require('./config.js').Ucum;
 var UnitTables = require('./unitTables.js').UnitTables;
 var PrefixTables = require('./prefixTables.js').PrefixTables;
 
@@ -2425,162 +2526,386 @@ var UnitString = exports.UnitString = function () {
 
   function UnitString() {
     _classCallCheck(this, UnitString);
-  }
-  // nothing really to do here.
 
+    // Set emphasis characters to those defined in config.ls.  These are
+    // used to emphasize certain characters or strings in user messages.
+    // They should be used when output will go to a web page and overridden
+    // when output will go to a file.  See parseString method.
+    this.openEmph_ = Ucum.openEmph_;
+    this.closeEmph_ = Ucum.closeEmph_;
+    this.bracesMsg_ = Ucum.bracesMsg_;
+
+    // Set the flags used, with indices, as place holders in unit strings
+    // for parenthetical strings and strings within braces.
+    this.parensFlag_ = '##';
+    this.braceFlag_ = '||';
+  }
 
   /**
    * Parses a unit string, returns a unit
    *
    * @params uStr the string defining the unit
-   * @returns a unit object, or null if there were problems creating the unit
-   * @throws an error if the unit string contains parentheses (not handled yet);
-   *  an error if at least one valid unit could not be derived from the string;
-   *  an error if a non-unit & non-number was parsed as an individual element
-   *    from the string (shouldn't happen, but this is a safeguard);
-   *  any errors thrown by called methods (see makeUnit,
-   *    unit object division, multiplication, and getProperty).
+   * @params msgEmph flag indicating whether or not to add emphasis codes
+   *  defined in config.us to emphasize portions of user messages; set to
+   *  false if not provided.
+   * @params origString the original unit string passed in; used when this is
+   *  called recursively; set to uStr if not provided.
+   * @returns an array containing: 1) the unit object (or null if there were
+   *  problems creating the unit); and 2) an array of user messages (error or
+   *  warning).
+   * @throws an error if nothing was specified.
    */
 
 
   _createClass(UnitString, [{
     key: 'parseString',
-    value: function parseString(uStr) {
+    value: function parseString(uStr, msgEmph, origString) {
+
+      // if the message emphasis flag is not specified or is false, override
+      // the emphasis values by setting them each to "".
+      if (msgEmph === undefined) msgEmph = false;
+
+      if (msgEmph === false) {
+        this.openEmph_ = "";
+        this.closeEmph_ = "";
+        this.bracesMsg_ = "*";
+      }
+      // Used in error messages to provide context for messages
+      if (origString === undefined) origString = uStr;
+
+      // Make sure we have something to work with
+      if (origString === '' || origString === null) {
+        throw new Error('Please specify a unit string to be validated.');
+      }
+
+      var firstCall = uStr === origString;
+
+      // Unit to be returned
       var finalUnit = null;
 
-      // Check for parentheses in unit strings. We assume there aren't any,
-      // so if some turn up we need to know so they can be parsed.  For now,
-      // block further processing of strings with parentheses.
-      //let pArray = uStr.split('(') ;
-      //if (pArray.length > 1) {
-      //  throw (new Error(`Unit string (${uStr}) contains parentheses, which ` +
-      //         'are not handled yet by this package.  Sorry'));
-      //}
+      // An array of messages (warnings and errors) to be returned
+      var retMsg = [];
 
+      // Flag used to block further processing on an unrecoverable error
+      var endProcessing = false;
+
+      // Extract any annotations, i.e., text enclosed in braces ({}) from the
+      // string before further processing.  Store each one in the annotations
+      // array and put a placeholder in the string for the annotation.  Do
+      // this before other processing in case an annotation contains characters
+      // that will be interpreted as parenthetical markers or operators in
+      // subsequent processing.
+      var annotations = [];
+      uStr = this.getAnnotations(uStr, annotations, retMsg);
+
+      // Check for parentheses in unit strings.  If found, isolate a parenthesized
+      // group and pass it to a recursive call of this method.  If it contains
+      // a nested parenthetical group, that will be handled in the same way.
+      // Units returned by a recursive call to this method are stored in the
+      // parensUnits array, and a placeholder is placed in the units array
+      // (uArray) which is reassembled after all parenthetical groups in the
+      // current string are processed.  The placeholder consists of the parenthesis
+      // flag (this.parensFlag_) followed by the index of the unit in the
+      // parensUnits array followed by the parensFlag_.
+
+      // Units array and index
       var uArray = [];
       var uPos = 0;
-      // Break string into parenthetical groups - if any
-      var pgArray = uStr.match(/([^\(]*)\(([^)]+)\)([^\(]*)/g);
 
+      // Array of parenthetical strings and index
       var parensUnits = [];
       var pu = 0;
-      // If something was written to pArray, it will be the chunks of the
-      // string that contain parenthetical groups.  (If no parentheses are
-      // found, the return from match is null).
-      if (pgArray) {
-        for (var p = 0; p < pgArray.length; p++) {
-          // Split the group into its parts
-          var theGroup = pgArray[0].match(/([^\(]*)\(([^)]+)\)([^\(]*)/);
-          if (theGroup.length === 4) {
-            // there should be 4 elements in theGroup:
-            // [0] should be the full group text
-            // [1] should be the text preceding the parentheses, if any
-            if (theGroup[1] != "") {
-              uArray[uPos++] = theGroup[1];
+
+      // count of characters trimmed off the beginning of the unit string (uStr)
+      // as units are removed from it; used for error messages, to provide
+      // context.
+      var trimmedCt = 0;
+
+      // Break the unit string into pieces that consist of text outside of
+      // parenthetical strings and placeholders for the parenthetical units.
+      // This method is call recursively for parenthetical strings and the units
+      // returned are stored in teh parensUnits array.
+      while (uStr !== "" && !endProcessing) {
+        var openCt = 0;
+        var closeCt = 0;
+        var openPos = uStr.indexOf('(');
+
+        // If an opening parenthesis was not found, check for an unmatched
+        // close parenthesis.  If one was found report the error and end
+        // processing.
+        if (openPos < 0) {
+          var closePos = uStr.indexOf(')');
+          if (closePos >= 0) {
+            var theMsg = 'Missing open parenthesis for close ' + ('parenthesis at ' + origString.substring(0, closePos + trimmedCt)) + ('' + this.openEmph_ + uStr.substr(closePos, 1) + this.closeEmph_);
+            if (closePos < uStr.length - 1) {
+              theMsg += uStr.substr(closePos + 1) + '.';
+            } else {
+              theMsg += '.';
             }
-            // [2] should be the text within the parentheses .  This needs to
-            // be passed to this method to be parsed.  Return will be a unit
-            // that we'll put in the parensUnits array and store the index to
-            // it in the uArrau.
-            uArray[uPos++] = '#' + pu.toString();
-            parensUnits[pu++] = this.parseString(theGroup[2]);
-
-            // [3] should be the text after the parentheses, if any
-            if (theGroup[3] !== "") {
-              uArray[uPos++] = theGroup[3];
-            }
-          } // end if we have the right number of elements
-        } // end do for each element
-        // join the elements o uArray aso we have a string again.  We need
-        // a string to do the next step, which is to split stuff out based on
-        // the operators - done in makeUnitsArray
-        uStr = uArray.join('');
-      }
-
-      // Call makeUnitsArray to convert the string to an array of unit
-      // descriptors with operators.
-      uArray = this.makeUnitsArray(uStr);
-
-      // create a unit object out of each un element
-      var uLen = uArray.length;
-      for (var u1 = 0; u1 < uLen; u1++) {
-        var curCode = uArray[u1]['un'];
-        if (curCode[0] === '#') {
-          var uIdx = curCode.substr(1);
-          uArray[u1]['un'] = parensUnits[uIdx];
-        } else {
-          var curCodeNum = Number(curCode);
-          // if the current unit string is NOT a number, call makeUnit to create
-          // the unit object for it
-          if (isNaN(curCodeNum)) {
-            uArray[u1]['un'] = this.makeUnit(curCode);
+            retMsg.push(theMsg);
+            endProcessing = true;
           }
-          // Otherwise write the numeric version of the number back to
-          // the uArray 'un' element
+          // If no parentheses were found in the current unit string, transfer
+          // it to the units array and blank out the string, which will end
+          // the search for parenthetical units.
           else {
-              uArray[u1]['un'] = curCodeNum;
+              uArray[uPos] = uStr;
+              uStr = "";
             }
         }
-      }
 
-      // Process the units (and numbers) to create one final unit object
-      if (uArray[0] == null || uArray == "'" || uArray[0]['un'] === undefined || uArray[0]['un'] == null) {
-        // not sure what this might be, but this is a safeguard
-        throw new Error('Unit string (' + uStr + ') did not contain anything that ' + 'could be used to create a unit, or else something that is not ' + 'handled yet by this package.  Sorry');
-      }
-
-      finalUnit = uArray[0]['un'];
-
-      // Perform the arithmetic for the units, starting with the first 2.
-      // We only need to do the arithmetic if we have more than one unit
-      for (var u2 = 1; u2 < uLen; u2++) {
-        var nextUnit = uArray[u2]['un'];
-        if (typeof nextUnit !== 'number' && !nextUnit.getProperty) {
-          throw new Error('Unit string (' + uStr + ') contains unrecognized ' + ('element (' + nextUnit.toString() + '); could not parse full ') + 'string.  Sorry');
-        }
-
-        // Is the operation division?
-        var thisOp = uArray[u2]['op'];
-        var isDiv = thisOp === '/';
-
-        // Perform the operation based on the type(s) of the operands
-
-        if (typeof nextUnit !== 'number') {
-          // both are unit objects
-          if (typeof finalUnit !== 'number') {
-            isDiv ? finalUnit = finalUnit.divide(nextUnit) : finalUnit = finalUnit.multiplyThese(nextUnit);
-          }
-          // finalUnit is a number; nextUnit is a unit object
-          else {
-              var nMag = nextUnit.getProperty('magnitude_');
-              isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
-              var theName = finalUnit.toString() + thisOp + nextUnit.getProperty('name_');
-              finalUnit = nextUnit;
-              finalUnit.assignVals({ 'name_': theName, 'magnitude_': nMag });
-            }
-        } // end if nextUnit is not a number
-
+        // Otherwise and open parenthesis was found. Process the string that
+        // includes the parenthetical group
         else {
-            // nextUnit is a number; finalUnit is a unit object
-            if (typeof finalUnit !== 'number') {
-              var fMag = finalUnit.getProperty('magnitude_');
-              isDiv ? fMag /= nextUnit : fMag *= nextUnit;
-              var _theName = finalUnit.getProperty('name_') + thisOp + nextUnit.toString();
-              finalUnit.assignVals({ 'name_': _theName, 'magnitude_': fMag });
+            openCt += 1;
+            // Write the text before the parentheses (if any) to the units array
+            var uLen = uStr.length;
+            if (openPos > 0) {
+              uArray[uPos++] = uStr.substr(0, openPos);
             }
-            // both are numbers
-            else {
-                isDiv ? finalUnit /= nextUnit : finalUnit *= nextUnit;
-                var _theName2 = finalUnit.toString() + thisOp + nextUnit.toString();
-                // well great - now what?  I don't have anywhere to put this.
-                // TODO: figure out where the heck to put this.
-                throw new Error('Unit string (' + uStr + ') contains 2 adjoining ' + 'elements that are numbers.  At least one must be a unit.');
-              }
-          } // end if nextUnit is a number
-      } // end do for each unit after the first one
 
-      return finalUnit;
+            // Find the matching closePos, i.e., the one that closes the
+            // parenthetical group that this one opens.  Look also for
+            // another open parenthesis, in case this includes nested parenthetical
+            // strings.  This continues until it finds the same number of close
+            // parentheses as open parentheses, or runs out of string to check.
+            // In the case of neste parentheses this will identify the outer set
+            // of parentheses.
+            var _closePos = 0;
+            var c = openPos + 1;
+            for (; c < uLen && openCt != closeCt; c++) {
+              if (uStr[c] === '(') openCt += 1;else if (uStr[c] === ')') closeCt += 1;
+            }
+
+            // Put a placeholder for the group in the units array and recursively
+            // call this method for the parenthetical group.  Put the unit returned
+            // in the parensUnit array.  Set the unit string to whatever follows
+            // the position of the closing parenthesis for this group, to be
+            // processed by the next iteration of this loop.  If there's nothing
+            // left uStr is set to "".
+            if (openCt === closeCt) {
+              _closePos = c;
+              uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
+              var parseResp = this.parseString(uStr.substring(openPos + 1, _closePos - 1), msgEmph, origString);
+              parensUnits[pu++] = parseResp[0];
+              if (parseResp[1] != '') retMsg.push(parseResp[1]);
+              uStr = uStr.substr(_closePos);
+              trimmedCt = _closePos;
+            }
+            // If the number of open and close parentheses doesn't match, indicate
+            // an error.
+            else {
+                retMsg.push('Missing close parenthesis for open parenthesis at ' + ('' + origString.substring(0, openPos + trimmedCt)) + ('' + this.openEmph_ + uStr.substr(openPos, 1)) + ('' + this.closeEmph_ + uStr.substr(openPos + 1) + '.'));
+                endProcessing = true;
+              }
+          } // end if an opening parenthesis was found
+      } // end do while the input string is not empty
+
+      // Continue if we didn't hit a problem
+      if (!endProcessing) {
+        // Join all the unit array elements back into one string with no separators.
+        uStr = uArray.join('');
+
+        // Call makeUnitsArray to convert the string to an array of unit
+        // descriptors with operators.
+        uArray = this.makeUnitsArray(uStr);
+
+        // Create a unit object out of each un element
+        var _uLen = uArray.length;
+        for (var u1 = 0; u1 < _uLen; u1++) {
+          var curCode = uArray[u1]['un'];
+
+          // If the current unit array element is a unit stored in the parensUnits
+          // array (from a parenthesized string), get that unit and put it in the
+          /// units array.
+          var pfLen = this.parensFlag_.length;
+          var anno = '';
+
+          // If the parentheses flag is found at the beginning of the curCode,
+          // make sure there is nothing following the parenthetical string (as
+          // indicated by the index into the parensUnit array); throw an error
+          // if there is - which will happen if there'a an operator missing
+          // before the parenthetical string; transfer the unit to the uArray if
+          // there is not.
+          if (curCode.substr(0, pfLen) === this.parensFlag_) {
+            // get the parenthetical index
+            var sIdx = curCode.substr(pfLen);
+            var endFlag = sIdx.lastIndexOf(this.parensFlag_);
+            var pIdx = sIdx.substring(0, endFlag);
+            sIdx = sIdx.substr(endFlag + pfLen);
+            if (endFlag < sIdx.length - pfLen) {
+              // first check to see if it's an annotation
+              var braceStart = sIdx.indexOf(this.braceFlag_);
+              if (braceStart >= 0) {
+                var anLen = this.braceFlag_.length;
+                var braceEnd = sIdx.lastIndexOf(this.braceFlag_);
+                var aIdx = sIdx.substr(anLen, braceEnd - anLen);
+                anno = annotations[aIdx];
+                // check to see if text follows the annotation
+                if (braceEnd + anLen < sIdx.length) {
+                  sIdx = sIdx.substr(braceEnd + anLen);
+                  var mString = origString.replace(')' + sIdx, ')' + this.openEmph_ + ('' + sIdx + this.closeEmph_));
+                  var mString2 = 'Missing operator before ' + this.openEmph_ + ('' + sIdx + this.closeEmph_ + ' in ' + mString);
+                  retMsg.push(mString2);
+                  endProcessing = true;
+                } // end if there is text following the annotation
+                else {
+                    //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
+                    //let wString = origString.replace(anno, `${this.openEmph_}` +
+                    //                                 `${anno}${this.closeEmph_}`);
+                    //let w2String = origString.replace(anno, '');
+                    //retMsg.push(`${wString} is interpreted as ${lead1}${w2String}`);
+                    var dup = false;
+                    for (var r = 0; !dup && r < retMsg.length; r++) {
+                      dup = retMsg[r] === this.bracesMsg_;
+                    }
+                    if (!dup) retMsg.push(this.bracesMsg_);
+                  }
+              } // end if the text following the parentheses is an annotation
+            } // end if the ending parenthesis is not at the end of the code
+
+            // If we're good, put the unit in the uArray
+            if (!endProcessing) {
+              var nIdx = parseInt(pIdx);
+              uArray[u1]['un'] = parensUnits[nIdx];
+            }
+          } // end if the parentheses flag is found at the beginning of curCode
+
+          // Else if characters precede a parentheses flag, an operator is
+          // missing between the characters and the unit referenced by the index.
+          else if (curCode.indexOf(this.parensFlag_) > 0) {
+              var _pIdx = curCode.indexOf(this.parensFlag_);
+              var msAfter = curCode.substr(0, _pIdx);
+              var _mString = origString.replace(msAfter + '(', '' + this.openEmph_ + ('' + msAfter + this.closeEmph_ + '('));
+              retMsg.push('Missing operator after ' + this.openEmph_ + msAfter + (this.closeEmph_ + ' in ' + _mString));
+              endProcessing = true;
+            } // end if we found the parentheses flag in the wrong place
+
+            // Else it's not a parenthetical unit.  If it's not a number, call
+            // makeUnit to create a unit for it.
+            else {
+                var curCodeNum = Number(curCode);
+                // if the current unit string is NOT a number, call makeUnit to create
+                // the unit object for it.  Stop processing if no unit was returned.
+                if (isNaN(curCodeNum)) {
+                  uArray[u1]['un'] = this.makeUnit(curCode, annotations, retMsg, origString);
+                  endProcessing = uArray[u1]['un'] == null;
+                }
+                // Otherwise write the numeric version of the number back to
+                // the uArray 'un' element
+                else {
+                    uArray[u1]['un'] = curCodeNum;
+                  }
+              }
+        }
+      }
+      // If we're still good, continue
+      if (!endProcessing) {
+
+        // Process the units (and numbers) to create one final unit object
+        if (uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined || uArray[0]['un'] == null) {
+          // not sure what this might be, but this is a safeguard
+          retMsg.push('Unit string (' + origString + ') did not contain anything that ' + 'could be used to create a unit, or else something that is not ' + 'handled yet by this package.  Sorry');
+          endProcessing = true;
+        }
+      }
+      if (!endProcessing) {
+
+        finalUnit = uArray[0]['un'];
+        var _uLen2 = uArray.length;
+
+        // Perform the arithmetic for the units, starting with the first 2 units.
+        // We only need to do the arithmetic if we have more than one unit.
+        for (var u2 = 1; u2 < _uLen2; u2++, !endProcessing) {
+          var nextUnit = uArray[u2]['un'];
+          if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
+            retMsg.push('Unit string (' + origString + ') contains unrecognized ' + ('element (' + this.openEmph_ + nextUnit.toString()) + (this.closeEmph_ + '); could not parse full string.  Sorry'));
+            endProcessing = true;
+          }
+          if (!endProcessing) {
+            try {
+              // Is the operation division?
+              var thisOp = uArray[u2]['op'];
+              var isDiv = thisOp === '/';
+
+              // Perform the operation based on the type(s) of the operands
+
+              if (typeof nextUnit !== 'number') {
+                // both are unit objects
+                if (typeof finalUnit !== 'number') {
+                  isDiv ? finalUnit = finalUnit.divide(nextUnit) : finalUnit = finalUnit.multiplyThese(nextUnit);
+                }
+                // finalUnit is a number; nextUnit is a unit object
+                else {
+                    var nMag = nextUnit.getProperty('magnitude_');
+                    isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
+                    var theName = finalUnit.toString() + thisOp + nextUnit.getProperty('name_');
+                    finalUnit = nextUnit;
+                    finalUnit.assignVals({ 'name_': theName, 'magnitude_': nMag });
+                  }
+              } // end if nextUnit is not a number
+
+              else {
+                  // nextUnit is a number; finalUnit is a unit object
+                  if (typeof finalUnit !== 'number') {
+                    var fMag = finalUnit.getProperty('magnitude_');
+                    isDiv ? fMag /= nextUnit : fMag *= nextUnit;
+                    var _theName = finalUnit.getProperty('name_') + thisOp + nextUnit.toString();
+                    finalUnit.assignVals({ 'name_': _theName, 'magnitude_': fMag });
+                  }
+                  // both are numbers
+                  else {
+                      isDiv ? finalUnit /= nextUnit : finalUnit *= nextUnit;
+                    }
+                } // end if nextUnit is a number
+            } catch (err) {
+              retMsg.unshift(err.message);
+              endProcessing = true;
+              finalUnit = null;
+            }
+          } // end if not endProceesing
+        } // end do for each unit after the first one
+      }
+
+      // Do a final check to make sure that finalUnit is a unit and not
+      // just a number.  Something like "1/{HCP}" will return a "unit" of 1
+      // - which is not a unit.  Do this only when this is the first/outer
+      // call to this method.
+      if (firstCall && !isNaN(finalUnit) && finalUnit !== 1) finalUnit = null;
+
+      return [finalUnit, retMsg];
     } // end parseString
+
+    /**
+     * Extracts all annotations from a unit string, replacing them with
+     * placeholders for later evaluation.  The annotations are stored in the
+     * annotations array.
+     *
+     * @param uStr the unit string being parsed
+     * @param annotations the array to contain the extracted annotations
+     * @param retMsg the array to contain any user messages (error and warning)
+     * @returns the string after the annotations are replaced with placeholders
+     */
+
+  }, {
+    key: 'getAnnotations',
+    value: function getAnnotations(uString, annotations, retMsg) {
+      var openBrace = uString.indexOf('{');
+      while (openBrace >= 0) {
+
+        var closeBrace = uString.indexOf('}');
+        if (closeBrace < 0) {
+          retMsg.push('Missing closing brace for annotation starting at ' + this.openEmph_ + uString.substr(openBrace) + this.closeEmph_);
+        } else {
+          var braceStr = uString.substring(openBrace, closeBrace + 1);
+          var aIdx = annotations.length.toString();
+          uString = uString.replace(braceStr, this.braceFlag_ + aIdx + this.braceFlag_);
+          annotations.push(braceStr);
+          openBrace = uString.indexOf('{');
+        }
+      } // end do while we have an opening brace
+      return uString;
+    } // end getAnnotations
 
     /**
      * Breaks the unit string into an array of unit descriptors and operators.
@@ -2607,14 +2932,14 @@ var UnitString = exports.UnitString = function () {
       }
 
       // Create an array of unit/operator objects.  The unit is, for now, the
-      // alphanumeric description of the unit (e.g., Hz for hertz) including
+      // string containing the unit code (e.g., Hz for hertz) including
       // a possible prefix and exponent.   The operator is the operator to be
       // applied to that unit and the one preceding it.  So, a.b would give
       // us two objects.  The first will have a unit of a, and a blank operator
       // (because it's the first unit).  The second would have a unit of b
-      // and the multiplication operator (.).
+      // and the multiplication operator (.).  REDO
       var u1 = uArray1.length;
-      var uArray = [{ un: uArray1[0], op: "" }];
+      var uArray = [{ op: "", un: uArray1[0] }];
       for (var n = 1; n < u1; n++) {
         uArray.push({ op: uArray1[n++], un: uArray1[n] });
       }
@@ -2628,12 +2953,16 @@ var UnitString = exports.UnitString = function () {
      * (centimeter squared).
      *
      * @params uCode the string defining the unit
-     * @returns a unit object, or null if problems creating the unit
+     * @param annotations the array to contain the extracted annotations
+     * @param retMsg the array to contain any user messages (error and warning)
+     * @param origString the original string to be parsed; used to provide
+     *  context for messages
+     * @returns a unit object, or null if there were problems creating the unit
      */
 
   }, {
     key: 'makeUnit',
-    value: function makeUnit(uCode) {
+    value: function makeUnit(uCode, annotations, retMsg, origString) {
       var exp = null;
       var pfxVal = null;
       var pfxCode = null;
@@ -2642,123 +2971,242 @@ var UnitString = exports.UnitString = function () {
       var ulen = uCode.length;
       var origUnit = null;
       var retUnit = null;
+      var endProcessing = false;
 
-      var utabs = UnitTables.getInstance();
+      // check annotations:
+      // If it's JUST an annotation, replace with 1.  If we find text following
+      // the annotation, mark it as an error.   Otherwise just remove it - the
+      // placeholder, that is.
+      // In any case, put a message in the retMsg array explaining either the
+      // problem or how the annotation is interpreted.
 
-      // First look for the full string
-      origUnit = utabs.getUnitByCode(uCode);
+      var anLen = this.braceFlag_.length;
 
-      // If that didn't work, peel off the exponent and try it
-      if (!origUnit) {
-        // This particular regex has been tweaked several times.  This one
-        // works with the following test strings:
-        // "m[H2O]-21] gives ["m{H2O]-21", "m[H2)]", "-21"]
-        // "m[H2O]+21] gives ["m{H2O]+21", "m[H2)]", "+21"]
-        // "m[H2O]21] gives ["m{H2O]-21", "m[H2)]", "21"]
-        // "s2" gives ["s2", "s, "2"]
-        // "kg" gives null
-        var res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
+      var anOpen = uCode.indexOf(this.braceFlag_);
+      if (anOpen >= 0) {
+        var anClose = uCode.substr(anOpen + 1).indexOf(this.braceFlag_) + anOpen + 1;
 
-        // if we got an exponent, separate it from the unit and try
-        // to get the unit again
-        if (res && res[2] && res[2] !== "") {
-          // Make sure that there were no characters after the last digit.
-          // If there are, the reassembled string ends at the last digit,
-          // dropping off everything after that.  Characters after an
-          // exponent (except for subsequent units after a division or
-          // multiplication operator) are invalid.
-          var reassemble = res[1] + res[2];
-          if (reassemble === uCode) {
-            uCode = res[1];
-            exp = res[2];
+        // If no closing flag was found, we have a problem somewhere.
+        if (anClose <= 0) {
+          retMsg.push('Problem processing annotation; please check syntax');
+          endProcessing = true;
+        } else {
+          var anIdx = parseInt(uCode.substring(anOpen + anLen, anClose));
+          var anText = annotations[anIdx];
+
+          // If the closing flag is not at the end of the uCode, text
+          // follows the annotation - which is invalid.
+          if (anClose + anLen < uCode.length) {
+            var wString = origString.replace(anText, this.openEmph_ + anText + this.closeEmph_);
+            retMsg.push('Text following annotation ' + anText + ' in ' + wString + ' ' + 'is invalid.');
+            endProcessing = true;
+          } // end if text follows the annotation
+
+          // Else if there is no text preceding the opening flag, the
+          // annotation is interpreted as 1.  Warn the user
+          else if (anOpen === 0) {
+              uCode = 1;
+              //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
+              //let wString = origString.replace(anText, this.openEmph_ + anText +
+              //                                         this.closeEmph_) ;
+              //let w2String = origString.replace(anText, this.openEmph_ + '1' +
+              //                                          this.closeEmph_);
+              //origString = origString.replace(anText, '1');
+              //retMsg.push(`${wString} is interpreted as ${lead1}${w2String}.  ` +
+              //            `Is this what you meant?`);
+              var dup = false;
+              for (var r = 0; !dup && r < retMsg.length; r++) {
+                dup = retMsg[r] === this.bracesMsg_;
+              }
+              if (!dup) retMsg.push(this.bracesMsg_);
+              retUnit = 1;
+              endProcessing = true;
+            } // end if the annotation is a standalone
+
+            // Else we have an annotation that follows a unit expression (probably).
+            // Put in an interpretation note and trim the annotation off the uCode.
+            else {
+                //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
+                //let wString = origString.replace(anText, this.openEmph_ + anText +
+                //                                         this.closeEmph_) ;
+                origString = origString.replace(anText, '');
+                //let updateExisting = false ;
+                //for (let r = 0; r < retMsg.length; r++) {
+                //  let idx1 = retMsg[r].indexOf(anText);
+                //  if (idx1 >= 0) {
+                //    // we've found the first one - emphasize it
+                //    retMsg[r] = retMsg[r].replace(anText,
+                //                     `${this.openEmph_}${anText}${this.closeEmph_}`);
+                //    // now find the next one
+                //    let idx2 = retMsg[r].lastIndexOf(anText) ;
+                //    if (idx2 > idx1) {
+                //      //let str2 = retMsg[r].substr(idx2);
+                //      //let str2a = str2.replace(anText, '');
+                //      retMsg[r] = retMsg[r].substr(0, idx2) +
+                //                  retMsg[r].substr(idx2).replace(anText, '');
+                //    }
+                //    updateExisting = true ;
+                //  }
+
+                //if (!updateExisting) {
+                //  retMsg.push(`${wString} is interpreted as ${lead1}${origString}.`);
+                //}
+                var _dup = false;
+                for (var _r = 0; !_dup && _r < retMsg.length; _r++) {
+                  _dup = retMsg[_r] === this.bracesMsg_;
+                }
+                if (!_dup) retMsg.push(this.bracesMsg_);
+                uCode = uCode.substr(0, anOpen);
+              } // end if the annotation follows the unit expression
+        } // end if we found an open and a close brace
+      } // end if we found an open brace
+
+      // Continue if we did not hit an annotation error
+      if (!endProcessing) {
+
+        // Check to make sure that the uCode is not simply a number.  This can
+        // happen if an annotation was stripped off, or if the uCode was JUST
+        // an annotation.  In either case, digits are not units.
+        endProcessing = !isNaN(uCode);
+      }
+      if (!endProcessing) {
+        ulen = uCode.length;
+        var utabs = UnitTables.getInstance();
+
+        // First look for the full string
+        origUnit = utabs.getUnitByCode(uCode);
+
+        // If that didn't work, peel off the exponent and try it
+        if (!origUnit) {
+          // This particular regex has been tweaked several times.  This one
+          // works with the following test strings:
+          // "m[H2O]-21] gives ["m{H2O]-21", "m[H2)]", "-21"]
+          // "m[H2O]+21] gives ["m{H2O]+21", "m[H2)]", "+21"]
+          // "m[H2O]21] gives ["m{H2O]-21", "m[H2)]", "21"]
+          // "s2" gives ["s2", "s, "2"]
+          // "kg" gives null
+          var res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
+
+          // if we got an exponent, separate it from the unit and try
+          // to get the unit again
+          if (res && res[2] && res[2] !== "") {
+            // Make sure that there were no characters after the last digit.
+            // If there are, the reassembled string ends at the last digit,
+            // dropping off everything after that.  Characters after an
+            // exponent (except for subsequent units after a division or
+            // multiplication operator) are invalid.
+            var reassemble = res[1] + res[2];
+            if (reassemble === uCode) {
+              uCode = res[1];
+              exp = res[2];
+              origUnit = utabs.getUnitByCode(uCode);
+            } // end if nothing followed the exponent (if there was one)
+          } // end if we got an exponent
+        } // end if we didn't get a unit for the full unit code
+
+        // if we still don't have a unit, separate out the prefix
+        // and try without it.
+
+        if (!origUnit) {
+
+          // Try for a single character prefix first.
+          var pfxTabs = PrefixTables.getInstance();
+          pfxCode = uCode.charAt(0);
+          var pfxObj = pfxTabs.getPrefixByCode(pfxCode);
+
+          // if we got a prefix, get its info and remove it from the unit code
+          if (pfxObj) {
+            pfxVal = pfxObj.getValue();
+            pfxExp = pfxObj.getExp();
+            pfxName = pfxObj.getName();
+            var pCodeLen = pfxCode.length;
+            uCode = uCode.substr(pCodeLen);
+            ulen -= pCodeLen;
+
+            // try again for the unit
             origUnit = utabs.getUnitByCode(uCode);
-          } // end if nothing followed the exponent (if there was one)
-        } // end if we got an exponent
-      } // end if we didn't get a unit for the full unit code
 
-      // if we still don't have a unit, separate out the prefix
-      // and try without it.
+            // If we still don't have a unit, see if the prefix could be the
+            // two character "da" (deka) prefix.  That's the only prefix with
+            // two characters, and without this check it's interpreted as "d"
+            // (deci) and the "a" is considered part of the unit code.
 
-      if (!origUnit) {
+            if (!origUnit && pfxCode == 'd' && uCode.substr(0, 1) == 'a') {
+              pfxCode = 'da';
+              pfxObj = pfxTabs.getPrefixByCode(pfxCode);
+              pfxVal = pfxObj.getValue();
+              pfxExp = pfxObj.getExp();
+              pfxName = pfxObj.getName();
+              uCode = uCode.substr(1);
+              ulen -= 1;
 
-        // Try for a single character prefix first and then
-        // try for a 2-character prefix if a single character prefix is not found.
-        var pfxTabs = PrefixTables.getInstance();
-        pfxCode = uCode.charAt(0);
-        var pfxObj = pfxTabs.getPrefixByCode(pfxCode);
-        if (!pfxObj && uCode.length > 2) {
-          pfxCode = uCode.substr(0, 2);
-          pfxObj = pfxTabs.getPrefixByCode(pfxCode);
-        }
-
-        // if we got a prefix, get its info and remove it from the unit code
-        if (pfxObj) {
-          pfxVal = pfxObj.getValue();
-          pfxExp = pfxObj.getExp();
-          pfxName = pfxObj.getName();
-          var pCodeLen = pfxCode.length;
-          uCode = uCode.substr(pCodeLen);
-          ulen -= pCodeLen;
-
-          // now try one more time for the unit
-          origUnit = utabs.getUnitByCode(uCode);
-        } // end if we found a prefix
-      } // end if we didn't get a unit after removing an exponent
-
-      // now, if we found a unit object, clone it and then apply the prefix
-      // and exponent, if any, to it.
-
-      if (origUnit) {
-        // clone the unit we just got and then apply any exponent and/or prefix
-        // to it
-        retUnit = origUnit.clone();
-        var theDim = retUnit.getProperty('dim_');
-        var theMag = retUnit.getProperty('magnitude_');
-        var theName = retUnit.getProperty('name_');
-        // If there is an exponent for the unit, apply it to the dimension
-        // and magnitude now
-        if (exp) {
-          exp = parseInt(exp);
-          var expMul = exp;
-          theDim = theDim.mul(exp);
-          theMag = Math.pow(theMag, exp);
-          retUnit.assignVals({ 'magnitude_': theMag });
-
-          // If there is also a prefix, apply the exponent to the prefix.
-          if (pfxVal) {
-
-            // if the prefix base is 10 it will have an exponent.  Multiply the
-            // current prefix exponent by the exponent for the unit we're
-            // working with.  Then raise the prefix value to the level
-            // defined by the exponent.
-            if (pfxExp) {
-              expMul *= pfxExp;
-              pfxVal = Math.pow(10, expMul);
+              // try one more time for the unit
+              origUnit = utabs.getUnitByCode(uCode);
             }
-            // if the prefix base is not 10, it won't have an exponent.
-            // At the moment I don't see any units using the prefixes
-            // that aren't base 10.   But if we get one the prefix value
-            // will be applied to the magnitude (below), which is what
-            // we want anyway.
-          } // end if there's a prefix as well as the exponent
-        } // end if there's an exponent
+          } // end if we found a prefix
+        } // end if we didn't get a unit after removing an exponent
 
-        // Now apply the prefix, if there is one, to the magnitude
-        if (pfxVal) {
-          theMag *= pfxVal;
-          retUnit.assignVals({ 'magnitude_': theMag });
+        // If we didn't find a unit, signal an error.  (We tried with the full
+        // unit string, with the unit string without the exponent, and the
+        // unit string without a prefix.  That's all we can try).
+        if (!origUnit) {
+          retMsg.push('Unable to find unit for ' + uCode);
+          endProcessing = true;
         }
+        if (!endProcessing) {
+          // Otherwise we found a unit object.  Clone it and then apply the prefix
+          // and exponent, if any, to it.
 
-        // if we have a prefix and/or an exponent, add them to the unit name
-        if (pfxVal) {
-          theName = pfxName + theName;
-          retUnit.assignVals({ 'name_': theName });
-        }
-        if (exp) {
-          theName = theName + '<sup>' + exp.toString() + '</sup>';
-          retUnit.assignVals({ 'name_': theName });
-        }
-      } // end if we found a unit object
+          retUnit = origUnit.clone();
+          var theDim = retUnit.getProperty('dim_');
+          var theMag = retUnit.getProperty('magnitude_');
+          var theName = retUnit.getProperty('name_');
+          // If there is an exponent for the unit, apply it to the dimension
+          // and magnitude now
+          if (exp) {
+            exp = parseInt(exp);
+            var expMul = exp;
+            theDim = theDim.mul(exp);
+            theMag = Math.pow(theMag, exp);
+            retUnit.assignVals({ 'magnitude_': theMag });
+
+            // If there is also a prefix, apply the exponent to the prefix.
+            if (pfxVal) {
+
+              // if the prefix base is 10 it will have an exponent.  Multiply the
+              // current prefix exponent by the exponent for the unit we're
+              // working with.  Then raise the prefix value to the level
+              // defined by the exponent.
+              if (pfxExp) {
+                expMul *= pfxExp;
+                pfxVal = Math.pow(10, expMul);
+              }
+              // if the prefix base is not 10, it won't have an exponent.
+              // At the moment I don't see any units using the prefixes
+              // that aren't base 10.   But if we get one the prefix value
+              // will be applied to the magnitude (below), which is what
+              // we want anyway.
+            } // end if there's a prefix as well as the exponent
+          } // end if there's an exponent
+
+          // Now apply the prefix, if there is one, to the magnitude
+          if (pfxVal) {
+            theMag *= pfxVal;
+            retUnit.assignVals({ 'magnitude_': theMag });
+          }
+
+          // if we have a prefix and/or an exponent, add them to the unit name
+          if (pfxVal) {
+            theName = pfxName + theName;
+            retUnit.assignVals({ 'name_': theName });
+          }
+          if (exp) {
+            theName = theName + '<sup>' + exp.toString() + '</sup>';
+            retUnit.assignVals({ 'name_': theName });
+          }
+        } // end if not endProcessing set from no unit found
+      } // end if not endProcessing set from annotation error
+
       return retUnit;
     } // ret makeUnit
 
@@ -2813,13 +3261,15 @@ var UnitString = exports.UnitString = function () {
         if (s2Sup) ret += s2Sup;
       }
       return ret;
-    }
+    } // end divString
+
   }]);
 
   return UnitString;
 }(); // end class UnitString
 
-},{"./prefixTables.js":7,"./unitTables.js":13}],13:[function(require,module,exports){
+
+},{"./config.js":2,"./prefixTables.js":7,"./unitTables.js":13}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2876,15 +3326,33 @@ var UnitTables = exports.UnitTables = function () {
     this.unitNames_ = {};
 
     /**
-     * Tracks units by code using case-sensitive or case-insensitive -
-     * whichever we're currently using.  See Ucum.caseSensitive_ in
-     * config.js
+     * Tracks units by code using case-sensitive version.
      *
      * @type hash - key is the code;
      *              value is the reference to the Unit object.  Codes must
      *              be unique.
      */
     this.unitCodes_ = {};
+
+    /**
+     * Tracks units by code using an uppercase version, e.g., MG instead of
+     * mg.  Searched if the code is not found in the unitCodes_ table.
+     *
+     * @type hash - key is the uppercase version of code;
+     *              value is the reference to the Unit object.  Codes must
+     *              be unique.
+     */
+    this.unitUcCodes_ = {};
+
+    /**
+     * Tracks units by code using an lowercase version, e.g., [ph] instead of
+     * [pH].  Searched if the code is not found in the unitCodes_ table.
+     *
+     * @type hash - key is the lowercase version of code;
+     *              value is the reference to the Unit object.  Codes must
+     *              be unique.
+     */
+    this.unitLcCodes_ = {};
 
     /**
      * Keeps track of the order in which units are defined.  The order is
@@ -2999,25 +3467,28 @@ var UnitTables = exports.UnitTables = function () {
     } // end addUnitName
 
     /**
-     * Adds a Unit object to the unitCodes_ table and to the codeOrder_ table.
+     * Adds a Unit object to the unitCodes_, unitUcCodes_, unitLcCodes_ and
+     * codeOrder_ tables.
      *
      * @param theUnit the unit to be added
      * @returns nothing
-     * @throws an error if the table already contains a unit with the code,
-     *         or if the unit has no code of the type currently in use (case
-     *         sensitive or insensitive)
+     * @throws an error if theunitCodes_ table already contains a unit with the code
      */
 
   }, {
     key: 'addUnitCode',
     value: function addUnitCode(theUnit) {
 
-      var uCode = null;
-      if (Ucum.caseSensitive_ == true) uCode = theUnit['csCode_'];else uCode = theUnit['ciCode_'];
-
+      var uCode = theUnit['csCode_'];
       if (uCode) {
+
+        var upCode = uCode.toUpperCase();
+        var downCode = uCode.toLowerCase();
+
         if (this.unitCodes_[uCode]) throw new Error('UnitTables.addUnitCode called, already contains entry for ' + ('unit with code = ' + uCode));else {
           this.unitCodes_[uCode] = theUnit;
+          this.unitUcCodes_[upCode] = theUnit;
+          this.unitLcCodes_[downCode] = theUnit;
           this.codeOrder_.push(uCode);
         }
       } else throw new Error('UnitAtomsTable.addUnitCode called for unit that has ' + 'no code.');
@@ -3072,7 +3543,7 @@ var UnitTables = exports.UnitTables = function () {
     /**
      *  Returns a unit object based on the unit's code.  Tries first on
      *  the code as passed in and then, if the unit is not found, on a
-     *  lowerCase version of the code
+     *  lower case version of the code and then an upper case version.
      *
      *  @param uCode the code of the unit to be returned
      *  @returns the unit object or null if it is not found
@@ -3085,9 +3556,10 @@ var UnitTables = exports.UnitTables = function () {
       if (uCode) {
         retUnit = this.unitCodes_[uCode];
         if (retUnit === undefined) {
-          retUnit = this.unitCodes_[uCode.toLowerCase()];
+          retUnit = this.unitLcCodes_[uCode.toLowerCase()];
           if (retUnit === undefined) {
-            retUnit = null;
+            retUnit = this.unitUcCodes_[uCode.toUpperCase()];
+            if (retUnit === undefined) retUnit = null;
           }
         }
       }
@@ -3356,6 +3828,7 @@ UnitTables.getInstance = function () {
 // Perform the first request for the tables object, to get the
 // getInstance method set.
 UnitTables.getInstance();
+
 
 },{"./config.js":2}],14:[function(require,module,exports){
 'use strict'
@@ -4932,7 +5405,7 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":14,"ieee754":21,"isarray":18}],18:[function(require,module,exports){
+},{"base64-js":14,"ieee754":23,"isarray":18}],18:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
@@ -5050,7 +5523,742 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":23}],20:[function(require,module,exports){
+},{"../../is-buffer/index.js":25}],20:[function(require,module,exports){
+(function (process,Buffer){
+// Generated by CoffeeScript 1.10.0
+var Parser, StringDecoder, stream, util;
+
+stream = require('stream');
+
+util = require('util');
+
+StringDecoder = require('string_decoder').StringDecoder;
+
+module.exports = function() {
+  var callback, called, chunks, data, options, parser;
+  if (arguments.length === 3) {
+    data = arguments[0];
+    options = arguments[1];
+    callback = arguments[2];
+    if (typeof callback !== 'function') {
+      throw Error("Invalid callback argument: " + (JSON.stringify(callback)));
+    }
+    if (!(typeof data === 'string' || Buffer.isBuffer(arguments[0]))) {
+      return callback(Error("Invalid data argument: " + (JSON.stringify(data))));
+    }
+  } else if (arguments.length === 2) {
+    if (typeof arguments[0] === 'string' || Buffer.isBuffer(arguments[0])) {
+      data = arguments[0];
+    } else {
+      options = arguments[0];
+    }
+    if (typeof arguments[1] === 'function') {
+      callback = arguments[1];
+    } else {
+      options = arguments[1];
+    }
+  } else if (arguments.length === 1) {
+    if (typeof arguments[0] === 'function') {
+      callback = arguments[0];
+    } else {
+      options = arguments[0];
+    }
+  }
+  if (options == null) {
+    options = {};
+  }
+  parser = new Parser(options);
+  if (data != null) {
+    process.nextTick(function() {
+      parser.write(data);
+      return parser.end();
+    });
+  }
+  if (callback) {
+    called = false;
+    chunks = options.objname ? {} : [];
+    parser.on('readable', function() {
+      var chunk, results;
+      results = [];
+      while (chunk = parser.read()) {
+        if (options.objname) {
+          results.push(chunks[chunk[0]] = chunk[1]);
+        } else {
+          results.push(chunks.push(chunk));
+        }
+      }
+      return results;
+    });
+    parser.on('error', function(err) {
+      called = true;
+      return callback(err);
+    });
+    parser.on('end', function() {
+      if (!called) {
+        return callback(null, chunks);
+      }
+    });
+  }
+  return parser;
+};
+
+Parser = function(options) {
+  var base, base1, base10, base11, base12, base13, base14, base15, base2, base3, base4, base5, base6, base7, base8, base9, k, v;
+  if (options == null) {
+    options = {};
+  }
+  options.objectMode = true;
+  this.options = {};
+  for (k in options) {
+    v = options[k];
+    this.options[k] = v;
+  }
+  stream.Transform.call(this, this.options);
+  if ((base = this.options).rowDelimiter == null) {
+    base.rowDelimiter = null;
+  }
+  if ((base1 = this.options).delimiter == null) {
+    base1.delimiter = ',';
+  }
+  if ((base2 = this.options).quote == null) {
+    base2.quote = '"';
+  }
+  if ((base3 = this.options).escape == null) {
+    base3.escape = '"';
+  }
+  if ((base4 = this.options).columns == null) {
+    base4.columns = null;
+  }
+  if ((base5 = this.options).comment == null) {
+    base5.comment = '';
+  }
+  if ((base6 = this.options).objname == null) {
+    base6.objname = false;
+  }
+  if ((base7 = this.options).trim == null) {
+    base7.trim = false;
+  }
+  if ((base8 = this.options).ltrim == null) {
+    base8.ltrim = false;
+  }
+  if ((base9 = this.options).rtrim == null) {
+    base9.rtrim = false;
+  }
+  if ((base10 = this.options).auto_parse == null) {
+    base10.auto_parse = false;
+  }
+  if ((base11 = this.options).auto_parse_date == null) {
+    base11.auto_parse_date = false;
+  }
+  if ((base12 = this.options).relax == null) {
+    base12.relax = false;
+  }
+  if ((base13 = this.options).relax_column_count == null) {
+    base13.relax_column_count = false;
+  }
+  if ((base14 = this.options).skip_empty_lines == null) {
+    base14.skip_empty_lines = false;
+  }
+  if ((base15 = this.options).max_limit_on_data_read == null) {
+    base15.max_limit_on_data_read = 128000;
+  }
+  this.lines = 0;
+  this.count = 0;
+  this.is_int = /^(\-|\+)?([1-9]+[0-9]*)$/;
+  this.is_float = function(value) {
+    return (value - parseFloat(value) + 1) >= 0;
+  };
+  this.decoder = new StringDecoder();
+  this.buf = '';
+  this.quoting = false;
+  this.commenting = false;
+  this.field = '';
+  this.nextChar = null;
+  this.closingQuote = 0;
+  this.line = [];
+  this.chunks = [];
+  return this;
+};
+
+util.inherits(Parser, stream.Transform);
+
+module.exports.Parser = Parser;
+
+Parser.prototype._transform = function(chunk, encoding, callback) {
+  var err;
+  if (chunk instanceof Buffer) {
+    chunk = this.decoder.write(chunk);
+  }
+  try {
+    this.__write(chunk, false);
+    return callback();
+  } catch (error) {
+    err = error;
+    return this.emit('error', err);
+  }
+};
+
+Parser.prototype._flush = function(callback) {
+  var err;
+  try {
+    this.__write(this.decoder.end(), true);
+    if (this.quoting) {
+      this.emit('error', new Error("Quoted field not terminated at line " + (this.lines + 1)));
+      return;
+    }
+    if (this.line.length > 0) {
+      this.__push(this.line);
+    }
+    return callback();
+  } catch (error) {
+    err = error;
+    return this.emit('error', err);
+  }
+};
+
+Parser.prototype.__push = function(line) {
+  var field, i, j, len, lineAsColumns;
+  if (this.options.columns === true) {
+    this.options.columns = line;
+    return;
+  } else if (typeof this.options.columns === 'function') {
+    this.options.columns = this.options.columns(line);
+    return;
+  }
+  if (!this.line_length && line.length > 0) {
+    this.line_length = this.options.columns ? this.options.columns.length : line.length;
+  }
+  if (!this.options.relax_column_count && line.length !== this.line_length) {
+    if (this.options.columns != null) {
+      this.emit('error', Error("Number of columns on line " + this.lines + " does not match header"));
+    } else {
+      this.emit('error', Error("Number of columns is inconsistent on line " + (this.lines + 1)));
+    }
+  }
+  this.count++;
+  if (this.options.columns != null) {
+    lineAsColumns = {};
+    for (i = j = 0, len = line.length; j < len; i = ++j) {
+      field = line[i];
+      lineAsColumns[this.options.columns[i]] = field;
+    }
+    if (this.options.objname) {
+      return this.push([lineAsColumns[this.options.objname], lineAsColumns]);
+    } else {
+      return this.push(lineAsColumns);
+    }
+  } else {
+    return this.push(line);
+  }
+};
+
+Parser.prototype.__write = function(chars, end, callback) {
+  var acceptedLength, areNextCharsDelimiter, areNextCharsRowDelimiters, auto_parse, char, escapeIsQuote, i, isDelimiter, isEscape, isNextCharAComment, isQuote, isRowDelimiter, is_float, is_int, l, ltrim, nextCharPos, ref, results, rowDelimiter, rowDelimiterLength, rtrim, wasCommenting;
+  is_int = (function(_this) {
+    return function(value) {
+      if (typeof _this.is_int === 'function') {
+        return _this.is_int(value);
+      } else {
+        return _this.is_int.test(value);
+      }
+    };
+  })(this);
+  is_float = (function(_this) {
+    return function(value) {
+      if (typeof _this.is_float === 'function') {
+        return _this.is_float(value);
+      } else {
+        return _this.is_float.test(value);
+      }
+    };
+  })(this);
+  auto_parse = (function(_this) {
+    return function(value) {
+      var m;
+      if (_this.options.auto_parse && is_int(_this.field)) {
+        _this.field = parseInt(_this.field);
+      } else if (_this.options.auto_parse && is_float(_this.field)) {
+        _this.field = parseFloat(_this.field);
+      } else if (_this.options.auto_parse && _this.options.auto_parse_date) {
+        m = Date.parse(_this.field);
+        if (!isNaN(m)) {
+          _this.field = new Date(m);
+        }
+      }
+      return _this.field;
+    };
+  })(this);
+  ltrim = this.options.trim || this.options.ltrim;
+  rtrim = this.options.trim || this.options.rtrim;
+  chars = this.buf + chars;
+  l = chars.length;
+  rowDelimiterLength = this.options.rowDelimiter ? this.options.rowDelimiter.length : 0;
+  i = 0;
+  if (this.lines === 0 && 0xFEFF === chars.charCodeAt(0)) {
+    i++;
+  }
+  while (i < l) {
+    acceptedLength = rowDelimiterLength + this.options.comment.length + this.options.escape.length + this.options.delimiter.length;
+    if (this.quoting) {
+      acceptedLength += this.options.quote.length;
+    }
+    if (!end && (i + acceptedLength >= l)) {
+      break;
+    }
+    char = this.nextChar ? this.nextChar : chars.charAt(i);
+    this.nextChar = chars.charAt(i + 1);
+    if (this.options.rowDelimiter == null) {
+      if ((this.field === '') && (char === '\n' || char === '\r')) {
+        rowDelimiter = char;
+        nextCharPos = i + 1;
+      } else if (this.nextChar === '\n' || this.nextChar === '\r') {
+        rowDelimiter = this.nextChar;
+        nextCharPos = i + 2;
+      }
+      if (rowDelimiter) {
+        if (rowDelimiter === '\r' && chars.charAt(nextCharPos) === '\n') {
+          rowDelimiter += '\n';
+        }
+        this.options.rowDelimiter = rowDelimiter;
+        rowDelimiterLength = this.options.rowDelimiter.length;
+      }
+    }
+    if (!this.commenting && char === this.options.escape) {
+      escapeIsQuote = this.options.escape === this.options.quote;
+      isEscape = this.nextChar === this.options.escape;
+      isQuote = this.nextChar === this.options.quote;
+      if (!(escapeIsQuote && !this.field && !this.quoting) && (isEscape || isQuote)) {
+        i++;
+        char = this.nextChar;
+        this.nextChar = chars.charAt(i + 1);
+        this.field += char;
+        i++;
+        continue;
+      }
+    }
+    if (!this.commenting && char === this.options.quote) {
+      if (this.quoting) {
+        areNextCharsRowDelimiters = this.options.rowDelimiter && chars.substr(i + 1, this.options.rowDelimiter.length) === this.options.rowDelimiter;
+        areNextCharsDelimiter = chars.substr(i + 1, this.options.delimiter.length) === this.options.delimiter;
+        isNextCharAComment = this.nextChar === this.options.comment;
+        if (this.nextChar && !areNextCharsRowDelimiters && !areNextCharsDelimiter && !isNextCharAComment) {
+          if (this.options.relax) {
+            this.quoting = false;
+            this.field = "" + this.options.quote + this.field;
+          } else {
+            throw Error("Invalid closing quote at line " + (this.lines + 1) + "; found " + (JSON.stringify(this.nextChar)) + " instead of delimiter " + (JSON.stringify(this.options.delimiter)));
+          }
+        } else {
+          this.quoting = false;
+          this.closingQuote = this.options.quote.length;
+          i++;
+          if (end && i === l) {
+            this.line.push(auto_parse(this.field));
+          }
+          continue;
+        }
+      } else if (!this.field) {
+        this.quoting = true;
+        i++;
+        continue;
+      } else if (this.field && !this.options.relax) {
+        throw Error("Invalid opening quote at line " + (this.lines + 1));
+      }
+    }
+    isRowDelimiter = this.options.rowDelimiter && chars.substr(i, this.options.rowDelimiter.length) === this.options.rowDelimiter;
+    if (isRowDelimiter || (end && i === l - 1)) {
+      this.lines++;
+    }
+    wasCommenting = false;
+    if (!this.commenting && !this.quoting && this.options.comment && chars.substr(i, this.options.comment.length) === this.options.comment) {
+      this.commenting = true;
+    } else if (this.commenting && isRowDelimiter) {
+      wasCommenting = true;
+      this.commenting = false;
+    }
+    isDelimiter = chars.substr(i, this.options.delimiter.length) === this.options.delimiter;
+    if (!this.commenting && !this.quoting && (isDelimiter || isRowDelimiter)) {
+      if (isRowDelimiter && this.line.length === 0 && this.field === '') {
+        if (wasCommenting || this.options.skip_empty_lines) {
+          i += this.options.rowDelimiter.length;
+          this.nextChar = chars.charAt(i);
+          continue;
+        }
+      }
+      if (rtrim) {
+        if (!this.closingQuote) {
+          this.field = this.field.trimRight();
+        }
+      }
+      this.line.push(auto_parse(this.field));
+      this.closingQuote = 0;
+      this.field = '';
+      if (isDelimiter) {
+        i += this.options.delimiter.length;
+        this.nextChar = chars.charAt(i);
+        if (end && !this.nextChar) {
+          isRowDelimiter = true;
+          this.line.push('');
+        }
+      }
+      if (isRowDelimiter) {
+        this.__push(this.line);
+        this.line = [];
+        i += (ref = this.options.rowDelimiter) != null ? ref.length : void 0;
+        this.nextChar = chars.charAt(i);
+        continue;
+      }
+    } else if (!this.commenting && !this.quoting && (char === ' ' || char === '\t')) {
+      if (!(ltrim && !this.field)) {
+        this.field += char;
+      }
+      if (end && i + 1 === l) {
+        if (this.options.trim || this.options.rtrim) {
+          this.field = this.field.trimRight();
+        }
+        this.line.push(auto_parse(this.field));
+      }
+      i++;
+    } else if (!this.commenting) {
+      this.field += char;
+      i++;
+      if (end && i === l) {
+        this.line.push(auto_parse(this.field));
+      }
+    } else {
+      i++;
+    }
+    if (!this.commenting && this.field.length > this.options.max_limit_on_data_read) {
+      throw Error("Delimter not found in the file " + (JSON.stringify(this.options.delimiter)));
+    }
+    if (!this.commenting && this.line.length > this.options.max_limit_on_data_read) {
+      throw Error("Row delimter not found in the file " + (JSON.stringify(this.options.rowDelimiter)));
+    }
+  }
+  this.buf = '';
+  results = [];
+  while (i < l) {
+    this.buf += chars.charAt(i);
+    results.push(i++);
+  }
+  return results;
+};
+
+}).call(this,require('_process'),require("buffer").Buffer)
+},{"_process":35,"buffer":17,"stream":48,"string_decoder":50,"util":53}],21:[function(require,module,exports){
+(function (process){
+// Generated by CoffeeScript 1.10.0
+var Stringifier, get, stream, util;
+
+stream = require('stream');
+
+util = require('util');
+
+get = require('lodash.get');
+
+module.exports = function() {
+  var callback, chunks, data, options, stringifier;
+  if (arguments.length === 3) {
+    data = arguments[0];
+    options = arguments[1];
+    callback = arguments[2];
+  } else if (arguments.length === 2) {
+    if (Array.isArray(arguments[0])) {
+      data = arguments[0];
+    } else {
+      options = arguments[0];
+    }
+    if (typeof arguments[1] === 'function') {
+      callback = arguments[1];
+    } else {
+      options = arguments[1];
+    }
+  } else if (arguments.length === 1) {
+    if (typeof arguments[0] === 'function') {
+      callback = arguments[0];
+    } else if (Array.isArray(arguments[0])) {
+      data = arguments[0];
+    } else {
+      options = arguments[0];
+    }
+  }
+  if (options == null) {
+    options = {};
+  }
+  stringifier = new Stringifier(options);
+  if (data) {
+    process.nextTick(function() {
+      var d, j, len;
+      for (j = 0, len = data.length; j < len; j++) {
+        d = data[j];
+        stringifier.write(d);
+      }
+      return stringifier.end();
+    });
+  }
+  if (callback) {
+    chunks = [];
+    stringifier.on('readable', function() {
+      var chunk, results;
+      results = [];
+      while (chunk = stringifier.read()) {
+        results.push(chunks.push(chunk));
+      }
+      return results;
+    });
+    stringifier.on('error', function(err) {
+      return callback(err);
+    });
+    stringifier.on('end', function() {
+      return callback(null, chunks.join(''));
+    });
+  }
+  return stringifier;
+};
+
+Stringifier = function(opts) {
+  var base, base1, base10, base11, base12, base2, base3, base4, base5, base6, base7, base8, base9, k, options, v;
+  if (opts == null) {
+    opts = {};
+  }
+  options = {};
+  for (k in opts) {
+    v = opts[k];
+    options[k] = v;
+  }
+  stream.Transform.call(this, options);
+  this.options = options;
+  if ((base = this.options).delimiter == null) {
+    base.delimiter = ',';
+  }
+  if ((base1 = this.options).quote == null) {
+    base1.quote = '"';
+  }
+  if ((base2 = this.options).quoted == null) {
+    base2.quoted = false;
+  }
+  if ((base3 = this.options).quotedString == null) {
+    base3.quotedString = false;
+  }
+  if ((base4 = this.options).eof == null) {
+    base4.eof = true;
+  }
+  if ((base5 = this.options).escape == null) {
+    base5.escape = '"';
+  }
+  if ((base6 = this.options).columns == null) {
+    base6.columns = null;
+  }
+  if ((base7 = this.options).header == null) {
+    base7.header = false;
+  }
+  if ((base8 = this.options).formatters == null) {
+    base8.formatters = {};
+  }
+  if ((base9 = this.options.formatters).date == null) {
+    base9.date = function(value) {
+      return '' + value.getTime();
+    };
+  }
+  if ((base10 = this.options.formatters).bool == null) {
+    base10.bool = function(value) {
+      if (value) {
+        return '1';
+      } else {
+        return '';
+      }
+    };
+  }
+  if ((base11 = this.options.formatters).object == null) {
+    base11.object = function(value) {
+      return JSON.stringify(value);
+    };
+  }
+  if ((base12 = this.options).rowDelimiter == null) {
+    base12.rowDelimiter = '\n';
+  }
+  if (this.countWriten == null) {
+    this.countWriten = 0;
+  }
+  switch (this.options.rowDelimiter) {
+    case 'auto':
+      this.options.rowDelimiter = null;
+      break;
+    case 'unix':
+      this.options.rowDelimiter = "\n";
+      break;
+    case 'mac':
+      this.options.rowDelimiter = "\r";
+      break;
+    case 'windows':
+      this.options.rowDelimiter = "\r\n";
+      break;
+    case 'unicode':
+      this.options.rowDelimiter = "\u2028";
+  }
+  return this;
+};
+
+util.inherits(Stringifier, stream.Transform);
+
+module.exports.Stringifier = Stringifier;
+
+Stringifier.prototype.headers = function() {
+  var k, label, labels;
+  if (!this.options.header) {
+    return;
+  }
+  if (!this.options.columns) {
+    return;
+  }
+  labels = this.options.columns;
+  if (typeof labels === 'object') {
+    labels = (function() {
+      var results;
+      results = [];
+      for (k in labels) {
+        label = labels[k];
+        results.push(label);
+      }
+      return results;
+    })();
+  }
+  if (this.options.eof) {
+    labels = this.stringify(labels) + this.options.rowDelimiter;
+  } else {
+    labels = this.stringify(labels);
+  }
+  return stream.Transform.prototype.write.call(this, labels);
+};
+
+Stringifier.prototype.end = function(chunk, encoding, callback) {
+  if (this.countWriten === 0) {
+    this.headers();
+  }
+  return stream.Transform.prototype.end.apply(this, arguments);
+};
+
+Stringifier.prototype.write = function(chunk, encoding, callback) {
+  var base, e, error, preserve;
+  if (chunk == null) {
+    return;
+  }
+  preserve = typeof chunk !== 'object';
+  if (!preserve) {
+    if (this.countWriten === 0 && !Array.isArray(chunk)) {
+      if ((base = this.options).columns == null) {
+        base.columns = Object.keys(chunk);
+      }
+    }
+    try {
+      this.emit('record', chunk, this.countWriten);
+    } catch (error) {
+      e = error;
+      return this.emit('error', e);
+    }
+    if (this.options.eof) {
+      chunk = this.stringify(chunk) + this.options.rowDelimiter;
+    } else {
+      chunk = this.stringify(chunk);
+      if (this.options.header || this.countWriten) {
+        chunk = this.options.rowDelimiter + chunk;
+      }
+    }
+  }
+  if (typeof chunk === 'number') {
+    chunk = "" + chunk;
+  }
+  if (this.countWriten === 0) {
+    this.headers();
+  }
+  if (!preserve) {
+    this.countWriten++;
+  }
+  return stream.Transform.prototype.write.call(this, chunk, encoding, callback);
+};
+
+Stringifier.prototype._transform = function(chunk, encoding, callback) {
+  this.push(chunk);
+  return callback();
+};
+
+Stringifier.prototype.stringify = function(line) {
+  var _line, column, columns, containsEscape, containsLinebreak, containsQuote, containsdelimiter, delimiter, escape, field, i, j, l, newLine, quote, ref, ref1, regexp, shouldQuote, value;
+  if (typeof line !== 'object') {
+    return line;
+  }
+  columns = this.options.columns;
+  if (typeof columns === 'object' && columns !== null && !Array.isArray(columns)) {
+    columns = Object.keys(columns);
+  }
+  delimiter = this.options.delimiter;
+  quote = this.options.quote;
+  escape = this.options.escape;
+  if (!Array.isArray(line)) {
+    _line = [];
+    if (columns) {
+      for (i = j = 0, ref = columns.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        column = columns[i];
+        value = get(line, column);
+        _line[i] = typeof value === 'undefined' || value === null ? '' : value;
+      }
+    } else {
+      for (column in line) {
+        _line.push(line[column]);
+      }
+    }
+    line = _line;
+    _line = null;
+  } else if (columns) {
+    line.splice(columns.length);
+  }
+  if (Array.isArray(line)) {
+    newLine = '';
+    for (i = l = 0, ref1 = line.length; 0 <= ref1 ? l < ref1 : l > ref1; i = 0 <= ref1 ? ++l : --l) {
+      field = line[i];
+      if (typeof field === 'string') {
+
+      } else if (typeof field === 'number') {
+        field = '' + field;
+      } else if (typeof field === 'boolean') {
+        field = this.options.formatters.bool(field);
+      } else if (field instanceof Date) {
+        field = this.options.formatters.date(field);
+      } else if (typeof field === 'object' && field !== null) {
+        field = this.options.formatters.object(field);
+      }
+      if (field) {
+        containsdelimiter = field.indexOf(delimiter) >= 0;
+        containsQuote = field.indexOf(quote) >= 0;
+        containsEscape = field.indexOf(escape) >= 0 && (escape !== quote);
+        containsLinebreak = field.indexOf('\r') >= 0 || field.indexOf('\n') >= 0;
+        shouldQuote = containsQuote || containsdelimiter || containsLinebreak || this.options.quoted || (this.options.quotedString && typeof line[i] === 'string');
+        if (shouldQuote && containsEscape) {
+          regexp = escape === '\\' ? new RegExp(escape + escape, 'g') : new RegExp(escape, 'g');
+          field = field.replace(regexp, escape + escape);
+        }
+        if (containsQuote) {
+          regexp = new RegExp(quote, 'g');
+          field = field.replace(regexp, escape + quote);
+        }
+        if (shouldQuote) {
+          field = quote + field + quote;
+        }
+        newLine += field;
+      } else if (this.options.quotedEmpty || ((this.options.quotedEmpty == null) && line[i] === '' && this.options.quotedString)) {
+        newLine += quote + quote;
+      }
+      if (i !== line.length - 1) {
+        newLine += delimiter;
+      }
+    }
+    line = newLine;
+  }
+  return line;
+};
+
+}).call(this,require('_process'))
+},{"_process":35,"lodash.get":31,"stream":48,"util":53}],22:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5350,7 +6558,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -5436,7 +6644,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -5461,7 +6669,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * Determine if an object is Buffer
  *
@@ -5480,7 +6688,7 @@ module.exports = function (obj) {
     ))
 }
 
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 var numberIsNan = require('number-is-nan');
 
@@ -5488,7 +6696,7 @@ module.exports = Number.isFinite || function (val) {
 	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
 };
 
-},{"number-is-nan":27}],25:[function(require,module,exports){
+},{"number-is-nan":32}],27:[function(require,module,exports){
 // https://github.com/paulmillr/es6-shim
 // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
 var isFinite = require("is-finite");
@@ -5498,7 +6706,7 @@ module.exports = Number.isInteger || function(val) {
     Math.floor(val) === val;
 };
 
-},{"is-finite":24}],26:[function(require,module,exports){
+},{"is-finite":26}],28:[function(require,module,exports){
 var fs = require('fs')
 
 function readFile (file, options, callback) {
@@ -5587,13 +6795,1124 @@ var jsonfile = {
 
 module.exports = jsonfile
 
-},{"fs":16}],27:[function(require,module,exports){
+},{"fs":16}],29:[function(require,module,exports){
+(function (global){
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/** Used to determine if values are of the language type `Object`. */
+var objectTypes = {
+  'function': true,
+  'object': true
+};
+
+/** Detect free variable `exports`. */
+var freeExports = (objectTypes[typeof exports] && exports && !exports.nodeType)
+  ? exports
+  : undefined;
+
+/** Detect free variable `module`. */
+var freeModule = (objectTypes[typeof module] && module && !module.nodeType)
+  ? module
+  : undefined;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = checkGlobal(freeExports && freeModule && typeof global == 'object' && global);
+
+/** Detect free variable `self`. */
+var freeSelf = checkGlobal(objectTypes[typeof self] && self);
+
+/** Detect free variable `window`. */
+var freeWindow = checkGlobal(objectTypes[typeof window] && window);
+
+/** Detect `this` as the global object. */
+var thisGlobal = checkGlobal(objectTypes[typeof this] && this);
+
+/**
+ * Used as a reference to the global object.
+ *
+ * The `this` value is used if it's the global object to avoid Greasemonkey's
+ * restricted `window` object, otherwise the `window` object is used.
+ */
+var root = freeGlobal ||
+  ((freeWindow !== (thisGlobal && thisGlobal.window)) && freeWindow) ||
+    freeSelf || thisGlobal || Function('return this')();
+
+/**
+ * Checks if `value` is a global object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {null|Object} Returns `value` if it's a global object, else `null`.
+ */
+function checkGlobal(value) {
+  return (value && value.Object === Object) ? value : null;
+}
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Built-in value references. */
+var Symbol = root.Symbol;
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolToString = symbolProto ? symbolProto.toString : undefined;
+
+/**
+ * The base implementation of `_.toString` which doesn't convert nullish
+ * values to empty strings.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return symbolToString ? symbolToString.call(value) : '';
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is correctly classified,
+ *  else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+module.exports = baseToString;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],30:[function(require,module,exports){
+(function (global){
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+var baseToString = require('lodash._basetostring');
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** `Object#toString` result references. */
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
+
+/** Used to match property names within property paths. */
+var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g;
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/6.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to match backslashes in property paths. */
+var reEscapeChar = /\\(\\)?/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used to determine if values are of the language type `Object`. */
+var objectTypes = {
+  'function': true,
+  'object': true
+};
+
+/** Detect free variable `exports`. */
+var freeExports = (objectTypes[typeof exports] && exports && !exports.nodeType)
+  ? exports
+  : undefined;
+
+/** Detect free variable `module`. */
+var freeModule = (objectTypes[typeof module] && module && !module.nodeType)
+  ? module
+  : undefined;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = checkGlobal(freeExports && freeModule && typeof global == 'object' && global);
+
+/** Detect free variable `self`. */
+var freeSelf = checkGlobal(objectTypes[typeof self] && self);
+
+/** Detect free variable `window`. */
+var freeWindow = checkGlobal(objectTypes[typeof window] && window);
+
+/** Detect `this` as the global object. */
+var thisGlobal = checkGlobal(objectTypes[typeof this] && this);
+
+/**
+ * Used as a reference to the global object.
+ *
+ * The `this` value is used if it's the global object to avoid Greasemonkey's
+ * restricted `window` object, otherwise the `window` object is used.
+ */
+var root = freeGlobal ||
+  ((freeWindow !== (thisGlobal && thisGlobal.window)) && freeWindow) ||
+    freeSelf || thisGlobal || Function('return this')();
+
+/**
+ * Checks if `value` is a global object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {null|Object} Returns `value` if it's a global object, else `null`.
+ */
+function checkGlobal(value) {
+  return (value && value.Object === Object) ? value : null;
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = Function.prototype.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var splice = arrayProto.splice;
+
+/* Built-in method references that are verified to be native. */
+var Map = getNative(root, 'Map'),
+    nativeCreate = getNative(Object, 'create');
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to search.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = object[key];
+  return isNative(value) ? value : undefined;
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Converts `string` to a property path array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the property path array.
+ */
+var stringToPath = memoize(function(string) {
+  var result = [];
+  toString(string).replace(rePropName, function(match, number, quote, string) {
+    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+  });
+  return result;
+});
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * Creates a function that memoizes the result of `func`. If `resolver` is
+ * provided, it determines the cache key for storing the result based on the
+ * arguments provided to the memoized function. By default, the first argument
+ * provided to the memoized function is used as the map cache key. The `func`
+ * is invoked with the `this` binding of the memoized function.
+ *
+ * **Note:** The cache is exposed as the `cache` property on the memoized
+ * function. Its creation may be customized by replacing the `_.memoize.Cache`
+ * constructor with one whose instances implement the
+ * [`Map`](http://ecma-international.org/ecma-262/6.0/#sec-properties-of-the-map-prototype-object)
+ * method interface of `delete`, `get`, `has`, and `set`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to have its output memoized.
+ * @param {Function} [resolver] The function to resolve the cache key.
+ * @returns {Function} Returns the new memoized function.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': 2 };
+ * var other = { 'c': 3, 'd': 4 };
+ *
+ * var values = _.memoize(_.values);
+ * values(object);
+ * // => [1, 2]
+ *
+ * values(other);
+ * // => [3, 4]
+ *
+ * object.a = 2;
+ * values(object);
+ * // => [1, 2]
+ *
+ * // Modify the result cache.
+ * values.cache.set(object, ['a', 'b']);
+ * values(object);
+ * // => ['a', 'b']
+ *
+ * // Replace `_.memoize.Cache`.
+ * _.memoize.Cache = WeakMap;
+ */
+function memoize(func, resolver) {
+  if (typeof func != 'function' || (resolver && typeof resolver != 'function')) {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  var memoized = function() {
+    var args = arguments,
+        key = resolver ? resolver.apply(this, args) : args[0],
+        cache = memoized.cache;
+
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    var result = func.apply(this, args);
+    memoized.cache = cache.set(key, result);
+    return result;
+  };
+  memoized.cache = new (memoize.Cache || MapCache);
+  return memoized;
+}
+
+// Assign cache to `_.memoize`.
+memoize.Cache = MapCache;
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'user': 'fred' };
+ * var other = { 'user': 'fred' };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is correctly classified,
+ *  else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8 which returns 'object' for typed array and weak map constructors,
+  // and PhantomJS 1.9 which returns 'function' for `NodeList` instances.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/6.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is a native function.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ * @example
+ *
+ * _.isNative(Array.prototype.push);
+ * // => true
+ *
+ * _.isNative(_);
+ * // => false
+ */
+function isNative(value) {
+  if (!isObject(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * Converts `value` to a string. An empty string is returned for `null`
+ * and `undefined` values. The sign of `-0` is preserved.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ * @example
+ *
+ * _.toString(null);
+ * // => ''
+ *
+ * _.toString(-0);
+ * // => '-0'
+ *
+ * _.toString([1, 2, 3]);
+ * // => '1,2,3'
+ */
+function toString(value) {
+  return value == null ? '' : baseToString(value);
+}
+
+module.exports = stringToPath;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"lodash._basetostring":29}],31:[function(require,module,exports){
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+var stringToPath = require('lodash._stringtopath');
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/** Used to match property names within property paths. */
+var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
+    reIsPlainProp = /^\w*$/;
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/**
+ * The base implementation of `_.get` without support for default values.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array|string} path The path of the property to get.
+ * @returns {*} Returns the resolved value.
+ */
+function baseGet(object, path) {
+  path = isKey(path, object) ? [path] : castPath(path);
+
+  var index = 0,
+      length = path.length;
+
+  while (object != null && index < length) {
+    object = object[toKey(path[index++])];
+  }
+  return (index && index == length) ? object : undefined;
+}
+
+/**
+ * Casts `value` to a path array if it's not one.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {Array} Returns the cast property path array.
+ */
+function castPath(value) {
+  return isArray(value) ? value : stringToPath(value);
+}
+
+/**
+ * Checks if `value` is a property name and not a property path.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {Object} [object] The object to query keys on.
+ * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
+ */
+function isKey(value, object) {
+  if (isArray(value)) {
+    return false;
+  }
+  var type = typeof value;
+  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
+      value == null || isSymbol(value)) {
+    return true;
+  }
+  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
+    (object != null && value in Object(object));
+}
+
+/**
+ * Converts `value` to a string key if it's not a string or symbol.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {string|symbol} Returns the key.
+ */
+function toKey(value) {
+  if (typeof value == 'string' || isSymbol(value)) {
+    return value;
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @type {Function}
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is correctly classified,
+ *  else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is correctly classified,
+ *  else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+/**
+ * Gets the value at `path` of `object`. If the resolved value is
+ * `undefined`, the `defaultValue` is used in its place.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.7.0
+ * @category Object
+ * @param {Object} object The object to query.
+ * @param {Array|string} path The path of the property to get.
+ * @param {*} [defaultValue] The value returned for `undefined` resolved values.
+ * @returns {*} Returns the resolved value.
+ * @example
+ *
+ * var object = { 'a': [{ 'b': { 'c': 3 } }] };
+ *
+ * _.get(object, 'a[0].b.c');
+ * // => 3
+ *
+ * _.get(object, ['a', '0', 'b', 'c']);
+ * // => 3
+ *
+ * _.get(object, 'a.b.c', 'default');
+ * // => 'default'
+ */
+function get(object, path, defaultValue) {
+  var result = object == null ? undefined : baseGet(object, path);
+  return result === undefined ? defaultValue : result;
+}
+
+module.exports = get;
+
+},{"lodash._stringtopath":30}],32:[function(require,module,exports){
 'use strict';
 module.exports = Number.isNaN || function (x) {
 	return x !== x;
 };
 
-},{}],28:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5821,7 +8140,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":30}],29:[function(require,module,exports){
+},{"_process":35}],34:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5845,7 +8164,7 @@ function nextTick(fn) {
 }
 
 }).call(this,require('_process'))
-},{"_process":30}],30:[function(require,module,exports){
+},{"_process":35}],35:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -5938,10 +8257,10 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],31:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 module.exports = require("./lib/_stream_duplex.js")
 
-},{"./lib/_stream_duplex.js":32}],32:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":37}],37:[function(require,module,exports){
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -6017,7 +8336,7 @@ function forEach(xs, f) {
     f(xs[i], i);
   }
 }
-},{"./_stream_readable":34,"./_stream_writable":36,"core-util-is":19,"inherits":22,"process-nextick-args":29}],33:[function(require,module,exports){
+},{"./_stream_readable":39,"./_stream_writable":41,"core-util-is":19,"inherits":24,"process-nextick-args":34}],38:[function(require,module,exports){
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -6044,7 +8363,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":35,"core-util-is":19,"inherits":22}],34:[function(require,module,exports){
+},{"./_stream_transform":40,"core-util-is":19,"inherits":24}],39:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6927,7 +9246,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":32,"_process":30,"buffer":17,"core-util-is":19,"events":20,"inherits":22,"isarray":37,"process-nextick-args":29,"string_decoder/":44,"util":15}],35:[function(require,module,exports){
+},{"./_stream_duplex":37,"_process":35,"buffer":17,"core-util-is":19,"events":22,"inherits":24,"isarray":42,"process-nextick-args":34,"string_decoder/":50,"util":15}],40:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -7108,7 +9427,7 @@ function done(stream, er) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":32,"core-util-is":19,"inherits":22}],36:[function(require,module,exports){
+},{"./_stream_duplex":37,"core-util-is":19,"inherits":24}],41:[function(require,module,exports){
 (function (process){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
@@ -7627,12 +9946,12 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":32,"_process":30,"buffer":17,"core-util-is":19,"events":20,"inherits":22,"process-nextick-args":29,"util-deprecate":45}],37:[function(require,module,exports){
+},{"./_stream_duplex":37,"_process":35,"buffer":17,"core-util-is":19,"events":22,"inherits":24,"process-nextick-args":34,"util-deprecate":51}],42:[function(require,module,exports){
 arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],38:[function(require,module,exports){
+},{"dup":18}],43:[function(require,module,exports){
 module.exports = require("./lib/_stream_passthrough.js")
 
-},{"./lib/_stream_passthrough.js":33}],39:[function(require,module,exports){
+},{"./lib/_stream_passthrough.js":38}],44:[function(require,module,exports){
 var Stream = (function (){
   try {
     return require('st' + 'ream'); // hack to fix a circular dependency issue when used with browserify
@@ -7646,13 +9965,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":32,"./lib/_stream_passthrough.js":33,"./lib/_stream_readable.js":34,"./lib/_stream_transform.js":35,"./lib/_stream_writable.js":36}],40:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":37,"./lib/_stream_passthrough.js":38,"./lib/_stream_readable.js":39,"./lib/_stream_transform.js":40,"./lib/_stream_writable.js":41}],45:[function(require,module,exports){
 module.exports = require("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":35}],41:[function(require,module,exports){
+},{"./lib/_stream_transform.js":40}],46:[function(require,module,exports){
 module.exports = require("./lib/_stream_writable.js")
 
-},{"./lib/_stream_writable.js":36}],42:[function(require,module,exports){
+},{"./lib/_stream_writable.js":41}],47:[function(require,module,exports){
 (function (Buffer){
 ;(function (sax) { // wrapper for non-node envs
   sax.parser = function (strict, opt) { return new SAXParser(strict, opt) }
@@ -9230,7 +11549,7 @@ module.exports = require("./lib/_stream_writable.js")
 })(typeof exports === 'undefined' ? this.sax = {} : exports)
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":17,"stream":43,"string_decoder":44}],43:[function(require,module,exports){
+},{"buffer":17,"stream":48,"string_decoder":50}],48:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -9359,7 +11678,171 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":20,"inherits":22,"readable-stream/duplex.js":31,"readable-stream/passthrough.js":38,"readable-stream/readable.js":39,"readable-stream/transform.js":40,"readable-stream/writable.js":41}],44:[function(require,module,exports){
+},{"events":22,"inherits":24,"readable-stream/duplex.js":36,"readable-stream/passthrough.js":43,"readable-stream/readable.js":44,"readable-stream/transform.js":45,"readable-stream/writable.js":46}],49:[function(require,module,exports){
+(function (process){
+// Generated by CoffeeScript 1.9.2
+var Transformer, stream, util,
+  slice = [].slice;
+
+stream = require('stream');
+
+util = require('util');
+
+module.exports = function() {
+  var argument, callback, data, error, handler, i, j, k, len, options, result, transform, type, v;
+  options = {};
+  for (i = j = 0, len = arguments.length; j < len; i = ++j) {
+    argument = arguments[i];
+    type = typeof argument;
+    if (argument === null) {
+      type = 'null';
+    } else if (type === 'object' && Array.isArray(argument)) {
+      type = 'array';
+    }
+    if (i === 0) {
+      if (type === 'function') {
+        handler = argument;
+      } else if (type !== null) {
+        data = argument;
+      }
+      continue;
+    }
+    if (type === 'object') {
+      for (k in argument) {
+        v = argument[k];
+        options[k] = v;
+      }
+    } else if (type === 'function') {
+      if (handler && i === arguments.length - 1) {
+        callback = argument;
+      } else {
+        handler = argument;
+      }
+    } else if (type !== 'null') {
+      throw new Error('Invalid arguments');
+    }
+  }
+  transform = new Transformer(options, handler);
+  error = false;
+  if (data) {
+    process.nextTick(function() {
+      var l, len1, row;
+      for (l = 0, len1 = data.length; l < len1; l++) {
+        row = data[l];
+        if (error) {
+          break;
+        }
+        transform.write(row);
+      }
+      return transform.end();
+    });
+  }
+  if (callback || options.consume) {
+    result = [];
+    transform.on('readable', function() {
+      var r, results;
+      results = [];
+      while ((r = transform.read())) {
+        results.push(result.push(r));
+      }
+      return results;
+    });
+    transform.on('error', function(err) {
+      error = true;
+      if (callback) {
+        return callback(err);
+      }
+    });
+    transform.on('end', function() {
+      if (callback && !error) {
+        return callback(null, result);
+      }
+    });
+  }
+  return transform;
+};
+
+Transformer = function(options1, transform1) {
+  var base;
+  this.options = options1 != null ? options1 : {};
+  this.transform = transform1;
+  this.options.objectMode = true;
+  if ((base = this.options).parallel == null) {
+    base.parallel = 100;
+  }
+  stream.Transform.call(this, this.options);
+  this.running = 0;
+  this.started = 0;
+  this.finished = 0;
+  return this;
+};
+
+util.inherits(Transformer, stream.Transform);
+
+module.exports.Transformer = Transformer;
+
+Transformer.prototype._transform = function(chunk, encoding, cb) {
+  var err;
+  this.started++;
+  this.running++;
+  if (this.running < this.options.parallel) {
+    cb();
+    cb = null;
+  }
+  try {
+    if (this.transform.length === 2) {
+      this.transform.call(null, chunk, (function(_this) {
+        return function() {
+          var chunks, err;
+          err = arguments[0], chunks = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+          return _this._done(err, chunks, cb);
+        };
+      })(this));
+    } else {
+      this._done(null, [this.transform.call(null, chunk)], cb);
+    }
+    return false;
+  } catch (_error) {
+    err = _error;
+    return this._done(err);
+  }
+};
+
+Transformer.prototype._flush = function(cb) {
+  this._ending = function() {
+    if (this.running === 0) {
+      return cb();
+    }
+  };
+  return this._ending();
+};
+
+Transformer.prototype._done = function(err, chunks, cb) {
+  var chunk, j, len;
+  this.running--;
+  if (err) {
+    return this.emit('error', err);
+  }
+  this.finished++;
+  for (j = 0, len = chunks.length; j < len; j++) {
+    chunk = chunks[j];
+    if (typeof chunk === 'number') {
+      chunk = "" + chunk;
+    }
+    if (chunk != null) {
+      this.push(chunk);
+    }
+  }
+  if (cb) {
+    cb();
+  }
+  if (this._ending) {
+    return this._ending();
+  }
+};
+
+}).call(this,require('_process'))
+},{"_process":35,"stream":48,"util":53}],50:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -9582,7 +12065,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":17}],45:[function(require,module,exports){
+},{"buffer":17}],51:[function(require,module,exports){
 (function (global){
 
 /**
@@ -9653,14 +12136,14 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],46:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],47:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -10250,12 +12733,12 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":46,"_process":30,"inherits":22}],48:[function(require,module,exports){
+},{"./support/isBuffer":52,"_process":35,"inherits":24}],54:[function(require,module,exports){
 // This file is just added for convenience so this repository can be
 // directly checked out into a project's deps folder
 module.exports = require('./lib/xmldoc');
 
-},{"./lib/xmldoc":49}],49:[function(require,module,exports){
+},{"./lib/xmldoc":55}],55:[function(require,module,exports){
 (function () {
 
 var sax;
@@ -10514,5 +12997,5 @@ else
 
 })();
 
-},{"sax":42}]},{},[2,3,4,5,6,7,8,9,10,11,12,13])(13)
+},{"sax":47}]},{},[2,3,4,5,6,7,8,9,10,11,12,13])(13)
 });

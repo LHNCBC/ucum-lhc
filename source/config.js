@@ -36,7 +36,28 @@ export var Ucum = {  // Namespace for UCUM classes
    * The string used to separate a unit code and unit name when they
    * are displayed together
    */
-  codeSep_ : ' - '
+  codeSep_ : ' - ',
+
+  /**
+   * Opening HTML used to emphasize portions of error messages.  Used when
+   * displaying messages on a web site; should be overridden when output is
+   * to a file.  See UnitString.parseString for override example.
+   */
+  openEmph_ : '<span class="emphSpan">',
+
+  /**
+   * Closing HTML used to emphasize portions of error messages.  Used when
+   * displaying messages on a web site; should be overridden when output is
+   * to a file.  See UnitString.parseString for override example.
+   */
+  closeEmph_ : '</span>' ,
+
+  /**
+   * Message that is displayed when annotations are included in a unit
+   * string, to let the user know how they are interpreted.
+   */
+  bracesMsg_ : 'Annotations (text in curley braces {}) have no influence ' +
+               'on the processing of a unit string.'
 
 }
 

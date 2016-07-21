@@ -54,12 +54,19 @@ export class UcumLhcUtils {
    * valid unit string.
    *
    * @param uStr the string to be validated
+   * @param useEmph use HTML emphasis style in user messages; set to false
+   *  if not defined
    * @returns true for a valid string; false for an invalid string
    */
-  validUnitString(uStr) {
+  validUnitString(uStr, useEmph) {
 
-    let retUnit = this.getSpecifiedUnit(uStr);
-    return retUnit !== null ;
+    if (useEmph === undefined)
+      useEmph = false ;
+
+    //let retUnit = this.getSpecifiedUnit(uStr, useEmph);
+    //return retUnit !== null ;
+
+    return this.getSpecifiedUnit(uStr, useEmph);
 
   } // end validUnitString
 
@@ -73,40 +80,55 @@ export class UcumLhcUtils {
    * @param decDigits the maximum number of decimal digits to be displayed
    *  for the converted unit.  If not specified, the UCUM.decDigits_ value
    *  (defined in config.js) is used.
-   *
+   * @param useEmph use HTML emphasis style in user messages; set to false
+   *  if undefined
    * @returns a message indicating either the result of the conversion or an
    *  error message if an error occurred.
    */
-  convertUnitTo(fromName, fromVal, toName, decDigits) {
+  convertUnitTo(fromName, fromVal, toName, decDigits, useEmph) {
 
     if (decDigits === undefined)
       decDigits = Ucum.decDigits_;
 
-    let resultMsg = '';
+    if (useEmph === undefined)
+      useEmph = false ;
+
+    let resultMsg = [];
 
     try {
+      let parseResp = [];
       let fromUnit = null;
-      fromUnit = this.getSpecifiedUnit(fromName);
+
+      parseResp = this.getSpecifiedUnit(fromName, useEmph);
+      fromUnit = parseResp[0];
+      if (parseResp[1].length > 0)
+        resultMsg = parseResp[1];
 
       let toUnit = null;
-      toUnit = this.getSpecifiedUnit(toName);
+      parseResp = this.getSpecifiedUnit(toName, useEmph);
+      toUnit = parseResp[0];
+      if (parseResp[1].length > 0) {
+        if (resultMsg.length > 0)
+          resultMsg = resultMsg.concat(parseResp[1]);
+        else
+          resultMsg = parseResp[1];
+      }
 
       if (fromUnit && toUnit) {
         try {
           let toVal = toUnit.convertFrom(fromVal, fromUnit);
           toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
-
-          resultMsg = fromVal.toString() + " " + fromUnit.getProperty('name_') +
-                      " units = " + toVal.toString() + " " +
-                      toUnit.getProperty('name_') + " units."
+          resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('name_') +
+                         " units = " + toVal.toString() + " " +
+                         toUnit.getProperty('name_') + " units.");
         }
         catch (err) {
-          resultMsg = err.message;
+          resultMsg.push(err.message);
         }
       }  // end if we have the from and to units
     }
     catch (err) {
-      resultMsg = err.message;
+      resultMsg.push(err.message);
     }
     return resultMsg ;
 
@@ -118,14 +140,20 @@ export class UcumLhcUtils {
    * represented by the string.
    *
    * @param uName the string representing the unit
+   * @param useEmph use HTML emphasis style in user messages; set to false
+   *  if undefined
    * @returns the unit found for the string
    * @throws a message if the unit is not found
    */
-  getSpecifiedUnit(uName) {
+  getSpecifiedUnit(uName, useEmph) {
 
     uName = uName.trim();
+
+    if (useEmph === undefined)
+      useEmph = false ;
+
     let utab = UnitTables.getInstance();
-    let retMsg = '';
+    let retMsg = [];
 
     // go ahead and just try using the name as the code.  This may or may not
     // work, but if it does, it cuts out a lot of parsing.
@@ -135,25 +163,26 @@ export class UcumLhcUtils {
     if (!theUnit) {
       try {
         let uStrParser = new UnitString();
-        theUnit = uStrParser.parseString(uName);
+        let parseResp = uStrParser.parseString(uName, useEmph);
+        theUnit = parseResp[0];
+        retMsg = parseResp[1];
       }
       catch (err) {
         console.log(`Unit requested for unit string ${uName}.` +
             'request unsuccessful; error thrown = ' + err.message);
-        if (retMsg !== '')
-          retMsg += ' and ';
-        retMsg += `${uName} is not a valid unit.  ${err.message}`;
+        if (uName !== '' && uName !== null)
+          retMsg.unshift(`${uName} is not a valid unit.  ${err.message}`);
+        else
+          retMsg.unshift(err.message);
       }
     }
 
     // if no error was thrown but no unit was found, create a not found message
     if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
-      retMsg = `Unable to find unit for name = ${uName}.`;
+      retMsg.unshift(`Unable to find unit for name = ${uName}.`);
     }
-    if (retMsg !== '')
-      throw (new Error(retMsg));
 
-    return theUnit;
+    return [theUnit, retMsg];
 
   } // end getSpecifiedUnit
 
@@ -163,21 +192,25 @@ export class UcumLhcUtils {
    * converted from and to, a specified unit.  Throws an error if the "from"
    * unit cannot be found or if no commensurable units are found.
    *
-   * @param fromField the ID of the field where the "from" unit is specified
-   * @param toField the ID of the field to receive the list of commensurable
-   *  units
-   * @param resultField the ID of the field to receive an error message if one
-   *  is thrown
-   * @returns nothing but sets the autocompleter list in the "toField" to the
-   *   commensurable units if any were found
+   * @param fromName the name/unit string of the "from" unit
+   * @param useEmph use HTML emphasis style in user messages; set to false
+   *  if undefined
+   * @returns the list of commensurable units if any were found
    *  @throws an error if the "from" unit is not found or if no commensurable
    *   units were found
    */
-  commensurablesList(fromName) {
+  commensurablesList(fromName, useEmph) {
 
-    let fromUnit = this.getSpecifiedUnit(fromName);
+    if (useEmph === undefined)
+      useEmph = false ;
+    let retMsg = []
+
+    let parseResp = this.getSpecifiedUnit(fromName, useEmph);
+    let fromUnit = parseResp[0];
+    if (parseResp[1].length > 0)
+      retMsg = parseResp[1] ;
     if (!fromUnit) {
-      throw (new Error(`Could not find unit ${fromName}.`));
+       retMsg.push(`Could not find unit ${fromName}.`);
     }
 
     let commUnits = null;
@@ -187,7 +220,7 @@ export class UcumLhcUtils {
       let utab = UnitTables.getInstance();
       commUnits = utab.getUnitsByDimension(dimVec);
     }
-    return commUnits ;
+    return [commUnits , retMsg];
   } // end commensurablesList
 
 
