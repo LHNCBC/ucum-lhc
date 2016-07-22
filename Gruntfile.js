@@ -29,7 +29,7 @@ module.exports = function(grunt) {
           }
         },
         files: [
-              {dest: "./dist/module.js", src: ["./dist/es5/*.js"]},
+              {dest: "./dist/module.js", src: ["./dist/es5/source/*.js"]},
               {dest: "./demo/module.js", src: ["./dist/es5/demo/main.js"]}
         ]
       }

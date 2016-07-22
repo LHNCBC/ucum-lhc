@@ -59,18 +59,27 @@ export class UcumDemo {
     let uStr = document.getElementById(elementID).value;
     let valFld = document.getElementById(returnElementID);
     valFld.innerHTML = '';
-    let retMsg = '';
-
-    try {
-      let utils = UcumLhcUtils.getInstance();
-      let ret = utils.validUnitString(uStr);
-      if (ret)
-        retMsg = `${uStr} is a valid unit.` ;
+    let retMsg = [];
+    let valMsg = '';
+    if (uStr === "") {
+      retMsg.push("Please specify a unit string to be validated.");
     }
-    catch(err) {
-      retMsg = err.message
+    else {
+      try {
+        let utils = UcumLhcUtils.getInstance();
+        let parseResp = utils.validUnitString(uStr, true);
+        if (parseResp[0])
+          valMsg = `${uStr} is a valid unit.`;
+        else
+          valMsg = `${uStr} Is NOT a valid unit.`;
+        if (parseResp[1].length > 0)
+          retMsg = retMsg.concat(parseResp[1]);
+      }
+      catch (err) {
+        retMsg.push(err.message);
+      }
     }
-    valFld.innerHTML = retMsg;
+    valFld.innerHTML = valMsg + '<br>' + retMsg.join('<br>');
   } // end reportUnitStringValidity
 
 
@@ -100,12 +109,12 @@ export class UcumDemo {
       toName = toName.substr(0, codePos);
 
     let utils = UcumLhcUtils.getInstance();
-    let resultMsg = utils.convertUnitTo(fromName, fromVal,
-                                               toName, decDigits);
+    let parseResp = utils.convertUnitTo(fromName, fromVal, toName,
+                                        decDigits, true);
 
     // Put the message - conversion or error - on the page
     let resultString = document.getElementById("resultString");
-    resultString.innerHTML = resultMsg;
+    resultString.innerHTML = resultMsg.join('<BR>');
   } // end convertUnit
 
 
@@ -131,11 +140,14 @@ export class UcumDemo {
     resultString.innerHTML = '';
 
     let fromName = document.getElementById(fromField).value;
-    let resultMsg = null;
+    let resultMsg = '';
+    let parseResp = [];
 
     try {
       let utils = UcumLhcUtils.getInstance();
-      let commUnits = utils.commensurablesList(fromName);
+      let parseResp = utils.commensurablesList(fromName, fromName);
+      let commUnits = parseResp[0];
+      let resultMsg = parseResp[1];
       // If we can't find any, don't panic.  The user could still enter one
       // that's not on our list but is commensurable.  So if none are found,
       // just move on.   Nothin' to see here.
@@ -151,10 +163,10 @@ export class UcumDemo {
       }
     }
     catch (err) {
-      resultMsg = err.message;
+      resultMsg.push(err.message);
     }
-    if (resultMsg) {
-      resultString.innerHTML = resultMsg ;
+    if (resultMsg.length > 0) {
+      resultString.innerHTML = resultMsg.join('<BR>') ;
     }
   } // end getCommensurables
 
