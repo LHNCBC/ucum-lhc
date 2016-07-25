@@ -40,15 +40,17 @@ export var Ucum = {  // Namespace for UCUM classes
 
   /**
    * Opening HTML used to emphasize portions of error messages.  Used when
-   * displaying messages on a web site; should be overridden when output is
-   * to a file.  See UnitString.parseString for override example.
+   * displaying messages on a web site; should be blank when output is
+   * to a file.  See UnitString.parseString where they start out blank in
+   * the constructor.
    */
   openEmph_ : '<span class="emphSpan">',
 
   /**
    * Closing HTML used to emphasize portions of error messages.  Used when
-   * displaying messages on a web site; should be overridden when output is
-   * to a file.  See UnitString.parseString for override example.
+   * displaying messages on a web site; should be blank when output is
+   * to a file.  See UnitString.parseString where they start out blank in
+   * the constructor.
    */
   closeEmph_ : '</span>' ,
 
