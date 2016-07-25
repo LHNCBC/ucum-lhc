@@ -50,15 +50,17 @@ var Ucum = exports.Ucum = { // Namespace for UCUM classes
 
   /**
    * Opening HTML used to emphasize portions of error messages.  Used when
-   * displaying messages on a web site; should be overridden when output is
-   * to a file.  See UnitString.parseString for override example.
+   * displaying messages on a web site; should be blank when output is
+   * to a file.  See UnitString.parseString where they start out blank in
+   * the constructor.
    */
   openEmph_: '<span class="emphSpan">',
 
   /**
    * Closing HTML used to emphasize portions of error messages.  Used when
-   * displaying messages on a web site; should be overridden when output is
-   * to a file.  See UnitString.parseString for override example.
+   * displaying messages on a web site; should be blank when output is
+   * to a file.  See UnitString.parseString where they start out blank in
+   * the constructor.
    */
   closeEmph_: '</span>',
 
@@ -75,31 +77,39 @@ var Ucum = exports.Ucum = { // Namespace for UCUM classes
 'use strict';
 
 /**
- * Created by lmericle on 6/15/16.
+ * This validates unit strings found in a column in a csv (comma separated values)
+ * file and returns the validation result in specified columns added to the
+ * file.  This uses the node-csv package (https://github.com/wdavidw/node-csv)
+ * to handle the input and output processing.
+ *
  */
-var Ucum = require('./config.js').Ucum;
-var fs = require('fs');
 
+var fs = require('fs');
 var parse = require('csv-parse');
 var transform = require('stream-transform');
 var stringify = require('csv-stringify');
-var UcumLhcUtils = require("/home/lmericle/ucum/dist/es5/source/ucumLhcUtils.js").UcumLhcUtils;
+
+var UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
+var Ucum = require('./config.js').Ucum;
 
 var output = [];
 var parser = parse({ columns: true });
-var input = fs.createReadStream('/home/lmericle/ucum/dist/data/RegenstriefCodes.csv');
-var output = fs.createWriteStream('/home/lmericle/ucum/dist/data/RegenstriefCodesValidations.csv');
+var input = fs.createReadStream('../../data/RegenstriefCodes.csv');
+var output = fs.createWriteStream('../../data/RegenstriefCodesValidations.csv');
 
+// Function that processes the input record (row) read from the input file,
+// calling the code to validate the string found in the specified source
+// column and placing the results in the specified result columns
 var transformer = transform(function (record) {
   // read value in sourceCol
   // validate it
   // place results in resultCol
   //
   var utils = UcumLhcUtils.getInstance();
-  var retMsg = [];
   var uStr = record[sourceCol];
   var parseResp = [];
   record[unitTestedCol] = uStr;
+
   try {
     var _parseResp = utils.validUnitString(uStr, false);
     if (_parseResp[0]) record[resultCol] = "Valid UCUM unit.";else record[resultCol] = "Not valid UCUM unit.";
@@ -118,13 +128,16 @@ var unitTestedCol = 'Unit String Tested';
 var resultCol = 'Validation Result';
 var commentCol = 'Notes';
 
+// Write the annotations message as the first line of the output file
 output.write('*' + Ucum.bracesMsg_ + '\r\n');
-// read the first line, get column numbers (source and result)
-// pass them to the transformer?
+
+// The parser reads a line (row) from the input file, sends it to the
+// transformer function (above), which sends the results to the stringifier
+// to format them as a spreadsheet row, and then pipes the row to the ouput file.
 input.pipe(parser).pipe(transformer).pipe(stringifier).pipe(output);
 
 
-},{"./config.js":2,"/home/lmericle/ucum/dist/es5/source/ucumLhcUtils.js":9,"csv-parse":20,"csv-stringify":21,"fs":16,"stream-transform":49}],4:[function(require,module,exports){
+},{"./config.js":2,"./ucumLhcUtils.js":9,"csv-parse":20,"csv-stringify":21,"fs":16,"stream-transform":49}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1227,7 +1240,9 @@ var Fx = require('./functions.js');
 var fs = require('fs');
 var path = require('path');
 
-//var utilsInstance = null;
+/**
+ * Constructor; initiates load of the prefix and units objects
+ */
 
 var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
@@ -1262,28 +1277,48 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
   } // end constructor
 
   /**
-   * This method validates a unit string.  It first checks to see if the
-   * string passed in is a unit code that is found in the unit codes table.
-   * If it is not found it parses the string to see if it resolves to a
-   * valid unit string.
-   *
-   * @param uStr the string to be validated
-   * @param useEmph use HTML emphasis style in user messages; set to false
-   *  if not defined
-   * @returns true for a valid string; false for an invalid string
+   * This method calls the useHTMLInMessages method on the (singleton)
+   * UnitString object.  It should be called by web applications that use
+   * these utilities.
    */
 
 
   _createClass(UcumLhcUtils, [{
+    key: 'useHTMLInMessages',
+    value: function useHTMLInMessages() {
+      var us = UnitString.getInstance();
+      us.useHTMLInMessages();
+    }
+
+    /**
+     * This method calls the useBraceMsgForEachString method on the (singleton)
+     * UnitString object.  It should be called by web applications where unit
+     * strings are validated individually (as opposed to validating a whole
+     * file of unit strings).
+     */
+
+  }, {
+    key: 'useBraceMsgForEachString',
+    value: function useBraceMsgForEachString() {
+      var us = UnitString.getInstance();
+      us.useBraceMsgForEachString();
+    }
+
+    /**
+     * This method validates a unit string.  It first checks to see if the
+     * string passed in is a unit code that is found in the unit codes table.
+     * If it is not found it parses the string to see if it resolves to a
+     * valid unit string.
+     *
+     * @param uStr the string to be validated
+     * @returns true for a valid string; false for an invalid string
+     */
+
+  }, {
     key: 'validUnitString',
-    value: function validUnitString(uStr, useEmph) {
+    value: function validUnitString(uStr) {
 
-      if (useEmph === undefined) useEmph = false;
-
-      //let retUnit = this.getSpecifiedUnit(uStr, useEmph);
-      //return retUnit !== null ;
-
-      return this.getSpecifiedUnit(uStr, useEmph);
+      return this.getSpecifiedUnit(uStr);
     } // end validUnitString
 
     /**
@@ -1295,19 +1330,15 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * @param decDigits the maximum number of decimal digits to be displayed
      *  for the converted unit.  If not specified, the UCUM.decDigits_ value
      *  (defined in config.js) is used.
-     * @param useEmph use HTML emphasis style in user messages; set to false
-     *  if undefined
      * @returns a message indicating either the result of the conversion or an
      *  error message if an error occurred.
      */
 
   }, {
     key: 'convertUnitTo',
-    value: function convertUnitTo(fromName, fromVal, toName, decDigits, useEmph) {
+    value: function convertUnitTo(fromName, fromVal, toName, decDigits) {
 
       if (decDigits === undefined) decDigits = Ucum.decDigits_;
-
-      if (useEmph === undefined) useEmph = false;
 
       var resultMsg = [];
 
@@ -1315,12 +1346,12 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         var parseResp = [];
         var fromUnit = null;
 
-        parseResp = this.getSpecifiedUnit(fromName, useEmph);
+        parseResp = this.getSpecifiedUnit(fromName);
         fromUnit = parseResp[0];
         if (parseResp[1].length > 0) resultMsg = parseResp[1];
 
         var toUnit = null;
-        parseResp = this.getSpecifiedUnit(toName, useEmph);
+        parseResp = this.getSpecifiedUnit(toName);
         toUnit = parseResp[0];
         if (parseResp[1].length > 0) {
           if (resultMsg.length > 0) resultMsg = resultMsg.concat(parseResp[1]);else resultMsg = parseResp[1];
@@ -1346,19 +1377,15 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * represented by the string.
      *
      * @param uName the string representing the unit
-     * @param useEmph use HTML emphasis style in user messages; set to false
-     *  if undefined
      * @returns the unit found for the string
      * @throws a message if the unit is not found
      */
 
   }, {
     key: 'getSpecifiedUnit',
-    value: function getSpecifiedUnit(uName, useEmph) {
+    value: function getSpecifiedUnit(uName) {
 
       uName = uName.trim();
-
-      if (useEmph === undefined) useEmph = false;
 
       var utab = UnitTables.getInstance();
       var retMsg = [];
@@ -1370,8 +1397,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       // If we didn't find it, try parsing as a unit string
       if (!theUnit) {
         try {
-          var uStrParser = new UnitString();
-          var parseResp = uStrParser.parseString(uName, useEmph);
+          var uStrParser = UnitString.getInstance();
+          var parseResp = uStrParser.parseString(uName);
           theUnit = parseResp[0];
           retMsg = parseResp[1];
         } catch (err) {
@@ -1394,8 +1421,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * unit cannot be found or if no commensurable units are found.
      *
      * @param fromName the name/unit string of the "from" unit
-     * @param useEmph use HTML emphasis style in user messages; set to false
-     *  if undefined
      * @returns the list of commensurable units if any were found
      *  @throws an error if the "from" unit is not found or if no commensurable
      *   units were found
@@ -1403,12 +1428,11 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
   }, {
     key: 'commensurablesList',
-    value: function commensurablesList(fromName, useEmph) {
+    value: function commensurablesList(fromName) {
 
-      if (useEmph === undefined) useEmph = false;
       var retMsg = [];
 
-      var parseResp = this.getSpecifiedUnit(fromName, useEmph);
+      var parseResp = this.getSpecifiedUnit(fromName);
       var fromUnit = parseResp[0];
       if (parseResp[1].length > 0) retMsg = parseResp[1];
       if (!fromUnit) {
@@ -1914,9 +1938,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var Ucum = require('./config.js');
-var Dim = require('./dimension.js');
-var Us = require("./unitString.js");
+var Ucum = require('./config.js').Ucum;
+var Dimension = require('./dimension.js').Dimension;
+var UnitString = require("./unitString.js").UnitString;
 var Fx = require("./functions.js");
 var isInteger = require("is-integer");
 
@@ -2005,18 +2029,18 @@ var Unit = exports.Unit = function () {
          */
         if (attrs['dim_'] !== null && attrs['dim_'] !== undefined) {
           if (attrs['dim_'] instanceof Array) {
-            this.dim_ = new Dim.Dimension(attrs['dim_']);
-          } else if (attrs['dim_'] instanceof Dim.Dimension) {
+            this.dim_ = new Dimension(attrs['dim_']);
+          } else if (attrs['dim_'] instanceof Dimension) {
             this.dim_ = attrs['dim_'];
           } else if (isInteger(attrs['dim_'])) {
-            this.dim_ = new Dim.Dimension(attrs['dim_']);
+            this.dim_ = new Dimension(attrs['dim_']);
           } else {
             if (attrs['dim_'].dimVec_) {
-              this.dim_ = new Dim.Dimension(attrs['dim_'].dimVec_);
-            } else this.dim_ = new Dim.Dimension(attrs['dim_']);
+              this.dim_ = new Dimension(attrs['dim_'].dimVec_);
+            } else this.dim_ = new Dimension(attrs['dim_']);
           }
         } else {
-          this.dim_ = new Dim.Dimension(null);
+          this.dim_ = new Dimension(null);
         }
 
         /*
@@ -2152,7 +2176,7 @@ var Unit = exports.Unit = function () {
       var retUnit = new Unit();
       Object.getOwnPropertyNames(this).forEach(function (val) {
         if (val === 'dim_') {
-          retUnit['dim_'] = new Dim.Dimension(_this.dim_.dimVec_);
+          retUnit['dim_'] = new Dimension(_this.dim_.dimVec_);
         } else {
           retUnit[val] = _this[val];
         }
@@ -2175,7 +2199,7 @@ var Unit = exports.Unit = function () {
       Object.getOwnPropertyNames(unit2).forEach(function (val) {
         if (_this2.val !== undefined) {
           if (val === 'dim_') {
-            _this2['dim_'] = new Dim.Dimension(_this2.dim_.dimVec_);
+            _this2['dim_'] = new Dimension(_this2.dim_.dimVec_);
           } else {
             _this2[val] = _this2[val];
           }
@@ -2226,7 +2250,8 @@ var Unit = exports.Unit = function () {
      * @param fromUnit the unit to be translated to one of this type (e.g. a mL unit)
      *
      * @return the number of converted units (e.g. 1 for 1 tablespoon)
-     * @throws an error if the dimension of the fromUnit differs from this unit's dimension
+     * @throws an error if the dimension of the fromUnit differs from this unit's
+     * dimension
      */
 
   }, {
@@ -2406,7 +2431,7 @@ var Unit = exports.Unit = function () {
             this.cnvPfx_ *= cp;
           } else throw new Error('Attempt to multiply non-ratio unit ' + u2Nname);
         } else {
-          var uString = new Us.UnitString();
+          var uString = UnitString.getInstance();
           this.name_ = uString.mulString(this.name_, unit2.name_);
           this.magnitude_ *= unit2.magnitude_;
           // for now, putting in this safeguard to get around a known error.
@@ -2435,7 +2460,7 @@ var Unit = exports.Unit = function () {
       if (this.cnv_ != null) throw new Error('Attempt to divide non-ratio unit ' + this.name_);
       if (unit2.cnv_ != null) throw new Error('Attempt to divide by non-ratio unit ' + unit2.name_);
 
-      var uString = new Us.UnitString();
+      var uString = UnitString.getInstance();
       this.name_ = uString.divString(this.name_, unit2.name_);
 
       this.magnitude_ /= unit2.magnitude_;
@@ -2527,49 +2552,79 @@ var UnitString = exports.UnitString = function () {
   function UnitString() {
     _classCallCheck(this, UnitString);
 
-    // Set emphasis characters to those defined in config.ls.  These are
-    // used to emphasize certain characters or strings in user messages.
-    // They should be used when output will go to a web page and overridden
-    // when output will go to a file.  See parseString method.
-    this.openEmph_ = Ucum.openEmph_;
-    this.closeEmph_ = Ucum.closeEmph_;
-    this.bracesMsg_ = Ucum.bracesMsg_;
+    // Set emphasis characters to blanks.  When set (see useHTMLInMessage) these
+    // are used to emphasize certain characters or strings in user messages.
+    // They should be used when output will go to a web page and blank
+    // when output will go to a file.  The useHTMLInMessages method should be
+    // called to set them to the appropriate HTML for the webpage display.
+    this.openEmph_ = '';
+    this.closeEmph_ = '';
+
+    // Set the braces message to blank.  This message is displayed for each
+    // validation request on the web page, but is included separately as
+    // a note on the validation spreadsheet.  The useBraceMsgForEachString
+    // method should be used to set the message to be displayed for each
+    // unit string.
+    this.bracesMsg_ = '';
 
     // Set the flags used, with indices, as place holders in unit strings
     // for parenthetical strings and strings within braces.
-    this.parensFlag_ = '##';
-    this.braceFlag_ = '||';
+    this.parensFlag_ = "parens_placeholder"; // in lieu of Jehoshapat
+    this.braceFlag_ = "braces_placeholder"; // in lieu of Nebuchadnezzar
+
+    // Make this a singleton.  See UnitTables constructor for details.
+    var holdThis = UnitString.prototype;
+    UnitString = function UnitString() {
+      throw new Error('UnitString is a Singleton. ' + 'Use UnitString.getInstance() instead.');
+    };
+    if (exports) exports.UnitString = UnitString;
+    UnitString.prototype = holdThis;
+
+    var self = this;
+    UnitString.getInstance = function () {
+      return self;
+    };
   }
 
   /**
-   * Parses a unit string, returns a unit
-   *
-   * @params uStr the string defining the unit
-   * @params msgEmph flag indicating whether or not to add emphasis codes
-   *  defined in config.us to emphasize portions of user messages; set to
-   *  false if not provided.
-   * @params origString the original unit string passed in; used when this is
-   *  called recursively; set to uStr if not provided.
-   * @returns an array containing: 1) the unit object (or null if there were
-   *  problems creating the unit); and 2) an array of user messages (error or
-   *  warning).
-   * @throws an error if nothing was specified.
+   * Sets the emphasis strings to the HTML used in the webpage display.
    */
 
 
   _createClass(UnitString, [{
+    key: 'useHTMLInMessages',
+    value: function useHTMLInMessages() {
+      this.openEmph_ = Ucum.openEmph_;
+      this.closeEmph_ = Ucum.closeEmph_;
+    } // end useHTMLInMessages
+
+    /**
+     * Sets the braces message to be displayed for each unit string validation
+     * requested, as appropriate.
+     */
+
+  }, {
+    key: 'useBraceMsgForEachString',
+    value: function useBraceMsgForEachString() {
+      this.bracesMsg_ = Ucum.bracesMsg_;
+    }
+
+    /**
+     * Parses a unit string, returns a unit
+     *
+     * @params uStr the string defining the unit
+     * @params origString the original unit string passed in; used when this is
+     *  called recursively; set to uStr if not provided.
+     * @returns an array containing: 1) the unit object (or null if there were
+     *  problems creating the unit); and 2) an array of user messages (error or
+     *  warning).
+     * @throws an error if nothing was specified.
+     */
+
+  }, {
     key: 'parseString',
-    value: function parseString(uStr, msgEmph, origString) {
+    value: function parseString(uStr, origString) {
 
-      // if the message emphasis flag is not specified or is false, override
-      // the emphasis values by setting them each to "".
-      if (msgEmph === undefined) msgEmph = false;
-
-      if (msgEmph === false) {
-        this.openEmph_ = "";
-        this.closeEmph_ = "";
-        this.bracesMsg_ = "*";
-      }
       // Used in error messages to provide context for messages
       if (origString === undefined) origString = uStr;
 
@@ -2623,8 +2678,8 @@ var UnitString = exports.UnitString = function () {
 
       // Break the unit string into pieces that consist of text outside of
       // parenthetical strings and placeholders for the parenthetical units.
-      // This method is call recursively for parenthetical strings and the units
-      // returned are stored in teh parensUnits array.
+      // This method is called recursively for parenthetical strings and the units
+      // returned are stored in the parensUnits array.
       while (uStr !== "" && !endProcessing) {
         var openCt = 0;
         var closeCt = 0;
@@ -2654,7 +2709,7 @@ var UnitString = exports.UnitString = function () {
             }
         }
 
-        // Otherwise and open parenthesis was found. Process the string that
+        // Otherwise an open parenthesis was found. Process the string that
         // includes the parenthetical group
         else {
             openCt += 1;
@@ -2669,7 +2724,7 @@ var UnitString = exports.UnitString = function () {
             // another open parenthesis, in case this includes nested parenthetical
             // strings.  This continues until it finds the same number of close
             // parentheses as open parentheses, or runs out of string to check.
-            // In the case of neste parentheses this will identify the outer set
+            // In the case of nest parentheses this will identify the outer set
             // of parentheses.
             var _closePos = 0;
             var c = openPos + 1;
@@ -2686,7 +2741,7 @@ var UnitString = exports.UnitString = function () {
             if (openCt === closeCt) {
               _closePos = c;
               uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
-              var parseResp = this.parseString(uStr.substring(openPos + 1, _closePos - 1), msgEmph, origString);
+              var parseResp = this.parseString(uStr.substring(openPos + 1, _closePos - 1), origString);
               parensUnits[pu++] = parseResp[0];
               if (parseResp[1] != '') retMsg.push(parseResp[1]);
               uStr = uStr.substr(_closePos);
@@ -3208,7 +3263,7 @@ var UnitString = exports.UnitString = function () {
       } // end if not endProcessing set from annotation error
 
       return retUnit;
-    } // ret makeUnit
+    } // end makeUnit
 
     /**
      * Creates a unit string that indicates multiplication of the two
@@ -3267,6 +3322,26 @@ var UnitString = exports.UnitString = function () {
 
   return UnitString;
 }(); // end class UnitString
+
+/**
+ *  This function exists ONLY until the original UnitString constructor
+ *  is called for the first time.  It's defined here in case getInstance
+ *  is called before the constructor.   This calls the constructor.
+ *
+ *  The constructor redefines the getInstance function to return the
+ *  singleton UnitString object.  This is based on the UnitTables singleton
+ *  implementation; see more detail in the UnitTables constructor description.
+ *
+ *  @return the singleton UnitString object.
+ */
+
+
+UnitString.getInstance = function () {
+  return new UnitString();
+};
+
+// Perform the first request for the object, to set the getInstance method.
+UnitString.getInstance();
 
 
 },{"./config.js":2,"./prefixTables.js":7,"./unitTables.js":13}],13:[function(require,module,exports){

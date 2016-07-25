@@ -15,13 +15,17 @@ export class UcumDemo {
   constructor () {
 
     // run the constructors for the utils and unitTables classes to get
-    // things initialized and data loaded.
-    var utils = UcumLhcUtils.getInstance();
-    var utab = UnitTables.getInstance();
+    // things initialized and data loaded.  Include a call to the LHC
+    // ucum utilities to set message output to use HTML emphasis and to
+    // output the braces message for each use.
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages();
+    utils.useBraceMsgForEachString();
+    let utab = UnitTables.getInstance();
 
     // Get a full list of unit names and assign it to a prefetch autocompleter
-    var unames = utab.getUnitNamesList();
-    var autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
+    let unames = utab.getUnitNamesList();
+    let autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
 
     // Set up an autocompleter for the "to" conversion fields.  It will be
     // populated with commensurable units in based on what the user enters
@@ -33,7 +37,7 @@ export class UcumDemo {
     let holdThis = UcumDemo.prototype;
     UcumDemo = function () {
       throw (new Error('UcumDemo is a Singleton.  ' +
-                       'Use UcumLhcDemo.getInstance() instead.'));
+                       'Use UcumDemo.getInstance() instead.'));
     };
     if (exports)
       exports.UcumDemo = UcumDemo;
@@ -67,7 +71,7 @@ export class UcumDemo {
     else {
       try {
         let utils = UcumLhcUtils.getInstance();
-        let parseResp = utils.validUnitString(uStr, true);
+        let parseResp = utils.validUnitString(uStr);
         if (parseResp[0])
           valMsg = `${uStr} is a valid unit.`;
         else
@@ -109,8 +113,7 @@ export class UcumDemo {
       toName = toName.substr(0, codePos);
 
     let utils = UcumLhcUtils.getInstance();
-    let parseResp = utils.convertUnitTo(fromName, fromVal, toName,
-                                        decDigits, true);
+    let resultMsg = utils.convertUnitTo(fromName, fromVal, toName, decDigits);
 
     // Put the message - conversion or error - on the page
     let resultString = document.getElementById("resultString");
@@ -145,7 +148,7 @@ export class UcumDemo {
 
     try {
       let utils = UcumLhcUtils.getInstance();
-      let parseResp = utils.commensurablesList(fromName, fromName);
+      let parseResp = utils.commensurablesList(fromName);
       let commUnits = parseResp[0];
       let resultMsg = parseResp[1];
       // If we can't find any, don't panic.  The user could still enter one
@@ -216,10 +219,10 @@ export class UcumDemo {
  *  is called before the constructor.   This calls the constructor.
  *
  *  The constructor redefines the getInstance function to return the
- *  singleton UcumLhcUtils object.  This is based on the UnitTables singleton
+ *  singleton UcumDemo object.  This is based on the UnitTables singleton
  *  implementation; see more detail in the UnitTables constructor description.
  *
- *  @return the singleton UcumLhcUtils object.
+ *  @return the singleton UcumDemo object.
  */
 UcumDemo.getInstance = function(){
   return new UcumDemo();

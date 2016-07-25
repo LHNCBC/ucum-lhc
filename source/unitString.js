@@ -12,27 +12,63 @@ export class UnitString{
    */
   constructor() {
 
-    // Set emphasis characters to those defined in config.ls.  These are
-    // used to emphasize certain characters or strings in user messages.
-    // They should be used when output will go to a web page and overridden
-    // when output will go to a file.  See parseString method.
-    this.openEmph_ = Ucum.openEmph_;
-    this.closeEmph_ = Ucum.closeEmph_ ;
-    this.bracesMsg_ = Ucum.bracesMsg_ ;
+    // Set emphasis characters to blanks.  When set (see useHTMLInMessage) these
+    // are used to emphasize certain characters or strings in user messages.
+    // They should be used when output will go to a web page and blank
+    // when output will go to a file.  The useHTMLInMessages method should be
+    // called to set them to the appropriate HTML for the webpage display.
+    this.openEmph_ = '';
+    this.closeEmph_ = '';
+
+    // Set the braces message to blank.  This message is displayed for each
+    // validation request on the web page, but is included separately as
+    // a note on the validation spreadsheet.  The useBraceMsgForEachString
+    // method should be used to set the message to be displayed for each
+    // unit string.
+    this.bracesMsg_ = '';
 
     // Set the flags used, with indices, as place holders in unit strings
     // for parenthetical strings and strings within braces.
-    this.parensFlag_ = '##';
-    this.braceFlag_ = '||';
+    this.parensFlag_ = "parens_placeholder" ; // in lieu of Jehoshapat
+    this.braceFlag_ = "braces_placeholder"; // in lieu of Nebuchadnezzar
+
+    // Make this a singleton.  See UnitTables constructor for details.
+    let holdThis = UnitString.prototype;
+    UnitString = function () {
+      throw (new Error('UnitString is a Singleton. ' +
+          'Use UnitString.getInstance() instead.'));
+    };
+    if (exports)
+      exports.UnitString = UnitString;
+    UnitString.prototype = holdThis;
+
+    let self = this ;
+    UnitString.getInstance = function(){return self} ;
   }
+
+
+  /**
+   * Sets the emphasis strings to the HTML used in the webpage display.
+   */
+  useHTMLInMessages() {
+    this.openEmph_ = Ucum.openEmph_;
+    this.closeEmph_ = Ucum.closeEmph_ ;
+  } // end useHTMLInMessages
+
+
+  /**
+   * Sets the braces message to be displayed for each unit string validation
+   * requested, as appropriate.
+   */
+  useBraceMsgForEachString() {
+    this.bracesMsg_ = Ucum.bracesMsg_;
+  }
+
 
   /**
    * Parses a unit string, returns a unit
    *
    * @params uStr the string defining the unit
-   * @params msgEmph flag indicating whether or not to add emphasis codes
-   *  defined in config.us to emphasize portions of user messages; set to
-   *  false if not provided.
    * @params origString the original unit string passed in; used when this is
    *  called recursively; set to uStr if not provided.
    * @returns an array containing: 1) the unit object (or null if there were
@@ -40,18 +76,8 @@ export class UnitString{
    *  warning).
    * @throws an error if nothing was specified.
    */
-  parseString(uStr, msgEmph, origString) {
+  parseString(uStr, origString) {
 
-    // if the message emphasis flag is not specified or is false, override
-    // the emphasis values by setting them each to "".
-    if (msgEmph === undefined)
-      msgEmph = false ;
-
-    if (msgEmph === false) {
-      this.openEmph_ = "" ;
-      this.closeEmph_ = "";
-      this.bracesMsg_ = "*";
-    }
     // Used in error messages to provide context for messages
     if (origString === undefined)
       origString = uStr ;
@@ -63,7 +89,7 @@ export class UnitString{
 
     let firstCall = (uStr === origString) ;
 
-    // Unit to be returned
+     // Unit to be returned
     let finalUnit = null ;
 
     // An array of messages (warnings and errors) to be returned
@@ -106,8 +132,8 @@ export class UnitString{
 
     // Break the unit string into pieces that consist of text outside of
     // parenthetical strings and placeholders for the parenthetical units.
-    // This method is call recursively for parenthetical strings and the units
-    // returned are stored in teh parensUnits array.
+    // This method is called recursively for parenthetical strings and the units
+    // returned are stored in the parensUnits array.
     while (uStr !== "" && !endProcessing) {
       let openCt = 0;
       let closeCt = 0;
@@ -140,7 +166,7 @@ export class UnitString{
         }
       }
 
-      // Otherwise and open parenthesis was found. Process the string that
+      // Otherwise an open parenthesis was found. Process the string that
       // includes the parenthetical group
       else {
         openCt += 1;
@@ -155,7 +181,7 @@ export class UnitString{
         // another open parenthesis, in case this includes nested parenthetical
         // strings.  This continues until it finds the same number of close
         // parentheses as open parentheses, or runs out of string to check.
-        // In the case of neste parentheses this will identify the outer set
+        // In the case of nest parentheses this will identify the outer set
         // of parentheses.
         let closePos = 0;
         let c = openPos + 1;
@@ -177,7 +203,7 @@ export class UnitString{
           uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
           let parseResp = this.parseString(
                                uStr.substring(openPos + 1, closePos - 1),
-                               msgEmph, origString);
+                               origString);
           parensUnits[pu++] = parseResp[0];
           if (parseResp[1] != '')
             retMsg.push(parseResp[1]);
@@ -731,7 +757,7 @@ export class UnitString{
     } // end if not endProcessing set from annotation error
 
     return retUnit ;
-  } // ret makeUnit
+  } // end makeUnit
 
 
   /**
@@ -787,3 +813,20 @@ export class UnitString{
 
 } // end class UnitString
 
+/**
+ *  This function exists ONLY until the original UnitString constructor
+ *  is called for the first time.  It's defined here in case getInstance
+ *  is called before the constructor.   This calls the constructor.
+ *
+ *  The constructor redefines the getInstance function to return the
+ *  singleton UnitString object.  This is based on the UnitTables singleton
+ *  implementation; see more detail in the UnitTables constructor description.
+ *
+ *  @return the singleton UnitString object.
+ */
+UnitString.getInstance = function(){
+  return new UnitString();
+}
+
+// Perform the first request for the object, to set the getInstance method.
+UnitString.getInstance();

@@ -13,8 +13,9 @@ var Fx = require('./functions.js');
 var fs = require('fs');
 var path = require('path');
 
-//var utilsInstance = null;
-
+/**
+ * Constructor; initiates load of the prefix and units objects
+ */
 export class UcumLhcUtils {
 
   /**
@@ -48,25 +49,40 @@ export class UcumLhcUtils {
 
 
   /**
+   * This method calls the useHTMLInMessages method on the (singleton)
+   * UnitString object.  It should be called by web applications that use
+   * these utilities.
+   */
+  useHTMLInMessages() {
+    let us = UnitString.getInstance() ;
+    us.useHTMLInMessages();
+  }
+
+
+  /**
+   * This method calls the useBraceMsgForEachString method on the (singleton)
+   * UnitString object.  It should be called by web applications where unit
+   * strings are validated individually (as opposed to validating a whole
+   * file of unit strings).
+   */
+  useBraceMsgForEachString() {
+    let us = UnitString.getInstance() ;
+    us.useBraceMsgForEachString();
+  }
+
+
+  /**
    * This method validates a unit string.  It first checks to see if the
    * string passed in is a unit code that is found in the unit codes table.
    * If it is not found it parses the string to see if it resolves to a
    * valid unit string.
    *
    * @param uStr the string to be validated
-   * @param useEmph use HTML emphasis style in user messages; set to false
-   *  if not defined
    * @returns true for a valid string; false for an invalid string
    */
-  validUnitString(uStr, useEmph) {
+  validUnitString(uStr) {
 
-    if (useEmph === undefined)
-      useEmph = false ;
-
-    //let retUnit = this.getSpecifiedUnit(uStr, useEmph);
-    //return retUnit !== null ;
-
-    return this.getSpecifiedUnit(uStr, useEmph);
+    return this.getSpecifiedUnit(uStr);
 
   } // end validUnitString
 
@@ -80,18 +96,13 @@ export class UcumLhcUtils {
    * @param decDigits the maximum number of decimal digits to be displayed
    *  for the converted unit.  If not specified, the UCUM.decDigits_ value
    *  (defined in config.js) is used.
-   * @param useEmph use HTML emphasis style in user messages; set to false
-   *  if undefined
    * @returns a message indicating either the result of the conversion or an
    *  error message if an error occurred.
    */
-  convertUnitTo(fromName, fromVal, toName, decDigits, useEmph) {
+  convertUnitTo(fromName, fromVal, toName, decDigits) {
 
     if (decDigits === undefined)
       decDigits = Ucum.decDigits_;
-
-    if (useEmph === undefined)
-      useEmph = false ;
 
     let resultMsg = [];
 
@@ -99,13 +110,13 @@ export class UcumLhcUtils {
       let parseResp = [];
       let fromUnit = null;
 
-      parseResp = this.getSpecifiedUnit(fromName, useEmph);
+      parseResp = this.getSpecifiedUnit(fromName);
       fromUnit = parseResp[0];
       if (parseResp[1].length > 0)
         resultMsg = parseResp[1];
 
       let toUnit = null;
-      parseResp = this.getSpecifiedUnit(toName, useEmph);
+      parseResp = this.getSpecifiedUnit(toName);
       toUnit = parseResp[0];
       if (parseResp[1].length > 0) {
         if (resultMsg.length > 0)
@@ -140,17 +151,12 @@ export class UcumLhcUtils {
    * represented by the string.
    *
    * @param uName the string representing the unit
-   * @param useEmph use HTML emphasis style in user messages; set to false
-   *  if undefined
    * @returns the unit found for the string
    * @throws a message if the unit is not found
    */
-  getSpecifiedUnit(uName, useEmph) {
+  getSpecifiedUnit(uName) {
 
     uName = uName.trim();
-
-    if (useEmph === undefined)
-      useEmph = false ;
 
     let utab = UnitTables.getInstance();
     let retMsg = [];
@@ -162,8 +168,8 @@ export class UcumLhcUtils {
     // If we didn't find it, try parsing as a unit string
     if (!theUnit) {
       try {
-        let uStrParser = new UnitString();
-        let parseResp = uStrParser.parseString(uName, useEmph);
+        let uStrParser = UnitString.getInstance();
+        let parseResp = uStrParser.parseString(uName);
         theUnit = parseResp[0];
         retMsg = parseResp[1];
       }
@@ -193,19 +199,15 @@ export class UcumLhcUtils {
    * unit cannot be found or if no commensurable units are found.
    *
    * @param fromName the name/unit string of the "from" unit
-   * @param useEmph use HTML emphasis style in user messages; set to false
-   *  if undefined
    * @returns the list of commensurable units if any were found
    *  @throws an error if the "from" unit is not found or if no commensurable
    *   units were found
    */
-  commensurablesList(fromName, useEmph) {
+  commensurablesList(fromName) {
 
-    if (useEmph === undefined)
-      useEmph = false ;
     let retMsg = []
 
-    let parseResp = this.getSpecifiedUnit(fromName, useEmph);
+    let parseResp = this.getSpecifiedUnit(fromName);
     let fromUnit = parseResp[0];
     if (parseResp[1].length > 0)
       retMsg = parseResp[1] ;

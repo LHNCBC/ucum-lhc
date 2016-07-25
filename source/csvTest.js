@@ -11,13 +11,13 @@ var parse = require('csv-parse');
 var transform = require('stream-transform');
 var stringify = require('csv-stringify');
 
-var UcumLhcUtils = require("/home/lmericle/ucum/dist/es5/source/ucumLhcUtils.js").UcumLhcUtils;
+var UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
 var Ucum = require('./config.js').Ucum;
 
 var output = [];
 var parser = parse({columns: true});
-var input = fs.createReadStream('/home/lmericle/ucum/dist/data/RegenstriefCodes.csv');
-var output = fs.createWriteStream('/home/lmericle/ucum/dist/data/RegenstriefCodesValidations.csv');
+var input = fs.createReadStream('../../data/RegenstriefCodes.csv');
+var output = fs.createWriteStream('../../data/RegenstriefCodesValidations.csv');
 
 // Function that processes the input record (row) read from the input file,
 // calling the code to validate the string found in the specified source
