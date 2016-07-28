@@ -29,7 +29,7 @@ export class UnitString{
 
     // Set the flags used, with indices, as place holders in unit strings
     // for parenthetical strings and strings within braces.
-    this.parensFlag_ = "parens_placeholder" ; // in lieu of Jehoshapat
+    this.parensFlag_ = "parens_placeholder" ; // in lieu of Jehoshaphat
     this.braceFlag_ = "braces_placeholder"; // in lieu of Nebuchadnezzar
 
     // Make this a singleton.  See UnitTables constructor for details.
@@ -181,7 +181,7 @@ export class UnitString{
         // another open parenthesis, in case this includes nested parenthetical
         // strings.  This continues until it finds the same number of close
         // parentheses as open parentheses, or runs out of string to check.
-        // In the case of nest parentheses this will identify the outer set
+        // In the case of nested parentheses this will identify the outer set
         // of parentheses.
         let closePos = 0;
         let c = openPos + 1;
