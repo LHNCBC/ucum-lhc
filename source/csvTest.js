@@ -1,8 +1,10 @@
 /**
  * This validates unit strings found in a column in a csv (comma separated values)
- * file and returns the validation result in specified columns added to the
- * file.  This uses the node-csv package (https://github.com/wdavidw/node-csv)
- * to handle the input and output processing.
+ * file and returns the validation result in specified columns added to a copy
+ * of the file.
+ *
+ * This uses the node-csv package (https://github.com/wdavidw/node-csv) to
+ * handle the input and output processing.
  *
  */
 
