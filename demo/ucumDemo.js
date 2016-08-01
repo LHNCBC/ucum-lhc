@@ -15,13 +15,17 @@ export class UcumDemo {
   constructor () {
 
     // run the constructors for the utils and unitTables classes to get
-    // things initialized and data loaded.
-    var utils = UcumLhcUtils.getInstance();
-    var utab = UnitTables.getInstance();
+    // things initialized and data loaded.  Include a call to the LHC
+    // ucum utilities to set message output to use HTML emphasis and to
+    // output the braces message for each use.
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages();
+    utils.useBraceMsgForEachString();
+    let utab = UnitTables.getInstance();
 
     // Get a full list of unit names and assign it to a prefetch autocompleter
-    var unames = utab.getUnitNamesList();
-    var autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
+    let unames = utab.getUnitNamesList();
+    let autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
 
     // Set up an autocompleter for the "to" conversion fields.  It will be
     // populated with commensurable units in based on what the user enters
@@ -33,7 +37,7 @@ export class UcumDemo {
     let holdThis = UcumDemo.prototype;
     UcumDemo = function () {
       throw (new Error('UcumDemo is a Singleton.  ' +
-                       'Use UcumLhcDemo.getInstance() instead.'));
+                       'Use UcumDemo.getInstance() instead.'));
     };
     if (exports)
       exports.UcumDemo = UcumDemo;
@@ -59,18 +63,27 @@ export class UcumDemo {
     let uStr = document.getElementById(elementID).value;
     let valFld = document.getElementById(returnElementID);
     valFld.innerHTML = '';
-    let retMsg = '';
-
-    try {
-      let utils = UcumLhcUtils.getInstance();
-      let ret = utils.validUnitString(uStr);
-      if (ret)
-        retMsg = `${uStr} is a valid unit.` ;
+    let retMsg = [];
+    let valMsg = '';
+    if (uStr === "") {
+      retMsg.push("Please specify a unit string to be validated.");
     }
-    catch(err) {
-      retMsg = err.message
+    else {
+      try {
+        let utils = UcumLhcUtils.getInstance();
+        let parseResp = utils.validUnitString(uStr);
+        if (parseResp[0])
+          valMsg = `${uStr} is a valid unit.`;
+        else
+          valMsg = `${uStr} Is NOT a valid unit.`;
+        if (parseResp[1].length > 0)
+          retMsg = retMsg.concat(parseResp[1]);
+      }
+      catch (err) {
+        retMsg.push(err.message);
+      }
     }
-    valFld.innerHTML = retMsg;
+    valFld.innerHTML = valMsg + '<br>' + retMsg.join('<br>');
   } // end reportUnitStringValidity
 
 
@@ -100,12 +113,11 @@ export class UcumDemo {
       toName = toName.substr(0, codePos);
 
     let utils = UcumLhcUtils.getInstance();
-    let resultMsg = utils.convertUnitTo(fromName, fromVal,
-                                               toName, decDigits);
+    let resultMsg = utils.convertUnitTo(fromName, fromVal, toName, decDigits);
 
     // Put the message - conversion or error - on the page
     let resultString = document.getElementById("resultString");
-    resultString.innerHTML = resultMsg;
+    resultString.innerHTML = resultMsg.join('<BR>');
   } // end convertUnit
 
 
@@ -131,11 +143,14 @@ export class UcumDemo {
     resultString.innerHTML = '';
 
     let fromName = document.getElementById(fromField).value;
-    let resultMsg = null;
+    let resultMsg = '';
+    let parseResp = [];
 
     try {
       let utils = UcumLhcUtils.getInstance();
-      let commUnits = utils.commensurablesList(fromName);
+      let parseResp = utils.commensurablesList(fromName);
+      let commUnits = parseResp[0];
+      let resultMsg = parseResp[1];
       // If we can't find any, don't panic.  The user could still enter one
       // that's not on our list but is commensurable.  So if none are found,
       // just move on.   Nothin' to see here.
@@ -151,10 +166,10 @@ export class UcumDemo {
       }
     }
     catch (err) {
-      resultMsg = err.message;
+      resultMsg.push(err.message);
     }
-    if (resultMsg) {
-      resultString.innerHTML = resultMsg ;
+    if (resultMsg.length > 0) {
+      resultString.innerHTML = resultMsg.join('<BR>') ;
     }
   } // end getCommensurables
 
@@ -204,10 +219,10 @@ export class UcumDemo {
  *  is called before the constructor.   This calls the constructor.
  *
  *  The constructor redefines the getInstance function to return the
- *  singleton UcumLhcUtils object.  This is based on the UnitTables singleton
+ *  singleton UcumDemo object.  This is based on the UnitTables singleton
  *  implementation; see more detail in the UnitTables constructor description.
  *
- *  @return the singleton UcumLhcUtils object.
+ *  @return the singleton UcumDemo object.
  */
 UcumDemo.getInstance = function(){
   return new UcumDemo();

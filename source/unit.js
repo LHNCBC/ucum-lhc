@@ -8,9 +8,9 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var Ucum = require('./config.js');
-var Dim = require('./dimension.js');
-var Us = require("./unitString.js");
+var Ucum = require('./config.js').Ucum;
+var Dimension = require('./dimension.js').Dimension;
+var UnitString = require("./unitString.js").UnitString;
 var Fx = require("./functions.js");
 var isInteger = require("is-integer");
 
@@ -96,24 +96,24 @@ export class Unit {
        */
       if (attrs['dim_'] !== null && attrs['dim_'] !== undefined) {
         if (attrs['dim_'] instanceof Array) {
-          this.dim_ = new Dim.Dimension(attrs['dim_']);
+          this.dim_ = new Dimension(attrs['dim_']);
         }
-        else if (attrs['dim_'] instanceof Dim.Dimension) {
+        else if (attrs['dim_'] instanceof Dimension) {
           this.dim_ = attrs['dim_'];
         }
         else if (isInteger(attrs['dim_'])) {
-          this.dim_ = new Dim.Dimension(attrs['dim_']) ;
+          this.dim_ = new Dimension(attrs['dim_']) ;
         }
         else {
           if (attrs['dim_'].dimVec_) {
-            this.dim_ = new Dim.Dimension(attrs['dim_'].dimVec_);
+            this.dim_ = new Dimension(attrs['dim_'].dimVec_);
           }
           else
-            this.dim_ = new Dim.Dimension(attrs['dim_']);
+            this.dim_ = new Dimension(attrs['dim_']);
         }
       }
       else {
-        this.dim_ = new Dim.Dimension(null);
+        this.dim_ = new Dimension(null);
       }
 
       /*
@@ -246,7 +246,7 @@ export class Unit {
     let retUnit = new Unit() ;
     Object.getOwnPropertyNames(this).forEach(val => {
       if (val === 'dim_') {
-        retUnit['dim_'] = new Dim.Dimension(this.dim_.dimVec_);
+        retUnit['dim_'] = new Dimension(this.dim_.dimVec_);
       }
       else {
         retUnit[val] = this[val];
@@ -267,7 +267,7 @@ export class Unit {
     Object.getOwnPropertyNames(unit2).forEach(val => {
       if (this.val !== undefined) {
         if (val === 'dim_') {
-          this['dim_'] = new Dim.Dimension(this.dim_.dimVec_);
+          this['dim_'] = new Dimension(this.dim_.dimVec_);
         }
         else {
           this[val] = this[val];
@@ -328,7 +328,8 @@ export class Unit {
    * @param fromUnit the unit to be translated to one of this type (e.g. a mL unit)
    *
    * @return the number of converted units (e.g. 1 for 1 tablespoon)
-   * @throws an error if the dimension of the fromUnit differs from this unit's dimension
+   * @throws an error if the dimension of the fromUnit differs from this unit's
+   * dimension
    */
   convertFrom(num, fromUnit) {
     let newNum = 0.0 ;
@@ -519,7 +520,7 @@ export class Unit {
           throw (new Error(`Attempt to multiply non-ratio unit ${u2Nname}`));
       }
       else {
-        let uString = new Us.UnitString();
+        let uString = UnitString.getInstance();
         this.name_ = uString.mulString(this.name_, unit2.name_);
         this.magnitude_ *= unit2.magnitude_;
         // for now, putting in this safeguard to get around a known error.
@@ -551,7 +552,7 @@ export class Unit {
     if (unit2.cnv_ != null)
       throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
 
-    let uString = new Us.UnitString();
+    let uString = UnitString.getInstance();
     this.name_ = uString.divString(this.name_, unit2.name_);
 
     this.magnitude_ /= unit2.magnitude_;
