@@ -212,7 +212,7 @@ export class UcumLhcUtils {
     if (parseResp[1].length > 0)
       retMsg = parseResp[1] ;
     if (!fromUnit) {
-       retMsg.push(`Could not find unit ${fromName}.`);
+      retMsg.push(`Could not find unit ${fromName}.`);
     }
 
     let commUnits = null;
