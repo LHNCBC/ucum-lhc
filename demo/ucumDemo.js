@@ -6,9 +6,11 @@
  * populating the autocompleter unit lists.
  */
 
+var fs = require('browserify-fs');
 var Ucum = require('../source/config.js').Ucum;
 var UcumLhcUtils = require("../source/ucumLhcUtils.js").UcumLhcUtils;
 var UnitTables = require("../source/unitTables.js").UnitTables;
+var UcumFileValidator = require("../source/ucumFileValidator").UcumFileValidator;
 
 export class UcumDemo {
 
@@ -208,6 +210,22 @@ export class UcumDemo {
           theButton.innerText = theButton.innerText.replace(blockText, noneText);
       }
     }
+  }
+
+  fileSelected() {
+    let dia = document.getElementById("inputfile");
+    //let tmppath = window.URL.createObjectURL(dia.files[0]);
+    //console.log('tmppath = ' + tmppath);
+    //let inputFile = fs.createReadStream(tmppath);
+    //let inputFile2 = fs.createReadStream(dia.files[0]);
+    //let reader = new FileReader();
+    //reader.readAsText(dia.files[0]);
+    //let inBuff = Buffer.from(reader);
+    //let inputFile = fs.createReadStream(inBuff);
+    //let fileValue = dia.files[0].name;
+    let ufv = UcumFileValidator.getInstance();
+    ufv.validateFile(dia.files[0]) ;
+    //let input = fs.createReadStream(file)
   }
 
 } // end class UcumDemo

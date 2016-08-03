@@ -9,7 +9,6 @@ var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs ;
 var UnitTables = require('./unitTables.js').UnitTables;
 var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
-var Fx = require('./functions.js');
 var fs = require('fs');
 var path = require('path');
 

@@ -1170,8 +1170,9 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
       var unitTestedCol = 'Unit String Tested';
       var resultCol = 'Validation Result';
       var commentCol = 'Notes';
-      var outputFile = fs.createWriteStream('RegenstriefCodesValidations.csv');
-
+      //var outputFile = fs.createWriteStream('RegenstriefCodesValidations.csv');
+      var outputBuffer = '';
+      var outputFile = fs.createWriteStream(outputBuffer);
       // Write the annotations message as the first line of the output file
       //outputFile.write('*' + Ucum.bracesMsg_ + '\r\n');
 
@@ -1229,6 +1230,9 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
       // to format them as a spreadsheet row, and then pipes the row to the ouput file.
       //inputFile.pipe(parser).pipe(transformer).pipe(stringifier).pipe(outputFile);
       str.pipe(parser).pipe(transformer).pipe(stringifier).pipe(outputFile);
+
+      var blob = new Blob([outputFile], { type: 'text/csv' });
+      var bUrl = URL.createObjectURL(blob);
     } // end validateFile
 
   }]);
@@ -1689,7 +1693,6 @@ var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
 var UnitTables = require('./unitTables.js').UnitTables;
 var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
-var Fx = require('./functions.js');
 var fs = require('fs');
 var path = require('path');
 
@@ -1945,7 +1948,7 @@ UcumLhcUtils.getInstance = function () {
 UcumLhcUtils.getInstance();
 
 
-},{"./config.js":2,"./functions.js":5,"./ucumJsonDefs.js":10,"./unit.js":13,"./unitString.js":14,"./unitTables.js":15,"fs":23,"path":111}],12:[function(require,module,exports){
+},{"./config.js":2,"./ucumJsonDefs.js":10,"./unit.js":13,"./unitString.js":14,"./unitTables.js":15,"fs":23,"path":111}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2394,7 +2397,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UnitString = require("./unitString.js").UnitString;
-var Fx = require("./functions.js");
+var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
 
 var Unit = exports.Unit = function () {
@@ -2726,7 +2729,7 @@ var Unit = exports.Unit = function () {
       // else use a function to get the number to be returned
       else {
           var x = 0.0;
-          var funcs = Fx.Functions.getInstance();
+          var funcs = UcumFunctions.getInstance();
           if (fromCnv != null) {
             // turn num * fromUnit.magnitude into its ratio scale equivalent
             var fromFunc = funcs.forName(fromCnv);
@@ -2978,7 +2981,7 @@ var Unit = exports.Unit = function () {
 }(); // end Unit class
 
 
-},{"./config.js":2,"./dimension.js":4,"./functions.js":5,"./unitString.js":14,"is-integer":50}],14:[function(require,module,exports){
+},{"./config.js":2,"./dimension.js":4,"./ucumFunctions.js":9,"./unitString.js":14,"is-integer":50}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
