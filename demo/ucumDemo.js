@@ -17,12 +17,8 @@ export class UcumDemo {
   constructor () {
 
     // run the constructors for the utils and unitTables classes to get
-    // things initialized and data loaded.  Include a call to the LHC
-    // ucum utilities to set message output to use HTML emphasis and to
-    // output the braces message for each use.
+    // things initialized and data loaded.
     let utils = UcumLhcUtils.getInstance();
-    utils.useHTMLInMessages();
-    utils.useBraceMsgForEachString();
     let utab = UnitTables.getInstance();
 
     // Get a full list of unit names and assign it to a prefetch autocompleter
@@ -62,6 +58,10 @@ export class UcumDemo {
    */
   reportUnitStringValidity(elementID, returnElementID) {
 
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(true);
+    utils.useBraceMsgForEachString(true);
+    
     let uStr = document.getElementById(elementID).value;
     let valFld = document.getElementById(returnElementID);
     valFld.innerHTML = '';
@@ -72,7 +72,6 @@ export class UcumDemo {
     }
     else {
       try {
-        let utils = UcumLhcUtils.getInstance();
         let parseResp = utils.validUnitString(uStr);
         if (parseResp[0])
           valMsg = `${uStr} is a valid unit.`;
@@ -104,6 +103,10 @@ export class UcumDemo {
    */
   convertUnit(fromField, numField, toField, decDigits) {
 
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(true);
+    utils.useBraceMsgForEachString(true);
+
     if (decDigits === undefined)
       decDigits = Ucum.decDigits_;
 
@@ -114,7 +117,6 @@ export class UcumDemo {
     if (codePos > 0)
       toName = toName.substr(0, codePos);
 
-    let utils = UcumLhcUtils.getInstance();
     let resultMsg = utils.convertUnitTo(fromName, fromVal, toName, decDigits);
 
     // Put the message - conversion or error - on the page
@@ -138,6 +140,11 @@ export class UcumDemo {
    *   functions called by this is caught, fills the result field with the error
    */
   getCommensurables(fromField, toField, resultField) {
+
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(true);
+    utils.useBraceMsgForEachString(true);
+
     let toFld = document.getElementById(toField);
     toFld.innerHTML = '';
     this.toAuto_.setList('');
@@ -149,7 +156,6 @@ export class UcumDemo {
     let parseResp = [];
 
     try {
-      let utils = UcumLhcUtils.getInstance();
       let parseResp = utils.commensurablesList(fromName);
       let commUnits = parseResp[0];
       let resultMsg = parseResp[1];
@@ -194,6 +200,11 @@ export class UcumDemo {
    *
    */
   toggleDisplay(elementID, buttonID, blockText, noneText) {
+
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(true);
+    utils.useBraceMsgForEachString(true);
+
     let theElement = document.getElementById(elementID);
     let theButton = null;
     if (buttonID)
@@ -212,21 +223,66 @@ export class UcumDemo {
     }
   }
 
+
+  /**
+   *  This method responds to the user's request to validate unit strings in
+   *  a file.  When the user clicks on the inputfile button on the demo page,
+   *  a file selector box is displayed.  When the user selects a file and clicks
+   *  on the "Open" button, this method is called.
+   *
+   *  It calls the file validator validateFile method, passing it the file
+   *  selected, the name of the dsv file column that contains the string
+   *  to validate, and the initiateDownload function in this object to be called
+   *  when file validation is complete.
+   *
+   * */
   fileSelected() {
+
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(false);
+    utils.useBraceMsgForEachString(false);
+
     let dia = document.getElementById("inputfile");
-    //let tmppath = window.URL.createObjectURL(dia.files[0]);
-    //console.log('tmppath = ' + tmppath);
-    //let inputFile = fs.createReadStream(tmppath);
-    //let inputFile2 = fs.createReadStream(dia.files[0]);
-    //let reader = new FileReader();
-    //reader.readAsText(dia.files[0]);
-    //let inBuff = Buffer.from(reader);
-    //let inputFile = fs.createReadStream(inBuff);
-    //let fileValue = dia.files[0].name;
     let ufv = UcumFileValidator.getInstance();
-    ufv.validateFile(dia.files[0]) ;
-    //let input = fs.createReadStream(file)
+    ufv.validateFile(dia.files[0], 'UCUM_CODE', this.initiateDownload) ;
+    dia.value = null;
   }
+
+
+  /**
+   *  This is called when validation of unit strings in a file is complete.
+   *  It controls display (and disposal) of the download dialog box that
+   *  lets the user choose where to store the output file and to change
+   *  the name of the file to be stored if desired.
+   *
+   * @param bUrl the object url of the blob that contains the validated file
+   *  contents
+   */
+  initiateDownload(bUrl){
+
+    // create the download element,  give it the default file name to
+    // create, and append it to the document.
+    let a = document.createElement('a') ;
+    a.id = 'downlink';
+    a.href = bUrl ;
+    a.download = 'InputFileCopy.csv';
+    document.body.appendChild(a);
+
+    // add a listener that gets rid of the download dialog once the
+    // users clicks save or cancel
+    window.addEventListener('focus', window_focus, false);
+    function window_focus(){
+      window.removeEventListener('focus', window_focus, false);
+      URL.revokeObjectURL(bUrl);
+      let an = document.getElementById('downlink');
+      an.parentElement.removeChild(an);
+    }
+
+    // Click on the download link to initiate display of the box and
+    // then download (if the user selects SAVE).
+    a.click();
+
+  } // end initiate download
 
 } // end class UcumDemo
 

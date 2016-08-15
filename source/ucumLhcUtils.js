@@ -9,6 +9,7 @@ var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs ;
 var UnitTables = require('./unitTables.js').UnitTables;
 var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
+var Prefix = require('./prefix.js').Prefix;
 var fs = require('fs');
 var path = require('path');
 
@@ -51,10 +52,15 @@ export class UcumLhcUtils {
    * This method calls the useHTMLInMessages method on the (singleton)
    * UnitString object.  It should be called by web applications that use
    * these utilities.
+   *
+   * @param use flag indicating whether or not to use the braces message;
+   *  defaults to true
    */
-  useHTMLInMessages() {
+  useHTMLInMessages(use) {
     let us = UnitString.getInstance() ;
-    us.useHTMLInMessages();
+    if (use === undefined)
+      use = true ;
+    us.useHTMLInMessages(use);
   }
 
 
@@ -63,10 +69,15 @@ export class UcumLhcUtils {
    * UnitString object.  It should be called by web applications where unit
    * strings are validated individually (as opposed to validating a whole
    * file of unit strings).
+   *
+   * @param use flag indicating whether or not to use the braces message;
+   *  defaults to true
    */
-  useBraceMsgForEachString() {
+  useBraceMsgForEachString(use) {
     let us = UnitString.getInstance() ;
-    us.useBraceMsgForEachString();
+    if (use === undefined)
+      use = true ;
+    us.useBraceMsgForEachString(use);
   }
 
 
@@ -240,6 +251,8 @@ export class UcumLhcUtils {
     fs.writeFileSync('/home/lmericle/ucum/test/JsonUnitsList.txt', uList,
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
   }
+
+
 } // end UcumLhcUtils class
 
 

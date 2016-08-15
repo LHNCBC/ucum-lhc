@@ -43,6 +43,25 @@ export class PrefixTables {
     return Object.keys(this.byCode_).length ;
   }
 
+
+  /**
+   * This is used to get all prefix objects by value.  Currently it is used
+   * to create a csv file with all prefixes and units.
+   * @returns csv string containing all prefix objects, ordered by value.
+   */
+  allPrefixesByValue() {
+    console.log('in allPrefixesByValue, this.byValue_ length = ' + this.byValue_.length);
+    let prefixBuff = '';
+    let pList = Object.keys(this.byValue_);
+    //pList.sort() ;
+    let pLen = pList.length;
+    for (let p = 0; p < pLen; p++) {
+      let pfx = this.getPrefixByValue(pList[p]) ;
+      prefixBuff += pfx.code_ + ',' + pfx.name_ + ',,' + pfx.value_ + '\r\n';
+    }
+    return prefixBuff ;
+  }
+
   /**
    * This is used to get all prefix objects.  Currently it is used
    * to get the objects to write to the json ucum definitions file
