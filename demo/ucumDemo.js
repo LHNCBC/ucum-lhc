@@ -230,30 +230,51 @@ export class UcumDemo {
    *  a file selector box is displayed.  When the user selects a file and clicks
    *  on the "Open" button, this method is called.
    *
-   *  It calls the file validator validateFile method, passing it the file
-   *  selected, the name of the dsv file column that contains the string
-   *  to validate, and the initiateDownload function in this object to be called
-   *  when file validation is complete.
-   *
-   * */
+   *  It displays the column name division, which is hidden until the file is
+   *  selected, and enables the field into which the column name is specified.
+   *  It also disables the inputfile field so that the user can't specify
+   *  another file.
+   */
   fileSelected() {
+    let colDiv = document.getElementById('colNameDiv') ;
+    colDiv.setAttribute('style', 'display:block');
+    colName.disabled = false ;
+    let dia = document.getElementById("inputfile");
+    dia.disabled = true;
+  }
 
+
+  /**
+   *  This method responds to the user's click on the Validate File button.
+   *
+   *  It calls the file validator validateFile method, passing it the file
+   *  selected, the column name specified, the initiateDownload function in
+   *  this object to be called when file validation is complete, and the
+   *  fileValidationError function in this object to be called on an error.
+   *
+   *  It also disables the column name input field.
+   */
+  columnSpecified() {
+    let colName = document.getElementById('colName').value;
     let utils = UcumLhcUtils.getInstance();
     utils.useHTMLInMessages(false);
     utils.useBraceMsgForEachString(false);
 
     let dia = document.getElementById("inputfile");
     let ufv = UcumFileValidator.getInstance();
-    ufv.validateFile(dia.files[0], 'UCUM_CODE', this.initiateDownload) ;
-    dia.value = null;
+    ufv.validateFile(dia.files[0], colName, this.initiateDownload,
+        this.fileValidationError) ;
+    colName.disabled = true;
   }
-
 
   /**
    *  This is called when validation of unit strings in a file is complete.
    *  It controls display (and disposal) of the download dialog box that
    *  lets the user choose where to store the output file and to change
    *  the name of the file to be stored if desired.
+   *
+   *  It also re-enables the input file field and clears the file name from
+   *  that field.  The display of the column name division is also blocked.
    *
    * @param bUrl the object url of the blob that contains the validated file
    *  contents
@@ -265,24 +286,56 @@ export class UcumDemo {
     let a = document.createElement('a') ;
     a.id = 'downlink';
     a.href = bUrl ;
-    a.download = 'InputFileCopy.csv';
+    a.download = 'UnitStringValidations.csv';
     document.body.appendChild(a);
 
     // add a listener that gets rid of the download dialog once the
-    // users clicks save or cancel
+    // user clicks save or cancel
     window.addEventListener('focus', window_focus, false);
     function window_focus(){
       window.removeEventListener('focus', window_focus, false);
       URL.revokeObjectURL(bUrl);
       let an = document.getElementById('downlink');
       an.parentElement.removeChild(an);
+      let dia = document.getElementById("inputfile");
+      dia.disabled = false;
+      dia.value = null;
+      let colDiv = document.getElementById('colNameDiv');
+      colDiv.setAttribute('style', 'display:none');
     }
-
     // Click on the download link to initiate display of the box and
     // then download (if the user selects SAVE).
     a.click();
 
   } // end initiate download
+
+
+  /**
+   * This method is called when an error occurs during the validation process,
+   * by the code doing the validation.
+   *
+   * It writes the error, including the name of the stream in which the error
+   * occurred, to the console.  It displays the error text to the user in an
+   * alert box and lets the user know that the validation file was not written.
+   *
+   * It also re-enables the input file field and clears the file name from
+   * that field.  The display of the column name division is also blocked.
+   *
+   * @param src the source of the error - which should be the stream in which
+   *  the error was encountered
+   * @param err the error text
+   *
+  */
+  fileValidationError(src, err) {
+    console.log(src + ' error; err = ' + err);
+    let aMsg = err + "\n\nSorry - your validation file could not be written.";
+    alert(aMsg);
+    let dia = document.getElementById("inputfile");
+    dia.disabled = false;
+    dia.value = '';
+    let colDiv = document.getElementById('colNameDiv');
+    colDiv.setAttribute('style', 'display:none');
+  }
 
 } // end class UcumDemo
 

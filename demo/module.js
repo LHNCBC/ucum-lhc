@@ -259,25 +259,45 @@ var UcumDemo = exports.UcumDemo = function () {
      *  a file selector box is displayed.  When the user selects a file and clicks
      *  on the "Open" button, this method is called.
      *
-     *  It calls the file validator validateFile method, passing it the file
-     *  selected, the name of the dsv file column that contains the string
-     *  to validate, and the initiateDownload function in this object to be called
-     *  when file validation is complete.
-     *
-     * */
+     *  It displays the column name division, which is hidden until the file is
+     *  selected, and enables the field into which the column name is specified.
+     *  It also disables the inputfile field so that the user can't specify
+     *  another file.
+     */
 
   }, {
     key: 'fileSelected',
     value: function fileSelected() {
+      var colDiv = document.getElementById('colNameDiv');
+      colDiv.setAttribute('style', 'display:block');
+      colName.disabled = false;
+      var dia = document.getElementById("inputfile");
+      dia.disabled = true;
+    }
 
+    /**
+     *  This method responds to the user's click on the Validate File button.
+     *
+     *  It calls the file validator validateFile method, passing it the file
+     *  selected, the column name specified, the initiateDownload function in
+     *  this object to be called when file validation is complete, and the
+     *  fileValidationError function in this object to be called on an error.
+     *
+     *  It also disables the column name input field.
+     */
+
+  }, {
+    key: 'columnSpecified',
+    value: function columnSpecified() {
+      var colName = document.getElementById('colName').value;
       var utils = UcumLhcUtils.getInstance();
       utils.useHTMLInMessages(false);
       utils.useBraceMsgForEachString(false);
 
       var dia = document.getElementById("inputfile");
       var ufv = UcumFileValidator.getInstance();
-      ufv.validateFile(dia.files[0], 'UCUM_CODE', this.initiateDownload);
-      dia.value = null;
+      ufv.validateFile(dia.files[0], colName, this.initiateDownload, this.fileValidationError);
+      colName.disabled = true;
     }
 
     /**
@@ -285,6 +305,9 @@ var UcumDemo = exports.UcumDemo = function () {
      *  It controls display (and disposal) of the download dialog box that
      *  lets the user choose where to store the output file and to change
      *  the name of the file to be stored if desired.
+     *
+     *  It also re-enables the input file field and clears the file name from
+     *  that field.  The display of the column name division is also blocked.
      *
      * @param bUrl the object url of the blob that contains the validated file
      *  contents
@@ -299,24 +322,58 @@ var UcumDemo = exports.UcumDemo = function () {
       var a = document.createElement('a');
       a.id = 'downlink';
       a.href = bUrl;
-      a.download = 'InputFileCopy.csv';
+      a.download = 'UnitStringValidations.csv';
       document.body.appendChild(a);
 
       // add a listener that gets rid of the download dialog once the
-      // users clicks save or cancel
+      // user clicks save or cancel
       window.addEventListener('focus', window_focus, false);
       function window_focus() {
         window.removeEventListener('focus', window_focus, false);
         URL.revokeObjectURL(bUrl);
         var an = document.getElementById('downlink');
         an.parentElement.removeChild(an);
+        var dia = document.getElementById("inputfile");
+        dia.disabled = false;
+        dia.value = null;
+        var colDiv = document.getElementById('colNameDiv');
+        colDiv.setAttribute('style', 'display:none');
       }
-
       // Click on the download link to initiate display of the box and
       // then download (if the user selects SAVE).
       a.click();
     } // end initiate download
 
+
+    /**
+     * This method is called when an error occurs during the validation process,
+     * by the code doing the validation.
+     *
+     * It writes the error, including the name of the stream in which the error
+     * occurred, to the console.  It displays the error text to the user in an
+     * alert box and lets the user know that the validation file was not written.
+     *
+     * It also re-enables the input file field and clears the file name from
+     * that field.  The display of the column name division is also blocked.
+     *
+     * @param src the source of the error - which should be the stream in which
+     *  the error was encountered
+     * @param err the error text
+     *
+    */
+
+  }, {
+    key: 'fileValidationError',
+    value: function fileValidationError(src, err) {
+      console.log(src + ' error; err = ' + err);
+      var aMsg = err + "\n\nSorry - your validation file could not be written.";
+      alert(aMsg);
+      var dia = document.getElementById("inputfile");
+      dia.disabled = false;
+      dia.value = '';
+      var colDiv = document.getElementById('colNameDiv');
+      colDiv.setAttribute('style', 'display:none');
+    }
   }]);
 
   return UcumDemo;
@@ -1218,6 +1275,11 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
   // @param fileSaveFunction the function to be called that will save the
   //  file.  It will be passed one parameter, which will be the Ojbect URL
   //  for the data to be written.
+  // @param msgHandler the function to be called on errors.  This function
+  //  should handle error reporting.  It should take 2 parameters - source,
+  //  which receives the name of the stream throwing the error, and err,
+  //  which should be the error text.   See UcumDemo.fileValidationError for
+  //  an example.
   //
   // @returns nothing
   //
@@ -1225,7 +1287,7 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
 
   _createClass(UcumFileValidator, [{
     key: 'validateFile',
-    value: function validateFile(inputFile, sourceCol, fileSaveFunction) {
+    value: function validateFile(inputFile, sourceCol, fileSaveFunction, msgHandler) {
 
       var unitTestedCol = 'Unit String Tested';
       var resultCol = 'Validation Result';
@@ -1248,7 +1310,7 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
       var transformer = transform(function (record) {
 
         if (!record[sourceCol]) {
-          this.emit('error', new Error('The ' + sourceCol + ' column was not ' + 'found in the file.  Validation is not possible.'));
+          transformer.emit('error', 'The ' + sourceCol + ' column was not ' + 'found in the file.  Validation is not possible.');
         } else {
           var uStr = record[sourceCol];
           var parseResp = [];
@@ -1291,25 +1353,6 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
         fileSaveFunction(bUrl);
       });
 
-      // Send errors from any of the streams to the validationError function
-      // For some reason, the string-to-stream package doesn't pass through an
-      // on error event.  If an error does occur on a read I'm assuming it will
-      // cascade down the pipeline until something blows up.  Then we'll just
-      // have to use a debugger.
-      //str.on('error', function(err){validationError(err, 'str')});
-      parser.on('error', function (err) {
-        validationError(err, 'parser');
-      });
-      transformer.on('error', function (err) {
-        validationError(err, 'transformer');
-      });
-      stringifier.on('error', function (err) {
-        validationError(err, 'stringifier');
-      });
-      outStream.on('error', function (err) {
-        validationError(err, 'outStream');
-      });
-
       // Start the data moving - but only after a little timeout.  Timing problems
       // were making this impossible to run.  Then I saw on the github/substack
       // stream handbook (https://github.com/substack/stream-handbook) a comment
@@ -1318,27 +1361,19 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
       // be less, but because this will be running on the client's system, I
       // wasn't sure how much would be needed for a slower system.
       setTimeout(function () {
-        str(reader.result).pipe(parser).pipe(transformer).pipe(stringifier).pipe(outStream);
+        str(reader.result).on('error', function (err) {
+          msgHandler('inputStream', err);
+        }).pipe(parser).on('error', function (err) {
+          msgHandler('parser', err);
+        }).pipe(transformer).on('error', function (err) {
+          msgHandler('transformer', err);
+        }).pipe(stringifier).on('error', function (err) {
+          msgHandler('stringifier', err);
+        }).pipe(outStream).on('error', function (err) {
+          msgHandler('outStream', err);
+        });
       }, 200);
     } // end validateFile
-
-
-    // This handles errors.  It puts up a general "So sorry" alert box, and
-    // writes the error text to the console.  We should probably tell the
-    // user what to do in this case, but I haven't figured out yet what that
-    // would be.
-    //
-    // @param err the error object
-    // @param source the source of the error (e.g., parser, transformer, etc.)
-    //
-
-  }, {
-    key: 'validationError',
-    value: function validationError(err, source) {
-      console.log(source + ' error; err = ' + err);
-      var aMsg = "So sorry!  Something has gone wrong with the validation " + "process.  Your validation file was not written.";
-      alert(aMsg);
-    } // end validationError
 
   }]);
 
@@ -2701,15 +2736,24 @@ var UnitString = exports.UnitString = function () {
   }
 
   /**
-   * Sets the emphasis strings to the HTML used in the webpage display.
+   * Sets the emphasis strings to the HTML used in the webpage display - or
+   * blanks them out, depending on the use parameter.
+   *
+   * @param use flag indicating whether or not to use the braces message;
+   *  defaults to true
    */
 
 
   _createClass(UnitString, [{
     key: 'useHTMLInMessages',
-    value: function useHTMLInMessages() {
-      this.openEmph_ = Ucum.openEmph_;
-      this.closeEmph_ = Ucum.closeEmph_;
+    value: function useHTMLInMessages(use) {
+      if (use === undefined || use === true) {
+        this.openEmph_ = Ucum.openEmph_;
+        this.closeEmph_ = Ucum.closeEmph_;
+      } else {
+        this.openEmph_ = '';
+        this.closeEmph_ = '';
+      }
     } // end useHTMLInMessages
 
 

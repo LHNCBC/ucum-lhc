@@ -48,10 +48,15 @@ export class UcumFileValidator {
   // @param fileSaveFunction the function to be called that will save the
   //  file.  It will be passed one parameter, which will be the Ojbect URL
   //  for the data to be written.
+  // @param msgHandler the function to be called on errors.  This function
+  //  should handle error reporting.  It should take 2 parameters - source,
+  //  which receives the name of the stream throwing the error, and err,
+  //  which should be the error text.   See UcumDemo.fileValidationError for
+  //  an example.
   //
   // @returns nothing
   //
-  validateFile(inputFile, sourceCol, fileSaveFunction) {
+  validateFile(inputFile, sourceCol, fileSaveFunction, msgHandler) {
 
     var unitTestedCol = 'Unit String Tested';
     var resultCol = 'Validation Result';
@@ -74,8 +79,8 @@ export class UcumFileValidator {
     var transformer = transform(function (record) {
 
       if (!record[sourceCol]) {
-        this.emit('error', new Error('The ' + sourceCol + ' column was not ' +
-                  'found in the file.  Validation is not possible.'));
+        transformer.emit('error', 'The ' + sourceCol + ' column was not ' +
+                  'found in the file.  Validation is not possible.');
       }
       else {
         let uStr = record[sourceCol];
@@ -126,17 +131,6 @@ export class UcumFileValidator {
       fileSaveFunction(bUrl);
     });
 
-    // Send errors from any of the streams to the validationError function
-    // For some reason, the string-to-stream package doesn't pass through an
-    // on error event.  If an error does occur on a read I'm assuming it will
-    // cascade down the pipeline until something blows up.  Then we'll just
-    // have to use a debugger.
-    //str.on('error', function(err){validationError(err, 'str')});
-    parser.on('error', function(err){validationError(err, 'parser')});
-    transformer.on('error', function(err){validationError(err, 'transformer')});
-    stringifier.on('error', function(err){validationError(err, 'stringifier')});
-    outStream.on('error', function (err){validationError(err, 'outStream')});
-
     // Start the data moving - but only after a little timeout.  Timing problems
     // were making this impossible to run.  Then I saw on the github/substack
     // stream handbook (https://github.com/substack/stream-handbook) a comment
@@ -145,26 +139,18 @@ export class UcumFileValidator {
     // be less, but because this will be running on the client's system, I
     // wasn't sure how much would be needed for a slower system.
     setTimeout(function () {
-      str(reader.result).pipe(parser).pipe(transformer).pipe(stringifier).pipe(outStream);
+      str(reader.result)
+          .on('error', function(err){msgHandler('inputStream', err)})
+          .pipe(parser)
+          .on('error', function(err){msgHandler('parser', err)})
+          .pipe(transformer)
+          .on('error', function(err){msgHandler('transformer', err)})
+          .pipe(stringifier)
+          .on('error', function(err){msgHandler('stringifier', err)})
+          .pipe(outStream)
+          .on('error', function(err){msgHandler('outStream', err)});
     }, 200);
   } // end validateFile
-
-
-  // This handles errors.  It puts up a general "So sorry" alert box, and
-  // writes the error text to the console.  We should probably tell the
-  // user what to do in this case, but I haven't figured out yet what that
-  // would be.
-  //
-  // @param err the error object
-  // @param source the source of the error (e.g., parser, transformer, etc.)
-  //
-  validationError(err, source) {
-    console.log(source + ' error; err = ' + err);
-    let aMsg = "So sorry!  Something has gone wrong with the validation " +
-               "process.  Your validation file was not written.";
-    alert(aMsg);
-
-  } // end validationError
 
 } // end UcumFileValidator
 
