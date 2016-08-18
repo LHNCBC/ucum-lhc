@@ -11,6 +11,7 @@
     <!-- page header -->
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" title="Home" rel="home" id="logo">
+        <!-- add dist/ to img path for demo version -->
         <img src="dist/assets/images/lhncbc.jpg" alt="Home" />
       </a>
       <div id="siteNameBox">
@@ -35,8 +36,8 @@
       <p>Enter a valid UCUM code for the unit you want to convert:
         <input type="text" id="convertFrom"
          onblur="ucumPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
-                                                                      'convertTo',
-                                                                      'resultString')">
+                                                                  'convertTo',
+                                                                  'resultString')">
         &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
       </p>
       <p>What is the value you want to convert?
@@ -46,8 +47,8 @@
       <input type="text" id="convertTo">
       <p>&nbsp;&nbsp;  <button id="doConversionButton"
          onclick="ucumPkg.UcumDemo.getInstance().convertUnit('convertFrom',
-                                                                 'convertNum',
-                                                                 'convertTo')"
+                                                             'convertNum',
+                                                             'convertTo')"
                 type="button">Convert</button>
       </p>
       <p id="resultString">&nbsp;&nbsp;</p>
@@ -67,7 +68,7 @@
       <button id="doValidationButton"
               onclick=
                   "ucumPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
-                                                            'validationString')"
+                                                                   'validationString')"
               type="button">Validate</button>
       <p id="validationString">&nbsp;&nbsp;</p>
       <p id="validList"></p>
@@ -88,18 +89,32 @@
         <li>No blanks are allowed within the unit string.</li>
         <li>The multiplication operator must be explicity specified; it is never
           assumed.</li>
-        <li>The multiplication operator must appear between two unit terms.</li>
-        <li>The division operator may appear at the beginning of the string,
+        <li>The multiplication operator (.) must appear between two unit terms.</li>
+        <li>The division operator (/) may appear at the beginning of the string,
            indicating inversion of the following term, but normally appears
            between two terms.</li>
         <li>Terms are evaluated from left to right, with multiplication and
            division having the same precedence.</li>
         <li><a href="http://unitsofmeasure.org/ucum.html#para-10">Parentheses</a>
           may be used to override normal left-to-right evaluation
-          of a string.  For example kg.m/s2 multiplies kg by m and dvides the
-          product by s2.   kg.(m/s2) divides m by s2 and multiples that by kg.</li>
+          of a string.  For example kg/m.s2 divides kg by m and multiplies the
+          result by s2.   kg/(m.s2) multiplies m by s2 and divides that by kg.</li>
       </ul>
-      </div></p>
+      </div><!-- hints div -->
+      <div id="filevalidation">
+        <p>Validate unit strings in a file</p>
+        <input type="file" id="inputfile"
+               onchange="ucumPkg.UcumDemo.getInstance().fileSelected()">
+        <div id="colNameDiv" style="display:none">
+            Name of the column that contains the strings to be validated
+            <input type="text" id="colName" disabled="true">&nbsp; &nbsp;
+            <button id="startValidation"
+                  onclick="
+                ucumPkg.UcumDemo.getInstance().columnSpecified()"
+                  type="button">Validate File</button>
+        </div><!-- colNameDiv -->
+        <!-- <a id="downlink" href="" style="'display:none'"></a> -->
+      </div><!-- filevalidation div -->
     </div> <!-- end validation div -->
 
   <!-- page footer -->
@@ -111,6 +126,7 @@
       <li><a title="NLM viewers and players" href="http://www.nlm.nih.gov/plugins.html">Viewers & Players</a></li>
       <li><a title="NIH Freedom of Information Act office"  href="http://www.nih.gov/icd/od/foia/index.htm"
           >Freedom of Information Act</a></li>
+      <!-- add dist/ to img path for demo version -->
       <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
           src="dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
     </ul>
@@ -122,9 +138,10 @@
       <li class="last-item"><a title="U.S. Department of Health and Human Services"  href="http://www.hhs.gov/"
           >U.S. Department of Health and Human Services</a></li>
     </ul>
-  </div>
+  </div><!-- fine-print -->
   <!-- end page footer -->
     <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/8.1.0/autocomplete-lhc_jQuery.min.js"></script>
+    <!-- add demo/ to module.js path for demo version -->
     <script src="demo/module.js"></script>
   </body>
 </html>

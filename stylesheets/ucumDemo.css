@@ -116,5 +116,9 @@ h4 {
 .small-print {
   font-size: 14px;
 }
+.emphSpan {
+  color: red;
+  font-weight: 500;
+}
 
 
