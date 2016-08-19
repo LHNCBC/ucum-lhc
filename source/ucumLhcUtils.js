@@ -88,7 +88,8 @@ export class UcumLhcUtils {
    * valid unit string.
    *
    * @param uStr the string to be validated
-   * @returns true for a valid string; false for an invalid string
+   * @returns an array containing the unit found for the string (or null if
+   *  no unit was found) and a message string, if one was returned
    */
   validUnitString(uStr) {
 
@@ -161,7 +162,8 @@ export class UcumLhcUtils {
    * represented by the string.
    *
    * @param uName the string representing the unit
-   * @returns the unit found for the string
+   * @returns an array containing the unit found for the string (or null if
+   *  no unit was found) and a message string, if one was returned
    * @throws a message if the unit is not found
    */
   getSpecifiedUnit(uName) {
