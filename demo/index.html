@@ -107,11 +107,15 @@
                onchange="ucumPkg.UcumDemo.getInstance().fileSelected()">
         <div id="colNameDiv" style="display:none">
             Name of the column that contains the strings to be validated
-            <input type="text" id="colName" disabled="true">&nbsp; &nbsp;
+            <input type="text" id="colName">&nbsp; &nbsp;
             <button id="startValidation"
                   onclick="
                 ucumPkg.UcumDemo.getInstance().columnSpecified()"
                   type="button">Validate File</button>
+          <button id="cancelValidation"
+                  onclick="
+                ucumPkg.UcumDemo.getInstance().resetFileInput()"
+                  type="button">Cancel</button>
         </div><!-- colNameDiv -->
         <!-- <a id="downlink" href="" style="'display:none'"></a> -->
       </div><!-- filevalidation div -->
