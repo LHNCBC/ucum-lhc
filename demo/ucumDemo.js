@@ -6,25 +6,23 @@
  * populating the autocompleter unit lists.
  */
 
+var fs = require('browserify-fs');
 var Ucum = require('../source/config.js').Ucum;
 var UcumLhcUtils = require("../source/ucumLhcUtils.js").UcumLhcUtils;
 var UnitTables = require("../source/unitTables.js").UnitTables;
+var UcumFileValidator = require("../source/ucumFileValidator").UcumFileValidator;
 
 export class UcumDemo {
 
   constructor () {
 
     // run the constructors for the utils and unitTables classes to get
-    // things initialized and data loaded.  Include a call to the LHC
-    // ucum utilities to set message output to use HTML emphasis and to
-    // output the braces message for each use.
-    let utils = UcumLhcUtils.getInstance();
-    utils.useHTMLInMessages();
-    utils.useBraceMsgForEachString();
-    let utab = UnitTables.getInstance();
+    // things initialized and data loaded.
+    this.utils_ = UcumLhcUtils.getInstance();
+    this.utabs_ = UnitTables.getInstance();
 
     // Get a full list of unit names and assign it to a prefetch autocompleter
-    let unames = utab.getUnitNamesList();
+    let unames = this.utabs_.getUnitNamesList();
     let autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
 
     // Set up an autocompleter for the "to" conversion fields.  It will be
@@ -60,6 +58,9 @@ export class UcumDemo {
    */
   reportUnitStringValidity(elementID, returnElementID) {
 
+    this.utils_.useHTMLInMessages(true);
+    this.utils_.useBraceMsgForEachString(true);
+    
     let uStr = document.getElementById(elementID).value;
     let valFld = document.getElementById(returnElementID);
     valFld.innerHTML = '';
@@ -70,8 +71,7 @@ export class UcumDemo {
     }
     else {
       try {
-        let utils = UcumLhcUtils.getInstance();
-        let parseResp = utils.validUnitString(uStr);
+        let parseResp = this.utils_.validUnitString(uStr);
         if (parseResp[0])
           valMsg = `${uStr} is a valid unit.`;
         else
@@ -102,6 +102,9 @@ export class UcumDemo {
    */
   convertUnit(fromField, numField, toField, decDigits) {
 
+    this.utils_.useHTMLInMessages(true);
+    this.utils_.useBraceMsgForEachString(true);
+
     if (decDigits === undefined)
       decDigits = Ucum.decDigits_;
 
@@ -112,8 +115,7 @@ export class UcumDemo {
     if (codePos > 0)
       toName = toName.substr(0, codePos);
 
-    let utils = UcumLhcUtils.getInstance();
-    let resultMsg = utils.convertUnitTo(fromName, fromVal, toName, decDigits);
+    let resultMsg = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
 
     // Put the message - conversion or error - on the page
     let resultString = document.getElementById("resultString");
@@ -136,6 +138,10 @@ export class UcumDemo {
    *   functions called by this is caught, fills the result field with the error
    */
   getCommensurables(fromField, toField, resultField) {
+
+    this.utils_.useHTMLInMessages(true);
+    this.utils_.useBraceMsgForEachString(true);
+
     let toFld = document.getElementById(toField);
     toFld.innerHTML = '';
     this.toAuto_.setList('');
@@ -147,8 +153,7 @@ export class UcumDemo {
     let parseResp = [];
 
     try {
-      let utils = UcumLhcUtils.getInstance();
-      let parseResp = utils.commensurablesList(fromName);
+      let parseResp = this.utils_.commensurablesList(fromName);
       let commUnits = parseResp[0];
       let resultMsg = parseResp[1];
       // If we can't find any, don't panic.  The user could still enter one
@@ -160,8 +165,7 @@ export class UcumDemo {
         for (let i = 0; i < cLen; i++)
           commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ +
               commUnits[i].getProperty('name_');
-        let utabs = UnitTables.getInstance();
-        commNames.sort(utabs.compareCodes);
+        commNames.sort(this.utabs_.compareCodes);
         this.toAuto_.setList(commNames)
       }
     }
@@ -192,6 +196,10 @@ export class UcumDemo {
    *
    */
   toggleDisplay(elementID, buttonID, blockText, noneText) {
+
+    this.utils_.useHTMLInMessages(true);
+    this.utils_.useBraceMsgForEachString(true);
+
     let theElement = document.getElementById(elementID);
     let theButton = null;
     if (buttonID)
@@ -208,6 +216,132 @@ export class UcumDemo {
           theButton.innerText = theButton.innerText.replace(blockText, noneText);
       }
     }
+  }
+
+
+  /**
+   *  This method responds to the user's request to validate unit strings in
+   *  a file.  When the user clicks on the inputfile button on the demo page,
+   *  a file selector box is displayed.  When the user selects a file and clicks
+   *  on the "Open" button, this method is called to display the column name
+   *  division, which is hidden until the file is selected.
+   */
+  fileSelected() {
+    let colDiv = document.getElementById('colNameDiv') ;
+    colDiv.setAttribute('style', 'display:block');
+  }
+
+
+  /**
+   *  This method responds to the user's click on the Validate File button.
+   *
+   *  It calls the file validator validateFile method, passing it the file
+   *  selected, the column name specified, the initiateDownload function in
+   *  this object to be called when file validation is complete, and the
+   *  fileValidationError function in this object to be called on an error.
+   *
+   *  It also disables the column name input field.
+   */
+  columnSpecified() {
+    let colName = document.getElementById('colName').value;
+    this.utils_.useHTMLInMessages(false);
+    this.utils_.useBraceMsgForEachString(false);
+
+    let dia = document.getElementById("inputfile");
+    let ufv = UcumFileValidator.getInstance();
+    ufv.validateFile(dia.files[0], colName, this.initiateDownload,
+        this.fileValidationError) ;
+  }
+
+  /**
+   *  This is called when validation of unit strings in a file is complete.
+   *  It controls display (and disposal) of the download dialog box that
+   *  lets the user choose where to store the output file and to change
+   *  the name of the file to be stored if desired.
+   *
+   *  It also clears the file name from input file field and blocks display
+   *  of the column name division.
+   *
+   * @param bUrl the object url of the blob that contains the validated file
+   *  contents
+   */
+  initiateDownload(bUrl){
+
+    // create the download element,  give it the default file name to
+    // create, and append it to the document.
+    let a = document.createElement('a') ;
+    a.id = 'downlink';
+    a.href = bUrl ;
+    a.download = 'UnitStringValidations.csv';
+    document.body.appendChild(a);
+
+    // add a listener that gets rid of the download link once the
+    // user clicks save or cancel
+    window.addEventListener('focus', windowFocus, false);
+    function windowFocus(){
+      window.removeEventListener('focus', windowFocus, false);
+      URL.revokeObjectURL(bUrl);
+      let an = document.getElementById('downlink');
+      an.parentElement.removeChild(an);
+      let dia = document.getElementById("inputfile");
+      dia.value = null;
+      let colDiv = document.getElementById('colNameDiv');
+      colDiv.setAttribute('style', 'display:none');
+    }
+    // Click on the download link to initiate display of the box and
+    // then download (if the user selects SAVE).
+    a.click();
+
+  } // end initiate download
+
+
+  /**
+   * This method is called when an error occurs during the validation process,
+   * by the code doing the validation.
+   *
+   * It writes the error, including the name of the stream in which the error
+   * occurred, to the console.  It displays the error text to the user in an
+   * alert box and lets the user know that the validation file was not written.
+   *
+   * It also re-enables the input file field and clears the file name from
+   * that field.  The display of the column name division is also blocked.
+   *
+   * @param src the source of the error - which should be the stream in which
+   *  the error was encountered
+   * @param err the error text
+   *
+  */
+  fileValidationError(src, err) {
+    console.log(src + ' error; err = ' + err);
+    let aMsg = err + "\n\nSorry - your validation file could not be written.";
+    alert(aMsg);
+    let dia = document.getElementById("inputfile");
+    dia.value = '';
+    let colDiv = document.getElementById('colNameDiv');
+    colDiv.setAttribute('style', 'display:none');
+  }
+
+
+  /**
+   * This method is called when the user clicks on the Cancel button for a
+   * file validation request.  This clears out the file name chosen in the
+   * input file field and hides the column stuff (request for column name,
+   * validate file button, and cancel button).
+   *
+   * These cleanup steps are also used in the fileValidationError method and
+   * the window_focus function defined in the initiateDownload method.  I tried
+   * to reference this method from those but for some reason this method
+   * could not been seen when called from those.  I'm not sure if it has to
+   * do with a different context, where the fileValidationError is called
+   * from the ucumFileValidator validateFile event emitter and the
+   * window_focus method in the initiateDownload method is also an event, but
+   * no matter what I tried it wouldn't work.   Sigh.
+   */
+  resetFileInput() {
+    let dia = document.getElementById("inputfile");
+    dia.value = '';
+    let colDiv = document.getElementById('colNameDiv');
+    colDiv.setAttribute('style', 'display:none');
   }
 
 } // end class UcumDemo

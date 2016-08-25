@@ -475,6 +475,37 @@ export class UnitTables {
 
 
   /**
+   * This is used to get all unit objects, ordered by unit name.  Currently it
+   * is used to create a csv list of all units.
+   *
+   * @returns a buffer containing all unit objects, ordered by name
+   * order
+   */
+  allUnitsByName() {
+    let uCount = 0;
+    let unitBuff = '';
+    let unitsList = this.getAllUnitNames();
+    let uLen = unitsList.length;
+    for (let i = 0; i < uLen; i++) {
+      let nameRecs = this.getUnitByName(unitsList[i]);
+      if (nameRecs instanceof Array) {
+        for (let u = 0; u < nameRecs.length; u++) {
+          let rec = nameRecs[u];
+          unitBuff += rec.csCode_ + ',' + rec.name_ + ',' + rec.property_ + ',\r\n';
+          uCount += 1;
+        }
+      }
+      else {
+        unitBuff += nameRecs.csCode_ + ',' + nameRecs.name_ + ',' +
+                    nameRecs.property_ + ',\r\n';
+        uCount += 1;
+      }
+    }
+    return unitBuff ;
+  } // end allUnitsByName
+
+
+  /**
    * This creates a list of all units in the tables.  It uses the byCode
    * table, and uses the codeOrder_ array to determine the order in which
    * the units are listed.

@@ -9,7 +9,7 @@ var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs ;
 var UnitTables = require('./unitTables.js').UnitTables;
 var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
-var Fx = require('./functions.js');
+var Prefix = require('./prefix.js').Prefix;
 var fs = require('fs');
 var path = require('path');
 
@@ -52,10 +52,15 @@ export class UcumLhcUtils {
    * This method calls the useHTMLInMessages method on the (singleton)
    * UnitString object.  It should be called by web applications that use
    * these utilities.
+   *
+   * @param use flag indicating whether or not to use the braces message;
+   *  defaults to true
    */
-  useHTMLInMessages() {
+  useHTMLInMessages(use) {
     let us = UnitString.getInstance() ;
-    us.useHTMLInMessages();
+    if (use === undefined)
+      use = true ;
+    us.useHTMLInMessages(use);
   }
 
 
@@ -64,10 +69,15 @@ export class UcumLhcUtils {
    * UnitString object.  It should be called by web applications where unit
    * strings are validated individually (as opposed to validating a whole
    * file of unit strings).
+   *
+   * @param use flag indicating whether or not to use the braces message;
+   *  defaults to true
    */
-  useBraceMsgForEachString() {
+  useBraceMsgForEachString(use) {
     let us = UnitString.getInstance() ;
-    us.useBraceMsgForEachString();
+    if (use === undefined)
+      use = true ;
+    us.useBraceMsgForEachString(use);
   }
 
 
@@ -78,7 +88,8 @@ export class UcumLhcUtils {
    * valid unit string.
    *
    * @param uStr the string to be validated
-   * @returns true for a valid string; false for an invalid string
+   * @returns an array containing the unit found for the string (or null if
+   *  no unit was found) and a message string, if one was returned
    */
   validUnitString(uStr) {
 
@@ -151,7 +162,8 @@ export class UcumLhcUtils {
    * represented by the string.
    *
    * @param uName the string representing the unit
-   * @returns the unit found for the string
+   * @returns an array containing the unit found for the string (or null if
+   *  no unit was found) and a message string, if one was returned
    * @throws a message if the unit is not found
    */
   getSpecifiedUnit(uName) {
@@ -241,6 +253,8 @@ export class UcumLhcUtils {
     fs.writeFileSync('/home/lmericle/ucum/test/JsonUnitsList.txt', uList,
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
   }
+
+
 } // end UcumLhcUtils class
 
 

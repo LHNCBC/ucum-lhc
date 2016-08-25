@@ -11,7 +11,7 @@
 var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UnitString = require("./unitString.js").UnitString;
-var Fx = require("./functions.js");
+var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
 
 export class Unit {
@@ -350,7 +350,7 @@ export class Unit {
     // else use a function to get the number to be returned
     else {
       let x = 0.0 ;
-      let funcs = Fx.Functions.getInstance();
+      let funcs = UcumFunctions.getInstance();
       if (fromCnv != null) {
         // turn num * fromUnit.magnitude into its ratio scale equivalent
         let fromFunc = funcs.forName(fromCnv);
