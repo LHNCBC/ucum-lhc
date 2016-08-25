@@ -50,11 +50,11 @@ var UcumDemo = exports.UcumDemo = function () {
 
     // run the constructors for the utils and unitTables classes to get
     // things initialized and data loaded.
-    var utils = UcumLhcUtils.getInstance();
-    var utab = UnitTables.getInstance();
+    this.utils_ = UcumLhcUtils.getInstance();
+    this.utabs_ = UnitTables.getInstance();
 
     // Get a full list of unit names and assign it to a prefetch autocompleter
-    var unames = utab.getUnitNamesList();
+    var unames = this.utabs_.getUnitNamesList();
     var autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
 
     // Set up an autocompleter for the "to" conversion fields.  It will be
@@ -93,9 +93,8 @@ var UcumDemo = exports.UcumDemo = function () {
     key: 'reportUnitStringValidity',
     value: function reportUnitStringValidity(elementID, returnElementID) {
 
-      var utils = UcumLhcUtils.getInstance();
-      utils.useHTMLInMessages(true);
-      utils.useBraceMsgForEachString(true);
+      this.utils_.useHTMLInMessages(true);
+      this.utils_.useBraceMsgForEachString(true);
 
       var uStr = document.getElementById(elementID).value;
       var valFld = document.getElementById(returnElementID);
@@ -106,7 +105,7 @@ var UcumDemo = exports.UcumDemo = function () {
         retMsg.push("Please specify a unit string to be validated.");
       } else {
         try {
-          var parseResp = utils.validUnitString(uStr);
+          var parseResp = this.utils_.validUnitString(uStr);
           if (parseResp[0]) valMsg = uStr + ' is a valid unit.';else valMsg = uStr + ' Is NOT a valid unit.';
           if (parseResp[1].length > 0) retMsg = retMsg.concat(parseResp[1]);
         } catch (err) {
@@ -135,9 +134,8 @@ var UcumDemo = exports.UcumDemo = function () {
     key: 'convertUnit',
     value: function convertUnit(fromField, numField, toField, decDigits) {
 
-      var utils = UcumLhcUtils.getInstance();
-      utils.useHTMLInMessages(true);
-      utils.useBraceMsgForEachString(true);
+      this.utils_.useHTMLInMessages(true);
+      this.utils_.useBraceMsgForEachString(true);
 
       if (decDigits === undefined) decDigits = Ucum.decDigits_;
 
@@ -147,7 +145,7 @@ var UcumDemo = exports.UcumDemo = function () {
       var codePos = toName.indexOf(Ucum.codeSep_);
       if (codePos > 0) toName = toName.substr(0, codePos);
 
-      var resultMsg = utils.convertUnitTo(fromName, fromVal, toName, decDigits);
+      var resultMsg = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
 
       // Put the message - conversion or error - on the page
       var resultString = document.getElementById("resultString");
@@ -174,9 +172,8 @@ var UcumDemo = exports.UcumDemo = function () {
     key: 'getCommensurables',
     value: function getCommensurables(fromField, toField, resultField) {
 
-      var utils = UcumLhcUtils.getInstance();
-      utils.useHTMLInMessages(true);
-      utils.useBraceMsgForEachString(true);
+      this.utils_.useHTMLInMessages(true);
+      this.utils_.useBraceMsgForEachString(true);
 
       var toFld = document.getElementById(toField);
       toFld.innerHTML = '';
@@ -189,7 +186,7 @@ var UcumDemo = exports.UcumDemo = function () {
       var parseResp = [];
 
       try {
-        var _parseResp = utils.commensurablesList(fromName);
+        var _parseResp = this.utils_.commensurablesList(fromName);
         var commUnits = _parseResp[0];
         var _resultMsg = _parseResp[1];
         // If we can't find any, don't panic.  The user could still enter one
@@ -200,8 +197,7 @@ var UcumDemo = exports.UcumDemo = function () {
           var commNames = [];
           for (var i = 0; i < cLen; i++) {
             commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ + commUnits[i].getProperty('name_');
-          }var utabs = UnitTables.getInstance();
-          commNames.sort(utabs.compareCodes);
+          }commNames.sort(this.utabs_.compareCodes);
           this.toAuto_.setList(commNames);
         }
       } catch (err) {
@@ -235,9 +231,8 @@ var UcumDemo = exports.UcumDemo = function () {
     key: 'toggleDisplay',
     value: function toggleDisplay(elementID, buttonID, blockText, noneText) {
 
-      var utils = UcumLhcUtils.getInstance();
-      utils.useHTMLInMessages(true);
-      utils.useBraceMsgForEachString(true);
+      this.utils_.useHTMLInMessages(true);
+      this.utils_.useBraceMsgForEachString(true);
 
       var theElement = document.getElementById(elementID);
       var theButton = null;
@@ -257,12 +252,8 @@ var UcumDemo = exports.UcumDemo = function () {
      *  This method responds to the user's request to validate unit strings in
      *  a file.  When the user clicks on the inputfile button on the demo page,
      *  a file selector box is displayed.  When the user selects a file and clicks
-     *  on the "Open" button, this method is called.
-     *
-     *  It displays the column name division, which is hidden until the file is
-     *  selected, and enables the field into which the column name is specified.
-     *  It also disables the inputfile field so that the user can't specify
-     *  another file.
+     *  on the "Open" button, this method is called to display the column name
+     *  division, which is hidden until the file is selected.
      */
 
   }, {
@@ -270,9 +261,6 @@ var UcumDemo = exports.UcumDemo = function () {
     value: function fileSelected() {
       var colDiv = document.getElementById('colNameDiv');
       colDiv.setAttribute('style', 'display:block');
-      colName.disabled = false;
-      var dia = document.getElementById("inputfile");
-      dia.disabled = true;
     }
 
     /**
@@ -290,14 +278,12 @@ var UcumDemo = exports.UcumDemo = function () {
     key: 'columnSpecified',
     value: function columnSpecified() {
       var colName = document.getElementById('colName').value;
-      var utils = UcumLhcUtils.getInstance();
-      utils.useHTMLInMessages(false);
-      utils.useBraceMsgForEachString(false);
+      this.utils_.useHTMLInMessages(false);
+      this.utils_.useBraceMsgForEachString(false);
 
       var dia = document.getElementById("inputfile");
       var ufv = UcumFileValidator.getInstance();
       ufv.validateFile(dia.files[0], colName, this.initiateDownload, this.fileValidationError);
-      colName.disabled = true;
     }
 
     /**
@@ -306,8 +292,8 @@ var UcumDemo = exports.UcumDemo = function () {
      *  lets the user choose where to store the output file and to change
      *  the name of the file to be stored if desired.
      *
-     *  It also re-enables the input file field and clears the file name from
-     *  that field.  The display of the column name division is also blocked.
+     *  It also clears the file name from input file field and blocks display
+     *  of the column name division.
      *
      * @param bUrl the object url of the blob that contains the validated file
      *  contents
@@ -325,16 +311,15 @@ var UcumDemo = exports.UcumDemo = function () {
       a.download = 'UnitStringValidations.csv';
       document.body.appendChild(a);
 
-      // add a listener that gets rid of the download dialog once the
+      // add a listener that gets rid of the download link once the
       // user clicks save or cancel
-      window.addEventListener('focus', window_focus, false);
-      function window_focus() {
-        window.removeEventListener('focus', window_focus, false);
+      window.addEventListener('focus', windowFocus, false);
+      function windowFocus() {
+        window.removeEventListener('focus', windowFocus, false);
         URL.revokeObjectURL(bUrl);
         var an = document.getElementById('downlink');
         an.parentElement.removeChild(an);
         var dia = document.getElementById("inputfile");
-        dia.disabled = false;
         dia.value = null;
         var colDiv = document.getElementById('colNameDiv');
         colDiv.setAttribute('style', 'display:none');
@@ -369,7 +354,31 @@ var UcumDemo = exports.UcumDemo = function () {
       var aMsg = err + "\n\nSorry - your validation file could not be written.";
       alert(aMsg);
       var dia = document.getElementById("inputfile");
-      dia.disabled = false;
+      dia.value = '';
+      var colDiv = document.getElementById('colNameDiv');
+      colDiv.setAttribute('style', 'display:none');
+    }
+
+    /**
+     * This method is called when the user clicks on the Cancel button for a
+     * file validation request.  This clears out the file name chosen in the
+     * input file field and hides the column stuff (request for column name,
+     * validate file button, and cancel button).
+     *
+     * These cleanup steps are also used in the fileValidationError method and
+     * the window_focus function defined in the initiateDownload method.  I tried
+     * to reference this method from those but for some reason this method
+     * could not been seen when called from those.  I'm not sure if it has to
+     * do with a different context, where the fileValidationError is called
+     * from the ucumFileValidator validateFile event emitter and the
+     * window_focus method in the initiateDownload method is also an event, but
+     * no matter what I tried it wouldn't work.   Sigh.
+     */
+
+  }, {
+    key: 'resetFileInput',
+    value: function resetFileInput() {
+      var dia = document.getElementById("inputfile");
       dia.value = '';
       var colDiv = document.getElementById('colNameDiv');
       colDiv.setAttribute('style', 'display:none');
@@ -1867,7 +1876,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * valid unit string.
      *
      * @param uStr the string to be validated
-     * @returns true for a valid string; false for an invalid string
+     * @returns an array containing the unit found for the string (or null if
+     *  no unit was found) and a message string, if one was returned
      */
 
   }, {
@@ -1935,7 +1945,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * represented by the string.
      *
      * @param uName the string representing the unit
-     * @returns the unit found for the string
+     * @returns an array containing the unit found for the string (or null if
+     *  no unit was found) and a message string, if one was returned
      * @throws a message if the unit is not found
      */
 

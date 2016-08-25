@@ -1,1 +1,16 @@
-# Created by .ignore support plugin (hsz.mobi)
+.idea
+LicenseCertificate*
+nbproject
+node_modules
+javaSource
+coverage
+rectangle.js
+*-compiled.js.map
+*-compiled.js
+js/
+*.zip
+autocomplete*
+.babelrc
+.gitignore
+stuff/
+dist/es5
