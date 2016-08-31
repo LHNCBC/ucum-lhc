@@ -55,7 +55,7 @@ export class UnitString{
    *  defaults to true
    */
   useHTMLInMessages(use) {
-    if (use === undefined || use ===true) {
+    if (use === undefined || use) {
       this.openEmph_ = Ucum.openEmph_;
       this.closeEmph_ = Ucum.closeEmph_;
     }
@@ -74,7 +74,7 @@ export class UnitString{
    *  defaults to true
    */
   useBraceMsgForEachString(use) {
-    if (use === undefined || use === true)
+    if (use === undefined || use)
       this.bracesMsg_ = Ucum.bracesMsg_;
     else
       this.bracesMsg_ = '';

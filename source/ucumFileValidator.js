@@ -35,27 +35,28 @@ export class UcumFileValidator {
     UcumFileValidator.getInstance = function(){return self} ;
   }
 
-  // This method reads the rows of the input csv file, checks the validity
-  // of the unit string in the identified column, and outputs the result of
-  // the test as well as any notes.  New columns are added to the rows, at
-  // the end of each row, to contain confirmation of the unit string tested,
-  // the result of the test, and any notes from the test.
-  //
-  // @param inputFile this is the input file obtained from the HTML file type
-  //  input field
-  // @param sourceCol this is the name of the column containing the unit
-  //  string to be tested.
-  // @param fileSaveFunction the function to be called that will save the
-  //  file.  It will be passed one parameter, which will be the Ojbect URL
-  //  for the data to be written.
-  // @param msgHandler the function to be called on errors.  This function
-  //  should handle error reporting.  It should take 2 parameters - source,
-  //  which receives the name of the stream throwing the error, and err,
-  //  which should be the error text.   See UcumDemo.fileValidationError for
-  //  an example.
-  //
-  // @returns nothing
-  //
+  /**
+   * This method reads the rows of the input csv file, checks the validity
+   * of the unit string in the identified column, and outputs the result of
+   * the test as well as any notes.  New columns are added to the rows, at
+   * the end of each row, to contain confirmation of the unit string tested,
+   * the result of the test, and any notes from the test.
+   *
+   * @param inputFile this is the input file obtained from the HTML file type
+   *  input field
+   * @param sourceCol this is the name of the column containing the unit
+   *  string to be tested.
+   * @param fileSaveFunction the function to be called that will save the
+   *  file.  It will be passed one parameter, which will be the Ojbect URL
+   *  for the data to be written.
+   * @param msgHandler the function to be called on errors.  This function
+   *  should handle error reporting.  It should take 2 parameters - source,
+   *  which receives the name of the stream throwing the error, and err,
+   *  which should be the error text.   See UcumDemo.fileValidationError for
+   *  an example.
+   *
+   * @returns nothing
+   */
   validateFile(inputFile, sourceCol, fileSaveFunction, msgHandler) {
 
     var unitTestedCol = 'Unit String Tested';
@@ -131,25 +132,20 @@ export class UcumFileValidator {
       fileSaveFunction(bUrl);
     });
 
-    // Start the data moving - but only after a little timeout.  Timing problems
-    // were making this impossible to run.  Then I saw on the github/substack
-    // stream handbook (https://github.com/substack/stream-handbook) a comment
-    // about being needed because of operating system delays.  So I tried it
-    // and voila!  Everything worked.  Note that the delay might be able to
-    // be less, but because this will be running on the client's system, I
-    // wasn't sure how much would be needed for a slower system.
-    setTimeout(function () {
-      str(reader.result)
-          .on('error', function(err){msgHandler('inputStream', err)})
-          .pipe(parser)
-          .on('error', function(err){msgHandler('parser', err)})
-          .pipe(transformer)
-          .on('error', function(err){msgHandler('transformer', err)})
-          .pipe(stringifier)
-          .on('error', function(err){msgHandler('stringifier', err)})
-          .pipe(outStream)
-          .on('error', function(err){msgHandler('outStream', err)});
-    }, 200);
+    // Start the data moving once the file reader is ready (has read in all
+    // the data).
+    var intSet = setInterval(pipeFunc, 10);
+    function pipeFunc() {
+      if (reader.readyState == FileReader.DONE) {
+        clearInterval(intSet);
+        str(reader.result)
+            .on('error', function (err){msgHandler('inputStream', err)})
+            .pipe(parser).on('error', function (err){msgHandler('parser', err)})
+            .pipe(transformer).on('error', function (err){msgHandler('transformer', err)})
+            .pipe(stringifier).on('error', function (err){msgHandler('stringifier', err)})
+            .pipe(outStream).on('error', function (err){msgHandler('outStream', err)});
+      }
+    }; // end pipeFunc
   } // end validateFile
 
 } // end UcumFileValidator
