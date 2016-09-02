@@ -3,7 +3,7 @@
   <head>
     <title>LHC UCUM Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="stylesheets/ucumDemo.css" rel="stylesheet"/>
+    <link href="dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
     <link href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/8.1.0/autocomplete-lhc_jQueryUI.min.css"
           media="screen" rel="stylesheet" />
   </head>
@@ -11,7 +11,6 @@
     <!-- page header -->
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" title="Home" rel="home" id="logo">
-        <!-- add dist/ to img path for demo version -->
         <img src="dist/assets/images/lhncbc.jpg" alt="Home" />
       </a>
       <div id="siteNameBox">
@@ -107,20 +106,20 @@
       <div id="filevalidation">
         <h3>Validate unit strings in a CSV file</h3>
         <p>We can validate unit strings in a <b>c</b>omma <b>s</b>eparated
-          <b>v</b>alues file on your system.<ul>
-        <li>Use the browse button below to select the file.</li>
-        <li>You will then be asked for the name of the column that contains
-          the strings to be validated.  (Your file must include column
-          headers).
-        </li>
-        <li>A copy of your file will be created that includes three
-          additional columns at the end, confirming what string was
-          validated, the validation results, and any relevant notes.
-        </li>
-        <li>You will be asked where you want the file saved.  You may
-          change the name of the output file at that time.
-        </li>
-      </ul>
+           <b>v</b>alues file on your system.<ul>
+           <li>Use the browse button below to select the file.</li>
+           <li>You will then be asked for the name of the column that contains
+               the strings to be validated.  (Your file must include column
+               headers).
+           </li>
+           <li>A copy of your file will be created that includes three
+               additional columns at the end, confirming what string was
+               validated, the validation results, and any relevant notes.
+           </li>
+           <li>You will be asked where you want the file saved.  You may
+               change the name of the output file at that time.
+           </li>
+        </ul>
         </p>
         <input type="file" id="inputfile"
                onchange="ucumPkg.UcumDemo.getInstance().fileSelected()">
@@ -149,7 +148,6 @@
       <li><a title="NLM viewers and players" href="http://www.nlm.nih.gov/plugins.html">Viewers & Players</a></li>
       <li><a title="NIH Freedom of Information Act office"  href="http://www.nih.gov/icd/od/foia/index.htm"
           >Freedom of Information Act</a></li>
-      <!-- add dist/ to img path for demo version -->
       <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
           src="dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
     </ul>
@@ -164,7 +162,6 @@
   </div><!-- fine-print -->
   <!-- end page footer -->
     <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/8.1.0/autocomplete-lhc_jQuery.min.js"></script>
-    <!-- add demo/ to module.js path for demo version -->
     <script src="demo/module.js"></script>
   </body>
 </html>

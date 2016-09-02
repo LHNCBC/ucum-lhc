@@ -13,16 +13,16 @@ var JDefs = require('../dist/es5/source/ucumJsonDefs.js').UcumJsonDefs;
 var UnitTables = require('../dist/es5/source/unitTables.js').UnitTables;
 
 // Load the data from the JSON file
-let jdefs = JDefs.getInstance();
+var jdefs = JDefs.getInstance();
 jdefs.loadJsonDefs();
 
 // Write the list to the output buffer
-let outBuff = 'case-sensitive code,name,unit property\r\n';
-let uTab = UnitTables.getInstance();
+var outBuff = 'case-sensitive code,name,unit property,unit string,magnitude,dimension\r\n';
+var uTab = UnitTables.getInstance();
 outBuff += uTab.allUnitsByName() ;
 
 // write the buffer to the output file
-fs.writeFileSync('/home/lmericle/ucum/data/ucumCsvList.csv', outBuff,
+fs.writeFileSync('ucumCsvList.csv', outBuff,
                  {encoding: 'utf8', mode: 0o666, flag: 'w'});
 
 
