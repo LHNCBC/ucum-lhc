@@ -22,7 +22,7 @@ var uTab = UnitTables.getInstance();
 outBuff += uTab.allUnitsByName() ;
 
 // write the buffer to the output file
-fs.writeFileSync('/home/lmericle/ucum/data/ucumCsvList.csv', outBuff,
+fs.writeFileSync('ucumCsvList.csv', outBuff,
                  {encoding: 'utf8', mode: 0o666, flag: 'w'});
 
 

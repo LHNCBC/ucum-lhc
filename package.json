@@ -2,7 +2,7 @@
   "name": "ucum",
   "version": "1.0.0",
   "description": "Implments Unified Code for Units of Measure (UCUM) functions in a javascript library",
-  "main": "dist/es5/main.js",
+  "main": "dist/es5/demo/main.js",
   "directories": {
     "test": "test"
   },
