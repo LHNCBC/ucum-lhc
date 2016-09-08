@@ -313,7 +313,6 @@ var UcumDemo = exports.UcumDemo = function () {
 
       // add a listener that gets rid of the download link once the
       // user clicks save or cancel
-      window.addEventListener('focus', windowFocus, false);
       function windowFocus() {
         window.removeEventListener('focus', windowFocus, false);
         URL.revokeObjectURL(bUrl);
@@ -324,6 +323,8 @@ var UcumDemo = exports.UcumDemo = function () {
         var colDiv = document.getElementById('colNameDiv');
         colDiv.setAttribute('style', 'display:none');
       }
+      window.addEventListener('focus', windowFocus, false);
+
       // Click on the download link to initiate display of the box and
       // then download (if the user selects SAVE).
       a.click();
@@ -1271,27 +1272,28 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
     };
   }
 
-  // This method reads the rows of the input csv file, checks the validity
-  // of the unit string in the identified column, and outputs the result of
-  // the test as well as any notes.  New columns are added to the rows, at
-  // the end of each row, to contain confirmation of the unit string tested,
-  // the result of the test, and any notes from the test.
-  //
-  // @param inputFile this is the input file obtained from the HTML file type
-  //  input field
-  // @param sourceCol this is the name of the column containing the unit
-  //  string to be tested.
-  // @param fileSaveFunction the function to be called that will save the
-  //  file.  It will be passed one parameter, which will be the Ojbect URL
-  //  for the data to be written.
-  // @param msgHandler the function to be called on errors.  This function
-  //  should handle error reporting.  It should take 2 parameters - source,
-  //  which receives the name of the stream throwing the error, and err,
-  //  which should be the error text.   See UcumDemo.fileValidationError for
-  //  an example.
-  //
-  // @returns nothing
-  //
+  /**
+   * This method reads the rows of the input csv file, checks the validity
+   * of the unit string in the identified column, and outputs the result of
+   * the test as well as any notes.  New columns are added to the rows, at
+   * the end of each row, to contain confirmation of the unit string tested,
+   * the result of the test, and any notes from the test.
+   *
+   * @param inputFile this is the input file obtained from the HTML file type
+   *  input field
+   * @param sourceCol this is the name of the column containing the unit
+   *  string to be tested.
+   * @param fileSaveFunction the function to be called that will save the
+   *  file.  It will be passed one parameter, which will be the Ojbect URL
+   *  for the data to be written.
+   * @param msgHandler the function to be called on errors.  This function
+   *  should handle error reporting.  It should take 2 parameters - source,
+   *  which receives the name of the stream throwing the error, and err,
+   *  which should be the error text.   See UcumDemo.fileValidationError for
+   *  an example.
+   *
+   * @returns nothing
+   */
 
 
   _createClass(UcumFileValidator, [{
@@ -1362,26 +1364,25 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
         fileSaveFunction(bUrl);
       });
 
-      // Start the data moving - but only after a little timeout.  Timing problems
-      // were making this impossible to run.  Then I saw on the github/substack
-      // stream handbook (https://github.com/substack/stream-handbook) a comment
-      // about being needed because of operating system delays.  So I tried it
-      // and voila!  Everything worked.  Note that the delay might be able to
-      // be less, but because this will be running on the client's system, I
-      // wasn't sure how much would be needed for a slower system.
-      setTimeout(function () {
-        str(reader.result).on('error', function (err) {
-          msgHandler('inputStream', err);
-        }).pipe(parser).on('error', function (err) {
-          msgHandler('parser', err);
-        }).pipe(transformer).on('error', function (err) {
-          msgHandler('transformer', err);
-        }).pipe(stringifier).on('error', function (err) {
-          msgHandler('stringifier', err);
-        }).pipe(outStream).on('error', function (err) {
-          msgHandler('outStream', err);
-        });
-      }, 200);
+      // Start the data moving once the file reader is ready (has read in all
+      // the data).
+      var intSet = setInterval(pipeFunc, 10);
+      function pipeFunc() {
+        if (reader.readyState == FileReader.DONE) {
+          clearInterval(intSet);
+          str(reader.result).on('error', function (err) {
+            msgHandler('inputStream', err);
+          }).pipe(parser).on('error', function (err) {
+            msgHandler('parser', err);
+          }).pipe(transformer).on('error', function (err) {
+            msgHandler('transformer', err);
+          }).pipe(stringifier).on('error', function (err) {
+            msgHandler('stringifier', err);
+          }).pipe(outStream).on('error', function (err) {
+            msgHandler('outStream', err);
+          });
+        }
+      }; // end pipeFunc
     } // end validateFile
 
   }]);
@@ -2758,7 +2759,7 @@ var UnitString = exports.UnitString = function () {
   _createClass(UnitString, [{
     key: 'useHTMLInMessages',
     value: function useHTMLInMessages(use) {
-      if (use === undefined || use === true) {
+      if (use === undefined || use) {
         this.openEmph_ = Ucum.openEmph_;
         this.closeEmph_ = Ucum.closeEmph_;
       } else {
@@ -2779,7 +2780,7 @@ var UnitString = exports.UnitString = function () {
   }, {
     key: 'useBraceMsgForEachString',
     value: function useBraceMsgForEachString(use) {
-      if (use === undefined || use === true) this.bracesMsg_ = Ucum.bracesMsg_;else this.bracesMsg_ = '';
+      if (use === undefined || use) this.bracesMsg_ = Ucum.bracesMsg_;else this.bracesMsg_ = '';
     }
 
     /**
@@ -2814,9 +2815,6 @@ var UnitString = exports.UnitString = function () {
       // An array of messages (warnings and errors) to be returned
       var retMsg = [];
 
-      // Flag used to block further processing on an unrecoverable error
-      var endProcessing = false;
-
       // Extract any annotations, i.e., text enclosed in braces ({}) from the
       // string before further processing.  Store each one in the annotations
       // array and put a placeholder in the string for the annotation.  Do
@@ -2825,6 +2823,9 @@ var UnitString = exports.UnitString = function () {
       // subsequent processing.
       var annotations = [];
       uStr = this.getAnnotations(uStr, annotations, retMsg);
+
+      // Flag used to block further processing on an unrecoverable error
+      var endProcessing = retMsg.length > 0;
 
       // Check for parentheses in unit strings.  If found, isolate a parenthesized
       // group and pass it to a recursive call of this method.  If it contains
@@ -2940,7 +2941,7 @@ var UnitString = exports.UnitString = function () {
 
         // Create a unit object out of each un element
         var _uLen = uArray.length;
-        for (var u1 = 0; u1 < _uLen; u1++) {
+        for (var u1 = 0; u1 < _uLen && !endProcessing; u1++) {
           var curCode = uArray[u1]['un'];
 
           // If the current unit array element is a unit stored in the parensUnits
@@ -3047,7 +3048,12 @@ var UnitString = exports.UnitString = function () {
         for (var u2 = 1; u2 < _uLen2; u2++, !endProcessing) {
           var nextUnit = uArray[u2]['un'];
           if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
-            retMsg.push('Unit string (' + origString + ') contains unrecognized ' + ('element (' + this.openEmph_ + nextUnit.toString()) + (this.closeEmph_ + '); could not parse full string.  Sorry'));
+            var msgString = 'Unit string (' + origString + ') contains unrecognized ' + 'element';
+            if (nextUnit) {
+              msgString += ' (' + this.openEmph_ + nextUnit.toString() + (this.closeEmph_ + ')');
+            }
+            msgString += '; could not parse full string.  Sorry';
+            retMsg.push(msgString);
             endProcessing = true;
           }
           if (!endProcessing) {
@@ -3125,6 +3131,7 @@ var UnitString = exports.UnitString = function () {
         var closeBrace = uString.indexOf('}');
         if (closeBrace < 0) {
           retMsg.push('Missing closing brace for annotation starting at ' + this.openEmph_ + uString.substr(openBrace) + this.closeEmph_);
+          openBrace = -1;
         } else {
           var braceStr = uString.substring(openBrace, closeBrace + 1);
           var aIdx = annotations.length.toString();
@@ -3830,9 +3837,9 @@ var UnitTables = exports.UnitTables = function () {
      *  not necessarily unique.
      *
      *  @param uName the name of the unit to be returned.  If more than one
-     *  unit has the same name, append the csCode of the unit you want to
-     *  the end of the name, enclosed in parentheses, e.g., inch ([in_i]) vs.
-     *  inch ([in_us]).
+     *  unit has the same name and you only want one specific unit, append the
+     *  csCode of the unit you want to the end of the name, separated by the
+     *  Ucum.codeSep_ value, e.g., inch - [in_i] vs. inch - [in_us].
      *  @returns null if no unit was found for the specified name OR an array of
      *  unit objects with the specified name.  Normally this will be an array
      *  of one object.
@@ -3844,30 +3851,31 @@ var UnitTables = exports.UnitTables = function () {
     key: 'getUnitByName',
     value: function getUnitByName(uName) {
 
-      var retUnit = null;
       if (uName === null || uName === undefined) {
         throw new Error('Unable to find unit by because when no name was provided.');
       }
       var sepPos = uName.indexOf(Ucum.codeSep_);
       var uCode = null;
       if (sepPos >= 1) {
-        uCode = uName.substr(0, sepPos);
-        uName = uName.substr(sepPos + Ucum.codeSep_.length);
+        uCode = uName.substr(sepPos + Ucum.codeSep_.length);
+        uName = uName.substr(0, sepPos);
       }
-      var unitsArray = this.unitNames_[uName];
-      if (unitsArray === undefined || unitsArray === null) {
+      var retUnits = this.unitNames_[uName];
+      if (retUnits === undefined || retUnits === null) {
         console.log('Unable to find unit with name = ' + uName);
       } else {
-        var uLen = unitsArray.length;
-        if (uLen === 1) retUnit = unitsArray[0];else if (uCode === null) {
-          retUnit = unitsArray;
-        } else {
+        var uLen = retUnits.length;
+
+        if (uCode && uLen > 1) {
           var i = 0;
-          for (; unitsArray[i].csCode_ !== uCode && i < uLen; i++) {}
-          if (i < uLen) retUnit = unitsArray[i];else console.log('Unable to find unit with name = ' + uName + ' amd ' + ('unit code = ' + uCode));
-        }
-      }
-      return retUnit;
+          for (; retUnits[i].csCode_ !== uCode && i < uLen; i++) {}
+          if (i < uLen) retUnits = [retUnits[i]];else {
+            console.log('Unable to find unit with name = ' + uName + ' amd ' + ('unit code = ' + uCode));
+            retUnits = null;
+          }
+        } // end if we need to find both a name and a code
+      } // end if we got an array of units
+      return retUnits;
     } // end getUnitByName
 
 
@@ -4020,21 +4028,15 @@ var UnitTables = exports.UnitTables = function () {
   }, {
     key: 'allUnitsByName',
     value: function allUnitsByName() {
-      var uCount = 0;
       var unitBuff = '';
       var unitsList = this.getAllUnitNames();
       var uLen = unitsList.length;
       for (var i = 0; i < uLen; i++) {
         var nameRecs = this.getUnitByName(unitsList[i]);
-        if (nameRecs instanceof Array) {
-          for (var u = 0; u < nameRecs.length; u++) {
-            var rec = nameRecs[u];
-            unitBuff += rec.csCode_ + ',' + rec.name_ + ',' + rec.property_ + ',\r\n';
-            uCount += 1;
-          }
-        } else {
-          unitBuff += nameRecs.csCode_ + ',' + nameRecs.name_ + ',' + nameRecs.property_ + ',\r\n';
-          uCount += 1;
+        for (var u = 0; u < nameRecs.length; u++) {
+          var rec = nameRecs[u];
+          unitBuff += rec.csCode_ + ',' + rec.name_ + ',' + rec.property_ + ',' + rec.csUnitString_ + ',' + rec.magnitude_;
+          if (rec.dim_ !== null && rec.dim_.dimVec_ instanceof Array) unitBuff += ',[' + rec.dim_.dimVec_.join('') + ']\r\n';else unitBuff += '\r\n';
         }
       }
       return unitBuff;

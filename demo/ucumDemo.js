@@ -277,7 +277,6 @@ export class UcumDemo {
 
     // add a listener that gets rid of the download link once the
     // user clicks save or cancel
-    window.addEventListener('focus', windowFocus, false);
     function windowFocus(){
       window.removeEventListener('focus', windowFocus, false);
       URL.revokeObjectURL(bUrl);
@@ -288,6 +287,8 @@ export class UcumDemo {
       let colDiv = document.getElementById('colNameDiv');
       colDiv.setAttribute('style', 'display:none');
     }
+    window.addEventListener('focus', windowFocus, false);
+
     // Click on the download link to initiate display of the box and
     // then download (if the user selects SAVE).
     a.click();
