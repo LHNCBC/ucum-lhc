@@ -18,11 +18,11 @@ export class UcumDemo {
 
     // run the constructors for the utils and unitTables classes to get
     // things initialized and data loaded.
-    this.utils_ = UcumLhcUtils.getInstance();
-    this.utabs_ = UnitTables.getInstance();
+    let utils = UcumLhcUtils.getInstance();
+    let utab = UnitTables.getInstance();
 
     // Get a full list of unit names and assign it to a prefetch autocompleter
-    let unames = this.utabs_.getUnitNamesList();
+    let unames = utab.getUnitNamesList();
     let autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
 
     // Set up an autocompleter for the "to" conversion fields.  It will be
@@ -58,8 +58,9 @@ export class UcumDemo {
    */
   reportUnitStringValidity(elementID, returnElementID) {
 
-    this.utils_.useHTMLInMessages(true);
-    this.utils_.useBraceMsgForEachString(true);
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(true);
+    utils.useBraceMsgForEachString(true);
     
     let uStr = document.getElementById(elementID).value;
     let valFld = document.getElementById(returnElementID);
@@ -71,7 +72,7 @@ export class UcumDemo {
     }
     else {
       try {
-        let parseResp = this.utils_.validUnitString(uStr);
+        let parseResp = utils.validUnitString(uStr);
         if (parseResp[0])
           valMsg = `${uStr} is a valid unit.`;
         else
@@ -102,8 +103,9 @@ export class UcumDemo {
    */
   convertUnit(fromField, numField, toField, decDigits) {
 
-    this.utils_.useHTMLInMessages(true);
-    this.utils_.useBraceMsgForEachString(true);
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(true);
+    utils.useBraceMsgForEachString(true);
 
     if (decDigits === undefined)
       decDigits = Ucum.decDigits_;
@@ -115,7 +117,7 @@ export class UcumDemo {
     if (codePos > 0)
       toName = toName.substr(0, codePos);
 
-    let resultMsg = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
+    let resultMsg = utils.convertUnitTo(fromName, fromVal, toName, decDigits);
 
     // Put the message - conversion or error - on the page
     let resultString = document.getElementById("resultString");
@@ -139,8 +141,9 @@ export class UcumDemo {
    */
   getCommensurables(fromField, toField, resultField) {
 
-    this.utils_.useHTMLInMessages(true);
-    this.utils_.useBraceMsgForEachString(true);
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(true);
+    utils.useBraceMsgForEachString(true);
 
     let toFld = document.getElementById(toField);
     toFld.innerHTML = '';
@@ -153,7 +156,7 @@ export class UcumDemo {
     let parseResp = [];
 
     try {
-      let parseResp = this.utils_.commensurablesList(fromName);
+      let parseResp = utils.commensurablesList(fromName);
       let commUnits = parseResp[0];
       let resultMsg = parseResp[1];
       // If we can't find any, don't panic.  The user could still enter one
@@ -165,7 +168,8 @@ export class UcumDemo {
         for (let i = 0; i < cLen; i++)
           commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ +
               commUnits[i].getProperty('name_');
-        commNames.sort(this.utabs_.compareCodes);
+        let utabs = UnitTables.getInstance();
+        commNames.sort(utabs.compareCodes);
         this.toAuto_.setList(commNames)
       }
     }
@@ -197,8 +201,9 @@ export class UcumDemo {
    */
   toggleDisplay(elementID, buttonID, blockText, noneText) {
 
-    this.utils_.useHTMLInMessages(true);
-    this.utils_.useBraceMsgForEachString(true);
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(true);
+    utils.useBraceMsgForEachString(true);
 
     let theElement = document.getElementById(elementID);
     let theButton = null;
@@ -223,12 +228,19 @@ export class UcumDemo {
    *  This method responds to the user's request to validate unit strings in
    *  a file.  When the user clicks on the inputfile button on the demo page,
    *  a file selector box is displayed.  When the user selects a file and clicks
-   *  on the "Open" button, this method is called to display the column name
-   *  division, which is hidden until the file is selected.
+   *  on the "Open" button, this method is called.
+   *
+   *  It displays the column name division, which is hidden until the file is
+   *  selected, and enables the field into which the column name is specified.
+   *  It also disables the inputfile field so that the user can't specify
+   *  another file.
    */
   fileSelected() {
     let colDiv = document.getElementById('colNameDiv') ;
     colDiv.setAttribute('style', 'display:block');
+    colName.disabled = false ;
+    let dia = document.getElementById("inputfile");
+    dia.disabled = true;
   }
 
 
@@ -244,13 +256,15 @@ export class UcumDemo {
    */
   columnSpecified() {
     let colName = document.getElementById('colName').value;
-    this.utils_.useHTMLInMessages(false);
-    this.utils_.useBraceMsgForEachString(false);
+    let utils = UcumLhcUtils.getInstance();
+    utils.useHTMLInMessages(false);
+    utils.useBraceMsgForEachString(false);
 
     let dia = document.getElementById("inputfile");
     let ufv = UcumFileValidator.getInstance();
     ufv.validateFile(dia.files[0], colName, this.initiateDownload,
         this.fileValidationError) ;
+    colName.disabled = true;
   }
 
   /**
@@ -259,8 +273,8 @@ export class UcumDemo {
    *  lets the user choose where to store the output file and to change
    *  the name of the file to be stored if desired.
    *
-   *  It also clears the file name from input file field and blocks display
-   *  of the column name division.
+   *  It also re-enables the input file field and clears the file name from
+   *  that field.  The display of the column name division is also blocked.
    *
    * @param bUrl the object url of the blob that contains the validated file
    *  contents
@@ -275,20 +289,20 @@ export class UcumDemo {
     a.download = 'UnitStringValidations.csv';
     document.body.appendChild(a);
 
-    // add a listener that gets rid of the download link once the
+    // add a listener that gets rid of the download dialog once the
     // user clicks save or cancel
-    function windowFocus(){
-      window.removeEventListener('focus', windowFocus, false);
+    window.addEventListener('focus', window_focus, false);
+    function window_focus(){
+      window.removeEventListener('focus', window_focus, false);
       URL.revokeObjectURL(bUrl);
       let an = document.getElementById('downlink');
       an.parentElement.removeChild(an);
       let dia = document.getElementById("inputfile");
+      dia.disabled = false;
       dia.value = null;
       let colDiv = document.getElementById('colNameDiv');
       colDiv.setAttribute('style', 'display:none');
     }
-    window.addEventListener('focus', windowFocus, false);
-
     // Click on the download link to initiate display of the box and
     // then download (if the user selects SAVE).
     a.click();
@@ -317,29 +331,7 @@ export class UcumDemo {
     let aMsg = err + "\n\nSorry - your validation file could not be written.";
     alert(aMsg);
     let dia = document.getElementById("inputfile");
-    dia.value = '';
-    let colDiv = document.getElementById('colNameDiv');
-    colDiv.setAttribute('style', 'display:none');
-  }
-
-
-  /**
-   * This method is called when the user clicks on the Cancel button for a
-   * file validation request.  This clears out the file name chosen in the
-   * input file field and hides the column stuff (request for column name,
-   * validate file button, and cancel button).
-   *
-   * These cleanup steps are also used in the fileValidationError method and
-   * the window_focus function defined in the initiateDownload method.  I tried
-   * to reference this method from those but for some reason this method
-   * could not been seen when called from those.  I'm not sure if it has to
-   * do with a different context, where the fileValidationError is called
-   * from the ucumFileValidator validateFile event emitter and the
-   * window_focus method in the initiateDownload method is also an event, but
-   * no matter what I tried it wouldn't work.   Sigh.
-   */
-  resetFileInput() {
-    let dia = document.getElementById("inputfile");
+    dia.disabled = false;
     dia.value = '';
     let colDiv = document.getElementById('colNameDiv');
     colDiv.setAttribute('style', 'display:none');
