@@ -3,7 +3,7 @@
   <head>
     <title>LHC UCUM Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="stylesheets/ucumDemo.css" rel="stylesheet"/>
+    <link href="dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
     <link href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/8.1.0/autocomplete-lhc_jQueryUI.min.css"
           media="screen" rel="stylesheet" />
   </head>
@@ -11,7 +11,6 @@
     <!-- page header -->
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" title="Home" rel="home" id="logo">
-        <!-- add dist/ to img path for demo version -->
         <img src="dist/assets/images/lhncbc.jpg" alt="Home" />
       </a>
       <div id="siteNameBox">
@@ -56,62 +55,85 @@
 
     <div id="validation" class="section">
       <h2>UCUM Unit Expression Validation</h2>
-      <p>Enter a unit string to be validated:
-        <input type="text" id="valString">&nbsp; &nbsp; &nbsp; &nbsp;
-        <button id="toggleHints"
-                onclick="
+      <div id="singleString">
+        <h3>Validate a single expression</h3>
+        <p>Enter a unit expression to be validated:
+          <input type="text" id="valString">&nbsp; &nbsp; &nbsp; &nbsp;
+          <button id="toggleHints"
+                  onclick="
                 ucumPkg.UcumDemo.getInstance().toggleDisplay('hints',
                                                                  'toggleHints',
                                                                  'Hide', 'Show')"
-        type="button">Show entry hints</button>
-      </p>&nbsp;&nbsp;
-      <button id="doValidationButton"
-              onclick=
-                  "ucumPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
+                  type="button">Show entry hints</button>
+        </p>&nbsp;&nbsp;
+        <button id="doValidationButton"
+                onclick=
+                    "ucumPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString')"
-              type="button">Validate</button>
-      <p id="validationString">&nbsp;&nbsp;</p>
-      <p id="validList"></p>
-      <div id="hints" style="display: none">
-      <h4 class="small-print" style="text-align: left">Unit String creation hints</h4>
-       <p class="small-print">See the <a href="http://unitsofmeasure.org/ucum.html">
-       UCUM Specification</a> for full descriptions of grammar and syntax rules.
-      <ul class="small-print">
-        <li>A <a href="http://unitsofmeasure.org/ucum.html#section-Prefixes">UCUM
-          defined prefix</a> can be applied to metric units, e.g. kg for
-          kilo gram (where k is the prefix and g is the base unit).</li>
-        <li>Simple units may be <a href="http://unitsofmeasure.org/ucum.html#para-9">
-          raised to a power</a> by appending an integer number to the end of the
-          unit term.  Negative exponents must be preceded by a minus sing ('-').  Positive exponents may be
-          preceded by a plus sign ('+') although the sign may be omitted.</li>
-        <li>All units can be combined in an <a href="http://unitsofmeasure.org/ucum.html#para-7">
-          algebraic term</a> using the operators for multiplication (period '.') and division (solidus '/').</li>
-        <li>No blanks are allowed within the unit string.</li>
-        <li>The multiplication operator must be explicity specified; it is never
-          assumed.</li>
-        <li>The multiplication operator (.) must appear between two unit terms.</li>
-        <li>The division operator (/) may appear at the beginning of the string,
-           indicating inversion of the following term, but normally appears
-           between two terms.</li>
-        <li>Terms are evaluated from left to right, with multiplication and
-           division having the same precedence.</li>
-        <li><a href="http://unitsofmeasure.org/ucum.html#para-10">Parentheses</a>
-          may be used to override normal left-to-right evaluation
-          of a string.  For example kg/m.s2 divides kg by m and multiplies the
-          result by s2.   kg/(m.s2) multiplies m by s2 and divides that by kg.</li>
-      </ul>
-      </div><!-- hints div -->
+                type="button">Validate</button>
+        <p id="validationString">&nbsp;&nbsp;</p>
+        <p id="validList"></p>
+        <div id="hints" style="display: none">
+          <h4 class="small-print" style="text-align: left">Unit Expression creation hints</h4>
+          <p class="small-print">See the <a href="http://unitsofmeasure.org/ucum.html">
+            UCUM Specification</a> for full descriptions of grammar and syntax rules.
+          <ul class="small-print">
+            <li>A <a href="http://unitsofmeasure.org/ucum.html#section-Prefixes">UCUM
+              defined prefix</a> can be applied to metric units, e.g. kg for
+              kilo gram (where k is the prefix and g is the base unit).</li>
+            <li>Simple units may be <a href="http://unitsofmeasure.org/ucum.html#para-9">
+              raised to a power</a> by appending an integer number to the end of the
+              unit term.  Negative exponents must be preceded by a minus sign ('-').  Positive exponents may be
+              preceded by a plus sign ('+') although the sign may be omitted.</li>
+            <li>All units can be combined in an <a href="http://unitsofmeasure.org/ucum.html#para-7">
+              algebraic term</a> using the operators for multiplication (period '.') and division (solidus '/').</li>
+            <li>No blanks are allowed within the unit expression.</li>
+            <li>The multiplication operator must be explicity specified; it is never
+              assumed.</li>
+            <li>The multiplication operator (.) must appear between two unit terms.</li>
+            <li>The division operator (/) may appear at the beginning of the expression,
+              indicating inversion of the following term, but normally appears
+              between two terms.</li>
+            <li>Terms are evaluated from left to right, with multiplication and
+              division having the same precedence.</li>
+            <li><a href="http://unitsofmeasure.org/ucum.html#para-10">Parentheses</a>
+              may be used to override normal left-to-right evaluation
+              of an expreession.  For example kg/m.s2 divides kg by m and multiplies the
+              result by s2.   kg/(m.s2) multiplies m by s2 and divides that by kg.</li>
+          </ul>
+        </div><!-- hints div -->
+      </div><!-- singleString div -->
       <div id="filevalidation">
-        <p>Validate unit strings in a file</p>
+        <h3>Validate unit expressions in a CSV file</h3>
+        <p>We can validate unit expressions in a <b>c</b>omma <b>s</b>eparated
+          <b>v</b>alues file on your system.<ul>
+        <li>Use the browse button below to select the file.</li>
+        <li>You will then be asked for the name of the column that contains
+          the expressions to be validated.  (Your file must include column
+          headers).
+        </li>
+        <li>A copy of your file will be created that includes three
+          additional columns at the end, confirming what expression was
+          validated, the validation results, and any relevant notes.
+        </li>
+        <li>You will be asked where you want the file saved.  You may
+          change the name of the output file at that time.
+        </li>
+      </ul>
+        </p>
         <input type="file" id="inputfile"
                onchange="ucumPkg.UcumDemo.getInstance().fileSelected()">
         <div id="colNameDiv" style="display:none">
-            Name of the column that contains the strings to be validated
-            <input type="text" id="colName" disabled="true">&nbsp; &nbsp;
-            <button id="startValidation"
+          Name of the column that contains the expressions to be validated
+          <input type="text" id="colName">&nbsp; &nbsp;
+          <button id="startValidation"
                   onclick="
                 ucumPkg.UcumDemo.getInstance().columnSpecified()"
                   type="button">Validate File</button>
+          <button id="cancelValidation"
+                  onclick="
+                ucumPkg.UcumDemo.getInstance().resetFileInput()"
+                  type="button">Cancel</button>
         </div><!-- colNameDiv -->
         <!-- <a id="downlink" href="" style="'display:none'"></a> -->
       </div><!-- filevalidation div -->
@@ -126,7 +148,6 @@
       <li><a title="NLM viewers and players" href="http://www.nlm.nih.gov/plugins.html">Viewers & Players</a></li>
       <li><a title="NIH Freedom of Information Act office"  href="http://www.nih.gov/icd/od/foia/index.htm"
           >Freedom of Information Act</a></li>
-      <!-- add dist/ to img path for demo version -->
       <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
           src="dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
     </ul>
@@ -141,7 +162,6 @@
   </div><!-- fine-print -->
   <!-- end page footer -->
     <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/8.1.0/autocomplete-lhc_jQuery.min.js"></script>
-    <!-- add demo/ to module.js path for demo version -->
     <script src="demo/module.js"></script>
   </body>
 </html>
