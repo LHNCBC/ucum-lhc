@@ -2815,9 +2815,6 @@ var UnitString = exports.UnitString = function () {
       // An array of messages (warnings and errors) to be returned
       var retMsg = [];
 
-      // Flag used to block further processing on an unrecoverable error
-      var endProcessing = false;
-
       // Extract any annotations, i.e., text enclosed in braces ({}) from the
       // string before further processing.  Store each one in the annotations
       // array and put a placeholder in the string for the annotation.  Do
@@ -2826,6 +2823,9 @@ var UnitString = exports.UnitString = function () {
       // subsequent processing.
       var annotations = [];
       uStr = this.getAnnotations(uStr, annotations, retMsg);
+
+      // Flag used to block further processing on an unrecoverable error
+      var endProcessing = retMsg.length > 0;
 
       // Check for parentheses in unit strings.  If found, isolate a parenthesized
       // group and pass it to a recursive call of this method.  If it contains
@@ -2941,7 +2941,7 @@ var UnitString = exports.UnitString = function () {
 
         // Create a unit object out of each un element
         var _uLen = uArray.length;
-        for (var u1 = 0; u1 < _uLen; u1++) {
+        for (var u1 = 0; u1 < _uLen && !endProcessing; u1++) {
           var curCode = uArray[u1]['un'];
 
           // If the current unit array element is a unit stored in the parensUnits
@@ -3048,7 +3048,12 @@ var UnitString = exports.UnitString = function () {
         for (var u2 = 1; u2 < _uLen2; u2++, !endProcessing) {
           var nextUnit = uArray[u2]['un'];
           if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
-            retMsg.push('Unit string (' + origString + ') contains unrecognized ' + ('element (' + this.openEmph_ + nextUnit.toString()) + (this.closeEmph_ + '); could not parse full string.  Sorry'));
+            var msgString = 'Unit string (' + origString + ') contains unrecognized ' + 'element';
+            if (nextUnit) {
+              msgString += ' (' + this.openEmph_ + nextUnit.toString() + (this.closeEmph_ + ')');
+            }
+            msgString += '; could not parse full string.  Sorry';
+            retMsg.push(msgString);
             endProcessing = true;
           }
           if (!endProcessing) {
@@ -3126,6 +3131,7 @@ var UnitString = exports.UnitString = function () {
         var closeBrace = uString.indexOf('}');
         if (closeBrace < 0) {
           retMsg.push('Missing closing brace for annotation starting at ' + this.openEmph_ + uString.substr(openBrace) + this.closeEmph_);
+          openBrace = -1;
         } else {
           var braceStr = uString.substring(openBrace, closeBrace + 1);
           var aIdx = annotations.length.toString();
