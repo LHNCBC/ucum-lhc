@@ -5,7 +5,7 @@
  *
  */
 
-class Functions {
+class UcumFunctions {
 
   /**
    * Constructor
@@ -16,96 +16,96 @@ class Functions {
   constructor() {
 
     // Create the hash containing the function pairs
-    this.fs = {};
+    this.funcs = {};
 
     // Celsius - convert to Celsius from kelvin and from Celsius to kelvin
     // where kelvin is the base unit for temperature
-    this.fs['cel'] = {cnvTo   : function(x){return x - 273.15;},
+    this.funcs['cel'] = {cnvTo   : function(x){return x - 273.15;},
                       cnvFrom : function(x){return x + 273.15;}};
 
     // Fahrenheit - convert to Fahrenheit from kelvin and from Fahrenheit to
     // kelvin - which is the base unit for temperature
-    this.fs['degf'] = {cnvTo   : function(x){return x - 459.67;},
+    this.funcs['degf'] = {cnvTo   : function(x){return x - 459.67;},
                        cnvFrom : function(x){return x + 459.67;}};
 
     // Reaumur - convert between Reaumur and Kelvin.   Because of the way the
     // calling code in the Units class is set up (in the convertFrom method),
     // what is given here as the convertTo function is actually the convert
     // from method and vice versa.
-    //this.fs['degre'] = {cnvTo   : function(x){return x + 273.15;},
+    //this.funcs['degre'] = {cnvTo   : function(x){return x + 273.15;},
     //                    cnvFrom : function(x){return x - 273.15;}};
-    this.fs['degre'] = {cnvTo   : function(x){return x - 273.15;},
+    this.funcs['degre'] = {cnvTo   : function(x){return x - 273.15;},
                         cnvFrom : function(x){return x + 273.15;}};
 
     // pH - convert to pH from moles per liter and from moles per liter to pH
     // where a mole is an amount of a substance (a count of particles)
-    this.fs['ph'] = {cnvTo  : function(x){return - Math.log(x) / Math.LN10;},
+    this.funcs['ph'] = {cnvTo  : function(x){return - Math.log(x) / Math.LN10;},
                      cnvFrom : function(x){return Math.pow(10, -x);}};
 
     // ln - natural logarithm (base e 2.71828) - apply (cnvTo) and invert (cnvFrom)
     // and 2ln - two times the natural logarithm
-    this.fs['ln'] = {cnvTo : function(x){return Math.log(x);},
+    this.funcs['ln'] = {cnvTo : function(x){return Math.log(x);},
                      cnvFrom : function(x){return Math.exp(x);}};
-    this.fs['2ln'] = {cnvTo : function(x){return 2 * Math.log(x);},
+    this.funcs['2ln'] = {cnvTo : function(x){return 2 * Math.log(x);},
                       cnvFrom : function(x){return Math.exp(x / 2);}};
 
     // lg - the decadic logarithm (base 10)
-    this.fs['lg'] = {cnvTo : function(x){return Math.log(x) / Math.LN10;},
+    this.funcs['lg'] = {cnvTo : function(x){return Math.log(x) / Math.LN10;},
                      cnvFrom : function(x){return Math.pow(10, x);}};
-    this.fs['10lg'] = {cnvTo : function(x){return 10 * Math.log(x)/Math.LN10;},
+    this.funcs['10lg'] = {cnvTo : function(x){return 10 * Math.log(x)/Math.LN10;},
                        cnvFrom : function(x){return Math.pow(10, x / 10);}};
-    this.fs['20lg'] = {cnvTo : function(x){return 20 * Math.log(x)/Math.LN10;},
+    this.funcs['20lg'] = {cnvTo : function(x){return 20 * Math.log(x)/Math.LN10;},
                        cnvFrom : function(x){return Math.pow(10, x / 20);}};
     // The plain text ucum units file uses '2lg'
-    this.fs['2lg'] = {cnvTo : function(x){return 2 * Math.log(x)/Math.LN10;},
+    this.funcs['2lg'] = {cnvTo : function(x){return 2 * Math.log(x)/Math.LN10;},
                            cnvFrom : function(x){return Math.pow(10, x / 2);}};
     // The xml essence ucum file uses lgTimes2
-    this.fs['lgtimes2'] = this.fs['2lg'];
+    this.funcs['lgtimes2'] = this.funcs['2lg'];
 
     // ld - dual logarithm (base 2)
-    this.fs['ld'] = {cnvTo : function(x){return Math.log(x)/Math.LN2;},
+    this.funcs['ld'] = {cnvTo : function(x){return Math.log(x)/Math.LN2;},
                      cnvFrom : function(x){return Math.pow(2, x);}};
 
     // tan - tangent
-    this.fs['100tan'] = {cnvTo : function(x){return Math.tan(x) * 100;},
+    this.funcs['100tan'] = {cnvTo : function(x){return Math.tan(x) * 100;},
                          cnvFrom : function(x){return Math.atan(x/100);}};
     // the xml essence ucum file uses both 100tan and tanTimes100
-    this.fs['tanTimes100'] = this.fs['100tan'] ;
+    this.funcs['tanTimes100'] = this.funcs['100tan'] ;
 
     // sqrt - square root
-    this.fs['sqrt'] = {cnvTo : function(x){return Math.sqrt(x);},
+    this.funcs['sqrt'] = {cnvTo : function(x){return Math.sqrt(x);},
                        cnvFrom : function(x){return x*x;}};
 
     // inv - inverse
-    this.fs['inv'] = {cnvTo : function(x){return 1.0 / x;},
+    this.funcs['inv'] = {cnvTo : function(x){return 1.0 / x;},
                       cnvFrom : function(x){return 1.0 / x;}};
 
     // homeopathic potency functions
-    this.fs['hpX'] = {cnvTo : function(x){return -(this.fs['lg'](x));},
+    this.funcs['hpX'] = {cnvTo : function(x){return -(this.funcs['lg'](x));},
                       cnvFrom : function(x){return Math.pow(10, -x);}};
 
-    this.fs['hpC'] = {cnvTo : function(x){
-                              return -(this.fs['ln'](x))/this.fs['ln'](100);},
+    this.funcs['hpC'] = {cnvTo : function(x){
+                              return -(this.func['ln'](x))/this.funcs['ln'](100);},
                        cnvFrom : function(x){return Math.pow(100, -x);}};
 
-    this.fs['hpM'] = {cnvTo : function(x){
-                              return -(this.fs['ln'](x))/this.fs['ln'](1000);},
+    this.funcs['hpM'] = {cnvTo : function(x){
+                              return -(this.funcs['ln'](x))/this.funcs['ln'](1000);},
                       cnvFrom : function(x){return Math.pow(1000, -x);}};
 
-    this.fs['hpQ'] = {cnvTo : function(x){
-                              return -(this.fs['ln'](x))/this.fs['ln'](50000);},
+    this.funcs['hpQ'] = {cnvTo : function(x){
+                              return -(this.funcs['ln'](x))/this.funcs['ln'](50000);},
                       cnvFrom : function(x){return Math.pow(50000, -x);}};
 
 
     // Make this a singleton.  See UnitTables constructor for details.
-    let holdThis = Functions.prototype;
+    let holdThis = UcumFunctions.prototype;
     if (exports)
-      exports.Functions = Functions ;
-    Functions = function(){throw (new Error('Functions is a Singleton. ' +
-                           'Use Functions.getInstance() instead.'))};
-    Functions.prototype = holdThis;
+      exports.UcumFunctions = UcumFunctions ;
+    UcumFunctions = function(){throw (new Error('UcumFunctions is a Singleton. ' +
+                           'Use UcumFunctions.getInstance() instead.'))};
+    UcumFunctions.prototype = holdThis;
     let self = this ;
-    Functions.getInstance = function(){return self} ;
+    UcumFunctions.getInstance = function(){return self} ;
 
   } // end of constructor
 
@@ -120,7 +120,7 @@ class Functions {
   forName(fname) {
     fname = fname.toLowerCase();
     
-    let f = this.fs[fname] ;
+    let f = this.funcs[fname] ;
     if (f === null)
       throw(new Error(`Requested function ${fname} is not defined`));
     return f;
@@ -136,24 +136,24 @@ class Functions {
    */
   isDefined(fname) {
     fname = fname.toLowerCase();
-    return this.fs[fname] !== null;
+    return this.funcs[fname] !== null;
   }
 
-} // end of Functions class
+} // end of UcumFunctions class
 
 
 /**
- *  This function exists ONLY until the original Functions constructor
+ *  This function exists ONLY until the original UcumFunctions constructor
  *  is called for the first time.  It's defined here in case getInstance
  *  is called before the constructor.   This calls the constructor.
  *
  *  The constructor redefines the getInstance function to return the
- *  singleton Functions object.  This is based on the UnitTables singleton
+ *  singleton UcumFunctions object.  This is based on the UnitTables singleton
  *  implementation; see more detail in the UnitTables constructor description.
  *
  *  @return the singleton Functions object.
  */
-Functions.getInstance = function(){
-  return new Functions();
+UcumFunctions.getInstance = function(){
+  return new UcumFunctions();
 }
-Functions.getInstance();
+UcumFunctions.getInstance();

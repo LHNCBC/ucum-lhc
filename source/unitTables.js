@@ -304,9 +304,9 @@ export class UnitTables {
    *  not necessarily unique.
    *
    *  @param uName the name of the unit to be returned.  If more than one
-   *  unit has the same name, append the csCode of the unit you want to
-   *  the end of the name, enclosed in parentheses, e.g., inch ([in_i]) vs.
-   *  inch ([in_us]).
+   *  unit has the same name and you only want one specific unit, append the
+   *  csCode of the unit you want to the end of the name, separated by the
+   *  Ucum.codeSep_ value, e.g., inch - [in_i] vs. inch - [in_us].
    *  @returns null if no unit was found for the specified name OR an array of
    *  unit objects with the specified name.  Normally this will be an array
    *  of one object.
@@ -315,38 +315,35 @@ export class UnitTables {
    */
   getUnitByName(uName) {
 
-    let retUnit = null ;
     if (uName === null || uName === undefined) {
       throw (new Error('Unable to find unit by because when no name was provided.'));
     }
     let sepPos = uName.indexOf(Ucum.codeSep_);
     let uCode = null;
     if (sepPos >= 1) {
-      uCode = uName.substr(0, sepPos);
-      uName = uName.substr(sepPos + Ucum.codeSep_.length);
+      uCode = uName.substr(sepPos + Ucum.codeSep_.length);
+      uName = uName.substr(0, sepPos);
     }
-    let unitsArray = this.unitNames_[uName] ;
-    if (unitsArray === undefined || unitsArray === null) {
+    let retUnits = this.unitNames_[uName] ;
+    if (retUnits === undefined || retUnits === null) {
       console.log(`Unable to find unit with name = ${uName}`);
     }
     else {
-      let uLen = unitsArray.length;
-      if (uLen === 1)
-        retUnit = unitsArray[0];
-      else if (uCode === null) {
-        retUnit = unitsArray;
-      }
-      else {
+      let uLen = retUnits.length ;
+
+      if (uCode && uLen > 1) {
         let i = 0;
-        for (; unitsArray[i].csCode_ !== uCode && i < uLen; i++);
+        for (; retUnits[i].csCode_ !== uCode && i < uLen; i++);
         if (i < uLen)
-          retUnit = unitsArray[i];
-        else
+          retUnits = [retUnits[i]];
+        else {
           console.log(`Unable to find unit with name = ${uName} amd ` +
-                      `unit code = ${uCode}`);
-      }
-    }
-    return retUnit ;
+              `unit code = ${uCode}`);
+          retUnits = null;
+        }
+      } // end if we need to find both a name and a code
+    } // end if we got an array of units
+    return retUnits ;
 
   } // end getUnitByName
 
@@ -472,6 +469,33 @@ export class UnitTables {
     }
     return unitsList ;
   } // end allUnitsByDef
+
+
+  /**
+   * This is used to get all unit objects, ordered by unit name.  Currently it
+   * is used to create a csv list of all units.
+   *
+   * @returns a buffer containing all unit objects, ordered by name
+   * order
+   */
+  allUnitsByName() {
+    let unitBuff = '';
+    let unitsList = this.getAllUnitNames();
+    let uLen = unitsList.length;
+    for (let i = 0; i < uLen; i++) {
+      let nameRecs = this.getUnitByName(unitsList[i]);
+      for (let u = 0; u < nameRecs.length; u++) {
+        let rec = nameRecs[u];
+        unitBuff += rec.csCode_ + ',' + rec.name_ + ',' + rec.property_ +
+            ',' + rec.csUnitString_ + ',' + rec.magnitude_ ;
+        if (rec.dim_ !== null && rec.dim_.dimVec_ instanceof Array)
+          unitBuff += ',[' + rec.dim_.dimVec_.join('') + ']\r\n';
+        else
+          unitBuff += '\r\n';
+      }
+    }
+    return unitBuff ;
+  } // end allUnitsByName
 
 
   /**

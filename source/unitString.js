@@ -48,20 +48,36 @@ export class UnitString{
 
 
   /**
-   * Sets the emphasis strings to the HTML used in the webpage display.
+   * Sets the emphasis strings to the HTML used in the webpage display - or
+   * blanks them out, depending on the use parameter.
+   *
+   * @param use flag indicating whether or not to use the braces message;
+   *  defaults to true
    */
-  useHTMLInMessages() {
-    this.openEmph_ = Ucum.openEmph_;
-    this.closeEmph_ = Ucum.closeEmph_ ;
+  useHTMLInMessages(use) {
+    if (use === undefined || use) {
+      this.openEmph_ = Ucum.openEmph_;
+      this.closeEmph_ = Ucum.closeEmph_;
+    }
+    else {
+      this.openEmph_ = '';
+      this.closeEmph_ = '';
+    }
   } // end useHTMLInMessages
 
 
   /**
    * Sets the braces message to be displayed for each unit string validation
    * requested, as appropriate.
+   *
+   * @param use flag indicating whether or not to use the braces message;
+   *  defaults to true
    */
-  useBraceMsgForEachString() {
-    this.bracesMsg_ = Ucum.bracesMsg_;
+  useBraceMsgForEachString(use) {
+    if (use === undefined || use)
+      this.bracesMsg_ = Ucum.bracesMsg_;
+    else
+      this.bracesMsg_ = '';
   }
 
 
