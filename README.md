@@ -1,7 +1,7 @@
 # ucum-lhc
 LHC implementation of UCUM validation and conversion services.  
 
-This is a work-in-progress so more capabilities will probably be introduced.
+This is a work in progress so more capabilities will probably be introduced.
 
 ## Check out the Demo page
 
@@ -18,17 +18,20 @@ standard Javascript using the <a href="https://babeljs.io">Babel</a> compiler.
 
 Currently we have code to serve multiple purposes.  If you are looking to
 include the ucum-lhc code in yours, we have a Bower package that you can
-access via npm.  
+download as a single package.  
 
-### Using the code in the Bower package
+### Using the code in the ucum-lhc package
       
 Use the <a href="bower.io">bower</a> package manager to install the code:
 
     bower install ucum-lhc
 
-We assume that your main motivation for including the ucum-lhc code is to have
-the validation and conversion capabilities for units of measure.  Those functions
-are available from the **UcumLhcUtils** class.  Here are the function descriptions:
+This will install the dist/ucum-lhc.js module package, which includes the
+source code you need for the validation and conversion functions as well as the 
+ucum code definitions file.  We assume that your main motivation for including 
+the ucum-lhc code is to have the validation and conversion capabilities for 
+units of measure on your system.  Those functions are available from the 
+**ucumPkg.UcumLhcUtils** class.  Here are the function descriptions:
 
 **validUnitString(uStr)**
 
@@ -42,7 +45,7 @@ parses the string to see if it resolves to a valid unit string.
 
 For example, to validate a unit string of m2/g4:
  
-    require Utils = require('.ucumLhcUtils.js').UcumLhcUtils;
+    require Utils = require('ucumPkg.ucumLhcUtils.js').UcumLhcUtils;
      
      var utils = Utils.getInstance();
      var returnArray = utils.validUnitString('m2/g4');
@@ -51,7 +54,7 @@ For example, to validate a unit string of m2/g4:
      else
        /* signal the error in returnArray[1] */
        
-For information on unit string formatting, Look at the _Ucum Unit Expression 
+For information on unit string formatting, look at the _Ucum Unit Expression 
 Validation_ section on the demo page.  There is a button labeled "Show entry hints". 
 That will give you a short description of unit strings, and includes a link to
 the UCUM Specification, where you can find the full deal.
@@ -72,20 +75,21 @@ another type of unit.
 
 For example, to convert 27 U.S. fathoms to U.S. inches with 0 decimal digits
  
-    require Utils = require('.ucumLhcUtils.js').UcumLhcUtils;
+    require Utils = require('ucumPkg.ucumLhcUtils.js').UcumLhcUtils;
      
     var utils = Utils.getInstance();
     var returnMsg = utils.convertUnitTo('[fth_us]', 27, '[in_us]', 0);
     if (returnMsg === "27 fathom units = 1944 inch units.")
       /* the conversion was successful */
     else
-      /* the conversion encountered an error */
+      /* the conversion encountered an error that returnMsg will describe */
       
-The _UCUM Unit Conversions_ section of the demo page will show you a list of
+If you want to know what unit types a particular unit can be converted to, the 
+_UCUM Unit Conversions_ section of the demo page will show you a list of 
 commensurable units when you enter the "from" unit code.  (Valid UCUM unit codes
 are shown in the _Find Common UnitCodes_ section).  That list will 
 be displayed in the "converted to" list.  It will not show that list for unit
-strings, such as m2/g4.
+strings that combine units, such as m2/g4.
 
 ### Download the Github repository
 
