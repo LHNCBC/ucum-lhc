@@ -13,8 +13,8 @@ More details are available at [README.md](README.md).
 
 The software includes the following third-party elements, which are released
 under open-source licenses (as noted):
-  * Portions of [is-integer](https://github.com/parshap/js-is-integer/blob/master/LICENSE) WTFPL License)
-  * Portions of [node-jsonfile](https://github.com/jprichardson/node-jsonfile/blob/master/LICENSE) MIT License)
+  * Portions of [is-integer](https://github.com/parshap/js-is-integer/blob/master/LICENSE) (WTFPL License)
+  * Portions of [node-jsonfile](https://github.com/jprichardson/node-jsonfile/blob/master/LICENSE) (MIT License)
   * Portions of [xmldoc](https://github.com/nfarina/xmldoc/blob/master/LICENSE)
   * Unit codes including those from [The UCUM Organization](http://unitsofmeasure.org/trac/TermsOfUse).
     Note particularly that the UCUM Codes that are included in this package, 
