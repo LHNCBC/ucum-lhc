@@ -13,7 +13,7 @@ functions described below.  You might want to try that out first.
 
 The ucum-lhc code is written in the ECMAScript 6 (developed by 
 <a href="www.ecma-international.org">Ecma International</a> version of Javascript.  
-Since that version not yet universally supported, the code is compiled to 
+Since that version is not yet universally supported, the code is compiled to 
 standard Javascript using the <a href="https://babeljs.io">Babel</a> compiler. 
 
 Currently we have code to serve multiple purposes.  If you are looking to
