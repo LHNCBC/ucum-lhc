@@ -15,6 +15,7 @@ The ucum-lhc code is written in the ECMAScript 6 (developed by
 <a href="www.ecma-international.org">Ecma International</a> version of Javascript.  
 Since that version is not yet universally supported, the code is compiled to 
 standard Javascript using the <a href="https://babeljs.io">Babel</a> compiler. 
+The code uses Node.js I/O functions and compatible packages. 
 
 Currently we have code to serve multiple purposes.  If you are looking to
 include the ucum-lhc code in yours, we have a Bower package that you can
@@ -45,9 +46,9 @@ parses the string to see if it resolves to a valid unit string.
 
 For example, to validate a unit string of m2/g4:
  
-    require Utils = require('ucumPkg.ucumLhcUtils.js').UcumLhcUtils;
+    var Pkg = require('ucum-lhc.js');  // include path to file where necessary
      
-     var utils = Utils.getInstance();
+     var utils = Pkg.UcumLhcUtils.getInstance();
      var returnArray = utils.validUnitString('m2/g4');
      if (returnArray[0] !== null)
        /* the string is valid */
@@ -75,9 +76,9 @@ another type of unit.
 
 For example, to convert 27 U.S. fathoms to U.S. inches with 0 decimal digits
  
-    require Utils = require('ucumPkg.ucumLhcUtils.js').UcumLhcUtils;
+    var Pkg = require('ucum-lhc.js');   // include path to file where necessary
      
-    var utils = Utils.getInstance();
+    var utils = Pkg.UcumLhcUtils.getInstance();
     var returnMsg = utils.convertUnitTo('[fth_us]', 27, '[in_us]', 0);
     if (returnMsg === "27 fathom units = 1944 inch units.")
       /* the conversion was successful */

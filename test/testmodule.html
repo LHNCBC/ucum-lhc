@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test dist/module.js</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <p>
+    <!-- page header -->
+    <div id="header">
+    </div>
+    <!-- end page header -->
+    <h1>Test dist/module.js</h1>
+
+    <p>Run UcumLhcUtils methods; use debugger to see results:
+      <ul>
+      <li><button id="validUnitString"
+                onclick="ucumPkg.UcumLhcUtils.getInstance().validUnitString('mg')"
+                type="button">Validate mg</button>
+      </li>
+      <li><button id="convert"
+                onclick="ucumPkg.UcumLhcUtils.getInstance().convertUnitTo('h', 3, 'min')"
+                type="button">3 hours to minutes</button>
+      </li>
+      </ul>
+    </p>
+    <p>This is really just here to make sure the validation and conversion
+       functions can be run from the ucum-lhc.js file.</p>
+    <script src="../dist/ucum-lhc.js"></script>
+  </body>
+</html>
