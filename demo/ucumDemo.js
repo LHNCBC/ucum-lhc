@@ -74,8 +74,11 @@ export class UcumDemo {
         let parseResp = this.utils_.validUnitString(uStr);
         if (parseResp[0])
           valMsg = `${uStr} is a valid unit.`;
-        else
-          valMsg = `${uStr} Is NOT a valid unit.`;
+        else {
+          if (parseResp[1].length === 0) {
+              valMsg = `${uStr} Is NOT a valid unit.`;
+          }
+        }
         if (parseResp[1].length > 0)
           retMsg = retMsg.concat(parseResp[1]);
       }
@@ -83,7 +86,10 @@ export class UcumDemo {
         retMsg.push(err.message);
       }
     }
-    valFld.innerHTML = valMsg + '<br>' + retMsg.join('<br>');
+    let finalMsg = retMsg.join('<br>');
+    if (valMsg.length > 0)
+      finalMsg = valMsg + '<br>' + finalMsg ;
+    valFld.innerHTML = finalMsg;
   } // end reportUnitStringValidity
 
 

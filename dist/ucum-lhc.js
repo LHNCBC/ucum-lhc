@@ -2204,10 +2204,38 @@ var UnitString = exports.UnitString = function () {
 
       // Make sure we have something to work with
       if (origString === '' || origString === null) {
-        throw new Error('Please specify a unit string to be validated.');
+        throw new Error('Please specify a unit expression to be validated.');
       }
 
       var firstCall = uStr === origString;
+
+      if (firstCall) {
+        // Check for spaces within the string and throw an error if any are
+        // found.  Spec explicitly forbids spaces.  If the space is found at
+        // the beginning or end of the string, just trim it off.
+        var blnk = origString.indexOf(' ');
+        if (blnk > -1) {
+          // if a blank was found at the beginning, trim it off and reset
+          // the blank value (could be multiple blanks)
+          if (blnk === 0) {
+            uStr = uStr.substr(1);
+            origString = uStr;
+            blnk = origString.indexOf(' ');
+          }
+          // if the blank was found at the end, trim it off and set the
+          // blank value to -1 (won't be anymore blanks in the string)
+          var sLen = uStr.length;
+          if (blnk === sLen - 1) {
+            uStr = uStr.substr(0, blnk);
+            origString = uStr;
+            blnk = -1;
+          }
+          // if the blank is within the string, reject it
+          if (blnk > -1) {
+            throw new Error('Blank spaces are not allowed in unit expressions.');
+          }
+        }
+      } // end if this was called for the full string
 
       // Unit to be returned
       var finalUnit = null;
@@ -2448,7 +2476,7 @@ var UnitString = exports.UnitString = function () {
         for (var u2 = 1; u2 < _uLen2; u2++, !endProcessing) {
           var nextUnit = uArray[u2]['un'];
           if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
-            retMsg.push('Unit string (' + origString + ') contains unrecognized ' + ('element (' + this.openEmph_ + nextUnit.toString()) + (this.closeEmph_ + '); could not parse full string.  Sorry'));
+            retMsg.push('Unit string (' + origString + ') contains unrecognized ' + ('element (' + this.openEmph_ + nextUnit.toString()) + (this.closeEmph_ + '); could not parse full expression.  Sorry'));
             endProcessing = true;
           }
           if (!endProcessing) {
