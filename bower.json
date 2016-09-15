@@ -1,7 +1,7 @@
 {
   "name": "ucum-lhc",
   "description": "Implements Unified Code for Units of Measure functions as javascript library",
-  "version": "0.1",
+  "version": "0.0.1",
   "main": "dist/ucum-lhc.js",
   "ignore": [
     "config",
@@ -16,7 +16,6 @@
     "index.html",
     "javaSource",
     "libs",
-    "LicenseCer*",
     "nbproject",
     "npm-shrinkwrap.json",
     "package.json",

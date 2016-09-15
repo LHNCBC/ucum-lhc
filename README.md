@@ -5,25 +5,29 @@ This is a work in progress so more capabilities will probably be introduced.
 
 ## Check out the Demo page
 
-We have a <a href="https://lhncbc.github.io/ucum-lhc">demo page</a> that 
+We have a [demo page](https://lhncbc.github.io/ucum-lhc) that 
 shows various capabilities.  That includes the validation and conversion
 functions described below.  You might want to try that out first.
 
 ## Get the code
 
 The ucum-lhc code is written in the ECMAScript 6 (developed by 
-<a href="www.ecma-international.org">Ecma International</a> version of Javascript.  
+[Ecma International](http:www.ecma-international.org) version of Javascript.  
 Since that version is not yet universally supported, the code is compiled to 
-standard Javascript using the <a href="https://babeljs.io">Babel</a> compiler. 
-The code uses Node.js I/O functions and compatible packages. 
+standard Javascript using the [Babel](https://babeljs.io) compiler. 
+The code uses Node.js I/O functions and compatible packages, and browserify-fs
+to replace the I/O functions with code that runs in a browser.
 
-Currently we have code to serve multiple purposes.  If you are looking to
-include the ucum-lhc code in yours, we have a Bower package that you can
-download as a single package.  
+Currently we have code to serve multiple purposes.  The core code supports
+the validation and conversion of UCUM unit expressions.  Other code is 
+concerned with importing and exporting the UCUM data, and in supporting the
+demo page (noted above).  If you are looking to include the ucum-lhc code code 
+in your application, we have a Bower package that you can download as a single 
+package.  
 
 ### Using the code in the ucum-lhc package
       
-Use the <a href="bower.io">bower</a> package manager to install the code:
+Use the [Bower}(bower.io) package manager to install the code:
 
     bower install ucum-lhc
 
@@ -92,9 +96,9 @@ are shown in the _Find Common UnitCodes_ section).  That list will
 be displayed in the "converted to" list.  It will not show that list for unit
 strings that combine units, such as m2/g4.
 
-### Download the Github repository
+### Download the GitHub repository
 
-The code available here on github includes functions and scripts to perform
+The code available here on GitHub includes functions and scripts to perform
 additional functions, mainly to convert ucum data from various formats to 
 the data used by our code as well as the code that supports the demo page.
 Click on the green "Clone or download" button above to download the repository.
