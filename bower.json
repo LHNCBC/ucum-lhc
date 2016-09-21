@@ -24,9 +24,10 @@
     "stylesheets",
     "test"],
   "dependencies": {
+    "autocomplete-lhc"
     "fs": "0.0.2",
     "is-integer": "^1.0.6",
-    "jsonfile": "^2.2.3",
+   // "jsonfile": "^2.2.3",
     "path": "^0.12.7"
   }
 }
