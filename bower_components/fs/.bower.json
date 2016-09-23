@@ -1,0 +1,15 @@
+{
+  "name": "fs",
+  "homepage": "https://github.com/matthewp/fs",
+  "version": "1.0.1",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "50a0a33cfc6a82f310d9ac3d08bc6a72c7dd18a2"
+  },
+  "_source": "https://github.com/matthewp/fs.git",
+  "_target": "^1.0.1",
+  "_originalSource": "fs",
+  "_direct": true
+}

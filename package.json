@@ -32,7 +32,7 @@
     "grunt-cli": "^1.2.0",
     "grunt-contrib-watch": "^1.0.0",
     "istanbul": "^0.3.22",
-    "mocha": "^2.3.3"
+    "mocha": "https://registry.npmjs.org/mocha/-/mocha-2.5.3.tgz"
   },
   "scripts": {
     "test": "mocha"

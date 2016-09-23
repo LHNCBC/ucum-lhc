@@ -28,7 +28,8 @@ module.exports = function(grunt) {
             standalone: "ucumPkg"
           }
         },
-        files: [{dest: "./dist/ucum-lhc.js", src: ["./dist/es5/source/ucumLhcUtils.js"]},
+        files: [{dest: "./dist/ucum-lhc.js",
+                 src: ["./dist/es5/source/ucumLhcUtils.js"]},
                 {dest: "./demo/ucum-demo.js", src: ["./dist/es5/demo/main.js"]}
               //{dest: "./dist/module.js", src: ["./dist/es5/demo/main.js",
               //                                 "./dist/es5/source/*.js"]}

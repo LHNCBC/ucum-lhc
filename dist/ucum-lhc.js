@@ -1435,7 +1435,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var uct = utab.unitsCount();
       var uList = utab.printUnits(true);
       console.log('in ucumLhcUtils.printUnits, about to write file.  uList ' + 'length = ' + uList.length + '; uct = ' + uct);
-      fs.writeFileSync('/home/lmericle/ucum/test/JsonUnitsList.txt', uList, { encoding: 'utf8', mode: 438, flag: 'w' });
+      fs.writeFileSync('/home/lmericle/ucum/impexp/JsonUnitsList.txt', uList, { encoding: 'utf8', mode: 438, flag: 'w' });
     }
   }]);
 

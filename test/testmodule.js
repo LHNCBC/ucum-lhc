@@ -1,45 +1,57 @@
 /**
- * This runs the code to test use of the built module available as
- * a bower task.  It tests the unit expression validation and conversion
- * functions.
+ * Mocha tests for the built module available as a bower task.  It tests the
+ * unit expression validation and conversion functions at the top level only.
  *
- * Babel is used to translate this to ECMA 5 code, i.e.,
- * babel testmodule.js --out-file testmodule5.js
- *
- * Run from the command line with node testmodule.js
+ * Run from the command line with mocha testmodule.js
  */
 
+var assert = require('assert');
 var Pkg = require("../dist/ucum-lhc.js");
 
-var utils = Pkg.UcumLhcUtils.getInstance() ;
+var utils = Pkg.UcumLhcUtils.getInstance();
 
-// Test unit expression validations
-var returnArray = utils.validUnitString('m2/g4');
-if (returnArray[0]) {
-  console.log(`\nreturnArray[0] from m2/g4 validation:\n unit with code = ${returnArray[0].csCode_}`);
-}
-else {
-  console.log(`\nreturnArray[0] from m2/g4 validation is null`);
-}
-console.log(`\nreturnArray[1] from m2/g4 validation:\n ${returnArray[1]}`);
+describe('Validate_m2/g4', function() {
+    describe('Validation Return Array', function() {
+      var returnArray = utils.validUnitString('m2/g4');
+      it("should return unit with name = meter<sup>2</sup>/gram<sup>4</sup>", function() {
+        assert.equal("meter<sup>2</sup>/gram<sup>4</sup>", returnArray[0].name_);
+      });
 
-returnArray = utils.validUnitString('m2/acr');
-if (returnArray[0]) {
-  console.log(`\nreturnArray[0] from m2/acr validation:\n ${returnArray[0].csCode_}`);
-}
-else {
-  console.log(`\nreturnArray[0] from m2/acr validation is null`);
-}
-console.log(`\nreturnArray[1] from m2/acr validation:\n ${returnArray[1]}`);
+      it("should return empty message", function() {
+        assert.equal("", returnArray[1]);
+      });
+    });
+});
 
-// Test unit conversions
-var returnMsg = utils.convertUnitTo('[fth_us]', 27, '[in_us]', 0);
-console.log(`\nreturnMsg from conversion of 27 fathoms to inches:\n ${returnMsg}`);
+describe('Validate_m2/acr', function() {
+  describe('Validation Return Array', function() {
+    var returnArray = utils.validUnitString('m2/acr');
+    it("should return no unit", function() {
+      assert.equal(null, returnArray[0]);
+    });
 
-returnMsg = utils.convertUnitTo('[fth_us]', 27, 'bar', 0);
-console.log(`\nreturnMsg from conversion of 27 fathoms to bar units:\n ${returnMsg}`);
+    it("should return error message = Unable to find unit for cr", function() {
+      assert.equal("Unable to find unit for cr", returnArray[1]);
+    });
+  });
+});
 
-returnMsg = utils.convertUnitTo('[fth_us]', 27, 'acr', 0);
-console.log(`\nreturnMsg from conversion of 27 fathoms to acr units:\n ${returnMsg}`);
+describe('Convert fathoms to inch, bar and acr units', function() {
+  describe('Conversion Return Message', function() {
 
+    it("should return 27 fathom units = 1944 inch units", function() {
+      var returnMsg = utils.convertUnitTo('[fth_us]', 27, '[in_us]', 0);
+      assert.equal("27 fathom units = 1944 inch units.", returnMsg[0]);
+    });
 
+    it("should return error message = Sorry.  fathom units cannot be converted to bar units", function() {
+      var returnMsg = utils.convertUnitTo('[fth_us]', 27, 'bar', 0);
+      assert.equal("Sorry.  fathom units cannot be converted to bar units.", returnMsg[0]);
+    });
+
+    it("should return error message = Unable to find unit for cr", function() {
+      var returnMsg = utils.convertUnitTo('[fth_us]', 27, 'acr', 0);
+      assert.equal("Unable to find unit for cr", returnMsg[0]);
+    });
+  });
+});
