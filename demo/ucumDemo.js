@@ -76,7 +76,7 @@ export class UcumDemo {
           valMsg = `${uStr} is a valid unit.`;
         else {
           if (parseResp[1].length === 0) {
-              valMsg = `${uStr} Is NOT a valid unit.`;
+              valMsg = `${uStr} is NOT a valid unit.`;
           }
         }
         if (parseResp[1].length > 0)
