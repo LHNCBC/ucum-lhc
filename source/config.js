@@ -6,9 +6,6 @@
  * defined by the ECMAScript 6 standard
  */
 
-//var Utab = require('/home/lmericle/ucum/dist/es5/unitTables.js');
-//var Pfx = require('/home/lmericle/ucum/dist/es5/prefix.js');
-
 export var Ucum = {  // Namespace for UCUM classes
 
   /**
