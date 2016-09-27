@@ -21,7 +21,7 @@ to replace the I/O functions with code that runs in a browser.
 Currently we have code to serve multiple purposes.  The core code supports
 the validation and conversion of UCUM unit expressions.  Other code is 
 concerned with importing and exporting the UCUM data, and in supporting the
-demo page (noted above).  If you are looking to include the ucum-lhc code code 
+demo page (noted above).  If you are looking to include the ucum-lhc core code 
 in your application, download the code with the [bower](https://bower.io) package
 manager.
 
