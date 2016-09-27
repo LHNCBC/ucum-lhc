@@ -2,7 +2,7 @@
  * Mocha tests for the built module available as a bower task.  It tests the
  * unit expression validation and conversion functions at the top level only.
  *
- * Run from the command line with mocha testmodule.js
+ * Run from the command line with 'mocha testmodule.js' or 'grunt test'
  */
 
 var assert = require('assert');
