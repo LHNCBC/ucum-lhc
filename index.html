@@ -3,15 +3,14 @@
   <head>
     <title>LHC UCUM Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="stylesheets/ucumDemo.css" rel="stylesheet"/>
-    <link href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/8.1.0/autocomplete-lhc_jQueryUI.min.css"
-          media="screen" rel="stylesheet" />
+    <link href="demo-dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.1.1/autocomplete-lhc_jQueryUI.min.css" />
   </head>
   <body>
     <!-- page header -->
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" title="Home" rel="home" id="logo">
-        <img src="dist/assets/images/lhncbc.jpg" alt="Home" />
+        <img src="demo-dist/assets/images/lhncbc.jpg" alt="Home" />
       </a>
       <div id="siteNameBox">
         <a href="/"><span id=siteName>Units of Measure (UCUM) Validator and Converter</span><br>
@@ -34,7 +33,7 @@
       <h4>Convert values from one UCUM unit to another</h4>
       <p>Enter a valid UCUM code for the unit you want to convert:
         <input type="text" id="convertFrom"
-         onblur="ucumPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
+         onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                   'convertTo',
                                                                   'resultString')">
         &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
@@ -45,7 +44,7 @@
       <p>Enter or Select the unit that it is to be converted to:
       <input type="text" id="convertTo">
       <p>&nbsp;&nbsp;  <button id="doConversionButton"
-         onclick="ucumPkg.UcumDemo.getInstance().convertUnit('convertFrom',
+         onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
                                                              'convertNum',
                                                              'convertTo')"
                 type="button">Convert</button>
@@ -61,14 +60,14 @@
           <input type="text" id="valString">&nbsp; &nbsp; &nbsp; &nbsp;
           <button id="toggleHints"
                   onclick="
-                ucumPkg.UcumDemo.getInstance().toggleDisplay('hints',
+                demoPkg.UcumDemo.getInstance().toggleDisplay('hints',
                                                                  'toggleHints',
                                                                  'Hide', 'Show')"
                   type="button">Show entry hints</button>
         </p>&nbsp;&nbsp;
         <button id="doValidationButton"
                 onclick=
-                    "ucumPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
+                    "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString')"
                 type="button">Validate</button>
         <p id="validationString">&nbsp;&nbsp;</p>
@@ -122,17 +121,17 @@
       </ul>
         </p>
         <input type="file" id="inputfile"
-               onchange="ucumPkg.UcumDemo.getInstance().fileSelected()">
+               onchange="demoPkg.UcumDemo.getInstance().fileSelected()">
         <div id="colNameDiv" style="display:none">
           Name of the column that contains the expressions to be validated
           <input type="text" id="colName">&nbsp; &nbsp;
           <button id="startValidation"
                   onclick="
-                ucumPkg.UcumDemo.getInstance().columnSpecified()"
+                demoPkg.UcumDemo.getInstance().columnSpecified()"
                   type="button">Validate File</button>
           <button id="cancelValidation"
                   onclick="
-                ucumPkg.UcumDemo.getInstance().resetFileInput()"
+                demoPkg.UcumDemo.getInstance().resetFileInput()"
                   type="button">Cancel</button>
         </div><!-- colNameDiv -->
         <!-- <a id="downlink" href="" style="'display:none'"></a> -->
@@ -149,7 +148,7 @@
       <li><a title="NIH Freedom of Information Act office"  href="http://www.nih.gov/icd/od/foia/index.htm"
           >Freedom of Information Act</a></li>
       <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
-          src="dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
+          src="demo-dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
     </ul>
     <ul class="horz-list">
       <li><a title="U.S. National Library of Medicine" href="http://www.nlm.nih.gov/"
@@ -161,7 +160,9 @@
     </ul>
   </div><!-- fine-print -->
   <!-- end page footer -->
-    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/8.1.0/autocomplete-lhc_jQuery.min.js"></script>
-    <script src="demo/module.js"></script>
+
+    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.1.1/autocomplete-lhc_jQuery.min.js"></script>
+    <script src="dist/ucum-lhc.js"></script>
+    <script src="demo-dist/ucum-demo.js"></script>
   </body>
 </html>

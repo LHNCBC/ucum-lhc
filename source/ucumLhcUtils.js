@@ -239,7 +239,8 @@ export class UcumLhcUtils {
 
 
   /**
-   * Creates a file containing a list of the units
+   * Creates a file containing a list of the units.  The file is created
+   * in the current directory.
    */
   printUnits() {
 
@@ -250,7 +251,7 @@ export class UcumLhcUtils {
     let uList = utab.printUnits(true);
     console.log('in ucumLhcUtils.printUnits, about to write file.  uList ' +
                 'length = ' + uList.length + '; uct = ' + uct);
-    fs.writeFileSync('/home/lmericle/ucum/test/JsonUnitsList.txt', uList,
+    fs.writeFileSync('JsonUnitsList.txt', uList,
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
   }
 
