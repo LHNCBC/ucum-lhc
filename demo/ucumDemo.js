@@ -7,10 +7,10 @@
  */
 
 var fs = require('browserify-fs');
-var Ucum = require('../source/config.js').Ucum;
-var UcumLhcUtils = require("../source/ucumLhcUtils.js").UcumLhcUtils;
-var UnitTables = require("../source/unitTables.js").UnitTables;
-var UcumFileValidator = require("../source/ucumFileValidator").UcumFileValidator;
+var Ucum = ucumPkg.Ucum;
+var UcumLhcUtils = ucumPkg.UcumLhcUtils;
+var UnitTables = ucumPkg.UnitTables;
+var UcumFileValidator = ucumPkg.UcumFileValidator;
 
 export class UcumDemo {
 

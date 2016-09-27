@@ -29,8 +29,5 @@
     "is-integer": "https://github.com/parshap/js-is-integer",
     "jsonfile": "https://github.com/jprichardson/node-jsonfile",
     "path": "https://github.com/jinder/path"
-  },
-  "devDependencies": {
-    "mocha": "^3.0.2"
   }
 }

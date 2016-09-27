@@ -6,9 +6,9 @@
  */
 
 var assert = require('assert');
-var Pkg = require("../dist/ucum-lhc.js");
+var Utils = require("../source-es5/ucumLhcUtils.js").UcumLhcUtils;
 
-var utils = Pkg.UcumLhcUtils.getInstance();
+var utils = Utils.getInstance();
 
 describe('Validate_m2/g4', function() {
     describe('Validation Return Array', function() {

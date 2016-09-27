@@ -30,9 +30,17 @@
     "grunt-babel": "^6.0.0",
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-mocha-test": "^0.13.2",
+    "grunt-nsp": "^2.3.1",
+    "grunt-wiredep": "^3.0.1",
     "istanbul": "^0.3.22",
-    "mocha": "https://registry.npmjs.org/mocha/-/mocha-2.5.3.tgz"
+    "jit-grunt": "^0.10.0",
+    "mocha": "https://registry.npmjs.org/mocha/-/mocha-2.5.3.tgz",
+    "time-grunt": "^1.4.0"
   },
   "scripts": {
     "test": "mocha"
@@ -42,5 +50,5 @@
     "url": "ssh://git@git-scm.nlm.nih.gov:7999/lfor/ucum.git"
   },
   "author": "Lee Mericle",
-  "license": "See LICENSE.md"
+  "license": "SEE LICENSE IN LICENSE.md"
 }
