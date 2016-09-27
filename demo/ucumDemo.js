@@ -21,9 +21,14 @@ export class UcumDemo {
     this.utils_ = UcumLhcUtils.getInstance();
     this.utabs_ = UnitTables.getInstance();
 
-    // Get a full list of unit names and assign it to a prefetch autocompleter
-    let unames = this.utabs_.getUnitNamesList();
-    let autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
+    // Set up search autocompleters for the two unit code input fields
+    let autoList = new Def.Autocompleter.Search('unitsList',
+        'http://lhcs-lynch-rh:3002/api/ucum/v1/search',
+        {nonMatchSuggestions: false});
+
+    let autolist2 = new Def.Autocompleter.Search('convertFrom',
+        'http://lhcs-lynch-rh:3002/api/ucum/v1/search',
+        {nonMatchSuggestions: false});
 
     // Set up an autocompleter for the "to" conversion fields.  It will be
     // populated with commensurable units in based on what the user enters
@@ -116,6 +121,9 @@ export class UcumDemo {
 
     let fromName = document.getElementById(fromField).value ;
     let fromVal = parseFloat(document.getElementById(numField).value);
+    let hypIdx = fromName.indexOf(Ucum.codeSep_);
+    if (hypIdx > 0)
+      fromName = fromName.substr(0, hypIdx) ;
     let toName = document.getElementById(toField).value;
     let codePos = toName.indexOf(Ucum.codeSep_);
     if (codePos > 0)
@@ -155,6 +163,9 @@ export class UcumDemo {
     resultString.innerHTML = '';
 
     let fromName = document.getElementById(fromField).value;
+    let hypIdx = fromName.indexOf(Ucum.codeSep_);
+    if (hypIdx > 0)
+      fromName = fromName.substr(0, hypIdx) ;
     let resultMsg = '';
     let parseResp = [];
 
