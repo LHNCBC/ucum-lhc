@@ -105,35 +105,13 @@ export class UnitString{
 
     let firstCall = (uStr === origString) ;
 
-    if (firstCall) {
-      // Check for spaces within the string and throw an error if any are
-      // found.  Spec explicitly forbids spaces.  If the space is found at
-      // the beginning or end of the string, just trim it off.
-      let blnk = origString.indexOf(' ');
-      if (blnk > -1) {
-        // if a blank was found at the beginning, trim it off and reset
-        // the blank value (could be multiple blanks)
-        if (blnk === 0) {
-          uStr = uStr.substr(1);
-          origString = uStr;
-          blnk = origString.indexOf(' ');
-        }
-        // if the blank was found at the end, trim it off and set the
-        // blank value to -1 (won't be anymore blanks in the string)
-        let sLen = uStr.length ;
-        if (blnk === sLen - 1) {
-          uStr = uStr.substr(0, blnk);
-          origString = uStr;
-          blnk = -1 ;
-        }
-        // if the blank is within the string, reject it
-        if (blnk > -1) {
-          throw (new Error('Blank spaces are not allowed in unit expressions.'));
-        }
-      }
+    // If this is the first call for the string, check for spaces and throw
+    // an error if any are found.  The spec explicitly forbids spaces.
+    if (firstCall && origString.indexOf(' ') > -1) {
+      throw (new Error('Blank spaces are not allowed in unit expressions.'));
     } // end if this was called for the full string
 
-     // Unit to be returned
+    // Unit to be returned
     let finalUnit = null ;
 
     // An array of messages (warnings and errors) to be returned
