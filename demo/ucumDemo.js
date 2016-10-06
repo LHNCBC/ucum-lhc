@@ -22,12 +22,12 @@ export class UcumDemo {
     this.utabs_ = UnitTables.getInstance();
 
     // Set up search autocompleters for the two unit code input fields
-    let autoList = new Def.Autocompleter.Search('unitsList',
-        'http://lhcs-lynch-rh:3002/api/ucum/v1/search',
-        {nonMatchSuggestions: false});
+    //let autoList = new Def.Autocompleter.Search('unitsList',
+    //    'https://lforms-service.nlm.nih.gov/api/ucum/v1/search',
+    //    {nonMatchSuggestions: false});
 
     let autolist2 = new Def.Autocompleter.Search('convertFrom',
-        'http://lhcs-lynch-rh:3002/api/ucum/v1/search',
+        'https://lforms-service.nlm.nih.gov/api/ucum/v1/search',
         {nonMatchSuggestions: false});
 
     // Set up an autocompleter for the "to" conversion fields.  It will be
@@ -50,6 +50,37 @@ export class UcumDemo {
     UcumDemo.getInstance = function(){return self} ;
   }
 
+  switchTabs(evt, sectionName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      let ele = tabcontent[i];
+      if (ele.id === sectionName)
+        ele.style.display = "block";
+      else
+        ele.style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      let tabEle = tablinks[i];
+      if (tabEle.id === sectionName + '-link')
+        tabEle.className += " active";
+      else
+        tabEle.className = tabEle.className.replace(" active", "");
+    }
+
+    if (evt = "load") {
+
+    }
+ /*   // Show the current tab, and add an "active" class to the link that opened the tab
+    document.getElementById(sectionName).style.display = "block";
+    evt.currentTarget.className += " active";*/
+  }
 
   /**
    * This method validates a string that is supposed to be representing a valid

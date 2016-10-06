@@ -49,9 +49,12 @@ var UcumDemo = exports.UcumDemo = function () {
     this.utils_ = UcumLhcUtils.getInstance();
     this.utabs_ = UnitTables.getInstance();
 
-    // Get a full list of unit names and assign it to a prefetch autocompleter
-    var unames = this.utabs_.getUnitNamesList();
-    var autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
+    // Set up search autocompleters for the two unit code input fields
+    //let autoList = new Def.Autocompleter.Search('unitsList',
+    //    'https://lforms-service.nlm.nih.gov/api/ucum/v1/search',
+    //    {nonMatchSuggestions: false});
+
+    var autolist2 = new Def.Autocompleter.Search('convertFrom', 'https://lforms-service.nlm.nih.gov/api/ucum/v1/search', { nonMatchSuggestions: false });
 
     // Set up an autocompleter for the "to" conversion fields.  It will be
     // populated with commensurable units in based on what the user enters
@@ -73,19 +76,44 @@ var UcumDemo = exports.UcumDemo = function () {
     };
   }
 
-  /**
-   * This method validates a string that is supposed to be representing a valid
-   * unit. It indicates whether or not the string translates to a valid unit.
-   *
-   * @param elementID the ID of the web page element that contains the
-   *  string to be validated
-   * @param returnElementID the ID of the web page element to receive the
-   *  return validation message
-   * @returns nothing directly; return is the validation message
-   */
-
-
   _createClass(UcumDemo, [{
+    key: 'switchTabs',
+    value: function switchTabs(evt, sectionName) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        var ele = tabcontent[i];
+        if (ele.id === sectionName) ele.style.display = "block";else ele.style.display = "none";
+      }
+
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        var tabEle = tablinks[i];
+        if (tabEle.id === sectionName + '-link') tabEle.className += " active";else tabEle.className = tabEle.className.replace(" active", "");
+      }
+
+      if (evt = "load") {}
+      /*   // Show the current tab, and add an "active" class to the link that opened the tab
+         document.getElementById(sectionName).style.display = "block";
+         evt.currentTarget.className += " active";*/
+    }
+
+    /**
+     * This method validates a string that is supposed to be representing a valid
+     * unit. It indicates whether or not the string translates to a valid unit.
+     *
+     * @param elementID the ID of the web page element that contains the
+     *  string to be validated
+     * @param returnElementID the ID of the web page element to receive the
+     *  return validation message
+     * @returns nothing directly; return is the validation message
+     */
+
+  }, {
     key: 'reportUnitStringValidity',
     value: function reportUnitStringValidity(elementID, returnElementID) {
 
@@ -143,6 +171,8 @@ var UcumDemo = exports.UcumDemo = function () {
 
       var fromName = document.getElementById(fromField).value;
       var fromVal = parseFloat(document.getElementById(numField).value);
+      var hypIdx = fromName.indexOf(Ucum.codeSep_);
+      if (hypIdx > 0) fromName = fromName.substr(0, hypIdx);
       var toName = document.getElementById(toField).value;
       var codePos = toName.indexOf(Ucum.codeSep_);
       if (codePos > 0) toName = toName.substr(0, codePos);
@@ -184,6 +214,8 @@ var UcumDemo = exports.UcumDemo = function () {
       resultString.innerHTML = '';
 
       var fromName = document.getElementById(fromField).value;
+      var hypIdx = fromName.indexOf(Ucum.codeSep_);
+      if (hypIdx > 0) fromName = fromName.substr(0, hypIdx);
       var resultMsg = '';
       var parseResp = [];
 

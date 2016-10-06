@@ -121,4 +121,50 @@ h4 {
   font-weight: 500;
 }
 
+input.search_field {
+  background-color: white !important;
+  font-style: normal !important;
+}
+
+/* tab styles */
+
+ul.tab {
+  list-style-type: none;
+  border: 3px solid #ddd;
+  border-radius: 25px;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: hidden;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+  display: inline-block;
+  color: #1e4193;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 18px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {background-color: #ddd;}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {background-color: #ccc;}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
 
