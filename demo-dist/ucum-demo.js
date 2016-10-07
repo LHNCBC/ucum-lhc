@@ -77,29 +77,25 @@ var UcumDemo = exports.UcumDemo = function () {
   }
 
   _createClass(UcumDemo, [{
-    key: 'switchTabs',
-    value: function switchTabs(evt, sectionName) {
-      // Declare all variables
-      var i, tabcontent, tablinks;
+    key: 'setActiveTab',
+    value: function setActiveTab(sectionName) {
 
-      // Get all elements with class="tabcontent" and hide them
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
+      // Get all elements with class="tabcontent".  Display the one
+      // with the specified section name, hide all others.
+      var tabcontent = document.getElementsByClassName("tabcontent");
+      for (var i = 0; i < tabcontent.length; i++) {
         var ele = tabcontent[i];
         if (ele.id === sectionName) ele.style.display = "block";else ele.style.display = "none";
       }
 
-      // Get all elements with class="tablinks" and remove the class "active"
-      tablinks = document.getElementsByClassName("tablinks");
-      for (i = 0; i < tablinks.length; i++) {
-        var tabEle = tablinks[i];
-        if (tabEle.id === sectionName + '-link') tabEle.className += " active";else tabEle.className = tabEle.className.replace(" active", "");
+      // Get all elements with class="tablinks".  Add the class "notActive"
+      // to any without the specified section name (+ '-link'), remove
+      // it from the one with the specified name.
+      var tablinks = document.getElementsByClassName("tablinks");
+      for (var _i = 0; _i < tablinks.length; _i++) {
+        var tabEle = tablinks[_i];
+        if (tabEle.id === sectionName + '-link') tabEle.className = tabEle.className.replace(" notActive", "");else tabEle.className += " notActive";
       }
-
-      if (evt = "load") {}
-      /*   // Show the current tab, and add an "active" class to the link that opened the tab
-         document.getElementById(sectionName).style.display = "block";
-         evt.currentTarget.className += " active";*/
     }
 
     /**
