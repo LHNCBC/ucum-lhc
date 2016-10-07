@@ -22563,7 +22563,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
 
     /**
-     * Creates a file containing a list of the units
+     * Creates a file containing a list of the units.  The file is created
+     * in the current directory.
      */
 
   }, {
@@ -22576,7 +22577,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var uct = utab.unitsCount();
       var uList = utab.printUnits(true);
       console.log('in ucumLhcUtils.printUnits, about to write file.  uList ' + 'length = ' + uList.length + '; uct = ' + uct);
-      fs.writeFileSync('/home/lmericle/ucum/impexp/JsonUnitsList.txt', uList, { encoding: 'utf8', mode: 438, flag: 'w' });
+      fs.writeFileSync('JsonUnitsList.txt', uList, { encoding: 'utf8', mode: 438, flag: 'w' });
     }
   }]);
 
@@ -23364,10 +23365,16 @@ var UnitString = exports.UnitString = function () {
 
       // Make sure we have something to work with
       if (origString === '' || origString === null) {
-        throw new Error('Please specify a unit string to be validated.');
+        throw new Error('Please specify a unit expression to be validated.');
       }
 
       var firstCall = uStr === origString;
+
+      // If this is the first call for the string, check for spaces and throw
+      // an error if any are found.  The spec explicitly forbids spaces.
+      if (firstCall && origString.indexOf(' ') > -1) {
+        throw new Error('Blank spaces are not allowed in unit expressions.');
+      } // end if this was called for the full string
 
       // Unit to be returned
       var finalUnit = null;
@@ -23608,7 +23615,7 @@ var UnitString = exports.UnitString = function () {
         for (var u2 = 1; u2 < _uLen2; u2++, !endProcessing) {
           var nextUnit = uArray[u2]['un'];
           if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
-            retMsg.push('Unit string (' + origString + ') contains unrecognized ' + ('element (' + this.openEmph_ + nextUnit.toString()) + (this.closeEmph_ + '); could not parse full string.  Sorry'));
+            retMsg.push('Unit string (' + origString + ') contains unrecognized ' + ('element (' + this.openEmph_ + nextUnit.toString()) + (this.closeEmph_ + '); could not parse full expression.  Sorry'));
             endProcessing = true;
           }
           if (!endProcessing) {
