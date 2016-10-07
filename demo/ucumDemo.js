@@ -50,13 +50,12 @@ export class UcumDemo {
     UcumDemo.getInstance = function(){return self} ;
   }
 
-  switchTabs(evt, sectionName) {
-    // Declare all variables
-    var i, tabcontent, tablinks;
+  setActiveTab(sectionName) {
 
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
+    // Get all elements with class="tabcontent".  Display the one
+    // with the specified section name, hide all others.
+    let tabcontent = document.getElementsByClassName("tabcontent");
+    for (let i = 0; i < tabcontent.length; i++) {
       let ele = tabcontent[i];
       if (ele.id === sectionName)
         ele.style.display = "block";
@@ -64,22 +63,17 @@ export class UcumDemo {
         ele.style.display = "none";
     }
 
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
+    // Get all elements with class="tablinks".  Add the class "notActive"
+    // to any without the specified section name (+ '-link'), remove
+    // it from the one with the specified name.
+    let tablinks = document.getElementsByClassName("tablinks");
+    for (let i = 0; i < tablinks.length; i++) {
       let tabEle = tablinks[i];
       if (tabEle.id === sectionName + '-link')
-        tabEle.className += " active";
+        tabEle.className = tabEle.className.replace(" notActive", "");
       else
-        tabEle.className = tabEle.className.replace(" active", "");
+        tabEle.className += " notActive";
     }
-
-    if (evt = "load") {
-
-    }
- /*   // Show the current tab, and add an "active" class to the link that opened the tab
-    document.getElementById(sectionName).style.display = "block";
-    evt.currentTarget.className += " active";*/
   }
 
   /**

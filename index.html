@@ -6,8 +6,7 @@
     <link href="demo-dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.1.1/autocomplete-lhc_jQueryUI.min.css" />
   </head>
-  <body onload="demoPkg.UcumDemo.getInstance().switchTabs(event,
-                                                          'validation')">
+  <body onload="demoPkg.UcumDemo.getInstance().setActiveTab('validation')">
     <!-- page header -->
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" title="Home" rel="home" id="logo">
@@ -23,12 +22,10 @@
 
     <ul class="tab section">
       <li><a id="validation-link" href="#" class="tablinks"
-             onclick="demoPkg.UcumDemo.getInstance().switchTabs(event,
-                                                                'validation')">
+             onclick="demoPkg.UcumDemo.getInstance().setActiveTab('validation')">
              Validator</a></li>
       <li><a id="conversion-link" href="#" class="tablinks"
-             onclick="demoPkg.UcumDemo.getInstance().switchTabs(event,
-                                                                'conversion')">
+             onclick="demoPkg.UcumDemo.getInstance().setActiveTab('conversion')">
              Converter</a></li>
     </ul>
 

@@ -139,12 +139,15 @@ ul.tab {
 }
 
 /* Float the list items side by side */
-ul.tab li {float: left;}
+ul.tab li {
+  float: left;
+}
 
 /* Style the links inside the list items */
 ul.tab li a {
   display: inline-block;
   color: #1e4193;
+  background-color: white;
   font-family: sans-serif;
   font-weight: bold;
   text-align: center;
@@ -157,8 +160,10 @@ ul.tab li a {
 /* Change background color of links on hover */
 ul.tab li a:hover {background-color: #ddd;}
 
-/* Create an active/current tablink class */
-ul.tab li a:focus, .active {background-color: #ccc;}
+/* Create active/current tablink class */
+ul.tab li .notActive {
+  background-color: #ccc !important;
+}
 
 /* Style the tab content */
 .tabcontent {
