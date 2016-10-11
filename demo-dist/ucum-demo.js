@@ -341,8 +341,8 @@ var UcumDemo = exports.UcumDemo = function () {
      * occurred, to the console.  It displays the error text to the user in an
      * alert box and lets the user know that the validation file was not written.
      *
-     * It also re-enables the input file field and clears the file name from
-     * that field.  The display of the column name division is also blocked.
+     * It also clears the file name from the input file field.  The display of
+     * the column name division is also blocked.
      *
      * @param src the source of the error - which should be the stream in which
      *  the error was encountered
