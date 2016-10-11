@@ -100,12 +100,18 @@ export class UnitString{
 
     // Make sure we have something to work with
     if (origString === '' || origString === null) {
-      throw (new Error('Please specify a unit string to be validated.'));
+      throw (new Error('Please specify a unit expression to be validated.'));
     }
 
     let firstCall = (uStr === origString) ;
 
-     // Unit to be returned
+    // If this is the first call for the string, check for spaces and throw
+    // an error if any are found.  The spec explicitly forbids spaces.
+    if (firstCall && origString.indexOf(' ') > -1) {
+      throw (new Error('Blank spaces are not allowed in unit expressions.'));
+    } // end if this was called for the full string
+
+    // Unit to be returned
     let finalUnit = null ;
 
     // An array of messages (warnings and errors) to be returned

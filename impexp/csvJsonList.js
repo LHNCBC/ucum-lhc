@@ -1,6 +1,7 @@
 /**
  * This runs the code that creates a units list sorted by name and written
- * to a file in csv format.  Only selected fields are written.
+ * to a file in csv format.  Only selected fields are written.  The data is
+ * from the UCUM JSON units/prefix data.
  *
  * Babel is used to translate this to ECMA 5 code, i.e.,
  * babel csvJsonList.js --out-file csvJsonList5.js
