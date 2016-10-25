@@ -88,24 +88,40 @@
 
 
 body {
-  font-family: "sans-serif";
-  margin: 0px 20px 20px 20px;
-  color: #1E4193;
+  font-family: "sans-serif" !important;
+  font-size: 16px !important;
+  margin: 0px 20px 20px 20px !important;
+  color: #1E4193 !important;
 }
 
 h2 {
-  font-size: 24px;
-  font-weight: 500;
-  text-align: center;
-  color: black;
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  color: black !important;
+}
+
+h3 {
+  font-size: 20px !important;
+  font-weight: bold !important;
+  margin-bottom:  20px !important;
 }
 
 h4 {
-  font-weight: 500;
-  text-align: center;
-  color: black;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  /*text-align: center;*/
+  color: black !important;
 }
 
+button {
+  font-size: 14px !important;
+}
+
+#inputfile {
+  font-size: 14px !important;
+  color: #1E4193 !important;
+}
 .section {
   border: 3px solid #ddd;
   border-radius: 25px;
@@ -121,48 +137,17 @@ h4 {
   font-weight: 500;
 }
 
-input.search_field {
+input.no_match {
   background-color: white !important;
   font-style: normal !important;
 }
 
-/* tab styles */
 
-ul.tab {
-  list-style-type: none;
-  border: 3px solid #ddd;
-  border-radius: 25px;
-  margin: 0;
-  padding: 0;
-  width: auto;
-  overflow: hidden;
-}
+/* Style the links inside the tab list items */
 
-/* Float the list items side by side */
-ul.tab li {
-  float: left;
-}
-
-/* Style the links inside the list items */
 ul.tab li a {
-  display: inline-block;
-  color: #1e4193;
-  background-color: white;
-  font-family: sans-serif;
   font-weight: bold;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  transition: 0.3s;
-  font-size: 18px;
-}
-
-/* Change background color of links on hover */
-ul.tab li a:hover {background-color: #ddd;}
-
-/* Create active/current tablink class */
-ul.tab li .notActive {
-  background-color: #ccc !important;
+  font-size: 20px;
 }
 
 /* Style the tab content */
@@ -171,5 +156,28 @@ ul.tab li .notActive {
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+}
+
+#advancedSearch {
+  border: 3px dotted #ddd;
+  border-radius: 25px;
+  padding: 20px;
+  margin: 20px;
+}
+#convertToDivs {
+  width: 100% ;
+}
+#convertLeft {
+  float: left ;
+  width: 70%;
+}
+
+#convertRight {
+  float: right;
+  width: 30%
+}
+
+.topMargin20 {
+  margin-top: 20px;
 }
 

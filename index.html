@@ -5,8 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="demo-dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.1.1/autocomplete-lhc_jQueryUI.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
-  <body onload="demoPkg.UcumDemo.getInstance().setActiveTab('validation')">
+  <body onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
     <!-- page header -->
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" title="Home" rel="home" id="logo">
@@ -20,54 +21,59 @@
     <!-- end page header -->
     <h1>LHC UCUM Validator and Converter</h1>
 
-    <ul class="tab section">
-      <li><a id="validation-link" href="#" class="tablinks"
-             onclick="demoPkg.UcumDemo.getInstance().setActiveTab('validation')">
+    <ul class="tab nav nav-tabs">
+      <li class="active"><a id="validation-link" href="#validation" class="tablinks"
+                            data-toggle="tab">
              Validator</a></li>
-      <li><a id="conversion-link" href="#" class="tablinks"
-             onclick="demoPkg.UcumDemo.getInstance().setActiveTab('conversion')">
+      <li><a id="conversion-link" href="#conversion" class="tablinks" data-toggle="tab">
              Converter</a></li>
     </ul>
-
-    <div id="conversion" class="tabcontent">
+    <div class="tab-content">
+    <div id="conversion" class="tabcontent tab-pane fade">
       <h2>UCUM Unit Conversions</h2>
-      <h4>Convert values from one UCUM unit to another</h4>
-      <p>Enter a valid UCUM code for the unit you want to convert:
-        <input type="text" id="convertFrom" placeholder="begin typing ..."
-         onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
+      <div id="convSection" class="section">
+        <h3>Convert values from one UCUM unit to another</h3>
+        <p>Enter a valid UCUM code for the unit you want to convert:
+          <input type="text" id="convertFrom" placeholder="begin typing ..."
+                 onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                   'convertTo',
                                                                   'resultString')">
-        &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
-      </p>
-      <!--
-      <button id="toggleAdvancedSearch"
-              onclick="
+          &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
+        </p>
+        <button id="toggleAdvancedSearch"
+                onclick="
                 demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearch',
                                                              'toggleAdvancedSearch',
                                                              'Hide', 'Show')"
-              type="button">Show advanced search options</button>
-      <div id="advancedSearch" style="display: none">
-        When you enter two or more characters in the UCUM code field, a search
-        is performed on the UCUM Code, Name, and Synonyms data available from
-        the Clinical Table Search Service provided by NLM.  You may constrain the
-        search on other data values.
-
-      </div> <!-- advancedSearch division -->
-      <p>What is the value you want to convert?
+                type="button">Show advanced search options</button>
+        <div id="advancedSearch" style="display: none">
+          <!-- this section is built in the demo code when the page is loaded -->
+        </div> <!-- advancedSearch division -->
+        <br><br><p>Enter the numeric value you want to convert:
         <input type="text" id="convertNum">
-      </p>
-      <p>Enter or Select the unit that it is to be converted to:
-      <input type="text" id="convertTo">
-      <p>&nbsp;&nbsp;  <button id="doConversionButton"
-         onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
+      </p><br>
+        <div id="convertToDivs">
+          <div id="convertLeft">
+            <p>Enter or Select the unit that it is to be converted to:
+              <input type="text" id="convertTo">
+          </div>
+          <div id="convertRight" style="visibility: hidden">
+            The list of commensurable units does NOT include all possible UCUM
+            units.  You can type in a unit code directly or select one from the
+            list.
+          </div>
+        </div>
+        <div><br>&nbsp;&nbsp;  <button id="doConversionButton"
+                                       onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
                                                              'convertNum',
                                                              'convertTo')"
-                type="button">Convert</button>
-      </p>
-      <p id="resultString">&nbsp;&nbsp;</p>
+                                       type="button">Convert</button>
+        </div>
+        <p id="resultString">&nbsp;&nbsp;</p>
+      </div> <!-- end convSection div -->
     </div> <!-- end conversion div -->
 
-    <div id="validation" class="tabcontent">
+    <div id="validation" class="tabcontent tab-pane fade in active">
       <h2>UCUM Unit Expression Validation</h2>
       <div id="singleString" class="section">
         <h3>Validate unit expressions one at a time</h3>
@@ -152,7 +158,7 @@
         <!-- <a id="downlink" href="" style="'display:none'"></a> -->
       </div><!-- filevalidation div -->
     </div> <!-- end validation div -->
-
+</div>
   <!-- page footer -->
   <div id="fine-print">
     <ul class="horz-list">
@@ -179,5 +185,7 @@
     <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.1.1/autocomplete-lhc_jQuery.min.js"></script>
     <script src="dist/ucum-lhc.js"></script>
     <script src="demo-dist/ucum-demo.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
 </html>

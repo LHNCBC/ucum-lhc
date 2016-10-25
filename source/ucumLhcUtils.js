@@ -218,7 +218,7 @@ export class UcumLhcUtils {
   commensurablesList(fromName) {
 
     let retMsg = []
-
+    let commUnits = null ;
     let parseResp = this.getSpecifiedUnit(fromName);
     let fromUnit = parseResp[0];
     if (parseResp[1].length > 0)
@@ -226,14 +226,15 @@ export class UcumLhcUtils {
     if (!fromUnit) {
       retMsg.push(`Could not find unit ${fromName}.`);
     }
+    else {
 
-    let commUnits = null;
-    let fromDim = fromUnit.getProperty('dim_');
-    let dimVec = fromDim.getProperty('dimVec_');
-    if (dimVec) {
-      let utab = UnitTables.getInstance();
-      commUnits = utab.getUnitsByDimension(dimVec);
-    }
+      let fromDim = fromUnit.getProperty('dim_');
+      let dimVec = fromDim.getProperty('dimVec_');
+      if (dimVec) {
+        let utab = UnitTables.getInstance();
+        commUnits = utab.getUnitsByDimension(dimVec);
+      }
+    } // end if we found a "from" unit
     return [commUnits , retMsg];
   } // end commensurablesList
 

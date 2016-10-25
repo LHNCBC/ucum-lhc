@@ -649,8 +649,18 @@ export class UnitString{
       ulen = uCode.length;
       let utabs = UnitTables.getInstance();
 
-      // First look for the full string
+      // First look for the full string as a code
       origUnit = utabs.getUnitByCode(uCode);
+
+      // If we didn't find it, try it as a name
+      if (!origUnit) {
+        let origUnitAry = utabs.getUnitByName(uCode);
+        if (origUnitAry && origUnitAry.length > 0) {
+          origUnit = origUnitAry[0];
+          retMsg.push('(The unit code for ' + uCode + ' is ' +
+                      origUnit.csCode_ + ')');
+        }
+      }
 
       // If that didn't work, peel off the exponent and try it
       if (!origUnit) {
@@ -727,7 +737,7 @@ export class UnitString{
       // unit string, with the unit string without the exponent, and the
       // unit string without a prefix.  That's all we can try).
       if (!origUnit) {
-        retMsg.push(`Unable to find unit for ${uCode}`);
+        retMsg.push(`Unable to find unit for ${origString}`);
         endProcessing = true ;
       }
       if (!endProcessing) {
