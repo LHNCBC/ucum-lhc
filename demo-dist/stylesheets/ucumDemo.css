@@ -88,24 +88,40 @@
 
 
 body {
-  font-family: "sans-serif";
-  margin: 0px 20px 20px 20px;
-  color: #1E4193;
+  font-family: "sans-serif" !important;
+  font-size: 16px !important;
+  margin: 0px 20px 20px 20px !important;
+  color: #1E4193 !important;
 }
 
 h2 {
-  font-size: 24px;
-  font-weight: 500;
-  text-align: center;
-  color: black;
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  color: black !important;
+}
+
+h3 {
+  font-size: 20px !important;
+  font-weight: bold !important;
+  margin-bottom:  20px !important;
 }
 
 h4 {
-  font-weight: 500;
-  text-align: center;
-  color: black;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  /*text-align: center;*/
+  color: black !important;
 }
 
+button {
+  font-size: 14px !important;
+}
+
+#inputfile {
+  font-size: 14px !important;
+  color: #1E4193 !important;
+}
 .section {
   border: 3px solid #ddd;
   border-radius: 25px;
@@ -121,4 +137,47 @@ h4 {
   font-weight: 500;
 }
 
+input.no_match {
+  background-color: white !important;
+  font-style: normal !important;
+}
+
+
+/* Style the links inside the tab list items */
+
+ul.tab li a {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+#advancedSearch {
+  border: 3px dotted #ddd;
+  border-radius: 25px;
+  padding: 20px;
+  margin: 20px;
+}
+#convertToDivs {
+  width: 100% ;
+}
+#convertLeft {
+  float: left ;
+  width: 70%;
+}
+
+#convertRight {
+  float: right;
+  width: 30%
+}
+
+.topMargin20 {
+  margin-top: 20px;
+}
 

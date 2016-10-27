@@ -20,18 +20,22 @@ export class UcumDemo {
     // things initialized and data loaded.
     this.utils_ = UcumLhcUtils.getInstance();
     this.utabs_ = UnitTables.getInstance();
+    this.urlCategories_ = ['Clinical'];
+    this.urlDisplayFlds_ = Ucum.defCols_ ;
+    let urlOpts = this.buildUrlAndOpts();
 
-    // Get a full list of unit names and assign it to a prefetch autocompleter
-    let unames = this.utabs_.getUnitNamesList();
-    let autoList = new Def.Autocompleter.Prefetch('unitsList', unames);
+    // Set up the search autocompleter for the "from" unit code input field
+    // on the Converter tab section
+    this.fromAuto_ = new Def.Autocompleter.Search('convertFrom',
+                     urlOpts[0], urlOpts[1]);
 
-    // Set up an autocompleter for the "to" conversion fields.  It will be
-    // populated with commensurable units in based on what the user enters
+    // Set up the prefetch autocompleter for the "to" conversion field.  It will
+    // be populated with commensurable units in based on what the user enters
     // in the "from" field.
     this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
 
+    //this.buildAdvancedSettings();
     // Make this a singleton.  See UnitTables constructor for details.
-
     let holdThis = UcumDemo.prototype;
     UcumDemo = function () {
       throw (new Error('UcumDemo is a Singleton.  ' +
@@ -44,6 +48,184 @@ export class UcumDemo {
     let self = this ;
     UcumDemo.getInstance = function(){return self} ;
   }
+
+  /**
+   * This method builds the URL and options array used by the search autocompleter
+   * used for the "convert from" field on the converter tab.
+   *
+   * This uses the urlCategories_ and urlDisplayFlds_ arrays built in the
+   * constructor to get the list of categories to be included and fields
+   * to be displayed in the autocompleter list.
+   *
+   * This called from the constructor, to build the initial url, and then
+   * each time the user clicks on one of the checkboxes assigned to the
+   * categories and display fields listed in the advanced settings of the
+   * converter tab.
+   *
+   * @param none
+   * @return an array containing the new url [0] and a new options hash [1]
+   */
+  buildUrlAndOpts(){
+    let urlString = Ucum.baseSearchURL_;
+    let opts = Ucum.baseSearchOpts_ ;
+    let catLen = this.urlCategories_.length;
+    if (catLen > 0) {
+      let qString = 'q=category:';
+      if (catLen > 1)
+        qString += '(' + this.urlCategories_.join(' OR ') + ')';
+      else
+        qString += '"' + this.urlCategories_[0] + '"';
+      urlString += '?' + qString ;
+    }
+    let dispLen = this.urlDisplayFlds_.length ;
+    let colHdrs = Ucum.defCols_;
+    if (dispLen > 0){
+      colHdrs = this.urlDisplayFlds_ ;
+      let dString = 'df=' + this.urlDisplayFlds_.join(',') ;
+      if (catLen > 0)
+        dString = '&' + dString;
+      else
+        dString = '?' + dString ;
+      urlString += dString ;
+    }
+    opts['colHeaders'] = colHdrs ;
+  return [urlString, opts];
+  }
+
+
+  /**
+   * This method builds the "Advanced Settings" section for the unit conversions
+   * tab when the page is loaded.   The settings consist of configuration data
+   * from the config.js file, so must be built whenever the page is built.
+   *
+   * This is called on the body onload event from the page html .
+   *
+   * @param none
+   * @return nothing
+   */
+  buildAdvancedSettings() {
+
+    // get the division that contains the advanced settings stuff
+    let settingsDiv = document.getElementById('advancedSearch');
+
+    // build the categories section
+    let limitPara = document.createElement("P");
+    let limitLine = document.createTextNode("Limit search to units in selected categories:");
+    limitPara.appendChild(limitLine);
+    settingsDiv.appendChild(limitPara);
+
+    //this.buildCheckBoxes('advancedSearch', Ucum.defCategories_, true, 'category') ;
+    this.buildCheckBoxes(settingsDiv, Ucum.defCategories_, true, 'category') ;
+    this.buildCheckBoxes(settingsDiv, Ucum.categories_, false, 'category') ;
+
+    // build display fields section
+    let dispPara = document.createElement("P");
+    dispPara.className = 'topMargin20' ;
+    let dispLine = document.createTextNode("Select unit fields to display:");
+    dispPara.appendChild(dispLine);
+    settingsDiv.appendChild(dispPara);
+
+    this.buildCheckBoxes(settingsDiv, Ucum.defDisplayFlds_, true, 'displayField');
+    this.buildCheckBoxes(settingsDiv, Ucum.displayFlds_, false, 'displayField');
+
+  } // buildAdvancedSettings
+
+
+  /**
+   * This method builds one set of checkboxes for the advanced settings section
+   * of the converter tab.  The checkboxes are either checked as defaults or
+   * are not.
+   *
+   * This is called on the body onload event.
+   *
+   * @param settingsDiv the element that contains the settings
+   * @param namesArray the array that contains the names for the checkboxes
+   *  to be created
+   * @param defBox a flag indicating whether or not these boxes are to be
+   *  checked as defaults
+   * @className a class name to be applied to the boxes.   Used to indicate
+   *  the type of checkbox (category or display)
+   * @return nothing
+   */
+  buildCheckBoxes(settingsDiv, namesArray, defBox, className){
+
+    let namesLen = namesArray.length;
+    for (let i = 0; i < namesLen; i++) {
+      let theVal = namesArray[i];
+      let theBox = document.createElement("INPUT");
+      theBox.setAttribute("type", "checkbox");
+      theBox.checked = defBox;
+      theBox.id = theVal + "_box";
+      theBox.value = theVal ;
+      theBox.setAttribute("class", className);
+      theBox.setAttribute("style", "margin-left: 10px; margin-right: 3px;");
+      theBox.addEventListener("click", function() {
+        demoPkg.UcumDemo.getInstance().updateSetting(theBox.id);});
+      settingsDiv.appendChild(theBox);
+      let aSpan = document.createElement('span')
+      let theText = document.createTextNode(theVal);
+      theText.className = 'checkboxText' ;
+      settingsDiv.appendChild(theText) ;
+    }
+  }  // end buildCheckBoxes
+
+
+  /**
+   * This method updates the autocompleter URL and options based advanced
+   * search options selected by the user.  It is called on a click event
+   * for each setting option (category selections as well as display field
+   * selections).
+   *
+   * The autocompleter for the convertFrom field on the Converter tab of
+   * the demo page is recreated each time this is called.
+   *
+   * @param ckBoxId id of the checkbox on which the click event occurred
+   * @return nothing
+   */
+  updateSetting(ckBoxId) {
+    let ckBox = document.getElementById(ckBoxId);
+    let clsName = ckBox.className ;
+    let boxVal = ckBox.value;
+    let boxChecked = ckBox.checked ;
+    if (clsName === 'category') {
+      let idx = this.urlCategories_.indexOf(boxVal);
+      // if the box is checked and the value is not already in the
+      // categories array, add it to the array.
+      if (boxChecked && idx < 0)
+        this.urlCategories_.push(boxVal);
+      // if the box is unchecked and the value is in the array, remove
+      // it from the array.
+      else if (!boxChecked && idx >= 0)
+        this.urlCategories_.splice(idx, 1);
+    }
+    else if (clsName === 'displayField') {
+      let idx = this.urlDisplayFlds_.indexOf(boxVal);
+      if (boxChecked && idx < 0)
+        this.urlDisplayFlds_.push(boxVal);
+      else if (!boxChecked && idx >= 0)
+        this.urlDisplayFlds_.splice(idx, 1);
+    }
+    else
+      throw(new Error('An error occured while specifying your choice.'));
+
+    // call buildUrlAndOpts to build the url and options from the updated url
+    // arrays (category and display field arrays).
+    let urlOpts = this.buildUrlAndOpts() ;
+
+    // Call setOptions and setUrl to update the the autocompleter.
+    // -- no, there is no setOptions at this point.  Leaving these lines in to remind
+    // me to update this if/when a setOptions (or equivalent) function
+    // becomes available.
+    //this.fromAuto_.setOptions(urlOpts[1]);
+    //this.fromAuto_.setURL(urlOpts[0]);
+
+    // So, instead, we clear the cache and recreate the autocompleter.
+    this.fromAuto_.clearCachedResults();
+    this.fromAuto_.destroy();
+    this.fromAuto_ = new Def.Autocompleter.Search('convertFrom',
+        urlOpts[0], urlOpts[1]);
+
+  } // end updateSetting
 
 
   /**
@@ -116,6 +298,9 @@ export class UcumDemo {
 
     let fromName = document.getElementById(fromField).value ;
     let fromVal = parseFloat(document.getElementById(numField).value);
+    let hypIdx = fromName.indexOf(Ucum.codeSep_);
+    if (hypIdx > 0)
+      fromName = fromName.substr(0, hypIdx) ;
     let toName = document.getElementById(toField).value;
     let codePos = toName.indexOf(Ucum.codeSep_);
     if (codePos > 0)
@@ -155,7 +340,10 @@ export class UcumDemo {
     resultString.innerHTML = '';
 
     let fromName = document.getElementById(fromField).value;
-    let resultMsg = '';
+    let hypIdx = fromName.indexOf(Ucum.codeSep_);
+    if (hypIdx > 0)
+      fromName = fromName.substr(0, hypIdx) ;
+    let resultMsg = [];
     let parseResp = [];
 
     try {
@@ -164,7 +352,8 @@ export class UcumDemo {
       let resultMsg = parseResp[1];
       // If we can't find any, don't panic.  The user could still enter one
       // that's not on our list but is commensurable.  So if none are found,
-      // just move on.   Nothin' to see here.
+      // just make sure the text about commensurable units is hidden.
+      let commText = document.getElementById('convertRight');
       if (commUnits) {
         let cLen = commUnits.length;
         let commNames = [];
@@ -172,8 +361,11 @@ export class UcumDemo {
           commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ +
               commUnits[i].getProperty('name_');
         commNames.sort(this.utabs_.compareCodes);
-        this.toAuto_.setList(commNames)
+        this.toAuto_.setList(commNames);
+        commText.setAttribute("style", "visibility: visible");
       }
+      else
+        commText.setAttribute("style", "visibility: hidden");
     }
     catch (err) {
       resultMsg.push(err.message);
