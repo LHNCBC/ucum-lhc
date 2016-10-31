@@ -21013,7 +21013,13 @@ var Ucum = exports.Ucum = {
    * to a file.  See UnitString.parseString where they start out blank in
    * the constructor.
    */
-  closeEmph_: '</span>'
+  closeEmph_: '</span>',
+
+  /**
+   * Message that is displayed when annotations are included in a unit
+   * string, to let the user know how they are interpreted.
+   */
+  bracesMsg_: 'Annotations (text in curley braces {}) have no influence ' + 'on the processing of a unit string.'
 
 };
 

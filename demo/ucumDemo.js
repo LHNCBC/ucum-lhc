@@ -69,12 +69,15 @@ export class UcumDemo {
     let opts = UcumDemoConfig.baseSearchOpts_ ;
     let catLen = this.urlCategories_.length;
     if (catLen > 0) {
-      let qString = 'q=category:';
+      let qString = ';'
+      for (var c = 0; c < catLen; c++) {
+        if (c > 0)
+          qString += ' OR ';
+        qString += Ucum.categoryValues_[this.urlCategories_[c]] ;
+      }
       if (catLen > 1)
-        qString += '(' + this.urlCategories_.join(' OR ') + ')';
-      else
-        qString += this.urlCategories_[0];
-      urlString += '?' + qString ;
+        qString = '(' + qString + ')';
+      urlString += '?q=category:' + qString ;
     }
     let dispLen = this.urlDisplayFlds_.length ;
     let colHdrs = UcumDemoConfig.defCols_;

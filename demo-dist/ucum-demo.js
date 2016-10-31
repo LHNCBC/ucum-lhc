@@ -24,6 +24,14 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
   categories_: ['Non-Clinical', 'Obsolete'],
 
   /**
+   * Hash that matches category display names with the corresponding
+   * values used in the data
+   */
+  categoryValues_: { 'Clinical Use': 'Clinical',
+    'Non-Clinical Use': 'Miscellaneous',
+    'Obsolete': 'Obsolete' },
+
+  /**
    * Fields that the user can select for display in the autocompleter list
    * that displays units in the Demo Unit Conversions page.   Separated into
    * two arrays, with the default categories in defDisplayFlds_ .
@@ -156,9 +164,13 @@ var UcumDemo = exports.UcumDemo = function () {
       var opts = UcumDemoConfig.baseSearchOpts_;
       var catLen = this.urlCategories_.length;
       if (catLen > 0) {
-        var qString = 'q=category:';
-        if (catLen > 1) qString += '(' + this.urlCategories_.join(' OR ') + ')';else qString += this.urlCategories_[0];
-        urlString += '?' + qString;
+        var qString = ';';
+        for (var c = 0; c < catLen; c++) {
+          if (c > 0) qString += ' OR ';
+          qString += Ucum.categoryValues_[this.urlCategories_[c]];
+        }
+        if (catLen > 1) qString = '(' + qString + ')';
+        urlString += '?q=category:' + qString;
       }
       var dispLen = this.urlDisplayFlds_.length;
       var colHdrs = UcumDemoConfig.defCols_;
@@ -269,7 +281,6 @@ var UcumDemo = exports.UcumDemo = function () {
      * the demo page is recreated each time this is called.
      *
      * @param ckBoxId id of the checkbox on which the click event occurred
-     * @return nothing
      */
 
   }, {
