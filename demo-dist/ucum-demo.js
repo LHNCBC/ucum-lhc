@@ -269,7 +269,6 @@ var UcumDemo = exports.UcumDemo = function () {
      * the demo page is recreated each time this is called.
      *
      * @param ckBoxId id of the checkbox on which the click event occurred
-     * @return nothing
      */
 
   }, {
