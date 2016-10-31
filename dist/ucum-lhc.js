@@ -21013,50 +21013,7 @@ var Ucum = exports.Ucum = {
    * to a file.  See UnitString.parseString where they start out blank in
    * the constructor.
    */
-  closeEmph_: '</span>',
-
-  /**
-   * Message that is displayed when annotations are included in a unit
-   * string, to let the user know how they are interpreted.
-   */
-  bracesMsg_: 'Annotations (text in curley braces {}) have no influence ' + 'on the processing of a unit string.',
-
-  /**
-   * Categories that can be used to limit units listed by the autocompleter
-   * in the Demo Unit Conversions page.   Separated into two arrays, with
-   * the default categories in defCategories_ .
-   */
-  defCategories_: ['Clinical'],
-  categories_: ['Non-Clinical', 'Obsolete'],
-
-  /**
-   * Fields that the user can select for display in the autocompleter list
-   * that displays units in the Demo Unit Conversions page.   Separated into
-   * two arrays, with the default categories in defDisplayFlds_ .
-   */
-  defDisplayFlds_: ['cs_code', 'name'],
-  displayFlds_: ['category', 'synonyms', 'loinc_property', 'guidance', 'source'],
-
-  /**
-   * Base URL for an autocompleter search query on the clinical tables search
-   * service for extended UCUM data
-   */
-  baseSearchURL_: 'https://lforms-service.nlm.nih.gov/api/ucum/v1/search',
-
-  /**
-   * Default column headers for an autocompleter search query when no display
-   * fields are specified.  If no display fields are specified, these are the
-   * columns that are displayed.  Once the user specifies columns to display,
-   * the column headers are built from those column names.
-   */
-  defCols_: ['cs_code', 'name'],
-
-  /**
-   * Basic search opts used for all autocompleter search queries
-   */
-  baseSearchOpts_: { 'nonMatchSuggestions': false,
-    'tableFormat': true,
-    'valueCols': [0] }
+  closeEmph_: '</span>'
 
 };
 
@@ -22566,13 +22523,13 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
     /**
      * This method retrieves a list of unit commensurable, i.e., that can be
-     * converted from and to, a specified unit.  Throws an error if the "from"
-     * unit cannot be found or if no commensurable units are found.
+     * converted from and to, a specified unit.  Returns an error if the "from"
+     * unit cannot be found.
      *
      * @param fromName the name/unit string of the "from" unit
-     * @returns the list of commensurable units if any were found
-     *  @throws an error if the "from" unit is not found or if no commensurable
-     *   units were found
+     * @returns an array containing two elements;
+     *   first element is the list of commensurable units if any were found
+     *   second element is an error message if the "from" unit is not found
      */
 
   }, {
@@ -22587,9 +22544,13 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       if (!fromUnit) {
         retMsg.push('Could not find unit ' + fromName + '.');
       } else {
-
+        var dimVec = null;
         var fromDim = fromUnit.getProperty('dim_');
-        var dimVec = fromDim.getProperty('dimVec_');
+        try {
+          dimVec = fromDim.getProperty('dimVec_');
+        } catch (err) {
+          if (err.message === "Dimension does not have requested property(dimVec_)") dimVec = null;
+        }
         if (dimVec) {
           var utab = UnitTables.getInstance();
           commUnits = utab.getUnitsByDimension(dimVec);

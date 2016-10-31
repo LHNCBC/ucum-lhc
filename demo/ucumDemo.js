@@ -8,7 +8,7 @@
 
 var fs = require('browserify-fs');
 var Ucum = ucumPkg.Ucum;
-//var UcumDemoConfig = demoPkg.UcumDemoConfig;
+var UcumDemoConfig = require('./demoConfig').UcumDemoConfig;
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;
 var UnitTables = ucumPkg.UnitTables;
 var UcumFileValidator = ucumPkg.UcumFileValidator;
@@ -22,7 +22,7 @@ export class UcumDemo {
     this.utils_ = UcumLhcUtils.getInstance();
     this.utabs_ = UnitTables.getInstance();
     this.urlCategories_ = ['Clinical'];
-    this.urlDisplayFlds_ = Ucum.defCols_ ;
+    this.urlDisplayFlds_ = UcumDemoConfig.defCols_ ;
     let urlOpts = this.buildUrlAndOpts();
 
     // Set up the search autocompleter for the "from" unit code input field
@@ -65,8 +65,8 @@ export class UcumDemo {
    * @return an array containing the new url [0] and a new options hash [1]
    */
   buildUrlAndOpts(){
-    let urlString = Ucum.baseSearchURL_;
-    let opts = Ucum.baseSearchOpts_ ;
+    let urlString = UcumDemoConfig.baseSearchURL_;
+    let opts = UcumDemoConfig.baseSearchOpts_ ;
     let catLen = this.urlCategories_.length;
     if (catLen > 0) {
       let qString = 'q=category:';
@@ -77,7 +77,7 @@ export class UcumDemo {
       urlString += '?' + qString ;
     }
     let dispLen = this.urlDisplayFlds_.length ;
-    let colHdrs = Ucum.defCols_;
+    let colHdrs = UcumDemoConfig.defCols_;
     if (dispLen > 0){
       colHdrs = this.urlDisplayFlds_ ;
       let dString = 'df=' + this.urlDisplayFlds_.join(',') ;
@@ -113,8 +113,8 @@ export class UcumDemo {
     limitPara.appendChild(limitLine);
     settingsDiv.appendChild(limitPara);
 
-    this.buildCheckBoxes(settingsDiv, Ucum.defCategories_, true, 'category') ;
-    this.buildCheckBoxes(settingsDiv, Ucum.categories_, false, 'category') ;
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defCategories_, true, 'category') ;
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.categories_, false, 'category') ;
 
     // build display fields section
     let dispPara = document.createElement("P");
@@ -123,8 +123,8 @@ export class UcumDemo {
     dispPara.appendChild(dispLine);
     settingsDiv.appendChild(dispPara);
 
-    this.buildCheckBoxes(settingsDiv, Ucum.defDisplayFlds_, true, 'displayField');
-    this.buildCheckBoxes(settingsDiv, Ucum.displayFlds_, false, 'displayField');
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defDisplayFlds_, true, 'displayField');
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.displayFlds_, false, 'displayField');
 
   } // buildAdvancedSettings
 
@@ -178,7 +178,6 @@ export class UcumDemo {
    * the demo page is recreated each time this is called.
    *
    * @param ckBoxId id of the checkbox on which the click event occurred
-   * @return nothing
    */
   updateSetting(ckBoxId) {
     let ckBox = document.getElementById(ckBoxId);
