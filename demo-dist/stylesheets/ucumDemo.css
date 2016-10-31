@@ -88,39 +88,44 @@
 
 
 body {
-  font-family: "sans-serif" !important;
-  font-size: 16px !important;
-  margin: 0px 20px 20px 20px !important;
-  color: #1E4193 !important;
+  font-family: "sans-serif" ;
+  font-size: 16px;
+  margin: 0px 20px 20px 20px ;
+  color: #1E4193 ;
 }
 
 h2 {
-  font-size: 24px !important;
-  font-weight: 500 !important;
-  text-align: center !important;
-  color: black !important;
+  font-size: 24px ;
+  font-weight: 500 ;
+  text-align: center ;
+  color: black ;
 }
 
+/* h3 margin-bottom setting gets overriden by bootstrap's
+   .h3 class if setting not specified as important here
+*/
 h3 {
-  font-size: 20px !important;
-  font-weight: bold !important;
+  font-size: 20px ;
+  font-weight: bold ;
   margin-bottom:  20px !important;
 }
 
+/* h4 font-size setting gets overriden by small-print class
+   setting if not specified as important here
+*/
 h4 {
   font-size: 18px !important;
-  font-weight: 500 !important;
-  /*text-align: center;*/
-  color: black !important;
+  font-weight: 500 ;
+  color: black ;
 }
 
 button {
-  font-size: 14px !important;
+  font-size: 14px ;
 }
 
 #inputfile {
-  font-size: 14px !important;
-  color: #1E4193 !important;
+  font-size: 14px ;
+  color: #1E4193 ;
 }
 .section {
   border: 3px solid #ddd;
@@ -132,11 +137,21 @@ button {
 .small-print {
   font-size: 14px;
 }
+
+a {
+  color:  #17317a;
+  text-decoration: underline ;
+}
+
 .emphSpan {
   color: red;
   font-weight: 500;
 }
 
+/* Override the standard autocompleter settings for an input
+   field when a value is typed in that doesn't match what's on
+   the list presented
+*/
 input.no_match {
   background-color: white !important;
   font-style: normal !important;

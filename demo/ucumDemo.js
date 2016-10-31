@@ -8,6 +8,7 @@
 
 var fs = require('browserify-fs');
 var Ucum = ucumPkg.Ucum;
+//var UcumDemoConfig = demoPkg.UcumDemoConfig;
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;
 var UnitTables = ucumPkg.UnitTables;
 var UcumFileValidator = ucumPkg.UcumFileValidator;
@@ -34,7 +35,6 @@ export class UcumDemo {
     // in the "from" field.
     this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
 
-    //this.buildAdvancedSettings();
     // Make this a singleton.  See UnitTables constructor for details.
     let holdThis = UcumDemo.prototype;
     UcumDemo = function () {
@@ -62,7 +62,6 @@ export class UcumDemo {
    * categories and display fields listed in the advanced settings of the
    * converter tab.
    *
-   * @param none
    * @return an array containing the new url [0] and a new options hash [1]
    */
   buildUrlAndOpts(){
@@ -74,7 +73,7 @@ export class UcumDemo {
       if (catLen > 1)
         qString += '(' + this.urlCategories_.join(' OR ') + ')';
       else
-        qString += '"' + this.urlCategories_[0] + '"';
+        qString += this.urlCategories_[0];
       urlString += '?' + qString ;
     }
     let dispLen = this.urlDisplayFlds_.length ;
@@ -89,7 +88,7 @@ export class UcumDemo {
       urlString += dString ;
     }
     opts['colHeaders'] = colHdrs ;
-  return [urlString, opts];
+    return [urlString, opts];
   }
 
 
@@ -114,7 +113,6 @@ export class UcumDemo {
     limitPara.appendChild(limitLine);
     settingsDiv.appendChild(limitPara);
 
-    //this.buildCheckBoxes('advancedSearch', Ucum.defCategories_, true, 'category') ;
     this.buildCheckBoxes(settingsDiv, Ucum.defCategories_, true, 'category') ;
     this.buildCheckBoxes(settingsDiv, Ucum.categories_, false, 'category') ;
 
@@ -362,10 +360,10 @@ export class UcumDemo {
               commUnits[i].getProperty('name_');
         commNames.sort(this.utabs_.compareCodes);
         this.toAuto_.setList(commNames);
-        commText.setAttribute("style", "visibility: visible");
+        commText.style.visibility = "visible";
       }
       else
-        commText.setAttribute("style", "visibility: hidden");
+        commText.style.visibility = "hidden";
     }
     catch (err) {
       resultMsg.push(err.message);

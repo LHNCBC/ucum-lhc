@@ -6,7 +6,7 @@
  * defined by the ECMAScript 6 standard
  */
 
-export var Ucum = {  // Namespace for UCUM classes
+export var Ucum = {
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
@@ -81,8 +81,10 @@ export var Ucum = {  // Namespace for UCUM classes
   baseSearchURL_ : 'https://lforms-service.nlm.nih.gov/api/ucum/v1/search',
 
   /**
-   * Default columns for an autocompleter search query when no display
-   * fields are specified.  Used to specify columns and headers
+   * Default column headers for an autocompleter search query when no display
+   * fields are specified.  If no display fields are specified, these are the
+   * columns that are displayed.  Once the user specifies columns to display,
+   * the column headers are built from those column names.
    */
   defCols_ : ['cs_code','name'],
 
@@ -90,8 +92,9 @@ export var Ucum = {  // Namespace for UCUM classes
    * Basic search opts used for all autocompleter search queries
    */
   baseSearchOpts_ : {'nonMatchSuggestions': false,
-                     'tableFormat': true,
-                      'valueCols': [0]}
-}
+    'tableFormat': true,
+    'valueCols': [0]}
+
+} ;
 
 

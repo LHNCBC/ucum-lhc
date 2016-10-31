@@ -20970,7 +20970,7 @@ Object.defineProperty(exports, "__esModule", {
  * defined by the ECMAScript 6 standard
  */
 
-var Ucum = exports.Ucum = { // Namespace for UCUM classes
+var Ucum = exports.Ucum = {
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
@@ -21044,8 +21044,10 @@ var Ucum = exports.Ucum = { // Namespace for UCUM classes
   baseSearchURL_: 'https://lforms-service.nlm.nih.gov/api/ucum/v1/search',
 
   /**
-   * Default columns for an autocompleter search query when no display
-   * fields are specified.  Used to specify columns and headers
+   * Default column headers for an autocompleter search query when no display
+   * fields are specified.  If no display fields are specified, these are the
+   * columns that are displayed.  Once the user specifies columns to display,
+   * the column headers are built from those column names.
    */
   defCols_: ['cs_code', 'name'],
 
@@ -21055,6 +21057,7 @@ var Ucum = exports.Ucum = { // Namespace for UCUM classes
   baseSearchOpts_: { 'nonMatchSuggestions': false,
     'tableFormat': true,
     'valueCols': [0] }
+
 };
 
 

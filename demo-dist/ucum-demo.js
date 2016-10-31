@@ -13,7 +13,7 @@ Object.defineProperty(exports, "__esModule", {
  */
 
 var UcumDemo = exports.UcumDemo = require("./ucumDemo.js").UcumDemo;
-
+//export var UcumDemoConfig = require("./demoConfig.js").UcumDemoConfig;
 var demo = UcumDemo.getInstance();
 
 
@@ -36,6 +36,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var fs = require('browserify-fs');
 var Ucum = ucumPkg.Ucum;
+//var UcumDemoConfig = demoPkg.UcumDemoConfig;
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;
 var UnitTables = ucumPkg.UnitTables;
 var UcumFileValidator = ucumPkg.UcumFileValidator;
@@ -61,7 +62,6 @@ var UcumDemo = exports.UcumDemo = function () {
     // in the "from" field.
     this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
 
-    //this.buildAdvancedSettings();
     // Make this a singleton.  See UnitTables constructor for details.
     var holdThis = UcumDemo.prototype;
     UcumDemo = function UcumDemo() {
@@ -76,6 +76,23 @@ var UcumDemo = exports.UcumDemo = function () {
     };
   }
 
+  /**
+   * This method builds the URL and options array used by the search autocompleter
+   * used for the "convert from" field on the converter tab.
+   *
+   * This uses the urlCategories_ and urlDisplayFlds_ arrays built in the
+   * constructor to get the list of categories to be included and fields
+   * to be displayed in the autocompleter list.
+   *
+   * This called from the constructor, to build the initial url, and then
+   * each time the user clicks on one of the checkboxes assigned to the
+   * categories and display fields listed in the advanced settings of the
+   * converter tab.
+   *
+   * @return an array containing the new url [0] and a new options hash [1]
+   */
+
+
   _createClass(UcumDemo, [{
     key: 'buildUrlAndOpts',
     value: function buildUrlAndOpts() {
@@ -84,7 +101,7 @@ var UcumDemo = exports.UcumDemo = function () {
       var catLen = this.urlCategories_.length;
       if (catLen > 0) {
         var qString = 'q=category:';
-        if (catLen > 1) qString += '(' + this.urlCategories_.join(' OR ') + ')';else qString += '"' + this.urlCategories_[0] + '"';
+        if (catLen > 1) qString += '(' + this.urlCategories_.join(' OR ') + ')';else qString += this.urlCategories_[0];
         urlString += '?' + qString;
       }
       var dispLen = this.urlDisplayFlds_.length;
@@ -123,7 +140,6 @@ var UcumDemo = exports.UcumDemo = function () {
       limitPara.appendChild(limitLine);
       settingsDiv.appendChild(limitPara);
 
-      //this.buildCheckBoxes('advancedSearch', Ucum.defCategories_, true, 'category') ;
       this.buildCheckBoxes(settingsDiv, Ucum.defCategories_, true, 'category');
       this.buildCheckBoxes(settingsDiv, Ucum.categories_, false, 'category');
 
@@ -370,8 +386,8 @@ var UcumDemo = exports.UcumDemo = function () {
             commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ + commUnits[i].getProperty('name_');
           }commNames.sort(this.utabs_.compareCodes);
           this.toAuto_.setList(commNames);
-          commText.setAttribute("style", "visibility: visible");
-        } else commText.setAttribute("style", "visibility: hidden");
+          commText.style.visibility = "visible";
+        } else commText.style.visibility = "hidden";
       } catch (err) {
         resultMsg.push(err.message);
       }
