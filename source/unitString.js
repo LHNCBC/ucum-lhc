@@ -117,9 +117,6 @@ export class UnitString{
     // An array of messages (warnings and errors) to be returned
     let retMsg = [];
 
-    // Flag used to block further processing on an unrecoverable error
-    let endProcessing = false ;
-
     // Extract any annotations, i.e., text enclosed in braces ({}) from the
     // string before further processing.  Store each one in the annotations
     // array and put a placeholder in the string for the annotation.  Do
@@ -128,6 +125,9 @@ export class UnitString{
     // subsequent processing.
     let annotations = [];
     uStr = this.getAnnotations(uStr, annotations, retMsg) ;
+
+    // Flag used to block further processing on an unrecoverable error
+    let endProcessing = retMsg.length > 0;
 
     // Check for parentheses in unit strings.  If found, isolate a parenthesized
     // group and pass it to a recursive call of this method.  If it contains
@@ -255,7 +255,7 @@ export class UnitString{
 
       // Create a unit object out of each un element
       let uLen = uArray.length;
-      for (let u1 = 0; u1 < uLen; u1++) {
+      for (let u1 = 0; u1 < uLen && !endProcessing; u1++) {
         let curCode = uArray[u1]['un'];
 
         // If the current unit array element is a unit stored in the parensUnits
@@ -372,9 +372,14 @@ export class UnitString{
         let nextUnit = uArray[u2]['un'];
         if (nextUnit === null ||
             ((typeof nextUnit !== 'number') && (!nextUnit.getProperty))) {
-          retMsg.push(`Unit string (${origString}) contains unrecognized ` +
-                      `element (${this.openEmph_}${nextUnit.toString()}` +
-                      `${this.closeEmph_}); could not parse full expression.  Sorry`);
+          let msgString = `Unit string (${origString}) contains unrecognized ` +
+                          'element' ;
+          if (nextUnit) {
+            msgString += ` (${this.openEmph_}${nextUnit.toString()}` +
+                         `${this.closeEmph_})`;
+          }
+          msgString += '; could not parse full string.  Sorry';
+          retMsg.push(msgString);
           endProcessing = true;
         }
         if (!endProcessing) {
@@ -458,6 +463,7 @@ export class UnitString{
         retMsg.push('Missing closing brace for annotation starting at ' +
             this.openEmph_ + uString.substr(openBrace) +
             this.closeEmph_);
+        openBrace = -1;
       }
       else {
         let braceStr = uString.substring(openBrace, closeBrace + 1);
@@ -643,8 +649,18 @@ export class UnitString{
       ulen = uCode.length;
       let utabs = UnitTables.getInstance();
 
-      // First look for the full string
+      // First look for the full string as a code
       origUnit = utabs.getUnitByCode(uCode);
+
+      // If we didn't find it, try it as a name
+      if (!origUnit) {
+        let origUnitAry = utabs.getUnitByName(uCode);
+        if (origUnitAry && origUnitAry.length > 0) {
+          origUnit = origUnitAry[0];
+          retMsg.push('(The unit code for ' + uCode + ' is ' +
+                      origUnit.csCode_ + ')');
+        }
+      }
 
       // If that didn't work, peel off the exponent and try it
       if (!origUnit) {
@@ -721,7 +737,7 @@ export class UnitString{
       // unit string, with the unit string without the exponent, and the
       // unit string without a prefix.  That's all we can try).
       if (!origUnit) {
-        retMsg.push(`Unable to find unit for ${uCode}`);
+        retMsg.push(`Unable to find unit for ${origString}`);
         endProcessing = true ;
       }
       if (!endProcessing) {

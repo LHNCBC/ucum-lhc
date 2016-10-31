@@ -20970,7 +20970,7 @@ Object.defineProperty(exports, "__esModule", {
  * defined by the ECMAScript 6 standard
  */
 
-var Ucum = exports.Ucum = { // Namespace for UCUM classes
+var Ucum = exports.Ucum = {
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
@@ -21013,13 +21013,7 @@ var Ucum = exports.Ucum = { // Namespace for UCUM classes
    * to a file.  See UnitString.parseString where they start out blank in
    * the constructor.
    */
-  closeEmph_: '</span>',
-
-  /**
-   * Message that is displayed when annotations are included in a unit
-   * string, to let the user know how they are interpreted.
-   */
-  bracesMsg_: 'Annotations (text in curley braces {}) have no influence ' + 'on the processing of a unit string.'
+  closeEmph_: '</span>'
 
 };
 
@@ -22529,13 +22523,13 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
     /**
      * This method retrieves a list of unit commensurable, i.e., that can be
-     * converted from and to, a specified unit.  Throws an error if the "from"
-     * unit cannot be found or if no commensurable units are found.
+     * converted from and to, a specified unit.  Returns an error if the "from"
+     * unit cannot be found.
      *
      * @param fromName the name/unit string of the "from" unit
-     * @returns the list of commensurable units if any were found
-     *  @throws an error if the "from" unit is not found or if no commensurable
-     *   units were found
+     * @returns an array containing two elements;
+     *   first element is the list of commensurable units if any were found
+     *   second element is an error message if the "from" unit is not found
      */
 
   }, {
@@ -22543,21 +22537,25 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     value: function commensurablesList(fromName) {
 
       var retMsg = [];
-
+      var commUnits = null;
       var parseResp = this.getSpecifiedUnit(fromName);
       var fromUnit = parseResp[0];
       if (parseResp[1].length > 0) retMsg = parseResp[1];
       if (!fromUnit) {
         retMsg.push('Could not find unit ' + fromName + '.');
-      }
-
-      var commUnits = null;
-      var fromDim = fromUnit.getProperty('dim_');
-      var dimVec = fromDim.getProperty('dimVec_');
-      if (dimVec) {
-        var utab = UnitTables.getInstance();
-        commUnits = utab.getUnitsByDimension(dimVec);
-      }
+      } else {
+        var dimVec = null;
+        var fromDim = fromUnit.getProperty('dim_');
+        try {
+          dimVec = fromDim.getProperty('dimVec_');
+        } catch (err) {
+          if (err.message === "Dimension does not have requested property(dimVec_)") dimVec = null;
+        }
+        if (dimVec) {
+          var utab = UnitTables.getInstance();
+          commUnits = utab.getUnitsByDimension(dimVec);
+        }
+      } // end if we found a "from" unit
       return [commUnits, retMsg];
     } // end commensurablesList
 
@@ -23382,9 +23380,6 @@ var UnitString = exports.UnitString = function () {
       // An array of messages (warnings and errors) to be returned
       var retMsg = [];
 
-      // Flag used to block further processing on an unrecoverable error
-      var endProcessing = false;
-
       // Extract any annotations, i.e., text enclosed in braces ({}) from the
       // string before further processing.  Store each one in the annotations
       // array and put a placeholder in the string for the annotation.  Do
@@ -23393,6 +23388,9 @@ var UnitString = exports.UnitString = function () {
       // subsequent processing.
       var annotations = [];
       uStr = this.getAnnotations(uStr, annotations, retMsg);
+
+      // Flag used to block further processing on an unrecoverable error
+      var endProcessing = retMsg.length > 0;
 
       // Check for parentheses in unit strings.  If found, isolate a parenthesized
       // group and pass it to a recursive call of this method.  If it contains
@@ -23508,7 +23506,7 @@ var UnitString = exports.UnitString = function () {
 
         // Create a unit object out of each un element
         var _uLen = uArray.length;
-        for (var u1 = 0; u1 < _uLen; u1++) {
+        for (var u1 = 0; u1 < _uLen && !endProcessing; u1++) {
           var curCode = uArray[u1]['un'];
 
           // If the current unit array element is a unit stored in the parensUnits
@@ -23615,7 +23613,12 @@ var UnitString = exports.UnitString = function () {
         for (var u2 = 1; u2 < _uLen2; u2++, !endProcessing) {
           var nextUnit = uArray[u2]['un'];
           if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
-            retMsg.push('Unit string (' + origString + ') contains unrecognized ' + ('element (' + this.openEmph_ + nextUnit.toString()) + (this.closeEmph_ + '); could not parse full expression.  Sorry'));
+            var msgString = 'Unit string (' + origString + ') contains unrecognized ' + 'element';
+            if (nextUnit) {
+              msgString += ' (' + this.openEmph_ + nextUnit.toString() + (this.closeEmph_ + ')');
+            }
+            msgString += '; could not parse full string.  Sorry';
+            retMsg.push(msgString);
             endProcessing = true;
           }
           if (!endProcessing) {
@@ -23693,6 +23696,7 @@ var UnitString = exports.UnitString = function () {
         var closeBrace = uString.indexOf('}');
         if (closeBrace < 0) {
           retMsg.push('Missing closing brace for annotation starting at ' + this.openEmph_ + uString.substr(openBrace) + this.closeEmph_);
+          openBrace = -1;
         } else {
           var braceStr = uString.substring(openBrace, closeBrace + 1);
           var aIdx = annotations.length.toString();
@@ -23874,8 +23878,17 @@ var UnitString = exports.UnitString = function () {
         ulen = uCode.length;
         var utabs = UnitTables.getInstance();
 
-        // First look for the full string
+        // First look for the full string as a code
         origUnit = utabs.getUnitByCode(uCode);
+
+        // If we didn't find it, try it as a name
+        if (!origUnit) {
+          var origUnitAry = utabs.getUnitByName(uCode);
+          if (origUnitAry && origUnitAry.length > 0) {
+            origUnit = origUnitAry[0];
+            retMsg.push('(The unit code for ' + uCode + ' is ' + origUnit.csCode_ + ')');
+          }
+        }
 
         // If that didn't work, peel off the exponent and try it
         if (!origUnit) {
@@ -23951,7 +23964,7 @@ var UnitString = exports.UnitString = function () {
         // unit string, with the unit string without the exponent, and the
         // unit string without a prefix.  That's all we can try).
         if (!origUnit) {
-          retMsg.push('Unable to find unit for ' + uCode);
+          retMsg.push('Unable to find unit for ' + origString);
           endProcessing = true;
         }
         if (!endProcessing) {
