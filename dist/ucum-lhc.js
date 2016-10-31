@@ -21020,7 +21020,6 @@ var Ucum = exports.Ucum = {
    * string, to let the user know how they are interpreted.
    */
   bracesMsg_: 'Annotations (text in curley braces {}) have no influence ' + 'on the processing of a unit string.'
-
 };
 
 

@@ -57,7 +57,6 @@ export var Ucum = {
    */
   bracesMsg_ : 'Annotations (text in curley braces {}) have no influence ' +
                'on the processing of a unit string.'
-
 } ;
 
 
