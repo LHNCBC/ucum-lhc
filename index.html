@@ -3,9 +3,9 @@
   <head>
     <title>LHC UCUM Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="demo-dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.1.1/autocomplete-lhc_jQueryUI.min.css" />
+    <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.2/autocomplete-lhc_jQueryUI.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="demo-dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
   </head>
   <body onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
     <!-- page header -->
@@ -33,7 +33,7 @@
       <h2>UCUM Unit Conversions</h2>
       <div id="convSection" class="section">
         <h3>Convert values from one UCUM unit to another</h3>
-        <p>Enter a valid UCUM code for the unit you want to convert:
+        <p>Enter or select a valid UCUM code for the unit you want to convert:
           <input type="text" id="convertFrom" placeholder="begin typing ..."
                  onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                   'convertTo',
@@ -54,13 +54,11 @@
       </p><br>
         <div id="convertToDivs">
           <div id="convertLeft">
-            <p>Enter or Select the unit that it is to be converted to:
+            <p>Enter or select the unit that it is to be converted to:
               <input type="text" id="convertTo">
           </div>
           <div id="convertRight" style="visibility: hidden">
-            The list of commensurable units does NOT include all possible UCUM
-            units.  You can type in a unit code directly or select one from the
-            list.
+            You can enter other commensurable units that are not on this list.
           </div>
         </div>
         <div><br>&nbsp;&nbsp;  <button id="doConversionButton"
@@ -108,12 +106,15 @@
             <li>All units can be combined in an <a href="http://unitsofmeasure.org/ucum.html#para-7">
               algebraic term</a> using the operators for multiplication (period '.') and division (solidus '/').</li>
             <li>No blanks are allowed within the unit expression.</li>
-            <li>The multiplication operator must be explicity specified; it is never
-              assumed.</li>
-            <li>The multiplication operator (.) must appear between two unit terms.</li>
-            <li>The division operator (/) may appear at the beginning of the expression,
-              indicating inversion of the following term, but normally appears
-              between two terms.</li>
+            <li>Multiple terms in an expression must be separated by an arithmetic
+              operator - either the multiplication operator (.) or the division
+              operator (/).</li>
+            <li>The multiplication operator (.) must be explicity specified; it is never
+            assumed.</li>
+            <li>While the multiplication operator (.) must appear between two unit terms,
+              the division operator (/) may appear at the beginning of the expression,
+              indicating inversion of the following term.  However, the division
+              operator normally appears between two terms.</li>
             <li>Terms are evaluated from left to right, with multiplication and
               division having the same precedence.</li>
             <li><a href="http://unitsofmeasure.org/ucum.html#para-10">Parentheses</a>

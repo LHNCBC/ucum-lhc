@@ -7,6 +7,6 @@
  */
 
 export var UcumDemo = require("./ucumDemo.js").UcumDemo;
-
+//export var UcumDemoConfig = require("./demoConfig.js").UcumDemoConfig;
 var demo = UcumDemo.getInstance();
 

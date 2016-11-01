@@ -207,13 +207,13 @@ export class UcumLhcUtils {
 
   /**
    * This method retrieves a list of unit commensurable, i.e., that can be
-   * converted from and to, a specified unit.  Throws an error if the "from"
-   * unit cannot be found or if no commensurable units are found.
+   * converted from and to, a specified unit.  Returns an error if the "from"
+   * unit cannot be found.
    *
    * @param fromName the name/unit string of the "from" unit
-   * @returns the list of commensurable units if any were found
-   *  @throws an error if the "from" unit is not found or if no commensurable
-   *   units were found
+   * @returns an array containing two elements;
+   *   first element is the list of commensurable units if any were found
+   *   second element is an error message if the "from" unit is not found
    */
   commensurablesList(fromName) {
 
@@ -227,9 +227,16 @@ export class UcumLhcUtils {
       retMsg.push(`Could not find unit ${fromName}.`);
     }
     else {
-
+      let dimVec = null ;
       let fromDim = fromUnit.getProperty('dim_');
-      let dimVec = fromDim.getProperty('dimVec_');
+      try {
+        dimVec = fromDim.getProperty('dimVec_');
+      }
+      catch (err) {
+        if (err.message ===
+            "Dimension does not have requested property(dimVec_)")
+          dimVec = null ;
+      }
       if (dimVec) {
         let utab = UnitTables.getInstance();
         commUnits = utab.getUnitsByDimension(dimVec);

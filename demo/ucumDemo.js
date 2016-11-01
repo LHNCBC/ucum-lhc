@@ -8,6 +8,7 @@
 
 var fs = require('browserify-fs');
 var Ucum = ucumPkg.Ucum;
+var UcumDemoConfig = require('./demoConfig').UcumDemoConfig;
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;
 var UnitTables = ucumPkg.UnitTables;
 var UcumFileValidator = ucumPkg.UcumFileValidator;
@@ -21,7 +22,7 @@ export class UcumDemo {
     this.utils_ = UcumLhcUtils.getInstance();
     this.utabs_ = UnitTables.getInstance();
     this.urlCategories_ = ['Clinical'];
-    this.urlDisplayFlds_ = Ucum.defCols_ ;
+    this.urlDisplayFlds_ = UcumDemoConfig.defCols_ ;
     let urlOpts = this.buildUrlAndOpts();
 
     // Set up the search autocompleter for the "from" unit code input field
@@ -34,7 +35,6 @@ export class UcumDemo {
     // in the "from" field.
     this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
 
-    //this.buildAdvancedSettings();
     // Make this a singleton.  See UnitTables constructor for details.
     let holdThis = UcumDemo.prototype;
     UcumDemo = function () {
@@ -62,23 +62,22 @@ export class UcumDemo {
    * categories and display fields listed in the advanced settings of the
    * converter tab.
    *
-   * @param none
    * @return an array containing the new url [0] and a new options hash [1]
    */
   buildUrlAndOpts(){
-    let urlString = Ucum.baseSearchURL_;
-    let opts = Ucum.baseSearchOpts_ ;
+    let urlString = UcumDemoConfig.baseSearchURL_;
+    let opts = UcumDemoConfig.baseSearchOpts_ ;
     let catLen = this.urlCategories_.length;
     if (catLen > 0) {
       let qString = 'q=category:';
       if (catLen > 1)
         qString += '(' + this.urlCategories_.join(' OR ') + ')';
       else
-        qString += '"' + this.urlCategories_[0] + '"';
+        qString += this.urlCategories_[0];
       urlString += '?' + qString ;
     }
     let dispLen = this.urlDisplayFlds_.length ;
-    let colHdrs = Ucum.defCols_;
+    let colHdrs = UcumDemoConfig.defCols_;
     if (dispLen > 0){
       colHdrs = this.urlDisplayFlds_ ;
       let dString = 'df=' + this.urlDisplayFlds_.join(',') ;
@@ -89,7 +88,7 @@ export class UcumDemo {
       urlString += dString ;
     }
     opts['colHeaders'] = colHdrs ;
-  return [urlString, opts];
+    return [urlString, opts];
   }
 
 
@@ -114,9 +113,8 @@ export class UcumDemo {
     limitPara.appendChild(limitLine);
     settingsDiv.appendChild(limitPara);
 
-    //this.buildCheckBoxes('advancedSearch', Ucum.defCategories_, true, 'category') ;
-    this.buildCheckBoxes(settingsDiv, Ucum.defCategories_, true, 'category') ;
-    this.buildCheckBoxes(settingsDiv, Ucum.categories_, false, 'category') ;
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defCategories_, true, 'category') ;
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.categories_, false, 'category') ;
 
     // build display fields section
     let dispPara = document.createElement("P");
@@ -125,8 +123,8 @@ export class UcumDemo {
     dispPara.appendChild(dispLine);
     settingsDiv.appendChild(dispPara);
 
-    this.buildCheckBoxes(settingsDiv, Ucum.defDisplayFlds_, true, 'displayField');
-    this.buildCheckBoxes(settingsDiv, Ucum.displayFlds_, false, 'displayField');
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defDisplayFlds_, true, 'displayField');
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.displayFlds_, false, 'displayField');
 
   } // buildAdvancedSettings
 
@@ -180,7 +178,6 @@ export class UcumDemo {
    * the demo page is recreated each time this is called.
    *
    * @param ckBoxId id of the checkbox on which the click event occurred
-   * @return nothing
    */
   updateSetting(ckBoxId) {
     let ckBox = document.getElementById(ckBoxId);
@@ -362,10 +359,10 @@ export class UcumDemo {
               commUnits[i].getProperty('name_');
         commNames.sort(this.utabs_.compareCodes);
         this.toAuto_.setList(commNames);
-        commText.setAttribute("style", "visibility: visible");
+        commText.style.visibility = "visible";
       }
       else
-        commText.setAttribute("style", "visibility: hidden");
+        commText.style.visibility = "hidden";
     }
     catch (err) {
       resultMsg.push(err.message);
