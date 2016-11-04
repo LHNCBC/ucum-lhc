@@ -45,54 +45,71 @@ in is a unit code that is found in the unit codes table. If it is not found it
 parses the string to see if it resolves to a valid unit string.
 
 * _@param_ uStr the string to be validated
-* _@returns_ an array containing the unit found for the string (or null if
-  no unit was found) and a message string, if one was returned
+* _@returns_ an object with three elements:
+   'status' contains either 'valid' or 'invalid';
+   'ucumCode' the valid ucum code, which may differ from what was passed
+              in (e.g., if 'pound' is passed in, this will contain '\[lb_av\]'); and
+     'msg' contains a message, if the string is invalid, indicating
+           the problem, or an explanation of a substitution such as the
+           substitution of '\[lb_av\]' for 'pound'
 
 For example, to validate a unit string of m2/g4:
  
     var Pkg = require('ucum-lhc.js');  // include path to file where necessary
      
      var utils = Pkg.UcumLhcUtils.getInstance();
-     var returnArray = utils.validUnitString('m2/g4');
-     if (returnArray[0] !== null)
-       /* the string is valid */
+     var returnObj = utils.validUnitString('m2/g4');
+     if (returnObj['status'] === 'valid')
+       /* the string is valid; returnObj['ucumCode'] will contain the valid 
+          code(s) and returnObj['msg'] may contain a message or messages
+          describing substitions*/
      else
-       /* signal the error in returnArray[1] */
+       /* returnObj['status'] will be 'invalid' and */
+       /* returnOb['msg'] will have a message describing the problem */
        
 For information on unit string formatting, look at the _Ucum Unit Expression 
 Validation_ section on the demo page.  There is a button labeled "Show entry hints". 
 That will give you a short description of unit strings, and includes a link to
 the UCUM Specification, where you can find the full deal.
 
-**convertUnitTo(fromName, fromVal, toName, decDigits)**
+**convertUnitTo(fromUnitCode, fromVal, toUnitCode, decDigits)**
 
 This method converts a number of one type of unit to the equivalent number of
 another type of unit.
 
-* _@param_ fromName the unit string of the unit to be converted
+* _@param_ fromUnitCode the unit code/expression/string of the unit to be converted
 * _@param_ fromVal the number of "from" units to be converted to "to" units
-* _@param_ toName the unit string of the unit that the from field is to be converted to
+* _@param_ toUnitCode the unit code/expression/string of the unit that the from 
+  field is to be converted to
 * _@param_ decDigits the maximum number of decimal digits to be displayed
- for the converted unit.  If not specified, the UCUM.decDigits_ value
+  for the converted unit.  If not specified, the UCUM.decDigits_ value
   (currently 4) is used.
-* _@returns_ a message indicating either the result of the conversion or an
-  error message if an error occurred.
+* _@returns_ an array with three elements:
+   'status' contains either 'succeeded' or 'failed'; 
+   'toVal' contains the number of "to" units resulting from the conversion, or
+     null if the conversion failed; and
+   'msg' contains a message describing either the result of the conversion or 
+         an error message if an error occurred.
 
 For example, to convert 27 U.S. fathoms to U.S. inches with 0 decimal digits
  
     var Pkg = require('ucum-lhc.js');   // include path to file where necessary
      
     var utils = Pkg.UcumLhcUtils.getInstance();
-    var returnMsg = utils.convertUnitTo('[fth_us]', 27, '[in_us]', 0);
-    if (returnMsg === "27 fathom units = 1944 inch units.")
-      /* the conversion was successful */
+    var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]', 0);
+    if (returnObj['status'] === 'succeeded')
+      /* the conversion was successful.  The value (1944) for the "to" unit
+         will be in returnObj['toVal'] and returnObj['msg'] will contain the
+         text "27 fathom units = 1944 inch units."
+       */
     else
-      /* the conversion encountered an error that returnMsg will describe */
+      /* the conversion encountered an error that the string in returnObj['msg'] 
+         will describe; returnObj['toVal'] will be null */
       
 If you want to know what unit types a particular unit can be converted to, the 
 _UCUM Unit Conversions_ section of the demo page will show you a list of 
 commensurable units when you enter the "from" unit code.  (Valid UCUM unit codes
-are shown in the _Find Common UnitCodes_ section).  That list will 
+are shown in the _UCUM Unit Expression Validation_ section).  That list will
 be displayed in the "converted to" list.  It will not show that list for unit
 strings that combine units, such as m2/g4.
 
