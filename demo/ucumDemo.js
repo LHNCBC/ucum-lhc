@@ -250,16 +250,16 @@ export class UcumDemo {
     }
     else {
       try {
-        let parseResp = this.utils_.validUnitString(uStr);
+        let parseResp = this.utils_.getSpecifiedUnit(uStr);
         if (parseResp[0])
-          valMsg = `${uStr} is a valid unit.`;
+          valMsg = `${parseResp[1]} is a valid unit expression.`;
         else {
-          if (parseResp[1].length === 0) {
-              valMsg = `${uStr} is NOT a valid unit.`;
+          if (parseResp[2].length === 0) {
+            valMsg = `${parseResp[1]} is NOT a valid unit expression.`;
           }
         }
-        if (parseResp[1].length > 0)
-          retMsg = retMsg.concat(parseResp[1]);
+        if (parseResp[2].length > 0)
+          retMsg = retMsg.concat(parseResp[2]);
       }
       catch (err) {
         retMsg.push(err.message);
@@ -303,11 +303,11 @@ export class UcumDemo {
     if (codePos > 0)
       toName = toName.substr(0, codePos);
 
-    let resultMsg = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
+    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
 
     // Put the message - conversion or error - on the page
     let resultString = document.getElementById("resultString");
-    resultString.innerHTML = resultMsg.join('<BR>');
+    resultString.innerHTML = resultObj['msg'].join('<BR>');
   } // end convertUnit
 
 
