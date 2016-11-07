@@ -22412,7 +22412,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * valid unit string.
      *
      * @param uStr the string to be validated
-     * @returns an object with two elements:
+     * @returns an object with two properties:
      *  'status' either 'valid' or 'invalid'
      *  'ucumCode' the valid ucum code, which may differ from what was passed
      *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]'); and
@@ -22462,10 +22462,9 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         'toVal': null };
 
       try {
-        var parseResp = [];
         var fromUnit = null;
 
-        parseResp = this.getSpecifiedUnit(fromUnitCode);
+        var parseResp = this.getSpecifiedUnit(fromUnitCode);
         fromUnit = parseResp[0];
         if (parseResp[2].length > 0) resultMsg = parseResp[2];
 
@@ -23896,8 +23895,15 @@ var UnitString = exports.UnitString = function () {
           var origUnitAry = utabs.getUnitByName(uCode);
           if (origUnitAry && origUnitAry.length > 0) {
             origUnit = origUnitAry[0];
-            retMsg.push('(The unit code for ' + uCode + ' is ' + origUnit.csCode_ + ')');
-            origString = origString.replace(uCode, origUnit.csCode_);
+            var rstring = '(The unit code for ' + uCode + ' is ' + origUnit.csCode_ + ')';
+            var dupMsg = false;
+            for (var _r2 = 0; _r2 < retMsg.length && !dupMsg; _r2++) {
+              dupMsg = retMsg[_r2] === rstring;
+            }if (!dupMsg) retMsg.push(rstring);
+            //retMsg.push('(The unit code for ' + uCode + ' is ' +
+            //            origUnit.csCode_ + ')');
+            var rStr = new RegExp(uCode, 'g');
+            origString = origString.replace(rStr, origUnit.csCode_);
             uCode = origUnit.csCode_;
           }
         }

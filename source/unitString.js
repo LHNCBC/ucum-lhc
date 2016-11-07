@@ -640,9 +640,15 @@ export class UnitString{
         let origUnitAry = utabs.getUnitByName(uCode);
         if (origUnitAry && origUnitAry.length > 0) {
           origUnit = origUnitAry[0];
-          retMsg.push('(The unit code for ' + uCode + ' is ' +
-                      origUnit.csCode_ + ')');
-          origString = origString.replace(uCode, origUnit.csCode_);
+          let mString = '(The unit code for ' + uCode + ' is ' +
+                         origUnit.csCode_ + ')';
+          let dupMsg = false;
+          for (let r = 0; r < retMsg.length && !dupMsg; r++)
+            dupMsg = retMsg[r] === mString ;
+          if (!dupMsg)
+            retMsg.push(mString);
+          let rStr = new RegExp(uCode, 'g');
+          origString = origString.replace(rStr, origUnit.csCode_);
           uCode = origUnit.csCode_ ;
         }
       }
