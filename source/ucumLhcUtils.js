@@ -88,7 +88,7 @@ export class UcumLhcUtils {
    * valid unit string.
    *
    * @param uStr the string to be validated
-   * @returns an object with two elements:
+   * @returns an object with two properties:
    *  'status' either 'valid' or 'invalid'
    *  'ucumCode' the valid ucum code, which may differ from what was passed
    *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]'); and

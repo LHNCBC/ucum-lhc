@@ -6,7 +6,8 @@
  * populating the autocompleter unit lists.
  */
 
+
+export var UcumDemoConfig = require("./demoConfig.js").UcumDemoConfig;
 export var UcumDemo = require("./ucumDemo.js").UcumDemo;
-//export var UcumDemoConfig = require("./demoConfig.js").UcumDemoConfig;
 var demo = UcumDemo.getInstance();
 

@@ -20,8 +20,8 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
   * in the Demo Unit Conversions page.   Separated into two arrays, with
   * the default categories in defCategories_ .
   */
-  defCategories_: ['Clinical'],
-  categories_: ['Non-Clinical', 'Obsolete'],
+  defCategories_: ['Clinical Use'],
+  categories_: ['Non-Clinical Use', 'Obsolete'],
 
   /**
    * Hash that matches category display names with the corresponding
@@ -76,12 +76,12 @@ Object.defineProperty(exports, "__esModule", {
  * populating the autocompleter unit lists.
  */
 
+var UcumDemoConfig = exports.UcumDemoConfig = require("./demoConfig.js").UcumDemoConfig;
 var UcumDemo = exports.UcumDemo = require("./ucumDemo.js").UcumDemo;
-//export var UcumDemoConfig = require("./demoConfig.js").UcumDemoConfig;
 var demo = UcumDemo.getInstance();
 
 
-},{"./ucumDemo.js":3}],3:[function(require,module,exports){
+},{"./demoConfig.js":1,"./ucumDemo.js":3}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -92,6 +92,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/** ADD SEARCH AUTOCOMPLETER TO VALIDATOR INPUT BOX, TEXT INDICATING
+ * any valid expression, not limited to list
+ */
 /**
  * This is the code entry point for the demo web page.  It coordinates the
  * loading of the prefix and unit objects from the json definitions file and
@@ -113,13 +116,20 @@ var UcumDemo = exports.UcumDemo = function () {
     // things initialized and data loaded.
     this.utils_ = UcumLhcUtils.getInstance();
     this.utabs_ = UnitTables.getInstance();
-    this.urlCategories_ = ['Clinical'];
-    this.urlDisplayFlds_ = UcumDemoConfig.defCols_;
-    var urlOpts = this.buildUrlAndOpts();
 
     // Set up the search autocompleter for the "from" unit code input field
     // on the Converter tab section
+    this.urlConvCats_ = UcumDemoConfig.defCategories_;
+    this.urlConvDispFlds_ = UcumDemoConfig.defCols_;
+    var urlOpts = this.buildUrlAndOpts('convert');
     this.fromAuto_ = new Def.Autocompleter.Search('convertFrom', urlOpts[0], urlOpts[1]);
+
+    // Set up the search autocompleter for the validation string input field
+    // on the Validator tab section
+    this.urlValCats_ = UcumDemoConfig.defCategories_;
+    this.urlValDispFlds_ = UcumDemoConfig.defCols_;
+    urlOpts = this.buildUrlAndOpts('validate');
+    this.valAuto_ = new Def.Autocompleter.Search('valString', urlOpts[0], urlOpts[1]);
 
     // Set up the prefetch autocompleter for the "to" conversion field.  It will
     // be populated with commensurable units in based on what the user enters
@@ -159,24 +169,26 @@ var UcumDemo = exports.UcumDemo = function () {
 
   _createClass(UcumDemo, [{
     key: 'buildUrlAndOpts',
-    value: function buildUrlAndOpts() {
+    value: function buildUrlAndOpts(tab) {
       var urlString = UcumDemoConfig.baseSearchURL_;
       var opts = UcumDemoConfig.baseSearchOpts_;
-      var catLen = this.urlCategories_.length;
+      var catsArray = tab === 'convert' ? this.urlConvCats_ : this.urlValCats_;
+      var dispArray = tab === 'convert' ? this.urlConvDispFlds_ : this.urlValDispFlds_;
+      var catLen = catsArray.length;
       if (catLen > 0) {
-        var qString = ';';
+        var qString = '';
         for (var c = 0; c < catLen; c++) {
           if (c > 0) qString += ' OR ';
-          qString += Ucum.categoryValues_[this.urlCategories_[c]];
+          qString += UcumDemoConfig.categoryValues_[catsArray[c]];
         }
         if (catLen > 1) qString = '(' + qString + ')';
         urlString += '?q=category:' + qString;
       }
-      var dispLen = this.urlDisplayFlds_.length;
+      var dispLen = dispArray.length;
       var colHdrs = UcumDemoConfig.defCols_;
       if (dispLen > 0) {
-        colHdrs = this.urlDisplayFlds_;
-        var dString = 'df=' + this.urlDisplayFlds_.join(',');
+        colHdrs = dispArray;
+        var dString = 'df=' + dispArray.join(',');
         if (catLen > 0) dString = '&' + dString;else dString = '?' + dString;
         urlString += dString;
       }
@@ -305,7 +317,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
       // call buildUrlAndOpts to build the url and options from the updated url
       // arrays (category and display field arrays).
-      var urlOpts = this.buildUrlAndOpts();
+      var urlOpts = this.buildUrlAndOpts('convert');
 
       // Call setOptions and setUrl to update the the autocompleter.
       // -- no, there is no setOptions at this point.  Leaving these lines in to remind

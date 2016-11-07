@@ -14,8 +14,8 @@ export var UcumDemoConfig = {
    * in the Demo Unit Conversions page.   Separated into two arrays, with
    * the default categories in defCategories_ .
    */
-  defCategories_ : ['Clinical'],
-  categories_ : ['Non-Clinical', 'Obsolete'],
+  defCategories_ : ['Clinical Use'],
+  categories_ : ['Non-Clinical Use', 'Obsolete'],
 
   /**
    * Hash that matches category display names with the corresponding
