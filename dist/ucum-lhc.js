@@ -22417,7 +22417,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * valid unit string.
      *
      * @param uStr the string to be validated
-     * @returns an object with two elements:
+     * @returns an object with two properties:
      *  'status' either 'valid' or 'invalid'
      *  'ucumCode' the valid ucum code, which may differ from what was passed
      *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]'); and
@@ -22467,10 +22467,9 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         'toVal': null };
 
       try {
-        var parseResp = [];
         var fromUnit = null;
 
-        parseResp = this.getSpecifiedUnit(fromUnitCode);
+        var parseResp = this.getSpecifiedUnit(fromUnitCode);
         fromUnit = parseResp[0];
         if (parseResp[2].length > 0) resultMsg = parseResp[2];
 
@@ -22538,7 +22537,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
           retMsg = parseResp[2];
         } catch (err) {
           console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-          if (uName && uName !== '') retMsg.unshift(uName + ' is not a valid unit.  ' + err.message);else retMsg.unshift(err.message);
+          if (uName) retMsg.unshift(uName + ' is not a valid unit.  ' + err.message);else retMsg.unshift(err.message);
         }
       }
 
@@ -23584,7 +23583,7 @@ var UnitString = exports.UnitString = function () {
                   retMsg.push(mString2);
                   endProcessing = true;
                 } // end if there is text following the annotation
-                else if (this.bracesMsg_ && this.bracesMsg_ !== '') {
+                else if (this.bracesMsg_) {
                     var dup = false;
                     for (var r = 0; !dup && r < retMsg.length; r++) {
                       dup = retMsg[r] === this.bracesMsg_;
@@ -23850,7 +23849,7 @@ var UnitString = exports.UnitString = function () {
           // annotation is interpreted as 1.  Warn the user
           else if (anOpen === 0) {
               uCode = 1;
-              if (this.bracesMsg_ && this.bracesMsg_ !== '') {
+              if (this.bracesMsg_) {
                 var dup = false;
                 for (var r = 0; !dup && r < retMsg.length; r++) {
                   dup = retMsg[r] === this.bracesMsg_;
@@ -23868,7 +23867,7 @@ var UnitString = exports.UnitString = function () {
                 //let wString = origString.replace(anText, this.openEmph_ + anText +
                 //                                         this.closeEmph_) ;
                 origString = origString.replace(anText, '');
-                if (this.bracesMsg_ && this.bracesMsg_ !== '') {
+                if (this.bracesMsg_) {
                   var _dup = false;
                   for (var _r = 0; !_dup && _r < retMsg.length; _r++) {
                     _dup = retMsg[_r] === this.bracesMsg_;
@@ -23901,8 +23900,13 @@ var UnitString = exports.UnitString = function () {
           var origUnitAry = utabs.getUnitByName(uCode);
           if (origUnitAry && origUnitAry.length > 0) {
             origUnit = origUnitAry[0];
-            retMsg.push('(The unit code for ' + uCode + ' is ' + origUnit.csCode_ + ')');
-            origString = origString.replace(uCode, origUnit.csCode_);
+            var mString = '(The unit code for ' + uCode + ' is ' + origUnit.csCode_ + ')';
+            var dupMsg = false;
+            for (var _r2 = 0; _r2 < retMsg.length && !dupMsg; _r2++) {
+              dupMsg = retMsg[_r2] === mString;
+            }if (!dupMsg) retMsg.push(mString);
+            var rStr = new RegExp('(^|[.\/({])' + uCode, 'g');
+            origString = origString.replace(rStr, origUnit.csCode_);
             uCode = origUnit.csCode_;
           }
         }

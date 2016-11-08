@@ -134,10 +134,9 @@ export class UcumLhcUtils {
                      'toVal' : null} ;
 
     try {
-      let parseResp = [];
       let fromUnit = null;
 
-      parseResp = this.getSpecifiedUnit(fromUnitCode);
+      let parseResp = this.getSpecifiedUnit(fromUnitCode);
       fromUnit = parseResp[0];
       if (parseResp[2].length > 0)
         resultMsg = parseResp[2];
@@ -214,7 +213,7 @@ export class UcumLhcUtils {
       catch (err) {
         console.log(`Unit requested for unit string ${uName}.` +
             'request unsuccessful; error thrown = ' + err.message);
-        if (uName && uName !== '')
+        if (uName)
           retMsg.unshift(`${uName} is not a valid unit.  ${err.message}`);
         else
           retMsg.unshift(err.message);
