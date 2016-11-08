@@ -116,6 +116,12 @@ var UcumDemo = exports.UcumDemo = function () {
     // things initialized and data loaded.
     this.utils_ = UcumLhcUtils.getInstance();
     this.utabs_ = UnitTables.getInstance();
+<<<<<<< Updated upstream
+=======
+    this.urlCategories_ = UcumDemoConfig.defCategories_;
+    this.urlDisplayFlds_ = UcumDemoConfig.defCols_;
+    var urlOpts = this.buildUrlAndOpts();
+>>>>>>> Stashed changes
 
     // Set up the search autocompleter for the "from" unit code input field
     // on the Converter tab section
@@ -179,7 +185,11 @@ var UcumDemo = exports.UcumDemo = function () {
         var qString = '';
         for (var c = 0; c < catLen; c++) {
           if (c > 0) qString += ' OR ';
+<<<<<<< Updated upstream
           qString += UcumDemoConfig.categoryValues_[catsArray[c]];
+=======
+          qString += UcumDemoConfig.categoryValues_[this.urlCategories_[c]];
+>>>>>>> Stashed changes
         }
         if (catLen > 1) qString = '(' + qString + ')';
         urlString += '?q=category:' + qString;
