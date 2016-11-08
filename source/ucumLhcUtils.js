@@ -213,7 +213,7 @@ export class UcumLhcUtils {
       catch (err) {
         console.log(`Unit requested for unit string ${uName}.` +
             'request unsuccessful; error thrown = ' + err.message);
-        if (uName && uName !== '')
+        if (uName)
           retMsg.unshift(`${uName} is not a valid unit.  ${err.message}`);
         else
           retMsg.unshift(err.message);

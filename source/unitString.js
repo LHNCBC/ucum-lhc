@@ -303,7 +303,7 @@ export class UnitString{
                 retMsg.push(mString2);
                 endProcessing = true;
               } // end if there is text following the annotation
-              else if (this.bracesMsg_ && this.bracesMsg_ !== '') {
+              else if (this.bracesMsg_) {
                 let dup = false ;
                 for (let r = 0; !dup && r < retMsg.length; r++) {
                   dup = (retMsg[r] === this.bracesMsg_);
@@ -587,7 +587,7 @@ export class UnitString{
         // annotation is interpreted as 1.  Warn the user
         else if (anOpen === 0) {
           uCode = 1 ;
-          if (this.bracesMsg_ && this.bracesMsg_ !== '') {
+          if (this.bracesMsg_) {
             let dup = false;
             for (let r = 0; !dup && r < retMsg.length; r++) {
               dup = (retMsg[r] === this.bracesMsg_);
@@ -606,7 +606,7 @@ export class UnitString{
           //let wString = origString.replace(anText, this.openEmph_ + anText +
           //                                         this.closeEmph_) ;
           origString = origString.replace(anText, '');
-          if (this.bracesMsg_ && this.bracesMsg_ !== '') {
+          if (this.bracesMsg_) {
             let dup = false;
             for (let r = 0; !dup && r < retMsg.length; r++) {
               dup = (retMsg[r] === this.bracesMsg_);
@@ -647,7 +647,7 @@ export class UnitString{
             dupMsg = retMsg[r] === mString ;
           if (!dupMsg)
             retMsg.push(mString);
-          let rStr = new RegExp(uCode, 'g');
+          let rStr = new RegExp('(^|[.\/({])' + uCode, 'g');
           origString = origString.replace(rStr, origUnit.csCode_);
           uCode = origUnit.csCode_ ;
         }
