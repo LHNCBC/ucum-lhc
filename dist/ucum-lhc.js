@@ -23900,10 +23900,8 @@ var UnitString = exports.UnitString = function () {
             for (var _r2 = 0; _r2 < retMsg.length && !dupMsg; _r2++) {
               dupMsg = retMsg[_r2] === mString;
             }if (!dupMsg) retMsg.push(mString);
-            var rStr = new RegExp('(\\b|[.\/({])(' + uCode + ')(\\b|[.\/({])');
+            var rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/({])');
             var res = origString.match(rStr);
-            //origString = origString.replace(rStr, origUnit.csCode_);
-
             origString = origString.replace(rStr, res[1] + origUnit.csCode_ + res[3]);
             uCode = origUnit.csCode_;
           }
