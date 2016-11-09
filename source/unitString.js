@@ -647,8 +647,9 @@ export class UnitString{
             dupMsg = retMsg[r] === mString ;
           if (!dupMsg)
             retMsg.push(mString);
-          let rStr = new RegExp('(\\b|[.\/({])' + uCode + '\\b', 'g');
-          origString = origString.replace(rStr, origUnit.csCode_);
+          let rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/({])');
+          let res = origString.match(rStr);
+          origString = origString.replace(rStr, res[1] + origUnit.csCode_ + res[3]);
           uCode = origUnit.csCode_ ;
         }
       }

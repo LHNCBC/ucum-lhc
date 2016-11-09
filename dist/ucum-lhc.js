@@ -23905,8 +23905,9 @@ var UnitString = exports.UnitString = function () {
             for (var _r2 = 0; _r2 < retMsg.length && !dupMsg; _r2++) {
               dupMsg = retMsg[_r2] === mString;
             }if (!dupMsg) retMsg.push(mString);
-            var rStr = new RegExp('(^|[.\/({])' + uCode, 'g');
-            origString = origString.replace(rStr, origUnit.csCode_);
+            var rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/({])');
+            var res = origString.match(rStr);
+            origString = origString.replace(rStr, res[1] + origUnit.csCode_ + res[3]);
             uCode = origUnit.csCode_;
           }
         }
@@ -23920,20 +23921,20 @@ var UnitString = exports.UnitString = function () {
           // "m[H2O]21] gives ["m{H2O]-21", "m[H2)]", "21"]
           // "s2" gives ["s2", "s, "2"]
           // "kg" gives null
-          var res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
+          var _res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
 
           // if we got an exponent, separate it from the unit and try
           // to get the unit again
-          if (res && res[2] && res[2] !== "") {
+          if (_res && _res[2] && _res[2] !== "") {
             // Make sure that there were no characters after the last digit.
             // If there are, the reassembled string ends at the last digit,
             // dropping off everything after that.  Characters after an
             // exponent (except for subsequent units after a division or
             // multiplication operator) are invalid.
-            var reassemble = res[1] + res[2];
+            var reassemble = _res[1] + _res[2];
             if (reassemble === uCode) {
-              uCode = res[1];
-              exp = res[2];
+              uCode = _res[1];
+              exp = _res[2];
               origUnit = utabs.getUnitByCode(uCode);
             } // end if nothing followed the exponent (if there was one)
           } // end if we got an exponent
