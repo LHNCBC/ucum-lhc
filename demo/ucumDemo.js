@@ -199,22 +199,22 @@ export class UcumDemo {
     let boxVal = ckBox.value;
     let boxChecked = ckBox.checked ;
     if (clsName === 'category') {
-      let idx = this.urlCategories_.indexOf(boxVal);
+      let idx = this.urlConvCats_.indexOf(boxVal);
       // if the box is checked and the value is not already in the
       // categories array, add it to the array.
       if (boxChecked && idx < 0)
-        this.urlCategories_.push(boxVal);
+        this.urlConvCats_.push(boxVal);
       // if the box is unchecked and the value is in the array, remove
       // it from the array.
       else if (!boxChecked && idx >= 0)
-        this.urlCategories_.splice(idx, 1);
+        this.urlConvCats_.splice(idx, 1);
     }
     else if (clsName === 'displayField') {
-      let idx = this.urlDisplayFlds_.indexOf(boxVal);
+      let idx = this.urlConvDispFlds_.indexOf(boxVal);
       if (boxChecked && idx < 0)
-        this.urlDisplayFlds_.push(boxVal);
+        this.urlConvDispFlds_.push(boxVal);
       else if (!boxChecked && idx >= 0)
-        this.urlDisplayFlds_.splice(idx, 1);
+        this.urlConvDispFlds_.splice(idx, 1);
     }
     else
       throw(new Error('An error occured while specifying your choice.'));

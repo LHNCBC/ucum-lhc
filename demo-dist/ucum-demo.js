@@ -116,12 +116,6 @@ var UcumDemo = exports.UcumDemo = function () {
     // things initialized and data loaded.
     this.utils_ = UcumLhcUtils.getInstance();
     this.utabs_ = UnitTables.getInstance();
-<<<<<<< Updated upstream
-=======
-    this.urlCategories_ = UcumDemoConfig.defCategories_;
-    this.urlDisplayFlds_ = UcumDemoConfig.defCols_;
-    var urlOpts = this.buildUrlAndOpts();
->>>>>>> Stashed changes
 
     // Set up the search autocompleter for the "from" unit code input field
     // on the Converter tab section
@@ -185,11 +179,7 @@ var UcumDemo = exports.UcumDemo = function () {
         var qString = '';
         for (var c = 0; c < catLen; c++) {
           if (c > 0) qString += ' OR ';
-<<<<<<< Updated upstream
           qString += UcumDemoConfig.categoryValues_[catsArray[c]];
-=======
-          qString += UcumDemoConfig.categoryValues_[this.urlCategories_[c]];
->>>>>>> Stashed changes
         }
         if (catLen > 1) qString = '(' + qString + ')';
         urlString += '?q=category:' + qString;
@@ -313,16 +303,16 @@ var UcumDemo = exports.UcumDemo = function () {
       var boxVal = ckBox.value;
       var boxChecked = ckBox.checked;
       if (clsName === 'category') {
-        var idx = this.urlCategories_.indexOf(boxVal);
+        var idx = this.urlConvCats_.indexOf(boxVal);
         // if the box is checked and the value is not already in the
         // categories array, add it to the array.
-        if (boxChecked && idx < 0) this.urlCategories_.push(boxVal);
+        if (boxChecked && idx < 0) this.urlConvCats_.push(boxVal);
         // if the box is unchecked and the value is in the array, remove
         // it from the array.
-        else if (!boxChecked && idx >= 0) this.urlCategories_.splice(idx, 1);
+        else if (!boxChecked && idx >= 0) this.urlConvCats_.splice(idx, 1);
       } else if (clsName === 'displayField') {
-        var _idx = this.urlDisplayFlds_.indexOf(boxVal);
-        if (boxChecked && _idx < 0) this.urlDisplayFlds_.push(boxVal);else if (!boxChecked && _idx >= 0) this.urlDisplayFlds_.splice(_idx, 1);
+        var _idx = this.urlConvDispFlds_.indexOf(boxVal);
+        if (boxChecked && _idx < 0) this.urlConvDispFlds_.push(boxVal);else if (!boxChecked && _idx >= 0) this.urlConvDispFlds_.splice(_idx, 1);
       } else throw new Error('An error occured while specifying your choice.');
 
       // call buildUrlAndOpts to build the url and options from the updated url
