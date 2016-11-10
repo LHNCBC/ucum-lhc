@@ -90,12 +90,12 @@ export class UcumFileValidator {
 
         try {
           let parseResp = utils.validUnitString(uStr);
-          if (parseResp[0])
-            record[resultCol] = "Valid UCUM unit.";
+          if (parseResp['status'] === 'valid')
+            record[resultCol] = parseResp['ucumCode'] + " is a valid UCUM unit.";
           else
-            record[resultCol] = "Not valid UCUM unit.";
-          if (parseResp[1].length > 0)
-            record[commentCol] = parseResp[1].join(' - ');
+            record[resultCol] = uStr + " is not a valid UCUM unit.";
+          if (parseResp['msg'] && parseResp['msg'].length > 0)
+            record[commentCol] = parseResp['msg'].join('; ');
           else
             record[commentCol] = '';
         }

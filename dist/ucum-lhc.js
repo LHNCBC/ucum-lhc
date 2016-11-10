@@ -20970,7 +20970,7 @@ Object.defineProperty(exports, "__esModule", {
  * defined by the ECMAScript 6 standard
  */
 
-var Ucum = exports.Ucum = { // Namespace for UCUM classes
+var Ucum = exports.Ucum = {
 
   /**
    *  Flag indicating whether or not we're using case sensitive labels
@@ -21020,7 +21020,6 @@ var Ucum = exports.Ucum = { // Namespace for UCUM classes
    * string, to let the user know how they are interpreted.
    */
   bracesMsg_: 'Annotations (text in curley braces {}) have no influence ' + 'on the processing of a unit string.'
-
 };
 
 
@@ -21870,8 +21869,8 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
 
           try {
             var _parseResp = utils.validUnitString(uStr);
-            if (_parseResp[0]) record[resultCol] = "Valid UCUM unit.";else record[resultCol] = "Not valid UCUM unit.";
-            if (_parseResp[1].length > 0) record[commentCol] = _parseResp[1].join(' - ');else record[commentCol] = '';
+            if (_parseResp['status'] === 'valid') record[resultCol] = _parseResp['ucumCode'] + " is a valid UCUM unit.";else record[resultCol] = uStr + " is not a valid UCUM unit.";
+            if (_parseResp['msg'] && _parseResp['msg'].length > 0) record[commentCol] = _parseResp['msg'].join('; ');else record[commentCol] = '';
           } catch (err) {
             record[resultCol] = 'ERROR';
             record[commentCol] = err.message;
@@ -22418,52 +22417,67 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * valid unit string.
      *
      * @param uStr the string to be validated
-     * @returns an array containing the unit found for the string (or null if
-     *  no unit was found) and a message string, if one was returned
+     * @returns an object with two properties:
+     *  'status' either 'valid' or 'invalid'
+     *  'ucumCode' the valid ucum code, which may differ from what was passed
+     *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]'); and
+     *   'msg' contains a message, if the string is invalid, indicating
+     *         the problem, or an explanation of a substitution such as the
+     *         substitution of '[lb_av]' for 'pound'
      */
 
   }, {
     key: 'validUnitString',
     value: function validUnitString(uStr) {
 
-      return this.getSpecifiedUnit(uStr);
+      var resp = this.getSpecifiedUnit(uStr);
+      var retObj = { 'status': resp[0] !== null ? 'valid' : 'invalid',
+        'ucumCode': resp[1],
+        'msg': resp[2] };
+      return retObj;
     } // end validUnitString
 
 
     /**
      * This method converts one unit to another
      *
-     * @param fromName the name of the unit to be converted
+     * @param fromUnitCode the unit code/expression/string of the unit to be converted
      * @param fromVal the number of "from" units to be converted to "to" units
-     * @param toName the name of the unit that the from field is to be converted to
+     * @param toUnitCode the unit code/expression/string of the unit that the from
+     *  field is to be converted to
      * @param decDigits the maximum number of decimal digits to be displayed
      *  for the converted unit.  If not specified, the UCUM.decDigits_ value
      *  (defined in config.js) is used.
-     * @returns a message indicating either the result of the conversion or an
-     *  error message if an error occurred.
+     * @returns an object with three elements:
+     *  'status' either 'succeeded' or 'failed';
+     *  'toVal' the numeric value indicating the conversion amount, or null
+     *     null if the conversion failed (e.g., if the units are not commensurable)
+     *  'msg' an array of any messages returned, including a description of
+     *     a successful result or an error message if an error occurred.
      */
 
   }, {
     key: 'convertUnitTo',
-    value: function convertUnitTo(fromName, fromVal, toName, decDigits) {
+    value: function convertUnitTo(fromUnitCode, fromVal, toUnitCode, decDigits) {
 
       if (decDigits === undefined) decDigits = Ucum.decDigits_;
 
       var resultMsg = [];
+      var returnObj = { 'status': 'failed',
+        'toVal': null };
 
       try {
-        var parseResp = [];
         var fromUnit = null;
 
-        parseResp = this.getSpecifiedUnit(fromName);
+        var parseResp = this.getSpecifiedUnit(fromUnitCode);
         fromUnit = parseResp[0];
-        if (parseResp[1].length > 0) resultMsg = parseResp[1];
+        if (parseResp[2].length > 0) resultMsg = parseResp[2];
 
         var toUnit = null;
-        parseResp = this.getSpecifiedUnit(toName);
+        parseResp = this.getSpecifiedUnit(toUnitCode);
         toUnit = parseResp[0];
-        if (parseResp[1].length > 0) {
-          if (resultMsg.length > 0) resultMsg = resultMsg.concat(parseResp[1]);else resultMsg = parseResp[1];
+        if (parseResp[2].length > 0) {
+          if (resultMsg.length > 0) resultMsg = resultMsg.concat(parseResp[2]);else resultMsg = parseResp[2];
         }
 
         if (fromUnit && toUnit) {
@@ -22471,6 +22485,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
             var toVal = toUnit.convertFrom(fromVal, fromUnit);
             toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
             resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('name_') + " units = " + toVal.toString() + " " + toUnit.getProperty('name_') + " units.");
+            returnObj['toVal'] = toVal;
+            returnObj['status'] = 'succeeded';
           } catch (err) {
             resultMsg.push(err.message);
           }
@@ -22478,7 +22494,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       } catch (err) {
         resultMsg.push(err.message);
       }
-      return resultMsg;
+      returnObj['msg'] = resultMsg;
+      return returnObj;
     } // end convertUnitTo
 
 
@@ -22486,10 +22503,11 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * This method parses a unit string to get (or try to get) the unit
      * represented by the string.
      *
-     * @param uName the string representing the unit
+     * @param uName the expression/string representing the unit
      * @returns an array containing the unit found for the string (or null if
-     *  no unit was found) and a message string, if one was returned
-     * @throws a message if the unit is not found
+     *  no unit was found), a (possibly) updated version of the string (for
+     *  cases where a unit name was specified and the code was found for it)
+     *  and a message array containing any returned
      */
 
   }, {
@@ -22500,21 +22518,26 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
       var utab = UnitTables.getInstance();
       var retMsg = [];
+      var retUnitString = null;
 
       // go ahead and just try using the name as the code.  This may or may not
       // work, but if it does, it cuts out a lot of parsing.
       var theUnit = utab.getUnitByCode(uName);
 
-      // If we didn't find it, try parsing as a unit string
-      if (!theUnit) {
+      // If we found it, set the returned unit string to what was passed in;
+      // otherwise try parsing as a unit string
+      if (theUnit) {
+        retUnitString = uName;
+      } else {
         try {
           var uStrParser = UnitString.getInstance();
           var parseResp = uStrParser.parseString(uName);
           theUnit = parseResp[0];
-          retMsg = parseResp[1];
+          retUnitString = parseResp[1];
+          retMsg = parseResp[2];
         } catch (err) {
           console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-          if (uName !== '' && uName !== null) retMsg.unshift(uName + ' is not a valid unit.  ' + err.message);else retMsg.unshift(err.message);
+          if (uName) retMsg.unshift(uName + ' is not a valid unit.  ' + err.message);else retMsg.unshift(err.message);
         }
       }
 
@@ -22523,19 +22546,19 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         retMsg.unshift('Unable to find unit for name = ' + uName + '.');
       }
 
-      return [theUnit, retMsg];
+      return [theUnit, retUnitString, retMsg];
     } // end getSpecifiedUnit
 
 
     /**
-     * This method retrieves a list of unit commensurable, i.e., that can be
-     * converted from and to, a specified unit.  Throws an error if the "from"
-     * unit cannot be found or if no commensurable units are found.
+     * This method retrieves a list of units commensurable, i.e., that can be
+     * converted from and to, a specified unit.  Returns an error if the "from"
+     * unit cannot be found.
      *
      * @param fromName the name/unit string of the "from" unit
-     * @returns the list of commensurable units if any were found
-     *  @throws an error if the "from" unit is not found or if no commensurable
-     *   units were found
+     * @returns an array containing two elements;
+     *   first element is the list of commensurable units if any were found
+     *   second element is an error message if the "from" unit is not found
      */
 
   }, {
@@ -22543,21 +22566,25 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     value: function commensurablesList(fromName) {
 
       var retMsg = [];
-
+      var commUnits = null;
       var parseResp = this.getSpecifiedUnit(fromName);
       var fromUnit = parseResp[0];
-      if (parseResp[1].length > 0) retMsg = parseResp[1];
+      if (parseResp[2].length > 0) retMsg = parseResp[2];
       if (!fromUnit) {
         retMsg.push('Could not find unit ' + fromName + '.');
-      }
-
-      var commUnits = null;
-      var fromDim = fromUnit.getProperty('dim_');
-      var dimVec = fromDim.getProperty('dimVec_');
-      if (dimVec) {
-        var utab = UnitTables.getInstance();
-        commUnits = utab.getUnitsByDimension(dimVec);
-      }
+      } else {
+        var dimVec = null;
+        var fromDim = fromUnit.getProperty('dim_');
+        try {
+          dimVec = fromDim.getProperty('dimVec_');
+        } catch (err) {
+          if (err.message === "Dimension does not have requested property(dimVec_)") dimVec = null;
+        }
+        if (dimVec) {
+          var utab = UnitTables.getInstance();
+          commUnits = utab.getUnitsByDimension(dimVec);
+        }
+      } // end if we found a "from" unit
       return [commUnits, retMsg];
     } // end commensurablesList
 
@@ -23153,6 +23180,7 @@ var Unit = exports.Unit = function () {
         } else {
           var uString = UnitString.getInstance();
           this.name_ = uString.mulString(this.name_, unit2.name_);
+          this.csCode_ = uString.mulString(this.csCode_, unit2.csCode_);
           this.magnitude_ *= unit2.magnitude_;
           // for now, putting in this safeguard to get around a known error.
           // need to put in error handling later.
@@ -23183,6 +23211,7 @@ var Unit = exports.Unit = function () {
 
       var uString = UnitString.getInstance();
       this.name_ = uString.divString(this.name_, unit2.name_);
+      this.csCode_ = uString.divString(this.csCode_, unit2.csCode_);
 
       this.magnitude_ /= unit2.magnitude_;
       // for now, putting in this safeguard to get around a known error.
@@ -23345,20 +23374,28 @@ var UnitString = exports.UnitString = function () {
     }
 
     /**
-     * Parses a unit string, returns a unit
+     * Parses a unit string, returns a unit, a possibly updated version of
+     * the string passed in, and messages where appropriate.
      *
-     * @params uStr the string defining the unit
-     * @params origString the original unit string passed in; used when this is
+     * The string returned may be updated if the input string contained unit
+     * names, e.g., "pound".  The unit code ([lb_av] for pound) is placed in
+     * the string returned, a the returned messages array includes a note
+     * explaining the substitution.
+     *
+     * @param uStr the string defining the unit
+     * @param origString the original unit string passed in; used when this is
      *  called recursively; set to uStr if not provided.
+     * @param retMsg the array of messages to be returned; optional, used when
+     *  this is called recursively.
      * @returns an array containing: 1) the unit object (or null if there were
-     *  problems creating the unit); and 2) an array of user messages (error or
-     *  warning).
+     *  problems creating the unit); 2) the possibly updated unit string passed
+     *  in; and 2) an array of user messages (informational, error or warning).
      * @throws an error if nothing was specified.
      */
 
   }, {
     key: 'parseString',
-    value: function parseString(uStr, origString) {
+    value: function parseString(uStr, origString, retMsg) {
 
       // Used in error messages to provide context for messages
       if (origString === undefined) origString = uStr;
@@ -23379,8 +23416,9 @@ var UnitString = exports.UnitString = function () {
       // Unit to be returned
       var finalUnit = null;
 
-      // An array of messages (warnings and errors) to be returned
-      var retMsg = [];
+      // An array of messages (warnings and errors) to be returned;;
+      // initialized if not provided.
+      if (retMsg === undefined) var retMsg = [];
 
       // Extract any annotations, i.e., text enclosed in braces ({}) from the
       // string before further processing.  Store each one in the annotations
@@ -23482,9 +23520,9 @@ var UnitString = exports.UnitString = function () {
             if (openCt === closeCt) {
               _closePos = c;
               uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
-              var parseResp = this.parseString(uStr.substring(openPos + 1, _closePos - 1), origString);
+              var parseResp = this.parseString(uStr.substring(openPos + 1, _closePos - 1), origString, retMsg);
               parensUnits[pu++] = parseResp[0];
-              if (parseResp[1] != '') retMsg.push(parseResp[1]);
+              origString = parseResp[1];
               uStr = uStr.substr(_closePos);
               trimmedCt = _closePos;
             }
@@ -23545,12 +23583,7 @@ var UnitString = exports.UnitString = function () {
                   retMsg.push(mString2);
                   endProcessing = true;
                 } // end if there is text following the annotation
-                else {
-                    //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
-                    //let wString = origString.replace(anno, `${this.openEmph_}` +
-                    //                                 `${anno}${this.closeEmph_}`);
-                    //let w2String = origString.replace(anno, '');
-                    //retMsg.push(`${wString} is interpreted as ${lead1}${w2String}`);
+                else if (this.bracesMsg_) {
                     var dup = false;
                     for (var r = 0; !dup && r < retMsg.length; r++) {
                       dup = retMsg[r] === this.bracesMsg_;
@@ -23584,7 +23617,9 @@ var UnitString = exports.UnitString = function () {
                 // if the current unit string is NOT a number, call makeUnit to create
                 // the unit object for it.  Stop processing if no unit was returned.
                 if (isNaN(curCodeNum)) {
-                  uArray[u1]['un'] = this.makeUnit(curCode, annotations, retMsg, origString);
+                  var uRet = this.makeUnit(curCode, annotations, retMsg, origString);
+                  uArray[u1]['un'] = uRet[0];
+                  origString = uRet[1];
                   endProcessing = uArray[u1]['un'] == null;
                 }
                 // Otherwise write the numeric version of the number back to
@@ -23674,7 +23709,7 @@ var UnitString = exports.UnitString = function () {
       // call to this method.
       if (firstCall && !isNaN(finalUnit) && finalUnit !== 1) finalUnit = null;
 
-      return [finalUnit, retMsg];
+      return [finalUnit, origString, retMsg];
     } // end parseString
 
 
@@ -23762,7 +23797,9 @@ var UnitString = exports.UnitString = function () {
      * @param retMsg the array to contain any user messages (error and warning)
      * @param origString the original string to be parsed; used to provide
      *  context for messages
-     * @returns a unit object, or null if there were problems creating the unit
+     * @returns an array containing:  1) a unit object, or null if there were
+     *  problems creating the unit; and 2) the origString passed in, which may
+     *  be updated if a unit name was translated to a unit code
      */
 
   }, {
@@ -23812,19 +23849,13 @@ var UnitString = exports.UnitString = function () {
           // annotation is interpreted as 1.  Warn the user
           else if (anOpen === 0) {
               uCode = 1;
-              //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
-              //let wString = origString.replace(anText, this.openEmph_ + anText +
-              //                                         this.closeEmph_) ;
-              //let w2String = origString.replace(anText, this.openEmph_ + '1' +
-              //                                          this.closeEmph_);
-              //origString = origString.replace(anText, '1');
-              //retMsg.push(`${wString} is interpreted as ${lead1}${w2String}.  ` +
-              //            `Is this what you meant?`);
-              var dup = false;
-              for (var r = 0; !dup && r < retMsg.length; r++) {
-                dup = retMsg[r] === this.bracesMsg_;
+              if (this.bracesMsg_) {
+                var dup = false;
+                for (var r = 0; !dup && r < retMsg.length; r++) {
+                  dup = retMsg[r] === this.bracesMsg_;
+                }
+                if (!dup) retMsg.push(this.bracesMsg_);
               }
-              if (!dup) retMsg.push(this.bracesMsg_);
               retUnit = 1;
               endProcessing = true;
             } // end if the annotation is a standalone
@@ -23836,32 +23867,13 @@ var UnitString = exports.UnitString = function () {
                 //let wString = origString.replace(anText, this.openEmph_ + anText +
                 //                                         this.closeEmph_) ;
                 origString = origString.replace(anText, '');
-                //let updateExisting = false ;
-                //for (let r = 0; r < retMsg.length; r++) {
-                //  let idx1 = retMsg[r].indexOf(anText);
-                //  if (idx1 >= 0) {
-                //    // we've found the first one - emphasize it
-                //    retMsg[r] = retMsg[r].replace(anText,
-                //                     `${this.openEmph_}${anText}${this.closeEmph_}`);
-                //    // now find the next one
-                //    let idx2 = retMsg[r].lastIndexOf(anText) ;
-                //    if (idx2 > idx1) {
-                //      //let str2 = retMsg[r].substr(idx2);
-                //      //let str2a = str2.replace(anText, '');
-                //      retMsg[r] = retMsg[r].substr(0, idx2) +
-                //                  retMsg[r].substr(idx2).replace(anText, '');
-                //    }
-                //    updateExisting = true ;
-                //  }
-
-                //if (!updateExisting) {
-                //  retMsg.push(`${wString} is interpreted as ${lead1}${origString}.`);
-                //}
-                var _dup = false;
-                for (var _r = 0; !_dup && _r < retMsg.length; _r++) {
-                  _dup = retMsg[_r] === this.bracesMsg_;
+                if (this.bracesMsg_) {
+                  var _dup = false;
+                  for (var _r = 0; !_dup && _r < retMsg.length; _r++) {
+                    _dup = retMsg[_r] === this.bracesMsg_;
+                  }
+                  if (!_dup) retMsg.push(this.bracesMsg_);
                 }
-                if (!_dup) retMsg.push(this.bracesMsg_);
                 uCode = uCode.substr(0, anOpen);
               } // end if the annotation follows the unit expression
         } // end if we found an open and a close brace
@@ -23880,8 +23892,25 @@ var UnitString = exports.UnitString = function () {
         ulen = uCode.length;
         var utabs = UnitTables.getInstance();
 
-        // First look for the full string
+        // First look for the full string as a code
         origUnit = utabs.getUnitByCode(uCode);
+
+        // If we didn't find it, try it as a name
+        if (!origUnit) {
+          var origUnitAry = utabs.getUnitByName(uCode);
+          if (origUnitAry && origUnitAry.length > 0) {
+            origUnit = origUnitAry[0];
+            var mString = '(The unit code for ' + uCode + ' is ' + origUnit.csCode_ + ')';
+            var dupMsg = false;
+            for (var _r2 = 0; _r2 < retMsg.length && !dupMsg; _r2++) {
+              dupMsg = retMsg[_r2] === mString;
+            }if (!dupMsg) retMsg.push(mString);
+            var rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
+            var res = origString.match(rStr);
+            origString = origString.replace(rStr, res[1] + origUnit.csCode_ + res[3]);
+            uCode = origUnit.csCode_;
+          }
+        }
 
         // If that didn't work, peel off the exponent and try it
         if (!origUnit) {
@@ -23892,20 +23921,20 @@ var UnitString = exports.UnitString = function () {
           // "m[H2O]21] gives ["m{H2O]-21", "m[H2)]", "21"]
           // "s2" gives ["s2", "s, "2"]
           // "kg" gives null
-          var res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
+          var _res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
 
           // if we got an exponent, separate it from the unit and try
           // to get the unit again
-          if (res && res[2] && res[2] !== "") {
+          if (_res && _res[2] && _res[2] !== "") {
             // Make sure that there were no characters after the last digit.
             // If there are, the reassembled string ends at the last digit,
             // dropping off everything after that.  Characters after an
             // exponent (except for subsequent units after a division or
             // multiplication operator) are invalid.
-            var reassemble = res[1] + res[2];
+            var reassemble = _res[1] + _res[2];
             if (reassemble === uCode) {
-              uCode = res[1];
-              exp = res[2];
+              uCode = _res[1];
+              exp = _res[2];
               origUnit = utabs.getUnitByCode(uCode);
             } // end if nothing followed the exponent (if there was one)
           } // end if we got an exponent
@@ -23957,7 +23986,7 @@ var UnitString = exports.UnitString = function () {
         // unit string, with the unit string without the exponent, and the
         // unit string without a prefix.  That's all we can try).
         if (!origUnit) {
-          retMsg.push('Unable to find unit for ' + uCode);
+          retMsg.push('Unable to find unit for ' + origString);
           endProcessing = true;
         }
         if (!endProcessing) {
@@ -24003,18 +24032,23 @@ var UnitString = exports.UnitString = function () {
           }
 
           // if we have a prefix and/or an exponent, add them to the unit name
+          var theCode = retUnit.csCode_;
           if (pfxVal) {
             theName = pfxName + theName;
-            retUnit.assignVals({ 'name_': theName });
+            theCode = pfxCode + theCode;
+            retUnit.assignVals({ 'name_': theName,
+              'csCode_': theCode });
           }
           if (exp) {
             theName = theName + '<sup>' + exp.toString() + '</sup>';
-            retUnit.assignVals({ 'name_': theName });
+            theCode = theCode + exp.toString();
+            retUnit.assignVals({ 'name_': theName,
+              'csCode_': theCode });
           }
         } // end if not endProcessing set from no unit found
       } // end if not endProcessing set from annotation error
 
-      return retUnit;
+      return [retUnit, origString];
     } // end makeUnit
 
 

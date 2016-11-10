@@ -522,6 +522,7 @@ export class Unit {
       else {
         let uString = UnitString.getInstance();
         this.name_ = uString.mulString(this.name_, unit2.name_);
+        this.csCode_ = uString.mulString(this.csCode_, unit2.csCode_);
         this.magnitude_ *= unit2.magnitude_;
         // for now, putting in this safeguard to get around a known error.
         // need to put in error handling later.
@@ -554,6 +555,7 @@ export class Unit {
 
     let uString = UnitString.getInstance();
     this.name_ = uString.divString(this.name_, unit2.name_);
+    this.csCode_ = uString.divString(this.csCode_, unit2.csCode_);
 
     this.magnitude_ /= unit2.magnitude_;
     // for now, putting in this safeguard to get around a known error.

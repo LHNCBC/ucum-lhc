@@ -3,10 +3,11 @@
   <head>
     <title>LHC UCUM Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="demo-dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.1.1/autocomplete-lhc_jQueryUI.min.css" />
+    <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.2/autocomplete-lhc_jQueryUI.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="demo-dist/ucumDemo.min.css" rel="stylesheet"/>
   </head>
-  <body>
+  <body onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
     <!-- page header -->
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" title="Home" rel="home" id="logo">
@@ -20,48 +21,67 @@
     <!-- end page header -->
     <h1>LHC UCUM Validator and Converter</h1>
 
-    <div id="ucumList" class="section">
-      <h2>Find Common UCUM Unit Codes</h2>
-      <p>Find the correct spelling of a common UCUM code:
-        <input type="text" id="unitsList">
-      </p>
-      <p class="small-print">List shows UCUM codes followed by the name of the unit</p>
-    </div> <!-- end ucumList div -->
-
-    <div id="conversion" class="section">
+    <ul class="tab nav nav-tabs">
+      <li class="active"><a id="validation-link" href="#validation" class="tablinks"
+                            data-toggle="tab">
+             Validator</a></li>
+      <li><a id="conversion-link" href="#conversion" class="tablinks" data-toggle="tab">
+             Converter</a></li>
+    </ul>
+    <div class="tab-content">
+    <div id="conversion" class="tabcontent tab-pane fade">
       <h2>UCUM Unit Conversions</h2>
-      <h4>Convert values from one UCUM unit to another</h4>
-      <p>Enter a valid UCUM code for the unit you want to convert:
-        <input type="text" id="convertFrom"
-         onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
+      <div id="convSection" class="section">
+        <h3>Convert values from one UCUM unit to another</h3>
+        <p>Enter or select a valid UCUM code for the unit you want to convert:
+          <input type="text" id="convertFrom" placeholder="begin typing ..."
+                 onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                   'convertTo',
                                                                   'resultString')">
-        &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
-      </p>
-      <p>What is the value you want to convert?
+          &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
+        </p>
+        <button id="toggleAdvancedSearch"
+                onclick="
+                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearch',
+                                                             'toggleAdvancedSearch',
+                                                             'Hide', 'Show')"
+                type="button">Show advanced search options</button>
+        <div id="advancedSearch" style="display: none">
+          <!-- this section is built in the demo code when the page is loaded -->
+        </div> <!-- advancedSearch division -->
+        <br><br><p>Enter the numeric value you want to convert:
         <input type="text" id="convertNum">
-      </p>
-      <p>Enter or Select the unit that it is to be converted to:
-      <input type="text" id="convertTo">
-      <p>&nbsp;&nbsp;  <button id="doConversionButton"
-         onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
+      </p><br>
+        <div id="convertToDivs">
+          <div id="convertLeft">
+            <p>Enter or select the unit that it is to be converted to:
+              <input type="text" id="convertTo">
+          </div>
+          <div id="convertRight" style="visibility: hidden">
+            You can enter other commensurable units that are not on this list.
+          </div>
+        </div>
+        <div><br>&nbsp;&nbsp;  <button id="doConversionButton"
+                                       onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
                                                              'convertNum',
                                                              'convertTo')"
-                type="button">Convert</button>
-      </p>
-      <p id="resultString">&nbsp;&nbsp;</p>
+                                       type="button">Convert</button>
+        </div>
+        <p id="resultString">&nbsp;&nbsp;</p>
+      </div> <!-- end convSection div -->
     </div> <!-- end conversion div -->
 
-    <div id="validation" class="section">
+    <div id="validation" class="tabcontent tab-pane fade in active">
       <h2>UCUM Unit Expression Validation</h2>
-      <div id="singleString">
-        <h3>Validate a single expression</h3>
-        <p>Enter a unit expression to be validated:
-          <input type="text" id="valString">&nbsp; &nbsp; &nbsp; &nbsp;
+      <div id="singleString" class="section">
+        <h3>Validate unit expressions one at a time</h3>
+        <p>Enter or select a unit expression to be validated:
+          <input type="text" id="valString" placeholder="begin typing ...">&nbsp; &nbsp; &nbsp; &nbsp;
           <button id="toggleHints"
                   onclick="demoPkg.UcumDemo.getInstance().toggleDisplay('hints',
                                                                  'toggleHints',
                                                                  'Hide', 'Show')"
+
                   type="button">Show entry hints</button>
         </p>&nbsp;&nbsp;
         <button id="doValidationButton"
@@ -86,12 +106,15 @@
             <li>All units can be combined in an <a href="http://unitsofmeasure.org/ucum.html#para-7">
               algebraic term</a> using the operators for multiplication (period '.') and division (solidus '/').</li>
             <li>No blanks are allowed within the unit expression.</li>
-            <li>The multiplication operator must be explicity specified; it is never
-              assumed.</li>
-            <li>The multiplication operator (.) must appear between two unit terms.</li>
-            <li>The division operator (/) may appear at the beginning of the expression,
-              indicating inversion of the following term, but normally appears
-              between two terms.</li>
+            <li>Multiple terms in an expression must be separated by an arithmetic
+              operator - either the multiplication operator (.) or the division
+              operator (/).</li>
+            <li>The multiplication operator (.) must be explicity specified; it is never
+            assumed.</li>
+            <li>While the multiplication operator (.) must appear between two unit terms,
+              the division operator (/) may appear at the beginning of the expression,
+              indicating inversion of the following term.  However, the division
+              operator normally appears between two terms.</li>
             <li>Terms are evaluated from left to right, with multiplication and
               division having the same precedence.</li>
             <li><a href="http://unitsofmeasure.org/ucum.html#para-10">Parentheses</a>
@@ -101,8 +124,8 @@
           </ul>
         </div><!-- hints div -->
       </div><!-- singleString div -->
-      <div id="filevalidation">
-        <h3>Validate unit expressions in a CSV file</h3>
+      <div id="filevalidation" class="section">
+        <h3>Validate all unit expressions in a CSV file</h3>
         <p>We can validate unit expressions in a <b>c</b>omma <b>s</b>eparated
           <b>v</b>alues file on your system.
         <ul>
@@ -137,7 +160,7 @@
         <!-- <a id="downlink" href="" style="'display:none'"></a> -->
       </div><!-- filevalidation div -->
     </div> <!-- end validation div -->
-
+</div>
   <!-- page footer -->
   <div id="fine-print">
     <ul class="horz-list">
@@ -161,8 +184,10 @@
   </div><!-- fine-print -->
   <!-- end page footer -->
 
-    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.1.1/autocomplete-lhc_jQuery.min.js"></script>
-    <script src="dist/ucum-lhc.js"></script>
-    <script src="demo-dist/ucum-demo.js"></script>
+    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.2/autocomplete-lhc_jQuery.min.js"></script>
+    <script src="dist/ucum-lhc.min.js"></script>
+    <script src="demo-dist/ucum-demo.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
 </html>
