@@ -123,6 +123,10 @@ button {
   font-size: 14px ;
 }
 
+#validationString {
+  margin-top: 1em;
+}
+
 #inputfile {
   font-size: 14px ;
   color: #1E4193 ;

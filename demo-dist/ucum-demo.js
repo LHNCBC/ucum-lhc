@@ -336,13 +336,13 @@ var UcumDemo = exports.UcumDemo = function () {
         retMsg.push("Please specify a unit string to be validated.");
       } else {
         try {
-          var parseResp = this.utils_.validUnitString(uStr);
-          if (parseResp[0]) valMsg = uStr + ' is a valid unit.';else {
-            if (parseResp[1].length === 0) {
-              valMsg = uStr + ' is NOT a valid unit.';
+          var parseResp = this.utils_.getSpecifiedUnit(uStr);
+          if (parseResp[0]) valMsg = parseResp[1] + ' is a valid unit expression.';else {
+            if (parseResp[2].length === 0) {
+              valMsg = parseResp[1] + ' is NOT a valid unit expression.';
             }
           }
-          if (parseResp[1].length > 0) retMsg = retMsg.concat(parseResp[1]);
+          if (parseResp[2].length > 0) retMsg = retMsg.concat(parseResp[2]);
         } catch (err) {
           retMsg.push(err.message);
         }
@@ -384,11 +384,11 @@ var UcumDemo = exports.UcumDemo = function () {
       var codePos = toName.indexOf(Ucum.codeSep_);
       if (codePos > 0) toName = toName.substr(0, codePos);
 
-      var resultMsg = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
+      var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
 
       // Put the message - conversion or error - on the page
       var resultString = document.getElementById("resultString");
-      resultString.innerHTML = resultMsg.join('<BR>');
+      resultString.innerHTML = resultObj['msg'].join('<BR>');
     } // end convertUnit
 
 

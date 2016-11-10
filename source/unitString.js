@@ -82,17 +82,25 @@ export class UnitString{
 
 
   /**
-   * Parses a unit string, returns a unit
+   * Parses a unit string, returns a unit, a possibly updated version of
+   * the string passed in, and messages where appropriate.
    *
-   * @params uStr the string defining the unit
-   * @params origString the original unit string passed in; used when this is
+   * The string returned may be updated if the input string contained unit
+   * names, e.g., "pound".  The unit code ([lb_av] for pound) is placed in
+   * the string returned, a the returned messages array includes a note
+   * explaining the substitution.
+   *
+   * @param uStr the string defining the unit
+   * @param origString the original unit string passed in; used when this is
    *  called recursively; set to uStr if not provided.
+   * @param retMsg the array of messages to be returned; optional, used when
+   *  this is called recursively.
    * @returns an array containing: 1) the unit object (or null if there were
-   *  problems creating the unit); and 2) an array of user messages (error or
-   *  warning).
+   *  problems creating the unit); 2) the possibly updated unit string passed
+   *  in; and 2) an array of user messages (informational, error or warning).
    * @throws an error if nothing was specified.
    */
-  parseString(uStr, origString) {
+  parseString(uStr, origString, retMsg) {
 
     // Used in error messages to provide context for messages
     if (origString === undefined)
@@ -114,8 +122,10 @@ export class UnitString{
     // Unit to be returned
     let finalUnit = null ;
 
-    // An array of messages (warnings and errors) to be returned
-    let retMsg = [];
+    // An array of messages (warnings and errors) to be returned;;
+    // initialized if not provided.
+    if (retMsg === undefined)
+      var retMsg = [];
 
     // Extract any annotations, i.e., text enclosed in braces ({}) from the
     // string before further processing.  Store each one in the annotations
@@ -225,10 +235,9 @@ export class UnitString{
           uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
           let parseResp = this.parseString(
                                uStr.substring(openPos + 1, closePos - 1),
-                               origString);
+                               origString, retMsg);
           parensUnits[pu++] = parseResp[0];
-          if (parseResp[1] != '')
-            retMsg.push(parseResp[1]);
+          origString = parseResp[1];
           uStr = uStr.substr(closePos);
           trimmedCt = closePos;
         }
@@ -294,15 +303,10 @@ export class UnitString{
                 retMsg.push(mString2);
                 endProcessing = true;
               } // end if there is text following the annotation
-              else {
-                //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
-                //let wString = origString.replace(anno, `${this.openEmph_}` +
-                //                                 `${anno}${this.closeEmph_}`);
-                //let w2String = origString.replace(anno, '');
-                //retMsg.push(`${wString} is interpreted as ${lead1}${w2String}`);
+              else if (this.bracesMsg_) {
                 let dup = false ;
                 for (let r = 0; !dup && r < retMsg.length; r++) {
-                  dup = (retMsg[r] === this.bracesMsg_) ;
+                  dup = (retMsg[r] === this.bracesMsg_);
                 }
                 if (!dup)
                   retMsg.push(this.bracesMsg_);
@@ -336,8 +340,10 @@ export class UnitString{
           // if the current unit string is NOT a number, call makeUnit to create
           // the unit object for it.  Stop processing if no unit was returned.
           if (isNaN(curCodeNum)) {
-            uArray[u1]['un'] = this.makeUnit(curCode, annotations,
-                                             retMsg, origString);
+            let uRet = this.makeUnit(curCode, annotations,
+                                     retMsg, origString);
+            uArray[u1]['un'] = uRet[0];
+            origString = uRet[1];
             endProcessing = uArray[u1]['un'] == null;
           }
           // Otherwise write the numeric version of the number back to
@@ -440,7 +446,7 @@ export class UnitString{
     if (firstCall && !isNaN(finalUnit) && finalUnit !== 1)
       finalUnit = null ;
 
-    return [finalUnit, retMsg];
+    return [finalUnit, origString, retMsg];
   } // end parseString
 
 
@@ -528,7 +534,9 @@ export class UnitString{
    * @param retMsg the array to contain any user messages (error and warning)
    * @param origString the original string to be parsed; used to provide
    *  context for messages
-   * @returns a unit object, or null if there were problems creating the unit
+   * @returns an array containing:  1) a unit object, or null if there were
+   *  problems creating the unit; and 2) the origString passed in, which may
+   *  be updated if a unit name was translated to a unit code
    */
   makeUnit(uCode, annotations, retMsg, origString) {
     let exp = null;
@@ -579,20 +587,14 @@ export class UnitString{
         // annotation is interpreted as 1.  Warn the user
         else if (anOpen === 0) {
           uCode = 1 ;
-          //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
-          //let wString = origString.replace(anText, this.openEmph_ + anText +
-          //                                         this.closeEmph_) ;
-          //let w2String = origString.replace(anText, this.openEmph_ + '1' +
-          //                                          this.closeEmph_);
-          //origString = origString.replace(anText, '1');
-          //retMsg.push(`${wString} is interpreted as ${lead1}${w2String}.  ` +
-          //            `Is this what you meant?`);
-          let dup = false ;
-          for (let r = 0; !dup && r < retMsg.length; r++) {
-            dup = (retMsg[r] === this.bracesMsg_) ;
+          if (this.bracesMsg_) {
+            let dup = false;
+            for (let r = 0; !dup && r < retMsg.length; r++) {
+              dup = (retMsg[r] === this.bracesMsg_);
+            }
+            if (!dup)
+              retMsg.push(this.bracesMsg_);
           }
-          if (!dup)
-            retMsg.push(this.bracesMsg_);
           retUnit = 1 ;
           endProcessing = true ;
         } // end if the annotation is a standalone
@@ -604,33 +606,14 @@ export class UnitString{
           //let wString = origString.replace(anText, this.openEmph_ + anText +
           //                                         this.closeEmph_) ;
           origString = origString.replace(anText, '');
-          //let updateExisting = false ;
-          //for (let r = 0; r < retMsg.length; r++) {
-          //  let idx1 = retMsg[r].indexOf(anText);
-          //  if (idx1 >= 0) {
-          //    // we've found the first one - emphasize it
-          //    retMsg[r] = retMsg[r].replace(anText,
-          //                     `${this.openEmph_}${anText}${this.closeEmph_}`);
-          //    // now find the next one
-          //    let idx2 = retMsg[r].lastIndexOf(anText) ;
-          //    if (idx2 > idx1) {
-          //      //let str2 = retMsg[r].substr(idx2);
-          //      //let str2a = str2.replace(anText, '');
-          //      retMsg[r] = retMsg[r].substr(0, idx2) +
-          //                  retMsg[r].substr(idx2).replace(anText, '');
-          //    }
-          //    updateExisting = true ;
-          //  }
-
-          //if (!updateExisting) {
-          //  retMsg.push(`${wString} is interpreted as ${lead1}${origString}.`);
-          //}
-          let dup = false ;
-          for (let r = 0; !dup && r < retMsg.length; r++) {
-            dup = (retMsg[r] === this.bracesMsg_) ;
+          if (this.bracesMsg_) {
+            let dup = false;
+            for (let r = 0; !dup && r < retMsg.length; r++) {
+              dup = (retMsg[r] === this.bracesMsg_);
+            }
+            if (!dup)
+              retMsg.push(this.bracesMsg_);
           }
-          if (!dup)
-            retMsg.push(this.bracesMsg_);
           uCode = uCode.substr(0, anOpen);
         } // end if the annotation follows the unit expression
       } // end if we found an open and a close brace
@@ -657,8 +640,17 @@ export class UnitString{
         let origUnitAry = utabs.getUnitByName(uCode);
         if (origUnitAry && origUnitAry.length > 0) {
           origUnit = origUnitAry[0];
-          retMsg.push('(The unit code for ' + uCode + ' is ' +
-                      origUnit.csCode_ + ')');
+          let mString = '(The unit code for ' + uCode + ' is ' +
+                         origUnit.csCode_ + ')';
+          let dupMsg = false;
+          for (let r = 0; r < retMsg.length && !dupMsg; r++)
+            dupMsg = retMsg[r] === mString ;
+          if (!dupMsg)
+            retMsg.push(mString);
+          let rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
+          let res = origString.match(rStr);
+          origString = origString.replace(rStr, res[1] + origUnit.csCode_ + res[3]);
+          uCode = origUnit.csCode_ ;
         }
       }
 
@@ -783,18 +775,23 @@ export class UnitString{
         }
 
         // if we have a prefix and/or an exponent, add them to the unit name
+        let theCode = retUnit.csCode_;
         if (pfxVal) {
           theName = pfxName + theName;
-          retUnit.assignVals({'name_': theName});
+          theCode = pfxCode + theCode ;
+          retUnit.assignVals({'name_': theName,
+                              'csCode_' : theCode});
         }
         if (exp) {
           theName = theName + '<sup>' + exp.toString() + '</sup>';
-          retUnit.assignVals({'name_': theName});
+          theCode = theCode + exp.toString() ;
+          retUnit.assignVals({'name_': theName,
+                              'csCode_' : theCode});
         }
       } // end if not endProcessing set from no unit found
     } // end if not endProcessing set from annotation error
 
-    return retUnit ;
+    return [retUnit, origString] ;
   } // end makeUnit
 
 
