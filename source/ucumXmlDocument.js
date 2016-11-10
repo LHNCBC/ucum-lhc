@@ -6,7 +6,6 @@
  *
  */
 
-var Ucum = require('./config.js');
 var Pfx = require("./prefix.js");
 var PfxT = require("./prefixTables.js");
 var Un = require("./unit.js");
@@ -14,10 +13,9 @@ var Us = require("./unitString.js");
 var Utab = require('./unitTables.js');
 var jsonfile = require('jsonfile');
 
-//var xmldoc = require('../node_modules/xmldoc/lib/xmldoc.js');
 var xmldoc = require('xmldoc');
 var fs = require('fs');
-var path = require('path');
+//var path = require('path');
 
 var essenceFile_ = '/proj/defExtra/ucum/ucum-essence.xml';
 

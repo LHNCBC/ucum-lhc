@@ -6,16 +6,10 @@
  *
  */
 
-var Ucum = require('./config.js').Ucum;
 var Pfx = require("./prefix.js");
 var PfxT = require("./prefixTables.js");
 var Un = require("./unit.js");
 var Utab = require('./unitTables.js');
-
-var jsonfile = require('jsonfile');
-var util = require('util');
-var fs = require('fs');
-var path = require('path');
 
 // requiring the file will take care of opening it for use
 var jsonDefs_ = require('../dist/data/ucumDefs.json');

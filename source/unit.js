@@ -8,7 +8,7 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var Ucum = require('./config.js').Ucum;
+//var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UnitString = require("./unitString.js").UnitString;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;

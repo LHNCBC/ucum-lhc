@@ -11,7 +11,6 @@ var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
 var Prefix = require('./prefix.js').Prefix;
 var fs = require('fs');
-var path = require('path');
 
 /**
  * Constructor; initiates load of the prefix and units objects
