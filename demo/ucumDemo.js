@@ -1,6 +1,4 @@
-/** ADD SEARCH AUTOCOMPLETER TO VALIDATOR INPUT BOX, TEXT INDICATING
- * any valid expression, not limited to list
- */
+
 /**
  * This is the code entry point for the demo web page.  It coordinates the
  * loading of the prefix and unit objects from the json definitions file and
@@ -71,6 +69,8 @@ export class UcumDemo {
    * categories and display fields listed in the advanced settings of the
    * converter tab.
    *
+   * @param tab the tab that the autocompleter is on - either 'convert' or
+   *  'validate'
    * @return an array containing the new url [0] and a new options hash [1]
    */
   buildUrlAndOpts(tab){
