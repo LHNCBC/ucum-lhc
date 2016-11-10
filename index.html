@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.2/autocomplete-lhc_jQueryUI.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="demo-dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
+    <link href="demo-dist/ucumDemo.min.css" rel="stylesheet"/>
   </head>
   <body onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
     <!-- page header -->
@@ -75,8 +75,8 @@
       <h2>UCUM Unit Expression Validation</h2>
       <div id="singleString" class="section">
         <h3>Validate unit expressions one at a time</h3>
-        <p>Enter a unit expression to be validated:
-          <input type="text" id="valString">&nbsp; &nbsp; &nbsp; &nbsp;
+        <p>Enter or select a unit expression to be validated:
+          <input type="text" id="valString" placeholder="begin typing ...">&nbsp; &nbsp; &nbsp; &nbsp;
           <button id="toggleHints"
                   onclick="
                 demoPkg.UcumDemo.getInstance().toggleDisplay('hints',
@@ -183,9 +183,9 @@
   </div><!-- fine-print -->
   <!-- end page footer -->
 
-    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.1.1/autocomplete-lhc_jQuery.min.js"></script>
-    <script src="dist/ucum-lhc.js"></script>
-    <script src="demo-dist/ucum-demo.js"></script>
+    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.2/autocomplete-lhc_jQuery.min.js"></script>
+    <script src="dist/ucum-lhc.min.js"></script>
+    <script src="demo-dist/ucum-demo.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>

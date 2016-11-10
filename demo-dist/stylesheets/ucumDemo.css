@@ -200,3 +200,11 @@ ul.tab li a {
   margin-top: 20px;
 }
 
+/* align the content of search list table cells to the top of the cell */
+tr[data-fieldval] {
+  vertical-align: top;
+}
+
+#valString {
+  margin-right: 3em;
+}

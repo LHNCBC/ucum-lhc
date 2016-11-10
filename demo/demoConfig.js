@@ -14,8 +14,16 @@ export var UcumDemoConfig = {
    * in the Demo Unit Conversions page.   Separated into two arrays, with
    * the default categories in defCategories_ .
    */
-  defCategories_ : ['Clinical'],
-  categories_ : ['Non-Clinical', 'Obsolete'],
+  defCategories_ : ['Clinical Use'],
+  categories_ : ['Non-Clinical Use', 'Obsolete'],
+
+  /**
+   * Hash that matches category display names with the corresponding
+   * values used in the data
+   */
+  categoryValues_ : {'Clinical Use' : 'Clinical',
+    'Non-Clinical Use' : 'Miscellaneous',
+    'Obsolete' : 'Obsolete'},
 
   /**
    * Fields that the user can select for display in the autocompleter list
