@@ -257,9 +257,42 @@ export class UnitString{
     if (!endProcessing) {
       // Join all the unit array elements back into one string with no separators.
       uStr = uArray.join('');
-
+      let astMsg = '*s are replaced with . where multiplication is assumed ' +
+                   'and removed where exponentiation seems indicated.';
+      // check for *
+      let aFound = true;
+      let aStart = 0 ;
+      //let rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
+      //let res = origString.match(rStr);
+      //origString = origString.replace(rStr, res[1] + origUnit.csCode_ + res[3]);
+      while (aFound) {
+        let uLen = uStr.length ;
+        let aPos = uStr.substr(aStart).indexOf('*');
+        if (aPos === -1 || (aPos >= 2 &&
+                            uStr.substr((aPos + aStart) - 2, 3) === '10*')) {
+          aFound = false;
+        }
+        else {
+          aPos += aStart;
+          if (aPos == (uLen - 1)) {
+            aFound = false ;
+          }
+          else {
+            if (isNaN(uStr[aPos + 1])) {
+              uStr = uStr.substr(0, aPos) + '.' + uStr.substr(aPos + 1);
+            }
+            else {
+              uStr = uStr.substr(0, aPos) + uStr.substr(aPos + 1) ;
+            }
+            if (retMsg.indexOf(astMsg) === -1)
+              retMsg.push(astMsg);
+          }
+          aStart = aPos + 1;
+        } // end if we didn't find * or only found 10*
+      } // end while we're finding *
       // Call makeUnitsArray to convert the string to an array of unit
       // descriptors with operators.
+      origString = uStr ;
       uArray = this.makeUnitsArray(uStr);
 
       // Create a unit object out of each un element
@@ -640,7 +673,7 @@ export class UnitString{
         let origUnitAry = utabs.getUnitByName(uCode);
         if (origUnitAry && origUnitAry.length > 0) {
           origUnit = origUnitAry[0];
-          let mString = '(The unit code for ' + uCode + ' is ' +
+          let mString = '(The UCUM code for ' + uCode + ' is ' +
                          origUnit.csCode_ + ')';
           let dupMsg = false;
           for (let r = 0; r < retMsg.length && !dupMsg; r++)
