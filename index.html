@@ -3,7 +3,7 @@
   <head>
     <title>LHC UCUM Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.2/autocomplete-lhc_jQueryUI.min.css" />
+    <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.3/autocomplete-lhc_jQueryUI.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="demo-dist/ucumDemo.min.css" rel="stylesheet"/>
   </head>
@@ -54,11 +54,11 @@
       </p><br>
         <div id="convertToDivs">
           <div id="convertLeft">
-            <p>Enter or select the unit that it is to be converted to:
+            <p>Enter or select the unit that you want to convert to:
               <input type="text" id="convertTo">
           </div>
           <div id="convertRight" style="visibility: hidden">
-            You can enter other commensurable units that are not on this list.
+            You can enter other commensurate units that are not on this list.
           </div>
         </div>
         <div><br>&nbsp;&nbsp;  <button id="doConversionButton"
@@ -76,7 +76,10 @@
       <div id="singleString" class="section">
         <h3>Validate unit expressions one at a time</h3>
         <p>Enter or select a unit expression to be validated:
-          <input type="text" id="valString" placeholder="begin typing ...">&nbsp; &nbsp; &nbsp; &nbsp;
+          <input type="text" id="valString" placeholder="begin typing ..."
+                 onchange=
+                 "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
+                                                                   'validationString')">&nbsp; &nbsp; &nbsp; &nbsp;
           <button id="toggleHints"
                   onclick="demoPkg.UcumDemo.getInstance().toggleDisplay('hints',
                                                                  'toggleHints',
@@ -184,7 +187,7 @@
   </div><!-- fine-print -->
   <!-- end page footer -->
 
-    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.2/autocomplete-lhc_jQuery.min.js"></script>
+    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.3/autocomplete-lhc_jQuery.min.js"></script>
     <script src="dist/ucum-lhc.min.js"></script>
     <script src="demo-dist/ucum-demo.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

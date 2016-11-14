@@ -22484,7 +22484,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
           try {
             var toVal = toUnit.convertFrom(fromVal, fromUnit);
             toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
-            resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('name_') + " units = " + toVal.toString() + " " + toUnit.getProperty('name_') + " units.");
+            resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('csCode_') + " = " + toVal.toString() + " " + toUnit.getProperty('csCode_'));
             returnObj['toVal'] = toVal;
             returnObj['status'] = 'succeeded';
           } catch (err) {
@@ -23002,7 +23002,7 @@ var Unit = exports.Unit = function () {
 
       // reject request if the dimensions are not equal
       if (!fromUnit.dim_.equals(this.dim_)) {
-        throw new Error('Sorry.  ' + fromUnit.name_ + ' units cannot be converted ' + ('to ' + this.name_ + ' units.'));
+        throw new Error('Sorry.  ' + fromUnit.csCode_ + ' cannot be converted ' + ('to ' + this.csCode_ + '.'));
       }
       var fromCnv = fromUnit.cnv_;
       var fromMag = fromUnit.magnitude_;
@@ -23542,6 +23542,7 @@ var UnitString = exports.UnitString = function () {
 
         // Call makeUnitsArray to convert the string to an array of unit
         // descriptors with operators.
+        origString = uStr;
         uArray = this.makeUnitsArray(uStr);
 
         // Create a unit object out of each un element
@@ -23900,7 +23901,7 @@ var UnitString = exports.UnitString = function () {
           var origUnitAry = utabs.getUnitByName(uCode);
           if (origUnitAry && origUnitAry.length > 0) {
             origUnit = origUnitAry[0];
-            var mString = '(The unit code for ' + uCode + ' is ' + origUnit.csCode_ + ')';
+            var mString = '(The UCUM code for ' + uCode + ' is ' + origUnit.csCode_ + ')';
             var dupMsg = false;
             for (var _r2 = 0; _r2 < retMsg.length && !dupMsg; _r2++) {
               dupMsg = retMsg[_r2] === mString;
