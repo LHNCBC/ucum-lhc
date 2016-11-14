@@ -21,14 +21,14 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
   * the default categories in defCategories_ .
   */
   defCategories_: ['Clinical Use'],
-  categories_: ['Non-Clinical Use', 'Obsolete'],
+  categories_: ['Nonclinical Use', 'Obsolete'],
 
   /**
    * Hash that matches category display names with the corresponding
    * values used in the data
    */
   categoryValues_: { 'Clinical Use': 'Clinical',
-    'Non-Clinical Use': 'Miscellaneous',
+    'Non-Clinical Use': 'Nonclinical',
     'Obsolete': 'Obsolete' },
 
   /**
@@ -36,8 +36,8 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
    * that displays units in the Demo Unit Conversions page.   Separated into
    * two arrays, with the default categories in defDisplayFlds_ .
    */
-  defDisplayFlds_: ['cs_code', 'name'],
-  displayFlds_: ['category', 'synonyms', 'loinc_property', 'guidance', 'source'],
+  defDisplayFlds_: ['cs_code', 'name', 'guidance'],
+  displayFlds_: ['category', 'synonyms', 'loinc_property', 'source'],
 
   /**
    * Base URL for an autocompleter search query on the clinical tables search
@@ -51,7 +51,7 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
    * columns that are displayed.  Once the user specifies columns to display,
    * the column headers are built from those column names.
    */
-  defCols_: ['cs_code', 'name'],
+  defCols_: ['cs_code', 'name', 'guidance'],
 
   /**
    * Basic search opts used for all autocompleter search queries
