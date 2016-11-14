@@ -23539,33 +23539,7 @@ var UnitString = exports.UnitString = function () {
       if (!endProcessing) {
         // Join all the unit array elements back into one string with no separators.
         uStr = uArray.join('');
-        var astMsg = '*s are replaced with . where multiplication is assumed ' + 'and removed where exponentiation seems indicated.';
-        // check for *
-        var aFound = true;
-        var aStart = 0;
-        //let rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
-        //let res = origString.match(rStr);
-        //origString = origString.replace(rStr, res[1] + origUnit.csCode_ + res[3]);
-        while (aFound) {
-          var _uLen2 = uStr.length;
-          var aPos = uStr.substr(aStart).indexOf('*');
-          if (aPos === -1 || aPos >= 2 && uStr.substr(aPos + aStart - 2, 3) === '10*') {
-            aFound = false;
-          } else {
-            aPos += aStart;
-            if (aPos == _uLen2 - 1) {
-              aFound = false;
-            } else {
-              if (isNaN(uStr[aPos + 1])) {
-                uStr = uStr.substr(0, aPos) + '.' + uStr.substr(aPos + 1);
-              } else {
-                uStr = uStr.substr(0, aPos) + uStr.substr(aPos + 1);
-              }
-              if (retMsg.indexOf(astMsg) === -1) retMsg.push(astMsg);
-            }
-            aStart = aPos + 1;
-          } // end if we didn't find * or only found 10*
-        } // end while we're finding *
+
         // Call makeUnitsArray to convert the string to an array of unit
         // descriptors with operators.
         origString = uStr;
@@ -23670,11 +23644,11 @@ var UnitString = exports.UnitString = function () {
       if (!endProcessing) {
 
         finalUnit = uArray[0]['un'];
-        var _uLen3 = uArray.length;
+        var _uLen2 = uArray.length;
 
         // Perform the arithmetic for the units, starting with the first 2 units.
         // We only need to do the arithmetic if we have more than one unit.
-        for (var u2 = 1; u2 < _uLen3; u2++, !endProcessing) {
+        for (var u2 = 1; u2 < _uLen2; u2++, !endProcessing) {
           var nextUnit = uArray[u2]['un'];
           if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
             var msgString = 'Unit string (' + origString + ') contains unrecognized ' + 'element';
