@@ -10031,7 +10031,6 @@ var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
 var Prefix = require('./prefix.js').Prefix;
 var fs = require('fs');
-//var path = require('path');
 
 /**
  * Constructor; initiates load of the prefix and units objects
@@ -10349,7 +10348,7 @@ var UcumFileValidator = exports.UcumFileValidator = require("./ucumFileValidator
 
 
 },{"./config.js":46,"./ucumFileValidator.js":50,"./ucumLhcUtils.js":53,"./unitTables.js":57}],55:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -10368,7 +10367,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var Ucum = require('./config.js').Ucum;
+//var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UnitString = require("./unitString.js").UnitString;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
@@ -10404,7 +10403,7 @@ var Unit = exports.Unit = function () {
       try {
         parser.parse(attrs);
       } catch (x) {
-        throw new Error('Parse error: ' + x.getMessage());
+        throw new Error("Parse error: " + x.getMessage());
       }
     } // end if this instance is defined by a string
 
@@ -10562,7 +10561,7 @@ var Unit = exports.Unit = function () {
 
 
   _createClass(Unit, [{
-    key: 'assignUnity',
+    key: "assignUnity",
     value: function assignUnity() {
       this.name_ = "";
       this.magnitude_ = 1;
@@ -10585,11 +10584,11 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'assignVals',
+    key: "assignVals",
     value: function assignVals(vals) {
       for (var key in vals) {
         var uKey = !key.charAt(key.length - 1) === '_' ? key + '_' : key;
-        if (this.hasOwnProperty(uKey)) this[uKey] = vals[key];else throw new Error('Parameter error; ' + key + ' is not a property of a Unit');
+        if (this.hasOwnProperty(uKey)) this[uKey] = vals[key];else throw new Error("Parameter error; " + key + " is not a property of a Unit");
       }
     } // end assignVals
 
@@ -10601,7 +10600,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'clone',
+    key: "clone",
     value: function clone() {
       var _this = this;
 
@@ -10625,7 +10624,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'assign',
+    key: "assign",
     value: function assign(unit2) {
       var _this2 = this;
 
@@ -10636,7 +10635,7 @@ var Unit = exports.Unit = function () {
           } else {
             _this2[val] = _this2[val];
           }
-        } else throw new Error('Parameter error; ' + val + ' is not a property of a Unit');
+        } else throw new Error("Parameter error; " + val + " is not a property of a Unit");
       });
     } // end assign
 
@@ -10652,7 +10651,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'equals',
+    key: "equals",
     value: function equals(unit2) {
 
       return this.magnitude_ === unit2.magnitude_ && this.dim_.equals(unit2.dim_) && this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_;
@@ -10670,10 +10669,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'getProperty',
+    key: "getProperty",
     value: function getProperty(propertyName) {
       var uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName : propertyName + '_';
-      if (!this.hasOwnProperty(uProp)) throw new Error('Unit does not have requested property (' + propertyName + '),  ' + ('unit code = ' + this.csCode_));else return this[uProp];
+      if (!this.hasOwnProperty(uProp)) throw new Error("Unit does not have requested property (" + propertyName + "),  " + ("unit code = " + this.csCode_));else return this[uProp];
     } // end getProperty
 
 
@@ -10691,13 +10690,13 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'convertFrom',
+    key: "convertFrom",
     value: function convertFrom(num, fromUnit) {
       var newNum = 0.0;
 
       // reject request if the dimensions are not equal
       if (!fromUnit.dim_.equals(this.dim_)) {
-        throw new Error('Sorry.  ' + fromUnit.csCode_ + ' cannot be converted ' + ('to ' + this.csCode_ + '.'));
+        throw new Error("Sorry.  " + fromUnit.csCode_ + " cannot be converted " + ("to " + this.csCode_ + "."));
       }
       var fromCnv = fromUnit.cnv_;
       var fromMag = fromUnit.magnitude_;
@@ -10747,7 +10746,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'convertTo',
+    key: "convertTo",
     value: function convertTo(num, toUnit) {
 
       return toUnit.convertFrom(num, this);
@@ -10766,7 +10765,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'convertCoherent',
+    key: "convertCoherent",
     value: function convertCoherent(num) {
 
       // convert mag' * u' into canonical number * u on ratio scale
@@ -10786,7 +10785,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'mutateCoherent',
+    key: "mutateCoherent",
     value: function mutateCoherent(num) {
 
       // convert mu' * u' into canonical mu * u on ratio scale
@@ -10805,7 +10804,7 @@ var Unit = exports.Unit = function () {
       for (var i = 0, max = Dimension.getMax(); i < max; i++) {
         var elem = this.dim_.elementAt(i);
         var uA = UnitTables.getUnitByDim(new Dimension(i));
-        if (uA == null) throw new Error('Can\'t find base unit for dimension ' + i);
+        if (uA == null) throw new Error("Can't find base unit for dimension " + i);
         this.name_ = uA.name + elem;
       }
       return num;
@@ -10822,7 +10821,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'mutateRatio',
+    key: "mutateRatio",
     value: function mutateRatio(num) {
       if (this.cnv_ == null) return this.mutateCoherent(num);else return num;
     } // end mutateRatio
@@ -10839,7 +10838,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'multiplyThis',
+    key: "multiplyThis",
     value: function multiplyThis(s) {
 
       if (this.cnv_ != null) this.cnvPfx_ *= s;else this.magnitude_ *= s;
@@ -10861,17 +10860,17 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'multiplyThese',
+    key: "multiplyThese",
     value: function multiplyThese(unit2) {
       if (this.cnv_ != null) {
-        if (unit2.cnv_ == null && unit2.dim_.isZero()) this.cnvPfx_ *= unit2.magnitude_;else throw new Error('Attempt to multiply non-ratio unit ' + this.name_ + ' ' + 'failed.');
+        if (unit2.cnv_ == null && unit2.dim_.isZero()) this.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + this.name_ + " " + 'failed.');
       } else {
         if (unit2.cnv_ != null) {
           if (this.cnv_ == null && this.dim_.isZero()) {
             var cp = this.magnitude_;
             assign(unit2);
             this.cnvPfx_ *= cp;
-          } else throw new Error('Attempt to multiply non-ratio unit ' + u2Nname);
+          } else throw new Error("Attempt to multiply non-ratio unit " + u2Nname);
         } else {
           var uString = UnitString.getInstance();
           this.name_ = uString.mulString(this.name_, unit2.name_);
@@ -10898,11 +10897,11 @@ var Unit = exports.Unit = function () {
      * */
 
   }, {
-    key: 'divide',
+    key: "divide",
     value: function divide(unit2) {
 
-      if (this.cnv_ != null) throw new Error('Attempt to divide non-ratio unit ' + this.name_);
-      if (unit2.cnv_ != null) throw new Error('Attempt to divide by non-ratio unit ' + unit2.name_);
+      if (this.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + this.name_);
+      if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
 
       var uString = UnitString.getInstance();
       this.name_ = uString.divString(this.name_, unit2.name_);
@@ -10929,10 +10928,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'invert',
+    key: "invert",
     value: function invert() {
 
-      if (this.cnv_ != null) throw new Error('Attempt to invert a non-ratio unit - ' + this.name_);
+      if (this.cnv_ != null) throw new Error("Attempt to invert a non-ratio unit - " + this.name_);
 
       this.name_ = UnitString.inv(this.name_);
 
@@ -10955,10 +10954,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'power',
+    key: "power",
     value: function power(p) {
 
-      if (this.cnv_ != null) throw new Error('Attempt to raise a non-ratio unit, ' + this.name_ + ', ' + 'to a power.');
+      if (this.cnv_ != null) throw new Error("Attempt to raise a non-ratio unit, " + this.name_ + ", " + 'to a power.');
 
       this.name_ = UnitString.pow(this.name_, p);
       this.magnitude_ = Math.pow(this.magnitude_, p);
@@ -10972,7 +10971,7 @@ var Unit = exports.Unit = function () {
 }(); // end Unit class
 
 
-},{"./config.js":46,"./dimension.js":47,"./ucumFunctions.js":51,"./unitString.js":56,"is-integer":16}],56:[function(require,module,exports){
+},{"./dimension.js":47,"./ucumFunctions.js":51,"./unitString.js":56,"is-integer":16}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

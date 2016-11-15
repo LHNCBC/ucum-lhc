@@ -22,7 +22,7 @@ export var UcumDemoConfig = {
    * values used in the data
    */
   categoryValues_ : {'Clinical Use' : 'Clinical',
-    'Non-Clinical Use' : 'Nonclinical',
+    'Nonclinical Use' : 'Nonclinical',
     'Obsolete' : 'Obsolete'},
 
   /**
