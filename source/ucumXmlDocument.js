@@ -5,7 +5,6 @@
  * @author Lee Mericle
  *
  */
-
 var Pfx = require("./prefix.js");
 var PfxT = require("./prefixTables.js");
 var Un = require("./unit.js");
@@ -15,7 +14,6 @@ var jsonfile = require('jsonfile');
 
 var xmldoc = require('xmldoc');
 var fs = require('fs');
-//var path = require('path');
 
 var essenceFile_ = '/proj/defExtra/ucum/ucum-essence.xml';
 
