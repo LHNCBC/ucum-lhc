@@ -336,8 +336,8 @@ export class Unit {
 
     // reject request if the dimensions are not equal
     if (!(fromUnit.dim_.equals(this.dim_))) {
-      throw(new Error(`Sorry.  ${fromUnit.name_} units cannot be converted ` +
-                      `to ${this.name_} units.`));
+      throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
+                      `to ${this.csCode_}.`));
     }
     let fromCnv = fromUnit.cnv_ ;
     let fromMag = fromUnit.magnitude_ ;

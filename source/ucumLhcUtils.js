@@ -154,9 +154,9 @@ export class UcumLhcUtils {
         try {
           let toVal = toUnit.convertFrom(fromVal, fromUnit);
           toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
-          resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('name_') +
-                         " units = " + toVal.toString() + " " +
-                         toUnit.getProperty('name_') + " units.");
+          resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('csCode_') +
+                         " = " + toVal.toString() + " " +
+                         toUnit.getProperty('csCode_'));
           returnObj['toVal'] = toVal ;
           returnObj['status'] = 'succeeded';
         }
