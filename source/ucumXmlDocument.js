@@ -5,11 +5,11 @@
  * @author Lee Mericle
  *
  */
-var Pfx = require("./prefix.js");
-var PfxT = require("./prefixTables.js");
-var Un = require("./unit.js");
-var Us = require("./unitString.js");
-var Utab = require('./unitTables.js');
+var Prefix = require("./prefix.js").Prefix;
+var PrefixTables = require("./prefixTables.js").PrefixTables;
+var Unit = require("./unit.js").Unit;
+var UnitString = require("./unitString.js").UnitString;
+var UnitTables = require('./unitTables.js').UnitTables;
 var jsonfile = require('jsonfile');
 
 var xmldoc = require('xmldoc');
@@ -37,6 +37,20 @@ export class UcumXmlDocument {
     // read the XML file and create an xmlDocument object from it.
     let data = fs.readFileSync(essenceFile_);
     xmlInput_ = new xmldoc.XmlDocument(data);
+
+    // Make this a singleton.  See UnitTables constructor for details.
+
+    let holdThis = UcumXmlDocument.prototype;
+    UcumXmlDocument = function () {
+      throw (new Error('UcumXmlDocument is a Singleton.  ' +
+          'Use UcumXmlDocument.getInstance() instead.'));
+    };
+    if (exports)
+      exports.UcumXmlDocument = UcumXmlDocument;
+    UcumXmlDocument.prototype = holdThis;
+
+    let self = this ;
+    UcumXmlDocument.getInstance = function(){return self} ;
   }
 
 
@@ -99,13 +113,13 @@ export class UcumXmlDocument {
 
       // Make sure the prefix has not already been created.  If it hasn't,
       // create the prefix object and then add it to the prefix tables.
-      let ptab = PfxT.PrefixTables.getInstance();
+      let ptab = PrefixTables.getInstance();
       if (ptab.isDefined(attrs["code_"])) {
         throw(new Error('Prefix constructor called for prefix already ' +
                         `defined; code = ${attrs["code_"]}`));
       }
       else {
-        let newPref = new Pfx.Prefix(attrs);
+        let newPref = new Prefix(attrs);
         ptab.add(newPref);
       }
     }
@@ -124,7 +138,7 @@ export class UcumXmlDocument {
    */
   parseBaseUnits(unitNodes) {
     let blen = unitNodes.length ;
-    let utab = Utab.UnitTables.getInstance() ;
+    let utab = UnitTables.getInstance() ;
     for (let b = 0; b < blen; b++) {
       let curBUnit = unitNodes[b];
       let attrs = {} ;
@@ -136,7 +150,7 @@ export class UcumXmlDocument {
       attrs['variable_'] = curBUnit.attr.dim ;
       attrs['printSymbol_'] = curBUnit.childNamed('printSymbol').val;
       attrs['dim_'] = b ;
-      let newUnit = new Un.Unit(attrs);
+      let newUnit = new Unit(attrs);
       utab.addUnit(newUnit) ;
     }
   } // end parseBaseUnits
@@ -154,8 +168,8 @@ export class UcumXmlDocument {
    */
   parseUnitStrings(unitStrings) {
 
-    let utab = Utab.UnitTables.getInstance() ;
-    let uStrParser = new Us.UnitString();
+    let utab = UnitTables.getInstance() ;
+    let uStrParser = UnitString.getInstance();
     let alen = unitStrings.length ;
     for (let a = 0; a < alen; a++) {
       let haveUnit = true;
@@ -383,7 +397,7 @@ export class UcumXmlDocument {
         // Now create the unit we want based on the attributes we've
         // accumulated from the xml input and from figuring the dimension
         // and magnitude.  Add it to the unit tables
-        let newUnit = new Un.Unit(attrs);
+        let newUnit = new Unit(attrs);
         utab.addUnit(newUnit);
 
         // for now, create a list of the units created and save it to a file
@@ -405,9 +419,9 @@ export class UcumXmlDocument {
    */
   writeJsonFile() {
 
-    let pfxTabs = PfxT.PrefixTables.getInstance() ;
+    let pfxTabs = PrefixTables.getInstance() ;
     let pfxArray = pfxTabs.allPrefixesByCode();
-    let uTabs = Utab.UnitTables.getInstance();
+    let uTabs = UnitTables.getInstance();
     let uArray = uTabs.allUnitsByDef();
 
     let defsHash = { 'prefixes' : pfxArray,
@@ -417,6 +431,24 @@ export class UcumXmlDocument {
                           {encoding: 'utf8', mode: 0o644, flag: 'w'});
   } // end writeJsonFile
 
-
 } // end UcumXmlDocument
 
+
+/**
+ *  This function exists ONLY until the original UcumXmlDocument constructor
+ *  is called for the first time.  It's defined here in case getInstance
+ *  is called before the constructor.   This calls the constructor.
+ *
+ *  The constructor redefines the getInstance function to return the
+ *  singleton UcumXmlDocument object.  This is based on the UnitTables singleton
+ *  implementation; see more detail in the UnitTables constructor description.
+ *
+ *  @return the singleton UcumXmlDocument object.
+ */
+UcumXmlDocument.getInstance = function(){
+  return new UcumXmlDocument();
+}
+
+// Perform the first request for the document object, to get the
+// getInstance method set.
+UcumXmlDocument.getInstance();

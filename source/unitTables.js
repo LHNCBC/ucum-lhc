@@ -481,6 +481,7 @@ export class UnitTables {
   allUnitsByName() {
     let unitBuff = '';
     let unitsList = this.getAllUnitNames();
+    console.log('unitslist = ' + JSON.stringify(unitsList));
     let uLen = unitsList.length;
     for (let i = 0; i < uLen; i++) {
       let nameRecs = this.getUnitByName(unitsList[i]);
@@ -506,66 +507,75 @@ export class UnitTables {
    * @param doLong boolean indicating how much to output.  If true, all data
    *  from the unit objects is included.   If false, only a few major values
    *  are included.
+   *  @param sep separator character (or string) to be used to separate each
+   *   column in the output.  Optional, defaults to '|' if not specified.
+   *   (Used to use ; but the synonyms use that extensively).
    * @returns {string} buffer containing all the listings
    */
-  printUnits(doLong) {
+  printUnits(doLong, sep) {
     if (doLong === undefined)
       doLong = false ;
+    if (sep === undefined)
+      sep = '|';
     let codeList = '';
     let uLen = this.codeOrder_.length ;
-    let unitString = 'csCode; ' ;
+    let unitString = 'csCode' + sep  ;
     if (doLong) {
-      unitString += 'ciCode; ' ;
+      unitString += 'ciCode' + sep ;
     }
-    unitString += 'name; ' ;
+    unitString += 'name' + sep ;
     if (doLong)
-      unitString += 'isBase; ' ;
-    unitString += 'magnitude; dimension; from unit(s); value; function; ' ;
+      unitString += 'isBase' + sep ;
+    unitString += 'magnitude' + sep + 'dimension' + sep + 'from unit(s)' + sep +
+                  'value' + sep + 'function' + sep ;
     if (doLong)
-      unitString += 'property; printSymbol; class; isMetric; variable; ' +
-                    'isSpecial; isAbitrary; '
-    unitString += 'comment'
+      unitString += 'property' + sep + 'printSymbol' + sep + 'synonyms' + sep +
+                    'source' + sep + 'class' + sep + 'isMetric' + sep +
+                    'variable' + sep + 'isSpecial' + sep + 'isAbitrary' + sep
+    unitString += 'comment';
     codeList = unitString + '\n' ;
 
     for (let u = 0; u < uLen; u++) {
       let curUnit = this.getUnitByCode(this.codeOrder_[u]);
-      unitString = this.codeOrder_[u] + '; ' ;
+      unitString = this.codeOrder_[u] + sep ;
       if (doLong) {
-        unitString += curUnit.getProperty('ciCode_') + '; ' ;
+        unitString += curUnit.getProperty('ciCode_') + sep ;
       }
-      unitString += curUnit.getProperty('name_') + '; ' ;
+      unitString += curUnit.getProperty('name_') + sep ;
       if (doLong) {
         if (curUnit.getProperty('isBase_'))
-          unitString += 'true; ' ;
+          unitString += 'true' + sep ;
         else
-          unitString += 'false; ';
+          unitString += 'false' + sep ;
       }
-      unitString += curUnit.getProperty('magnitude_')  + '; ';
+      unitString += curUnit.getProperty('magnitude_')  + sep;
       let curDim = curUnit.getProperty('dim_');
       if (curDim) {
-        unitString += curDim.dimVec_ + '; ';
+        unitString += curDim.dimVec_ + sep ;
       }
       else {
-        unitString += 'null; ';
+        unitString += 'null' + sep;
       }
       if (curUnit.csUnitString_)
-        unitString += curUnit.csUnitString_ + '; ' + curUnit.baseFactor_ + '; ';
+        unitString += curUnit.csUnitString_ + sep + curUnit.baseFactor_ + sep ;
       else
-        unitString += 'null; null; ';
+        unitString += 'null' + sep + 'null' + sep;
 
       if (curUnit.cnv_)
-        unitString += curUnit.cnv_ + '; ' ;
+        unitString += curUnit.cnv_ + sep ;
       else
-        unitString += 'null; ' ;
+        unitString += 'null' + sep ;
 
       if (doLong) {
-        unitString += curUnit.getProperty('property_') + '; ' +
-                      curUnit.getProperty('printSymbol_') + '; ' +
-                      curUnit.getProperty('class_') + '; ' +
-                      curUnit.getProperty('isMetric_') + '; ' +
-                      curUnit.getProperty('variable_') + '; ' +
-                      curUnit.getProperty('isSpecial_') + '; ' +
-                      curUnit.getProperty('isArbitrary_') + '; ' ;
+        unitString += curUnit.getProperty('property_') + sep +
+                      curUnit.getProperty('printSymbol_') + sep +
+                      curUnit.getProperty('synonyms_') + sep +
+                      curUnit.getProperty('source_') + sep +
+                      curUnit.getProperty('class_') + sep +
+                      curUnit.getProperty('isMetric_') + sep +
+                      curUnit.getProperty('variable_') + sep +
+                      curUnit.getProperty('isSpecial_') + sep +
+                      curUnit.getProperty('isArbitrary_') + sep ;
       }
       if (curUnit.defError_)
         unitString += 'problem parsing this one, deferred to later.' ;

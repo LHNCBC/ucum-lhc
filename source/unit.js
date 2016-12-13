@@ -10,7 +10,6 @@
  */
 //var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
-var UnitString = require("./unitString.js").UnitString;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
 
@@ -33,169 +32,165 @@ export class Unit {
    */
   constructor(attrs = {}) {
 
-    // If this instance is defined by a string, use the UnitParser
-    // to create the unit.  Haven't tested this yet.
-    // I don't know if we'll even need it.
-    if (typeof attrs === 'string') {
-      let parser = new UnitParser(attrs);
-      try {
-        parser.parse(attrs);
+    // Process the attrs hash passed in, which may be empty.
+    // Create and assign values (from the attrs hash or defaults) to all
+    // attributes.  From Class Declarations in Understanding ECMAScript,
+    // https://leanpub.com/understandinges6/read/#leanpub-auto-class-declarations,
+    //   "Own properties, properties that occur on the instance rather than the
+    //    prototype, can only be created inside of a class constructor or method.
+    //    It's recommended to create all possible own properties inside of the
+    //    constructor function so there's a single place that's responsible for
+    //    all of them."
+
+    /*
+     * Flag indicating whether or not this is a base unit
+     */
+    this.isBase_ = attrs['isBase_'] || false ;
+
+    /*
+     * The unit name, e.g., meter
+     */
+    this.name_ = attrs['name_'] || '';
+
+    /*
+     * The unit's case-sensitive code, e.g., m
+     */
+    this.csCode_ = attrs['csCode_'] || '';
+
+    /*
+     * The unit's case-insensitive code, e.g., M
+     */
+    this.ciCode_ = attrs['ciCode_'] || '';
+
+    /*
+     * The unit's property, e.g., length
+     */
+    this.property_ = attrs['property_'] || '';
+
+    /*
+     * The magnitude of the unit, e.g., 3600/3937 for a yard,
+     * where a yard - 3600/3973 * m(eter).  The Dimension
+     * property specifies the meter - which is the unit on which
+     * a yard is based, and this magnitude specifies how to figure
+     * this unit based on the base unit.
+     */
+    this.magnitude_ = attrs['magnitude_'] || 1;
+
+    /*
+     * The Dimension object of the unit
+     */
+    if (attrs['dim_'] !== null && attrs['dim_'] !== undefined) {
+      if (attrs['dim_'] instanceof Array) {
+        this.dim_ = new Dimension(attrs['dim_']);
       }
-      catch (x) {
-        throw(new Error(`Parse error: ${x.getMessage()}`));
+      else if (attrs['dim_'] instanceof Dimension) {
+        this.dim_ = attrs['dim_'];
       }
-    } // end if this instance is defined by a string
-
-    else {
-      // This instance is defined by a (possibly empty) hash of values.
-      // Create and assign values (from the attrs hash or defaults) to all
-      // attributes.  From Class Declarations in Understanding ECMAScript,
-      // https://leanpub.com/understandinges6/read/#leanpub-auto-class-declarations,
-      //   "Own properties, properties that occur on the instance rather than the
-      //    prototype, can only be created inside of a class constructor or method.
-      //    It's recommended to create all possible own properties inside of the
-      //    constructor function so there's a single place that's responsible for
-      //    all of them."
-
-      /*
-       * Flag indicating whether or not this is a base unit
-       */
-      this.isBase_ = attrs['isBase_'] || false ;
-
-      /*
-       * The unit name, e.g., meter
-       */
-      this.name_ = attrs['name_'] || '';
-
-      /*
-       * The unit's case-sensitive code, e.g., m
-       */
-      this.csCode_ = attrs['csCode_'] || '';
-
-      /*
-       * The unit's case-insensitive code, e.g., M
-       */
-      this.ciCode_ = attrs['ciCode_'] || '';
-
-      /*
-       * The unit's property, e.g., length
-       */
-      this.property_ = attrs['property_'] || '';
-
-      /*
-       * The magnitude of the unit, e.g., 3600/3937 for a yard,
-       * where a yard - 3600/3973 * m(eter).  The Dimension
-       * property specifies the meter - which is the unit on which
-       * a yard is based, and this magnitude specifies how to figure
-       * this unit based on the base unit.
-       */
-      this.magnitude_ = attrs['magnitude_'] || 1;
-
-      /*
-       * The Dimension object of the unit
-       */
-      if (attrs['dim_'] !== null && attrs['dim_'] !== undefined) {
-        if (attrs['dim_'] instanceof Array) {
-          this.dim_ = new Dimension(attrs['dim_']);
-        }
-        else if (attrs['dim_'] instanceof Dimension) {
-          this.dim_ = attrs['dim_'];
-        }
-        else if (isInteger(attrs['dim_'])) {
-          this.dim_ = new Dimension(attrs['dim_']) ;
-        }
-        else {
-          if (attrs['dim_'].dimVec_) {
-            this.dim_ = new Dimension(attrs['dim_'].dimVec_);
-          }
-          else
-            this.dim_ = new Dimension(attrs['dim_']);
-        }
+      else if (isInteger(attrs['dim_'])) {
+        this.dim_ = new Dimension(attrs['dim_']) ;
       }
       else {
-        this.dim_ = new Dimension(null);
+        if (attrs['dim_'].dimVec_) {
+          this.dim_ = new Dimension(attrs['dim_'].dimVec_);
+        }
+        else
+          this.dim_ = new Dimension(attrs['dim_']);
       }
+    }
+    else {
+      this.dim_ = new Dimension(null);
+    }
 
-      /*
-       * The print symbol of the unit, e.g., m
-       */
-      this.printSymbol_ = attrs['printSymbol_'] || null;
+    /*
+     * The print symbol of the unit, e.g., m
+     */
+    this.printSymbol_ = attrs['printSymbol_'] || null;
 
-      /*
-       * The class of the unit, where given, e.g., dimless
-       */
-      this.class_ = attrs['class_'] || null;
+    /*
+     * The class of the unit, where given, e.g., dimless
+     */
+    this.class_ = attrs['class_'] || null;
 
-      /*
-       * A flag indicating whether or not the unit is metric
-       */
-      this.isMetric_ = attrs['isMetric_'] || false;
+    /*
+     * A flag indicating whether or not the unit is metric
+     */
+    this.isMetric_ = attrs['isMetric_'] || false;
 
-      /*
-       * The "variable" - which I think is used only for base units
-       * The symbol for the variable as used in equations, e.g., s for distance
-       */
-      this.variable_ = attrs['variable_'] || null ;  // comes from 'dim' in XML
+    /*
+     * The "variable" - which I think is used only for base units
+     * The symbol for the variable as used in equations, e.g., s for distance
+     */
+    this.variable_ = attrs['variable_'] || null ;  // comes from 'dim' in XML
 
-      /*
-       * The conversion function
-       */
-      this.cnv_ = attrs['cnv_'] || null;
+    /*
+     * The conversion function
+     */
+    this.cnv_ = attrs['cnv_'] || null;
 
-      /*
-       * The conversion prefix
-       */
-      this.cnvPfx_ = attrs['cnvPfx_'] || 1;
+    /*
+     * The conversion prefix
+     */
+    this.cnvPfx_ = attrs['cnvPfx_'] || 1;
 
-      /*
-       * Flag indicating whether or not this is a "special" unit, i.e., is
-       * constructed using a function specific to the measurement, e.g.,
-       * fahrenheit and celsius
-       */
-      this.isSpecial_ = attrs['isSpecial_'] || false ;
+    /*
+     * Flag indicating whether or not this is a "special" unit, i.e., is
+     * constructed using a function specific to the measurement, e.g.,
+     * fahrenheit and celsius
+     */
+    this.isSpecial_ = attrs['isSpecial_'] || false ;
 
-      /*
-       * Flag indicating whether or not this is an arbitrary unit
-       */
-      this.isArbitrary_ = attrs['isArbitrary_'] || false;
+    /*
+     * Flag indicating whether or not this is an arbitrary unit
+     */
+    this.isArbitrary_ = attrs['isArbitrary_'] || false;
 
-      /*
-       * Used to compute dimension; storing for now until I complete
-       * unit definition parsing
-       */
-      /*
-       * Case sensitive (cs) and case insensitive (ci) unit strings,
-       * includes exponent and prefix if applicable - specified in
-       * <value Unit=x UNIT=X value="nnn">nnn</value> -- the unit part --
-       * in the ucum-essence.xml file, and may be specified by a user
-       * when requesting conversion or validation of a unit string.
-       */
-      this.csUnitString_ = attrs['csUnitString_'] || null ;
-      this.ciUnitString_ = attrs['ciUnitString_'] || null ;
+    /*
+     * Added when added LOINC list of units
+     * synonyms are used by the autocompleter to enhance lookup capabilities
+     * while source says where the unit first shows up.  Current sources are
+     * UCUM - which are units from the unitsofmeasure.org list and LOINC -
+     * which are units from the LOINC data.
+     */
+    this.synonyms_ = attrs['synonyms_'] || null ;
+    this.source_ = attrs['source_'] || null ;
+    this.loincProperty_ = attrs['loincProperty_'] || null;
+    this.category_ = attrs['category_'] || null;
 
-      /*
-       * String and numeric versions of factor applied to base unit specified in
-       * <value Unit=x UNIT=X value="nnn">nnn</value> -- the value part
-       */
-      this.baseFactorStr_ = attrs['baseFactorStr_'] || null;
-      this.baseFactor_ = attrs['baseFactor_'] || null;
+    /*
+     * Used to compute dimension; storing for now until I complete
+     * unit definition parsing
+     */
+    /*
+     * Case sensitive (cs) and case insensitive (ci) unit strings,
+     * includes exponent and prefix if applicable - specified in
+     * <value Unit=x UNIT=X value="nnn">nnn</value> -- the unit part --
+     * in the ucum-essence.xml file, and may be specified by a user
+     * when requesting conversion or validation of a unit string.
+     */
+    this.csUnitString_ = attrs['csUnitString_'] || null ;
+    this.ciUnitString_ = attrs['ciUnitString_'] || null ;
 
-      /*
-       * Flag used to indicate units where the definition process failed
-       * when parsing units from the official units definitions file
-       * (currently using the ucum-essence.xml file).  We keep these
-       * so that we can use them to at least validate them as valid
-       * units, but we don't try to convert them.   This is temporary
-       * and only to account for instances where the code does not
-       * take into account various special cases in the xml file.
-       *
-       * This is NOT used when trying to validate a unit string
-       * submitted during a conversion or validation attempt.
-       */
-      this.defError_ = attrs['defError_'] || false ;
+    /*
+     * String and numeric versions of factor applied to base unit specified in
+     * <value Unit=x UNIT=X value="nnn">nnn</value> -- the value part
+     */
+    this.baseFactorStr_ = attrs['baseFactorStr_'] || null;
+    this.baseFactor_ = attrs['baseFactor_'] || null;
 
-    } // end if this constructor uses a (possibly empty) hash
-      // to define the instance
+    /*
+     * Flag used to indicate units where the definition process failed
+     * when parsing units from the official units definitions file
+     * (currently using the ucum-essence.xml file).  We keep these
+     * so that we can use them to at least validate them as valid
+     * units, but we don't try to convert them.   This is temporary
+     * and only to account for instances where the code does not
+     * take into account various special cases in the xml file.
+     *
+     * This is NOT used when trying to validate a unit string
+     * submitted during a conversion or validation attempt.
+     */
+    this.defError_ = attrs['defError_'] || false ;
+
 
   } // end constructor
 
@@ -520,9 +515,9 @@ export class Unit {
           throw (new Error(`Attempt to multiply non-ratio unit ${u2Nname}`));
       }
       else {
-        let uString = UnitString.getInstance();
-        this.name_ = uString.mulString(this.name_, unit2.name_);
-        this.csCode_ = uString.mulString(this.csCode_, unit2.csCode_);
+        //let uString = UnitString.getInstance();
+        this.name_ = this.mulString(this.name_, unit2.name_);
+        this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
         this.magnitude_ *= unit2.magnitude_;
         // for now, putting in this safeguard to get around a known error.
         // need to put in error handling later.
@@ -553,9 +548,9 @@ export class Unit {
     if (unit2.cnv_ != null)
       throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
 
-    let uString = UnitString.getInstance();
-    this.name_ = uString.divString(this.name_, unit2.name_);
-    this.csCode_ = uString.divString(this.csCode_, unit2.csCode_);
+    //let uString = UnitString.getInstance();
+    this.name_ = this.divString(this.name_, unit2.name_);
+    this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
 
     this.magnitude_ /= unit2.magnitude_;
     // for now, putting in this safeguard to get around a known error.
@@ -584,8 +579,15 @@ export class Unit {
     if (this.cnv_ != null)
       throw (new Error(`Attempt to invert a non-ratio unit - ${this.name_}`));
 
-    this.name_ = UnitString.inv(this.name_);
-
+    //this.name_ = UnitString.inv(this.name_);
+    if (this.name_.length > 0) {
+      let nameRep = this.name_.replace('/', "!").replace('.', '/').replace("!", '.');
+      switch(nameRep.charAt(0)) {
+        case '.' : this.name_ = nameRep.substr(1); break;
+        case '/' : this.name_ = nameRep; break;
+        default  : this.name_ = "/" + nameRep;
+      }
+    }
     this.magnitude_ = 1/this.magnitude_ ;
     this.dim_.minus();
     return this;
@@ -610,12 +612,100 @@ export class Unit {
       throw (new Error(`Attempt to raise a non-ratio unit, ${this.name_}, ` +
                        'to a power.'));
 
-    this.name_ = UnitString.pow(this.name_, p);
+    //this.name_ = UnitString.pow(this.name_, p);
+    // the above line is replaced with the code below, as the pow method
+    // never actually existing in the UnitString class.  (Tried to use
+    // Schadow java code but this way ended up being a lot easier).
+    let uStr = this.csCode_ ;
+    let uArray = uStr.match(/([./]|[^./]+)/g) ;
+    let arLen = uArray.length;
+    for (let i = 0; i < arLen; i++) {
+      let un = uArray[i] ;
+      if (un !== '/' && un !== '.') {
+        let nun = parseInt(un);
+        if (typeof nun === 'number')
+          un = (Math.pow(nun, p).toString());
+        else {
+          let uLen = un.length ;
+          for (let u = uLen - 1; u >= 0; u--) {
+            let uChar = parseInt(un[u]);
+            if (typeof uChar !== 'number') {
+              if (uChar === '-' || uChar === '+') {
+                u--;
+              }
+              if (u < uLen - 1) {
+                let exp = parseInt(un.substr(u));
+                exp = Math.pow(exp, p);
+                un = un.substr(0, u) + exp.toString();
+              } // end if there are some numbers at the end
+              u = -1;
+            } // end if this character is not a number
+          } // end searching backwards for start of exponent
+        } // end if this element is not a number
+      } // end if the current element is not an operator
+    } // end do for each element of the units array
+
+    // reassemble the updated units array to a string
+    this.csCode_ = uArray.join('');
+
     this.magnitude_ = Math.pow(this.magnitude_, p);
     if (this.dim_)
       this.dim_.mul(p);
     return this;
 
   } // end power
+
+
+  /**
+   * Creates a unit string that indicates multiplication of the two
+   * units referenced by the codes passed in.
+   *
+   * @params s1 string representing the first unit
+   * @params s2 string representing the second unit
+   * @returns a string representing the two units multiplied
+   */
+  mulString(s1, s2) {
+    return s1 + "." + s2;
+  }
+
+
+  /**
+   * Creates a unit string that indicates division of the first unit by
+   * the second unit, as referenced by the codes passed in.
+   *
+   * @params s1 string representing the first unit
+   * @params s2 string representing the second unit
+   * @returns a string representing the division of the first unit by the
+   * second unit
+   */
+  divString(s1, s2) {
+    let ret = null;
+    if(s2.length == 0)
+      ret = s1;
+    else {
+      let supPos = s2.indexOf('<sup>') ;
+      let s2Sup = null;
+      if (supPos > 0) {
+        s2Sup = s2.substr(supPos) ;
+        s2 = s2.substr(0, supPos);
+      }
+      let t = s2.replace('/','1').replace('.','/').replace('1','.');
+
+      switch (t[0]) {
+        case '.':
+          ret = s1 + t;
+          break ;
+        case '/':
+          ret =  s1 + t;
+          break;
+        default:
+          ret = s1 + "/" + t;
+      }
+      if (s2Sup)
+        ret += s2Sup;
+    }
+    return ret ;
+
+  } // end divString
 
 } // end Unit class

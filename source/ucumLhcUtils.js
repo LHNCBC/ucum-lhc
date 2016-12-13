@@ -191,6 +191,7 @@ export class UcumLhcUtils {
     let utab = UnitTables.getInstance();
     let retMsg = [];
     let retUnitString = null;
+    let errorThrown = false ;
 
     // go ahead and just try using the name as the code.  This may or may not
     // work, but if it does, it cuts out a lot of parsing.
@@ -216,12 +217,13 @@ export class UcumLhcUtils {
           retMsg.unshift(`${uName} is not a valid unit.  ${err.message}`);
         else
           retMsg.unshift(err.message);
+        errorThrown = true ;
       }
     }
 
     // if no error was thrown but no unit was found, create a not found message
-    if ((theUnit === null || theUnit === undefined) && (retMsg === '')) {
-      retMsg.unshift(`Unable to find unit for name = ${uName}.`);
+    if ((theUnit === null || theUnit === undefined) && !errorThrown) {
+      retMsg.unshift(`${uName} is not a valid unit expression.`);
     }
 
     return [theUnit, retUnitString, retMsg];
