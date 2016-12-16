@@ -5,6 +5,9 @@
  * populating the autocompleter unit lists.
  */
 
+var fs = require('browserify-fs');
+var sanitizeHtml = require('sanitize-html');
+
 var Ucum = ucumPkg.Ucum;
 var UcumDemoConfig = require('./demoConfig').UcumDemoConfig;
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;
@@ -253,8 +256,8 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
     
-    let uStr = document.getElementById(elementID).value;
-    let valFld = document.getElementById(returnElementID);
+    let uStr = sanitizeHtml(document.getElementById(sanitizeHtml(elementID)).value);
+    let valFld = document.getElementById(sanitizeHtml(returnElementID));
     valFld.innerHTML = '';
     let retMsg = [];
     let valMsg = '';
@@ -303,20 +306,20 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
-    if (decDigits === undefined)
+    if (sanitizeHtml(decDigits) === undefined)
       decDigits = Ucum.decDigits_;
 
-    let fromName = document.getElementById(fromField).value ;
-    let fromVal = parseFloat(document.getElementById(numField).value);
+    let fromName = sanitizeHtml(document.getElementById(sanitizeHtml(fromField)).value) ;
+    let fromVal = parseFloat(sanitizeHtml(document.getElementById(sanitizeHtml(numField)).value));
     let hypIdx = fromName.indexOf(Ucum.codeSep_);
     if (hypIdx > 0)
       fromName = fromName.substr(0, hypIdx) ;
-    let toName = document.getElementById(toField).value;
+    let toName = sanitizeHtml(document.getElementById(sanitizeHtml(toField)).value);
     let codePos = toName.indexOf(Ucum.codeSep_);
     if (codePos > 0)
       toName = toName.substr(0, codePos);
 
-    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
+    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, sanitizeHtml(decDigits));
 
     // Put the message - conversion or error - on the page
     let resultString = document.getElementById("resultString");
@@ -343,13 +346,13 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
-    let toFld = document.getElementById(toField);
+    let toFld = document.getElementById(sanitizeHtml(toField));
     toFld.innerHTML = '';
     this.toAuto_.setList('');
-    let resultString = document.getElementById(resultField);
+    let resultString = document.getElementById(sanitizeHtml(resultField));
     resultString.innerHTML = '';
 
-    let fromName = document.getElementById(fromField).value;
+    let fromName = sanitizeHtml(document.getElementById(sanitizeHtml(fromField)).value);
     let hypIdx = fromName.indexOf(Ucum.codeSep_);
     if (hypIdx > 0)
       fromName = fromName.substr(0, hypIdx) ;
@@ -357,9 +360,9 @@ export class UcumDemo {
     let parseResp = [];
 
     try {
-      let parseResp = this.utils_.commensurablesList(fromName);
+      parseResp = this.utils_.commensurablesList(fromName);
       let commUnits = parseResp[0];
-      let resultMsg = parseResp[1];
+      resultMsg = parseResp[1];
       // If we can't find any, don't panic.  The user could still enter one
       // that's not on our list but is commensurable.  So if none are found,
       // just make sure the text about commensurable units is hidden.
@@ -408,23 +411,25 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
-    let theElement = document.getElementById(elementID);
+    let theElement = document.getElementById(sanitizeHtml(elementID));
     let theButton = null;
     if (buttonID)
-      theButton = document.getElementById(buttonID);
+      theButton = document.getElementById(sanitizeHtml(buttonID));
     if (theElement) {
       if (theElement.style.display === "none") {
         theElement.style.display = "block";
         if (theButton)
-          theButton.innerText = theButton.innerText.replace(noneText, blockText);
+          theButton.innerText = theButton.innerText.replace(sanitizeHtml(noneText),
+                                                            sanitizeHtml(blockText));
       }
       else {
         theElement.style.display = "none";
         if (theButton)
-          theButton.innerText = theButton.innerText.replace(blockText, noneText);
+          theButton.innerText = theButton.innerText.replace(sanitizeHtml(blockText),
+                                                            sanitizeHtml(noneText));
       }
-    }
-  }
+    } // end if we got the target element
+  } // end toggleDisplay
 
 
   /**
@@ -451,7 +456,7 @@ export class UcumDemo {
    *  It also disables the column name input field.
    */
   columnSpecified() {
-    let colName = document.getElementById('colName').value;
+    let colName = sanitizeHtml(document.getElementById('colName').value);
     this.utils_.useHTMLInMessages(false);
     this.utils_.useBraceMsgForEachString(false);
 

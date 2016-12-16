@@ -5,6 +5,8 @@
  * to handle the input and output processing.
  *
  */
+var fs = require('browserify-fs');
+var sanitizeHtml = require('sanitize-html');
 
 var stream = require('stream');
 var parse = require('csv-parse') ;
@@ -63,7 +65,7 @@ export class UcumFileValidator {
 
     // The file reader reads the input file into the str readable stream
     var reader = new FileReader();
-    reader.readAsText(inputFile);
+    reader.readAsText(sanitizeHtml(inputFile));
 
     var utils = UcumLhcUtils.getInstance();
 

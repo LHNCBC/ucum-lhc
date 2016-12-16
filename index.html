@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.3/autocomplete-lhc_jQueryUI.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="demo-dist/ucumDemo.min.css" rel="stylesheet"/>
+    <link href="demo-dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
   </head>
   <body onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
     <!-- page header -->
@@ -63,8 +63,8 @@
         </div>
         <div><br>&nbsp;&nbsp;  <button id="doConversionButton"
                                        onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
-                                                             'convertNum',
-                                                             'convertTo')"
+                                                             'convertNum<script>',
+                                                             'convertTo<script>')"
                                        type="button">Convert</button>
         </div>
         <p id="resultString">&nbsp;&nbsp;</p>
