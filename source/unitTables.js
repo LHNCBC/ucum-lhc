@@ -481,7 +481,6 @@ export class UnitTables {
   allUnitsByName() {
     let unitBuff = '';
     let unitsList = this.getAllUnitNames();
-    console.log('unitslist = ' + JSON.stringify(unitsList));
     let uLen = unitsList.length;
     for (let i = 0; i < uLen; i++) {
       let nameRecs = this.getUnitByName(unitsList[i]);
