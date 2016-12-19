@@ -8,7 +8,6 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-//var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
@@ -515,7 +514,6 @@ export class Unit {
           throw (new Error(`Attempt to multiply non-ratio unit ${u2Nname}`));
       }
       else {
-        //let uString = UnitString.getInstance();
         this.name_ = this.mulString(this.name_, unit2.name_);
         this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
         this.magnitude_ *= unit2.magnitude_;
@@ -689,7 +687,7 @@ export class Unit {
         s2Sup = s2.substr(supPos) ;
         s2 = s2.substr(0, supPos);
       }
-      let t = s2.replace('/','1').replace('.','/').replace('1','.');
+      let t = s2.replace('/','~').replace('.','/').replace('~','.');
 
       switch (t[0]) {
         case '.':

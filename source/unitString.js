@@ -320,7 +320,8 @@ export class UnitString {
             } // end if the text following the parentheses is an annotation
           } // end if the ending parenthesis is not at the end of the code
 
-          // If we're good, put the unit in the uArray
+          // If we're good, put the unit in the uArray and replace the placeholder
+          // in the original string with the unit name.
           if (!endProcessing) {
             let nIdx = parseInt(pIdx);
             uArray[u1]['un'] = parensUnits[nIdx];
