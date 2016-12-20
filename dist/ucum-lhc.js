@@ -10386,7 +10386,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-//var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
@@ -10887,7 +10886,6 @@ var Unit = exports.Unit = function () {
             this.cnvPfx_ *= cp;
           } else throw new Error("Attempt to multiply non-ratio unit " + u2Nname);
         } else {
-          //let uString = UnitString.getInstance();
           this.name_ = this.mulString(this.name_, unit2.name_);
           this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
           this.magnitude_ *= unit2.magnitude_;
@@ -10918,7 +10916,6 @@ var Unit = exports.Unit = function () {
       if (this.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + this.name_);
       if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
 
-      //let uString = UnitString.getInstance();
       this.name_ = this.divString(this.name_, unit2.name_);
       this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
 
@@ -10948,7 +10945,6 @@ var Unit = exports.Unit = function () {
 
       if (this.cnv_ != null) throw new Error("Attempt to invert a non-ratio unit - " + this.name_);
 
-      //this.name_ = UnitString.inv(this.name_);
       if (this.name_.length > 0) {
         var nameRep = this.name_.replace('/', "!").replace('.', '/').replace("!", '.');
         switch (nameRep.charAt(0)) {
@@ -10967,10 +10963,16 @@ var Unit = exports.Unit = function () {
 
 
     /**
-     * Raises this unit to a power.  If this unit is not on a
-     * ratio scale an error is thrown. Mutating to a ratio scale unit
-     * is not possible for a unit, only for a measurement (magnitude
-     * and dimension).
+     * Raises this unit to a power.  For example
+     *  kg.m/s2 raised to the -2 power would be kg-2.m-2/s-4
+     *
+     * If this unit is not on a ratio scale an error is thrown. Mutating
+     * to a ratio scale unit is not possible for a unit, only for a
+     * measurement (magnitude and dimension).
+     *
+     * This is based on the pow method in Gunter Schadow's java version,
+     * although it uses javascript capabilities to simplify the processing.
+     *
      *
      * This unit is modified by this function
      * @param p the power to with this unit is to be raise
@@ -10991,23 +10993,28 @@ var Unit = exports.Unit = function () {
       var uStr = this.csCode_;
       var uArray = uStr.match(/([./]|[^./]+)/g);
       var arLen = uArray.length;
+
       for (var i = 0; i < arLen; i++) {
         var un = uArray[i];
         if (un !== '/' && un !== '.') {
           var nun = parseInt(un);
-          if (typeof nun === 'number') un = Math.pow(nun, p).toString();else {
+          if (isInteger(nun)) uArray[i] = Math.pow(nun, p).toString();else {
             var uLen = un.length;
             for (var u = uLen - 1; u >= 0; u--) {
               var uChar = parseInt(un[u]);
-              if (typeof uChar !== 'number') {
-                if (uChar === '-' || uChar === '+') {
+              if (!isInteger(uChar)) {
+                if (un[u] === '-' || un[u] === '+') {
                   u--;
                 }
                 if (u < uLen - 1) {
                   var exp = parseInt(un.substr(u));
                   exp = Math.pow(exp, p);
-                  un = un.substr(0, u) + exp.toString();
-                } // end if there are some numbers at the end
+                  uArray[i] = un.substr(0, u) + exp.toString();
+                  u = -1;
+                } else {
+                  uArray[i] += p.toString();
+                  u = -1;
+                } // end if there are/aren't some numbers at the end
                 u = -1;
               } // end if this character is not a number
             } // end searching backwards for start of exponent
@@ -11019,7 +11026,9 @@ var Unit = exports.Unit = function () {
       this.csCode_ = uArray.join('');
 
       this.magnitude_ = Math.pow(this.magnitude_, p);
-      if (this.dim_) this.dim_.mul(p);
+      if (this.dim_) {
+        this.dim_.mul(p);
+      }
       return this;
     } // end power
 
@@ -11060,7 +11069,7 @@ var Unit = exports.Unit = function () {
           s2Sup = s2.substr(supPos);
           s2 = s2.substr(0, supPos);
         }
-        var t = s2.replace('/', '1').replace('.', '/').replace('1', '.');
+        var t = s2.replace('/', '~').replace('.', '/').replace('~', '.');
 
         switch (t[0]) {
           case '.':
@@ -11405,7 +11414,8 @@ var UnitString = exports.UnitString = function () {
               } // end if the text following the parentheses is an annotation
             } // end if the ending parenthesis is not at the end of the code
 
-            // If we're good, put the unit in the uArray
+            // If we're good, put the unit in the uArray and replace the placeholder
+            // in the original string with the unit name.
             if (!endProcessing) {
               var nIdx = parseInt(pIdx);
               uArray[u1]['un'] = parensUnits[nIdx];
@@ -12417,7 +12427,6 @@ var UnitTables = exports.UnitTables = function () {
     value: function allUnitsByName() {
       var unitBuff = '';
       var unitsList = this.getAllUnitNames();
-      console.log('unitslist = ' + JSON.stringify(unitsList));
       var uLen = unitsList.length;
       for (var i = 0; i < uLen; i++) {
         var nameRecs = this.getUnitByName(unitsList[i]);
@@ -12439,9 +12448,9 @@ var UnitTables = exports.UnitTables = function () {
      * @param doLong boolean indicating how much to output.  If true, all data
      *  from the unit objects is included.   If false, only a few major values
      *  are included.
-     *  @param sep separator character (or string) to be used to separate each
-     *   column in the output.  Optional, defaults to '|' if not specified.
-     *   (Used to use ; but the synonyms use that extensively).
+     * @param sep separator character (or string) to be used to separate each
+     *  column in the output.  Optional, defaults to '|' if not specified.
+     *  (Used to use ; but the synonyms use that extensively).
      * @returns {string} buffer containing all the listings
      */
 

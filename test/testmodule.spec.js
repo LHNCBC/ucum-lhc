@@ -13,7 +13,7 @@ var utils = Utils.getInstance();
 describe('Validate_m2/g4', function() {
     describe('Validation Return Object', function() {
       var returnObj = utils.validUnitString('m2/g4');
-      it("shoud return status of valid", function() {
+      it("should return status of valid", function() {
         assert.equal('valid', returnObj['status']);
       });
 
