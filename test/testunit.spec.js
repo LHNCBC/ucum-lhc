@@ -1,8 +1,8 @@
 /**
- * Mocha tests for the built module available as a bower task.  It tests the
- * unit expression validation and conversion functions at the top level only.
+ * Mocha tests for the Unit class.  Starting out with just testing the power
+ * method.  More tests to be added later.
  *
- * Run from the command line with 'mocha testmodule.js' or 'grunt test'
+ * Run from the command line with 'mocha testunit.js' or 'grunt test'
  */
 
 var assert = require('assert');

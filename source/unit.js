@@ -624,9 +624,9 @@ export class Unit {
 
     for (let i = 0; i < arLen; i++) {
       let un = uArray[i] ;
-     if (un !== '/' && un !== '.') {
-       let nun = parseInt(un);
-       if (isInteger(nun))
+      if (un !== '/' && un !== '.') {
+        let nun = parseInt(un);
+        if (isInteger(nun))
           uArray[i] = (Math.pow(nun, p).toString());
         else {
           let uLen = un.length ;
