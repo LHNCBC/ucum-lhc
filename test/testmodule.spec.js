@@ -39,8 +39,8 @@ describe('Validate_m2/acr', function() {
       assert.equal("m2/acr", returnObj['ucumCode']);
     });
 
-    it("should return error message = Unable to find unit for cr", function() {
-      assert.equal("Unable to find unit for m2/acr", returnObj['msg'][0]);
+    it("should return error message = m2/acr is not a valid unit expression.", function() {
+      assert.equal("m2/acr is not a valid unit expression.", returnObj['msg'][0]);
     });
   });
 });
@@ -98,8 +98,8 @@ describe('Convert fathoms to acrs', function() {
     });
 
 
-    it("should return error message = Unable to find unit for acr", function() {
-      assert.equal("Unable to find unit for acr", returnObj['msg'][0]);
+    it("should return error message = acr is not a valid unit expresion.", function() {
+      assert.equal("acr is not a valid unit expression.", returnObj['msg'][0]);
     });
   });
 });
