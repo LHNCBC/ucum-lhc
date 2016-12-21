@@ -8,7 +8,6 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-//var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
@@ -515,7 +514,6 @@ export class Unit {
           throw (new Error(`Attempt to multiply non-ratio unit ${u2Nname}`));
       }
       else {
-        //let uString = UnitString.getInstance();
         this.name_ = this.mulString(this.name_, unit2.name_);
         this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
         this.magnitude_ *= unit2.magnitude_;
@@ -548,7 +546,6 @@ export class Unit {
     if (unit2.cnv_ != null)
       throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
 
-    //let uString = UnitString.getInstance();
     this.name_ = this.divString(this.name_, unit2.name_);
     this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
 
@@ -561,7 +558,7 @@ export class Unit {
     
     return this;
 
-  }// end divide
+  } // end divide
 
   
   /**
@@ -579,7 +576,6 @@ export class Unit {
     if (this.cnv_ != null)
       throw (new Error(`Attempt to invert a non-ratio unit - ${this.name_}`));
 
-    //this.name_ = UnitString.inv(this.name_);
     if (this.name_.length > 0) {
       let nameRep = this.name_.replace('/', "!").replace('.', '/').replace("!", '.');
       switch(nameRep.charAt(0)) {
@@ -596,10 +592,16 @@ export class Unit {
 
   
   /**
-   * Raises this unit to a power.  If this unit is not on a
-   * ratio scale an error is thrown. Mutating to a ratio scale unit
-   * is not possible for a unit, only for a measurement (magnitude
-   * and dimension).
+   * Raises this unit to a power.  For example
+   *  kg.m/s2 raised to the -2 power would be kg-2.m-2/s-4
+   *
+   * If this unit is not on a ratio scale an error is thrown. Mutating
+   * to a ratio scale unit is not possible for a unit, only for a
+   * measurement (magnitude and dimension).
+   *
+   * This is based on the pow method in Gunter Schadow's java version,
+   * although it uses javascript capabilities to simplify the processing.
+   *
    *
    * This unit is modified by this function
    * @param p the power to with this unit is to be raise
@@ -619,25 +621,31 @@ export class Unit {
     let uStr = this.csCode_ ;
     let uArray = uStr.match(/([./]|[^./]+)/g) ;
     let arLen = uArray.length;
+
     for (let i = 0; i < arLen; i++) {
       let un = uArray[i] ;
       if (un !== '/' && un !== '.') {
         let nun = parseInt(un);
-        if (typeof nun === 'number')
-          un = (Math.pow(nun, p).toString());
+        if (isInteger(nun))
+          uArray[i] = (Math.pow(nun, p).toString());
         else {
           let uLen = un.length ;
           for (let u = uLen - 1; u >= 0; u--) {
             let uChar = parseInt(un[u]);
-            if (typeof uChar !== 'number') {
-              if (uChar === '-' || uChar === '+') {
+            if (!isInteger(uChar)) {
+              if (un[u] === '-' || un[u] === '+') {
                 u--;
               }
               if (u < uLen - 1) {
                 let exp = parseInt(un.substr(u));
                 exp = Math.pow(exp, p);
-                un = un.substr(0, u) + exp.toString();
-              } // end if there are some numbers at the end
+                uArray[i] = un.substr(0, u) + exp.toString();
+                u = -1;
+              }
+              else {
+                uArray[i] += p.toString();
+                u = -1;
+              } // end if there are/aren't some numbers at the end
               u = -1;
             } // end if this character is not a number
           } // end searching backwards for start of exponent
@@ -649,8 +657,9 @@ export class Unit {
     this.csCode_ = uArray.join('');
 
     this.magnitude_ = Math.pow(this.magnitude_, p);
-    if (this.dim_)
+    if (this.dim_) {
       this.dim_.mul(p);
+    }
     return this;
 
   } // end power
@@ -689,7 +698,7 @@ export class Unit {
         s2Sup = s2.substr(supPos) ;
         s2 = s2.substr(0, supPos);
       }
-      let t = s2.replace('/','1').replace('.','/').replace('1','.');
+      let t = s2.replace('/','~').replace('.','/').replace('~','.');
 
       switch (t[0]) {
         case '.':

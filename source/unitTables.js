@@ -481,7 +481,6 @@ export class UnitTables {
   allUnitsByName() {
     let unitBuff = '';
     let unitsList = this.getAllUnitNames();
-    console.log('unitslist = ' + JSON.stringify(unitsList));
     let uLen = unitsList.length;
     for (let i = 0; i < uLen; i++) {
       let nameRecs = this.getUnitByName(unitsList[i]);
@@ -507,9 +506,9 @@ export class UnitTables {
    * @param doLong boolean indicating how much to output.  If true, all data
    *  from the unit objects is included.   If false, only a few major values
    *  are included.
-   *  @param sep separator character (or string) to be used to separate each
-   *   column in the output.  Optional, defaults to '|' if not specified.
-   *   (Used to use ; but the synonyms use that extensively).
+   * @param sep separator character (or string) to be used to separate each
+   *  column in the output.  Optional, defaults to '|' if not specified.
+   *  (Used to use ; but the synonyms use that extensively).
    * @returns {string} buffer containing all the listings
    */
   printUnits(doLong, sep) {

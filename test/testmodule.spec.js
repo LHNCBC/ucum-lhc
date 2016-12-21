@@ -2,7 +2,7 @@
  * Mocha tests for the built module available as a bower task.  It tests the
  * unit expression validation and conversion functions at the top level only.
  *
- * Run from the command line with 'mocha testmodule.js' or 'grunt test'
+ * Run from the command line with 'mocha testmodule.spec.js' or 'grunt test'
  */
 
 var assert = require('assert');
@@ -13,7 +13,7 @@ var utils = Utils.getInstance();
 describe('Validate_m2/g4', function() {
     describe('Validation Return Object', function() {
       var returnObj = utils.validUnitString('m2/g4');
-      it("shoud return status of valid", function() {
+      it("should return status of valid", function() {
         assert.equal('valid', returnObj['status']);
       });
 
