@@ -23,6 +23,12 @@ export class UcumJsonDefs {
    */
   constructor() {
 
+    if (Utab.UnitTables.getInstance().unitsCount() === 0) {
+
+      // Load the prefix and unit objects
+      let uDefs = UcumJsonDefs.getInstance();
+      uDefs.loadJsonDefs();
+    }
     // Make this a singleton.  See UnitTables constructor for details.
 
     let holdThis = UcumJsonDefs.prototype;
