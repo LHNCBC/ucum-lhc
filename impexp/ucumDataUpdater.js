@@ -18,8 +18,8 @@ var UnitString = require('../source-es5/unitString.js').UnitString;
 var UcumXmlDocument = require('../source-es5/ucumXmlDocument.js').UcumXmlDocument;
 
 // Load the data from the JSON file
-var jdefs = JDefs.getInstance();
-jdefs.loadJsonDefs();
+//var jdefs = JDefs.getInstance();
+//jdefs.loadJsonDefs();
 
 var UcumLhcUtils = require("../source-es5/ucumLhcUtils.js").UcumLhcUtils;
 var Ucum = require('../source-es5/config.js').Ucum;
