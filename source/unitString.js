@@ -1,11 +1,13 @@
 /**
  * This class handles the parsing of a unit string into a unit object
  */
+
 var Ucum = require('./config.js').Ucum;
+var Unit = require('./unit.js').Unit;
 var UnitTables = require('./unitTables.js').UnitTables;
 var PrefixTables = require('./prefixTables.js').PrefixTables;
 
-export class UnitString{
+export class UnitString {
 
   /**
    * Constructor
@@ -101,6 +103,8 @@ export class UnitString{
    * @throws an error if nothing was specified.
    */
   parseString(uStr, origString, retMsg) {
+
+    uStr = uStr.trim();
 
     // Used in error messages to provide context for messages
     if (origString === undefined)
@@ -234,10 +238,10 @@ export class UnitString{
           closePos = c;
           uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
           let parseResp = this.parseString(
-                               uStr.substring(openPos + 1, closePos - 1),
+                               origString.substring(openPos + 1, closePos - 1),
                                origString, retMsg);
           parensUnits[pu++] = parseResp[0];
-          origString = parseResp[1];
+          //origString = parseResp[1];
           uStr = uStr.substr(closePos);
           trimmedCt = closePos;
         }
@@ -260,7 +264,8 @@ export class UnitString{
 
       // Call makeUnitsArray to convert the string to an array of unit
       // descriptors with operators.
-      origString = uStr ;
+  /*    if (firstCall)
+        origString = uStr ;*/
       uArray = this.makeUnitsArray(uStr);
 
       // Create a unit object out of each un element
@@ -315,10 +320,13 @@ export class UnitString{
             } // end if the text following the parentheses is an annotation
           } // end if the ending parenthesis is not at the end of the code
 
-          // If we're good, put the unit in the uArray
+          // If we're good, put the unit in the uArray and replace the placeholder
+          // in the original string with the unit name.
           if (!endProcessing) {
             let nIdx = parseInt(pIdx);
             uArray[u1]['un'] = parensUnits[nIdx];
+            origString = origString.replace(this.parensFlag_ + pIdx + this.parensFlag_,
+                         '(' + parensUnits[nIdx]['name_'] + ')');
           }
         } // end if the parentheses flag is found at the beginning of curCode
 
@@ -343,9 +351,12 @@ export class UnitString{
           if (isNaN(curCodeNum)) {
             let uRet = this.makeUnit(curCode, annotations,
                                      retMsg, origString);
-            uArray[u1]['un'] = uRet[0];
-            origString = uRet[1];
-            endProcessing = uArray[u1]['un'] == null;
+            if (uRet[0] == null)
+              endProcessing = true;
+            else {
+              uArray[u1]['un'] = uRet[0];
+              origString = uRet[1];
+            }
           }
           // Otherwise write the numeric version of the number back to
           // the uArray 'un' element
@@ -409,8 +420,12 @@ export class UnitString{
                 isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
                 let theName = finalUnit.toString() + thisOp +
                     nextUnit.getProperty('name_');
+                let theCode = finalUnit.toString() + thisOp +
+                    nextUnit.getProperty('csCode_');
                 finalUnit = nextUnit;
-                finalUnit.assignVals({'name_': theName, 'magnitude_': nMag});
+                finalUnit.assignVals({'csCode_' : theCode,
+                                      'name_' : theName,
+                                      'magnitude_' : nMag});
               }
             } // end if nextUnit is not a number
 
@@ -422,7 +437,11 @@ export class UnitString{
                     fMag *= nextUnit;
                 let theName = finalUnit.getProperty('name_') + thisOp +
                     nextUnit.toString();
-                finalUnit.assignVals({'name_': theName, 'magnitude_': fMag});
+                let theCode = finalUnit.getProperty('csCode_') + thisOp +
+                    nextUnit.toString();
+                finalUnit.assignVals({'csCode_' : theCode ,
+                                      'name_': theName,
+                                      'magnitude_': fMag});
               }
               // both are numbers
               else {
@@ -440,13 +459,30 @@ export class UnitString{
       } // end do for each unit after the first one
     }
 
+    // check for any annotation flags still there and replace them with
+    // the annotations
+    let anoLen = annotations.length;
+    for (let a = 0; a < anoLen; a++) {
+      origString = origString.replace(this.braceFlag_ + a +
+          this.braceFlag_, annotations[a]);
+    }
+
     // Do a final check to make sure that finalUnit is a unit and not
     // just a number.  Something like "1/{HCP}" will return a "unit" of 1
     // - which is not a unit.  Do this only when this is the first/outer
     // call to this method.
-    if (firstCall && !isNaN(finalUnit) && finalUnit !== 1)
-      finalUnit = null ;
-
+    if (finalUnit && firstCall && !isNaN(finalUnit) && finalUnit !== 1) {
+      //console.log('at end of parseString, uStr = ' + uStr + '; origString = ' +
+      //    origString + '; finalUnit = ' + JSON.stringify(finalUnit) );
+      let newUnit = new Unit({'csCode_' : origString});
+      if (newUnit) {
+        newUnit['magnitude_'] = finalUnit ;
+      }
+      else {
+        throw (new Error('error processing numerical unit'));
+      }
+      finalUnit = newUnit ;
+    }
     return [finalUnit, origString, retMsg];
   } // end parseString
 
@@ -549,6 +585,7 @@ export class UnitString{
     let origUnit = null;
     let retUnit = null;
     let endProcessing = false ;
+    let origCode = uCode ;
 
     // check annotations:
     // If it's JUST an annotation, replace with 1.  If we find text following
@@ -606,7 +643,8 @@ export class UnitString{
           //let lead1 = (origString.substr(0,1) === '/') ? '1' : '' ;
           //let wString = origString.replace(anText, this.openEmph_ + anText +
           //                                         this.closeEmph_) ;
-          origString = origString.replace(anText, '');
+          origString = origString.replace(this.braceFlag_ + anIdx +
+                                          this.braceFlag_, anText);
           if (this.bracesMsg_) {
             let dup = false;
             for (let r = 0; !dup && r < retMsg.length; r++) {
@@ -626,8 +664,10 @@ export class UnitString{
 
       // Check to make sure that the uCode is not simply a number.  This can
       // happen if an annotation was stripped off, or if the uCode was JUST
-      // an annotation.  In either case, digits are not units.
+      // an annotation.  In either case, digits are not units, but return the
+      // digits.
       endProcessing = !isNaN(uCode);
+      retUnit = Number(uCode) ;
     }
     if (!endProcessing) {
       ulen = uCode.length;
@@ -730,7 +770,8 @@ export class UnitString{
       // unit string, with the unit string without the exponent, and the
       // unit string without a prefix.  That's all we can try).
       if (!origUnit) {
-        retMsg.push(`Unable to find unit for ${origString}`);
+        retMsg.push(`Unable to find unit for ${origCode}`);
+        retUnit = null;
         endProcessing = true ;
       }
       if (!endProcessing) {
@@ -794,58 +835,6 @@ export class UnitString{
 
     return [retUnit, origString] ;
   } // end makeUnit
-
-
-  /**
-   * Creates a unit string that indicates multiplication of the two
-   * units referenced by the codes passed in.
-   *
-   * @params s1 string representing the first unit
-   * @params s2 string representing the second unit
-   * @returns a string representing the two units multiplied
-   */
-  mulString(s1, s2) {
-    return s1 + "." + s2;
-  }
-
-
-  /**
-   * Creates a unit string that indicates division of the first unit by
-   * the second unit, as referenced by the codes passed in.
-   *
-   * @params s1 string representing the first unit
-   * @params s2 string representing the second unit
-   * @returns a string representing the division of the first unit by the
-   * second unit
-   */
-  divString(s1, s2) {
-    let ret = null;
-    if(s2.length == 0)
-      ret = s1;
-    else {
-      let supPos = s2.indexOf('<sup>') ;
-      let s2Sup = null;
-      if (supPos > 0) {
-        s2Sup = s2.substr(supPos) ;
-        s2 = s2.substr(0, supPos);
-      }
-      let t = s2.replace('/','1').replace('.','/').replace('1','.');
-
-      switch (t[0]) {
-        case '.':
-          ret = s1 + t;
-          break ;
-        case '/':
-          ret =  s1 + t;
-          break;
-        default:
-          ret = s1 + "/" + t;
-      }
-      if (s2Sup)
-        ret += s2Sup;
-    }
-    return ret ;
-  } // end divString
 
 } // end class UnitString
 

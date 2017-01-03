@@ -79,21 +79,25 @@
           <input type="text" id="valString" placeholder="begin typing ..."
                  onchange=
                  "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
-                                                                   'validationString')">&nbsp; &nbsp; &nbsp; &nbsp;
-          <button id="toggleHints"
-                  onclick="
-                demoPkg.UcumDemo.getInstance().toggleDisplay('hints',
-                                                             'toggleHints',
-                                                             'Hide', 'Show')"
-                  type="button">Show entry hints</button>
+                                                                   'validationString')">&nbsp; &nbsp;
+          Press tab or return to validate the expression<br><br>
+          The choices list may disappear when you are typing a complex expression.&nbsp
+          Keep typing and your expression will be validated when you press tab or return.
+
         </p>&nbsp;&nbsp;
-        <button id="doValidationButton"
+        <!--<button id="doValidationButton"
                 onclick=
                     "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString')"
-                type="button">Validate</button>
+                type="button">Validate</button> -->
         <p id="validationString">&nbsp;&nbsp;</p>
         <p id="validList"></p>
+        <p><button id="toggleHints"
+                onclick="
+                demoPkg.UcumDemo.getInstance().toggleDisplay('hints',
+                                                             'toggleHints',
+                                                             'Hide', 'Show')"
+                type="button">Show entry hints</button></p>
         <div id="hints" style="display: none">
           <h4 class="small-print" style="text-align: left">Unit Expression creation hints</h4>
           <p class="small-print">See the <a href="http://unitsofmeasure.org/ucum.html">

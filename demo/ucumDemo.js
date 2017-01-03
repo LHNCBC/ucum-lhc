@@ -5,7 +5,6 @@
  * populating the autocompleter unit lists.
  */
 
-var fs = require('browserify-fs');
 var Ucum = ucumPkg.Ucum;
 var UcumDemoConfig = require('./demoConfig').UcumDemoConfig;
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;

@@ -1,7 +1,7 @@
 {
   "name": "ucum-lhc",
   "description": "Implements Unified Code for Units of Measure functions as javascript library",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "main": "dist/ucum-lhc.js",
   "license": "LICENSE.md",
   "ignore": [
@@ -23,11 +23,5 @@
     "source",
     "stuff",
     "stylesheets"
-  ],
-  "dependencies": {
-    "fs": "https://github.com/bpedro/node-fs",
-    "is-integer": "https://github.com/parshap/js-is-integer",
-    "jsonfile": "https://github.com/jprichardson/node-jsonfile",
-    "path": "https://github.com/jinder/path"
-  }
+  ]
 }
