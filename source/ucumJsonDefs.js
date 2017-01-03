@@ -23,12 +23,6 @@ export class UcumJsonDefs {
    */
   constructor() {
 
-    if (Utab.UnitTables.getInstance().unitsCount() === 0) {
-
-      // Load the prefix and unit objects
-      let uDefs = UcumJsonDefs.getInstance();
-      uDefs.loadJsonDefs();
-    }
     // Make this a singleton.  See UnitTables constructor for details.
 
     let holdThis = UcumJsonDefs.prototype;
@@ -51,23 +45,26 @@ export class UcumJsonDefs {
    */
   loadJsonDefs() {
 
-    let pTab = PfxT.PrefixTables.getInstance() ;
-    let prefixes = jsonDefs_["prefixes"];
-    let plen = prefixes.length ;
+    if (Utab.UnitTables.getInstance().unitsCount() === 0) {
 
-    for (let p = 0; p < plen; p++) {
-      let newPref = new Pfx.Prefix(prefixes[p]);
-      pTab.add(newPref);
-    }
+      let pTab = PfxT.PrefixTables.getInstance();
+      let prefixes = jsonDefs_["prefixes"];
+      let plen = prefixes.length;
 
-    let uTab = Utab.UnitTables.getInstance();
-    let units = jsonDefs_["units"];
-    let ulen = units.length ;
+      for (let p = 0; p < plen; p++) {
+        let newPref = new Pfx.Prefix(prefixes[p]);
+        pTab.add(newPref);
+      }
 
-    for (let u = 0; u < ulen; u++) {
-      let newUnit = new Un.Unit(units[u]);
-      uTab.addUnit(newUnit);
-    }
+      let uTab = Utab.UnitTables.getInstance();
+      let units = jsonDefs_["units"];
+      let ulen = units.length;
+
+      for (let u = 0; u < ulen; u++) {
+        let newUnit = new Un.Unit(units[u]);
+        uTab.addUnit(newUnit);
+      }
+    } // end if the data has not already been loaded
   } // end loadJsonDefs
 
 } // end UcumJsonDefs class

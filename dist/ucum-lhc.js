@@ -25319,23 +25319,26 @@ var UcumJsonDefs = exports.UcumJsonDefs = function () {
     key: "loadJsonDefs",
     value: function loadJsonDefs() {
 
-      var pTab = PfxT.PrefixTables.getInstance();
-      var prefixes = jsonDefs_["prefixes"];
-      var plen = prefixes.length;
+      if (Utab.UnitTables.getInstance().unitsCount() === 0) {
 
-      for (var p = 0; p < plen; p++) {
-        var newPref = new Pfx.Prefix(prefixes[p]);
-        pTab.add(newPref);
-      }
+        var pTab = PfxT.PrefixTables.getInstance();
+        var prefixes = jsonDefs_["prefixes"];
+        var plen = prefixes.length;
 
-      var uTab = Utab.UnitTables.getInstance();
-      var units = jsonDefs_["units"];
-      var ulen = units.length;
+        for (var p = 0; p < plen; p++) {
+          var newPref = new Pfx.Prefix(prefixes[p]);
+          pTab.add(newPref);
+        }
 
-      for (var u = 0; u < ulen; u++) {
-        var newUnit = new Un.Unit(units[u]);
-        uTab.addUnit(newUnit);
-      }
+        var uTab = Utab.UnitTables.getInstance();
+        var units = jsonDefs_["units"];
+        var ulen = units.length;
+
+        for (var u = 0; u < ulen; u++) {
+          var newUnit = new Un.Unit(units[u]);
+          uTab.addUnit(newUnit);
+        }
+      } // end if the data has not already been loaded
     } // end loadJsonDefs
 
   }]);
@@ -27284,6 +27287,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 
 var Ucum = require('./config.js').Ucum;
+var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
 
 var UnitTables = exports.UnitTables = function () {
 
@@ -27866,5 +27870,5 @@ UnitTables.getInstance = function () {
 UnitTables.getInstance();
 
 
-},{"./config.js":166}]},{},[174])(174)
+},{"./config.js":166,"./ucumJsonDefs.js":172}]},{},[174])(174)
 });
