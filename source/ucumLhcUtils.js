@@ -28,7 +28,7 @@ export class UcumLhcUtils {
 
         // Load the prefix and unit objects
         let uDefs = UcumJsonDefs.getInstance();
-      //  uDefs.loadJsonDefs();
+        uDefs.loadJsonDefs();
       }
 
       // Make this a singleton.  See UnitTables constructor for details.

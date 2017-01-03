@@ -11,10 +11,9 @@ var UTables = require("../source-es5/unitTables.js").UnitTables;
 var UnitObj = require("../source-es5/unit.js").Unit;
 
 var uTabs = UTables.getInstance();
-//if (uTabs.unitsCount() === 0) {
 var uDefs = UcumJsonDefs.getInstance();
-//uDefs.loadJsonDefs();
-//}
+uDefs.loadJsonDefs();
+
 
 describe('Test Unit Power method', function() {
     describe('Test invalid Power request', function() {
