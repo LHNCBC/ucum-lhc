@@ -120,6 +120,8 @@ export class UcumDataUpdater {
 
   /**
    * This updates an existing unit with the data from the input file.
+   * Specifically, this updates the columns named in the csvCols_ hash
+   * that is defined in the config.js file.
    *
    * @param existingUnit the existing unit object with the csCode that
    *  matches the case-sensitive code found in the input file

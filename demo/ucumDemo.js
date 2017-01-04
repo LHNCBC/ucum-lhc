@@ -256,8 +256,8 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
     
-    let uStr = sanitizeHtml(document.getElementById(sanitizeHtml(elementID)).value);
-    let valFld = document.getElementById(sanitizeHtml(returnElementID));
+    let uStr = sanitizeHtml(document.getElementById(elementID).value);
+    let valFld = document.getElementById(returnElementID);
     valFld.innerHTML = '';
     let retMsg = [];
     let valMsg = '';
@@ -306,20 +306,20 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
-    if (sanitizeHtml(decDigits) === undefined)
+    if (decDigits === undefined)
       decDigits = Ucum.decDigits_;
 
-    let fromName = sanitizeHtml(document.getElementById(sanitizeHtml(fromField)).value) ;
-    let fromVal = parseFloat(sanitizeHtml(document.getElementById(sanitizeHtml(numField)).value));
+    let fromName = sanitizeHtml(document.getElementById(fromField).value) ;
+    let fromVal = parseFloat(sanitizeHtml(document.getElementById(numField).value));
     let hypIdx = fromName.indexOf(Ucum.codeSep_);
     if (hypIdx > 0)
       fromName = fromName.substr(0, hypIdx) ;
-    let toName = sanitizeHtml(document.getElementById(sanitizeHtml(toField)).value);
+    let toName = sanitizeHtml(document.getElementById(toField).value);
     let codePos = toName.indexOf(Ucum.codeSep_);
     if (codePos > 0)
       toName = toName.substr(0, codePos);
 
-    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, sanitizeHtml(decDigits));
+    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
 
     // Put the message - conversion or error - on the page
     let resultString = document.getElementById("resultString");
@@ -346,13 +346,13 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
-    let toFld = document.getElementById(sanitizeHtml(toField));
+    let toFld = document.getElementById(toField);
     toFld.innerHTML = '';
     this.toAuto_.setList('');
-    let resultString = document.getElementById(sanitizeHtml(resultField));
+    let resultString = document.getElementById(resultField);
     resultString.innerHTML = '';
 
-    let fromName = sanitizeHtml(document.getElementById(sanitizeHtml(fromField)).value);
+    let fromName = sanitizeHtml(document.getElementById(fromField).value);
     let hypIdx = fromName.indexOf(Ucum.codeSep_);
     if (hypIdx > 0)
       fromName = fromName.substr(0, hypIdx) ;
@@ -411,22 +411,20 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
-    let theElement = document.getElementById(sanitizeHtml(elementID));
+    let theElement = document.getElementById(elementID);
     let theButton = null;
     if (buttonID)
-      theButton = document.getElementById(sanitizeHtml(buttonID));
+      theButton = document.getElementById(buttonID);
     if (theElement) {
       if (theElement.style.display === "none") {
         theElement.style.display = "block";
         if (theButton)
-          theButton.innerText = theButton.innerText.replace(sanitizeHtml(noneText),
-                                                            sanitizeHtml(blockText));
+          theButton.innerText = theButton.innerText.replace(noneText, blockText);
       }
       else {
         theElement.style.display = "none";
         if (theButton)
-          theButton.innerText = theButton.innerText.replace(sanitizeHtml(blockText),
-                                                            sanitizeHtml(noneText));
+          theButton.innerText = theButton.innerText.replace(blockText, noneText);
       }
     } // end if we got the target element
   } // end toggleDisplay

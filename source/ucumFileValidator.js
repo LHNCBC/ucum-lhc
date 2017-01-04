@@ -65,7 +65,7 @@ export class UcumFileValidator {
 
     // The file reader reads the input file into the str readable stream
     var reader = new FileReader();
-    reader.readAsText(sanitizeHtml(inputFile));
+    reader.readAsText(inputFile);
 
     var utils = UcumLhcUtils.getInstance();
 
