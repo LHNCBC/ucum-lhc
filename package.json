@@ -1,6 +1,6 @@
 {
   "name": "ucum",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "dist/ucum-lhc.js",
   "directories": {
@@ -8,13 +8,13 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "bower": "^1.7.9",
     "csv": "^1.1.0",
     "csv-parse": "^1.1.7",
     "csv-stringify": "^1.0.4",
     "is-integer": "^1.0.6",
     "jsonfile": "^2.2.3",
     "path": "^0.12.7",
+    "sanitize-html": "^1.13.0",
     "stream": "0.0.2",
     "stream-transform": "^0.1.1",
     "string-to-stream": "^1.1.0",
