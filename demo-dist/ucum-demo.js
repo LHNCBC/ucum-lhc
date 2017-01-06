@@ -400,20 +400,40 @@ var UcumDemo = exports.UcumDemo = function () {
       this.utils_.useBraceMsgForEachString(true);
 
       if (decDigits === undefined) decDigits = Ucum.decDigits_;
+      var entryMsg = [];
 
       var fromName = sanitizeHtml(document.getElementById(fromField).value);
-      var fromVal = parseFloat(sanitizeHtml(document.getElementById(numField).value));
-      var hypIdx = fromName.indexOf(Ucum.codeSep_);
-      if (hypIdx > 0) fromName = fromName.substr(0, hypIdx);
+      if (fromName === '' || fromName === null) {
+        entryMsg.push('Please specify a code for the units you want to convert.');
+      } else {
+        var hypIdx = fromName.indexOf(Ucum.codeSep_);
+        if (hypIdx > 0) fromName = fromName.substr(0, hypIdx);
+      }
+      var fromVal = parseFloat(document.getElementById(numField).value);
+      if (isNaN(fromVal)) {
+        entryMsg.push('Please specify the number of units to be converted.');
+      }
       var toName = sanitizeHtml(document.getElementById(toField).value);
-      var codePos = toName.indexOf(Ucum.codeSep_);
-      if (codePos > 0) toName = toName.substr(0, codePos);
-
-      var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
-
-      // Put the message - conversion or error - on the page
+      if (toName === '' || toName === null) {
+        entryMsg.push('Please specify a code that you want the units to be converted to.');
+      } else {
+        var codePos = toName.indexOf(Ucum.codeSep_);
+        if (codePos > 0) toName = toName.substr(0, codePos);
+      }
+      // Get the field to hold the response
       var resultString = document.getElementById("resultString");
-      resultString.innerHTML = resultObj['msg'].join('<BR>');
+      resultString.innerHTML = '';
+
+      // if we don't have any entry messages, call the conversion code and put
+      // the response in the form field.  Otherwise fill that field with the
+      // entry message(s).
+      var mLen = entryMsg.length;
+      if (mLen === 0) {
+        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
+        resultString.innerHTML = resultObj['msg'].join('<BR>');
+      } else {
+        resultString.innerHTML = entryMsg.join('<BR>');
+      }
     } // end convertUnit
 
 
@@ -438,6 +458,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
       this.utils_.useHTMLInMessages(true);
       this.utils_.useBraceMsgForEachString(true);
+      var resultMsg = [];
 
       var toFld = document.getElementById(toField);
       toFld.innerHTML = '';
@@ -446,30 +467,34 @@ var UcumDemo = exports.UcumDemo = function () {
       resultString.innerHTML = '';
 
       var fromName = sanitizeHtml(document.getElementById(fromField).value);
-      var hypIdx = fromName.indexOf(Ucum.codeSep_);
-      if (hypIdx > 0) fromName = fromName.substr(0, hypIdx);
-      var resultMsg = [];
-      var parseResp = [];
+      if (fromName === '' || fromName === null) {
+        resultMsg.push('Please specify a code for the units you want to convert.');
+      } else {
+        var hypIdx = fromName.indexOf(Ucum.codeSep_);
+        if (hypIdx > 0) fromName = fromName.substr(0, hypIdx);
 
-      try {
-        parseResp = this.utils_.commensurablesList(fromName);
-        var commUnits = parseResp[0];
-        resultMsg = parseResp[1];
-        // If we can't find any, don't panic.  The user could still enter one
-        // that's not on our list but is commensurable.  So if none are found,
-        // just make sure the text about commensurable units is hidden.
-        var commText = document.getElementById('convertRight');
-        if (commUnits) {
-          var cLen = commUnits.length;
-          var commNames = [];
-          for (var i = 0; i < cLen; i++) {
-            commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ + commUnits[i].getProperty('name_');
-          }commNames.sort(this.utabs_.compareCodes);
-          this.toAuto_.setList(commNames);
-          commText.style.visibility = "visible";
-        } else commText.style.visibility = "hidden";
-      } catch (err) {
-        resultMsg.push(err.message);
+        var parseResp = [];
+
+        try {
+          parseResp = this.utils_.commensurablesList(fromName);
+          var commUnits = parseResp[0];
+          resultMsg = parseResp[1];
+          // If we can't find any, don't panic.  The user could still enter one
+          // that's not on our list but is commensurable.  So if none are found,
+          // just make sure the text about commensurable units is hidden.
+          var commText = document.getElementById('convertRight');
+          if (commUnits) {
+            var cLen = commUnits.length;
+            var commNames = [];
+            for (var i = 0; i < cLen; i++) {
+              commNames[i] = commUnits[i].getProperty('csCode_') + Ucum.codeSep_ + commUnits[i].getProperty('name_');
+            }commNames.sort(this.utabs_.compareCodes);
+            this.toAuto_.setList(commNames);
+            commText.style.visibility = "visible";
+          } else commText.style.visibility = "hidden";
+        } catch (err) {
+          resultMsg.push(err.message);
+        }
       }
       if (resultMsg.length > 0) {
         resultString.innerHTML = resultMsg.join('<BR>');
