@@ -5,6 +5,8 @@
  * to handle the input and output processing.
  *
  */
+var fs = require('browserify-fs');
+var sanitizeHtml = require('sanitize-html');
 
 var stream = require('stream');
 var parse = require('csv-parse') ;
