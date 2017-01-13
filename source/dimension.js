@@ -310,15 +310,18 @@ export class Dimension {
    * @throws an exception if dim2 is not a Dimension object
    */
   assignDim(dim2) {
+
     if (!dim2 instanceof Dimension) {
       throw(new Error(`Dimension.assignDim called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`));
     }
-    let dimVec2 = dim2.dimVec_;
-    if (this.dimVec_ === null && dimVec2 !== null) {
-      this.dimVec = [] ;
-    }
+    let dimVec2 = null;
+    if (dim2.dimVec_ !== undefined && dim2.dimVec_ !== null)
+      dimVec2 = dim2.dimVec_ ;
 
+    if (this.dimVec_ === null && dimVec2 !== null) {
+      this.dimVec_ = [] ;
+    }
     if (this.dimVec_ && dimVec2) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++)
         this.dimVec_[i] = dimVec2[i];
@@ -326,7 +329,6 @@ export class Dimension {
     else { // dimVec2_ === null, this.dimVec_ may or may not be null
       this.dimVec_ = null ;
     }
-
     return this;
   }
 

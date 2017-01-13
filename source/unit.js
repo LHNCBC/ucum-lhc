@@ -239,12 +239,18 @@ export class Unit {
   clone() {
     let retUnit = new Unit() ;
     Object.getOwnPropertyNames(this).forEach(val => {
-      if (val === 'dim_') {
-        retUnit['dim_'] = new Dimension(this.dim_.dimVec_);
+      if (val == 'dim_') {
+        if (this['dim_']) {
+          if (Object.keys(this['dim_']).length > 0)
+            retUnit['dim_'] = this['dim_'].clone();
+          else
+            retUnit['dim_'] = {} ;
+        }
+        else
+          retUnit['dim_'] = null;
       }
-      else {
+      else
         retUnit[val] = this[val];
-      }
     });
     return retUnit ;
 
@@ -285,7 +291,8 @@ export class Unit {
   equals(unit2) {
 
     return (this.magnitude_ === unit2.magnitude_ &&
-            this.dim_.equals(unit2.dim_) &&
+            //this.dim_.equals(unit2.dim_) &&
+            JSON.stringify(this.dim_) === JSON.stringify(unit2.dim_) &&
             this.cnv_ === unit2.cnv_ &&
             this.cnvPfx_ === unit2.cnvPfx_);
 

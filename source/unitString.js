@@ -116,7 +116,8 @@ export class UnitString {
     }
 
     let firstCall = (uStr === origString) ;
-
+    if (firstCall)
+      console.log('\rn');
     // If this is the first call for the string, check for spaces and throw
     // an error if any are found.  The spec explicitly forbids spaces.
     if (firstCall && origString.indexOf(' ') > -1) {
@@ -455,6 +456,9 @@ export class UnitString {
             endProcessing = true ;
             finalUnit = null ;
           }
+          console.log('just did arithmetic, finalUnit dim: ' +
+                      JSON.stringify(finalUnit.dim_) + '; mag: ' +
+                      finalUnit.magnitude_);
         } // end if not endProceesing
       } // end do for each unit after the first one
     }
@@ -586,7 +590,8 @@ export class UnitString {
     let retUnit = null;
     let endProcessing = false ;
     let origCode = uCode ;
-
+    console.log('makeUnit called for origString = ' + origString +
+                '; uCode = ' + uCode);
     // check annotations:
     // If it's JUST an annotation, replace with 1.  If we find text following
     // the annotation, mark it as an error.   Otherwise just remove it - the
@@ -779,18 +784,25 @@ export class UnitString {
         // and exponent, if any, to it.
 
         retUnit = origUnit.clone();
+        console.log('cloned unit for csCode_ = ' + origUnit.csCode_);
         let theDim = retUnit.getProperty('dim_');
+        //if (theDim)
+        //  theDim = theDim.clone();
         let theMag = retUnit.getProperty('magnitude_');
         let theName = retUnit.getProperty('name_');
+        console.log('  dim = ' + JSON.stringify(theDim) + '; mag = ' + theMag);
         // If there is an exponent for the unit, apply it to the dimension
         // and magnitude now
         if (exp) {
           exp = parseInt(exp);
           let expMul = exp;
-          theDim = theDim.mul(exp);
+          if (theDim && Object.keys(theDim).length > 0)
+            theDim = theDim.mul(exp);
           theMag = Math.pow(theMag, exp);
           retUnit.assignVals({'magnitude_': theMag});
-
+          console.log('  applied exponent, dim = ' +
+                      JSON.stringify(retUnit.dim_) + '; mag = ' +
+                      retUnit.magnitude_);
           // If there is also a prefix, apply the exponent to the prefix.
           if (pfxVal) {
 
@@ -814,6 +826,9 @@ export class UnitString {
         if (pfxVal) {
           theMag *= pfxVal;
           retUnit.assignVals({'magnitude_': theMag})
+          console.log('    applied prefix, dim = ' +
+              JSON.stringify(retUnit.dim_) + '; mag = ' +
+              retUnit.magnitude_);
         }
 
         // if we have a prefix and/or an exponent, add them to the unit name

@@ -24411,14 +24411,16 @@ var Dimension = exports.Dimension = function () {
   }, {
     key: 'assignDim',
     value: function assignDim(dim2) {
+
       if (!dim2 instanceof Dimension) {
         throw new Error('Dimension.assignDim called with an invalid parameter - ' + ((typeof dim2 === 'undefined' ? 'undefined' : _typeof(dim2)) + ' instead of a Dimension object'));
       }
-      var dimVec2 = dim2.dimVec_;
-      if (this.dimVec_ === null && dimVec2 !== null) {
-        this.dimVec = [];
-      }
+      var dimVec2 = null;
+      if (dim2.dimVec_ !== undefined && dim2.dimVec_ !== null) dimVec2 = dim2.dimVec_;
 
+      if (this.dimVec_ === null && dimVec2 !== null) {
+        this.dimVec_ = [];
+      }
       if (this.dimVec_ && dimVec2) {
         for (var i = 0; i < UC.Ucum.dimLen_; i++) {
           this.dimVec_[i] = dimVec2[i];
@@ -24427,7 +24429,6 @@ var Dimension = exports.Dimension = function () {
         // dimVec2_ === null, this.dimVec_ may or may not be null
         this.dimVec_ = null;
       }
-
       return this;
     }
 
@@ -25319,7 +25320,7 @@ var UcumJsonDefs = exports.UcumJsonDefs = function () {
     key: "loadJsonDefs",
     value: function loadJsonDefs() {
 
-      if (Utab.UnitTables.getInstance().unitsCount() === 0) {
+      if (Utab.UnitTables.getInstance().unitsCount() === 0 && Object.keys(jsonDefs_).length === 0) {
 
         var pTab = PfxT.PrefixTables.getInstance();
         var prefixes = jsonDefs_["prefixes"];
@@ -25960,11 +25961,11 @@ var Unit = exports.Unit = function () {
 
       var retUnit = new Unit();
       Object.getOwnPropertyNames(this).forEach(function (val) {
-        if (val === 'dim_') {
-          retUnit['dim_'] = new Dimension(_this.dim_.dimVec_);
-        } else {
-          retUnit[val] = _this[val];
-        }
+        if (val == 'dim_') {
+          if (_this['dim_']) {
+            if (Object.keys(_this['dim_']).length > 0) retUnit['dim_'] = _this['dim_'].clone();else retUnit['dim_'] = {};
+          } else retUnit['dim_'] = null;
+        } else retUnit[val] = _this[val];
       });
       return retUnit;
     } // end clone
@@ -26008,7 +26009,9 @@ var Unit = exports.Unit = function () {
     key: "equals",
     value: function equals(unit2) {
 
-      return this.magnitude_ === unit2.magnitude_ && this.dim_.equals(unit2.dim_) && this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_;
+      return this.magnitude_ === unit2.magnitude_ &&
+      //this.dim_.equals(unit2.dim_) &&
+      JSON.stringify(this.dim_) === JSON.stringify(unit2.dim_) && this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_;
     } // end equals
 
 
@@ -26565,7 +26568,7 @@ var UnitString = exports.UnitString = function () {
       }
 
       var firstCall = uStr === origString;
-
+      if (firstCall) console.log('\rn');
       // If this is the first call for the string, check for spaces and throw
       // an error if any are found.  The spec explicitly forbids spaces.
       if (firstCall && origString.indexOf(' ') > -1) {
@@ -26869,6 +26872,7 @@ var UnitString = exports.UnitString = function () {
               endProcessing = true;
               finalUnit = null;
             }
+            console.log('just did arithmetic, finalUnit dim: ' + JSON.stringify(finalUnit.dim_) + '; mag: ' + finalUnit.magnitude_);
           } // end if not endProceesing
         } // end do for each unit after the first one
       }
@@ -27001,7 +27005,7 @@ var UnitString = exports.UnitString = function () {
       var retUnit = null;
       var endProcessing = false;
       var origCode = uCode;
-
+      console.log('makeUnit called for origString = ' + origString + '; uCode = ' + uCode);
       // check annotations:
       // If it's JUST an annotation, replace with 1.  If we find text following
       // the annotation, mark it as an error.   Otherwise just remove it - the
@@ -27184,18 +27188,22 @@ var UnitString = exports.UnitString = function () {
           // and exponent, if any, to it.
 
           retUnit = origUnit.clone();
+          console.log('cloned unit for csCode_ = ' + origUnit.csCode_);
           var theDim = retUnit.getProperty('dim_');
+          //if (theDim)
+          //  theDim = theDim.clone();
           var theMag = retUnit.getProperty('magnitude_');
           var theName = retUnit.getProperty('name_');
+          console.log('  dim = ' + JSON.stringify(theDim) + '; mag = ' + theMag);
           // If there is an exponent for the unit, apply it to the dimension
           // and magnitude now
           if (exp) {
             exp = parseInt(exp);
             var expMul = exp;
-            theDim = theDim.mul(exp);
+            if (theDim && Object.keys(theDim).length > 0) theDim = theDim.mul(exp);
             theMag = Math.pow(theMag, exp);
             retUnit.assignVals({ 'magnitude_': theMag });
-
+            console.log('  applied exponent, dim = ' + JSON.stringify(retUnit.dim_) + '; mag = ' + retUnit.magnitude_);
             // If there is also a prefix, apply the exponent to the prefix.
             if (pfxVal) {
 
@@ -27219,6 +27227,7 @@ var UnitString = exports.UnitString = function () {
           if (pfxVal) {
             theMag *= pfxVal;
             retUnit.assignVals({ 'magnitude_': theMag });
+            console.log('    applied prefix, dim = ' + JSON.stringify(retUnit.dim_) + '; mag = ' + retUnit.magnitude_);
           }
 
           // if we have a prefix and/or an exponent, add them to the unit name
