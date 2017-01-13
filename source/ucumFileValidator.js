@@ -5,13 +5,13 @@
  * to handle the input and output processing.
  *
  */
-
 var fs = require('browserify-fs');
+var sanitizeHtml = require('sanitize-html');
+
 var stream = require('stream');
 var parse = require('csv-parse') ;
 var transform = require('stream-transform');
 var stringify = require('csv-stringify');
-var process = require('process');
 var str = require('string-to-stream') ;
 
 var UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;

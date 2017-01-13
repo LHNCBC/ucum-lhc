@@ -56,7 +56,25 @@ export var Ucum = {
    * string, to let the user know how they are interpreted.
    */
   bracesMsg_ : 'Annotations (text in curley braces {}) have no influence ' +
-               'on the processing of a unit string.'
+               'on the processing of a unit string.',
+
+  /**
+   * Hash that matches unit column names to names used in the csv file
+   * that is submitted to the data updater.
+   */
+  csvCols_ : {
+    'case-sensitive code' : 'csCode_',
+    'LOINC property' : 'loincProperty_',
+    'name (final)' : 'name_',
+    'synonyms' : 'synonyms_',
+    'source' : 'source_',
+    'category' : 'category_'
+  } ,
+
+  /**
+   * Name of the iey in the csv file that serves as the key
+   */
+  inputKey_ : 'case-sensitive code'
 } ;
 
 
