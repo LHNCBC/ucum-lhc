@@ -147,6 +147,7 @@ module.exports = function(grunt) {
                                     "uglify:demo"]);
   grunt.registerTask("build", ["build:dist",
                                "build:demo"]);
-  grunt.registerTask("test", 'mochaTest');
+  grunt.registerTask("test", ['build',
+                              'mochaTest']);
 
 };

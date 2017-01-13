@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/9.2.3/autocomplete-lhc_jQueryUI.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="demo-dist/ucumDemo.min.css" rel="stylesheet"/>
+    <link href="demo-dist/stylesheets/ucumDemo.css" rel="stylesheet"/>
   </head>
   <body onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
     <!-- page header -->
@@ -79,21 +79,25 @@
           <input type="text" id="valString" placeholder="begin typing ..."
                  onchange=
                  "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
-                                                                   'validationString')">&nbsp; &nbsp; &nbsp; &nbsp;
-          <button id="toggleHints"
-                  onclick="
-                demoPkg.UcumDemo.getInstance().toggleDisplay('hints',
-                                                             'toggleHints',
-                                                             'Hide', 'Show')"
-                  type="button">Show entry hints</button>
+                                                                   'validationString')">&nbsp; &nbsp;
+          Press tab or return to validate the expression<br><br>
+          The choices list may disappear when you are typing a complex expression.&nbsp
+          Keep typing and your expression will be validated when you press tab or return.
+
         </p>&nbsp;&nbsp;
-        <button id="doValidationButton"
+        <!--<button id="doValidationButton"
                 onclick=
                     "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString')"
-                type="button">Validate</button>
+                type="button">Validate</button> -->
         <p id="validationString">&nbsp;&nbsp;</p>
         <p id="validList"></p>
+        <p><button id="toggleHints"
+                onclick="
+                demoPkg.UcumDemo.getInstance().toggleDisplay('hints',
+                                                             'toggleHints',
+                                                             'Hide', 'Show')"
+                type="button">Show entry hints</button></p>
         <div id="hints" style="display: none">
           <h4 class="small-print" style="text-align: left">Unit Expression creation hints</h4>
           <p class="small-print">See the <a href="http://unitsofmeasure.org/ucum.html">

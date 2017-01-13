@@ -6,16 +6,10 @@
  *
  */
 
-var Ucum = require('./config.js').Ucum;
 var Pfx = require("./prefix.js");
 var PfxT = require("./prefixTables.js");
 var Un = require("./unit.js");
 var Utab = require('./unitTables.js');
-
-var jsonfile = require('jsonfile');
-var util = require('util');
-var fs = require('fs');
-var path = require('path');
 
 // requiring the file will take care of opening it for use
 var jsonDefs_ = require('../dist/data/ucumDefs.json');
@@ -51,23 +45,26 @@ export class UcumJsonDefs {
    */
   loadJsonDefs() {
 
-    let pTab = PfxT.PrefixTables.getInstance() ;
-    let prefixes = jsonDefs_["prefixes"];
-    let plen = prefixes.length ;
+    if (Utab.UnitTables.getInstance().unitsCount() === 0) {
 
-    for (let p = 0; p < plen; p++) {
-      let newPref = new Pfx.Prefix(prefixes[p]);
-      pTab.add(newPref);
-    }
+      let pTab = PfxT.PrefixTables.getInstance();
+      let prefixes = jsonDefs_["prefixes"];
+      let plen = prefixes.length;
 
-    let uTab = Utab.UnitTables.getInstance();
-    let units = jsonDefs_["units"];
-    let ulen = units.length ;
+      for (let p = 0; p < plen; p++) {
+        let newPref = new Pfx.Prefix(prefixes[p]);
+        pTab.add(newPref);
+      }
 
-    for (let u = 0; u < ulen; u++) {
-      let newUnit = new Un.Unit(units[u]);
-      uTab.addUnit(newUnit);
-    }
+      let uTab = Utab.UnitTables.getInstance();
+      let units = jsonDefs_["units"];
+      let ulen = units.length;
+
+      for (let u = 0; u < ulen; u++) {
+        let newUnit = new Un.Unit(units[u]);
+        uTab.addUnit(newUnit);
+      }
+    } // end if the data has not already been loaded
   } // end loadJsonDefs
 
 } // end UcumJsonDefs class
