@@ -37,7 +37,7 @@ export var UcumDemoConfig = {
    * Base URL for an autocompleter search query on the clinical tables search
    * service for extended UCUM data
    */
-  baseSearchURL_ : 'https://lforms-service.nlm.nih.gov/api/ucum/v1/search',
+  baseSearchURL_ : 'https://lforms-service.nlm.nih.gov/api/ucum/v3/search',
 
   /**
    * Default column headers for an autocompleter search query when no display

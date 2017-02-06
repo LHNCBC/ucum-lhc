@@ -8,6 +8,7 @@
 
 var Ucum = require('./config.js').Ucum;
 var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
+var fs = require('fs');
 
 export class UnitTables {
 
@@ -84,8 +85,7 @@ export class UnitTables {
      * Tracks units by unit strings, e.g., cm-1
      *
      * @type hash - key is the unit string
-     *              value is an array of magnitude/unit reference objects
-     *              with that unit string.
+     *              value is an array of unit objects with that ciUnitString.
      */
     this.unitStrings_ = {};
 
@@ -100,6 +100,15 @@ export class UnitTables {
      *              of commensurable units.
      */
     this.unitDimensions_ = {};
+
+    /**
+     * Maps synonyms to units.   Not built until first requested.
+     *
+     * @type hash - key is the synonym
+     *              value is an array of references to Unit objects that
+     *              include that synonym.
+     */
+     this.unitSynonyms_ = {};
 
     // Make this a singleton - from mrme44 May 18 comment on
     // on GitHub Gist page of SanderLi/Singleton.js.  Modified
@@ -220,8 +229,8 @@ export class UnitTables {
 
 
   /**
-   * Adds a magnitude:unit object to the unitStrings_ table.  More than one unit
-   * can have the same string, so an array of magnitude:unit objects is stored
+   * Adds a unit object to the unitStrings_ table.  More than one unit
+   * can have the same string, so an array of unit objects is stored
    * for the string.
    *
    * If the unit has no string, nothing is stored and no error is reported.
@@ -275,6 +284,84 @@ export class UnitTables {
 
 
   /**
+   * Builds the unitSynonyms_ table. This is called the first time the
+   * getUnitsBySynonym method is called.  The table/hash contains each word
+   * (once) from each synonym as well as each word from each unit name.
+   *
+   * Hash keys are the words.  Hash values are an array of unit codes for
+   * each unit that has that word in its synonyms or name.
+   *
+   * @returns nothing
+   */
+  buildUnitSynonyms() {
+
+    for (let code in this.unitCodes_) {
+      let theUnit = this.unitCodes_[code];
+      let uSyns = theUnit.synonyms_ ;
+
+      // If the current unit has synonyms, process each synonym (often multiples)
+      if (uSyns) {
+        let synsAry = uSyns.split(';');
+        if (synsAry[0] !== '') {
+          let aLen = synsAry.length;
+          for (let a = 0; a < aLen; a++) {
+            let theSyn = synsAry[a].trim();
+
+            // process each word in the synonym
+            let synWords = theSyn.split(' ');
+            let wLen = synWords.length;
+            for (let w = 0; w < wLen; w++) {
+              let synWord = synWords[w];
+              // if the synonyms hash already has an element for the word,
+              // add the code for the current unit to the value array for
+              // the synonym - IF it's not already there.
+              if (this.unitSynonyms_[synWord]) {
+                if (this.unitSynonyms_[synWord].indexOf(code) === -1)
+                  this.unitSynonyms_[synWord].push(code);
+
+              }
+              // Otherwise create an element for the word and start the
+              // value array with the code for the current unit.
+              else {
+                this.unitSynonyms_[synWord] = [code];
+              }
+            } // end do for each word in the synonym
+          } // end do for each synonym
+        } // end if the current unit has a non-null synonym attribute
+      } // end if the unit has any synonyms
+
+      // Now process the unit's name
+      // names many have multiple units, so get the units and get the
+      // code for each unit
+      let theName = theUnit.name_ ;
+      // names often have multiple words; process each word
+      let nameWords = theName.split(' ');
+      let nLen = nameWords.length;
+      for (let n = 0; n < nLen; n++) {
+        let nameWord = nameWords[n];
+
+        // if there is already a synonyms entry for the word,
+        // get the array of unit codes currently assigned to
+        // the word and add the code for the current word to
+        // the synonyms array if it's not already there.
+        if (this.unitSynonyms_[nameWord]) {
+          let synCodes = this.unitSynonyms_[nameWord];
+          if (synCodes.indexOf(code) === -1) {
+            this.unitSynonyms_[nameWord].push(code);
+          }
+        }
+        // else there are no synonyms entry for the word.  Create a
+        // synonyms array for the word, setting it to contain the unit code.
+        else {
+          this.unitSynonyms_[nameWord] = [code];
+        }
+      } // end do for each word in the unit name being processed
+
+    } // end do for each unit
+   } // end buildUnitSynonyms
+
+
+  /**
    *  Returns a unit object based on the unit's code.  Tries first on
    *  the code as passed in and then, if the unit is not found, on a
    *  lower case version of the code and then an upper case version.
@@ -317,7 +404,7 @@ export class UnitTables {
   getUnitByName(uName) {
 
     if (uName === null || uName === undefined) {
-      throw (new Error('Unable to find unit by because when no name was provided.'));
+      throw (new Error('Unable to find unit by name because no name was provided.'));
     }
     let sepPos = uName.indexOf(Ucum.codeSep_);
     let uCode = null;
@@ -351,12 +438,12 @@ export class UnitTables {
 
   /**
    *  Returns an array of unit objects with the specified unit string.
-   *  The array may contain one or more magnitude:unit reference objects.
+   *  The array may contain one or more unit reference objects.
    *  Or none, if no units have a matching unit string (which is not
    *  considered an error)
    *
    *  @param name the name of the unit to be returned
-   *  @returns the array of magnitude:unit references or null if none were found
+   *  @returns the array of unit references or null if none were found
    */
   getUnitByString(uString) {
     let retAry = null ;
@@ -372,10 +459,10 @@ export class UnitTables {
   /**
    *  Returns a array of unit objects based on the unit's dimension vector.
    *
-   *  @param uName the deimension vector of the units to be returned.
+   *  @param uName the dimension vector of the units to be returned.
    *
    *  @returns null if no unit was found for the specified vector OR an array of
-   *  unit objects with the specified vector.
+   *  one or more unit objects with the specified vector.
    *  @throws an error if no vector is provided to search on
    *  logs an error to the console if no unit is found
    */
@@ -383,7 +470,7 @@ export class UnitTables {
 
     let unitsArray = null ;
     if (uDim === null || uDim === undefined) {
-      throw (new Error('Unable to find unit by because when no dimension ' +
+      throw (new Error('Unable to find unit by because no dimension ' +
                        'vector was provided.'));
     }
 
@@ -395,6 +482,54 @@ export class UnitTables {
     return unitsArray ;
 
   } // end getUnitsByDimension
+
+
+  /**
+   *  Returns a array of unit objects that include the specified synonym.
+   *
+   *  @param uSyn the synonym of the units to be returned.
+   *
+   *  @returns null if no unit was found for the specified synonym OR an array of
+   *  one or more unit objects with the specified synonym.
+   *  @throws an error if no synonym is provided to search on
+   *  logs an error to the console if no unit is found
+   */
+  getUnitBySynonym(uSyn) {
+
+    let retObj = {} ;
+    let unitsArray = [];
+
+    try {
+      if (uSyn === null || uSyn === undefined) {
+        retObj['status'] = 'error' ;
+        throw (new Error('Unable to find unit by synonym because no synonym ' +
+            'was provided.'));
+      }
+      // If this is the first request for a unit by synonym, build the hash map
+      if (Object.keys(this.unitSynonyms_).length === 0) {
+        this.buildUnitSynonyms();
+      }
+      let foundCodes = [];
+      foundCodes = this.unitSynonyms_[uSyn];
+      if (foundCodes) {
+        let fLen = foundCodes.length;
+        for (let f = 0; f < fLen; f++)
+          unitsArray.push(this.unitCodes_[foundCodes[f]]);
+      }
+      if (unitsArray.length === 0) {
+        retObj['status'] = 'failed' ;
+        throw (new Error(`Unable to find any units with synonym = ${uSyn}`));
+      }
+    }
+    catch(err) {
+      retObj['msg'] = err.message ;
+    }
+    if (unitsArray.length > 0)
+      retObj['units'] = unitsArray ;
+
+    return retObj ;
+
+  } // end getUnitBySynonym
 
 
   /**
@@ -583,6 +718,31 @@ export class UnitTables {
     }
     return codeList ;
   }
+
+
+  /**
+   * This creates a list of the synonyms in the unitSynonyms hash.  It writes
+   * it in synonym order and in csv format, and includes the synonym, the number
+   * of units for the synonym, and the list of unit codes for the synonym.
+   * It uses | as a separator rather than a comma, to keep from interfering
+   * with the JSON output for the unit code arrays kept for each synonym.
+   *
+   * @returns outputs to a file named "SynonymsList.txt'
+   */
+  printSynonyms() {
+    let sList = 'synonym|unit count|unit codes\n';
+    let sKeys = Object.keys(this.unitSynonyms_).sort();
+    let sLen = sKeys.length ;
+    for (let s = 0; s < sLen; s++) {
+      let sKey = sKeys[s];
+      let kLen = this.unitSynonyms_[sKey].length;
+      let codes = JSON.stringify(this.unitSynonyms_[sKey]);
+      codes = codes.substring(1, codes.length - 2);
+      sList += sKey + '|' + kLen + '|' + codes + '\n';
+    }
+    fs.writeFileSync('SynonymsList.txt', sList,
+        {encoding: 'utf8', mode: 0o666, flag: 'w'} );
+  } // printSynonyms
 
 } // end UnitTables
 
