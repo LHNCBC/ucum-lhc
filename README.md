@@ -65,10 +65,11 @@ For example, to validate a unit string of m2/g4:
      var returnObj = utils.validUnitString('m2/g4');
      if (returnObj['status'] === 'valid')
        /* the string is valid; returnObj['ucumCode'] will contain the valid 
-          code(s), returnObj['msg'] may contain a message or messages
-          describing substitions, and 'unit' will contain 3 pieces of data
-          for the unit - code, name and guidance (provides information about
-          the unit, such as how the unit is used, etc.)*/
+          ucum code (may differ from what was entered) , returnObj['msg'] may 
+          contain a message or messages describing a substitutions for the
+          code entered, and 'unit' will contain 4 pieces of data for the unit - 
+          code, name and guidance (provides information about the unit, such as 
+          how the unit is used, etc.)*/
      else
        /* returnObj['status'] will be 'invalid' and */
        /* returnOb['msg'] will have a message describing the problem */
