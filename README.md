@@ -46,16 +46,16 @@ parses the string to see if it resolves to a valid unit string.
 
 * _@param_ uStr the string to be validated
 * _@returns_ an object with three elements:
-   'status' contains either 'valid' or 'invalid';
-   'ucumCode' the valid ucum code, which may differ from what was passed
+   * 'status' contains either 'valid' or 'invalid';
+   * 'ucumCode' the valid ucum code, which may differ from what was passed
               in (e.g., if 'pound' is passed in, this will contain '\[lb_av\]'); and
-   'msg' contains a message, if the string is invalid, indicating
+   * 'msg' contains a message, if the string is invalid, indicating
          the problem, or an explanation of a substitution such as the
          substitution of '\[lb_av\]' for 'pound'
-   'units' which is a hash for the unit found:
-          'code' is the unit's csCode_
-          'name' is the unit's name_
-          'guidance' is the unit's guidance_ data
+   * 'units' which is a hash for the unit found:
+     * 'code' is the unit's csCode_
+     * 'name' is the unit's name_
+     * 'guidance' is the unit's guidance_ data
 
 For example, to validate a unit string of m2/g4:
  
@@ -91,10 +91,10 @@ another type of unit.
   for the converted unit.  If not specified, the UCUM.decDigits_ value
   (currently 4) is used.
 * _@returns_ a hash with three elements:
-   'status' contains either 'succeeded' or 'failed'; 
-   'toVal' contains the number of "to" units resulting from the conversion, or
+   * 'status' contains either 'succeeded' or 'failed'; 
+   * 'toVal' contains the number of "to" units resulting from the conversion, or
      null if the conversion failed; and
-   'msg' contains a message describing either the result of the conversion or 
+   * 'msg' contains a message describing either the result of the conversion or 
          an error message if an error occurred.
 
 For example, to convert 27 U.S. fathoms to U.S. inches with 0 decimal digits
