@@ -154,23 +154,29 @@ export class Unit {
     this.source_ = attrs['source_'] || null ;
     this.loincProperty_ = attrs['loincProperty_'] || null;
     this.category_ = attrs['category_'] || null;
+    this.guidance_ = attrs['guidance_'] || null;
 
     /*
      * Used to compute dimension; storing for now until I complete
      * unit definition parsing
      */
     /*
-     * Case sensitive (cs) and case insensitive (ci) unit strings,
+     * Case sensitive (cs) and case insensitive (ci) base unit strings,
      * includes exponent and prefix if applicable - specified in
      * <value Unit=x UNIT=X value="nnn">nnn</value> -- the unit part --
      * in the ucum-essence.xml file, and may be specified by a user
-     * when requesting conversion or validation of a unit string.
+     * when requesting conversion or validation of a unit string.  The
+     * magnitude (base factor) is used with this to determine the new unit.
+     * For example, a newton (unit code N) is created from the string
+     * kg.m/s2, and the value of 1 (base factor defined below). An hour
+     * (unit code h) is created from the unit min (minute) with a value
+     * of 60.
      */
     this.csUnitString_ = attrs['csUnitString_'] || null ;
     this.ciUnitString_ = attrs['ciUnitString_'] || null ;
 
     /*
-     * String and numeric versions of factor applied to base unit specified in
+     * String and numeric versions of factor applied to unit specified in
      * <value Unit=x UNIT=X value="nnn">nnn</value> -- the value part
      */
     this.baseFactorStr_ = attrs['baseFactorStr_'] || null;
@@ -240,7 +246,10 @@ export class Unit {
     let retUnit = new Unit() ;
     Object.getOwnPropertyNames(this).forEach(val => {
       if (val === 'dim_') {
-        retUnit['dim_'] = new Dimension(this.dim_.dimVec_);
+        if (Object.keys(this[val]).length === 0)
+          retUnit['dim_'] = this[val] ;
+        else
+          retUnit['dim_'] = new Dimension(this.dim_.dimVec_);
       }
       else {
         retUnit[val] = this[val];
@@ -285,9 +294,12 @@ export class Unit {
   equals(unit2) {
 
     return (this.magnitude_ === unit2.magnitude_ &&
-            this.dim_.equals(unit2.dim_) &&
             this.cnv_ === unit2.cnv_ &&
-            this.cnvPfx_ === unit2.cnvPfx_);
+            this.cnvPfx_ === unit2.cnvPfx_ &&
+            ((this.dim_ === null && unit2.dim_ === null) ||
+             (Object.keys(this.dim_).length === 0 &&
+              Object.keys(unit2.dim_).length === 0) ||
+             this.dim_.equals(unit2.dim_)));
 
   } // end equals
 
@@ -516,6 +528,10 @@ export class Unit {
       else {
         this.name_ = this.mulString(this.name_, unit2.name_);
         this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
+        if (this.guidance_ && unit2.guidance_)
+          this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);
+        else if (unit2.guidance_)
+          this.guidance_ = unit2.guidance_ ;
         this.magnitude_ *= unit2.magnitude_;
         // for now, putting in this safeguard to get around a known error.
         // need to put in error handling later.
@@ -548,7 +564,10 @@ export class Unit {
 
     this.name_ = this.divString(this.name_, unit2.name_);
     this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
-
+    if (this.guidance_ && unit2.guidance_)
+      this.guidance_ = this.divString(this.guidance_, unit2.guidance_);
+    else if (unit2.guidance_)
+      this.guidance_ = unit2.guidance_ ;
     this.magnitude_ /= unit2.magnitude_;
     // for now, putting in this safeguard to get around a known error.
     // need to put in error handling later.

@@ -49,9 +49,13 @@ parses the string to see if it resolves to a valid unit string.
    'status' contains either 'valid' or 'invalid';
    'ucumCode' the valid ucum code, which may differ from what was passed
               in (e.g., if 'pound' is passed in, this will contain '\[lb_av\]'); and
-     'msg' contains a message, if the string is invalid, indicating
-           the problem, or an explanation of a substitution such as the
-           substitution of '\[lb_av\]' for 'pound'
+   'msg' contains a message, if the string is invalid, indicating
+         the problem, or an explanation of a substitution such as the
+         substitution of '\[lb_av\]' for 'pound'
+   'units' which is a hash for the unit found:
+          'code' is the unit's csCode_
+          'name' is the unit's name_
+          'guidance' is the unit's guidance_ data
 
 For example, to validate a unit string of m2/g4:
  
@@ -61,8 +65,10 @@ For example, to validate a unit string of m2/g4:
      var returnObj = utils.validUnitString('m2/g4');
      if (returnObj['status'] === 'valid')
        /* the string is valid; returnObj['ucumCode'] will contain the valid 
-          code(s) and returnObj['msg'] may contain a message or messages
-          describing substitions*/
+          code(s), returnObj['msg'] may contain a message or messages
+          describing substitions, and 'unit' will contain 3 pieces of data
+          for the unit - code, name and guidance (provides information about
+          the unit, such as how the unit is used, etc.)*/
      else
        /* returnObj['status'] will be 'invalid' and */
        /* returnOb['msg'] will have a message describing the problem */
@@ -84,7 +90,7 @@ another type of unit.
 * _@param_ decDigits the maximum number of decimal digits to be displayed
   for the converted unit.  If not specified, the UCUM.decDigits_ value
   (currently 4) is used.
-* _@returns_ an array with three elements:
+* _@returns_ a hash with three elements:
    'status' contains either 'succeeded' or 'failed'; 
    'toVal' contains the number of "to" units resulting from the conversion, or
      null if the conversion failed; and
@@ -112,6 +118,50 @@ commensurable units when you enter the "from" unit code.  (Valid UCUM unit codes
 are shown in the _UCUM Unit Expression Validation_ section).  That list will
 be displayed in the "converted to" list.  It will not show that list for unit
 strings that combine units, such as m2/g4.
+
+
+**checkSynonyms(theSyn)**
+
+This method searches for units that include the search term (theSyn) in the
+unit's synonyms data and the unit name.  It returns all units found with a 
+match.  This is useful when an exact match for a term is not found.  For example,
+submitting the term "pound" is to the validUnitString method will result in a 
+"not found" response.   Submitting it to this method will return with a list 
+of possible pound units.
+
+* _@param_ theSyn the term to search for
+* _@returns_ a hash with three elements:
+   'status' contains the status of the request, which can be 'error',
+      'failed' or 'succeeded'; 
+   'msg' contains a message for an error or if no units were found; and 
+   
+   'units' which is an array that contains one hash for each unit found:
+     'code' is the unit's code;
+     'name' is the unit's name; and
+     'guidance' is the guidance, or description, for the unit.
+
+   For example, the 'units' array returned for a search term of "pound" would be:
+    {"code":"\[lb_av\]","name":"pound - international","guidance":"standard unit used in the US and internationally"}
+    {"code":"\[lbf_av\]","name":"pound force - US","guidance":"only rarely needed in health care - see [lb_av] which is the more common unit to express weight"}
+    {"code":"\[lb_tr\]","name":"pound - troy","guidance":"only used for weighing precious metals"}
+    {"code":"\[lb_ap\]","name":"pound - apothecary","guidance":null}
+    {"code":"\[psi\]","name":"pound per square inch","guidance":null}
+
+ 
+    var Pkg = require('ucum-lhc.js');   // include path to file where necessary
+     
+    var utils = Pkg.UcumLhcUtils.getInstance();
+    var returnObj = utils.checkSynonyms('pound');
+    if (returnObj['status'] === 'succeeded')
+      /* one or more units was found.  returnObj['msg'] will be null and the 
+         returnObj['units'] array will contain the data listed above */
+    else if (returnObj['status'] === 'failed')
+      /* no units were found and the returnObj['msg'] string will indicate that 
+      */
+    else
+      /* returnObj['status'] will be 'error' and returnObj['msg'] will indicate
+         what the error was. */
+      
 
 ### Download the GitHub repository
 

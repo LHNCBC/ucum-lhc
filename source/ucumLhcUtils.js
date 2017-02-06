@@ -94,13 +94,22 @@ export class UcumLhcUtils {
    *   'msg' contains a message, if the string is invalid, indicating
    *         the problem, or an explanation of a substitution such as the
    *         substitution of '[lb_av]' for 'pound'
+   *  'unit' which is a hash for the unit found:
+   *    'code' is the unit's csCode_
+   *    'name' is the unit's name_
+   *    'guidance' is the unit's guidance_ data
    */
   validUnitString(uStr) {
 
     let resp = this.getSpecifiedUnit(uStr);
+    let theUnit = resp[0];
     let retObj = {'status' : (resp[0] !== null ? 'valid' : 'invalid'),
                   'ucumCode' : resp[1],
                   'msg': resp[2]};
+    if (theUnit)
+      retObj['unit'] = { 'code' : theUnit.csCode_,
+                         'name' : theUnit.name_ ,
+                         'guidance' : theUnit.guidance_ }
     return retObj;
 
   } // end validUnitString
@@ -116,7 +125,7 @@ export class UcumLhcUtils {
    * @param decDigits the maximum number of decimal digits to be displayed
    *  for the converted unit.  If not specified, the UCUM.decDigits_ value
    *  (defined in config.js) is used.
-   * @returns an object with three elements:
+   * @returns a hash with three elements:
    *  'status' either 'succeeded' or 'failed';
    *  'toVal' the numeric value indicating the conversion amount, or null
    *     null if the conversion failed (e.g., if the units are not commensurable)
@@ -172,6 +181,64 @@ export class UcumLhcUtils {
     return returnObj ;
 
   } // end convertUnitTo
+
+
+  /**
+   * This method accepts a term and looks for units that include it as
+   * a synonym - or that include the term in its name.
+   *
+   * @param theSyn the term to search for
+   * @returns a hash with up to three elements:
+   *  'status' contains the status of the request, which can be 'error',
+   *    'failed' or succeeded';
+   *  'msg' which contains a message for an error or if no units were found; and
+   *  'units' which is an array that contains one hash for each unit found:
+   *    'code' is the unit's csCode_
+   *    'name' is the unit's name_
+   *    'guidance' is the unit's guidance_
+   *
+   */
+  checkSynonyms(theSyn) {
+
+    let retObj = {} ;
+    if (theSyn === undefined || theSyn === null) {
+      retObj['status'] = 'error';
+      retObj['msg'] = 'No term specified for synonym search.'
+    }
+    else {
+      let utab = UnitTables.getInstance();
+      let resp = {} ;
+      try {
+        let resp = utab.getUnitBySynonym(theSyn);
+
+        // If we didn't get any units, transfer the status and message
+        if (!resp['units']) {
+          retObj['status'] = resp['status'];
+          retObj['msg'] = resp['msg'];
+        }
+        else {
+          retObj['status'] = 'succeeded';
+          let aLen = resp['units'].length ;
+          retObj['units'] = [];
+          for (let a = 0; a < aLen; a++) {
+            let theUnit = resp['units'][a];
+            retObj['units'][a] = {
+              'code': theUnit.csCode_,
+              'name': theUnit.name_,
+              'guidance': theUnit.guidance_
+            }
+          } // end do for all units returned
+        } // else we got a units list
+      }
+      catch (err) {
+        retObj['status'] = 'error';
+        retObj['msg'] = `Error occurred during synonym search.  ` +
+                        `Error = ${err.message}` ;
+      }
+    } // end if a search synonym was supplied
+    return retObj ;
+
+  } // end checkSynonyms
 
 
   /**

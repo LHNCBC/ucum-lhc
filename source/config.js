@@ -68,7 +68,8 @@ export var Ucum = {
     'name (final)' : 'name_',
     'synonyms' : 'synonyms_',
     'source' : 'source_',
-    'category' : 'category_'
+    'category' : 'category_',
+    'Guidance' : 'guidance_'
   } ,
 
   /**
