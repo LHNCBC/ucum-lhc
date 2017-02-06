@@ -123,29 +123,28 @@ strings that combine units, such as m2/g4.
 **checkSynonyms(theSyn)**
 
 This method searches for units that include the search term (theSyn) in the
-unit's synonyms data and the unit name.  It returns all units found with a 
+unit's synonyms data and/or the unit name.  It returns all units found with a 
 match.  This is useful when an exact match for a term is not found.  For example,
-submitting the term "pound" is to the validUnitString method will result in a 
+submitting the term "pound" to the validUnitString method will result in a 
 "not found" response.   Submitting it to this method will return with a list 
 of possible pound units.
 
 * _@param_ theSyn the term to search for
 * _@returns_ a hash with three elements:
-   'status' contains the status of the request, which can be 'error',
+   * 'status' contains the status of the request, which can be 'error',
       'failed' or 'succeeded'; 
-   'msg' contains a message for an error or if no units were found; and 
-   
-   'units' which is an array that contains one hash for each unit found:
-     'code' is the unit's code;
-     'name' is the unit's name; and
-     'guidance' is the guidance, or description, for the unit.
+   * 'msg' contains a message for an error or if no units were found; and 
+   * 'units' which is an array that contains one hash for each unit found:
+     * 'code' is the unit's code;
+     * 'name' is the unit's name; and
+     * 'guidance' is the guidance, or description, for the unit.
 
    For example, the 'units' array returned for a search term of "pound" would be:
-    {"code":"\[lb_av\]","name":"pound - international","guidance":"standard unit used in the US and internationally"}
-    {"code":"\[lbf_av\]","name":"pound force - US","guidance":"only rarely needed in health care - see [lb_av] which is the more common unit to express weight"}
-    {"code":"\[lb_tr\]","name":"pound - troy","guidance":"only used for weighing precious metals"}
-    {"code":"\[lb_ap\]","name":"pound - apothecary","guidance":null}
-    {"code":"\[psi\]","name":"pound per square inch","guidance":null}
+    * {"code":"\[lb_av\]","name":"pound - international","guidance":"standard unit used in the US and internationally"}
+    * {"code":"\[lbf_av\]","name":"pound force - US","guidance":"only rarely needed in health care - see [lb_av] which is the more common unit to express weight"}
+    * {"code":"\[lb_tr\]","name":"pound - troy","guidance":"only used for weighing precious metals"}
+    * {"code":"\[lb_ap\]","name":"pound - apothecary","guidance":null}
+    * {"code":"\[psi\]","name":"pound per square inch","guidance":null}
 
  
     var Pkg = require('ucum-lhc.js');   // include path to file where necessary
