@@ -669,8 +669,8 @@ export class UnitString {
       endProcessing = !isNaN(uCode);
       retUnit = Number(uCode) ;
     }
-    if (endProcessing) {
-    } else {
+    if (!endProcessing) {
+
       ulen = uCode.length;
       let utabs = UnitTables.getInstance();
 

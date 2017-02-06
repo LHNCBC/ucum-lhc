@@ -45,17 +45,17 @@ in is a unit code that is found in the unit codes table. If it is not found it
 parses the string to see if it resolves to a valid unit string.
 
 * _@param_ uStr the string to be validated
-* _@returns_ an object with three elements:
+* _@returns_ an object with four elements:
    * 'status' contains either 'valid' or 'invalid';
    * 'ucumCode' the valid ucum code, which may differ from what was passed
-              in (e.g., if 'pound' is passed in, this will contain '\[lb_av\]'); and
+        in (e.g., if 'pound' is passed in, this will contain '\[lb_av\]'); and
    * 'msg' contains a message, if the string is invalid, indicating
-         the problem, or an explanation of a substitution such as the
-         substitution of '\[lb_av\]' for 'pound'
-   * 'units' which is a hash for the unit found:
-     * 'code' is the unit's csCode_
-     * 'name' is the unit's name_
-     * 'guidance' is the unit's guidance_ data
+        the problem, or an explanation of a substitution such as the
+        substitution of '\[lb_av\]' for 'pound'
+   * 'units' which is null if no unit was found, othewise a hash for the unit found:
+     * 'code' is the unit's ucum code ([lb_av] in the above example;
+     * 'name' is the unit's name name (pound - international is the above example); and
+     * 'guidance' is the unit's guidance/description data
 
 For example, to validate a unit string of m2/g4:
  
