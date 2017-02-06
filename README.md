@@ -52,7 +52,7 @@ parses the string to see if it resolves to a valid unit string.
    * 'msg' contains a message, if the string is invalid, indicating
         the problem, or an explanation of a substitution such as the
         substitution of '\[lb_av\]' for 'pound'
-   * 'units' which is null if no unit was found, othewise a hash for the unit found:
+   * 'unit' which is null if no unit is found, or a hash for a unit found:
      * 'code' is the unit's ucum code ([lb_av] in the above example;
      * 'name' is the unit's name name (pound - international is the above example); and
      * 'guidance' is the unit's guidance/description data
@@ -66,7 +66,7 @@ For example, to validate a unit string of m2/g4:
      if (returnObj['status'] === 'valid')
        /* the string is valid; returnObj['ucumCode'] will contain the valid 
           ucum code (may differ from what was entered) , returnObj['msg'] may 
-          contain a message or messages describing a substitutions for the
+          contain a message or messages describing substitution(s) for the
           code entered, and 'unit' will contain 4 pieces of data for the unit - 
           code, name and guidance (provides information about the unit, such as 
           how the unit is used, etc.)*/
