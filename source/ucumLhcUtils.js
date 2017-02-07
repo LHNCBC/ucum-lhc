@@ -87,17 +87,17 @@ export class UcumLhcUtils {
    * valid unit string.
    *
    * @param uStr the string to be validated
-   * @returns an object with two properties:
-   *  'status' either 'valid' or 'invalid'
+   * @returns an object with four properties:
+   *  'status' either 'valid' or 'invalid';
    *  'ucumCode' the valid ucum code, which may differ from what was passed
-   *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]'); and
-   *   'msg' contains a message, if the string is invalid, indicating
-   *         the problem, or an explanation of a substitution such as the
-   *         substitution of '[lb_av]' for 'pound'
-   *  'unit' which is a hash for the unit found:
-   *    'code' is the unit's csCode_
-   *    'name' is the unit's name_
-   *    'guidance' is the unit's guidance_ data
+   *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]');
+   *  'msg' contains a message, if the string is invalid, indicating
+   *        the problem, or an explanation of a substitution such as the
+   *        substitution of '[lb_av]' for 'pound'; and
+   *  'unit' which is null if no unit is found, or a hash for a unit found:
+   *    'code' is the unit's ucum code ([lb_av] in the above example;
+   *    'name' is the unit's name (pound - international is the above example); and
+   *    'guidance' is the unit's guidance/description data
    */
   validUnitString(uStr) {
 
