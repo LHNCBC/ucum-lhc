@@ -19,13 +19,7 @@ describe('Test getUnitBySynonym method', function() {
 
   describe('Test request with no synonym specified ', function() {
 
-    var retObj = null;
-    try {
-      var retObj = uTabs.getUnitBySynonym();
-    }
-    catch(err) {
-      errMsg = err.message;
-    }
+    var retObj = uTabs.getUnitBySynonym();
     it("should return an error message for no synonym specified", function() {
       assert.equal('error', retObj['status']);
       assert.equal('Unable to find unit by synonym because no synonym ' +
@@ -35,15 +29,7 @@ describe('Test getUnitBySynonym method', function() {
 
   describe('Test synonym request', function () {
 
-    var retObj = null;
-    var uArray = null;
-    try {
-      retObj = uTabs.getUnitBySynonym('month');
-    }
-    catch(err) {
-      errMsg = err.message;
-      console.log(`error thrown from get synonym request, = ${errMsg}`);
-    }
+    var retObj = uTabs.getUnitBySynonym('month');
     it("should show that the unitSynonyms_ hash is not empty.", function() {
       assert(Object.keys(uTabs.unitSynonyms_).length > 0);
     });

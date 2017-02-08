@@ -199,7 +199,6 @@ export class UcumLhcUtils {
    *
    */
   checkSynonyms(theSyn) {
-
     let retObj = {} ;
     if (theSyn === undefined || theSyn === null) {
       retObj['status'] = 'error';
@@ -208,33 +207,26 @@ export class UcumLhcUtils {
     else {
       let utab = UnitTables.getInstance();
       let resp = {} ;
-      try {
-        let resp = utab.getUnitBySynonym(theSyn);
+      resp = utab.getUnitBySynonym(theSyn);
 
-        // If we didn't get any units, transfer the status and message
-        if (!resp['units']) {
-          retObj['status'] = resp['status'];
-          retObj['msg'] = resp['msg'];
-        }
-        else {
-          retObj['status'] = 'succeeded';
-          let aLen = resp['units'].length ;
-          retObj['units'] = [];
-          for (let a = 0; a < aLen; a++) {
-            let theUnit = resp['units'][a];
-            retObj['units'][a] = {
-              'code': theUnit.csCode_,
-              'name': theUnit.name_,
-              'guidance': theUnit.guidance_
-            }
-          } // end do for all units returned
-        } // else we got a units list
+      // If we didn't get any units, transfer the status and message
+      if (!resp['units']) {
+        retObj['status'] = resp['status'];
+        retObj['msg'] = resp['msg'];
       }
-      catch (err) {
-        retObj['status'] = 'error';
-        retObj['msg'] = `Error occurred during synonym search.  ` +
-                        `Error = ${err.message}` ;
-      }
+      else {
+        retObj['status'] = 'succeeded';
+        let aLen = resp['units'].length ;
+        retObj['units'] = [];
+        for (let a = 0; a < aLen; a++) {
+          let theUnit = resp['units'][a];
+          retObj['units'][a] = {
+            'code': theUnit.csCode_,
+            'name': theUnit.name_,
+            'guidance': theUnit.guidance_
+          }
+        } // end do for all units returned
+      } // else we got a units list
     } // end if a search synonym was supplied
     return retObj ;
 
