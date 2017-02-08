@@ -73,7 +73,7 @@ export var Ucum = {
   } ,
 
   /**
-   * Name of the iey in the csv file that serves as the key
+   * Name of the column in the csv file that serves as the key
    */
   inputKey_ : 'case-sensitive code'
 } ;
