@@ -167,7 +167,7 @@ export class Unit {
      * in the ucum-essence.xml file, and may be specified by a user
      * when requesting conversion or validation of a unit string.  The
      * magnitude (base factor) is used with this to determine the new unit.
-     * For example, a newton (unit code N) is created from the string
+     * For example, a Newton (unit code N) is created from the string
      * kg.m/s2, and the value of 1 (base factor defined below). An hour
      * (unit code h) is created from the unit min (minute) with a value
      * of 60.
@@ -312,9 +312,7 @@ export class Unit {
 //>>>>>>> feature/LF-693-add-synonym-checking-to-unit-validation-acquisition
             this.cnv_ === unit2.cnv_ &&
             this.cnvPfx_ === unit2.cnvPfx_ &&
-            ((this.dim_ === null && unit2.dim_ === null) ||
-             (Object.keys(this.dim_).length === 0 &&
-              Object.keys(unit2.dim_).length === 0) ||
+            ((this.dim_ === null && unit2.dim_ === null) |
              this.dim_.equals(unit2.dim_)));
 
   } // end equals

@@ -25470,17 +25470,17 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * valid unit string.
      *
      * @param uStr the string to be validated
-     * @returns an object with two properties:
-     *  'status' either 'valid' or 'invalid'
+     * @returns an object with four properties:
+     *  'status' either 'valid' or 'invalid';
      *  'ucumCode' the valid ucum code, which may differ from what was passed
-     *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]'); and
-     *   'msg' contains a message, if the string is invalid, indicating
-     *         the problem, or an explanation of a substitution such as the
-     *         substitution of '[lb_av]' for 'pound'
-     *  'unit' which is a hash for the unit found:
-     *    'code' is the unit's csCode_
-     *    'name' is the unit's name_
-     *    'guidance' is the unit's guidance_ data
+     *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]');
+     *  'msg' contains a message, if the string is invalid, indicating
+     *        the problem, or an explanation of a substitution such as the
+     *        substitution of '[lb_av]' for 'pound'; and
+     *  'unit' which is null if no unit is found, or a hash for a unit found:
+     *    'code' is the unit's ucum code ([lb_av] in the above example;
+     *    'name' is the unit's name (pound - international is the above example); and
+     *    'guidance' is the unit's guidance/description data
      */
 
   }, {
@@ -25579,7 +25579,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
   }, {
     key: 'checkSynonyms',
     value: function checkSynonyms(theSyn) {
-
       var retObj = {};
       if (theSyn === undefined || theSyn === null) {
         retObj['status'] = 'error';
@@ -25587,30 +25586,25 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       } else {
         var utab = UnitTables.getInstance();
         var resp = {};
-        try {
-          var _resp = utab.getUnitBySynonym(theSyn);
+        resp = utab.getUnitBySynonym(theSyn);
 
-          // If we didn't get any units, transfer the status and message
-          if (!_resp['units']) {
-            retObj['status'] = _resp['status'];
-            retObj['msg'] = _resp['msg'];
-          } else {
-            retObj['status'] = 'succeeded';
-            var aLen = _resp['units'].length;
-            retObj['units'] = [];
-            for (var a = 0; a < aLen; a++) {
-              var theUnit = _resp['units'][a];
-              retObj['units'][a] = {
-                'code': theUnit.csCode_,
-                'name': theUnit.name_,
-                'guidance': theUnit.guidance_
-              };
-            } // end do for all units returned
-          } // else we got a units list
-        } catch (err) {
-          retObj['status'] = 'error';
-          retObj['msg'] = 'Error occurred during synonym search.  ' + ('Error = ' + err.message);
-        }
+        // If we didn't get any units, transfer the status and message
+        if (!resp['units']) {
+          retObj['status'] = resp['status'];
+          retObj['msg'] = resp['msg'];
+        } else {
+          retObj['status'] = 'succeeded';
+          var aLen = resp['units'].length;
+          retObj['units'] = [];
+          for (var a = 0; a < aLen; a++) {
+            var theUnit = resp['units'][a];
+            retObj['units'][a] = {
+              'code': theUnit.csCode_,
+              'name': theUnit.name_,
+              'guidance': theUnit.guidance_
+            };
+          } // end do for all units returned
+        } // else we got a units list
       } // end if a search synonym was supplied
       return retObj;
     } // end checkSynonyms
@@ -25948,7 +25942,7 @@ var Unit = exports.Unit = function () {
      * in the ucum-essence.xml file, and may be specified by a user
      * when requesting conversion or validation of a unit string.  The
      * magnitude (base factor) is used with this to determine the new unit.
-     * For example, a newton (unit code N) is created from the string
+     * For example, a Newton (unit code N) is created from the string
      * kg.m/s2, and the value of 1 (base factor defined below). An hour
      * (unit code h) is created from the unit min (minute) with a value
      * of 60.
@@ -26032,19 +26026,19 @@ var Unit = exports.Unit = function () {
 
       var retUnit = new Unit();
       Object.getOwnPropertyNames(this).forEach(function (val) {
-<<<<<<< HEAD
+        //<<<<<<< HEAD
         if (val == 'dim_') {
           if (_this['dim_']) {
             if (Object.keys(_this['dim_']).length > 0) retUnit['dim_'] = _this['dim_'].clone();else retUnit['dim_'] = {};
           } else retUnit['dim_'] = null;
+          //=======
+          //      if (val === 'dim_') {
+          //        if (Object.keys(this[val]).length === 0)
+          //          retUnit['dim_'] = this[val] ;
+          //        else
+          //          retUnit['dim_'] = new Dimension(this.dim_.dimVec_);
+          //>>>>>>> feature/LF-693-add-synonym-checking-to-unit-validation-acquisition
         } else retUnit[val] = _this[val];
-=======
-        if (val === 'dim_') {
-          if (Object.keys(_this[val]).length === 0) retUnit['dim_'] = _this[val];else retUnit['dim_'] = new Dimension(_this.dim_.dimVec_);
-        } else {
-          retUnit[val] = _this[val];
-        }
->>>>>>> feature/LF-693-add-synonym-checking-to-unit-validation-acquisition
       });
       return retUnit;
     } // end clone
@@ -26088,13 +26082,13 @@ var Unit = exports.Unit = function () {
     key: "equals",
     value: function equals(unit2) {
 
-<<<<<<< HEAD
       return this.magnitude_ === unit2.magnitude_ &&
-      //this.dim_.equals(unit2.dim_) &&
-      JSON.stringify(this.dim_) === JSON.stringify(unit2.dim_) && this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_;
-=======
-      return this.magnitude_ === unit2.magnitude_ && this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_ && (this.dim_ === null && unit2.dim_ === null || Object.keys(this.dim_).length === 0 && Object.keys(unit2.dim_).length === 0 || this.dim_.equals(unit2.dim_));
->>>>>>> feature/LF-693-add-synonym-checking-to-unit-validation-acquisition
+      //<<<<<<< HEAD
+      //            //this.dim_.equals(unit2.dim_) &&
+      //            JSON.stringify(this.dim_) === JSON.stringify(unit2.dim_) &&
+      //=======
+      //>>>>>>> feature/LF-693-add-synonym-checking-to-unit-validation-acquisition
+      this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_ && (this.dim_ === null && unit2.dim_ === null) | this.dim_.equals(unit2.dim_);
     } // end equals
 
 
@@ -27165,7 +27159,8 @@ var UnitString = exports.UnitString = function () {
         endProcessing = !isNaN(uCode);
         retUnit = Number(uCode);
       }
-      if (endProcessing) {} else {
+      if (!endProcessing) {
+
         ulen = uCode.length;
         var utabs = UnitTables.getInstance();
 
@@ -27676,55 +27671,55 @@ var UnitTables = exports.UnitTables = function () {
             for (var a = 0; a < aLen; a++) {
               var theSyn = synsAry[a].trim();
 
-              // process each word in the synonym
-              var synWords = theSyn.split(' ');
-              var wLen = synWords.length;
-              for (var w = 0; w < wLen; w++) {
-                var synWord = synWords[w];
-                // if the synonyms hash already has an element for the word,
-                // add the code for the current unit to the value array for
-                // the synonym - IF it's not already there.
-                if (this.unitSynonyms_[synWord]) {
-                  if (this.unitSynonyms_[synWord].indexOf(code) === -1) this.unitSynonyms_[synWord].push(code);
-                }
-                // Otherwise create an element for the word and start the
-                // value array with the code for the current unit.
-                else {
-                    this.unitSynonyms_[synWord] = [code];
-                  }
-              } // end do for each word in the synonym
+              // call addSynonymCodes to process each word in the
+              // synonym, e.g., "British fluid ounces"
+              this.addSynonymCodes(code, theSyn);
             } // end do for each synonym
           } // end if the current unit has a non-null synonym attribute
         } // end if the unit has any synonyms
 
-        // Now process the unit's name
-        // names many have multiple units, so get the units and get the
-        // code for each unit
-        var theName = theUnit.name_;
-        // names often have multiple words; process each word
-        var nameWords = theName.split(' ');
-        var nLen = nameWords.length;
-        for (var n = 0; n < nLen; n++) {
-          var nameWord = nameWords[n];
-
-          // if there is already a synonyms entry for the word,
-          // get the array of unit codes currently assigned to
-          // the word and add the code for the current word to
-          // the synonyms array if it's not already there.
-          if (this.unitSynonyms_[nameWord]) {
-            var synCodes = this.unitSynonyms_[nameWord];
-            if (synCodes.indexOf(code) === -1) {
-              this.unitSynonyms_[nameWord].push(code);
-            }
-          }
-          // else there are no synonyms entry for the word.  Create a
-          // synonyms array for the word, setting it to contain the unit code.
-          else {
-              this.unitSynonyms_[nameWord] = [code];
-            }
-        } // end do for each word in the unit name being processed
+        // Now call addSynonymCodes to process each word in the unit's name
+        this.addSynonymCodes(code, theUnit.name_);
       } // end do for each unit
     } // end buildUnitSynonyms
+
+
+    /**
+     * Adds unit code entries to the synonyms table for a string containing
+     * one or more words to be considered as synonyms.
+     *
+     * @param theCode the unit code to be connected to the synonyms
+     * @param theSynonyms a string containing one or more words to be
+     *  considered synonyms (and thus to be added to the unitSynonyms hash).
+     */
+
+  }, {
+    key: 'addSynonymCodes',
+    value: function addSynonymCodes(theCode, theSynonyms) {
+
+      var words = theSynonyms.split(' ');
+      var wLen = words.length;
+
+      for (var w = 0; w < wLen; w++) {
+        var word = words[w];
+
+        // if there is already a synonyms entry for the word,
+        // get the array of unit codes currently assigned to
+        // the word and add the code for the current word to
+        // the synonyms array if it's not already there.
+        if (this.unitSynonyms_[word]) {
+          var synCodes = this.unitSynonyms_[word];
+          if (synCodes.indexOf(theCode) === -1) {
+            this.unitSynonyms_[word].push(theCode);
+          }
+        }
+        // else there are no synonyms entry for the word.  Create a
+        // synonyms array for the word, setting it to contain the unit code.
+        else {
+            this.unitSynonyms_[word] = [theCode];
+          }
+      } // end do for each word in the synonyms being processed
+    } // end addSynonymCodes
 
 
     /**
@@ -27766,7 +27761,6 @@ var UnitTables = exports.UnitTables = function () {
      *  unit objects with the specified name.  Normally this will be an array
      *  of one object.
      *  @throws an error if no name is provided to search on
-     *  logs an error to the console if no unit is found
      */
 
   }, {
@@ -27783,16 +27777,13 @@ var UnitTables = exports.UnitTables = function () {
         uName = uName.substr(0, sepPos);
       }
       var retUnits = this.unitNames_[uName];
-      if (retUnits === undefined || retUnits === null) {
-        console.log('Unable to find unit with name = ' + uName);
-      } else {
+      if (retUnits) {
         var uLen = retUnits.length;
 
         if (uCode && uLen > 1) {
           var i = 0;
           for (; retUnits[i].csCode_ !== uCode && i < uLen; i++) {}
           if (i < uLen) retUnits = [retUnits[i]];else {
-            console.log('Unable to find unit with name = ' + uName + ' amd ' + ('unit code = ' + uCode));
             retUnits = null;
           }
         } // end if we need to find both a name and a code
@@ -27856,10 +27847,12 @@ var UnitTables = exports.UnitTables = function () {
      *
      *  @param uSyn the synonym of the units to be returned.
      *
-     *  @returns null if no unit was found for the specified synonym OR an array of
-     *  one or more unit objects with the specified synonym.
-     *  @throws an error if no synonym is provided to search on
-     *  logs an error to the console if no unit is found
+     *  @returns an object with two of the following three elements:
+     *   'status' will be error, failed or succeeded
+     *   'msg' will be included for returns with status = error or failed and
+     *     will explain why the request did not return any units
+     *   'units' any array of unit objects with the specified synonym will be
+     *     returned for requests with status = succeeded
      */
 
   }, {
