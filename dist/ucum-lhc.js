@@ -25483,8 +25483,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      */
 
   }, {
-    key: 'validUnitString',
-    value: function validUnitString(uStr) {
+    key: 'validateUnitString',
+    value: function validateUnitString(uStr) {
 
       var resp = this.getSpecifiedUnit(uStr);
       var theUnit = resp[0];
@@ -25495,7 +25495,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         'name': theUnit.name_,
         'guidance': theUnit.guidance_ };
       return retObj;
-    } // end validUnitString
+    } // end validateUnitString
 
 
     /**

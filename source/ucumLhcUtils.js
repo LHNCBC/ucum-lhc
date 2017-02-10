@@ -99,7 +99,7 @@ export class UcumLhcUtils {
    *    'name' is the unit's name (Gauss in the above example); and
    *    'guidance' is the unit's guidance/description data
    */
-  validUnitString(uStr) {
+  validateUnitString(uStr) {
 
     let resp = this.getSpecifiedUnit(uStr);
     let theUnit = resp[0];
@@ -112,7 +112,7 @@ export class UcumLhcUtils {
                          'guidance' : theUnit.guidance_ }
     return retObj;
 
-  } // end validUnitString
+  } // end validateUnitString
 
 
   /**

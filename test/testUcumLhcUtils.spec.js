@@ -47,7 +47,6 @@ describe('Test checkSynonyms method', function() {
       assert.notStrictEqual(undefined, theUnit['name']);
       assert.notStrictEqual(undefined, theUnit['guidance']);
     }
-    uTabs.printSynonyms();
   });
 
 });
