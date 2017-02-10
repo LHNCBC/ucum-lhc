@@ -296,7 +296,7 @@ export class Unit {
     return (this.magnitude_ === unit2.magnitude_ &&
             this.cnv_ === unit2.cnv_ &&
             this.cnvPfx_ === unit2.cnvPfx_ &&
-            ((this.dim_ === null && unit2.dim_ === null) |
+            ((this.dim_ === null && unit2.dim_ === null) ||
              this.dim_.equals(unit2.dim_)));
 
   } // end equals
