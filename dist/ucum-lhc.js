@@ -25393,14 +25393,14 @@ var Prefix = require('./prefix.js').Prefix;
 var fs = require('fs');
 
 /**
- * Constructor; initiates load of the prefix and units objects
+ * UCUM utilities class
  */
 
 var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
   /**
-   * Constructor.  This loads the json prefix and unit definitions and
-   * creates itself as a singleton object.
+   * Constructor.  This loads the json prefix and unit definitions if
+   * they haven't been loaded already and creates itself as a singleton object.
    *
    */
   function UcumLhcUtils() {
@@ -25474,19 +25474,19 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * @returns an object with four properties:
      *  'status' either 'valid' or 'invalid';
      *  'ucumCode' the valid ucum code, which may differ from what was passed
-     *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]');
+     *    in (e.g., if 'Gauss' is passed in, this will contain 'G');
      *  'msg' contains a message, if the string is invalid, indicating
      *        the problem, or an explanation of a substitution such as the
-     *        substitution of '[lb_av]' for 'pound'; and
+     *        substitution of 'G' for 'Gauss'; and
      *  'unit' which is null if no unit is found, or a hash for a unit found:
-     *    'code' is the unit's ucum code ([lb_av] in the above example;
-     *    'name' is the unit's name (pound - international is the above example); and
+     *    'code' is the unit's ucum code (G in the above example;
+     *    'name' is the unit's name (Gauss in the above example); and
      *    'guidance' is the unit's guidance/description data
      */
 
   }, {
-    key: 'validUnitString',
-    value: function validUnitString(uStr) {
+    key: 'validateUnitString',
+    value: function validateUnitString(uStr) {
 
       var resp = this.getSpecifiedUnit(uStr);
       var theUnit = resp[0];
@@ -25497,7 +25497,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         'name': theUnit.name_,
         'guidance': theUnit.guidance_ };
       return retObj;
-    } // end validUnitString
+    } // end validateUnitString
 
 
     /**
@@ -26089,7 +26089,7 @@ var Unit = exports.Unit = function () {
       //            JSON.stringify(this.dim_) === JSON.stringify(unit2.dim_) &&
       //=======
       //>>>>>>> feature/LF-693-add-synonym-checking-to-unit-validation-acquisition
-      this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_ && (this.dim_ === null && unit2.dim_ === null) | this.dim_.equals(unit2.dim_);
+      this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_ && (this.dim_ === null && unit2.dim_ === null || this.dim_.equals(unit2.dim_));
     } // end equals
 
 
@@ -27600,7 +27600,9 @@ var UnitTables = exports.UnitTables = function () {
     /**
      * Adds a unit object to the unitStrings_ table.  More than one unit
      * can have the same string, so an array of unit objects is stored
-     * for the string.
+     * for the string.  The unit string is the string that creates a non-base
+     * unit, e.g., a Newton has a unit code of N, a name of Newton, and a
+     * unitString of kg.m/s2.
      *
      * If the unit has no string, nothing is stored and no error is reported.
      *

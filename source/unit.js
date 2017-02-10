@@ -312,7 +312,7 @@ export class Unit {
 //>>>>>>> feature/LF-693-add-synonym-checking-to-unit-validation-acquisition
             this.cnv_ === unit2.cnv_ &&
             this.cnvPfx_ === unit2.cnvPfx_ &&
-            ((this.dim_ === null && unit2.dim_ === null) |
+            ((this.dim_ === null && unit2.dim_ === null) ||
              this.dim_.equals(unit2.dim_)));
 
   } // end equals

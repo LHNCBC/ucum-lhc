@@ -231,7 +231,9 @@ export class UnitTables {
   /**
    * Adds a unit object to the unitStrings_ table.  More than one unit
    * can have the same string, so an array of unit objects is stored
-   * for the string.
+   * for the string.  The unit string is the string that creates a non-base
+   * unit, e.g., a Newton has a unit code of N, a name of Newton, and a
+   * unitString of kg.m/s2.
    *
    * If the unit has no string, nothing is stored and no error is reported.
    *
