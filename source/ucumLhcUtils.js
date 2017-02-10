@@ -13,13 +13,13 @@ var Prefix = require('./prefix.js').Prefix;
 var fs = require('fs');
 
 /**
- * Constructor; initiates load of the prefix and units objects
+ * UCUM utilities class
  */
 export class UcumLhcUtils {
 
   /**
-   * Constructor.  This loads the json prefix and unit definitions and
-   * creates itself as a singleton object.
+   * Constructor.  This loads the json prefix and unit definitions if
+   * they haven't been loaded already and creates itself as a singleton object.
    *
    */
   constructor() {

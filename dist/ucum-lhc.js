@@ -25321,7 +25321,8 @@ var UcumJsonDefs = exports.UcumJsonDefs = function () {
     key: "loadJsonDefs",
     value: function loadJsonDefs() {
 
-      if (Utab.UnitTables.getInstance().unitsCount() === 0 && Object.keys(jsonDefs_).length === 0) {
+      if (Utab.UnitTables.getInstance().unitsCount() === 0) {
+        //&&  Object.keys(jsonDefs_).length === 0) {
 
         var pTab = PfxT.PrefixTables.getInstance();
         var prefixes = jsonDefs_["prefixes"];
@@ -27971,11 +27972,13 @@ var UnitTables = exports.UnitTables = function () {
   }, {
     key: 'allUnitsByDef',
     value: function allUnitsByDef() {
+      console.log('start of allUnitsByDef, this.codeOrder_length = ' + this.codeOrder_.length);
       var unitsList = [];
       var uLen = this.codeOrder_.length;
       for (var u = 0; u < uLen; u++) {
         unitsList.push(this.getUnitByCode(this.codeOrder_[u]));
       }
+      console.log('allUnitsByDef returned list with length = ' + unitsList.length);
       return unitsList;
     } // end allUnitsByDef
 

@@ -45,8 +45,8 @@ export class UcumJsonDefs {
    */
   loadJsonDefs() {
 
-    if (Utab.UnitTables.getInstance().unitsCount() === 0 &&
-        Object.keys(jsonDefs_).length === 0) {
+    if (Utab.UnitTables.getInstance().unitsCount() === 0) {
+        //&&  Object.keys(jsonDefs_).length === 0) {
 
       let pTab = PfxT.PrefixTables.getInstance();
       let prefixes = jsonDefs_["prefixes"];

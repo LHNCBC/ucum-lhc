@@ -589,11 +589,13 @@ export class UnitTables {
    * order
    */
   allUnitsByDef() {
+    console.log(`start of allUnitsByDef, this.codeOrder_length = ${this.codeOrder_.length}`);
     let unitsList = [];
     let uLen = this.codeOrder_.length ;
     for (let u = 0; u < uLen; u++) {
       unitsList.push(this.getUnitByCode(this.codeOrder_[u]));
     }
+    console.log(`allUnitsByDef returned list with length = ${unitsList.length}`);
     return unitsList ;
   } // end allUnitsByDef
 

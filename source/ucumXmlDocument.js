@@ -220,7 +220,7 @@ export class UcumXmlDocument {
         attrs['csUnitString_'] = funcNode.attr.Unit;
         if (attrs['csUnitString_'] === '1') {
           attrs['baseFactor_'] = 1 ;
-          parseUnitString = false ;
+          parseUnitString = false ;  //<------------
         }
         else if (attrs['csCode_'] === '[pH]') {
           attrs['baseFactor_'] = funcNode.attr.value ;
