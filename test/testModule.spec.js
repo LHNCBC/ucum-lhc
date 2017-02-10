@@ -12,7 +12,7 @@ var utils = Utils.getInstance();
 
 describe('Validate_m2/g4', function() {
     describe('Validation Return Object', function() {
-      var returnObj = utils.validUnitString('m2/g4');
+      var returnObj = utils.validateUnitString('m2/g4');
       it("should return status of valid", function() {
         assert.equal('valid', returnObj['status']);
       });
@@ -29,8 +29,7 @@ describe('Validate_m2/g4', function() {
 
 describe('Validate_m2/acr', function() {
   describe('Validation Return Object', function() {
-    var returnObj = utils.validUnitString('m2/acr');
-
+    var returnObj = utils.validateUnitString('m2/acr');
     it("should return status = invalid", function() {
       assert.equal("invalid", returnObj['status']);
     });

@@ -87,23 +87,32 @@ export class UcumLhcUtils {
    * valid unit string.
    *
    * @param uStr the string to be validated
-   * @returns an object with two properties:
-   *  'status' either 'valid' or 'invalid'
+   * @returns an object with four properties:
+   *  'status' either 'valid' or 'invalid';
    *  'ucumCode' the valid ucum code, which may differ from what was passed
-   *    in (e.g., if 'pound' is passed in, this will contain '[lb_av]'); and
-   *   'msg' contains a message, if the string is invalid, indicating
-   *         the problem, or an explanation of a substitution such as the
-   *         substitution of '[lb_av]' for 'pound'
+   *    in (e.g., if 'Gauss' is passed in, this will contain 'G');
+   *  'msg' contains a message, if the string is invalid, indicating
+   *        the problem, or an explanation of a substitution such as the
+   *        substitution of 'G' for 'Gauss'; and
+   *  'unit' which is null if no unit is found, or a hash for a unit found:
+   *    'code' is the unit's ucum code (G in the above example;
+   *    'name' is the unit's name (Gauss in the above example); and
+   *    'guidance' is the unit's guidance/description data
    */
-  validUnitString(uStr) {
+  validateUnitString(uStr) {
 
     let resp = this.getSpecifiedUnit(uStr);
+    let theUnit = resp[0];
     let retObj = {'status' : (resp[0] !== null ? 'valid' : 'invalid'),
                   'ucumCode' : resp[1],
                   'msg': resp[2]};
+    if (theUnit)
+      retObj['unit'] = { 'code' : theUnit.csCode_,
+                         'name' : theUnit.name_ ,
+                         'guidance' : theUnit.guidance_ }
     return retObj;
 
-  } // end validUnitString
+  } // end validateUnitString
 
 
   /**
@@ -116,7 +125,7 @@ export class UcumLhcUtils {
    * @param decDigits the maximum number of decimal digits to be displayed
    *  for the converted unit.  If not specified, the UCUM.decDigits_ value
    *  (defined in config.js) is used.
-   * @returns an object with three elements:
+   * @returns a hash with three elements:
    *  'status' either 'succeeded' or 'failed';
    *  'toVal' the numeric value indicating the conversion amount, or null
    *     null if the conversion failed (e.g., if the units are not commensurable)
@@ -172,6 +181,56 @@ export class UcumLhcUtils {
     return returnObj ;
 
   } // end convertUnitTo
+
+
+  /**
+   * This method accepts a term and looks for units that include it as
+   * a synonym - or that include the term in its name.
+   *
+   * @param theSyn the term to search for
+   * @returns a hash with up to three elements:
+   *  'status' contains the status of the request, which can be 'error',
+   *    'failed' or succeeded';
+   *  'msg' which contains a message for an error or if no units were found; and
+   *  'units' which is an array that contains one hash for each unit found:
+   *    'code' is the unit's csCode_
+   *    'name' is the unit's name_
+   *    'guidance' is the unit's guidance_
+   *
+   */
+  checkSynonyms(theSyn) {
+    let retObj = {} ;
+    if (theSyn === undefined || theSyn === null) {
+      retObj['status'] = 'error';
+      retObj['msg'] = 'No term specified for synonym search.'
+    }
+    else {
+      let utab = UnitTables.getInstance();
+      let resp = {} ;
+      resp = utab.getUnitBySynonym(theSyn);
+
+      // If we didn't get any units, transfer the status and message
+      if (!resp['units']) {
+        retObj['status'] = resp['status'];
+        retObj['msg'] = resp['msg'];
+      }
+      else {
+        retObj['status'] = 'succeeded';
+        let aLen = resp['units'].length ;
+        retObj['units'] = [];
+        for (let a = 0; a < aLen; a++) {
+          let theUnit = resp['units'][a];
+          retObj['units'][a] = {
+            'code': theUnit.csCode_,
+            'name': theUnit.name_,
+            'guidance': theUnit.guidance_
+          }
+        } // end do for all units returned
+      } // else we got a units list
+    } // end if a search synonym was supplied
+    return retObj ;
+
+  } // end checkSynonyms
 
 
   /**
