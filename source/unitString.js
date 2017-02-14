@@ -670,6 +670,7 @@ export class UnitString {
       retUnit = Number(uCode) ;
     }
     if (!endProcessing) {
+
       ulen = uCode.length;
       let utabs = UnitTables.getInstance();
 
@@ -682,16 +683,16 @@ export class UnitString {
         if (origUnitAry && origUnitAry.length > 0) {
           origUnit = origUnitAry[0];
           let mString = '(The UCUM code for ' + uCode + ' is ' +
-                         origUnit.csCode_ + ')';
+              origUnit.csCode_ + ')';
           let dupMsg = false;
           for (let r = 0; r < retMsg.length && !dupMsg; r++)
-            dupMsg = retMsg[r] === mString ;
+            dupMsg = retMsg[r] === mString;
           if (!dupMsg)
             retMsg.push(mString);
           let rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
           let res = origString.match(rStr);
           origString = origString.replace(rStr, res[1] + origUnit.csCode_ + res[3]);
-          uCode = origUnit.csCode_ ;
+          uCode = origUnit.csCode_;
         }
       }
 
@@ -750,7 +751,7 @@ export class UnitString {
           // two characters, and without this check it's interpreted as "d"
           // (deci) and the "a" is considered part of the unit code.
 
-          if (!origUnit && pfxCode == 'd' && uCode.substr(0,1) == 'a') {
+          if (!origUnit && pfxCode == 'd' && uCode.substr(0, 1) == 'a') {
             pfxCode = 'da';
             pfxObj = pfxTabs.getPrefixByCode(pfxCode);
             pfxVal = pfxObj.getValue();
@@ -772,7 +773,7 @@ export class UnitString {
       if (!origUnit) {
         retMsg.push(`Unable to find unit for ${origCode}`);
         retUnit = null;
-        endProcessing = true ;
+        endProcessing = true;
       }
       if (!endProcessing) {
         // Otherwise we found a unit object.  Clone it and then apply the prefix
@@ -820,15 +821,19 @@ export class UnitString {
         let theCode = retUnit.csCode_;
         if (pfxVal) {
           theName = pfxName + theName;
-          theCode = pfxCode + theCode ;
-          retUnit.assignVals({'name_': theName,
-                              'csCode_' : theCode});
+          theCode = pfxCode + theCode;
+          retUnit.assignVals({
+            'name_': theName,
+            'csCode_': theCode
+          });
         }
         if (exp) {
           theName = theName + '<sup>' + exp.toString() + '</sup>';
-          theCode = theCode + exp.toString() ;
-          retUnit.assignVals({'name_': theName,
-                              'csCode_' : theCode});
+          theCode = theCode + exp.toString();
+          retUnit.assignVals({
+            'name_': theName,
+            'csCode_': theCode
+          });
         }
       } // end if not endProcessing set from no unit found
     } // end if not endProcessing set from annotation error
