@@ -210,7 +210,7 @@ export class Dimension {
 
 
   /**
-   * Subtracts the vector of the dimension object passed in to this
+   * Subtracts the vector of the dimension object passed in from this
    * dimension object's vector.  This object's vector is changed.
    * If either dimension vector is null, no changes are made to this object.
    *

@@ -305,11 +305,6 @@ export class Unit {
   equals(unit2) {
 
     return (this.magnitude_ === unit2.magnitude_ &&
-//<<<<<<< HEAD
-//            //this.dim_.equals(unit2.dim_) &&
-//            JSON.stringify(this.dim_) === JSON.stringify(unit2.dim_) &&
-//=======
-//>>>>>>> feature/LF-693-add-synonym-checking-to-unit-validation-acquisition
             this.cnv_ === unit2.cnv_ &&
             this.cnvPfx_ === unit2.cnvPfx_ &&
             ((this.dim_ === null && unit2.dim_ === null) ||
@@ -317,6 +312,34 @@ export class Unit {
 
   } // end equals
 
+
+  /**
+   * This method compares every attribute of two objects to determine
+   * if they all match.
+   *
+   * @param unit2 the unit that is to be compared to this unit
+   * @return boolean indicating whether or not every attribute matches
+   */
+  fullEquals(unit2) {
+
+    let match = true ;
+    let thisAttr = Object.keys(this);
+    let c2Attr = Object.keys(unit2);
+
+    // make sure the keys match
+    assert.equal(thisAttr.sort(), u2Attr.sort());
+    let keyLen = thisAttr.length ;
+
+    // check each attribute.   Dimension objects have to checked using
+    // the equals function of the Dimension class.
+    for (let k = 0; k < keyLen && match; k++) {
+      if (thisAttr[k] === 'dim_')
+        match = this.dim_.equals(unit2.dim_);
+      else
+        match = this[thisAttr[k]] === unit2[thisAttr[k]];
+    }
+    return match ;
+  }// end of fullEquals
 
   /**
    * This returns the value of the property named by the parameter
@@ -583,12 +606,18 @@ export class Unit {
     else if (unit2.guidance_)
       this.guidance_ = unit2.guidance_ ;
     this.magnitude_ /= unit2.magnitude_;
-    // for now, putting in this safeguard to get around a known error.
-    // need to put in error handling later.
-    if (unit2.dim_ && unit2.dim_.dimVec_ &&
-        this.dim_ && this.dim_.dimVec_)
+
+    // Subract unit2's dim_ object from this one - if they both exist.
+    // The sub method will take care of cases where the dimVec_ arrays
+    // are missing on one or both dim_ objects.
+    if (unit2.dim_ && this.dim_)
       this.dim_.sub(unit2.dim_);
-    
+
+    // Else if this dim_ object is missing, clone unit2's dim_ object
+    // and give the inverted clone to this unit.
+    else if (this.dim_ === null || this.dim_ === undefined)
+      this.dim_ = unit2.dim_.clone().minus();
+
     return this;
 
   } // end divide
