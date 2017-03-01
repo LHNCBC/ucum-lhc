@@ -1,11 +1,16 @@
 # ucum-lhc
-LHC implementation of UCUM validation and conversion services.  
+This is the LHC implementation of validation and conversion services based on
+the [Unified Code for Units of Measure](http://unitsofmeasure.org) (UCUM) code
+system created by the Regenstrief Institute, Inc.  
+
+See our [overview page](https://lhncbc.github.io/ucum-lhc/index.html) for 
+general information.
 
 This is a work in progress so more capabilities will probably be introduced.
 
 ## Check out the Demo page
 
-We have a [demo page](https://lhncbc.github.io/ucum-lhc) that 
+We have a [demo page](https://lhncbc.github.io/ucum-lhc/demo.html) that 
 shows various capabilities.  That includes the validation and conversion
 functions described below.  You might want to try that out first.
 
@@ -27,7 +32,7 @@ manager.
 
 ### Using the code in the ucum-lhc package
       
-Use the [Bower}(bower.io) package manager to install the code:
+Use the [Bower](http://bower.io) package manager to install the code:
 
     bower install ucum-lhc
 
@@ -36,7 +41,7 @@ source code you need for the validation and conversion functions as well as the
 ucum code definitions file.  We assume that your main motivation for including 
 the ucum-lhc code is to have the validation and conversion capabilities for 
 units of measure on your system.  Those functions are available from the 
-**ucumPkg.UcumLhcUtils** class.  Here are the function descriptions:
+_ucumPkg.UcumLhcUtils_ class.  Here are the function descriptions:
 
 **validateUnitString(uStr)**
 
@@ -48,14 +53,14 @@ parses the string to see if it resolves to a valid unit string.
 * _@returns_ an object with four elements:
    * 'status' contains either 'valid' or 'invalid';
    * 'ucumCode' the valid ucum code, which may differ from what was passed
-        in (e.g., if 'Gauss' is passed in, this will contain 'G'); and
+        in (e.g., if 'Gauss' is passed in, this will contain 'G'); 
    * 'msg' contains a message, if the string is invalid, indicating
         the problem, or an explanation of a substitution such as the
-        substitution of 'G' for 'Gauss'
+        substitution of 'G' for 'Gauss'; and
    * 'unit' which is null if no unit is found, or a hash for a unit found:
-     * 'code' is the unit's ucum code (G in the above example;
-     * 'name' is the unit's name name (Gauss in the above example); and
-     * 'guidance' is the unit's guidance/description data
+     * 'code' is the unit's ucum code (G in the above example);
+     * 'name' is the unit's name (Gauss in the above example); and
+     * 'guidance' is the unit's guidance/description data.
 
 For example, to validate a unit string of m2/g4:
  
@@ -75,9 +80,11 @@ For example, to validate a unit string of m2/g4:
        /* returnOb['msg'] will have a message describing the problem */
        
 For information on unit string formatting, look at the _Ucum Unit Expression 
-Validation_ section on the demo page.  There is a button labeled "Show entry hints". 
-That will give you a short description of unit strings, and includes a link to
-the UCUM Specification, where you can find the full deal.
+Validation_ section on the [demo page](https://lhncbc.github.io/ucum-lhc/demo.html).  
+There is a button labeled "Show entry hints".  That will give you a short description 
+of unit strings, and includes a link to the 
+[UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
+the full deal.
 
 **convertUnitTo(fromUnitCode, fromVal, toUnitCode, decDigits)**
 
@@ -89,7 +96,7 @@ another type of unit.
 * _@param_ toUnitCode the unit code/expression/string of the unit that the from 
   field is to be converted to
 * _@param_ decDigits the maximum number of decimal digits to be displayed
-  for the converted unit.  If not specified, the UCUM.decDigits_ value
+  for the converted unit.  If not specified, the _UCUM.decDigits_ value
   (currently 4) is used.
 * _@returns_ a hash with three elements:
    * 'status' contains either 'succeeded' or 'failed'; 
@@ -114,19 +121,17 @@ For example, to convert 27 U.S. fathoms to U.S. inches with 0 decimal digits
          will describe; returnObj['toVal'] will be null */
       
 If you want to know what unit types a particular unit can be converted to, the 
-_UCUM Unit Conversions_ section of the demo page will show you a list of 
-commensurable units when you enter the "from" unit code.  (Valid UCUM unit codes
-are shown in the _UCUM Unit Expression Validation_ section).  That list will
-be displayed in the "converted to" list.  It will not show that list for unit
-strings that combine units, such as m2/g4.
-
+_UCUM Unit Conversions_ section of the [demo page](https://lhncbc.github.io/ucum-lhc/demo.html) 
+will show you a list of commensurable units when you enter the "from" unit code.  
+(Valid UCUM unit codes are shown in the _UCUM Unit Expression Validation_ section).  
+That list will be displayed in the "converted to" list.  
 
 **checkSynonyms(theSyn)**
 
-This method searches for units that include the search term (theSyn) in the
+This method searches for units that include a single search term (theSyn) in the
 unit's synonyms data and/or the unit name.  It returns all units found with a 
 match.  This is useful when an exact match for a term is not found.  For example,
-submitting the term "pound" to the validUnitString method will result in a 
+submitting the term "pound" to the _validUnitString_ method will result in a 
 "not found" response.   Submitting it to this method will return with a list 
 of possible pound units.
 
