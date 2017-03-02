@@ -16,8 +16,7 @@ functions described below.  You might want to try that out first.
 
 ## Get the code
 
-The ucum-lhc code is written in the ECMAScript 6 (developed by 
-[Ecma International](http:www.ecma-international.org) version of Javascript.  
+The ucum-lhc code is written in the ECMAScript 6 version of Javascript.
 Since that version is not yet universally supported, the code is compiled to 
 standard Javascript using the [Babel](https://babeljs.io) compiler. 
 The code uses Node.js I/O functions and compatible packages, and browserify-fs
