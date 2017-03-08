@@ -38,7 +38,10 @@
                  onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                   'convertTo',
                                                                   'resultString')">
-          &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
+          &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b></p>
+        <p class="small-print">If you are not finding a unit that you think should be there, check the
+          advanced search options to see if you should add a category (or categories)
+          to the search.
         </p>
         <button id="toggleAdvancedSearchCnvB"
                 onclick="
@@ -80,9 +83,10 @@
                  onchange=
                  "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString')">&nbsp; &nbsp;
-          Press tab or return to validate the expression<br><br>
-          <!-- The choices list may disappear when you are typing a complex expression.&nbsp
-          Keep typing and your expression will be validated when you press tab or return. -->
+          Press tab or return to validate the expression</p>
+          <p class="small-print">If you are not finding a unit that you think should be there, check the
+          advanced search options to see if you should add a category (or categories)
+          to the search.
           </p><button id="toggleAdvancedSearchValB"
                   onclick="
                 demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchVal',

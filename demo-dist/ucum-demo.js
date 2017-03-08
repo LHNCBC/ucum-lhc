@@ -127,7 +127,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
     // Set up the search autocompleter for the validation string input field
     // on the Validator tab section
-    this.urlValCats_ = UcumDemoConfig.defCategories_.concat(UcumDemoConfig.categories_);
+    this.urlValCats_ = UcumDemoConfig.defCategories_;
     this.urlValDispFlds_ = UcumDemoConfig.defCols_;
     urlOpts = this.buildUrlAndOpts('validate');
     this.valAuto_ = new Def.Autocompleter.Search('valString', urlOpts[0], urlOpts[1]);
@@ -153,7 +153,8 @@ var UcumDemo = exports.UcumDemo = function () {
 
   /**
    * This method builds the URL and options array used by the search autocompleter
-   * used for the "convert from" field on the converter tab.
+   * used for the "convert from" field on the converter tab and the
+   * "unit expression to be validated" field on the validator tab.
    *
    * This uses the urlCategories_ and urlDisplayFlds_ arrays built in the
    * constructor to get the list of categories to be included and fields
@@ -162,7 +163,7 @@ var UcumDemo = exports.UcumDemo = function () {
    * This called from the constructor, to build the initial url, and then
    * each time the user clicks on one of the checkboxes assigned to the
    * categories and display fields listed in the advanced settings of the
-   * converter tab.
+   * converter and validator tabs.
    *
    * @param tab the tab that the autocompleter is on - either 'convert' or
    *  'validate'
@@ -198,6 +199,12 @@ var UcumDemo = exports.UcumDemo = function () {
       opts['colHeaders'] = colHdrs;
       return [urlString, opts];
     }
+  }, {
+    key: 'buildAdvancedSettings',
+    value: function buildAdvancedSettings() {
+      this.buildTabSettings('advancedSearchVal', 'val');
+      this.buildTabSettings('advancedSearchCnv', 'cnv');
+    }
 
     /**
      * This method builds the "Advanced Settings" section for the unit conversions
@@ -211,11 +218,11 @@ var UcumDemo = exports.UcumDemo = function () {
      */
 
   }, {
-    key: 'buildAdvancedSettings',
-    value: function buildAdvancedSettings() {
+    key: 'buildTabSettings',
+    value: function buildTabSettings(divName, boxSuffix) {
 
       // get the division that contains the advanced settings stuff
-      var settingsDiv = document.getElementById('advancedSearch');
+      var settingsDiv = document.getElementById(divName);
 
       // build the categories section
       var limitPara = document.createElement("P");
@@ -223,8 +230,8 @@ var UcumDemo = exports.UcumDemo = function () {
       limitPara.appendChild(limitLine);
       settingsDiv.appendChild(limitPara);
 
-      this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defCategories_, true, 'category');
-      this.buildCheckBoxes(settingsDiv, UcumDemoConfig.categories_, false, 'category');
+      this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defCategories_, true, 'category', boxSuffix);
+      this.buildCheckBoxes(settingsDiv, UcumDemoConfig.categories_, false, 'category', boxSuffix);
 
       // build display fields section
       var dispPara = document.createElement("P");
@@ -233,8 +240,8 @@ var UcumDemo = exports.UcumDemo = function () {
       dispPara.appendChild(dispLine);
       settingsDiv.appendChild(dispPara);
 
-      this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defDisplayFlds_, true, 'displayField');
-      this.buildCheckBoxes(settingsDiv, UcumDemoConfig.displayFlds_, false, 'displayField');
+      this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defDisplayFlds_, true, 'displayField', boxSuffix);
+      this.buildCheckBoxes(settingsDiv, UcumDemoConfig.displayFlds_, false, 'displayField', boxSuffix);
     } // buildAdvancedSettings
 
 
@@ -257,7 +264,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
   }, {
     key: 'buildCheckBoxes',
-    value: function buildCheckBoxes(settingsDiv, namesArray, defBox, className) {
+    value: function buildCheckBoxes(settingsDiv, namesArray, defBox, className, boxSuffix) {
 
       var namesLen = namesArray.length;
 
@@ -266,12 +273,12 @@ var UcumDemo = exports.UcumDemo = function () {
         var theBox = document.createElement("INPUT");
         theBox.setAttribute("type", "checkbox");
         theBox.checked = defBox;
-        theBox.id = theVal + "_box";
+        theBox.id = theVal + "_" + boxSuffix + "box";
         theBox.value = theVal;
         theBox.setAttribute("class", className);
         theBox.setAttribute("style", "margin-left: 10px; margin-right: 3px;");
         theBox.addEventListener("click", function () {
-          demoPkg.UcumDemo.getInstance().updateSetting(theBox.id);
+          demoPkg.UcumDemo.getInstance().updateSetting(theBox.id, boxSuffix);
         });
         settingsDiv.appendChild(theBox);
         var aSpan = document.createElement('span');
@@ -300,7 +307,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
   }, {
     key: 'updateSetting',
-    value: function updateSetting(ckBoxId) {
+    value: function updateSetting(ckBoxId, tabSuffix) {
       var ckBox = document.getElementById(ckBoxId);
       var clsName = ckBox.className;
       var boxVal = ckBox.value;
@@ -330,9 +337,15 @@ var UcumDemo = exports.UcumDemo = function () {
       //this.fromAuto_.setURL(urlOpts[0]);
 
       // So, instead, we clear the cache and recreate the autocompleter.
-      this.fromAuto_.clearCachedResults();
-      this.fromAuto_.destroy();
-      this.fromAuto_ = new Def.Autocompleter.Search('convertFrom', urlOpts[0], urlOpts[1]);
+      if (tabSuffix === 'cnv') {
+        this.fromAuto_.clearCachedResults();
+        this.fromAuto_.destroy();
+        this.fromAuto_ = new Def.Autocompleter.Search('convertFrom', urlOpts[0], urlOpts[1]);
+      } else {
+        this.valAuto_.clearCachedResults();
+        this.valAuto_.destroy();
+        this.valAuto_ = new Def.Autocompleter.Search('valString', urlOpts[0], urlOpts[1]);
+      }
     } // end updateSetting
 
 
