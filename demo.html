@@ -40,15 +40,15 @@
                                                                   'resultString')">
           &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
         </p>
-        <button id="toggleAdvancedSearch"
+        <button id="toggleAdvancedSearchCnvB"
                 onclick="
-                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearch',
-                                                             'toggleAdvancedSearch',
+                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchCnv',
+                                                             'toggleAdvancedSearchCnvB',
                                                              'Hide', 'Show')"
                 type="button">Show advanced search options</button>
-        <div id="advancedSearch" style="display: none">
+        <div id="advancedSearchCnv" style="display: none">
           <!-- this section is built in the demo code when the page is loaded -->
-        </div> <!-- advancedSearch division -->
+        </div> <!-- advancedSearchCnv division -->
         <br><br><p>Enter the numeric value you want to convert:
         <input type="text" id="convertNum">
       </p><br>
@@ -81,9 +81,17 @@
                  "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString')">&nbsp; &nbsp;
           Press tab or return to validate the expression<br><br>
-          The choices list may disappear when you are typing a complex expression.&nbsp
-          Keep typing and your expression will be validated when you press tab or return.
-
+          <!-- The choices list may disappear when you are typing a complex expression.&nbsp
+          Keep typing and your expression will be validated when you press tab or return. -->
+          </p><button id="toggleAdvancedSearchValB"
+                  onclick="
+                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchVal',
+                                                             'toggleAdvancedSearchValB',
+                                                             'Hide', 'Show')"
+                  type="button">Show advanced search options</button>
+        <div id="advancedSearchVal" style="display: none">
+          <!-- this section is built in the demo code when the page is loaded -->
+        </div> <!-- advancedSearchVal division -->
         </p>&nbsp;&nbsp;
         <!--<button id="doValidationButton"
                 onclick=
@@ -200,7 +208,7 @@
 
     <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/10.1.1/autocomplete-lhc_jQuery.min.js"></script>
     <script src="dist/ucum-lhc.min.js"></script>
-    <script src="demo-dist/ucum-demo.min.js"></script>
+    <script src="demo-dist/ucum-demo.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>

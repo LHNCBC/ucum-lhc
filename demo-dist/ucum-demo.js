@@ -21,7 +21,7 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
   * the default categories in defCategories_ .
   */
   defCategories_: ['Clinical Use'],
-  categories_: ['Nonclinical Use', 'Obsolete'],
+  categories_: ['Nonclinical Use', 'Constants', 'Obsolete'],
 
   /**
    * Hash that matches category display names with the corresponding
@@ -29,6 +29,7 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
    */
   categoryValues_: { 'Clinical Use': 'Clinical',
     'Nonclinical Use': 'Nonclinical',
+    'Constants': 'Constant',
     'Obsolete': 'Obsolete' },
 
   /**
@@ -126,7 +127,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
     // Set up the search autocompleter for the validation string input field
     // on the Validator tab section
-    this.urlValCats_ = UcumDemoConfig.defCategories_;
+    this.urlValCats_ = UcumDemoConfig.defCategories_.concat(UcumDemoConfig.categories_);
     this.urlValDispFlds_ = UcumDemoConfig.defCols_;
     urlOpts = this.buildUrlAndOpts('validate');
     this.valAuto_ = new Def.Autocompleter.Search('valString', urlOpts[0], urlOpts[1]);

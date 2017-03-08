@@ -33,7 +33,7 @@ export class UcumDemo {
 
     // Set up the search autocompleter for the validation string input field
     // on the Validator tab section
-    this.urlValCats_ = UcumDemoConfig.defCategories_ ;
+    this.urlValCats_ = UcumDemoConfig.defCategories_.concat(UcumDemoConfig.categories_) ;
     this.urlValDispFlds_ = UcumDemoConfig.defCols_ ;
     urlOpts = this.buildUrlAndOpts('validate');
     this.valAuto_ = new Def.Autocompleter.Search('valString',
@@ -60,7 +60,8 @@ export class UcumDemo {
 
   /**
    * This method builds the URL and options array used by the search autocompleter
-   * used for the "convert from" field on the converter tab.
+   * used for the "convert from" field on the converter tab and the
+   * "unit expression to be validated" field on the validator tab.
    *
    * This uses the urlCategories_ and urlDisplayFlds_ arrays built in the
    * constructor to get the list of categories to be included and fields
@@ -69,7 +70,7 @@ export class UcumDemo {
    * This called from the constructor, to build the initial url, and then
    * each time the user clicks on one of the checkboxes assigned to the
    * categories and display fields listed in the advanced settings of the
-   * converter tab.
+   * converter and validator tabs.
    *
    * @param tab the tab that the autocompleter is on - either 'convert' or
    *  'validate'
