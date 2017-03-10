@@ -15,7 +15,7 @@ export var UcumDemoConfig = {
    * the default categories in defCategories_ .
    */
   defCategories_ : ['Clinical Use'],
-  categories_ : ['Nonclinical Use', 'Obsolete'],
+  categories_ : ['Nonclinical Use', 'Constants', 'Obsolete'],
 
   /**
    * Hash that matches category display names with the corresponding
@@ -23,6 +23,7 @@ export var UcumDemoConfig = {
    */
   categoryValues_ : {'Clinical Use' : 'Clinical',
     'Nonclinical Use' : 'Nonclinical',
+    'Constants' : 'Constant',
     'Obsolete' : 'Obsolete'},
 
   /**

@@ -60,7 +60,8 @@ export class UcumDemo {
 
   /**
    * This method builds the URL and options array used by the search autocompleter
-   * used for the "convert from" field on the converter tab.
+   * used for the "convert from" field on the converter tab and the
+   * "unit expression to be validated" field on the validator tab.
    *
    * This uses the urlCategories_ and urlDisplayFlds_ arrays built in the
    * constructor to get the list of categories to be included and fields
@@ -69,7 +70,7 @@ export class UcumDemo {
    * This called from the constructor, to build the initial url, and then
    * each time the user clicks on one of the checkboxes assigned to the
    * categories and display fields listed in the advanced settings of the
-   * converter tab.
+   * converter and validator tabs.
    *
    * @param tab the tab that the autocompleter is on - either 'convert' or
    *  'validate'
@@ -83,7 +84,7 @@ export class UcumDemo {
     let catLen = catsArray.length;
     if (catLen > 0) {
       let qString = '';
-      for (var c = 0; c < catLen; c++) {
+      for (let c = 0; c < catLen; c++) {
         if (c > 0)
           qString += ' OR ';
         qString += UcumDemoConfig.categoryValues_[catsArray[c]] ;
@@ -105,23 +106,39 @@ export class UcumDemo {
     }
     opts['colHeaders'] = colHdrs ;
     return [urlString, opts];
+
+  } // end buildUrlAndOpts
+
+
+  /* This method controls the building of the "Advanced Settings" section that
+   * appears on each tab of the demo page.  It is called when the page is
+   * loaded.   The settings consist of configuration data from the config.js
+   * file, so must be built whenever the page is built.
+   *
+   * This is called on the body onload event from the page html.
+   */
+  buildAdvancedSettings() {
+    this.buildTabSettings('advancedSearchVal', 'val') ;
+    this.buildTabSettings('advancedSearchCnv', 'cnv') ;
   }
 
 
   /**
-   * This method builds the "Advanced Settings" section for the unit conversions
-   * tab when the page is loaded.   The settings consist of configuration data
+   * This method builds the "Advanced Settings" section for one tab of the
+   * demo page/site.  The settings consist of configuration data
    * from the config.js file, so must be built whenever the page is built.
    *
-   * This is called on the body onload event from the page html .
+   * This is called once for each tab by the buildAdvancedSettings function.
    *
-   * @param none
-   * @return nothing
+   * @param divName name of the div element to receive the settings html
+   * @param boxSuffix suffix for the tab ('val' or 'cnv') that is included
+   *  in the checkbox ids for the sections built, and is used to determine
+   *  which tab is the target for the current call
    */
-  buildAdvancedSettings() {
+  buildTabSettings(divName, boxSuffix) {
 
     // get the division that contains the advanced settings stuff
-    let settingsDiv = document.getElementById('advancedSearch');
+    let settingsDiv = document.getElementById(divName);
 
     // build the categories section
     let limitPara = document.createElement("P");
@@ -129,8 +146,10 @@ export class UcumDemo {
     limitPara.appendChild(limitLine);
     settingsDiv.appendChild(limitPara);
 
-    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defCategories_, true, 'category') ;
-    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.categories_, false, 'category') ;
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defCategories_, true,
+                         'category', boxSuffix) ;
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.categories_, false,
+                         'category', boxSuffix) ;
 
     // build display fields section
     let dispPara = document.createElement("P");
@@ -139,10 +158,12 @@ export class UcumDemo {
     dispPara.appendChild(dispLine);
     settingsDiv.appendChild(dispPara);
 
-    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defDisplayFlds_, true, 'displayField');
-    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.displayFlds_, false, 'displayField');
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defDisplayFlds_, true,
+                         'displayField', boxSuffix);
+    this.buildCheckBoxes(settingsDiv, UcumDemoConfig.displayFlds_, false,
+                         'displayField', boxSuffix);
 
-  } // buildAdvancedSettings
+  } // buildTabSettings
 
 
   /**
@@ -157,11 +178,13 @@ export class UcumDemo {
    *  to be created
    * @param defBox a flag indicating whether or not these boxes are to be
    *  checked as defaults
-   * @className a class name to be applied to the boxes.   Used to indicate
+   * @param className a class name to be applied to the boxes.   Used to indicate
    *  the type of checkbox (category or display)
+   * @param boxSuffix applied to the checkbox name to distinguish which tab
+   *  the checkbox is on ('val' or 'cnv')
    * @return nothing
    */
-  buildCheckBoxes(settingsDiv, namesArray, defBox, className){
+  buildCheckBoxes(settingsDiv, namesArray, defBox, className, boxSuffix){
 
     let namesLen = namesArray.length;
     for (let i = 0; i < namesLen; i++) {
@@ -169,12 +192,12 @@ export class UcumDemo {
       let theBox = document.createElement("INPUT");
       theBox.setAttribute("type", "checkbox");
       theBox.checked = defBox;
-      theBox.id = theVal + "_box";
+      theBox.id = theVal + "_" + boxSuffix + "box";
       theBox.value = theVal ;
       theBox.setAttribute("class", className);
       theBox.setAttribute("style", "margin-left: 10px; margin-right: 3px;");
       theBox.addEventListener("click", function() {
-        demoPkg.UcumDemo.getInstance().updateSetting(theBox.id);});
+        demoPkg.UcumDemo.getInstance().updateSetting(theBox.id, boxSuffix);});
       settingsDiv.appendChild(theBox);
       let aSpan = document.createElement('span')
       let theText = document.createTextNode(theVal);
@@ -185,17 +208,19 @@ export class UcumDemo {
 
 
   /**
-   * This method updates the autocompleter URL and options based advanced
+   * This method updates one of the autocompleter URLs and options based advanced
    * search options selected by the user.  It is called on a click event
    * for each setting option (category selections as well as display field
    * selections).
    *
-   * The autocompleter for the convertFrom field on the Converter tab of
+   * The autocompleter for the appropriate field on the one of the tabs of
    * the demo page is recreated each time this is called.
    *
    * @param ckBoxId id of the checkbox on which the click event occurred
+   * @param tabSuffix suffix ('val' or 'cnv') used to determine which
+   *  autocompleter needs to be updated
    */
-  updateSetting(ckBoxId) {
+  updateSetting(ckBoxId, tabSuffix) {
     let ckBox = document.getElementById(ckBoxId);
     let clsName = ckBox.className ;
     let boxVal = ckBox.value;
@@ -233,10 +258,17 @@ export class UcumDemo {
     //this.fromAuto_.setURL(urlOpts[0]);
 
     // So, instead, we clear the cache and recreate the autocompleter.
-    this.fromAuto_.clearCachedResults();
-    this.fromAuto_.destroy();
-    this.fromAuto_ = new Def.Autocompleter.Search('convertFrom',
-        urlOpts[0], urlOpts[1]);
+    if (tabSuffix === 'cnv') {
+      this.fromAuto_.clearCachedResults();
+      this.fromAuto_.destroy();
+      this.fromAuto_ = new Def.Autocompleter.Search('convertFrom',
+          urlOpts[0], urlOpts[1]);
+    } else {
+      this.valAuto_.clearCachedResults();
+      this.valAuto_.destroy();
+      this.valAuto_ = new Def.Autocompleter.Search('valString',
+          urlOpts[0], urlOpts[1]);
+    }
 
   } // end updateSetting
 
