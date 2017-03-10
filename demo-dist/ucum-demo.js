@@ -58,7 +58,8 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
    */
   baseSearchOpts_: { 'nonMatchSuggestions': false,
     'tableFormat': true,
-    'valueCols': [0] }
+    'valueCols': [0],
+    'tokens': ['/', '.'] }
 };
 
 

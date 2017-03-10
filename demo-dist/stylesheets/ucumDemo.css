@@ -89,9 +89,12 @@
 
 body {
   font-family: "sans-serif" ;
-  font-size: 16px;
   margin: 0px 20px 20px 20px ;
   color: #1E4193 ;
+}
+
+#demobody {
+  font-size: 16px;
 }
 
 h2 {
