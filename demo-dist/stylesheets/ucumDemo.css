@@ -184,7 +184,7 @@ ul.tab li a {
   border-top: none;
 }
 
-#advancedSearch {
+#advancedSearchCnv, #advancedSearchVal {
   border: 3px dotted #ddd;
   border-radius: 25px;
   padding: 20px;

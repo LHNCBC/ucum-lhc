@@ -38,17 +38,20 @@
                  onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                   'convertTo',
                                                                   'resultString')">
-          &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b>
+          &nbsp;&nbsp;UCUM codes are <b>case-sensitive</b></p>
+        <p class="small-print">If you are not finding a unit that you think should be there, check the
+          advanced search options to see if you should add a category (or categories)
+          to the search.
         </p>
-        <button id="toggleAdvancedSearch"
+        <button id="toggleAdvancedSearchCnvB"
                 onclick="
-                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearch',
-                                                             'toggleAdvancedSearch',
+                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchCnv',
+                                                             'toggleAdvancedSearchCnvB',
                                                              'Hide', 'Show')"
                 type="button">Show advanced search options</button>
-        <div id="advancedSearch" style="display: none">
+        <div id="advancedSearchCnv" style="display: none">
           <!-- this section is built in the demo code when the page is loaded -->
-        </div> <!-- advancedSearch division -->
+        </div> <!-- advancedSearchCnv division -->
         <br><br><p>Enter the numeric value you want to convert:
         <input type="text" id="convertNum">
       </p><br>
@@ -80,10 +83,19 @@
                  onchange=
                  "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString')">&nbsp; &nbsp;
-          Press tab or return to validate the expression<br><br>
-          The choices list may disappear when you are typing a complex expression.&nbsp
-          Keep typing and your expression will be validated when you press tab or return.
-
+          Press tab or return to validate the expression</p>
+          <p class="small-print">If you are not finding a unit that you think should be there, check the
+          advanced search options to see if you should add a category (or categories)
+          to the search.
+          </p><button id="toggleAdvancedSearchValB"
+                  onclick="
+                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchVal',
+                                                             'toggleAdvancedSearchValB',
+                                                             'Hide', 'Show')"
+                  type="button">Show advanced search options</button>
+        <div id="advancedSearchVal" style="display: none">
+          <!-- this section is built in the demo code when the page is loaded -->
+        </div> <!-- advancedSearchVal division -->
         </p>&nbsp;&nbsp;
         <!--<button id="doValidationButton"
                 onclick=
