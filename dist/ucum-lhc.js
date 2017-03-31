@@ -27562,11 +27562,9 @@ var UnitTables = exports.UnitTables = function () {
         var downCode = uCode.toLowerCase();
 
         if (this.unitCodes_[uCode]) throw new Error('UnitTables.addUnitCode called, already contains entry for ' + ('unit with code = ' + uCode));else {
-          console.log('pushing ' + uCode + ' to unitCodes_ hash for unit with code ' + theUnit.csCode_);
           this.unitCodes_[uCode] = theUnit;
           this.unitUcCodes_[upCode] = theUnit;
           this.unitLcCodes_[downCode] = theUnit;
-          console.log('pushing ' + uCode + ' to codeOrder hash');
           this.codeOrder_.push(uCode);
         }
       } else throw new Error('UnitAtomsTable.addUnitCode called for unit that has ' + 'no code.');
@@ -27713,25 +27711,16 @@ var UnitTables = exports.UnitTables = function () {
   }, {
     key: 'getUnitByCode',
     value: function getUnitByCode(uCode) {
-      console.log('in getUnitByCode, ucode = ' + uCode);
       var retUnit = null;
       if (uCode) {
         retUnit = this.unitCodes_[uCode];
-        if (retUnit) {
-          console.log('got unit from this.unitCodes_, code = ' + retUnit.csCode_);
-        } else {
+        if (!retUnit) {
           retUnit = this.unitLcCodes_[uCode.toLowerCase()];
-          if (retUnit) {
-            console.log('got unit from this.unitLcCodes_, code = ' + retUnit.csCode_);
-          } else {
+          if (!retUnit) {
             retUnit = this.unitUcCodes_[uCode.toUpperCase()];
-            if (retUnit) {
-              console.log('got unit from this.unitUcCodes_, code = ' + retUnit.csCode_);
-            } // if found in unitUcCodes_
           } // if not found in unitLcCodes_
         } // if not found in unitCodes_
       } // if we got a unit code
-      if (retUnit) console.log('returning unit with code = ' + retUnit.csCode_ + ' ');else console.log('returning null retUnit');
       return retUnit;
     }
 
@@ -27963,7 +27952,6 @@ var UnitTables = exports.UnitTables = function () {
       var uLen = this.codeOrder_.length;
       for (var u = 0; u < uLen; u++) {
         unitsList.push(this.getUnitByCode(this.codeOrder_[u]));
-        console.log('pushing ' + this.getUnitByCode(this.codeOrder_[u]).csCode_ + ' to unitsList');
       }
       return unitsList;
     } // end allUnitsByDef

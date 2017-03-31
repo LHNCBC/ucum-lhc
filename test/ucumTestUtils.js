@@ -44,7 +44,6 @@ export class UcumTestUtils {
     var allUnits = uTab.allUnitsByDef();
     var uLen = allUnits.length;
     for (var u = 0; u < uLen; u++) {
-      console.log(`processing ${allUnits[u].source_} unit ${allUnits[u].csCode_}`);
       let skipped = false;
       let whoCalled = '';
       let whoReturned = '';
