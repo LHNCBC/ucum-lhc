@@ -3,6 +3,10 @@
  * a unit and its operations for addition, subtraction, and multiplication
  * with a scalar.
  *
+ * This object should exist for each unit that can be expressed as a
+ * vector of numbers.   This excludes arbitrary units, e.g., (10*23), and
+ * units that are not numbers but are an expression based solely on numbers,
+ * e.g., mol (mole) which is based on 10*23 or Ki which is based on 1014.
  *
  * @author Lee Mericle, based on java version by Gunther Schadow
  */
@@ -14,13 +18,12 @@ export class Dimension {
    * Constructor.
    *
    * @param dimSetting an optional parameter that may be:
-   *  null, which means that this object will be created with a vector
-   *   containing all zeroes; or
+   *  null, which means that this object will be created with a null vector; or
    *  an array, which must be the length defined by Ucum.dimLen_, and
    *    whose contents will be copied to this new object's vector; or
-   *  a number, which must be between 0 and 1 less than the vector length
+   *  an integer, which must be between 0 and 1 less than the vector length
    *    defined by Ucum.dimLen_.  This new object's vector will be
-   *    initialize to zero for all elements except the one whose index
+   *    initialized to zero for all elements except the one whose index
    *    matches the number passed in.  That element will be set to one.
 
    * @throws an error if the dimSetting parameter does not meet the types
@@ -39,19 +42,18 @@ export class Dimension {
       'Dimension constructor'));
     }
     if (dimSetting === undefined || dimSetting === null) {
-      //this.dimVec_ = new Array(UC.Ucum.dimLen_) ;
-      //this.assignZero() ;
       this.dimVec_ = null ;
     }
     else if (dimSetting instanceof Array) {
       if (dimSetting.length !== UC.Ucum.dimLen_) {
         throw(new Error('Parameter error, incorrect length of vector passed to ' +
-        'Dimension constructor'));
+            `Dimension constructor, vector = ${JSON.stringify(dimSetting)}`));
       }
       this.dimVec_ = [];
       for (let d = 0; d < UC.Ucum.dimLen_; d++)
         this.dimVec_[d] = dimSetting[d];
     }
+
     // In es6 this should be Number.isInteger(dimSetting).  But Babel
     // doesn't transpile that correctly, so we need to use the isInteger
     // module.  :0
@@ -68,44 +70,9 @@ export class Dimension {
 
 
   /**
-   * This function sets the number of elements in the dimension vector.
-   * It may only be set once, presumably when unit definitions are being
-   * loaded in.
-   *
-   * At the moment this is commented out because we are setting the value in
-   * config.js.  In the future this value will come from the definitions file
-   * - but we're not there yet.
-   *
-   * @param the number of dimensions
-   * @throws an error if Ucum.dimLen_ has already been set (i.e., is not zero)
-   */
-  /*
-  setDimensionLen(n) {
-    if(Ucum.dimLen_ != 0)
-      throw new IllegalStateException("setDimensionLen was called more than once");
-    Ucum.dimLen_ = n;
-  } // end setDimensionLen
-  **/
-
-
-  /**
-   * Returns the current setting for Ucum.dimLen_
-   *
-   * @return the current setting
-   * @throws an error if the value has not yet been set
-   */
-  getDimensionLen() {
-    if (UC.Ucum.dimLen_ == 0) {
-      throw(new Error('Dimension.setDimensionLen must be called before it can be ' +
-      'by Dimension.getLen'));
-    }
-    return UC.Ucum.dimLen_;
-  }
-  
-
-  /**
-   * Sets the element at the specified position to 1 if the dimension vector
-   * is not null; else nothing is changed.
+   * Sets the element at the specified position to 1.  If the dimension vector
+   * is null when this is called a zero-filled vector is created and then the
+   * indicated position is set to 1.
    *
    * @param indexPos the index of the element to be set
    * @throws an exception if the specified position is invalid, i.e., not a
@@ -119,8 +86,10 @@ export class Dimension {
       `position (${indexPos})`));
     }
 
-    if (this.dimVec_)
-      this.dimVec_[indexPos] = 1;
+    if (!this.dimVec_) {
+      this.assignZero();
+    }
+    this.dimVec_[indexPos] = 1;
   }
 
 
@@ -161,11 +130,7 @@ export class Dimension {
   getProperty(propertyName) {
     let uProp = (!(propertyName.endsWith('_'))) ? propertyName + '_' :
         propertyName ;
-    if (!(this.hasOwnProperty(uProp)))
-      throw(new Error('Dimension does not have requested property ' +
-                      `(${propertyName})`));
-    else
-      return this[uProp] ;
+    return this[uProp] ;
 
   } // end getProperty
 
@@ -315,16 +280,13 @@ export class Dimension {
       throw(new Error(`Dimension.assignDim called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`));
     }
-    let dimVec2 = null;
-    if (dim2.dimVec_ !== undefined && dim2.dimVec_ !== null)
-      dimVec2 = dim2.dimVec_ ;
 
-    if (this.dimVec_ === null && dimVec2 !== null) {
+    if (this.dimVec_ === null && dim2.dimVec_ !== null) {
       this.dimVec_ = [] ;
     }
-    if (this.dimVec_ && dimVec2) {
+    if (this.dimVec_ && dim2.dimVec_) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++)
-        this.dimVec_[i] = dimVec2[i];
+        this.dimVec_[i] = dim2.dimVec_[i];
     }
     else { // dimVec2_ === null, this.dimVec_ may or may not be null
       this.dimVec_ = null ;
@@ -353,8 +315,8 @@ export class Dimension {
   /**
    * Tests for zero dimension.
    *
-   * @return true if exponents (elements) of this dimension's vector are all zero;
-   * false otherwise.
+   * @return true if exponents (elements) of this dimension's vector are all
+   * zero; false otherwise (including if the current vector is null).
    *
    */
   isZero() {
@@ -363,7 +325,6 @@ export class Dimension {
       for (let i = 0; allZero && i < UC.Ucum.dimLen_; i++)
         allZero = this.dimVec_[i] === 0;
     }
-
     return allZero;
   }
 

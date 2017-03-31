@@ -150,6 +150,7 @@ export class UcumXmlDocument {
       attrs['variable_'] = curBUnit.attr.dim ;
       attrs['printSymbol_'] = curBUnit.childNamed('printSymbol').val;
       attrs['dim_'] = b ;
+      attrs['source_'] = 'UCUM';
       let newUnit = new Unit(attrs);
       utab.addUnit(newUnit) ;
     }
@@ -170,10 +171,11 @@ export class UcumXmlDocument {
 
     let utab = UnitTables.getInstance() ;
     let uStrParser = UnitString.getInstance();
+    let stopNow = false ;
     let alen = unitStrings.length ;
-    for (let a = 0; a < alen; a++) {
+    for (let a = 0; a < alen && !stopNow; a++) {
       let haveUnit = true;
-      let curUA = unitAtoms[a];
+      let curUA = unitStrings[a];
       let attrs = {};
       attrs['isBase_'] = false;
       attrs['name_'] = curUA.childNamed('name').val;
@@ -322,7 +324,8 @@ export class UcumXmlDocument {
       // Handle carat of gold alloys - which doesn't get a dimension
       //
       else if (attrs['csCode_'] === "[car_Au]") {
-        attrs['magnitude_'] = 1/24
+        attrs['magnitude_'] = 1/24 ;
+        attrs['dim_'] = null ;
       }
       else {
 
@@ -365,7 +368,10 @@ export class UcumXmlDocument {
           // object and magnitude before it's multiplied by the one
           // specified in the input node.
           try {
-            let ret = uStrParser.parseString(attrs['csUnitString_']);
+            let retObj = uStrParser.parseString(attrs['csUnitString_']);
+            let ret = retObj[0];
+            let retString = retObj[1];
+            let retMsg = retObj[2];
 
             // Get the dimension object and magnitude (and adjust by
             // specified magnitude factor) from the unit created and
@@ -381,7 +387,8 @@ export class UcumXmlDocument {
             // if there's no unit string, report an error
             else {
               attrs['defError_'] = true;
-              console.log('unit definition error; code = ' + attrs['csCode_']);
+              console.log(`unit definition error; code = ${attrs['csCode_']}; `+
+                          `msg = ${retMsg}`);
               attrs['dim_'] = null;
               attrs['magnitude_'] = null;
             }
@@ -389,6 +396,7 @@ export class UcumXmlDocument {
           catch(err) {
             console.log('error thrown from unit parsing code for unit name ' +
                         attrs['name_'] + '\n' + err.message);
+            stopNow = true;
           }
         } // end if there is a unit string to parse
       } // end if this is not a dimless unit
@@ -397,6 +405,7 @@ export class UcumXmlDocument {
         // Now create the unit we want based on the attributes we've
         // accumulated from the xml input and from figuring the dimension
         // and magnitude.  Add it to the unit tables
+        attrs['source_'] = 'UCUM';
         let newUnit = new Unit(attrs);
         utab.addUnit(newUnit);
 
@@ -426,9 +435,9 @@ export class UcumXmlDocument {
 
     let defsHash = { 'prefixes' : pfxArray,
                      'units' : uArray};
-
-    jsonfile.writeFileSync('../dist/data/ucumDefs.json', defsHash,
-                          {encoding: 'utf8', mode: 0o644, flag: 'w'});
+    let dt = new Date();
+    jsonfile.writeFileSync('../dist/data/ucumDefs' + dt.valueOf() + '.json',
+                           defsHash, {encoding: 'utf8', mode: 0o644, flag: 'w'});
   } // end writeJsonFile
 
 } // end UcumXmlDocument

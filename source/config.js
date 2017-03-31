@@ -33,7 +33,7 @@ export var Ucum = {
    * The string used to separate a unit code and unit name when they
    * are displayed together
    */
-  codeSep_ : ' - ',
+  codeSep_ : ': ',
 
   /**
    * Opening HTML used to emphasize portions of error messages.  Used when

@@ -116,8 +116,7 @@ export class UnitString {
     }
 
     let firstCall = (uStr === origString) ;
-    //if (firstCall)
-    //  console.log('\rn');
+
     // If this is the first call for the string, check for spaces and throw
     // an error if any are found.  The spec explicitly forbids spaces.
     if (firstCall && origString.indexOf(' ') > -1) {
@@ -369,7 +368,6 @@ export class UnitString {
     }
     // If we're still good, continue
     if (!endProcessing) {
-
       // Process the units (and numbers) to create one final unit object
       if (uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined ||
           uArray[0]['un'] == null) {
@@ -384,7 +382,6 @@ export class UnitString {
 
       finalUnit = uArray[0]['un'];
       let uLen = uArray.length ;
-
       // Perform the arithmetic for the units, starting with the first 2 units.
       // We only need to do the arithmetic if we have more than one unit.
       for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
@@ -415,6 +412,7 @@ export class UnitString {
                 isDiv ? finalUnit = finalUnit.divide(nextUnit) :
                     finalUnit = finalUnit.multiplyThese(nextUnit);
               }
+
               // finalUnit is a number; nextUnit is a unit object
               else {
                 let nMag = nextUnit.getProperty('magnitude_');
@@ -423,9 +421,11 @@ export class UnitString {
                     nextUnit.getProperty('name_');
                 let theCode = finalUnit.toString() + thisOp +
                     nextUnit.getProperty('csCode_');
+                let theDim = nextUnit.getProperty('dim_');
                 finalUnit = nextUnit;
                 finalUnit.assignVals({'csCode_' : theCode,
                                       'name_' : theName,
+                                      'dim_' : theDim,
                                       'magnitude_' : nMag});
               }
             } // end if nextUnit is not a number
@@ -451,14 +451,11 @@ export class UnitString {
               }
             } // end if nextUnit is a number
           }
-          catch (err) {
+           catch (err) {
             retMsg.unshift(err.message) ;
             endProcessing = true ;
             finalUnit = null ;
           }
-          //console.log('just did arithmetic, finalUnit dim: ' +
-          //            JSON.stringify(finalUnit.dim_) + '; mag: ' +
-          //            finalUnit.magnitude_);
         } // end if not endProceesing
       } // end do for each unit after the first one
     }
@@ -476,8 +473,6 @@ export class UnitString {
     // - which is not a unit.  Do this only when this is the first/outer
     // call to this method.
     if (finalUnit && firstCall && !isNaN(finalUnit) && finalUnit !== 1) {
-      //console.log('at end of parseString, uStr = ' + uStr + '; origString = ' +
-      //    origString + '; finalUnit = ' + JSON.stringify(finalUnit) );
       let newUnit = new Unit({'csCode_' : origString});
       if (newUnit) {
         newUnit['magnitude_'] = finalUnit ;
@@ -590,8 +585,7 @@ export class UnitString {
     let retUnit = null;
     let endProcessing = false ;
     let origCode = uCode ;
-    //console.log('makeUnit called for origString = ' + origString +
-    //            '; uCode = ' + uCode);
+
     // check annotations:
     // If it's JUST an annotation, replace with 1.  If we find text following
     // the annotation, mark it as an error.   Otherwise just remove it - the
@@ -678,7 +672,6 @@ export class UnitString {
 
       ulen = uCode.length;
       let utabs = UnitTables.getInstance();
-
       // First look for the full string as a code
       origUnit = utabs.getUnitByCode(uCode);
 
@@ -733,7 +726,6 @@ export class UnitString {
       // and try without it.
 
       if (!origUnit) {
-
         // Try for a single character prefix first.
         let pfxTabs = PrefixTables.getInstance();
         pfxCode = uCode.charAt(0);
@@ -772,6 +764,7 @@ export class UnitString {
         } // end if we found a prefix
       } // end if we didn't get a unit after removing an exponent
 
+      // One more thing.
       // If we didn't find a unit, signal an error.  (We tried with the full
       // unit string, with the unit string without the exponent, and the
       // unit string without a prefix.  That's all we can try).
@@ -783,15 +776,10 @@ export class UnitString {
       if (!endProcessing) {
         // Otherwise we found a unit object.  Clone it and then apply the prefix
         // and exponent, if any, to it.
-
         retUnit = origUnit.clone();
-        //console.log('cloned unit for csCode_ = ' + origUnit.csCode_);
         let theDim = retUnit.getProperty('dim_');
-        //if (theDim)
-        //  theDim = theDim.clone();
         let theMag = retUnit.getProperty('magnitude_');
         let theName = retUnit.getProperty('name_');
-        //console.log('  dim = ' + JSON.stringify(theDim) + '; mag = ' + theMag);
         // If there is an exponent for the unit, apply it to the dimension
         // and magnitude now
         if (exp) {
@@ -801,9 +789,7 @@ export class UnitString {
             theDim = theDim.mul(exp);
           theMag = Math.pow(theMag, exp);
           retUnit.assignVals({'magnitude_': theMag});
-          //console.log('  applied exponent, dim = ' +
-          //            JSON.stringify(retUnit.dim_) + '; mag = ' +
-          //            retUnit.magnitude_);
+
           // If there is also a prefix, apply the exponent to the prefix.
           if (pfxVal) {
 
@@ -827,9 +813,6 @@ export class UnitString {
         if (pfxVal) {
           theMag *= pfxVal;
           retUnit.assignVals({'magnitude_': theMag})
-          //console.log('    applied prefix, dim = ' +
-          //    JSON.stringify(retUnit.dim_) + '; mag = ' +
-          //    retUnit.magnitude_);
         }
 
         // if we have a prefix and/or an exponent, add them to the unit name

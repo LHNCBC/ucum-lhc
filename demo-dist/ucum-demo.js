@@ -198,7 +198,17 @@ var UcumDemo = exports.UcumDemo = function () {
       }
       opts['colHeaders'] = colHdrs;
       return [urlString, opts];
-    }
+    } // end buildUrlAndOpts
+
+
+    /* This method controls the building of the "Advanced Settings" section that
+     * appears on each tab of the demo page.  It is called when the page is
+     * loaded.   The settings consist of configuration data from the config.js
+     * file, so must be built whenever the page is built.
+     *
+     * This is called on the body onload event from the page html.
+     */
+
   }, {
     key: 'buildAdvancedSettings',
     value: function buildAdvancedSettings() {
@@ -207,14 +217,16 @@ var UcumDemo = exports.UcumDemo = function () {
     }
 
     /**
-     * This method builds the "Advanced Settings" section for the unit conversions
-     * tab when the page is loaded.   The settings consist of configuration data
+     * This method builds the "Advanced Settings" section for one tab of the
+     * demo page/site.  The settings consist of configuration data
      * from the config.js file, so must be built whenever the page is built.
      *
-     * This is called on the body onload event from the page html .
+     * This is called once for each tab by the buildAdvancedSettings function.
      *
-     * @param none
-     * @return nothing
+     * @param divName name of the div element to receive the settings html
+     * @param boxSuffix suffix for the tab ('val' or 'cnv') that is included
+     *  in the checkbox ids for the sections built, and is used to determine
+     *  which tab is the target for the current call
      */
 
   }, {
@@ -242,7 +254,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
       this.buildCheckBoxes(settingsDiv, UcumDemoConfig.defDisplayFlds_, true, 'displayField', boxSuffix);
       this.buildCheckBoxes(settingsDiv, UcumDemoConfig.displayFlds_, false, 'displayField', boxSuffix);
-    } // buildAdvancedSettings
+    } // buildTabSettings
 
 
     /**
@@ -257,8 +269,10 @@ var UcumDemo = exports.UcumDemo = function () {
      *  to be created
      * @param defBox a flag indicating whether or not these boxes are to be
      *  checked as defaults
-     * @className a class name to be applied to the boxes.   Used to indicate
+     * @param className a class name to be applied to the boxes.   Used to indicate
      *  the type of checkbox (category or display)
+     * @param boxSuffix applied to the checkbox name to distinguish which tab
+     *  the checkbox is on ('val' or 'cnv')
      * @return nothing
      */
 
@@ -294,15 +308,17 @@ var UcumDemo = exports.UcumDemo = function () {
 
 
     /**
-     * This method updates the autocompleter URL and options based advanced
+     * This method updates one of the autocompleter URLs and options based advanced
      * search options selected by the user.  It is called on a click event
      * for each setting option (category selections as well as display field
      * selections).
      *
-     * The autocompleter for the convertFrom field on the Converter tab of
+     * The autocompleter for the appropriate field on the one of the tabs of
      * the demo page is recreated each time this is called.
      *
      * @param ckBoxId id of the checkbox on which the click event occurred
+     * @param tabSuffix suffix ('val' or 'cnv') used to determine which
+     *  autocompleter needs to be updated
      */
 
   }, {

@@ -342,8 +342,6 @@ export class UcumLhcUtils {
     let utab = UnitTables.getInstance();
     let uct = utab.unitsCount();
     let uList = utab.printUnits(true);
-    console.log('in ucumLhcUtils.printUnits, about to write file.  uList ' +
-                'length = ' + uList.length + '; uct = ' + uct);
     fs.writeFileSync('JsonUnitsList.txt', uList,
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
   }

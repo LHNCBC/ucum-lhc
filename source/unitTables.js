@@ -369,16 +369,14 @@ export class UnitTables {
   getUnitByCode(uCode) {
     let retUnit = null ;
     if (uCode) {
-      retUnit = this.unitCodes_[uCode] ;
-      if (retUnit === undefined) {
+      retUnit = this.unitCodes_[uCode];
+      if (!retUnit) {
         retUnit = this.unitLcCodes_[uCode.toLowerCase()];
-        if (retUnit === undefined) {
+        if (!retUnit) {
           retUnit = this.unitUcCodes_[uCode.toUpperCase()];
-          if (retUnit === undefined)
-            retUnit = null;
-        }
-      }
-    }
+        } // if not found in unitLcCodes_
+      } // if not found in unitCodes_
+    } // if we got a unit code
     return retUnit ;
   }
 
@@ -604,25 +602,44 @@ export class UnitTables {
   /**
    * This is used to get all unit objects, ordered by unit name.  Currently it
    * is used to create a csv list of all units.
-   *
+   * @param sep separator character (or string) to be used to separate each
+   *  column in the output.  Optional, defaults to '|' if not specified.
+   *  (Used to use ; but the synonyms use that extensively).  Don't use a
+   *  comma or any other punctuation found in the output data.
    * @returns a buffer containing all unit objects, ordered by name
    * order
    */
-  allUnitsByName() {
+  allUnitsByName(cols, sep) {
+    if (sep === undefined || sep === null)
+      sep = '|';
     let unitBuff = '';
     let unitsList = this.getAllUnitNames();
     let uLen = unitsList.length;
+    let cLen = cols.length;
     for (let i = 0; i < uLen; i++) {
       let nameRecs = this.getUnitByName(unitsList[i]);
       for (let u = 0; u < nameRecs.length; u++) {
         let rec = nameRecs[u];
-        unitBuff += rec.csCode_ + ',' + rec.name_ + ',' + rec.property_ +
-            ',' + rec.csUnitString_ + ',' + rec.magnitude_ ;
-        if (rec.dim_ !== null && rec.dim_.dimVec_ instanceof Array)
-          unitBuff += ',[' + rec.dim_.dimVec_.join('') + ']\r\n';
-        else
-          unitBuff += '\r\n';
-      }
+        for (let c = 0; c < cLen; c++) {
+          if (c > 0)
+            unitBuff += sep;
+          if (cols[c] === 'dim_') {
+            if (rec.dim_ !== null && rec.dim_ !== undefined &&
+                rec.dim_.dimVec_ instanceof Array)
+              unitBuff += '[' + rec.dim_.dimVec_.join(',') + ']';
+            else
+              unitBuff += '';
+          }
+          else {
+            let cbuf = rec[cols[c]];
+            if (typeof cbuf === 'string')
+              unitBuff += cbuf.replace(/[\n\r]/g, ' ');
+            else
+              unitBuff += cbuf ;
+          }
+        } // end do for each column requested
+        unitBuff += '\r\n';
+      } // end do for each unit in the unit names array
     }
     return unitBuff ;
   } // end allUnitsByName
@@ -660,7 +677,7 @@ export class UnitTables {
     if (doLong)
       unitString += 'property' + sep + 'printSymbol' + sep + 'synonyms' + sep +
                     'source' + sep + 'class' + sep + 'isMetric' + sep +
-                    'variable' + sep + 'isSpecial' + sep + 'isAbitrary' + sep
+                    'variable' + sep + 'isSpecial' + sep + 'isAbitrary' + sep ;
     unitString += 'comment';
     codeList = unitString + '\n' ;
 
