@@ -25929,7 +25929,7 @@ var Unit = exports.Unit = function () {
     value: function assignUnity() {
       this.name_ = "";
       this.magnitude_ = 1;
-      if (!this.dim_) this.dim_ = new Dimension(null);
+      if (!this.dim_) this.dim_ = new Dimension();
       this.dim_.assignZero();
       this.cnv_ = null;
       this.cnvPfx_ = 1;

@@ -204,7 +204,7 @@ export class Unit {
     this.name_  = "" ;
     this.magnitude_ = 1 ;
     if (!this.dim_)
-      this.dim_ = new Dimension(null);
+      this.dim_ = new Dimension();
     this.dim_.assignZero() ;
     this.cnv_ = null ;
     this.cnvPfx_ = 1 ;

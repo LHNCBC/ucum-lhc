@@ -133,7 +133,7 @@ export class UcumTestUtils {
 
   /**
    * This method checks a single unit string, basically just passing the
-   * string on UnitString.parseString.
+   * string on to UnitString.parseString.
    *
    * -- this should process a file, and hopefully will in the near future.
    */
