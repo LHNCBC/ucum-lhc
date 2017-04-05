@@ -78,28 +78,23 @@ export class Unit {
     /*
      * The Dimension object of the unit
      */
-    if (attrs['dim_'] !== null && attrs['dim_'] !== undefined) {
-      if (attrs['dim_'] instanceof Array) {
-        this.dim_ = new Dimension(attrs['dim_']);
-      }
-      else if (attrs['dim_'] instanceof Dimension) {
-        this.dim_ = attrs['dim_'];
-      }
-      else if (isInteger(attrs['dim_'])) {
-        this.dim_ = new Dimension(attrs['dim_']) ;
-      }
-      else {
-        if (attrs['dim_'].dimVec_) {
-          this.dim_ = new Dimension(attrs['dim_'].dimVec_);
-        }
-        else
-          this.dim_ = new Dimension(attrs['dim_']);
-      }
+    if (attrs['dim_'] === undefined || attrs['dim_'] === null) {
+      attrs['dim_'] = null;
+    }
+    // When the unit data stored in json format is reloaded, the dimension data
+    // is recognized as a a hash, not as a Dimension object.
+    else if (attrs['dim_']['dimVec_'] !== undefined) {
+      this.dim_ = new Dimension(attrs['dim_']['dimVec_']) ;
+    }
+    else if (attrs['dim_'] instanceof Dimension) {
+      this.dim_ = attrs['dim_'];
+    }
+    else if (attrs['dim_'] instanceof Array || isInteger(attrs['dim_'])) {
+      this.dim_ = new Dimension(attrs['dim_']) ;
     }
     else {
-      this.dim_ = new Dimension(null);
+      this.dim_ = null;
     }
-
     /*
      * The print symbol of the unit, e.g., m
      */
@@ -208,6 +203,8 @@ export class Unit {
   assignUnity() {
     this.name_  = "" ;
     this.magnitude_ = 1 ;
+    if (!this.dim_)
+      this.dim_ = new Dimension(null);
     this.dim_.assignZero() ;
     this.cnv_ = null ;
     this.cnvPfx_ = 1 ;
@@ -246,14 +243,13 @@ export class Unit {
     let retUnit = new Unit() ;
     Object.getOwnPropertyNames(this).forEach(val => {
       if (val === 'dim_') {
-        if (Object.keys(this[val]).length === 0)
-          retUnit['dim_'] = this[val] ;
+        if (this['dim_'])
+          retUnit['dim_'] = this['dim_'].clone();
         else
-          retUnit['dim_'] = new Dimension(this.dim_.dimVec_);
+          retUnit['dim_'] = null;
       }
-      else {
+      else
         retUnit[val] = this[val];
-      }
     });
     return retUnit ;
 
@@ -268,16 +264,15 @@ export class Unit {
    */
   assign(unit2) {
     Object.getOwnPropertyNames(unit2).forEach(val => {
-      if (this.val !== undefined) {
-        if (val === 'dim_') {
-          this['dim_'] = new Dimension(this.dim_.dimVec_);
-        }
-        else {
-          this[val] = this[val];
-        }
+      if (val === 'dim_') {
+        if (unit2['dim_'])
+          this['dim_'] = unit2['dim_'].clone();
+        else
+          this['dim_'] = null;
       }
-      else
-         throw(new Error(`Parameter error; ${val} is not a property of a Unit`));
+      else {
+        this[val] = unit2[val];
+      }
     });
   } // end assign
 
@@ -303,6 +298,37 @@ export class Unit {
 
 
   /**
+   * This method compares every attribute of two objects to determine
+   * if they all match.
+   *
+   * @param unit2 the unit that is to be compared to this unit
+   * @return boolean indicating whether or not every attribute matches
+   */
+  fullEquals(unit2) {
+
+    let match = true ;
+    let thisAttr = Object.keys(this).sort();
+    let u2Attr = Object.keys(unit2).sort();
+
+    let keyLen = thisAttr.length ;
+    match = (keyLen === u2Attr.length);
+
+    // check each attribute.   Dimension objects have to checked using
+    // the equals function of the Dimension class.
+    for (let k = 0; k < keyLen && match; k++) {
+      if (thisAttr[k] === u2Attr[k]) {
+        if (thisAttr[k] === 'dim_')
+          match = this.dim_.equals(unit2.dim_);
+        else
+          match = this[thisAttr[k]] === unit2[thisAttr[k]];
+      }
+      else
+        match = false ;
+    } // end do for each key and attribute
+    return match ;
+  }// end of fullEquals
+
+  /**
    * This returns the value of the property named by the parameter
    * passed in.
    *
@@ -314,11 +340,7 @@ export class Unit {
   getProperty(propertyName) {
     let uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName :
                                              propertyName + '_' ;
-    if (!(this.hasOwnProperty(uProp)))
-      throw(new Error(`Unit does not have requested property (${propertyName}),  ` +
-            `unit code = ${this.csCode_}`));
-    else
-      return this[uProp] ;
+    return this[uProp] ;
 
   } // end getProperty
 
@@ -445,8 +467,8 @@ export class Unit {
     // but until we figure out what the heck the name being
     // built here really is, it will have to stay.
     for (let i = 0, max = Dimension.getMax(); i < max; i++) {
-      let elem = this.dim_.elementAt(i);
-      let uA = UnitTables.getUnitByDim(new Dimension(i));
+      let elem = this.dim_.getElementAt(i);
+      let uA = UnitTables.getUnitsByDimension(new Dimension(i));
       if(uA == null)
         throw(new Error(`Can't find base unit for dimension ${i}`));
       this.name_ = uA.name + elem;
@@ -506,8 +528,9 @@ export class Unit {
    *         and the other is not dimensionless.
    */
   multiplyThese(unit2) {
+
     if (this.cnv_ != null) {
-      if (unit2.cnv_ == null && unit2.dim_.isZero())
+      if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero()))
 	      this.cnvPfx_ *= unit2.magnitude_;
       else
 	      throw (new Error(`Attempt to multiply non-ratio unit ${this.name_} ` +
@@ -515,13 +538,13 @@ export class Unit {
     }
     else {
       if (unit2.cnv_ != null) {
-        if (this.cnv_ == null && this.dim_.isZero()) {
+        if (this.cnv_ == null && (!this.dim_ || this.dim_.isZero())) {
           let cp = this.magnitude_;
           assign(unit2);
           this.cnvPfx_ *= cp;
         }
         else
-          throw (new Error(`Attempt to multiply non-ratio unit ${u2Nname}`));
+          throw (new Error(`Attempt to multiply non-ratio unit ${unit2.name_}`));
       }
       else {
         this.name_ = this.mulString(this.name_, unit2.name_);
@@ -531,11 +554,25 @@ export class Unit {
         else if (unit2.guidance_)
           this.guidance_ = unit2.guidance_ ;
         this.magnitude_ *= unit2.magnitude_;
-        // for now, putting in this safeguard to get around a known error.
-        // need to put in error handling later.
-        if (unit2.dim_ && unit2.dim_.dimVec_ &&
-            this.dim_ && this.dim_.dimVec_)
-          this.dim_.add(unit2.dim_);
+        if (this.printSymbol_ && unit2.printSymbol_)
+          this.printSymbol_ = this.mulString(this.printSymbol_, unit2.printSymbol_);
+        else if (unit2.printSymbol_)
+          this.printSymbol_ = unit2.printSymbol_;
+
+        // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
+        // is a dimension in unit2.dim_; else just transfer it to this dimension
+        if (!this.dim_ || (this.dim_ && !this.dim_.dimVec_)) {
+          if (unit2.dim_ && unit2.dim_ instanceof Dimension)
+            this.dim_ = unit2.dim_.clone();
+          else
+            this.dim_ = unit2.dim_ ;
+        }
+
+        // Else this.dim_ is there.  If there is a dimension for unit2,
+        // add it to this one.
+        else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
+          this.dim_.add(unit2.dim_) ;
+        }
       }
     }
     return this;
@@ -559,7 +596,6 @@ export class Unit {
       throw (new Error(`Attempt to divide non-ratio unit ${this.name_}`));
     if (unit2.cnv_ != null)
       throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
-
     this.name_ = this.divString(this.name_, unit2.name_);
     this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
     if (this.guidance_ && unit2.guidance_)
@@ -567,12 +603,29 @@ export class Unit {
     else if (unit2.guidance_)
       this.guidance_ = unit2.guidance_ ;
     this.magnitude_ /= unit2.magnitude_;
-    // for now, putting in this safeguard to get around a known error.
-    // need to put in error handling later.
-    if (unit2.dim_ && unit2.dim_.dimVec_ &&
-        this.dim_ && this.dim_.dimVec_)
-      this.dim_.sub(unit2.dim_);
-    
+    if (this.printSymbol_ && unit2.printSymbol_)
+      this.printSymbol_ = this.divString(this.printSymbol_, unit2.printSymbol_);
+    else if (unit2.printSymbol_)
+      this.printSymbol_ = unit2.printSymbol_;
+
+    // Continue if unit2 has a dimension object.
+    // If this object has a dimension object, subtract unit2's dim_ object from
+    // this one. The sub method will take care of cases where the dimVec_ arrays
+    // are missing on one or both dim_ objects.
+    if (unit2.dim_) {
+      if (this.dim_) {
+        if (!this.dim_.dimVec_)
+          this.dim_ = new Dimension([0, 0, 0, 0, 0, 0, 0]);
+        if (this.dim_.dimVec_.length == 0)
+          this.dim_.assignZero();
+        this.dim_ = this.dim_.sub(unit2.dim_);
+      } // end if this.dim_ exists
+
+      // Else if this dim_ object is missing, clone unit2's dim_ object
+      // and give the inverted clone to this unit.
+      else
+        this.dim_ = unit2.dim_.clone().minus();
+    } // end if unit2 has a dimension object
     return this;
 
   } // end divide
@@ -609,7 +662,7 @@ export class Unit {
 
   
   /**
-   * Raises this unit to a power.  For example
+   * Raises the unit to a power.  For example
    *  kg.m/s2 raised to the -2 power would be kg-2.m-2/s-4
    *
    * If this unit is not on a ratio scale an error is thrown. Mutating
@@ -619,8 +672,8 @@ export class Unit {
    * This is based on the pow method in Gunter Schadow's java version,
    * although it uses javascript capabilities to simplify the processing.
    *
-   *
    * This unit is modified by this function
+   *
    * @param p the power to with this unit is to be raise
    * @return this unit after it is raised
    * @throws an error if this unit is not on a ratio scale.

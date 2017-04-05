@@ -368,7 +368,6 @@ export class UnitString {
     }
     // If we're still good, continue
     if (!endProcessing) {
-
       // Process the units (and numbers) to create one final unit object
       if (uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined ||
           uArray[0]['un'] == null) {
@@ -383,7 +382,6 @@ export class UnitString {
 
       finalUnit = uArray[0]['un'];
       let uLen = uArray.length ;
-
       // Perform the arithmetic for the units, starting with the first 2 units.
       // We only need to do the arithmetic if we have more than one unit.
       for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
@@ -414,6 +412,7 @@ export class UnitString {
                 isDiv ? finalUnit = finalUnit.divide(nextUnit) :
                     finalUnit = finalUnit.multiplyThese(nextUnit);
               }
+
               // finalUnit is a number; nextUnit is a unit object
               else {
                 let nMag = nextUnit.getProperty('magnitude_');
@@ -422,9 +421,11 @@ export class UnitString {
                     nextUnit.getProperty('name_');
                 let theCode = finalUnit.toString() + thisOp +
                     nextUnit.getProperty('csCode_');
+                let theDim = nextUnit.getProperty('dim_');
                 finalUnit = nextUnit;
                 finalUnit.assignVals({'csCode_' : theCode,
                                       'name_' : theName,
+                                      'dim_' : theDim,
                                       'magnitude_' : nMag});
               }
             } // end if nextUnit is not a number
@@ -472,8 +473,6 @@ export class UnitString {
     // - which is not a unit.  Do this only when this is the first/outer
     // call to this method.
     if (finalUnit && firstCall && !isNaN(finalUnit) && finalUnit !== 1) {
-      //console.log('at end of parseString, uStr = ' + uStr + '; origString = ' +
-      //    origString + '; finalUnit = ' + JSON.stringify(finalUnit) );
       let newUnit = new Unit({'csCode_' : origString});
       if (newUnit) {
         newUnit['magnitude_'] = finalUnit ;
@@ -673,7 +672,6 @@ export class UnitString {
 
       ulen = uCode.length;
       let utabs = UnitTables.getInstance();
-
       // First look for the full string as a code
       origUnit = utabs.getUnitByCode(uCode);
 
@@ -728,7 +726,6 @@ export class UnitString {
       // and try without it.
 
       if (!origUnit) {
-
         // Try for a single character prefix first.
         let pfxTabs = PrefixTables.getInstance();
         pfxCode = uCode.charAt(0);
@@ -767,6 +764,7 @@ export class UnitString {
         } // end if we found a prefix
       } // end if we didn't get a unit after removing an exponent
 
+      // One more thing.
       // If we didn't find a unit, signal an error.  (We tried with the full
       // unit string, with the unit string without the exponent, and the
       // unit string without a prefix.  That's all we can try).
@@ -778,7 +776,6 @@ export class UnitString {
       if (!endProcessing) {
         // Otherwise we found a unit object.  Clone it and then apply the prefix
         // and exponent, if any, to it.
-
         retUnit = origUnit.clone();
         let theDim = retUnit.getProperty('dim_');
         let theMag = retUnit.getProperty('magnitude_');
@@ -788,7 +785,8 @@ export class UnitString {
         if (exp) {
           exp = parseInt(exp);
           let expMul = exp;
-          theDim = theDim.mul(exp);
+          if (theDim && Object.keys(theDim).length > 0)
+            theDim = theDim.mul(exp);
           theMag = Math.pow(theMag, exp);
           retUnit.assignVals({'magnitude_': theMag});
 

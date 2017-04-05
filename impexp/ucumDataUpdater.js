@@ -13,6 +13,7 @@ var str = require('string-to-stream') ;
 
 var JDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs;
 var Unit = require('../source-es5/unit.js').Unit;
+var Dimension = require('../source-es5/dimension.js').Dimension;
 var UnitTables = require('../source-es5/unitTables.js').UnitTables;
 var UnitString = require('../source-es5/unitString.js').UnitString;
 var UcumXmlDocument = require('../source-es5/ucumXmlDocument.js').UcumXmlDocument;
@@ -74,13 +75,9 @@ export class UcumDataUpdater {
       var existUnit = utab.getUnitByCode(record[Ucum.inputKey_]);
       let upd = UcumDataUpdater.getInstance();
       if (existUnit) {
-        console.log('existing unit found for key = ' +
-                    record[Ucum.inputKey_]);
         upd.updateUnit(existUnit, record);
       }
       else {
-        console.log('calling addNewUnit for key = ' +
-                    record[Ucum.inputKey_]);
         upd.addNewUnit(record);
       }
 
@@ -103,18 +100,6 @@ export class UcumDataUpdater {
       let upd=UcumDataUpdater.getInstance();
       upd.msg('File write', 'write succeeded.', false);
     });
-    //// Start the data moving once the file reader is ready (has read in all
-    //// the data).
-    //var intSet = setInterval(pipeFunc, 10);
-    //function pipeFunc() {
-    //  if (reader.readyState == FileReader.DONE) {
-    //    clearInterval(intSet);
-    //    str(reader.result)
-    //        .on('error', function (err){msgHandler('inputStream', err)})
-    //        .pipe(parser).on('error', function (err){msgHandler('parser', err)})
-    //        .pipe(transformer).on('error', function (err){msgHandler('transformer', err)})
-    //  }
-    //}; // end pipeFunc
   } // end readFile
 
 
@@ -130,11 +115,7 @@ export class UcumDataUpdater {
   updateUnit(existingUnit, inputRec) {
     for (var colName in Ucum.csvCols_) {
       if (colName != Ucum.inputKey_) {
-        console.log('updating column = ' + Ucum.csvCols_[colName] + ' for ' +
-            existingUnit['csCode_']);
         existingUnit[Ucum.csvCols_[colName]] = inputRec[colName];
-        console.log('column ' + Ucum.csvCols_[colName] + ' in existing unit now = ' +
-                    existingUnit[Ucum.csvCols_[colName]]);
       }
     }
   }
@@ -154,15 +135,22 @@ export class UcumDataUpdater {
     var newUnit = parseResp[0];
     if (newUnit) {
       // If this is an expression that is entirely an annotation, create
-      // a new unit from that
+      // a new unit from that.
       if (newUnit === 1) {
-        newUnit = new Unit({});
+        newUnit = new Unit({"magnitude_" : 1});
       }
-      var utab = UnitTables.getInstance();
+    }
+    else if (parseResp[2].indexOf('Unable to find unit for') === 0) {
+      newUnit = new Unit({});
+    }
+    if (newUnit) {
+      // Transfer the csv column data to the unit created by parseString
+      // (or for a return of "1")
+
       for (var colName in Ucum.csvCols_) {
         newUnit[Ucum.csvCols_[colName]] = inputRec[colName];
       }
-      //console.log('new unit = ' + JSON.stringify(newUnit));
+      var utab = UnitTables.getInstance();
       utab.addUnit(newUnit);
     }
     else {
