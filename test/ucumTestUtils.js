@@ -76,6 +76,8 @@ export class UcumTestUtils {
           whoCalled = `parseString called on LOINC unit ${curUnit.csCode_} ` +
               `for string = ${curUnit.csUnitString_}`;
           parseResp = uString.parseString(curUnit.csCode_);
+          whoReturned = `parseString returned ${parseResp[0].csCode_} ` +
+              `for string = ${parseResp[0].csUnitString_}`;
           parsedUnit = parseResp[0];
         } // end if this is a LOINC unit
         if (!skipped) {
@@ -130,8 +132,10 @@ export class UcumTestUtils {
 
 
   /**
-   * This method checks a single unit string, basically just passing on
-   * -- this should process a file.
+   * This method checks a single unit string, basically just passing the
+   * string on UnitString.parseString.
+   *
+   * -- this should process a file, and hopefully will in the near future.
    */
   checkOneDimension(uString) {
     let uStr = UnitString.getInstance();

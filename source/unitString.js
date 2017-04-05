@@ -451,7 +451,7 @@ export class UnitString {
               }
             } // end if nextUnit is a number
           }
-           catch (err) {
+          catch (err) {
             retMsg.unshift(err.message) ;
             endProcessing = true ;
             finalUnit = null ;

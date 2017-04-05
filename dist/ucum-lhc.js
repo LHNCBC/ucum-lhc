@@ -24085,7 +24085,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * This object should exist for each unit that can be expressed as a
  * vector of numbers.   This excludes arbitrary units, e.g., (10*23), and
  * units that are not numbers but are an expression based solely on numbers,
- * e.g., mol (mole) which is based on 10*23 or Ki which is based on 1014.
+ * e.g., mol (mole) which is based on 10*23.
  *
  * @author Lee Mericle, based on java version by Gunther Schadow
  */
@@ -24098,7 +24098,7 @@ var Dimension = exports.Dimension = function () {
    * Constructor.
    *
    * @param dimSetting an optional parameter that may be:
-   *  null, which means that this object will be created with a null vector; or
+   *  null, which means that the dimVec_ attribute for this object will be null; or
    *  an array, which must be the length defined by Ucum.dimLen_, and
    *    whose contents will be copied to this new object's vector; or
    *  an integer, which must be between 0 and 1 less than the vector length
@@ -24371,17 +24371,13 @@ var Dimension = exports.Dimension = function () {
       if (!dim2 instanceof Dimension) {
         throw new Error('Dimension.assignDim called with an invalid parameter - ' + ((typeof dim2 === 'undefined' ? 'undefined' : _typeof(dim2)) + ' instead of a Dimension object'));
       }
-
-      if (this.dimVec_ === null && dim2.dimVec_ !== null) {
-        this.dimVec_ = [];
-      }
-      if (this.dimVec_ && dim2.dimVec_) {
+      if (dim2.dimVec_ === null) this.dimVec_ = null;else {
+        if (this.dimVec_ === null) {
+          this.dimVec_ = [];
+        }
         for (var i = 0; i < UC.Ucum.dimLen_; i++) {
           this.dimVec_[i] = dim2.dimVec_[i];
         }
-      } else {
-        // dimVec2_ === null, this.dimVec_ may or may not be null
-        this.dimVec_ = null;
       }
       return this;
     }
@@ -25273,7 +25269,6 @@ var UcumJsonDefs = exports.UcumJsonDefs = function () {
     value: function loadJsonDefs() {
 
       if (Utab.UnitTables.getInstance().unitsCount() === 0) {
-        //&&  Object.keys(jsonDefs_).length === 0) {
 
         var pTab = PfxT.PrefixTables.getInstance();
         var prefixes = jsonDefs_["prefixes"];
@@ -26037,18 +26032,19 @@ var Unit = exports.Unit = function () {
     value: function fullEquals(unit2) {
 
       var match = true;
-      var thisAttr = Object.keys(this);
-      var c2Attr = Object.keys(unit2);
+      var thisAttr = Object.keys(this).sort();
+      var u2Attr = Object.keys(unit2).sort();
 
-      // make sure the keys match
-      assert.equal(thisAttr.sort(), u2Attr.sort());
       var keyLen = thisAttr.length;
+      match = keyLen === u2Attr.length;
 
       // check each attribute.   Dimension objects have to checked using
       // the equals function of the Dimension class.
       for (var k = 0; k < keyLen && match; k++) {
-        if (thisAttr[k] === 'dim_') match = this.dim_.equals(unit2.dim_);else match = this[thisAttr[k]] === unit2[thisAttr[k]];
-      }
+        if (thisAttr[k] === u2Attr[k]) {
+          if (thisAttr[k] === 'dim_') match = this.dim_.equals(unit2.dim_);else match = this[thisAttr[k]] === unit2[thisAttr[k]];
+        } else match = false;
+      } // end do for each key and attribute
       return match;
     } // end of fullEquals
 
@@ -26273,8 +26269,8 @@ var Unit = exports.Unit = function () {
           this.magnitude_ *= unit2.magnitude_;
           if (this.printSymbol_ && unit2.printSymbol_) this.printSymbol_ = this.mulString(this.printSymbol_, unit2.printSymbol_);else if (unit2.printSymbol_) this.printSymbol_ = unit2.printSymbol_;
 
-          // If this.dim_ isn't there, close the dimension in unit2 - if it
-          // is a dimension; else just transfer it to this dimension
+          // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
+          // is a dimension in unit2.dim_; else just transfer it to this dimension
           if (!this.dim_ || this.dim_ && !this.dim_.dimVec_) {
             if (unit2.dim_ && unit2.dim_ instanceof Dimension) this.dim_ = unit2.dim_.clone();else this.dim_ = unit2.dim_;
           }
@@ -26377,10 +26373,10 @@ var Unit = exports.Unit = function () {
      * This is based on the pow method in Gunter Schadow's java version,
      * although it uses javascript capabilities to simplify the processing.
      *
-     * This unit is not modified by this function
+     * This unit is modified by this function
      *
      * @param p the power to with this unit is to be raise
-     * @return a clone of this unit after it is raised
+     * @return this unit after it is raised
      * @throws an error if this unit is not on a ratio scale.
      */
 
@@ -26389,13 +26385,12 @@ var Unit = exports.Unit = function () {
     value: function power(p) {
 
       if (this.cnv_ != null) throw new Error("Attempt to raise a non-ratio unit, " + this.name_ + ", " + 'to a power.');
-      var retUnit = this.clone();
 
       //this.name_ = UnitString.pow(this.name_, p);
       // the above line is replaced with the code below, as the pow method
       // never actually existing in the UnitString class.  (Tried to use
       // Schadow java code but this way ended up being a lot easier).
-      var uStr = retUnit.csCode_;
+      var uStr = this.csCode_;
       var uArray = uStr.match(/([./]|[^./]+)/g);
       var arLen = uArray.length;
 
@@ -26428,13 +26423,13 @@ var Unit = exports.Unit = function () {
       } // end do for each element of the units array
 
       // reassemble the updated units array to a string
-      retUnit.csCode_ = uArray.join('');
+      this.csCode_ = uArray.join('');
 
-      retUnit.magnitude_ = Math.pow(retUnit.magnitude_, p);
-      if (retUnit.dim_) {
-        retUnit.dim_.mul(p);
+      this.magnitude_ = Math.pow(this.magnitude_, p);
+      if (this.dim_) {
+        this.dim_.mul(p);
       }
-      return retUnit;
+      return this;
     } // end power
 
 

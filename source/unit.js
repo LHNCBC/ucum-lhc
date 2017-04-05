@@ -307,21 +307,24 @@ export class Unit {
   fullEquals(unit2) {
 
     let match = true ;
-    let thisAttr = Object.keys(this);
-    let c2Attr = Object.keys(unit2);
+    let thisAttr = Object.keys(this).sort();
+    let u2Attr = Object.keys(unit2).sort();
 
-    // make sure the keys match
-    assert.equal(thisAttr.sort(), u2Attr.sort());
     let keyLen = thisAttr.length ;
+    match = (keyLen === u2Attr.length);
 
     // check each attribute.   Dimension objects have to checked using
     // the equals function of the Dimension class.
     for (let k = 0; k < keyLen && match; k++) {
-      if (thisAttr[k] === 'dim_')
-        match = this.dim_.equals(unit2.dim_);
+      if (thisAttr[k] === u2Attr[k]) {
+        if (thisAttr[k] === 'dim_')
+          match = this.dim_.equals(unit2.dim_);
+        else
+          match = this[thisAttr[k]] === unit2[thisAttr[k]];
+      }
       else
-        match = this[thisAttr[k]] === unit2[thisAttr[k]];
-    }
+        match = false ;
+    } // end do for each key and attribute
     return match ;
   }// end of fullEquals
 
@@ -556,8 +559,8 @@ export class Unit {
         else if (unit2.printSymbol_)
           this.printSymbol_ = unit2.printSymbol_;
 
-        // If this.dim_ isn't there, close the dimension in unit2 - if it
-        // is a dimension; else just transfer it to this dimension
+        // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
+        // is a dimension in unit2.dim_; else just transfer it to this dimension
         if (!this.dim_ || (this.dim_ && !this.dim_.dimVec_)) {
           if (unit2.dim_ && unit2.dim_ instanceof Dimension)
             this.dim_ = unit2.dim_.clone();
@@ -669,10 +672,10 @@ export class Unit {
    * This is based on the pow method in Gunter Schadow's java version,
    * although it uses javascript capabilities to simplify the processing.
    *
-   * This unit is not modified by this function
+   * This unit is modified by this function
    *
    * @param p the power to with this unit is to be raise
-   * @return a clone of this unit after it is raised
+   * @return this unit after it is raised
    * @throws an error if this unit is not on a ratio scale.
    */
   power(p) {
@@ -680,13 +683,12 @@ export class Unit {
     if (this.cnv_ != null)
       throw (new Error(`Attempt to raise a non-ratio unit, ${this.name_}, ` +
                        'to a power.'));
-    let retUnit = this.clone();
 
     //this.name_ = UnitString.pow(this.name_, p);
     // the above line is replaced with the code below, as the pow method
     // never actually existing in the UnitString class.  (Tried to use
     // Schadow java code but this way ended up being a lot easier).
-    let uStr = retUnit.csCode_ ;
+    let uStr = this.csCode_ ;
     let uArray = uStr.match(/([./]|[^./]+)/g) ;
     let arLen = uArray.length;
 
@@ -722,13 +724,13 @@ export class Unit {
     } // end do for each element of the units array
 
     // reassemble the updated units array to a string
-    retUnit.csCode_ = uArray.join('');
+    this.csCode_ = uArray.join('');
 
-    retUnit.magnitude_ = Math.pow(retUnit.magnitude_, p);
-    if (retUnit.dim_) {
-      retUnit.dim_.mul(p);
+    this.magnitude_ = Math.pow(this.magnitude_, p);
+    if (this.dim_) {
+      this.dim_.mul(p);
     }
-    return retUnit;
+    return this;
 
   } // end power
 

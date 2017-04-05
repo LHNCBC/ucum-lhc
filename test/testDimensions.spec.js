@@ -21,7 +21,8 @@ describe('Check computed dimension vectors', function() {
       console.log('PROBLEMS:');
       for (var p = 0; p < pLen; p++)
         console.log(`${problems[p]}`);
-    }assert.equal(0, problems.length);
+    }
+    assert.equal(0, problems.length);
   });
 });
 

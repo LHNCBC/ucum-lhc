@@ -214,7 +214,6 @@ export class UcumXmlDocument {
       let valNode = curUA.childNamed('value');
 
       // Process special units
-      let parseUnitString = true ;
       if (curUA.attr.isSpecial) {
         attrs['isSpecial_'] = curUA.attr.isSpecial === "yes";
         let funcNode = valNode.childNamed('function');
@@ -222,7 +221,6 @@ export class UcumXmlDocument {
         attrs['csUnitString_'] = funcNode.attr.Unit;
         if (attrs['csUnitString_'] === '1') {
           attrs['baseFactor_'] = 1 ;
-          parseUnitString = false ;  //<------------
         }
         else if (attrs['csCode_'] === '[pH]') {
           attrs['baseFactor_'] = funcNode.attr.value ;
@@ -421,10 +419,12 @@ export class UcumXmlDocument {
 
 
   /**
-   * Get an array containing all prefix objects and returns it in a hash
-   * with the key being "prefixes" and the value being the array.
+   * This writes out the ucumDefs data file, which contains all prefixes and
+   * units (base units and others) read and parsed from the XML file.
    *
-   * @returns hash object
+   * This creates the file in the dist/data directory and appends the
+   * current Date object value to "ucumDefs" so that this does not run
+   * into problems with a previously existing file.
    */
   writeJsonFile() {
 

@@ -6,7 +6,7 @@
  * This object should exist for each unit that can be expressed as a
  * vector of numbers.   This excludes arbitrary units, e.g., (10*23), and
  * units that are not numbers but are an expression based solely on numbers,
- * e.g., mol (mole) which is based on 10*23 or Ki which is based on 1014.
+ * e.g., mol (mole) which is based on 10*23.
  *
  * @author Lee Mericle, based on java version by Gunther Schadow
  */
@@ -18,7 +18,7 @@ export class Dimension {
    * Constructor.
    *
    * @param dimSetting an optional parameter that may be:
-   *  null, which means that this object will be created with a null vector; or
+   *  null, which means that the dimVec_ attribute for this object will be null; or
    *  an array, which must be the length defined by Ucum.dimLen_, and
    *    whose contents will be copied to this new object's vector; or
    *  an integer, which must be between 0 and 1 less than the vector length
@@ -280,16 +280,14 @@ export class Dimension {
       throw(new Error(`Dimension.assignDim called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`));
     }
-
-    if (this.dimVec_ === null && dim2.dimVec_ !== null) {
-      this.dimVec_ = [] ;
-    }
-    if (this.dimVec_ && dim2.dimVec_) {
+    if (dim2.dimVec_ === null)
+      this.dimVec_ = null;
+    else {
+      if (this.dimVec_ === null) {
+        this.dimVec_ = [] ;
+      }
       for (let i = 0; i < UC.Ucum.dimLen_; i++)
         this.dimVec_[i] = dim2.dimVec_[i];
-    }
-    else { // dimVec2_ === null, this.dimVec_ may or may not be null
-      this.dimVec_ = null ;
     }
     return this;
   }
