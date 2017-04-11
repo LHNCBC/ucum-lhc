@@ -67,10 +67,13 @@ export class UcumDemo {
    * constructor to get the list of categories to be included and fields
    * to be displayed in the autocompleter list.
    *
-   * This called from the constructor, to build the initial url, and then
+   * This is called from the constructor, to build the initial url, and then
    * each time the user clicks on one of the checkboxes assigned to the
    * categories and display fields listed in the advanced settings of the
    * converter and validator tabs.
+   *
+   * This adds a minChars: 1 option to the end of options hash, to allow
+   * searching to start as soon as the operator enters 1 character.
    *
    * @param tab the tab that the autocompleter is on - either 'convert' or
    *  'validate'
@@ -105,6 +108,7 @@ export class UcumDemo {
       urlString += dString ;
     }
     opts['colHeaders'] = colHdrs ;
+    opts['minChars'] = 1;
     return [urlString, opts];
 
   } // end buildUrlAndOpts

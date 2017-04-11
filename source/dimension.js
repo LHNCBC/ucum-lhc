@@ -311,7 +311,7 @@ export class Dimension {
 
 
   /**
-   * Tests for zero dimension.
+   * Tests for a dimension vector set to all zeroes.
    *
    * @return true if exponents (elements) of this dimension's vector are all
    * zero; false otherwise (including if the current vector is null).
@@ -324,6 +324,17 @@ export class Dimension {
         allZero = this.dimVec_[i] === 0;
     }
     return allZero;
+  }
+
+
+  /**
+   * Tests for a Dimension object with no dimension vector (dimVec_ is null).
+   *
+   * @return true the dimension vector is null; false if it is not
+   *
+   */
+  isNull() {
+    return (this.dimVec_ === null);
   }
 
 

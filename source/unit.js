@@ -614,9 +614,7 @@ export class Unit {
     // are missing on one or both dim_ objects.
     if (unit2.dim_) {
       if (this.dim_) {
-        if (!this.dim_.dimVec_)
-          this.dim_ = new Dimension([0, 0, 0, 0, 0, 0, 0]);
-        if (this.dim_.dimVec_.length == 0)
+        if (this.dim_.isNull())
           this.dim_.assignZero();
         this.dim_ = this.dim_.sub(unit2.dim_);
       } // end if this.dim_ exists
