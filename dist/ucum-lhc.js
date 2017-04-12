@@ -24013,7 +24013,7 @@ var Ucum = exports.Ucum = {
   /**
    *  The number of decimal digits to be displayed for a unit amount
    */
-  decDigits_: 4,
+  decDigits_: 2,
 
   /**
    * The string used to separate a unit code and unit name when they
@@ -25504,7 +25504,13 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         if (fromUnit && toUnit) {
           try {
             var toVal = toUnit.convertFrom(fromVal, fromUnit);
-            toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
+            // convert the value to a fixed value with the specified number of
+            // decimal digits.  Remove trailing zeroes
+            // ----- OR ----
+            //toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
+            // convert the value to a fixed value with the specified number of
+            // decimal digits.  Do not remove trailing zeroes
+            toVal = toVal.toFixed(decDigits);
             resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('csCode_') + " = " + toVal.toString() + " " + toUnit.getProperty('csCode_'));
             returnObj['toVal'] = toVal;
             returnObj['status'] = 'succeeded';

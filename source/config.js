@@ -27,7 +27,7 @@ export var Ucum = {
   /**
    *  The number of decimal digits to be displayed for a unit amount
    */
-  decDigits_ : 4,
+  decDigits_ : 2,
 
   /**
    * The string used to separate a unit code and unit name when they

@@ -124,6 +124,8 @@ export class UcumDemo {
   buildAdvancedSettings() {
     this.buildTabSettings('advancedSearchVal', 'val') ;
     this.buildTabSettings('advancedSearchCnv', 'cnv') ;
+    let prec = document.getElementById("precision");
+    prec.value = Ucum.decDigits_ ;
   }
 
 
@@ -333,17 +335,19 @@ export class UcumDemo {
    *  to be converted to "to" units
    * @param toField the ID of the field containing the name of the unit that
    *  the from field is to be converted to
-   * @param decDigits the maximum number of decimal digits to be displayed
-   *  for the converted unit.  If not specified, the UCUM.decDigits_ value
-   *  (defined in config.js) is used.
    */
-  convertUnit(fromField, numField, toField, decDigits) {
+  convertUnit(fromField, numField, toField) {
 
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
-    if (decDigits === undefined)
+    let prec = document.getElementById("precision");
+    let decDigits = prec.value;
+    decDigits = parseInt(decDigits);
+    if (isNaN(decDigits)) {
       decDigits = Ucum.decDigits_;
+      prec.value = decDigits;
+    }
     let entryMsg = [];
 
     let fromName = sanitizeHtml(document.getElementById(fromField).value) ;
