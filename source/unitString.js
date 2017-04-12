@@ -785,7 +785,7 @@ export class UnitString {
         if (exp) {
           exp = parseInt(exp);
           let expMul = exp;
-          if (theDim && Object.keys(theDim).length > 0)
+          if (theDim)
             theDim = theDim.mul(exp);
           theMag = Math.pow(theMag, exp);
           retUnit.assignVals({'magnitude_': theMag});

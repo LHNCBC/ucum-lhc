@@ -24401,7 +24401,7 @@ var Dimension = exports.Dimension = function () {
     }
 
     /**
-     * Tests for zero dimension.
+     * Tests for a dimension vector set to all zeroes.
      *
      * @return true if exponents (elements) of this dimension's vector are all
      * zero; false otherwise (including if the current vector is null).
@@ -24418,6 +24418,19 @@ var Dimension = exports.Dimension = function () {
         }
       }
       return allZero;
+    }
+
+    /**
+     * Tests for a Dimension object with no dimension vector (dimVec_ is null).
+     *
+     * @return true the dimension vector is null; false if it is not
+     *
+     */
+
+  }, {
+    key: 'isNull',
+    value: function isNull() {
+      return this.dimVec_ === null;
     }
 
     /**
@@ -25929,7 +25942,7 @@ var Unit = exports.Unit = function () {
     value: function assignUnity() {
       this.name_ = "";
       this.magnitude_ = 1;
-      if (!this.dim_) this.dim_ = new Dimension(null);
+      if (!this.dim_) this.dim_ = new Dimension();
       this.dim_.assignZero();
       this.cnv_ = null;
       this.cnvPfx_ = 1;
@@ -26315,8 +26328,7 @@ var Unit = exports.Unit = function () {
       // are missing on one or both dim_ objects.
       if (unit2.dim_) {
         if (this.dim_) {
-          if (!this.dim_.dimVec_) this.dim_ = new Dimension([0, 0, 0, 0, 0, 0, 0]);
-          if (this.dim_.dimVec_.length == 0) this.dim_.assignZero();
+          if (this.dim_.isNull()) this.dim_.assignZero();
           this.dim_ = this.dim_.sub(unit2.dim_);
         } // end if this.dim_ exists
 
@@ -27250,7 +27262,7 @@ var UnitString = exports.UnitString = function () {
           if (exp) {
             exp = parseInt(exp);
             var expMul = exp;
-            if (theDim && Object.keys(theDim).length > 0) theDim = theDim.mul(exp);
+            if (theDim) theDim = theDim.mul(exp);
             theMag = Math.pow(theMag, exp);
             retUnit.assignVals({ 'magnitude_': theMag });
 
