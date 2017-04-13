@@ -4,11 +4,6 @@
  * Run from the command line with 'mocha testDimensions.spec.js' or 'grunt test'
  */
 var assert = require('assert');
-//var fs = require('fs');
-//var JDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs;
-//var Unit = require('../source-es5/unit.js').Unit;
-//var UnitTables = require('../source-es5/unitTables.js').UnitTables;
-//var UnitString = require('../source-es5/unitString.js').UnitString;
 var UcumTestUtils = require('../test-es5/ucumTestUtils.js').UcumTestUtils;
 
 

@@ -378,87 +378,9 @@ export class UnitString {
         endProcessing = true;
       }
     }
-    if (!endProcessing) {
+    if (!endProcessing)
+      finalUnit = this.performUnitArithmetic(uArray, retMsg, origString) ;
 
-      finalUnit = uArray[0]['un'];
-      let uLen = uArray.length ;
-      // Perform the arithmetic for the units, starting with the first 2 units.
-      // We only need to do the arithmetic if we have more than one unit.
-      for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
-        let nextUnit = uArray[u2]['un'];
-        if (nextUnit === null ||
-            ((typeof nextUnit !== 'number') && (!nextUnit.getProperty))) {
-          let msgString = `Unit string (${origString}) contains unrecognized ` +
-                          'element' ;
-          if (nextUnit) {
-            msgString += ` (${this.openEmph_}${nextUnit.toString()}` +
-                         `${this.closeEmph_})`;
-          }
-          msgString += '; could not parse full string.  Sorry';
-          retMsg.push(msgString);
-          endProcessing = true;
-        }
-        if (!endProcessing) {
-          try {
-            // Is the operation division?
-            let thisOp = uArray[u2]['op'];
-            let isDiv = thisOp === '/';
-
-            // Perform the operation based on the type(s) of the operands
-
-            if (typeof nextUnit !== 'number') {
-              // both are unit objects
-              if (typeof finalUnit !== 'number') {
-                isDiv ? finalUnit = finalUnit.divide(nextUnit) :
-                    finalUnit = finalUnit.multiplyThese(nextUnit);
-              }
-
-              // finalUnit is a number; nextUnit is a unit object
-              else {
-                let nMag = nextUnit.getProperty('magnitude_');
-                isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
-                let theName = finalUnit.toString() + thisOp +
-                    nextUnit.getProperty('name_');
-                let theCode = finalUnit.toString() + thisOp +
-                    nextUnit.getProperty('csCode_');
-                let theDim = nextUnit.getProperty('dim_');
-                finalUnit = nextUnit;
-                finalUnit.assignVals({'csCode_' : theCode,
-                                      'name_' : theName,
-                                      'dim_' : theDim,
-                                      'magnitude_' : nMag});
-              }
-            } // end if nextUnit is not a number
-
-            else {
-              // nextUnit is a number; finalUnit is a unit object
-              if (typeof finalUnit !== 'number') {
-                let fMag = finalUnit.getProperty('magnitude_');
-                isDiv ? fMag /= nextUnit :
-                    fMag *= nextUnit;
-                let theName = finalUnit.getProperty('name_') + thisOp +
-                    nextUnit.toString();
-                let theCode = finalUnit.getProperty('csCode_') + thisOp +
-                    nextUnit.toString();
-                finalUnit.assignVals({'csCode_' : theCode ,
-                                      'name_': theName,
-                                      'magnitude_': fMag});
-              }
-              // both are numbers
-              else {
-                isDiv ? finalUnit /= nextUnit :
-                    finalUnit *= nextUnit;
-              }
-            } // end if nextUnit is a number
-          }
-          catch (err) {
-            retMsg.unshift(err.message) ;
-            endProcessing = true ;
-            finalUnit = null ;
-          }
-        } // end if not endProceesing
-      } // end do for each unit after the first one
-    }
 
     // check for any annotation flags still there and replace them with
     // the annotations
@@ -555,8 +477,6 @@ export class UnitString {
     }
     return uArray ;
   } // end makeUnitsArray
-
-
 
 
   /**
@@ -839,7 +759,112 @@ export class UnitString {
     return [retUnit, origString] ;
   } // end makeUnit
 
+
+  /**
+   * Performs unit arithmetic for the units in the units array.  That array
+   * contains units/numbers and the operators (division or multiplication) to
+   * be performed on each unit/unit or unit/number pair in the array.
+   *
+   * @params uArray the array that contains the units, numbers and operators
+   *  derived from the unit string passed in to parseString
+   * @param retMsg the array that contains any/all user messages (error and
+   *  warning); may be empty when passed in or might not
+   * @param origString the original string to be parsed; used to provide
+   *  context for messages
+   * @returns a single unit object that is the result of the unit arithmetic
+   */
+  performUnitArithmetic(uArray, retMsg, origString) {
+
+    let finalUnit = uArray[0]['un'];
+    let uLen = uArray.length ;
+    let endProcessing = false ;
+
+    // Perform the arithmetic for the units, starting with the first 2 units.
+    // We only need to do the arithmetic if we have more than one unit.
+    for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
+      let nextUnit = uArray[u2]['un'];
+      if (nextUnit === null ||
+          ((typeof nextUnit !== 'number') && (!nextUnit.getProperty))) {
+        let msgString = `Unit string (${origString}) contains unrecognized ` +
+                        'element' ;
+        if (nextUnit) {
+          msgString += ` (${this.openEmph_}${nextUnit.toString()}` +
+                       `${this.closeEmph_})`;
+        }
+        msgString += '; could not parse full string.  Sorry';
+        retMsg.push(msgString);
+        endProcessing = true;
+      }
+      if (!endProcessing) {
+        try {
+          // Is the operation division?
+          let thisOp = uArray[u2]['op'];
+          let isDiv = thisOp === '/';
+
+          // Perform the operation based on the type(s) of the operands
+
+          // A.  nextUnit is a unit object:
+          if (typeof nextUnit !== 'number') {
+
+            // both are unit objects
+            if (typeof finalUnit !== 'number') {
+              isDiv ? finalUnit = finalUnit.divide(nextUnit) :
+                  finalUnit = finalUnit.multiplyThese(nextUnit);
+            }
+            // finalUnit is a number; nextUnit is a unit object
+            else {
+              let nMag = nextUnit.getProperty('magnitude_');
+              isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
+              let theName = finalUnit.toString() + thisOp +
+                  nextUnit.getProperty('name_');
+              let theCode = finalUnit.toString() + thisOp +
+                  nextUnit.getProperty('csCode_');
+              let theDim = nextUnit.getProperty('dim_');
+              if (isDiv)
+                theDim = theDim.minus();
+              finalUnit = nextUnit;
+              finalUnit.assignVals({'csCode_' : theCode,
+                'name_' : theName,
+                'dim_' : theDim,
+                'magnitude_' : nMag});
+            }
+          } // end if nextUnit is not a number
+
+          // B.  nextUnit is a number
+          else {
+            // nextUnit is a number; finalUnit is a unit object
+            if (typeof finalUnit !== 'number') {
+              let fMag = finalUnit.getProperty('magnitude_');
+              isDiv ? fMag /= nextUnit :
+                  fMag *= nextUnit;
+              let theName = finalUnit.getProperty('name_') + thisOp +
+                  nextUnit.toString();
+              let theCode = finalUnit.getProperty('csCode_') + thisOp +
+                  nextUnit.toString();
+              finalUnit.assignVals({'csCode_' : theCode ,
+                'name_': theName,
+                'magnitude_': fMag});
+            }
+            // both are numbers
+            else {
+              isDiv ? finalUnit /= nextUnit :
+                  finalUnit *= nextUnit;
+            }
+          } // end if nextUnit is a number
+        }
+        catch (err) {
+          retMsg.unshift(err.message) ;
+          endProcessing = true ;
+          finalUnit = null ;
+        }
+      } // end if not endProceesing because there is only one unit
+    } // end do for each unit after the first one
+
+    return finalUnit ;
+  }  // end performUnitArithmetic
+
 } // end class UnitString
+
 
 /**
  *  This function exists ONLY until the original UnitString constructor
@@ -854,7 +879,7 @@ export class UnitString {
  */
 UnitString.getInstance = function(){
   return new UnitString();
-}
+} ;
 
 // Perform the first request for the object, to set the getInstance method.
 UnitString.getInstance();
