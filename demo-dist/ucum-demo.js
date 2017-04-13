@@ -218,6 +218,8 @@ var UcumDemo = exports.UcumDemo = function () {
     value: function buildAdvancedSettings() {
       this.buildTabSettings('advancedSearchVal', 'val');
       this.buildTabSettings('advancedSearchCnv', 'cnv');
+      var prec = document.getElementById("precision");
+      prec.value = Ucum.decDigits_;
     }
 
     /**
@@ -422,19 +424,22 @@ var UcumDemo = exports.UcumDemo = function () {
      *  to be converted to "to" units
      * @param toField the ID of the field containing the name of the unit that
      *  the from field is to be converted to
-     * @param decDigits the maximum number of decimal digits to be displayed
-     *  for the converted unit.  If not specified, the UCUM.decDigits_ value
-     *  (defined in config.js) is used.
      */
 
   }, {
     key: 'convertUnit',
-    value: function convertUnit(fromField, numField, toField, decDigits) {
+    value: function convertUnit(fromField, numField, toField) {
 
       this.utils_.useHTMLInMessages(true);
       this.utils_.useBraceMsgForEachString(true);
 
-      if (decDigits === undefined) decDigits = Ucum.decDigits_;
+      var prec = document.getElementById("precision");
+      var decDigits = prec.value;
+      decDigits = parseInt(decDigits);
+      if (isNaN(decDigits)) {
+        decDigits = Ucum.decDigits_;
+        prec.value = decDigits;
+      }
       var entryMsg = [];
 
       var fromName = sanitizeHtml(document.getElementById(fromField).value);

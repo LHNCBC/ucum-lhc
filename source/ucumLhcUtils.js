@@ -162,7 +162,13 @@ export class UcumLhcUtils {
       if (fromUnit && toUnit) {
         try {
           let toVal = toUnit.convertFrom(fromVal, fromUnit);
-          toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
+          // convert the value to a fixed value with the specified number of
+          // decimal digits.  Remove trailing zeroes
+          // ----- OR ----
+          //toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
+          // convert the value to a fixed value with the specified number of
+          // decimal digits.  Do not remove trailing zeroes
+          toVal = toVal.toFixed(decDigits);
           resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('csCode_') +
                          " = " + toVal.toString() + " " +
                          toUnit.getProperty('csCode_'));

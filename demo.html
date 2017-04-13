@@ -53,7 +53,8 @@
           <!-- this section is built in the demo code when the page is loaded -->
         </div> <!-- advancedSearchCnv division -->
         <br><br><p>Enter the numeric value you want to convert:
-        <input type="text" id="convertNum">
+        <input type="text" id="convertNum">&nbsp; &nbsp;
+        Result rounded to <input type="number" min="1" max="20" id="precision"> decimal digits.
       </p><br>
         <div id="convertToDivs">
           <div id="convertLeft">
@@ -97,11 +98,6 @@
           <!-- this section is built in the demo code when the page is loaded -->
         </div> <!-- advancedSearchVal division -->
         </p>&nbsp;&nbsp;
-        <!--<button id="doValidationButton"
-                onclick=
-                    "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
-                                                                   'validationString')"
-                type="button">Validate</button> -->
         <p id="validationString">&nbsp;&nbsp;</p>
         <p id="validList"></p>
         <p><button id="toggleHints"
@@ -211,8 +207,8 @@
   <!-- end page footer -->
 
     <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/10.1.1/autocomplete-lhc_jQuery.min.js"></script>
-    <script src="dist/ucum-lhc.min.js"></script>
-    <script src="demo-dist/ucum-demo.min.js"></script>
+    <script src="dist/ucum-lhc.js"></script>
+    <script src="demo-dist/ucum-demo.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
