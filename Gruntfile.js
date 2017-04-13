@@ -28,6 +28,12 @@ module.exports = function(grunt) {
           cwd: '.',
           src: ['demo-es5/*']
         }]
+      } ,
+      test: {
+        files: [{
+          cwd: '.',
+          src: ['test-es5/*']
+        }]
       }
     },
 
@@ -54,6 +60,15 @@ module.exports = function(grunt) {
           flatten: true,
           src: ['./demo/*.js'],
           dest: './demo-es5'
+        }]
+      },
+      test: {
+        files: [{
+          expand: true,
+          cwd: '.',
+          flatten: true,
+          src: ['./test/*.js', "!./test/*.spec.js"],
+          dest: './test-es5'
         }]
       }
     },
@@ -145,8 +160,11 @@ module.exports = function(grunt) {
                                     "browserify:demo",
                                     "cssmin",
                                     "uglify:demo"]);
+  grunt.registerTask("build:test", ["clean:test",
+                                    "babel:test"]);
   grunt.registerTask("build", ["build:dist",
-                               "build:demo"]);
+                               "build:demo",
+                               "build:test"]);
   grunt.registerTask("test", ['build',
                               'mochaTest']);
 

@@ -33,11 +33,10 @@ describe('Test Unit Power method', function() {
     });
 
     describe('Test valid Power request', function() {
-      var footUnit = uTabs.getUnitByCode('[ft_i]');
+      var footUnit = uTabs.getUnitByCode('[ft_i]').clone();
       var errMsg = null;
-      var retFoot = null;
       try {
-        retFoot = footUnit.power(2);
+        footUnit = footUnit.power(2);
       }
       catch(err) {
         errMsg = err;
@@ -46,13 +45,13 @@ describe('Test Unit Power method', function() {
         assert.equal(null, errMsg);
       });
       it ("should return a unit code of [ft_i]2", function() {
-        assert.equal('[ft_i]2', retFoot.csCode_);
+        assert.equal('[ft_i]2', footUnit.csCode_);
       });
       it ("should return a magnitude of 0.09290304", function() {
-        assert.equal(0.09290304, retFoot.magnitude_);
+        assert.equal(0.09290304, footUnit.magnitude_);
       });
       it ("should return a dimension vector of [2,0,0,0,0,0,0]", function() {
-        assert.deepEqual([2,0,0,0,0,0,0], retFoot.dim_.dimVec_);
+        assert.deepEqual([2,0,0,0,0,0,0], footUnit.dim_.dimVec_);
       });
   });
 });

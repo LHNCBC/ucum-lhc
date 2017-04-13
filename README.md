@@ -3,7 +3,7 @@ This is the LHC implementation of validation and conversion services based on
 the [Unified Code for Units of Measure](http://unitsofmeasure.org) (UCUM) code
 system created by the Regenstrief Institute, Inc.  
 
-See our [overview page](https://lhncbc.github.io/ucum-lhc/index.html) for 
+See our [overview page](https://lhncbc.github.io/ucum-lhc) for
 general information.
 
 This is a work in progress so more capabilities will probably be introduced.

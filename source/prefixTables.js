@@ -50,7 +50,6 @@ export class PrefixTables {
    * @returns csv string containing all prefix objects, ordered by value.
    */
   allPrefixesByValue() {
-    console.log('in allPrefixesByValue, this.byValue_ length = ' + this.byValue_.length);
     let prefixBuff = '';
     let pList = Object.keys(this.byValue_);
     //pList.sort() ;
