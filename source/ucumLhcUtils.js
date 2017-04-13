@@ -13,13 +13,13 @@ var Prefix = require('./prefix.js').Prefix;
 var fs = require('fs');
 
 /**
- * Constructor; initiates load of the prefix and units objects
+ * UCUM utilities class
  */
 export class UcumLhcUtils {
 
   /**
-   * Constructor.  This loads the json prefix and unit definitions and
-   * creates itself as a singleton object.
+   * Constructor.  This loads the json prefix and unit definitions if
+   * they haven't been loaded already and creates itself as a singleton object.
    *
    */
   constructor() {
@@ -342,8 +342,6 @@ export class UcumLhcUtils {
     let utab = UnitTables.getInstance();
     let uct = utab.unitsCount();
     let uList = utab.printUnits(true);
-    console.log('in ucumLhcUtils.printUnits, about to write file.  uList ' +
-                'length = ' + uList.length + '; uct = ' + uct);
     fs.writeFileSync('JsonUnitsList.txt', uList,
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
   }
