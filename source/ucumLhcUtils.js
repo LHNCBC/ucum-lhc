@@ -122,25 +122,25 @@ export class UcumLhcUtils {
    * @param fromVal the number of "from" units to be converted to "to" units
    * @param toUnitCode the unit code/expression/string of the unit that the from
    *  field is to be converted to
-   * @param decDigits the maximum number of decimal digits to be displayed
-   *  for the converted unit.  If not specified, the UCUM.decDigits_ value
-   *  (defined in config.js) is used.
-   * @returns a hash with three elements:
-   *  'status' either 'succeeded' or 'failed';
+   * @returns a hash with five elements:
+   *  'status' that will be: 'succeeded' if the conversion was successfully
+   *     calculated; 'failed' if the conversion could not be made, e.g., if
+   *     the units are not commensurable; or 'error' if an error occurred;
    *  'toVal' the numeric value indicating the conversion amount, or null
-   *     null if the conversion failed (e.g., if the units are not commensurable)
-   *  'msg' an array of any messages returned, including a description of
-   *     a successful result or an error message if an error occurred.
+   *     if the conversion failed (e.g., if the units are not commensurable);
+   *  'msg' an array of any messages returned, specifically a description of
+   *     a failure or an error message if an error occurred;
+   *  'fromUnit' the unit object for the fromUnitCode passed in; returned
+   *     in case it's needed for additional data from the object; and
+   *  'toUnit' the unit object for the toUnitCode passed in; returned
+   *     in case it's needed for additional data from the object.
    */
-  convertUnitTo(fromUnitCode, fromVal, toUnitCode, decDigits) {
-
-    if (decDigits === undefined)
-      decDigits = Ucum.decDigits_;
+  convertUnitTo(fromUnitCode, fromVal, toUnitCode) {
 
     let resultMsg = [];
     let returnObj = {'status' : 'failed',
-                     'toVal' : null} ;
-
+                     'toVal' : null,
+                     'msg' : null} ;
     try {
       let fromUnit = null;
 
@@ -161,19 +161,10 @@ export class UcumLhcUtils {
 
       if (fromUnit && toUnit) {
         try {
-          let toVal = toUnit.convertFrom(fromVal, fromUnit);
-          // convert the value to a fixed value with the specified number of
-          // decimal digits.  Remove trailing zeroes
-          // ----- OR ----
-          //toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
-          // convert the value to a fixed value with the specified number of
-          // decimal digits.  Do not remove trailing zeroes
-          toVal = toVal.toFixed(decDigits);
-          resultMsg.push(fromVal.toString() + " " + fromUnit.getProperty('csCode_') +
-                         " = " + toVal.toString() + " " +
-                         toUnit.getProperty('csCode_'));
-          returnObj['toVal'] = toVal ;
+          returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
           returnObj['status'] = 'succeeded';
+          returnObj['fromUnit'] = fromUnit ;
+          returnObj['toUnit'] = toUnit ;
         }
         catch (err) {
           resultMsg.push(err.message);
@@ -183,7 +174,8 @@ export class UcumLhcUtils {
     catch (err) {
       resultMsg.push(err.message);
     }
-    returnObj['msg'] = resultMsg;
+    if (resultMsg.length > 0)
+      returnObj['msg'] = resultMsg;
     return returnObj ;
 
   } // end convertUnitTo

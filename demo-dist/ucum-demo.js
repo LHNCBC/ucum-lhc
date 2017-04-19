@@ -434,28 +434,28 @@ var UcumDemo = exports.UcumDemo = function () {
       this.utils_.useBraceMsgForEachString(true);
 
       var prec = document.getElementById("precision");
-      var decDigits = prec.value;
-      decDigits = parseInt(decDigits);
+      var decDigits = parseInt(prec.value);
       if (isNaN(decDigits)) {
         decDigits = Ucum.decDigits_;
         prec.value = decDigits;
       }
-      var entryMsg = [];
+
+      var entryErrMsg = [];
 
       var fromName = sanitizeHtml(document.getElementById(fromField).value);
       if (fromName === '' || fromName === null) {
-        entryMsg.push('Please specify a code for the units you want to convert.');
+        entryErrMsg.push('Please specify a code for the units you want to convert.');
       } else {
         var hypIdx = fromName.indexOf(Ucum.codeSep_);
         if (hypIdx > 0) fromName = fromName.substr(0, hypIdx);
       }
       var fromVal = parseFloat(document.getElementById(numField).value);
       if (isNaN(fromVal)) {
-        entryMsg.push('Please specify the number of units to be converted.');
+        entryErrMsg.push('Please specify the number of units to be converted.');
       }
       var toName = sanitizeHtml(document.getElementById(toField).value);
       if (toName === '' || toName === null) {
-        entryMsg.push('Please specify a code that you want the units to be converted to.');
+        entryErrMsg.push('Please specify a code that you want the units to be converted to.');
       } else {
         var codePos = toName.indexOf(Ucum.codeSep_);
         if (codePos > 0) toName = toName.substr(0, codePos);
@@ -467,13 +467,28 @@ var UcumDemo = exports.UcumDemo = function () {
       // if we don't have any entry messages, call the conversion code and put
       // the response in the form field.  Otherwise fill that field with the
       // entry message(s).
-      var mLen = entryMsg.length;
-      if (mLen === 0) {
-        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, decDigits);
-        resultString.innerHTML = resultObj['msg'].join('<BR>');
+      if (entryErrMsg.length > 0) {
+        resultString.innerHTML = entryErrMsg.join('<BR>');
       } else {
-        resultString.innerHTML = entryMsg.join('<BR>');
-      }
+        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName);
+        if (resultObj['status'] === 'succeeded') {
+          var toVal = resultObj['toVal'];
+          // convert the value to a fixed value with the specified number of
+          // decimal digits.  Remove trailing zeroes
+          // ----- OR ----
+          //toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
+          // convert the value to a fixed value with the specified number of
+          // decimal digits.  Do not remove trailing zeroes
+          toVal = toVal.toFixed(decDigits);
+
+          // Set the return message.   Use the UCUM code from the "from" and "to"
+          // unit objects returned.  Although the user will PROBABLY enter a
+          // valid unit code from the web page, they don't have to.
+          resultString.innerHTML = fromVal.toString() + ' ' + (resultObj['fromUnit'].getProperty('csCode_') + ' = ') + (toVal.toString() + ' ') + ('' + resultObj['toUnit'].getProperty('csCode_'));
+        } else {
+          resultString.innerHTML = resultObj['msg'].join('<BR>');
+        } // end if conversion did/didn't succeed
+      } // end if there were/weren't entry errors
     } // end convertUnit
 
 
