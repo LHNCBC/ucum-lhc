@@ -203,6 +203,13 @@ ul.tab li a {
   width: 30%
 }
 
+#convertNum {
+  width: 10em;
+}
+
+#precision {
+  width: 3em;
+}
 .topMargin20 {
   margin-top: 20px;
 }

@@ -14,15 +14,18 @@ describe('Validate_m2/g4', function() {
     describe('Validation Return Object', function() {
       var returnObj = utils.validateUnitString('m2/g4');
       it("should return status of valid", function() {
-        assert.equal('valid', returnObj['status']);
+        assert.equal(returnObj['status'], 'valid', "status = " +
+                     returnObj['status'] ? `${returnObj['status']}` : 'null');
       });
 
       it("should return a ucumCode = m2/g4", function() {
-        assert.equal("m2/g4", returnObj['ucumCode']);
+        assert.equal(returnObj['ucumCode'], "m2/g4", "ucumCode = " +
+                     returnObj['ucumCode'] ? `${returnObj['ucumCode']}` : 'null');
       });
 
       it("should return empty message array", function() {
-        assert.equal(0, returnObj['msg'].length);
+        assert.equal(returnObj['msg'].length, 0, "msg = " +
+                     returnObj['msg'] ? `${returnObj['msg'].join()}` : 'null');
       });
     });
 });
@@ -31,74 +34,125 @@ describe('Validate_m2/acr', function() {
   describe('Validation Return Object', function() {
     var returnObj = utils.validateUnitString('m2/acr');
     it("should return status = invalid", function() {
-      assert.equal("invalid", returnObj['status']);
+      assert.equal(returnObj['status'], "invalid", "status = " +
+                   returnObj['status'] ? `${returnObj['status']}` : 'null');
     });
 
     it("should return a ucumCode = m2/acr", function() {
-      assert.equal("m2/acr", returnObj['ucumCode']);
+      assert.equal(returnObj['ucumCode'], "m2/acr", "ucumCode = " +
+                   returnObj['ucumCode'] ? `${returnObj['ucumCode']}` : 'null');
     });
 
     it("should return error message = m2/acr is not a valid unit expression.", function() {
-      assert.equal("m2/acr is not a valid unit expression.", returnObj['msg'][0]);
+      assert.equal(returnObj['msg'][0],
+                   "m2/acr is not a valid unit expression.", "msg = " +
+                   returnObj['msg'] ? `${returnObj['msg'].join()}` : 'null');
     });
   });
 });
 
-describe('Convert fathoms to inchs', function() {
+describe('Convert fathoms to inches', function() {
   describe('Conversion Return Object', function() {
 
-    var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]', 0);
+    var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]');
 
     it("should return status = succeeded", function() {
-      assert.equal('succeeded', returnObj['status']);
+      assert.equal(returnObj['status'], 'succeeded',  "status = " +
+                   returnObj['status'] ? `${returnObj['status']}` : 'null');
     });
 
-    it("should return toVal = 1944", function() {
-      assert.equal(1944, returnObj['toVal']);
+    it("should return toVal = 1943.9999999999998", function() {
+      assert.equal(returnObj['toVal'], 1943.9999999999998, "toVal = " +
+                   returnObj['toVal'] ? `${returnObj['toVal']}` : 'null');
     });
 
-    it("should return msg = 27 [fth_us] = 1944 [in_us]", function() {
-      assert.equal("27 [fth_us] = 1944 [in_us]", returnObj['msg'][0]);
-    });
+    it("should return a null msg", function() {
+      assert.equal(returnObj['msg'], null, "msg = " +
+                   `${JSON.stringify(returnObj['msg'])}`);
+    }) ;
+
+    it("should return a fromUnit object with name = fathom - US", function() {
+      assert.equal(returnObj['fromUnit'].name_, 'fathom - US', "name = " +
+          (returnObj['fromUnit'] && returnObj['fromUnit'].name_) ?
+          `${returnObj['fromUnit'.name_]}` : 'null');
+    }) ;
+
+    it("should return a toUnit object with name = inch - US", function() {
+      assert.equal(returnObj['toUnit'].name_, 'inch - US', "name = " +
+          (returnObj['toUnit'] && returnObj['toUnit'].name_) ?
+          `${returnObj['toUnit'.name_]}` : 'null');
+    })
+
   });
 });
 
 describe('Convert fathoms to bars', function() {
   describe('Conversion Return Object', function() {
 
-    var returnObj = utils.convertUnitTo('[fth_us]', 27, 'bar', 0);
+    var returnObj = utils.convertUnitTo('[fth_us]', 27, 'bar');
 
     it("should return status = failed", function() {
-      assert.equal('failed', returnObj['status']);
+      assert.equal(returnObj['status'], 'failed', "status = " +
+                   returnObj['status'] ? `${returnObj['status']}` : 'null');
     });
 
     it("should return toVal = null", function() {
-      assert.equal(null, returnObj['toVal']);
+      assert.equal(returnObj['toVal'], null, "toVal = " +
+                   returnObj['toVal'] ? `${returnObj['toVal']}` : 'null');
     });
 
     it("should return msg = Sorry.  [fth_us] cannot be converted to bar.", function() {
-      assert.equal("Sorry.  [fth_us] cannot be converted to bar.",
-                   returnObj['msg'][0]);
+      assert.equal(returnObj['msg'][0],
+                   "Sorry.  [fth_us] cannot be converted to bar.", "msg = " +
+                   returnObj['msg'] ? `${returnObj['msg'].join()}` : 'null');
+
     });
+
+    it("should return a null fromUnit value", function() {
+      assert.equal(returnObj['fromUnit'], null, "fromUnit = " +
+                   returnObj['fromUnit'] ?
+                       `${JSON.stringify(returnObj['fromUnit'])}` : 'null');
+    }) ;
+
+    it("should return a null toUnit value", function() {
+      assert.equal(returnObj['toUnit'], null, "toUnit = " +
+                   returnObj['toUnit'] ?
+                    `${JSON.stringify(returnObj['toUnit'])}` : 'null');
+    })
   });
 });
 
 describe('Convert fathoms to acrs', function() {
   describe('Conversion Return Object', function() {
 
-    var returnObj = utils.convertUnitTo('[fth_us]', 27, 'acr', 0);
+    var returnObj = utils.convertUnitTo('[fth_us]', 27, 'acr');
 
     it("should return status = failed", function() {
-      assert.equal('failed', returnObj['status']);
+      assert.equal(returnObj['status'], 'failed', "status = " +
+                   returnObj['status'] ? `${returnObj['status']}` : 'null');;
     });
 
     it("should return toVal = null", function() {
-      assert.equal(null, returnObj['toVal']);
+      assert.equal(returnObj['toVal'], null, "toVal = " +
+                   returnObj['toVal'] ? `${returnObj['toVal']}` : 'null');
     });
-
 
     it("should return error message = acr is not a valid unit expresion.", function() {
-      assert.equal("acr is not a valid unit expression.", returnObj['msg'][0]);
+      assert.equal("acr is not a valid unit expression.", returnObj['msg'][0],
+                   "msg = " + returnObj['msg'] ?
+                   `${returnObj['msg'].join()}` : 'null')
     });
+
+    it("should return a null fromUnit value", function() {
+      assert.equal(returnObj['fromUnit'], null, "fromUnit = " +
+                   returnObj['fromUnit'] ?
+                   `${JSON.stringify(returnObj['fromUnit'])}` : 'null');
+    }) ;
+
+    it("should return a null toUnit value", function() {
+      assert.equal(returnObj['toUnit'], null, "toUnit = " +
+                   returnObj['toUnit'] ?
+                   `${JSON.stringify(returnObj['toUnit'])}` : 'null');
+    })
   });
 });
