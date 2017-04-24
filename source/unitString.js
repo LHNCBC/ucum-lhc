@@ -795,7 +795,7 @@ export class UnitString {
         retMsg.push(msgString);
         endProcessing = true;
       }
-      if (!endProcessing) {
+      else {
         try {
           // Is the operation division?
           let thisOp = uArray[u2]['op'];
@@ -857,7 +857,7 @@ export class UnitString {
           endProcessing = true ;
           finalUnit = null ;
         }
-      } // end if not endProceesing because there is only one unit
+      } // end if we have another valid unit/number to process
     } // end do for each unit after the first one
 
     return finalUnit ;

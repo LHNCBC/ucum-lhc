@@ -68,14 +68,13 @@ describe('Test makeUnit method', function() {
   describe('Test makeUnit for unit code mL', function () {
     var mlUnit = uTabs.getUnitByCode('mL');
     var annotations = [];
-    var befAnnotations = [];
     var retMsg = [];
     var origString = 'mL';
     var resp = uString.makeUnit(origString, annotations, retMsg, origString);
     var retUnit = resp[0];
     var retOrig = resp[1];
     it("should not change the annotations array", function () {
-      assert.deepEqual(befAnnotations, annotations);
+      assert.deepEqual([], annotations);
     });
     it("should not return any messages", function () {
       assert.deepEqual([], retMsg, `retMsg = ${JSON.stringify(retMsg)}`);
