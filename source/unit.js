@@ -79,7 +79,7 @@ export class Unit {
      * The Dimension object of the unit
      */
     if (attrs['dim_'] === undefined || attrs['dim_'] === null) {
-      attrs['dim_'] = null;
+      this.dim_ = null;
     }
     // When the unit data stored in json format is reloaded, the dimension data
     // is recognized as a a hash, not as a Dimension object.

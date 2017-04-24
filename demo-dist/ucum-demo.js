@@ -475,8 +475,8 @@ var UcumDemo = exports.UcumDemo = function () {
           var toVal = resultObj['toVal'];
           // convert the value to a fixed value with the specified number of
           // decimal digits.  Remove trailing zeroes
-          // ----- OR ----
           //toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
+          // ----- OR ----
           // convert the value to a fixed value with the specified number of
           // decimal digits.  Do not remove trailing zeroes
           toVal = toVal.toFixed(decDigits);
