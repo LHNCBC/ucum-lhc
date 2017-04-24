@@ -85,7 +85,7 @@ of unit strings, and includes a link to the
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
 the full deal.
 
-**convertUnitTo(fromUnitCode, fromVal, toUnitCode, decDigits)**
+**convertUnitTo(fromUnitCode, fromVal, toUnitCode)**
 
 This method converts a number of one type of unit to the equivalent number of
 another type of unit.  Note that the number returned is not trimmed or
