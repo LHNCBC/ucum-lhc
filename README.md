@@ -85,39 +85,57 @@ of unit strings, and includes a link to the
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
 the full deal.
 
-**convertUnitTo(fromUnitCode, fromVal, toUnitCode, decDigits)**
+**convertUnitTo(fromUnitCode, fromVal, toUnitCode)**
 
 This method converts a number of one type of unit to the equivalent number of
-another type of unit.
+another type of unit.  Note that the number returned is not trimmed or
+rounded to any particular precision or significant digits.
 
 * _@param_ fromUnitCode the unit code/expression/string of the unit to be converted
 * _@param_ fromVal the number of "from" units to be converted to "to" units
 * _@param_ toUnitCode the unit code/expression/string of the unit that the from 
   field is to be converted to
-* _@param_ decDigits the maximum number of decimal digits to be displayed
-  for the converted unit.  If not specified, the _UCUM.decDigits_ value
-  (currently 4) is used.
-* _@returns_ a hash with three elements:
-   * 'status' contains either 'succeeded' or 'failed'; 
-   * 'toVal' contains the number of "to" units resulting from the conversion, or
-     null if the conversion failed; and
-   * 'msg' contains a message describing either the result of the conversion or 
-         an error message if an error occurred.
+* _@returns_ a hash with five elements:
+   * 'status' the will be: 'succeeded' if the conversion was successfully
+      calculated; 'failed' if the conversion could not be made, e.g., if
+      the units are not commensurable; or 'error' if an error occurred;
+   * 'toVal' the numeric value indicating the conversion amount, or null
+      if the conversion failed (e.g., the units are not commensurable);
+   * 'msg' an array of messages returned, specifically a description of
+      a failure or an error message if an error occurred;
+   * 'fromUnit' the unit object for the fromUnitCode passed in; returned
+      in case it's needed for additional data from the object; and
+   * 'toUnit' the unit object for the toUnitCode passed in; returned
+      in case it's needed for additional data from the object.
 
-For example, to convert 27 U.S. fathoms to U.S. inches with 0 decimal digits
+For example, to convert 27 U.S. fathoms to U.S. inches
  
     var Pkg = require('ucum-lhc.js');   // include path to file where necessary
      
     var utils = Pkg.UcumLhcUtils.getInstance();
-    var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]', 0);
+    var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]');
     if (returnObj['status'] === 'succeeded')
-      /* the conversion was successful.  The value (1944) for the "to" unit
-         will be in returnObj['toVal'] and returnObj['msg'] will contain the
-         text "27 fathom units = 1944 inch units."
+      /* the conversion was successful.
+         returnObj['toVal'] will contain the conversion result
+           (~1943.9999999999998 - number, not formatted string)
+         returnObj['msg'] will be null
+         returnObj['fromUnit'] will contain the unit object for [fth_us]
+         returnObj['toUnit'] will contain the unit object for [in_us]
        */
-    else
-      /* the conversion encountered an error that the string in returnObj['msg'] 
-         will describe; returnObj['toVal'] will be null */
+    else if (returnObj['status'] === 'failed')
+      /* the conversion could not be made.
+         returnObj['toVal'] will be null
+         returnObj['msg'] will contain a message describing the failure
+         returnObj['fromUnit'] will be null
+         returnObj['toUnit'] will be null
+       */
+    else (returnObj['status'] === 'error)
+      /* the conversion encountered an error
+         returnObj['toVal'] will be null
+         returnObj['msg'] will contain a message describing the error
+         returnObj['fromUnit'] will be null
+         returnObj['toUnit'] will be null
+       */
       
 If you want to know what unit types a particular unit can be converted to, the 
 _UCUM Unit Conversions_ section of the [demo page](https://lhncbc.github.io/ucum-lhc/demo.html) 
