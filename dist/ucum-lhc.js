@@ -27281,8 +27281,7 @@ var UnitString = exports.UnitString = function () {
           msgString += '; could not parse full string.  Sorry';
           retMsg.push(msgString);
           endProcessing = true;
-        }
-        if (!endProcessing) {
+        } else {
           try {
             // Is the operation division?
             var thisOp = uArray[u2]['op'];
@@ -27335,7 +27334,7 @@ var UnitString = exports.UnitString = function () {
             endProcessing = true;
             finalUnit = null;
           }
-        } // end if not endProceesing because there is only one unit
+        } // end if we have another valid unit/number to process
       } // end do for each unit after the first one
 
       return finalUnit;
