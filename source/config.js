@@ -27,13 +27,13 @@ export var Ucum = {
   /**
    *  The number of decimal digits to be displayed for a unit amount
    */
-  decDigits_ : 4,
+  decDigits_ : 2,
 
   /**
    * The string used to separate a unit code and unit name when they
    * are displayed together
    */
-  codeSep_ : ' - ',
+  codeSep_ : ': ',
 
   /**
    * Opening HTML used to emphasize portions of error messages.  Used when
@@ -73,7 +73,7 @@ export var Ucum = {
   } ,
 
   /**
-   * Name of the iey in the csv file that serves as the key
+   * Name of the column in the csv file that serves as the key
    */
   inputKey_ : 'case-sensitive code'
 } ;
