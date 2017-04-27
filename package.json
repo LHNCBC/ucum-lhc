@@ -1,6 +1,6 @@
 {
   "name": "ucum",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "dist/ucum-lhc.js",
   "directories": {
