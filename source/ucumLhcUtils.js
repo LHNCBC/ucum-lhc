@@ -152,7 +152,7 @@ export class UcumLhcUtils {
       returnObj.status = 'error';
       returnObj.msg.push('No "from" unit expression specified.');
     }
-    if (!fromVal || fromVal == '') {
+    if (!fromVal || (isNaN(fromVal))) {
       returnObj.status = 'error';
       returnObj.msg.push('No "from" value specified.');
     }

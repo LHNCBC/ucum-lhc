@@ -25450,14 +25450,18 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var resp = this.getSpecifiedUnit(uStr);
       var theUnit = resp[0];
       var retObj = {};
-      if (!theUnit) retObj = { 'status': resp[1] !== null ? 'invalid' : 'error',
-        'ucumCode': resp[1],
-        'msg': resp[2] };else retObj = { 'status': 'valid',
-        'ucumCode': resp[1],
-        'msg': resp[2],
-        'unit': { 'code': theUnit.csCode_,
-          'name': theUnit.name_,
-          'guidance': theUnit.guidance_ } };
+      if (!theUnit) {
+        retObj = { 'status': resp[1] !== null ? 'invalid' : 'error',
+          'ucumCode': resp[1],
+          'msg': resp[2] };
+      } else {
+        retObj = { 'status': 'valid',
+          'ucumCode': resp[1],
+          'msg': resp[2],
+          'unit': { 'code': theUnit.csCode_,
+            'name': theUnit.name_,
+            'guidance': theUnit.guidance_ } };
+      }
       return retObj;
     } // end validateUnitString
 
@@ -25495,7 +25499,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         returnObj.status = 'error';
         returnObj.msg.push('No "from" unit expression specified.');
       }
-      if (!fromVal || toUnitCode == '') {
+      if (!fromVal || isNaN(fromVal)) {
         returnObj.status = 'error';
         returnObj.msg.push('No "from" value specified.');
       }
@@ -25596,10 +25600,12 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * or if any errors were encountered trying to get the unit.
      *
      * @param uName the expression/string representing the unit
-     * @returns an array containing the unit found for the string (or null if
-     *  no unit was found), a (possibly) updated version of the string (for
-     *  cases where a unit name was specified and the code was found for it)
-     *  and a message array containing any error or "not found" messages.
+     * @returns an array containing:
+     *  the unit found for the string (or null if no unit was found);
+     *  a (possibly) updated version of the string (for cases where a unit name
+     *    was specified and the code was found for it) or null if an error
+     *    occurred; and
+     *  a message array containing any error or "not found" messages.
      */
 
   }, {
@@ -25638,11 +25644,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
             errorThrown = true;
           }
         }
-
-        // if no error was thrown but no unit was found, create a not found message
-        // if ((theUnit === null || theUnit === undefined) && !errorThrown) {
-        //   retMsg.unshift(`${uName} is not a valid unit expression.`);
-        // }
       } // end if a unit expression was specified
 
       return [theUnit, retUnitString, retMsg];
