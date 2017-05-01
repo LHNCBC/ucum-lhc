@@ -25495,13 +25495,22 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var returnObj = { 'status': 'failed',
         'toVal': null,
         'msg': [] };
+
+      if (fromUnitCode) {
+        fromUnitCode = fromUnitCode.trim();
+      }
       if (!fromUnitCode || fromUnitCode == '') {
         returnObj.status = 'error';
         returnObj.msg.push('No "from" unit expression specified.');
       }
+
       if (!fromVal || isNaN(fromVal)) {
         returnObj.status = 'error';
         returnObj.msg.push('No "from" value specified.');
+      }
+
+      if (toUnitCode) {
+        toUnitCode = toUnitCode.trim();
       }
       if (!toUnitCode || toUnitCode == '') {
         returnObj.status = 'error';
