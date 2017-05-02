@@ -25449,12 +25449,19 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
       var resp = this.getSpecifiedUnit(uStr);
       var theUnit = resp[0];
-      var retObj = { 'status': resp[0] !== null ? 'valid' : 'invalid',
-        'ucumCode': resp[1],
-        'msg': resp[2] };
-      if (theUnit) retObj['unit'] = { 'code': theUnit.csCode_,
-        'name': theUnit.name_,
-        'guidance': theUnit.guidance_ };
+      var retObj = {};
+      if (!theUnit) {
+        retObj = { 'status': resp[1] !== null ? 'invalid' : 'error',
+          'ucumCode': resp[1],
+          'msg': resp[2] };
+      } else {
+        retObj = { 'status': 'valid',
+          'ucumCode': resp[1],
+          'msg': resp[2],
+          'unit': { 'code': theUnit.csCode_,
+            'name': theUnit.name_,
+            'guidance': theUnit.guidance_ } };
+      }
       return retObj;
     } // end validateUnitString
 
@@ -25487,35 +25494,61 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var resultMsg = [];
       var returnObj = { 'status': 'failed',
         'toVal': null,
-        'msg': null };
-      try {
-        var fromUnit = null;
+        'msg': [] };
 
-        var parseResp = this.getSpecifiedUnit(fromUnitCode);
-        fromUnit = parseResp[0];
-        if (parseResp[2].length > 0) resultMsg = parseResp[2];
+      if (fromUnitCode) {
+        fromUnitCode = fromUnitCode.trim();
+      }
+      if (!fromUnitCode || fromUnitCode == '') {
+        returnObj.status = 'error';
+        returnObj.msg.push('No "from" unit expression specified.');
+      }
 
-        var toUnit = null;
-        parseResp = this.getSpecifiedUnit(toUnitCode);
-        toUnit = parseResp[0];
-        if (parseResp[2].length > 0) {
-          if (resultMsg.length > 0) resultMsg = resultMsg.concat(parseResp[2]);else resultMsg = parseResp[2];
-        }
+      if (!fromVal || isNaN(fromVal)) {
+        returnObj.status = 'error';
+        returnObj.msg.push('No "from" value specified.');
+      }
 
-        if (fromUnit && toUnit) {
-          try {
-            returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
-            returnObj['status'] = 'succeeded';
-            returnObj['fromUnit'] = fromUnit;
-            returnObj['toUnit'] = toUnit;
-          } catch (err) {
-            resultMsg.push(err.message);
+      if (toUnitCode) {
+        toUnitCode = toUnitCode.trim();
+      }
+      if (!toUnitCode || toUnitCode == '') {
+        returnObj.status = 'error';
+        returnObj.msg.push('No "to" unit expression specified.');
+      }
+      if (returnObj.status !== 'error') {
+        try {
+          var fromUnit = null;
+
+          var parseResp = this.getSpecifiedUnit(fromUnitCode);
+          fromUnit = parseResp[0];
+          if (parseResp[2].length > 0) resultMsg = parseResp[2];
+
+          var toUnit = null;
+          parseResp = this.getSpecifiedUnit(toUnitCode);
+          toUnit = parseResp[0];
+          if (parseResp[2].length > 0) {
+            if (resultMsg.length > 0) resultMsg = resultMsg.concat(parseResp[2]);else resultMsg = parseResp[2];
           }
-        } // end if we have the from and to units
-      } catch (err) {
-        resultMsg.push(err.message);
+
+          if (fromUnit && toUnit) {
+            try {
+              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+              returnObj['status'] = 'succeeded';
+              returnObj['fromUnit'] = fromUnit;
+              returnObj['toUnit'] = toUnit;
+            } catch (err) {
+              returnObj['status'] = 'failed';
+              resultMsg.push(err.message);
+            }
+          } // end if we have the from and to units
+        } catch (err) {
+          returnObj['status'] = 'error';
+          resultMsg.push(err.message);
+        }
       }
       if (resultMsg.length > 0) returnObj['msg'] = resultMsg;
+
       return returnObj;
     } // end convertUnitTo
 
@@ -25572,52 +25605,55 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
     /**
      * This method parses a unit string to get (or try to get) the unit
-     * represented by the string.
+     * represented by the string.  It returns an error message if no string was specified
+     * or if any errors were encountered trying to get the unit.
      *
      * @param uName the expression/string representing the unit
-     * @returns an array containing the unit found for the string (or null if
-     *  no unit was found), a (possibly) updated version of the string (for
-     *  cases where a unit name was specified and the code was found for it)
-     *  and a message array containing any returned
+     * @returns an array containing:
+     *  the unit found for the string (or null if no unit was found);
+     *  a (possibly) updated version of the string (for cases where a unit name
+     *    was specified and the code was found for it) or null if an error
+     *    occurred; and
+     *  a message array containing any error or "not found" messages.
      */
 
   }, {
     key: 'getSpecifiedUnit',
     value: function getSpecifiedUnit(uName) {
 
-      uName = uName.trim();
-
-      var utab = UnitTables.getInstance();
       var retMsg = [];
       var retUnitString = null;
-      var errorThrown = false;
+      var theUnit = null;
 
-      // go ahead and just try using the name as the code.  This may or may not
-      // work, but if it does, it cuts out a lot of parsing.
-      var theUnit = utab.getUnitByCode(uName);
-
-      // If we found it, set the returned unit string to what was passed in;
-      // otherwise try parsing as a unit string
-      if (theUnit) {
-        retUnitString = uName;
+      if (!uName) {
+        retMsg.push('No unit string specified.');
       } else {
-        try {
-          var uStrParser = UnitString.getInstance();
-          var parseResp = uStrParser.parseString(uName);
-          theUnit = parseResp[0];
-          retUnitString = parseResp[1];
-          retMsg = parseResp[2];
-        } catch (err) {
-          console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-          if (uName) retMsg.unshift(uName + ' is not a valid unit.  ' + err.message);else retMsg.unshift(err.message);
-          errorThrown = true;
-        }
-      }
+        var utab = UnitTables.getInstance();
+        var errorThrown = false;
+        uName = uName.trim();
 
-      // if no error was thrown but no unit was found, create a not found message
-      if ((theUnit === null || theUnit === undefined) && !errorThrown) {
-        retMsg.unshift(uName + ' is not a valid unit expression.');
-      }
+        // go ahead and just try using the name as the code.  This may or may not
+        // work, but if it does, it cuts out a lot of parsing.
+        theUnit = utab.getUnitByCode(uName);
+
+        // If we found it, set the returned unit string to what was passed in;
+        // otherwise try parsing as a unit string
+        if (theUnit) {
+          retUnitString = uName;
+        } else {
+          try {
+            var uStrParser = UnitString.getInstance();
+            var parseResp = uStrParser.parseString(uName);
+            theUnit = parseResp[0];
+            retUnitString = parseResp[1];
+            retMsg = parseResp[2];
+          } catch (err) {
+            console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
+            if (uName) retMsg.unshift(uName + ' is not a valid unit.  ' + err.message);else retMsg.unshift(err.message);
+            errorThrown = true;
+          }
+        }
+      } // end if a unit expression was specified
 
       return [theUnit, retUnitString, retMsg];
     } // end getSpecifiedUnit
