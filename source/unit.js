@@ -528,7 +528,7 @@ export class Unit {
    *         and the other is not dimensionless.
    */
   multiplyThese(unit2) {
-
+console.log(`in multiplyThese, this.name = ${this.name_}; unit2.name = ${unit2.name_}`);
     if (this.cnv_ != null) {
       if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero()))
 	      this.cnvPfx_ *= unit2.magnitude_;
@@ -548,6 +548,8 @@ export class Unit {
       }
       else {
         this.name_ = this.mulString(this.name_, unit2.name_);
+console.log(`after call to mulString this.name = ${this.name_}; unit2.name = ${unit2.name_}`);
+console.log('');
         this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
         if (this.guidance_ && unit2.guidance_)
           this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);
@@ -591,6 +593,7 @@ export class Unit {
    * @throws an error if either of the units is not on a ratio scale.
    * */
   divide(unit2) {
+console.log(`in divide, this.name = ${this.name_}; unit2.name = ${unit2.name_}`);
 
     if (this.cnv_ != null)
       throw (new Error(`Attempt to divide non-ratio unit ${this.name_}`));
@@ -756,30 +759,25 @@ export class Unit {
    * second unit
    */
   divString(s1, s2) {
+    console.log(`in divString, s1 = ${s1}; s2 = ${s2}`);
+
     let ret = null;
     if(s2.length == 0)
       ret = s1;
     else {
+      let startParen = '';
+      let endParen = '';
+      if ((s2.indexOf('.') > -1 || s2.indexOf('/') > -1) && s2[0] !== '(') {
+        startParen = '(';
+        endParen = ')';
+      }
       let supPos = s2.indexOf('<sup>') ;
       let s2Sup = null;
       if (supPos > 0) {
         s2Sup = s2.substr(supPos) ;
         s2 = s2.substr(0, supPos);
       }
-      let t = s2.replace('/','~').replace('.','/').replace('~','.');
-
-      switch (t[0]) {
-        case '.':
-          ret = s1 + t;
-          break ;
-        case '/':
-          ret =  s1 + t;
-          break;
-        default:
-          ret = s1 + "/" + t;
-      }
-      if (s2Sup)
-        ret += s2Sup;
+      ret = s1 + '/' + startParen + s2 + endParen ;
     }
     return ret ;
 

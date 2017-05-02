@@ -139,6 +139,7 @@ export class UcumTestUtils {
    */
   checkOneDimension(uString) {
     let uStr = UnitString.getInstance();
+console.log(`in checkOneDimension, uString = ${uString}`) ;
     let generatedUnit = uStr.parseString(uString);
     return generatedUnit ;
   }

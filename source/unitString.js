@@ -103,7 +103,8 @@ export class UnitString {
    * @throws an error if nothing was specified.
    */
   parseString(uStr, origString, retMsg) {
-
+console.log(`parseString called for uStr = ${uStr}, origString = ${origString}`);
+console.log('');
     uStr = uStr.trim();
 
     // Used in error messages to provide context for messages
@@ -117,11 +118,11 @@ export class UnitString {
 
     let firstCall = (uStr === origString) ;
 
-    // If this is the first call for the string, check for spaces and throw
-    // an error if any are found.  The spec explicitly forbids spaces.
-    if (firstCall && origString.indexOf(' ') > -1) {
-      throw (new Error('Blank spaces are not allowed in unit expressions.'));
-    } // end if this was called for the full string
+    // // If this is the first call for the string, check for spaces and throw
+    // // an error if any are found.  The spec explicitly forbids spaces.
+    // if (firstCall && origString.indexOf(' ') > -1) {
+    //   throw (new Error('Blank spaces are not allowed in unit expressions.'));
+    // } // end if this was called for the full string
 
     // Unit to be returned
     let finalUnit = null ;
@@ -139,9 +140,20 @@ export class UnitString {
     // subsequent processing.
     let annotations = [];
     uStr = this.getAnnotations(uStr, annotations, retMsg) ;
-
+console.log(`just back from getAnnotations, uStr = ${uStr}`);
+console.log(`               annotations = ${JSON.stringify(annotations)}`);
+console.log(`               origString = ${origString}`);
+console.log('');
     // Flag used to block further processing on an unrecoverable error
     let endProcessing = retMsg.length > 0;
+
+    // If this is the first call for the string, check for spaces and throw
+    // an error if any are found.  The spec explicitly forbids spaces.
+    // Except in annotations, which is why this is done after the annotations
+    // are extracted
+    if (firstCall && uStr.indexOf(' ') > -1) {
+      throw (new Error('Blank spaces are not allowed in unit expressions.'));
+    } // end if this was called for the full string
 
     // Check for parentheses in unit strings.  If found, isolate a parenthesized
     // group and pass it to a recursive call of this method.  If it contains
@@ -237,8 +249,12 @@ export class UnitString {
         if (openCt === closeCt) {
           closePos = c;
           uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
+console.log(`in parseString about to call parseString for parenthetical group`);
+console.log(`passing ${origString.substring(openPos + 1, closePos - 1)}`);
+console.log(` openPos = ${openPos}; closePos = ${closePos}; origString = ${origString}`);
+console.log('');
           let parseResp = this.parseString(
-                               origString.substring(openPos + 1, closePos - 1),
+                               uStr.substring(openPos + 1, closePos - 1),
                                origString, retMsg);
           parensUnits[pu++] = parseResp[0];
           //origString = parseResp[1];
@@ -267,12 +283,12 @@ export class UnitString {
   /*    if (firstCall)
         origString = uStr ;*/
       uArray = this.makeUnitsArray(uStr);
-
+console.log(`back from makeUnitsArray, uArray = ${JSON.stringify(uArray)}`);
       // Create a unit object out of each un element
       let uLen = uArray.length;
       for (let u1 = 0; u1 < uLen && !endProcessing; u1++) {
         let curCode = uArray[u1]['un'];
-
+console.log(`processing curCode = ${curCode}`);
         // If the current unit array element is a unit stored in the parensUnits
         // array (from a parenthesized string), get that unit and put it in the
         /// units array.
@@ -324,9 +340,14 @@ export class UnitString {
           // in the original string with the unit name.
           if (!endProcessing) {
             let nIdx = parseInt(pIdx);
-            uArray[u1]['un'] = parensUnits[nIdx];
-            origString = origString.replace(this.parensFlag_ + pIdx + this.parensFlag_,
-                         '(' + parensUnits[nIdx]['name_'] + ')');
+            console.log(`origString = ${origString}`);
+            console.log(`nIdx = ${nIdx}, pIdx = ${pIdx}`);
+            console.log(`parensUnits = ${JSON.stringify(parensUnits)}`);
+            if (parensUnits[nIdx]) {
+              uArray[u1]['un'] = parensUnits[nIdx];
+              origString = origString.replace(this.parensFlag_ + pIdx + this.parensFlag_,
+                  '(' + parensUnits[nIdx]['name_'] + ')');
+            }
           }
         } // end if the parentheses flag is found at the beginning of curCode
 
@@ -349,6 +370,7 @@ export class UnitString {
           // if the current unit string is NOT a number, call makeUnit to create
           // the unit object for it.  Stop processing if no unit was returned.
           if (isNaN(curCodeNum)) {
+console.log(`curCodeNum ${curCodeNum}. curCode ${curCode} is not a number; trying to make it a unit`) ;
             let uRet = this.makeUnit(curCode, annotations,
                                      retMsg, origString);
             if (uRet[0] == null)
@@ -455,7 +477,9 @@ export class UnitString {
     // can then perform any operations (prefixes, multiplication, division).
 
     let uArray1 = uStr.match(/([./]|[^./]+)/g) ;
-
+console.log(`in makeUnitsArray, uStr = ${uStr}`);
+console.log(`                uArray1 = ${JSON.stringify(uArray1)}`);
+console.log('');
     // If the first element in the array is a division operator (/), the
     // string started with '/'.  Add a first element containing 1 to the
     // array, which will cause the correct computation to be performed (inversion).
@@ -515,8 +539,10 @@ export class UnitString {
 
 
     let anLen = this.braceFlag_.length;
-
+console.log(`in makeUnit, uCode = ${uCode}`);
     let anOpen = uCode.indexOf(this.braceFlag_) ;
+console.log(`anOpen = ${anOpen}`);
+console.log(`annotations = ${JSON.stringify(annotations)}`);
     if (anOpen >= 0) {
       let anClose = uCode.substr(anOpen + 1).indexOf(this.braceFlag_) +
                     anOpen + 1;
@@ -529,7 +555,8 @@ export class UnitString {
       else {
         let anIdx = parseInt(uCode.substring(anOpen + anLen, anClose));
         let anText = annotations[anIdx] ;
-
+console.log(`anIdx = ${anIdx}`);
+console.log(`anText = ${anText}`);
         // If the closing flag is not at the end of the uCode, text
         // follows the annotation - which is invalid.
         if (anClose + anLen < uCode.length) {
@@ -564,6 +591,7 @@ export class UnitString {
           //                                         this.closeEmph_) ;
           origString = origString.replace(this.braceFlag_ + anIdx +
                                           this.braceFlag_, anText);
+console.log(`origString set to ${origString}`) ;
           if (this.bracesMsg_) {
             let dup = false;
             for (let r = 0; !dup && r < retMsg.length; r++) {
@@ -573,6 +601,8 @@ export class UnitString {
               retMsg.push(this.bracesMsg_);
           }
           uCode = uCode.substr(0, anOpen);
+          origCode = uCode ;
+console.log(`uCode set to ${uCode}`);
         } // end if the annotation follows the unit expression
       } // end if we found an open and a close brace
     } // end if we found an open brace
@@ -594,7 +624,15 @@ export class UnitString {
       let utabs = UnitTables.getInstance();
       // First look for the full string as a code
       origUnit = utabs.getUnitByCode(uCode);
-
+      // If we didn't find it, check to see if it uses a carat ^
+      if (!origUnit && uCode.indexOf('^') > -1) {
+        let tryCode = uCode.replace('^', '*') ;
+        origUnit = utabs.getUnitByCode(tryCode) ;
+        if (origUnit) {
+          origUnit.csCode_ = origUnit.csCode_.replace('*', '^') ;
+          origUnit.ciCode_ = origUnit.ciCode_.replace('*', '^') ;
+        }
+      }
       // If we didn't find it, try it as a name
       if (!origUnit) {
         let origUnitAry = utabs.getUnitByName(uCode);
@@ -690,6 +728,7 @@ export class UnitString {
       // unit string without a prefix.  That's all we can try).
       if (!origUnit) {
         retMsg.push(`Unable to find unit for ${origCode}`);
+console.log(`retMsg = ${JSON.stringify(retMsg)}`);
         retUnit = null;
         endProcessing = true;
       }
@@ -778,7 +817,7 @@ export class UnitString {
     let finalUnit = uArray[0]['un'];
     let uLen = uArray.length ;
     let endProcessing = false ;
-
+console.log(`in performUnitArithmetic, uArray = ${JSON.stringify(uArray)}`);
     // Perform the arithmetic for the units, starting with the first 2 units.
     // We only need to do the arithmetic if we have more than one unit.
     for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
@@ -808,8 +847,12 @@ export class UnitString {
 
             // both are unit objects
             if (typeof finalUnit !== 'number') {
+console.log(`finalUnit = ${JSON.stringify(finalUnit)}`);
+console.log(`about to call multiplyThese, finalUnit.name = ${finalUnit.name_};` +
+        ` nextUnit name = ${nextUnit.name_}; isDiv = ${isDiv}`);
               isDiv ? finalUnit = finalUnit.divide(nextUnit) :
                   finalUnit = finalUnit.multiplyThese(nextUnit);
+console.log(`multiplyThese called, the name set to ${finalUnit.name_}`);
             }
             // finalUnit is a number; nextUnit is a unit object
             else {
@@ -817,16 +860,22 @@ export class UnitString {
               isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
               let theName = finalUnit.toString() + thisOp +
                   nextUnit.getProperty('name_');
+console.log(`theName set to ${theName}`);
               let theCode = finalUnit.toString() + thisOp +
                   nextUnit.getProperty('csCode_');
+console.log(`theCode set to ${theCode}`) ;
               let theDim = nextUnit.getProperty('dim_');
-              if (isDiv)
+              if (isDiv && theDim) {
+                console.log(`calling theDim.minus for dim = ${JSON.stringify(theDim)}`);
                 theDim = theDim.minus();
+                console.log(`theDim set to ${JSON.stringify(theDim)}`);
+              }
               finalUnit = nextUnit;
               finalUnit.assignVals({'csCode_' : theCode,
                 'name_' : theName,
                 'dim_' : theDim,
                 'magnitude_' : nMag});
+console.log(`finalUnit set to ${JSON.stringify(finalUnit)}`);
             }
           } // end if nextUnit is not a number
 
@@ -839,6 +888,7 @@ export class UnitString {
                   fMag *= nextUnit;
               let theName = finalUnit.getProperty('name_') + thisOp +
                   nextUnit.toString();
+console.log(`theName set to ${theName}`);
               let theCode = finalUnit.getProperty('csCode_') + thisOp +
                   nextUnit.toString();
               finalUnit.assignVals({'csCode_' : theCode ,
@@ -859,7 +909,7 @@ export class UnitString {
         }
       } // end if we have another valid unit/number to process
     } // end do for each unit after the first one
-
+console.log('');
     return finalUnit ;
   }  // end performUnitArithmetic
 

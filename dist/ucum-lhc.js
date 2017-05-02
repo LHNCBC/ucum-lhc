@@ -24877,7 +24877,7 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
       // updated hash is passed along the pipeline to the stringifier.
       var transformer = transform(function (record) {
 
-        if (!record[sourceCol]) {
+        if (record[sourceCol] === undefined) {
           transformer.emit('error', 'The ' + sourceCol + ' column was not ' + 'found in the file.  Validation is not possible.');
         } else {
           var uStr = record[sourceCol];
@@ -24885,7 +24885,7 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
           record[unitTestedCol] = uStr;
 
           try {
-            var _parseResp = utils.validUnitString(uStr);
+            var _parseResp = utils.validateUnitString(uStr);
             if (_parseResp['status'] === 'valid') record[resultCol] = _parseResp['ucumCode'] + " is a valid UCUM unit.";else record[resultCol] = uStr + " is not a valid UCUM unit.";
             if (_parseResp['msg'] && _parseResp['msg'].length > 0) record[commentCol] = _parseResp['msg'].join('; ');else record[commentCol] = '';
           } catch (err) {
@@ -26265,7 +26265,7 @@ var Unit = exports.Unit = function () {
   }, {
     key: "multiplyThese",
     value: function multiplyThese(unit2) {
-
+      console.log("in multiplyThese, this.name = " + this.name_ + "; unit2.name = " + unit2.name_);
       if (this.cnv_ != null) {
         if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) this.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + this.name_ + " " + 'failed.');
       } else {
@@ -26277,6 +26277,8 @@ var Unit = exports.Unit = function () {
           } else throw new Error("Attempt to multiply non-ratio unit " + unit2.name_);
         } else {
           this.name_ = this.mulString(this.name_, unit2.name_);
+          console.log("after call to mulString this.name = " + this.name_ + "; unit2.name = " + unit2.name_);
+          console.log('');
           this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
           if (this.guidance_ && unit2.guidance_) this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);else if (unit2.guidance_) this.guidance_ = unit2.guidance_;
           this.magnitude_ *= unit2.magnitude_;
@@ -26313,6 +26315,7 @@ var Unit = exports.Unit = function () {
   }, {
     key: "divide",
     value: function divide(unit2) {
+      console.log("in divide, this.name = " + this.name_ + "; unit2.name = " + unit2.name_);
 
       if (this.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + this.name_);
       if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
@@ -26473,27 +26476,23 @@ var Unit = exports.Unit = function () {
   }, {
     key: "divString",
     value: function divString(s1, s2) {
+      console.log("in divString, s1 = " + s1 + "; s2 = " + s2);
+
       var ret = null;
       if (s2.length == 0) ret = s1;else {
+        var startParen = '';
+        var endParen = '';
+        if ((s2.indexOf('.') > -1 || s2.indexOf('/') > -1) && s2[0] !== '(') {
+          startParen = '(';
+          endParen = ')';
+        }
         var supPos = s2.indexOf('<sup>');
         var s2Sup = null;
         if (supPos > 0) {
           s2Sup = s2.substr(supPos);
           s2 = s2.substr(0, supPos);
         }
-        var t = s2.replace('/', '~').replace('.', '/').replace('~', '.');
-
-        switch (t[0]) {
-          case '.':
-            ret = s1 + t;
-            break;
-          case '/':
-            ret = s1 + t;
-            break;
-          default:
-            ret = s1 + "/" + t;
-        }
-        if (s2Sup) ret += s2Sup;
+        ret = s1 + '/' + startParen + s2 + endParen;
       }
       return ret;
     } // end divString
@@ -26625,7 +26624,8 @@ var UnitString = exports.UnitString = function () {
   }, {
     key: 'parseString',
     value: function parseString(uStr, origString, retMsg) {
-
+      console.log('parseString called for uStr = ' + uStr + ', origString = ' + origString);
+      console.log('');
       uStr = uStr.trim();
 
       // Used in error messages to provide context for messages
@@ -26638,11 +26638,11 @@ var UnitString = exports.UnitString = function () {
 
       var firstCall = uStr === origString;
 
-      // If this is the first call for the string, check for spaces and throw
-      // an error if any are found.  The spec explicitly forbids spaces.
-      if (firstCall && origString.indexOf(' ') > -1) {
-        throw new Error('Blank spaces are not allowed in unit expressions.');
-      } // end if this was called for the full string
+      // // If this is the first call for the string, check for spaces and throw
+      // // an error if any are found.  The spec explicitly forbids spaces.
+      // if (firstCall && origString.indexOf(' ') > -1) {
+      //   throw (new Error('Blank spaces are not allowed in unit expressions.'));
+      // } // end if this was called for the full string
 
       // Unit to be returned
       var finalUnit = null;
@@ -26659,9 +26659,20 @@ var UnitString = exports.UnitString = function () {
       // subsequent processing.
       var annotations = [];
       uStr = this.getAnnotations(uStr, annotations, retMsg);
-
+      console.log('just back from getAnnotations, uStr = ' + uStr);
+      console.log('               annotations = ' + JSON.stringify(annotations));
+      console.log('               origString = ' + origString);
+      console.log('');
       // Flag used to block further processing on an unrecoverable error
       var endProcessing = retMsg.length > 0;
+
+      // If this is the first call for the string, check for spaces and throw
+      // an error if any are found.  The spec explicitly forbids spaces.
+      // Except in annotations, which is why this is done after the annotations
+      // are extracted
+      if (firstCall && uStr.indexOf(' ') > -1) {
+        throw new Error('Blank spaces are not allowed in unit expressions.');
+      } // end if this was called for the full string
 
       // Check for parentheses in unit strings.  If found, isolate a parenthesized
       // group and pass it to a recursive call of this method.  If it contains
@@ -26751,7 +26762,11 @@ var UnitString = exports.UnitString = function () {
             if (openCt === closeCt) {
               _closePos = c;
               uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
-              var parseResp = this.parseString(origString.substring(openPos + 1, _closePos - 1), origString, retMsg);
+              console.log('in parseString about to call parseString for parenthetical group');
+              console.log('passing ' + origString.substring(openPos + 1, _closePos - 1));
+              console.log(' openPos = ' + openPos + '; closePos = ' + _closePos + '; origString = ' + origString);
+              console.log('');
+              var parseResp = this.parseString(uStr.substring(openPos + 1, _closePos - 1), origString, retMsg);
               parensUnits[pu++] = parseResp[0];
               //origString = parseResp[1];
               uStr = uStr.substr(_closePos);
@@ -26776,12 +26791,12 @@ var UnitString = exports.UnitString = function () {
         /*    if (firstCall)
               origString = uStr ;*/
         uArray = this.makeUnitsArray(uStr);
-
+        console.log('back from makeUnitsArray, uArray = ' + JSON.stringify(uArray));
         // Create a unit object out of each un element
         var _uLen = uArray.length;
         for (var u1 = 0; u1 < _uLen && !endProcessing; u1++) {
           var curCode = uArray[u1]['un'];
-
+          console.log('processing curCode = ' + curCode);
           // If the current unit array element is a unit stored in the parensUnits
           // array (from a parenthesized string), get that unit and put it in the
           /// units array.
@@ -26830,8 +26845,13 @@ var UnitString = exports.UnitString = function () {
             // in the original string with the unit name.
             if (!endProcessing) {
               var nIdx = parseInt(pIdx);
-              uArray[u1]['un'] = parensUnits[nIdx];
-              origString = origString.replace(this.parensFlag_ + pIdx + this.parensFlag_, '(' + parensUnits[nIdx]['name_'] + ')');
+              console.log('origString = ' + origString);
+              console.log('nIdx = ' + nIdx + ', pIdx = ' + pIdx);
+              console.log('parensUnits = ' + JSON.stringify(parensUnits));
+              if (parensUnits[nIdx]) {
+                uArray[u1]['un'] = parensUnits[nIdx];
+                origString = origString.replace(this.parensFlag_ + pIdx + this.parensFlag_, '(' + parensUnits[nIdx]['name_'] + ')');
+              }
             }
           } // end if the parentheses flag is found at the beginning of curCode
 
@@ -26852,6 +26872,7 @@ var UnitString = exports.UnitString = function () {
                 // if the current unit string is NOT a number, call makeUnit to create
                 // the unit object for it.  Stop processing if no unit was returned.
                 if (isNaN(curCodeNum)) {
+                  console.log('curCodeNum ' + curCodeNum + '. curCode ' + curCode + ' is not a number; trying to make it a unit');
                   var uRet = this.makeUnit(curCode, annotations, retMsg, origString);
                   if (uRet[0] == null) endProcessing = true;else {
                     uArray[u1]['un'] = uRet[0];
@@ -26950,7 +26971,9 @@ var UnitString = exports.UnitString = function () {
       // can then perform any operations (prefixes, multiplication, division).
 
       var uArray1 = uStr.match(/([./]|[^./]+)/g);
-
+      console.log('in makeUnitsArray, uStr = ' + uStr);
+      console.log('                uArray1 = ' + JSON.stringify(uArray1));
+      console.log('');
       // If the first element in the array is a division operator (/), the
       // string started with '/'.  Add a first element containing 1 to the
       // array, which will cause the correct computation to be performed (inversion).
@@ -27013,8 +27036,10 @@ var UnitString = exports.UnitString = function () {
 
 
       var anLen = this.braceFlag_.length;
-
+      console.log('in makeUnit, uCode = ' + uCode);
       var anOpen = uCode.indexOf(this.braceFlag_);
+      console.log('anOpen = ' + anOpen);
+      console.log('annotations = ' + JSON.stringify(annotations));
       if (anOpen >= 0) {
         var anClose = uCode.substr(anOpen + 1).indexOf(this.braceFlag_) + anOpen + 1;
 
@@ -27025,7 +27050,8 @@ var UnitString = exports.UnitString = function () {
         } else {
           var anIdx = parseInt(uCode.substring(anOpen + anLen, anClose));
           var anText = annotations[anIdx];
-
+          console.log('anIdx = ' + anIdx);
+          console.log('anText = ' + anText);
           // If the closing flag is not at the end of the uCode, text
           // follows the annotation - which is invalid.
           if (anClose + anLen < uCode.length) {
@@ -27056,6 +27082,7 @@ var UnitString = exports.UnitString = function () {
                 //let wString = origString.replace(anText, this.openEmph_ + anText +
                 //                                         this.closeEmph_) ;
                 origString = origString.replace(this.braceFlag_ + anIdx + this.braceFlag_, anText);
+                console.log('origString set to ' + origString);
                 if (this.bracesMsg_) {
                   var _dup = false;
                   for (var _r = 0; !_dup && _r < retMsg.length; _r++) {
@@ -27064,6 +27091,8 @@ var UnitString = exports.UnitString = function () {
                   if (!_dup) retMsg.push(this.bracesMsg_);
                 }
                 uCode = uCode.substr(0, anOpen);
+                origCode = uCode;
+                console.log('uCode set to ' + uCode);
               } // end if the annotation follows the unit expression
         } // end if we found an open and a close brace
       } // end if we found an open brace
@@ -27085,7 +27114,15 @@ var UnitString = exports.UnitString = function () {
         var utabs = UnitTables.getInstance();
         // First look for the full string as a code
         origUnit = utabs.getUnitByCode(uCode);
-
+        // If we didn't find it, check to see if it uses a carat ^
+        if (!origUnit && uCode.indexOf('^') > -1) {
+          var tryCode = uCode.replace('^', '*');
+          origUnit = utabs.getUnitByCode(tryCode);
+          if (origUnit) {
+            origUnit.csCode_ = origUnit.csCode_.replace('*', '^');
+            origUnit.ciCode_ = origUnit.ciCode_.replace('*', '^');
+          }
+        }
         // If we didn't find it, try it as a name
         if (!origUnit) {
           var origUnitAry = utabs.getUnitByName(uCode);
@@ -27178,6 +27215,7 @@ var UnitString = exports.UnitString = function () {
         // unit string without a prefix.  That's all we can try).
         if (!origUnit) {
           retMsg.push('Unable to find unit for ' + origCode);
+          console.log('retMsg = ' + JSON.stringify(retMsg));
           retUnit = null;
           endProcessing = true;
         }
@@ -27268,7 +27306,7 @@ var UnitString = exports.UnitString = function () {
       var finalUnit = uArray[0]['un'];
       var uLen = uArray.length;
       var endProcessing = false;
-
+      console.log('in performUnitArithmetic, uArray = ' + JSON.stringify(uArray));
       // Perform the arithmetic for the units, starting with the first 2 units.
       // We only need to do the arithmetic if we have more than one unit.
       for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
@@ -27294,21 +27332,31 @@ var UnitString = exports.UnitString = function () {
 
               // both are unit objects
               if (typeof finalUnit !== 'number') {
+                console.log('finalUnit = ' + JSON.stringify(finalUnit));
+                console.log('about to call multiplyThese, finalUnit.name = ' + finalUnit.name_ + ';' + (' nextUnit name = ' + nextUnit.name_ + '; isDiv = ' + isDiv));
                 isDiv ? finalUnit = finalUnit.divide(nextUnit) : finalUnit = finalUnit.multiplyThese(nextUnit);
+                console.log('multiplyThese called, the name set to ' + finalUnit.name_);
               }
               // finalUnit is a number; nextUnit is a unit object
               else {
                   var nMag = nextUnit.getProperty('magnitude_');
                   isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
                   var theName = finalUnit.toString() + thisOp + nextUnit.getProperty('name_');
+                  console.log('theName set to ' + theName);
                   var theCode = finalUnit.toString() + thisOp + nextUnit.getProperty('csCode_');
+                  console.log('theCode set to ' + theCode);
                   var theDim = nextUnit.getProperty('dim_');
-                  if (isDiv) theDim = theDim.minus();
+                  if (isDiv && theDim) {
+                    console.log('calling theDim.minus for dim = ' + JSON.stringify(theDim));
+                    theDim = theDim.minus();
+                    console.log('theDim set to ' + JSON.stringify(theDim));
+                  }
                   finalUnit = nextUnit;
                   finalUnit.assignVals({ 'csCode_': theCode,
                     'name_': theName,
                     'dim_': theDim,
                     'magnitude_': nMag });
+                  console.log('finalUnit set to ' + JSON.stringify(finalUnit));
                 }
             } // end if nextUnit is not a number
 
@@ -27319,6 +27367,7 @@ var UnitString = exports.UnitString = function () {
                   var fMag = finalUnit.getProperty('magnitude_');
                   isDiv ? fMag /= nextUnit : fMag *= nextUnit;
                   var _theName = finalUnit.getProperty('name_') + thisOp + nextUnit.toString();
+                  console.log('theName set to ' + _theName);
                   var _theCode = finalUnit.getProperty('csCode_') + thisOp + nextUnit.toString();
                   finalUnit.assignVals({ 'csCode_': _theCode,
                     'name_': _theName,
@@ -27336,7 +27385,7 @@ var UnitString = exports.UnitString = function () {
           }
         } // end if we have another valid unit/number to process
       } // end do for each unit after the first one
-
+      console.log('');
       return finalUnit;
     } // end performUnitArithmetic
 
