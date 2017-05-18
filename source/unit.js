@@ -528,7 +528,7 @@ export class Unit {
    *         and the other is not dimensionless.
    */
   multiplyThese(unit2) {
-console.log(`in multiplyThese, this.name = ${this.name_}; unit2.name = ${unit2.name_}`);
+
     if (this.cnv_ != null) {
       if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero()))
 	      this.cnvPfx_ *= unit2.magnitude_;
@@ -548,8 +548,6 @@ console.log(`in multiplyThese, this.name = ${this.name_}; unit2.name = ${unit2.n
       }
       else {
         this.name_ = this.mulString(this.name_, unit2.name_);
-console.log(`after call to mulString this.name = ${this.name_}; unit2.name = ${unit2.name_}`);
-console.log('');
         this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
         if (this.guidance_ && unit2.guidance_)
           this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);
@@ -593,7 +591,6 @@ console.log('');
    * @throws an error if either of the units is not on a ratio scale.
    * */
   divide(unit2) {
-console.log(`in divide, this.name = ${this.name_}; unit2.name = ${unit2.name_}`);
 
     if (this.cnv_ != null)
       throw (new Error(`Attempt to divide non-ratio unit ${this.name_}`));
@@ -759,7 +756,6 @@ console.log(`in divide, this.name = ${this.name_}; unit2.name = ${unit2.name_}`)
    * second unit
    */
   divString(s1, s2) {
-    console.log(`in divString, s1 = ${s1}; s2 = ${s2}`);
 
     let ret = null;
     if(s2.length == 0)
