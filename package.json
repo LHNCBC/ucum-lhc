@@ -28,6 +28,7 @@
     "browserify-fs": "^1.0.0",
     "browserify-handbook": "^1.8.0",
     "chai": "^3.3.0",
+    "connect": "^3.6.1",
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-browserify": "^5.0.0",
@@ -42,6 +43,8 @@
     "istanbul": "^0.3.22",
     "jit-grunt": "^0.10.0",
     "mocha": "https://registry.npmjs.org/mocha/-/mocha-2.5.3.tgz",
+    "serve-index": "^1.8.0",
+    "serve-static": "^1.12.2",
     "time-grunt": "^1.4.0"
   },
   "scripts": {

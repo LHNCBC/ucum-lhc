@@ -16,6 +16,85 @@ uDefs.loadJsonDefs();
 
 var utils = Utils.getInstance();
 
+describe('Test validateUnitString method', function() {
+
+  it("should return an error message for no unit string supplied", function() {
+
+    var resp1 = utils.validateUnitString();
+    assert.equal(resp1.status, 'error', resp1.status);
+    assert.equal(resp1.msg, 'No unit string specified.', resp1.msg);
+  });
+
+  it("should return a message for no unit found", function() {
+
+    var resp2 = utils.validateUnitString('Barack');
+    assert.equal(resp2.status, 'invalid', resp2.status);
+    assert.equal(resp2.msg[0], 'Unable to find unit for Barack', resp2.msg[0]);
+  });
+
+  it("should return an updated UCUM code and message for 'Gauss'", function() {
+    var resp3 = utils.validateUnitString('Gauss');
+    assert.equal(resp3.status, 'valid', resp3.status);
+    assert.equal(resp3.ucumCode, 'G', resp3.ucumCode);
+    assert.equal(resp3.msg[0], '(The UCUM code for Gauss is G)', resp3.msg[0]);
+  });
+
+  it("should return a unit with a code, name and guidance for 'Bi'", function() {
+    var resp4 = utils.validateUnitString('Bi');
+    var theUnit = resp4.unit;
+    assert(theUnit != null);
+    if (theUnit) {
+      assert.equal(theUnit.code, 'Bi', theUnit.code);
+      assert.equal(theUnit.name, 'Biot', theUnit.name);
+      assert.equal(theUnit.guidance, 'equal to 10 amperes', theUnit.guidance);
+    }
+  });
+
+}); // end validateUnitString tests
+
+
+describe('Test convertUnitTo method', function() {
+
+  it("should return error messages for no unit strings supplied", function() {
+
+    var resp1 = utils.convertUnitTo();
+    assert.equal(resp1.status, 'error', resp1.status);
+    assert.equal(resp1.msg[0], 'No "from" unit expression specified.', resp1.msg[0]);
+    assert.equal(resp1.msg[1], 'No "from" value specified.', resp1.msg[1]);
+    assert.equal(resp1.msg[2], 'No "to" unit expression specified.', resp1.msg[2]);
+  });
+
+  it("should return a message for invalid unit strings", function() {
+
+    var resp2 = utils.convertUnitTo('Barack', 523, 'Donald');
+    assert.equal(resp2.status, 'failed', resp2.status);
+    assert.equal(resp2.msg[0],
+                 'Unable to find unit for Barack', resp2.msg[0]);
+    assert.equal(resp2.msg[1],
+                 'Unable to find unit for Donald', resp2.msg[1]);
+
+  });
+
+  it("should return a valid conversion value and units for grams to metric carats", function() {
+    var resp3 = utils.convertUnitTo('g', 56, '[car_m]');
+    assert.equal(resp3.status, 'succeeded', resp3.status);
+    assert.equal(resp3.toVal, 280.00, resp3.toVal);
+    assert.equal(resp3.fromUnit.name_, 'gram', JSON.stringify(resp3.fromUnit));
+    assert.equal(resp3.toUnit.name_, 'metric carat', JSON.stringify(resp3.toUnit));
+  });
+
+  it("should return an error for an attempt to translate g to /g", function() {
+    var resp4 = utils.convertUnitTo('g', 847, '/g');
+    assert.equal(resp4.status, 'failed', resp4.status);
+    assert.equal(resp4.msg[0], 'Sorry.  g cannot be converted to /g.', resp4.msg[0]);
+    assert.equal(resp4.toVal, null, resp4.toVal);
+    assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
+    assert.equal(resp4.toUnit, undefined, resp4.toUnit);
+  });
+
+}); // end convertUnitTo tests
+
+
 describe('Test checkSynonyms method', function() {
 
   it("should return an error message for no synonym supplied", function() {
@@ -49,8 +128,7 @@ describe('Test checkSynonyms method', function() {
     }
   });
 
-});
-
+}); // end checkSynonyms tests
 
 
 

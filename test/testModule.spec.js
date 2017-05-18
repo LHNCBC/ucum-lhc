@@ -45,7 +45,7 @@ describe('Validate_m2/acr', function() {
 
     it("should return error message = m2/acr is not a valid unit expression.", function() {
       assert.equal(returnObj['msg'][0],
-                   "m2/acr is not a valid unit expression.", "msg = " +
+                   "Unable to find unit for acr", "msg = " +
                    returnObj['msg'] ? `${returnObj['msg'].join()}` : 'null');
     });
   });
@@ -66,8 +66,8 @@ describe('Convert fathoms to inches', function() {
                    returnObj['toVal'] ? `${returnObj['toVal']}` : 'null');
     });
 
-    it("should return a null msg", function() {
-      assert.equal(returnObj['msg'], null, "msg = " +
+    it("should return an empty msg array", function() {
+      assert.equal(returnObj['msg'].length, 0, "msg = " +
                    `${JSON.stringify(returnObj['msg'])}`);
     }) ;
 
@@ -138,7 +138,7 @@ describe('Convert fathoms to acrs', function() {
     });
 
     it("should return error message = acr is not a valid unit expresion.", function() {
-      assert.equal("acr is not a valid unit expression.", returnObj['msg'][0],
+      assert.equal("Unable to find unit for acr", returnObj['msg'][0],
                    "msg = " + returnObj['msg'] ?
                    `${returnObj['msg'].join()}` : 'null')
     });
