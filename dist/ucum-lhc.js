@@ -26509,24 +26509,7 @@ var Unit = exports.Unit = function () {
   }, {
     key: "divString",
     value: function divString(s1, s2) {
-
-      var ret = null;
-      if (s2.length == 0) ret = s1;else {
-        var startParen = '';
-        var endParen = '';
-        if ((s2.indexOf('.') > -1 || s2.indexOf('/') > -1) && s2[0] !== '(') {
-          startParen = '(';
-          endParen = ')';
-        }
-        var supPos = s2.indexOf('<sup>');
-        var s2Sup = null;
-        if (supPos > 0) {
-          s2Sup = s2.substr(supPos);
-          s2 = s2.substr(0, supPos);
-        }
-        ret = s1 + '/' + startParen + s2 + endParen;
-      }
-      return ret;
+      return s1 + '/' + s2;
     } // end divString
 
   }]);
@@ -26645,8 +26628,13 @@ var UnitString = exports.UnitString = function () {
      * @param uStr the string defining the unit
      * @param origString the original unit string passed in; used when this is
      *  called recursively; set to uStr if not provided.
-     * @param retMsg the array of messages to be returned; optional, used when
-     *  this is called recursively.
+     * @param retMsg the array of messages to be returned; Should NOT be specified
+     *  when this is called from another class; MUST be specified when this is
+     *  called recursively from within this function.
+     * @param parensUnits an array to to hold unit objects obtained from
+     *  parenthetical strings.  Should NOT be specified when this is called from
+     *  another class; may be specified when this is called recursively from
+     *  within this function.
      * @returns an array containing: 1) the unit object (or null if there were
      *  problems creating the unit); 2) the possibly updated unit string passed
      *  in; and 2) an array of user messages (informational, error or warning).
@@ -26655,7 +26643,7 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: 'parseString',
-    value: function parseString(uStr, origString, retMsg) {
+    value: function parseString(uStr, origString, retMsg, parensUnits) {
       uStr = uStr.trim();
 
       // Used in error messages to provide context for messages
@@ -26665,21 +26653,16 @@ var UnitString = exports.UnitString = function () {
       if (origString === '' || origString === null) {
         throw new Error('Please specify a unit expression to be validated.');
       }
-
-      var firstCall = uStr === origString;
-
-      // // If this is the first call for the string, check for spaces and throw
-      // // an error if any are found.  The spec explicitly forbids spaces.
-      // if (firstCall && origString.indexOf(' ') > -1) {
-      //   throw (new Error('Blank spaces are not allowed in unit expressions.'));
-      // } // end if this was called for the full string
+      // Initialize retMsg and parensUnits arrays if this is the first call
+      // to this function.
+      var firstCall = retMsg === undefined;
+      if (firstCall) {
+        retMsg = [];
+        parensUnits = [];
+      }
 
       // Unit to be returned
       var finalUnit = null;
-
-      // An array of messages (warnings and errors) to be returned;;
-      // initialized if not provided.
-      if (retMsg === undefined) var retMsg = [];
 
       // Extract any annotations, i.e., text enclosed in braces ({}) from the
       // string before further processing.  Store each one in the annotations
@@ -26694,131 +26677,35 @@ var UnitString = exports.UnitString = function () {
       var endProcessing = retMsg.length > 0;
 
       // If this is the first call for the string, check for spaces and throw
-      // an error if any are found.  The spec explicitly forbids spaces.
-      // Except in annotations, which is why this is done after the annotations
+      // an error if any are found.  The spec explicitly forbids spaces
+      // except in annotations, which is why this is done after the annotations
       // are extracted
       if (firstCall && uStr.indexOf(' ') > -1) {
         throw new Error('Blank spaces are not allowed in unit expressions.');
       } // end if this was called for the full string
 
-      // Check for parentheses in unit strings.  If found, isolate a parenthesized
-      // group and pass it to a recursive call of this method.  If it contains
-      // a nested parenthetical group, that will be handled in the same way.
-      // Units returned by a recursive call to this method are stored in the
-      // parensUnits array, and a placeholder is placed in the units array
-      // (uArray) which is reassembled after all parenthetical groups in the
-      // current string are processed.  The placeholder consists of the parenthesis
-      // flag (this.parensFlag_) followed by the index of the unit in the
-      // parensUnits array followed by the parensFlag_.
+      // Call processParens to search for and process any/all parenthetical
+      // strings in uStr.  Units created for parenthetical strings will be
+      // stored in the parensUnits array.
+      var parensResp = this.processParens(uStr, origString, parensUnits, retMsg);
 
-      // Units array and index
+      endProcessing = parensResp[2];
+
+      // The array used ot hold the units and their operators.
       var uArray = [];
-      var uPos = 0;
-
-      // Array of parenthetical strings and index
-      var parensUnits = [];
-      var pu = 0;
-
-      // count of characters trimmed off the beginning of the unit string (uStr)
-      // as units are removed from it; used for error messages, to provide
-      // context.
-      var trimmedCt = 0;
-
-      // Break the unit string into pieces that consist of text outside of
-      // parenthetical strings and placeholders for the parenthetical units.
-      // This method is called recursively for parenthetical strings and the units
-      // returned are stored in the parensUnits array.
-      while (uStr !== "" && !endProcessing) {
-        var openCt = 0;
-        var closeCt = 0;
-        var openPos = uStr.indexOf('(');
-
-        // If an opening parenthesis was not found, check for an unmatched
-        // close parenthesis.  If one was found report the error and end
-        // processing.
-        if (openPos < 0) {
-          var closePos = uStr.indexOf(')');
-          if (closePos >= 0) {
-            var theMsg = 'Missing open parenthesis for close ' + ('parenthesis at ' + origString.substring(0, closePos + trimmedCt)) + ('' + this.openEmph_ + uStr.substr(closePos, 1) + this.closeEmph_);
-            if (closePos < uStr.length - 1) {
-              theMsg += uStr.substr(closePos + 1) + '.';
-            } else {
-              theMsg += '.';
-            }
-            retMsg.push(theMsg);
-            endProcessing = true;
-          }
-          // If no parentheses were found in the current unit string, transfer
-          // it to the units array and blank out the string, which will end
-          // the search for parenthetical units.
-          else {
-              uArray[uPos] = uStr;
-              uStr = "";
-            }
-        }
-
-        // Otherwise an open parenthesis was found. Process the string that
-        // includes the parenthetical group
-        else {
-            openCt += 1;
-            // Write the text before the parentheses (if any) to the units array
-            var uLen = uStr.length;
-            if (openPos > 0) {
-              uArray[uPos++] = uStr.substr(0, openPos);
-            }
-
-            // Find the matching closePos, i.e., the one that closes the
-            // parenthetical group that this one opens.  Look also for
-            // another open parenthesis, in case this includes nested parenthetical
-            // strings.  This continues until it finds the same number of close
-            // parentheses as open parentheses, or runs out of string to check.
-            // In the case of nested parentheses this will identify the outer set
-            // of parentheses.
-            var _closePos = 0;
-            var c = openPos + 1;
-            for (; c < uLen && openCt != closeCt; c++) {
-              if (uStr[c] === '(') openCt += 1;else if (uStr[c] === ')') closeCt += 1;
-            }
-
-            // Put a placeholder for the group in the units array and recursively
-            // call this method for the parenthetical group.  Put the unit returned
-            // in the parensUnit array.  Set the unit string to whatever follows
-            // the position of the closing parenthesis for this group, to be
-            // processed by the next iteration of this loop.  If there's nothing
-            // left uStr is set to "".
-            if (openCt === closeCt) {
-              _closePos = c;
-              uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
-              var parseResp = this.parseString(uStr.substring(openPos + 1, _closePos - 1), origString, retMsg);
-              if (parseResp[0] === null) endProcessing = true;else {
-                origString = parseResp[1];
-                parensUnits[pu++] = parseResp[0];
-                //origString = parseResp[1];
-                uStr = uStr.substr(_closePos);
-                trimmedCt = _closePos;
-              }
-            }
-            // If the number of open and close parentheses doesn't match, indicate
-            // an error.
-            else {
-                retMsg.push('Missing close parenthesis for open parenthesis at ' + ('' + origString.substring(0, openPos + trimmedCt)) + ('' + this.openEmph_ + uStr.substr(openPos, 1)) + ('' + this.closeEmph_ + uStr.substr(openPos + 1) + '.'));
-                endProcessing = true;
-              }
-          } // end if an opening parenthesis was found
-      } // end do while the input string is not empty
 
       // Continue if we didn't hit a problem
       if (!endProcessing) {
-        // Join all the unit array elements back into one string with no separators.
-        uStr = uArray.join('');
+        uStr = parensResp[0];
+        origString = parensResp[1];
 
         // Call makeUnitsArray to convert the string to an array of unit
         // descriptors with operators.
         uArray = this.makeUnitsArray(uStr);
 
         // Create a unit object out of each un element
-        var _uLen = uArray.length;
-        for (var u1 = 0; u1 < _uLen && !endProcessing; u1++) {
+        var uLen = uArray.length;
+        for (var u1 = 0; u1 < uLen && !endProcessing; u1++) {
           var curCode = uArray[u1]['un'];
           // If the current unit array element is a unit stored in the parensUnits
           // array (from a parenthesized string), get that unit and put it in the
@@ -26972,6 +26859,134 @@ var UnitString = exports.UnitString = function () {
       } // end do while we have an opening brace
       return uString;
     } // end getAnnotations
+
+
+    /**
+     * Finds and processes any/all parenthesized unit strings.
+     *
+     * Nested parenthesized strings are processed from the inside out.  The
+     * parseString function is called from within this one for each parenthesized
+     * unit string, and the resulting unit object is stored in the parensUnits
+     * array, to be processed after all strings are translated to units.
+     *
+     * A placeholder is placed in the unit string returned to indicate that the
+     * unit object should be obtained from the parensUnits array.  The placeholder
+     * consists of the parenthesis flag (this.parensFlag_) followed by the index
+     * of the unit in the parensUnits array followed by this.parensFlag_.
+     *
+     * @param uStr the unit string being parsed, where this will be the full
+     *  string the first time this is called and parenthesized strings on any
+     *  subsequent calls
+     * @param origString the original string first passed in to parseString
+     * @param retMsg the array to contain any user messages (error and warning)
+     * @param parensUnits the array to contain the unit objects for the
+     *  parenthesized unit strings
+     * @returns the string after the annotations are replaced with placeholders
+     */
+
+  }, {
+    key: 'processParens',
+    value: function processParens(uString, origString, parensUnits, retMsg) {
+
+      // Unit strings array and index
+      var uStrArray = [];
+      var uStrPos = 0;
+      var stopProcessing = false;
+
+      var pu = parensUnits.length;
+
+      // Count of characters trimmed off the beginning of the unit string (uString)
+      // as units are removed from it; used for error messages to provide
+      // context.
+      var trimmedCt = 0;
+
+      // Break the unit string into pieces that consist of text outside of
+      // parenthetical strings and placeholders for the parenthetical units.
+      // This method is called recursively for parenthetical strings and the units
+      // returned are stored in the parensUnits array.
+      while (uString !== "" && !stopProcessing) {
+        var openCt = 0;
+        var closeCt = 0;
+        var openPos = uString.indexOf('(');
+
+        // If an opening parenthesis was not found, check for an unmatched
+        // close parenthesis.  If one was found report the error and end
+        // processing.
+        if (openPos < 0) {
+          var closePos = uString.indexOf(')');
+          if (closePos >= 0) {
+            var theMsg = 'Missing open parenthesis for close ' + ('parenthesis at ' + uString.substring(0, closePos + trimmedCt)) + ('' + this.openEmph_ + uString.substr(closePos, 1) + this.closeEmph_);
+            if (closePos < uString.length - 1) {
+              theMsg += uString.substr(closePos + 1) + '.';
+            } else {
+              theMsg += '.';
+            }
+            retMsg.push(theMsg);
+            uStrArray[uStrPos] = uString;
+            stopProcessing = true;
+          } // end if a close parenthesis was found
+
+          // If no parentheses were found in the current unit string, transfer
+          // it to the units array and blank out the string, which will end
+          // the search for parenthetical units.
+          else {
+              uStrArray[uStrPos] = uString;
+              uString = "";
+            } // end if no close parenthesis was found
+        } // end if no open parenthesis was found
+
+        // Otherwise an open parenthesis was found. Process the string that
+        // includes the parenthetical group
+        else {
+            openCt += 1;
+            // Write the text before the parentheses (if any) to the unit strings array
+            var uLen = uString.length;
+            if (openPos > 0) {
+              uStrArray[uStrPos++] = uString.substr(0, openPos);
+            }
+
+            // Find the matching closePos, i.e., the one that closes the
+            // parenthetical group that this one opens.  Look also for
+            // another open parenthesis, in case this includes nested parenthetical
+            // strings.  This continues until it finds the same number of close
+            // parentheses as open parentheses, or runs out of string to check.
+            // In the case of nested parentheses this will identify the outer set
+            // of parentheses.
+            var _closePos = 0;
+            var c = openPos + 1;
+            for (; c < uLen && openCt != closeCt; c++) {
+              if (uString[c] === '(') openCt += 1;else if (uString[c] === ')') closeCt += 1;
+            }
+
+            // Put a placeholder for the group in the unit strings array and recursively
+            // call this method for the parenthetical group.  Put the unit returned
+            // in the parensUnit array.  Set the unit string to whatever follows
+            // the position of the closing parenthesis for this group, to be
+            // processed by the next iteration of this loop.  If there's nothing
+            // left uString is set to "".
+            if (openCt === closeCt) {
+              _closePos = c;
+              uStrArray[uStrPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
+              var parseResp = this.parseString(uString.substring(openPos + 1, _closePos - 1), origString, retMsg, parensUnits);
+              if (parseResp[0] === null) stopProcessing = true;else {
+                origString = parseResp[1];
+                parensUnits[pu++] = parseResp[0];
+                uString = uString.substr(_closePos);
+                trimmedCt = _closePos;
+              }
+            } // end if the number of open and close parentheses matched
+
+            // If the number of open and close parentheses doesn't match, indicate
+            // an error.
+            else {
+                uStrArray.push(origString.substr(openPos));
+                retMsg.push('Missing close parenthesis for open parenthesis at ' + ('' + origString.substring(0, openPos + trimmedCt)) + ('' + this.openEmph_ + origString.substr(openPos, 1)) + ('' + this.closeEmph_ + origString.substr(openPos + 1) + '.'));
+                stopProcessing = true;
+              }
+          } // end if an open parenthesis was found
+      } // end do while the input string is not empty
+      return [uStrArray.join(''), origString, stopProcessing];
+    } // end processParens
 
 
     /**

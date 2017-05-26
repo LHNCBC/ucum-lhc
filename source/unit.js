@@ -756,27 +756,7 @@ export class Unit {
    * second unit
    */
   divString(s1, s2) {
-
-    let ret = null;
-    if(s2.length == 0)
-      ret = s1;
-    else {
-      let startParen = '';
-      let endParen = '';
-      if ((s2.indexOf('.') > -1 || s2.indexOf('/') > -1) && s2[0] !== '(') {
-        startParen = '(';
-        endParen = ')';
-      }
-      let supPos = s2.indexOf('<sup>') ;
-      let s2Sup = null;
-      if (supPos > 0) {
-        s2Sup = s2.substr(supPos) ;
-        s2 = s2.substr(0, supPos);
-      }
-      ret = s1 + '/' + startParen + s2 + endParen ;
-    }
-    return ret ;
-
+    return s1 + '/' + s2 ;
   } // end divString
 
 } // end Unit class
