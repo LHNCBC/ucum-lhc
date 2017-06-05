@@ -152,28 +152,28 @@ export class UnitString {
   } // end parseString
 
 
-    /**
-     * Parses a unit string, returns a unit, a possibly updated version of
-     * the string passed in, and messages where appropriate.  This should
-     * only be called from within this class (or by test code).
-     *
-     * The string returned may be updated if the input string contained unit
-     * names, e.g., "pound".  The unit code ([lb_av] for pound) is placed in
-     * the string returned, a the returned messages array includes a note
-     * explaining the substitution.
-     *
-     * @param uStr the string defining the unit
-     * @param origString the original unit string passed in
-     * @param retMsg the array of messages to be returned
-     * @param parensUnits an array to to hold unit objects obtained from
-     *  parenthetical strings
-     * @param annotations an array to hold annotations found in the original
-     *  string
-     * @returns an array containing: 1) the unit object (or null if there were
-     *  problems creating the unit); 2) the possibly updated unit string passed
-     *  in; and 2) an array of user messages (informational, error or warning).
-     */
-    _parseTheString(uStr, origString, retMsg, parensUnits, annotations) {
+  /**
+   * Parses a unit string, returns a unit, a possibly updated version of
+   * the string passed in, and messages where appropriate.  This should
+   * only be called from within this class (or by test code).
+   *
+   * The string returned may be updated if the input string contained unit
+   * names, e.g., "pound".  The unit code ([lb_av] for pound) is placed in
+   * the string returned, a the returned messages array includes a note
+   * explaining the substitution.
+   *
+   * @param uStr the string defining the unit
+   * @param origString the original unit string passed in
+   * @param retMsg the array of messages to be returned
+   * @param parensUnits an array to to hold unit objects obtained from
+   *  parenthetical strings
+   * @param annotations an array to hold annotations found in the original
+   *  string
+   * @returns an array containing: 1) the unit object (or null if there were
+   *  problems creating the unit); 2) the possibly updated unit string passed
+   *  in; and 2) an array of user messages (informational, error or warning).
+   */
+  _parseTheString(uStr, origString, retMsg, parensUnits, annotations) {
 
     // Unit to be returned
     let finalUnit = null ;
