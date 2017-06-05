@@ -70,7 +70,7 @@ describe('Test makeUnit method', function() {
     var annotations = [];
     var retMsg = [];
     var origString = 'mL';
-    var resp = uString.makeUnit(origString, annotations, retMsg, origString);
+    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
     var retUnit = resp[0];
     var retOrig = resp[1];
     it("should not change the annotations array", function () {
@@ -94,9 +94,11 @@ describe('Test the processParens method', function() {
 
   describe('Test processParens for unit code mL', function () {
     var parensUnits = [];
+    var annotations = [];
     var retMsg = [];
     var origString = 'mL';
-    var resp = uString.processParens('mL', origString, parensUnits, retMsg);
+    var resp = uString._processParens('mL', origString, parensUnits,
+                                      annotations, retMsg);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
@@ -117,10 +119,12 @@ describe('Test the processParens method', function() {
 
   describe('Test processParens for unit code m.g(L', function () {
     var parensUnits = [];
+    var annotations = [];
     var retMsg = [];
     var origString = 'm.g(L';
     var errMsg = 'Missing close parenthesis for open parenthesis at m.g(L.';
-    var resp = uString.processParens('m.g(L', origString, parensUnits, retMsg);
+    var resp = uString._processParens('m.g(L', origString, parensUnits,
+                                      annotations, retMsg);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
@@ -144,10 +148,12 @@ describe('Test the processParens method', function() {
 
   describe('Test processParens for unit code m.g)', function () {
     var parensUnits = [];
+    var annotations = [];
     var retMsg = [];
     var origString = 'm.g)';
     var errMsg = 'Missing open parenthesis for close parenthesis at m.g).';
-    var resp = uString.processParens('m.g)', origString, parensUnits, retMsg);
+    var resp = uString._processParens('m.g)', origString, parensUnits,
+                                      annotations, retMsg);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
@@ -171,10 +177,12 @@ describe('Test the processParens method', function() {
 
   describe('Test processParens for unit code m.g/(L.(s/m)', function () {
     var parensUnits = [];
+    var annotations = [];
     var retMsg = [];
     var origString = 'm.g(L.(s/m)';
     var errMsg = 'Missing close parenthesis for open parenthesis at m.g(L.(s/m).';
-    var resp = uString.processParens('m.g(L.(s/m)', origString, parensUnits, retMsg);
+    var resp = uString._processParens('m.g(L.(s/m)', origString, parensUnits,
+                                      annotations, retMsg);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
@@ -198,12 +206,14 @@ describe('Test the processParens method', function() {
 
   describe('Test processParens for unit code m.g/(L.(s/m))', function () {
     var parensUnits = [];
+    var annotations = [];
     var parseResp = uString.parseString('L.(s/m)');
     var retParenUnit = parseResp[0];
     var retMsg = [];
     var origString = 'm.g(L.(s/m))';
     var errMsg = 'Missing close parenthesis for open parenthesis at m.g(L.(s/m).';
-    var resp = uString.processParens('m.g(L.(s/m))', origString, parensUnits, retMsg);
+    var resp = uString._processParens('m.g(L.(s/m))', origString, parensUnits,
+                                      annotations, retMsg);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];

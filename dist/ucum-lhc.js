@@ -26626,15 +26626,7 @@ var UnitString = exports.UnitString = function () {
      * explaining the substitution.
      *
      * @param uStr the string defining the unit
-     * @param origString the original unit string passed in; used when this is
-     *  called recursively; set to uStr if not provided.
-     * @param retMsg the array of messages to be returned; Should NOT be specified
-     *  when this is called from another class; MUST be specified when this is
-     *  called recursively from within this function.
-     * @param parensUnits an array to to hold unit objects obtained from
-     *  parenthetical strings.  Should NOT be specified when this is called from
-     *  another class; may be specified when this is called recursively from
-     *  within this function.
+     *
      * @returns an array containing: 1) the unit object (or null if there were
      *  problems creating the unit); 2) the possibly updated unit string passed
      *  in; and 2) an array of user messages (informational, error or warning).
@@ -26643,26 +26635,17 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: 'parseString',
-    value: function parseString(uStr, origString, retMsg, parensUnits) {
+    value: function parseString(uStr) {
+
       uStr = uStr.trim();
-
-      // Used in error messages to provide context for messages
-      if (origString === undefined) origString = uStr;
-
       // Make sure we have something to work with
       if (origString === '' || origString === null) {
         throw new Error('Please specify a unit expression to be validated.');
       }
-      // Initialize retMsg and parensUnits arrays if this is the first call
-      // to this function.
-      var firstCall = retMsg === undefined;
-      if (firstCall) {
-        retMsg = [];
-        parensUnits = [];
-      }
 
-      // Unit to be returned
-      var finalUnit = null;
+      var origString = uStr;
+      var retMsg = [];
+      var parensUnits = [];
 
       // Extract any annotations, i.e., text enclosed in braces ({}) from the
       // string before further processing.  Store each one in the annotations
@@ -26671,7 +26654,7 @@ var UnitString = exports.UnitString = function () {
       // that will be interpreted as parenthetical markers or operators in
       // subsequent processing.
       var annotations = [];
-      uStr = this.getAnnotations(uStr, annotations, retMsg);
+      uStr = this._getAnnotations(uStr, annotations, retMsg);
 
       // Flag used to block further processing on an unrecoverable error
       var endProcessing = retMsg.length > 0;
@@ -26679,19 +26662,69 @@ var UnitString = exports.UnitString = function () {
       // If this is the first call for the string, check for spaces and throw
       // an error if any are found.  The spec explicitly forbids spaces
       // except in annotations, which is why this is done after the annotations
-      // are extracted
-      if (firstCall && uStr.indexOf(' ') > -1) {
+      // are extracted instead of in _parseTheString.
+      if (uStr.indexOf(' ') > -1) {
         throw new Error('Blank spaces are not allowed in unit expressions.');
       } // end if this was called for the full string
 
-      // Call processParens to search for and process any/all parenthetical
+      var retObj = this._parseTheString(uStr, origString, retMsg, parensUnits, annotations);
+      var finalUnit = retObj[0];
+
+      // Do a final check to make sure that finalUnit is a unit and not
+      // just a number.  Something like "1/{HCP}" will return a "unit" of 1
+      // - which is not a unit.
+      if (finalUnit && !isNaN(finalUnit) && finalUnit !== 1) {
+        var newUnit = new Unit({ 'csCode_': origString });
+        if (newUnit) {
+          newUnit['magnitude_'] = finalUnit;
+        } else {
+          throw new Error('error processing numerical unit');
+        }
+        retObj[0] = newUnit;
+      } // end final check
+      return retObj;
+    } // end parseString
+
+
+    /**
+     * Parses a unit string, returns a unit, a possibly updated version of
+     * the string passed in, and messages where appropriate.  This should
+     * only be called from within this class (or by test code).
+     *
+     * The string returned may be updated if the input string contained unit
+     * names, e.g., "pound".  The unit code ([lb_av] for pound) is placed in
+     * the string returned, a the returned messages array includes a note
+     * explaining the substitution.
+     *
+     * @param uStr the string defining the unit
+     * @param origString the original unit string passed in
+     * @param retMsg the array of messages to be returned
+     * @param parensUnits an array to to hold unit objects obtained from
+     *  parenthetical strings
+     * @param annotations an array to hold annotations found in the original
+     *  string
+     * @returns an array containing: 1) the unit object (or null if there were
+     *  problems creating the unit); 2) the possibly updated unit string passed
+     *  in; and 2) an array of user messages (informational, error or warning).
+     */
+
+  }, {
+    key: '_parseTheString',
+    value: function _parseTheString(uStr, origString, retMsg, parensUnits, annotations) {
+
+      // Unit to be returned
+      var finalUnit = null;
+
+      // Flag used to block further processing on an unrecoverable error
+      var endProcessing = retMsg.length > 0;
+
+      // Call _processParens to search for and process any/all parenthetical
       // strings in uStr.  Units created for parenthetical strings will be
       // stored in the parensUnits array.
-      var parensResp = this.processParens(uStr, origString, parensUnits, retMsg);
-
+      var parensResp = this._processParens(uStr, origString, parensUnits, annotations, retMsg);
       endProcessing = parensResp[2];
 
-      // The array used ot hold the units and their operators.
+      // The array used to hold the units and their operators.
       var uArray = [];
 
       // Continue if we didn't hit a problem
@@ -26699,9 +26732,9 @@ var UnitString = exports.UnitString = function () {
         uStr = parensResp[0];
         origString = parensResp[1];
 
-        // Call makeUnitsArray to convert the string to an array of unit
+        // Call _makeUnitsArray to convert the string to an array of unit
         // descriptors with operators.
-        uArray = this.makeUnitsArray(uStr);
+        uArray = this._makeUnitsArray(uStr);
 
         // Create a unit object out of each un element
         var uLen = uArray.length;
@@ -26773,13 +26806,13 @@ var UnitString = exports.UnitString = function () {
             } // end if we found the parentheses flag in the wrong place
 
             // Else it's not a parenthetical unit.  If it's not a number, call
-            // makeUnit to create a unit for it.
+            // _makeUnit to create a unit for it.
             else {
                 var curCodeNum = Number(curCode);
-                // if the current unit string is NOT a number, call makeUnit to create
+                // if the current unit string is NOT a number, call _makeUnit to create
                 // the unit object for it.  Stop processing if no unit was returned.
                 if (isNaN(curCodeNum)) {
-                  var uRet = this.makeUnit(curCode, annotations, retMsg, origString);
+                  var uRet = this._makeUnit(curCode, annotations, retMsg, origString);
                   if (uRet[0] === null) endProcessing = true;else {
                     uArray[u1]['un'] = uRet[0];
                     origString = uRet[1];
@@ -26802,7 +26835,7 @@ var UnitString = exports.UnitString = function () {
           endProcessing = true;
         }
       }
-      if (!endProcessing) finalUnit = this.performUnitArithmetic(uArray, retMsg, origString);
+      if (!endProcessing) finalUnit = this._performUnitArithmetic(uArray, retMsg, origString);
 
       // check for any annotation flags still there and replace them with
       // the annotations
@@ -26810,28 +26843,15 @@ var UnitString = exports.UnitString = function () {
       for (var a = 0; a < anoLen; a++) {
         origString = origString.replace(this.braceFlag_ + a + this.braceFlag_, annotations[a]);
       }
-
-      // Do a final check to make sure that finalUnit is a unit and not
-      // just a number.  Something like "1/{HCP}" will return a "unit" of 1
-      // - which is not a unit.  Do this only when this is the first/outer
-      // call to this method.
-      if (finalUnit && firstCall && !isNaN(finalUnit) && finalUnit !== 1) {
-        var newUnit = new Unit({ 'csCode_': origString });
-        if (newUnit) {
-          newUnit['magnitude_'] = finalUnit;
-        } else {
-          throw new Error('error processing numerical unit');
-        }
-        finalUnit = newUnit;
-      }
       return [finalUnit, origString, retMsg];
-    } // end parseString
+    } // end _parseTheString
 
 
     /**
      * Extracts all annotations from a unit string, replacing them with
      * placeholders for later evaluation.  The annotations are stored in the
-     * annotations array.
+     * annotations array.  This should only be called from within this class
+     * (or by test code).
      *
      * @param uStr the unit string being parsed
      * @param annotations the array to contain the extracted annotations
@@ -26840,8 +26860,8 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: 'getAnnotations',
-    value: function getAnnotations(uString, annotations, retMsg) {
+    key: '_getAnnotations',
+    value: function _getAnnotations(uString, annotations, retMsg) {
       var openBrace = uString.indexOf('{');
       while (openBrace >= 0) {
 
@@ -26858,11 +26878,12 @@ var UnitString = exports.UnitString = function () {
         }
       } // end do while we have an opening brace
       return uString;
-    } // end getAnnotations
+    } // end _getAnnotations
 
 
     /**
-     * Finds and processes any/all parenthesized unit strings.
+     * Finds and processes any/all parenthesized unit strings. This should only
+     * be called from within this class (or by test code).
      *
      * Nested parenthesized strings are processed from the inside out.  The
      * parseString function is called from within this one for each parenthesized
@@ -26878,15 +26899,17 @@ var UnitString = exports.UnitString = function () {
      *  string the first time this is called and parenthesized strings on any
      *  subsequent calls
      * @param origString the original string first passed in to parseString
-     * @param retMsg the array to contain any user messages (error and warning)
      * @param parensUnits the array to contain the unit objects for the
      *  parenthesized unit strings
-     * @returns the string after the annotations are replaced with placeholders
+     * @param annotations the array that contains any annotations in the
+     *  unit strings; passed through when _parseTheString called recursively
+     * @param retMsg the array to contain any user messages (error and warning)
+     * @returns the string after the parentheses are replaced with placeholders
      */
 
   }, {
-    key: 'processParens',
-    value: function processParens(uString, origString, parensUnits, retMsg) {
+    key: '_processParens',
+    value: function _processParens(uString, origString, parensUnits, annotations, retMsg) {
 
       // Unit strings array and index
       var uStrArray = [];
@@ -26967,7 +26990,7 @@ var UnitString = exports.UnitString = function () {
             if (openCt === closeCt) {
               _closePos = c;
               uStrArray[uStrPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
-              var parseResp = this.parseString(uString.substring(openPos + 1, _closePos - 1), origString, retMsg, parensUnits);
+              var parseResp = this._parseTheString(uString.substring(openPos + 1, _closePos - 1), origString, retMsg, parensUnits, annotations);
               if (parseResp[0] === null) stopProcessing = true;else {
                 origString = parseResp[1];
                 parensUnits[pu++] = parseResp[0];
@@ -26986,19 +27009,20 @@ var UnitString = exports.UnitString = function () {
           } // end if an open parenthesis was found
       } // end do while the input string is not empty
       return [uStrArray.join(''), origString, stopProcessing];
-    } // end processParens
+    } // end _processParens
 
 
     /**
      * Breaks the unit string into an array of unit descriptors and operators.
+     * This should only be called from within this class (or by test code).
      *
      * @param uStr the unit string being parsed
      * @returns the array representing the unit string
      */
 
   }, {
-    key: 'makeUnitsArray',
-    value: function makeUnitsArray(uStr) {
+    key: '_makeUnitsArray',
+    value: function _makeUnitsArray(uStr) {
 
       // Separate the string into pieces based on delimiters / (division) and .
       // (multiplication).  The idea is to get an array of units on which we
@@ -27026,14 +27050,15 @@ var UnitString = exports.UnitString = function () {
         uArray.push({ op: uArray1[n++], un: uArray1[n] });
       }
       return uArray;
-    } // end makeUnitsArray
+    } // end _makeUnitsArray
 
 
     /**
      * Creates a unit object from a string defining one unit.  The string
      * should consist of a unit code for a unit already defined (base or
      * otherwise).  It may include a prefix and an exponent, e.g., cm2
-     * (centimeter squared).
+     * (centimeter squared).  This should only be called from within this
+     * class (or by test code).
      *
      * @params uCode the string defining the unit
      * @param annotations the array to contain the extracted annotations
@@ -27046,8 +27071,8 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: 'makeUnit',
-    value: function makeUnit(uCode, annotations, retMsg, origString) {
+    key: '_makeUnit',
+    value: function _makeUnit(uCode, annotations, retMsg, origString) {
       var exp = null;
       var pfxVal = null;
       var pfxCode = null;
@@ -27306,13 +27331,14 @@ var UnitString = exports.UnitString = function () {
         } // end if not endProcessing set from no unit found
       } // end if not endProcessing set from annotation error
       return [retUnit, origString];
-    } // end makeUnit
+    } // end _makeUnit
 
 
     /**
      * Performs unit arithmetic for the units in the units array.  That array
      * contains units/numbers and the operators (division or multiplication) to
-     * be performed on each unit/unit or unit/number pair in the array.
+     * be performed on each unit/unit or unit/number pair in the array.  This
+     * should only be called from within this class (or by test code).
      *
      * @params uArray the array that contains the units, numbers and operators
      *  derived from the unit string passed in to parseString
@@ -27324,8 +27350,8 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: 'performUnitArithmetic',
-    value: function performUnitArithmetic(uArray, retMsg, origString) {
+    key: '_performUnitArithmetic',
+    value: function _performUnitArithmetic(uArray, retMsg, origString) {
 
       var finalUnit = uArray[0]['un'];
       var uLen = uArray.length;
@@ -27400,7 +27426,7 @@ var UnitString = exports.UnitString = function () {
         } // end if we have another valid unit/number to process
       } // end do for each unit after the first one
       return finalUnit;
-    } // end performUnitArithmetic
+    } // end _performUnitArithmetic
 
   }]);
 

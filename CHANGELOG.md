@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - This change log.
 
 ### Changed
-- Updated UcumFileValidator.js with previously changed function name 
-(validUnitString -> validateUnitString in UcumLhcUtils.js).
 - Streamlined divString function in Unit.js
 - Moved parenthesized unit string processing to separate function
 in UnitString.js (processParens).
 - Added testing for the processParens function in testUnitString.spec.js
+
+### Fixed
+- Updated UcumFileValidator.js with previously changed function name 
+(validUnitString -> validateUnitString in UcumLhcUtils.js).
