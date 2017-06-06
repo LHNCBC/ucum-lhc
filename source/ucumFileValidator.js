@@ -79,7 +79,7 @@ export class UcumFileValidator {
     // updated hash is passed along the pipeline to the stringifier.
     var transformer = transform(function (record) {
 
-      if (!record[sourceCol]) {
+      if (record[sourceCol] === undefined) {
         transformer.emit('error', 'The ' + sourceCol + ' column was not ' +
                   'found in the file.  Validation is not possible.');
       }
@@ -89,7 +89,7 @@ export class UcumFileValidator {
         record[unitTestedCol] = uStr;
 
         try {
-          let parseResp = utils.validUnitString(uStr);
+          let parseResp = utils.validateUnitString(uStr);
           if (parseResp['status'] === 'valid')
             record[resultCol] = parseResp['ucumCode'] + " is a valid UCUM unit.";
           else

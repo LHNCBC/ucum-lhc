@@ -93,43 +93,23 @@ export class UnitString {
    * explaining the substitution.
    *
    * @param uStr the string defining the unit
-   * @param origString the original unit string passed in; used when this is
-   *  called recursively; set to uStr if not provided.
-   * @param retMsg the array of messages to be returned; optional, used when
-   *  this is called recursively.
+   *
    * @returns an array containing: 1) the unit object (or null if there were
    *  problems creating the unit); 2) the possibly updated unit string passed
    *  in; and 2) an array of user messages (informational, error or warning).
    * @throws an error if nothing was specified.
    */
-  parseString(uStr, origString, retMsg) {
+  parseString(uStr) {
 
     uStr = uStr.trim();
-
-    // Used in error messages to provide context for messages
-    if (origString === undefined)
-      origString = uStr ;
-
     // Make sure we have something to work with
     if (origString === '' || origString === null) {
       throw (new Error('Please specify a unit expression to be validated.'));
     }
 
-    let firstCall = (uStr === origString) ;
-
-    // If this is the first call for the string, check for spaces and throw
-    // an error if any are found.  The spec explicitly forbids spaces.
-    if (firstCall && origString.indexOf(' ') > -1) {
-      throw (new Error('Blank spaces are not allowed in unit expressions.'));
-    } // end if this was called for the full string
-
-    // Unit to be returned
-    let finalUnit = null ;
-
-    // An array of messages (warnings and errors) to be returned;;
-    // initialized if not provided.
-    if (retMsg === undefined)
-      var retMsg = [];
+    let origString = uStr ;
+    let retMsg = [] ;
+    let parensUnits = [] ;
 
     // Extract any annotations, i.e., text enclosed in braces ({}) from the
     // string before further processing.  Store each one in the annotations
@@ -138,141 +118,92 @@ export class UnitString {
     // that will be interpreted as parenthetical markers or operators in
     // subsequent processing.
     let annotations = [];
-    uStr = this.getAnnotations(uStr, annotations, retMsg) ;
+    uStr = this._getAnnotations(uStr, annotations, retMsg) ;
 
     // Flag used to block further processing on an unrecoverable error
     let endProcessing = retMsg.length > 0;
 
-    // Check for parentheses in unit strings.  If found, isolate a parenthesized
-    // group and pass it to a recursive call of this method.  If it contains
-    // a nested parenthetical group, that will be handled in the same way.
-    // Units returned by a recursive call to this method are stored in the
-    // parensUnits array, and a placeholder is placed in the units array
-    // (uArray) which is reassembled after all parenthetical groups in the
-    // current string are processed.  The placeholder consists of the parenthesis
-    // flag (this.parensFlag_) followed by the index of the unit in the
-    // parensUnits array followed by the parensFlag_.
+    // If this is the first call for the string, check for spaces and throw
+    // an error if any are found.  The spec explicitly forbids spaces
+    // except in annotations, which is why this is done after the annotations
+    // are extracted instead of in _parseTheString.
+    if (uStr.indexOf(' ') > -1) {
+      throw (new Error('Blank spaces are not allowed in unit expressions.'));
+    } // end if this was called for the full string
 
-    // Units array and index
-    let uArray = [];
-    let uPos = 0;
+    let retObj = this._parseTheString(uStr, origString, retMsg, parensUnits, annotations) ;
+    let finalUnit = retObj[0];
 
-    // Array of parenthetical strings and index
-    let parensUnits = [];
-    let pu = 0;
-
-    // count of characters trimmed off the beginning of the unit string (uStr)
-    // as units are removed from it; used for error messages, to provide
-    // context.
-    let trimmedCt = 0 ;
-
-    // Break the unit string into pieces that consist of text outside of
-    // parenthetical strings and placeholders for the parenthetical units.
-    // This method is called recursively for parenthetical strings and the units
-    // returned are stored in the parensUnits array.
-    while (uStr !== "" && !endProcessing) {
-      let openCt = 0;
-      let closeCt = 0;
-      let openPos = uStr.indexOf('(');
-
-      // If an opening parenthesis was not found, check for an unmatched
-      // close parenthesis.  If one was found report the error and end
-      // processing.
-      if (openPos < 0) {
-        let closePos = uStr.indexOf(')');
-        if (closePos >= 0) {
-          let theMsg  = `Missing open parenthesis for close ` +
-              `parenthesis at ${origString.substring(0, closePos + trimmedCt)}` +
-              `${this.openEmph_}${uStr.substr(closePos,1)}${this.closeEmph_}` ;
-          if (closePos < uStr.length - 1) {
-            theMsg += `${uStr.substr(closePos + 1)}.`;
-          }
-          else {
-            theMsg += '.';
-          }
-          retMsg.push(theMsg);
-          endProcessing = true ;
-        }
-        // If no parentheses were found in the current unit string, transfer
-        // it to the units array and blank out the string, which will end
-        // the search for parenthetical units.
-        else {
-          uArray[uPos] = uStr;
-          uStr = "";
-        }
+    // Do a final check to make sure that finalUnit is a unit and not
+    // just a number.  Something like "1/{HCP}" will return a "unit" of 1
+    // - which is not a unit.
+    if (finalUnit && !isNaN(finalUnit) && finalUnit !== 1) {
+      let newUnit = new Unit({'csCode_': origString});
+      if (newUnit) {
+        newUnit['magnitude_'] = finalUnit;
       }
-
-      // Otherwise an open parenthesis was found. Process the string that
-      // includes the parenthetical group
       else {
-        openCt += 1;
-        // Write the text before the parentheses (if any) to the units array
-        let uLen = uStr.length;
-        if (openPos > 0) {
-          uArray[uPos++] = uStr.substr(0, openPos);
-        }
+        throw (new Error('error processing numerical unit'));
+      }
+      retObj[0] = newUnit;
+    } // end final check
+    return retObj;
 
-        // Find the matching closePos, i.e., the one that closes the
-        // parenthetical group that this one opens.  Look also for
-        // another open parenthesis, in case this includes nested parenthetical
-        // strings.  This continues until it finds the same number of close
-        // parentheses as open parentheses, or runs out of string to check.
-        // In the case of nested parentheses this will identify the outer set
-        // of parentheses.
-        let closePos = 0;
-        let c = openPos + 1;
-        for (; c < uLen && openCt != closeCt; c++) {
-          if (uStr[c] === '(')
-            openCt += 1;
-          else if (uStr[c] === ')')
-            closeCt += 1;
-        }
+  } // end parseString
 
-        // Put a placeholder for the group in the units array and recursively
-        // call this method for the parenthetical group.  Put the unit returned
-        // in the parensUnit array.  Set the unit string to whatever follows
-        // the position of the closing parenthesis for this group, to be
-        // processed by the next iteration of this loop.  If there's nothing
-        // left uStr is set to "".
-        if (openCt === closeCt) {
-          closePos = c;
-          uArray[uPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
-          let parseResp = this.parseString(
-                               origString.substring(openPos + 1, closePos - 1),
-                               origString, retMsg);
-          parensUnits[pu++] = parseResp[0];
-          //origString = parseResp[1];
-          uStr = uStr.substr(closePos);
-          trimmedCt = closePos;
-        }
-        // If the number of open and close parentheses doesn't match, indicate
-        // an error.
-        else {
-          retMsg.push(`Missing close parenthesis for open parenthesis at ` +
-                      `${origString.substring(0, openPos + trimmedCt)}` +
-                      `${this.openEmph_}${uStr.substr(openPos,1)}` +
-                      `${this.closeEmph_}${uStr.substr(openPos + 1)}.`);
-          endProcessing = true ;
-        }
-      } // end if an opening parenthesis was found
-    } // end do while the input string is not empty
+
+  /**
+   * Parses a unit string, returns a unit, a possibly updated version of
+   * the string passed in, and messages where appropriate.  This should
+   * only be called from within this class (or by test code).
+   *
+   * The string returned may be updated if the input string contained unit
+   * names, e.g., "pound".  The unit code ([lb_av] for pound) is placed in
+   * the string returned, a the returned messages array includes a note
+   * explaining the substitution.
+   *
+   * @param uStr the string defining the unit
+   * @param origString the original unit string passed in
+   * @param retMsg the array of messages to be returned
+   * @param parensUnits an array to to hold unit objects obtained from
+   *  parenthetical strings
+   * @param annotations an array to hold annotations found in the original
+   *  string
+   * @returns an array containing: 1) the unit object (or null if there were
+   *  problems creating the unit); 2) the possibly updated unit string passed
+   *  in; and 2) an array of user messages (informational, error or warning).
+   */
+  _parseTheString(uStr, origString, retMsg, parensUnits, annotations) {
+
+    // Unit to be returned
+    let finalUnit = null ;
+
+    // Flag used to block further processing on an unrecoverable error
+    let endProcessing = retMsg.length > 0;
+
+    // Call _processParens to search for and process any/all parenthetical
+    // strings in uStr.  Units created for parenthetical strings will be
+    // stored in the parensUnits array.
+    let parensResp = this._processParens(uStr, origString, parensUnits,
+                                         annotations, retMsg);
+    endProcessing = parensResp[2];
+
+    // The array used to hold the units and their operators.
+    let uArray = [];
 
     // Continue if we didn't hit a problem
     if (!endProcessing) {
-      // Join all the unit array elements back into one string with no separators.
-      uStr = uArray.join('');
+      uStr = parensResp[0];
+      origString = parensResp[1];
 
-      // Call makeUnitsArray to convert the string to an array of unit
+      // Call _makeUnitsArray to convert the string to an array of unit
       // descriptors with operators.
-  /*    if (firstCall)
-        origString = uStr ;*/
-      uArray = this.makeUnitsArray(uStr);
+      uArray = this._makeUnitsArray(uStr);
 
       // Create a unit object out of each un element
       let uLen = uArray.length;
       for (let u1 = 0; u1 < uLen && !endProcessing; u1++) {
         let curCode = uArray[u1]['un'];
-
         // If the current unit array element is a unit stored in the parensUnits
         // array (from a parenthesized string), get that unit and put it in the
         /// units array.
@@ -324,9 +255,11 @@ export class UnitString {
           // in the original string with the unit name.
           if (!endProcessing) {
             let nIdx = parseInt(pIdx);
-            uArray[u1]['un'] = parensUnits[nIdx];
-            origString = origString.replace(this.parensFlag_ + pIdx + this.parensFlag_,
-                         '(' + parensUnits[nIdx]['name_'] + ')');
+            if (parensUnits[nIdx]) {
+              uArray[u1]['un'] = parensUnits[nIdx];
+              origString = origString.replace(this.parensFlag_ + pIdx + this.parensFlag_,
+                  '(' + parensUnits[nIdx]['name_'] + ')');
+            }
           }
         } // end if the parentheses flag is found at the beginning of curCode
 
@@ -343,15 +276,15 @@ export class UnitString {
         } // end if we found the parentheses flag in the wrong place
 
         // Else it's not a parenthetical unit.  If it's not a number, call
-        // makeUnit to create a unit for it.
+        // _makeUnit to create a unit for it.
         else {
           let curCodeNum = Number(curCode);
-          // if the current unit string is NOT a number, call makeUnit to create
+          // if the current unit string is NOT a number, call _makeUnit to create
           // the unit object for it.  Stop processing if no unit was returned.
           if (isNaN(curCodeNum)) {
-            let uRet = this.makeUnit(curCode, annotations,
+            let uRet = this._makeUnit(curCode, annotations,
                                      retMsg, origString);
-            if (uRet[0] == null)
+            if (uRet[0] === null)
               endProcessing = true;
             else {
               uArray[u1]['un'] = uRet[0];
@@ -379,7 +312,7 @@ export class UnitString {
       }
     }
     if (!endProcessing)
-      finalUnit = this.performUnitArithmetic(uArray, retMsg, origString) ;
+      finalUnit = this._performUnitArithmetic(uArray, retMsg, origString) ;
 
 
     // check for any annotation flags still there and replace them with
@@ -389,36 +322,22 @@ export class UnitString {
       origString = origString.replace(this.braceFlag_ + a +
           this.braceFlag_, annotations[a]);
     }
-
-    // Do a final check to make sure that finalUnit is a unit and not
-    // just a number.  Something like "1/{HCP}" will return a "unit" of 1
-    // - which is not a unit.  Do this only when this is the first/outer
-    // call to this method.
-    if (finalUnit && firstCall && !isNaN(finalUnit) && finalUnit !== 1) {
-      let newUnit = new Unit({'csCode_' : origString});
-      if (newUnit) {
-        newUnit['magnitude_'] = finalUnit ;
-      }
-      else {
-        throw (new Error('error processing numerical unit'));
-      }
-      finalUnit = newUnit ;
-    }
     return [finalUnit, origString, retMsg];
-  } // end parseString
+  } // end _parseTheString
 
 
   /**
    * Extracts all annotations from a unit string, replacing them with
    * placeholders for later evaluation.  The annotations are stored in the
-   * annotations array.
+   * annotations array.  This should only be called from within this class
+   * (or by test code).
    *
    * @param uStr the unit string being parsed
    * @param annotations the array to contain the extracted annotations
    * @param retMsg the array to contain any user messages (error and warning)
    * @returns the string after the annotations are replaced with placeholders
    */
-  getAnnotations(uString, annotations, retMsg) {
+  _getAnnotations(uString, annotations, retMsg) {
     let openBrace = uString.indexOf('{');
     while (openBrace >= 0) {
 
@@ -439,16 +358,158 @@ export class UnitString {
       }
     } // end do while we have an opening brace
     return uString ;
-  } // end getAnnotations
+  } // end _getAnnotations
+
+
+  /**
+   * Finds and processes any/all parenthesized unit strings. This should only
+   * be called from within this class (or by test code).
+   *
+   * Nested parenthesized strings are processed from the inside out.  The
+   * parseString function is called from within this one for each parenthesized
+   * unit string, and the resulting unit object is stored in the parensUnits
+   * array, to be processed after all strings are translated to units.
+   *
+   * A placeholder is placed in the unit string returned to indicate that the
+   * unit object should be obtained from the parensUnits array.  The placeholder
+   * consists of the parenthesis flag (this.parensFlag_) followed by the index
+   * of the unit in the parensUnits array followed by this.parensFlag_.
+   *
+   * @param uStr the unit string being parsed, where this will be the full
+   *  string the first time this is called and parenthesized strings on any
+   *  subsequent calls
+   * @param origString the original string first passed in to parseString
+   * @param parensUnits the array to contain the unit objects for the
+   *  parenthesized unit strings
+   * @param annotations the array that contains any annotations in the
+   *  unit strings; passed through when _parseTheString called recursively
+   * @param retMsg the array to contain any user messages (error and warning)
+   * @returns the string after the parentheses are replaced with placeholders
+   */
+  _processParens(uString, origString, parensUnits, annotations, retMsg) {
+
+    // Unit strings array and index
+    let uStrArray = [];
+    let uStrPos = 0;
+    let stopProcessing = false ;
+
+    let pu = parensUnits.length;
+
+    // Count of characters trimmed off the beginning of the unit string (uString)
+    // as units are removed from it; used for error messages to provide
+    // context.
+    let trimmedCt = 0;
+
+    // Break the unit string into pieces that consist of text outside of
+    // parenthetical strings and placeholders for the parenthetical units.
+    // This method is called recursively for parenthetical strings and the units
+    // returned are stored in the parensUnits array.
+    while (uString !== "" && !stopProcessing) {
+      let openCt = 0;
+      let closeCt = 0;
+      let openPos = uString.indexOf('(');
+
+      // If an opening parenthesis was not found, check for an unmatched
+      // close parenthesis.  If one was found report the error and end
+      // processing.
+      if (openPos < 0) {
+        let closePos = uString.indexOf(')');
+        if (closePos >= 0) {
+          let theMsg = `Missing open parenthesis for close ` +
+              `parenthesis at ${uString.substring(0, closePos + trimmedCt)}` +
+              `${this.openEmph_}${uString.substr(closePos, 1)}${this.closeEmph_}`;
+          if (closePos < uString.length - 1) {
+            theMsg += `${uString.substr(closePos + 1)}.`;
+          }
+          else {
+            theMsg += '.';
+          }
+          retMsg.push(theMsg);
+          uStrArray[uStrPos] = uString;
+          stopProcessing = true;
+        } // end if a close parenthesis was found
+
+        // If no parentheses were found in the current unit string, transfer
+        // it to the units array and blank out the string, which will end
+        // the search for parenthetical units.
+        else {
+          uStrArray[uStrPos] = uString;
+          uString = "";
+        } // end if no close parenthesis was found
+      } // end if no open parenthesis was found
+
+      // Otherwise an open parenthesis was found. Process the string that
+      // includes the parenthetical group
+      else {
+        openCt += 1;
+        // Write the text before the parentheses (if any) to the unit strings array
+        let uLen = uString.length;
+        if (openPos > 0) {
+          uStrArray[uStrPos++] = uString.substr(0, openPos);
+        }
+
+        // Find the matching closePos, i.e., the one that closes the
+        // parenthetical group that this one opens.  Look also for
+        // another open parenthesis, in case this includes nested parenthetical
+        // strings.  This continues until it finds the same number of close
+        // parentheses as open parentheses, or runs out of string to check.
+        // In the case of nested parentheses this will identify the outer set
+        // of parentheses.
+        let closePos = 0;
+        let c = openPos + 1;
+        for (; c < uLen && openCt != closeCt; c++) {
+          if (uString[c] === '(')
+            openCt += 1;
+          else if (uString[c] === ')')
+            closeCt += 1;
+        }
+
+        // Put a placeholder for the group in the unit strings array and recursively
+        // call this method for the parenthetical group.  Put the unit returned
+        // in the parensUnit array.  Set the unit string to whatever follows
+        // the position of the closing parenthesis for this group, to be
+        // processed by the next iteration of this loop.  If there's nothing
+        // left uString is set to "".
+        if (openCt === closeCt) {
+          closePos = c;
+          uStrArray[uStrPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
+          let parseResp = this._parseTheString(
+              uString.substring(openPos + 1, closePos - 1),
+              origString, retMsg, parensUnits, annotations);
+          if (parseResp[0] === null)
+            stopProcessing = true;
+          else {
+            origString = parseResp[1];
+            parensUnits[pu++] = parseResp[0];
+            uString = uString.substr(closePos);
+            trimmedCt = closePos;
+          }
+        } // end if the number of open and close parentheses matched
+
+        // If the number of open and close parentheses doesn't match, indicate
+        // an error.
+        else {
+          uStrArray.push(origString.substr(openPos));
+          retMsg.push(`Missing close parenthesis for open parenthesis at ` +
+              `${origString.substring(0, openPos + trimmedCt)}` +
+              `${this.openEmph_}${origString.substr(openPos, 1)}` +
+              `${this.closeEmph_}${origString.substr(openPos + 1)}.`);
+          stopProcessing = true;
+        }
+      } // end if an open parenthesis was found
+    } // end do while the input string is not empty
+    return [uStrArray.join(''), origString, stopProcessing]
+  } // end _processParens
 
 
   /**
    * Breaks the unit string into an array of unit descriptors and operators.
+   * This should only be called from within this class (or by test code).
    *
    * @param uStr the unit string being parsed
    * @returns the array representing the unit string
    */
-  makeUnitsArray(uStr) {
+  _makeUnitsArray(uStr) {
 
     // Separate the string into pieces based on delimiters / (division) and .
     // (multiplication).  The idea is to get an array of units on which we
@@ -476,14 +537,15 @@ export class UnitString {
       uArray.push({op: uArray1[n++], un: uArray1[n]});
     }
     return uArray ;
-  } // end makeUnitsArray
+  } // end _makeUnitsArray
 
 
   /**
    * Creates a unit object from a string defining one unit.  The string
    * should consist of a unit code for a unit already defined (base or
    * otherwise).  It may include a prefix and an exponent, e.g., cm2
-   * (centimeter squared).
+   * (centimeter squared).  This should only be called from within this
+   * class (or by test code).
    *
    * @params uCode the string defining the unit
    * @param annotations the array to contain the extracted annotations
@@ -494,7 +556,7 @@ export class UnitString {
    *  problems creating the unit; and 2) the origString passed in, which may
    *  be updated if a unit name was translated to a unit code
    */
-  makeUnit(uCode, annotations, retMsg, origString) {
+  _makeUnit(uCode, annotations, retMsg, origString) {
     let exp = null;
     let pfxVal = null;
     let pfxCode = null;
@@ -515,7 +577,6 @@ export class UnitString {
 
 
     let anLen = this.braceFlag_.length;
-
     let anOpen = uCode.indexOf(this.braceFlag_) ;
     if (anOpen >= 0) {
       let anClose = uCode.substr(anOpen + 1).indexOf(this.braceFlag_) +
@@ -573,6 +634,7 @@ export class UnitString {
               retMsg.push(this.bracesMsg_);
           }
           uCode = uCode.substr(0, anOpen);
+          origCode = uCode ;
         } // end if the annotation follows the unit expression
       } // end if we found an open and a close brace
     } // end if we found an open brace
@@ -594,7 +656,15 @@ export class UnitString {
       let utabs = UnitTables.getInstance();
       // First look for the full string as a code
       origUnit = utabs.getUnitByCode(uCode);
-
+      // If we didn't find it, check to see if it uses a carat ^
+      if (!origUnit && uCode.indexOf('^') > -1) {
+        let tryCode = uCode.replace('^', '*') ;
+        origUnit = utabs.getUnitByCode(tryCode) ;
+        if (origUnit) {
+          origUnit.csCode_ = origUnit.csCode_.replace('*', '^') ;
+          origUnit.ciCode_ = origUnit.ciCode_.replace('*', '^') ;
+        }
+      }
       // If we didn't find it, try it as a name
       if (!origUnit) {
         let origUnitAry = utabs.getUnitByName(uCode);
@@ -755,15 +825,15 @@ export class UnitString {
         }
       } // end if not endProcessing set from no unit found
     } // end if not endProcessing set from annotation error
-
     return [retUnit, origString] ;
-  } // end makeUnit
+  } // end _makeUnit
 
 
   /**
    * Performs unit arithmetic for the units in the units array.  That array
    * contains units/numbers and the operators (division or multiplication) to
-   * be performed on each unit/unit or unit/number pair in the array.
+   * be performed on each unit/unit or unit/number pair in the array.  This
+   * should only be called from within this class (or by test code).
    *
    * @params uArray the array that contains the units, numbers and operators
    *  derived from the unit string passed in to parseString
@@ -773,12 +843,11 @@ export class UnitString {
    *  context for messages
    * @returns a single unit object that is the result of the unit arithmetic
    */
-  performUnitArithmetic(uArray, retMsg, origString) {
+  _performUnitArithmetic(uArray, retMsg, origString) {
 
     let finalUnit = uArray[0]['un'];
     let uLen = uArray.length ;
     let endProcessing = false ;
-
     // Perform the arithmetic for the units, starting with the first 2 units.
     // We only need to do the arithmetic if we have more than one unit.
     for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
@@ -820,8 +889,9 @@ export class UnitString {
               let theCode = finalUnit.toString() + thisOp +
                   nextUnit.getProperty('csCode_');
               let theDim = nextUnit.getProperty('dim_');
-              if (isDiv)
+              if (isDiv && theDim) {
                 theDim = theDim.minus();
+              }
               finalUnit = nextUnit;
               finalUnit.assignVals({'csCode_' : theCode,
                 'name_' : theName,
@@ -859,9 +929,8 @@ export class UnitString {
         }
       } // end if we have another valid unit/number to process
     } // end do for each unit after the first one
-
     return finalUnit ;
-  }  // end performUnitArithmetic
+  }  // end _performUnitArithmetic
 
 } // end class UnitString
 
