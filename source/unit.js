@@ -756,33 +756,7 @@ export class Unit {
    * second unit
    */
   divString(s1, s2) {
-    let ret = null;
-    if(s2.length == 0)
-      ret = s1;
-    else {
-      let supPos = s2.indexOf('<sup>') ;
-      let s2Sup = null;
-      if (supPos > 0) {
-        s2Sup = s2.substr(supPos) ;
-        s2 = s2.substr(0, supPos);
-      }
-      let t = s2.replace('/','~').replace('.','/').replace('~','.');
-
-      switch (t[0]) {
-        case '.':
-          ret = s1 + t;
-          break ;
-        case '/':
-          ret =  s1 + t;
-          break;
-        default:
-          ret = s1 + "/" + t;
-      }
-      if (s2Sup)
-        ret += s2Sup;
-    }
-    return ret ;
-
+    return s1 + '/' + s2 ;
   } // end divString
 
 } // end Unit class
