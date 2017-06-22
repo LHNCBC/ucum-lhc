@@ -350,7 +350,12 @@ export class Unit {
    * the equivalent number of this unit.  So, 15 mL would translate
    * to 1 tablespoon if this object is a tablespoon.
    *
-   * @param num the numnitude for the unit to be translated (e.g. 15 for 15 mL)
+   * Note that the number returned may not be what is normally expected.
+   * For example, converting 10 Celsius units to Fahrenheit would "normally"
+   * return a value of 50.   But in this case you'll get back something like
+   * 49.99999999999994.
+   *
+   * @param num the magnitude for the unit to be translated (e.g. 15 for 15 mL)
    * @param fromUnit the unit to be translated to one of this type (e.g. a mL unit)
    *
    * @return the number of converted units (e.g. 1 for 1 tablespoon)
@@ -361,18 +366,19 @@ export class Unit {
     let newNum = 0.0 ;
 
     // reject request if the dimensions are not equal
-    if (!(fromUnit.dim_.equals(this.dim_))) {
+    if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
       throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
                       `to ${this.csCode_}.`));
     }
     let fromCnv = fromUnit.cnv_ ;
     let fromMag = fromUnit.magnitude_ ;
 
-    // if both units are on a ratio scale, multiply the "from" unit's magnitude
-    // by the number passed in and then divide that result by this unit's magnitude
-    if (fromCnv == null && this.cnv_ == null)
-      newNum = (num * fromMag)/this.magnitude_;
-
+    // if neither unit has a conversion function, multiply the "from" unit's
+    // magnitude by the number passed in and then divide that result by this
+    // unit's magnitude.  Do this for units with and without dimension vectors.
+    if (fromCnv == null && this.cnv_ == null) {
+      newNum = (num * fromMag) / this.magnitude_;
+    }
     // else use a function to get the number to be returned
     else {
       let x = 0.0 ;
@@ -394,7 +400,7 @@ export class Unit {
       else {
         newNum = x / this.magnitude_;
       }
-    } // end if both units are NOT on a ratio scale
+    } // end if either unit has a conversion function
 
     return newNum;
 
@@ -406,6 +412,8 @@ export class Unit {
    * of this unit that corresponds to the number of the target unit passed in.
    * So, 1 tablespoon (where this unit represents a tablespoon) would translate
    * to 15 mL.
+   *
+   * See the note on convertFrom about return values.
    *
    * @param mag the magnitude for this unit (e.g. 1 for 1 tablespoon)
    * @param toUnit the unit to which this unit is to be translated

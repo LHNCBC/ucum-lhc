@@ -11,6 +11,7 @@
     "csv": "^1.1.0",
     "csv-parse": "^1.1.7",
     "csv-stringify": "^1.0.4",
+    "diff": "^3.2.0",
     "is-integer": "^1.0.6",
     "jsonfile": "^2.2.3",
     "path": "^0.12.7",
