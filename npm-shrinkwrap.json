@@ -1,6 +1,6 @@
 {
   "name": "ucum",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "abbrev": {
       "version": "1.0.7",
@@ -2572,10 +2572,9 @@
       "dev": true
     },
     "diff": {
-      "version": "1.4.0",
-      "from": "https://registry.npmjs.org/diff/-/diff-1.4.0.tgz",
-      "resolved": "https://registry.npmjs.org/diff/-/diff-1.4.0.tgz",
-      "dev": true
+      "version": "3.2.0",
+      "from": "diff@latest",
+      "resolved": "https://registry.npmjs.org/diff/-/diff-3.2.0.tgz"
     },
     "diffie-hellman": {
       "version": "5.0.2",
@@ -4457,6 +4456,12 @@
           "version": "2.3.0",
           "from": "https://registry.npmjs.org/commander/-/commander-2.3.0.tgz",
           "resolved": "https://registry.npmjs.org/commander/-/commander-2.3.0.tgz",
+          "dev": true
+        },
+        "diff": {
+          "version": "1.4.0",
+          "from": "diff@1.4.0",
+          "resolved": "https://registry.npmjs.org/diff/-/diff-1.4.0.tgz",
           "dev": true
         },
         "escape-string-regexp": {
