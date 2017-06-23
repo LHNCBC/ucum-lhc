@@ -70,7 +70,7 @@ describe('Test Unit convertFrom/convertTo methods', function() {
   }); // end test conversion for units with vectors, no functions
 
   describe('Test conversion for units with no vectors, no functions', function(){
-    it('should return just under 2000 for 2 g.kmol/(mmol.kmol) to g/mol', function() {
+    it('should return 2000 for 2 g.kmol/(mmol.kmol) to g/mol', function() {
       var respObj = uString.parseString('g.kmol/(mmol.kmol)');
       var fromUnit = respObj[0];
       respObj = uString.parseString('g/mol');
@@ -103,13 +103,13 @@ describe('Test Unit convertFrom/convertTo methods', function() {
   }); // end test conversion for units with no vectors, no functions
 
   describe('Test conversion for units with no vectors but with functions', function(){
-    it("should return just under 50 for 10 Celsius units to Fahrenheit", function(){
+    it("should return 50 for 10 Celsius units to Fahrenheit", function(){
       var fahrUnit = uTabs.getUnitByCode('[degF]');
       var celUnit = uTabs.getUnitByCode('Cel');
       var resToFahr = fahrUnit.convertFrom(10, celUnit);
       assert(Math.abs(50 - resToFahr) < 0.000000000099, `result returned was ${resToFahr}`);
     });
-    it("should return a little less than 0 for 32 Fahrenheit units to Celsius", function() {
+    it("should return 0 for 32 Fahrenheit units to Celsius", function() {
       fahrUnit = uTabs.getUnitByCode('[degF]');
       celUnit = uTabs.getUnitByCode('Cel');
       var resToCel = celUnit.convertFrom(32, fahrUnit);
