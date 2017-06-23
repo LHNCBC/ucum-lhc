@@ -60,62 +60,62 @@ describe('Test Unit Power method', function() {
 
 describe('Test Unit convertFrom/convertTo methods', function() {
   describe('Test conversion for units with vectors, no functions', function() {
-    var avUnit = uTabs.getUnitByCode('[lb_av]');
-    var troyUnit = uTabs.getUnitByCode('[lb_tr]');
-    var result = troyUnit.convertFrom(33, avUnit) ;
     it('should return a little over 40.10 for 33 [lb_av] units to' +
         ' [lb_tr] units', function(){
+      var avUnit = uTabs.getUnitByCode('[lb_av]');
+      var troyUnit = uTabs.getUnitByCode('[lb_tr]');
+      var result = troyUnit.convertFrom(33, avUnit) ;
       assert(Math.abs(40.11 - result) < 0.015, `result returned was ${result}`);
     })
   }); // end test conversion for units with vectors, no functions
 
   describe('Test conversion for units with no vectors, no functions', function(){
-    var respObj = uString.parseString('g.kmol/(mmol.kmol)');
-    var fromUnit = respObj[0];
-    respObj = uString.parseString('g/mol');
-    var toUnit = respObj[0];
-    var res1 = toUnit.convertFrom(2, fromUnit);
     it('should return just under 2000 for 2 g.kmol/(mmol.kmol) to g/mol', function() {
+      var respObj = uString.parseString('g.kmol/(mmol.kmol)');
+      var fromUnit = respObj[0];
+      respObj = uString.parseString('g/mol');
+      var toUnit = respObj[0];
+      var res1 = toUnit.convertFrom(2, fromUnit);
       assert(Math.abs(2000 - res1) < 0.0000000000003, `result returned was ${res1}`);
     });
-    var mol = uTabs.getUnitByCode('mol');
-    respObj = uString.parseString('kmol');
-    var kmol = respObj[0];
-    var res2 = mol.convertTo(2000, kmol);
     it('should return 2 for 2000/mol to kmol', function(){
+      var mol = uTabs.getUnitByCode('mol');
+      respObj = uString.parseString('kmol');
+      var kmol = respObj[0];
+      var res2 = mol.convertTo(2000, kmol);
       assert.equal(res2, 2, `result returned was ${res2}`);
     });
-    respObj = uString.parseString('10/mol');
-    var molD10 = respObj[0];
-    respObj = uString.parseString('/kmol');
-    var kmolD1 = respObj[0];
-    var res3 = kmolD1.convertFrom(1, molD10);
     it('should return 10000 for 10/mol to /kmol', function(){
+      respObj = uString.parseString('10/mol');
+      var molD10 = respObj[0];
+      respObj = uString.parseString('/kmol');
+      var kmolD1 = respObj[0];
+      var res3 = kmolD1.convertFrom(1, molD10);
       assert.equal(res3, 10000, `result returned was ${res3}`);
     }) ;
-    respObj = uString.parseString('kmol/[CFU]');
-    var kmolCFU = respObj[0];
-    var res4 = kmolCFU.convertTo(2, mol);
-    if ('should return 2000 for 2 kmol/[CFU] to mol', function(){
-      assert.equal(res4, 2000, `result returned was ${res4}`);
+    it('should return 2000 for 2 kmol/[CFU] to mol', function(){
+      var mol = uTabs.getUnitByCode('mol');
+      respObj = uString.parseString('kmol/[CFU]');
+      var kmolCFU = respObj[0];
+      var res4 = kmolCFU.convertTo(2, mol);
+       assert.equal(res4, 2000, `result returned was ${res4}`);
     });
   }); // end test conversion for units with no vectors, no functions
 
   describe('Test conversion for units with no vectors but with functions', function(){
-    var fahrUnit = uTabs.getUnitByCode('[degF]');
-    var celUnit = uTabs.getUnitByCode('Cel');
-    var resToFahr = fahrUnit.convertFrom(10, celUnit);
-    it("should return just under 50 for 10 Celsius units to Fahrenheit", function() {
+    it("should return just under 50 for 10 Celsius units to Fahrenheit", function(){
+      var fahrUnit = uTabs.getUnitByCode('[degF]');
+      var celUnit = uTabs.getUnitByCode('Cel');
+      var resToFahr = fahrUnit.convertFrom(10, celUnit);
       assert(Math.abs(50 - resToFahr) < 0.000000000099, `result returned was ${resToFahr}`);
     });
-    fahrUnit = uTabs.getUnitByCode('[degF]');
-    celUnit = uTabs.getUnitByCode('Cel');
-    var resToCel = celUnit.convertFrom(32, fahrUnit);
     it("should return a little less than 0 for 32 Fahrenheit units to Celsius", function() {
+      fahrUnit = uTabs.getUnitByCode('[degF]');
+      celUnit = uTabs.getUnitByCode('Cel');
+      var resToCel = celUnit.convertFrom(32, fahrUnit);
       assert(Math.abs(0 - resToCel) < 0.00000000000006, `result returned was ${resToCel}`);
     });
   }); // end test conversion for units with no vectors but with functions
-
 
 }); // end Test Unit convertFrom method
 
