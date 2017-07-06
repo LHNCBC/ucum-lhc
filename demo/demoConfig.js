@@ -55,8 +55,7 @@ export var UcumDemoConfig = {
   baseSearchOpts_ : {'nonMatchSuggestions': false,
                      'tableFormat': true,
                      'valueCols': [0],
-                     'tokens': ['/', '.'],
-                     q: 'is_simple:true'}
+                     'tokens': ['/', '.']}
 } ;
 
 
