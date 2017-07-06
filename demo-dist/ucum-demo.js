@@ -44,7 +44,7 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
    * Base URL for an autocompleter search query on the clinical tables search
    * service for extended UCUM data
    */
-  baseSearchURL_: 'https://lforms-service.nlm.nih.gov/api/ucum/v3/search',
+  baseSearchURL_: 'https://clin-table-search.lhc.nlm.nih.gov/api/ucum/v3/' + 'search?q=is_simple:true',
 
   /**
    * Default column headers for an autocompleter search query when no display
@@ -60,7 +60,8 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
   baseSearchOpts_: { 'nonMatchSuggestions': false,
     'tableFormat': true,
     'valueCols': [0],
-    'tokens': ['/', '.'] }
+    'tokens': ['/', '.'],
+    q: 'is_simple:true' }
 };
 
 
@@ -124,6 +125,7 @@ var UcumDemo = exports.UcumDemo = function () {
     this.urlConvDispFlds_ = UcumDemoConfig.defCols_;
     var urlOpts = this.buildUrlAndOpts('convert');
     this.fromAuto_ = new Def.Autocompleter.Search('convertFrom', urlOpts[0], urlOpts[1]);
+    this.toAuto_ = new Def.Autocompleter.Search('convertTo', urlOpts[0], urlOpts[1]);
 
     // Set up the search autocompleter for the validation string input field
     // on the Validator tab section
@@ -134,8 +136,8 @@ var UcumDemo = exports.UcumDemo = function () {
 
     // Set up the prefetch autocompleter for the "to" conversion field.  It will
     // be populated with commensurable units in based on what the user enters
-    // in the "from" field.
-    this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
+    // in the "from" field.  Changed to search autocompleter per Clem
+    // this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
 
     // Make this a singleton.  See UnitTables constructor for details.
     var holdThis = UcumDemo.prototype;
@@ -189,7 +191,7 @@ var UcumDemo = exports.UcumDemo = function () {
           qString += UcumDemoConfig.categoryValues_[catsArray[c]];
         }
         if (catLen > 1) qString = '(' + qString + ')';
-        urlString += '?q=category:' + qString;
+        urlString += ' AND category:' + qString;
       }
       var dispLen = dispArray.length;
       var colHdrs = UcumDemoConfig.defCols_;
@@ -334,22 +336,33 @@ var UcumDemo = exports.UcumDemo = function () {
       var clsName = ckBox.className;
       var boxVal = ckBox.value;
       var boxChecked = ckBox.checked;
+
       if (clsName === 'category') {
-        var idx = this.urlConvCats_.indexOf(boxVal);
+        var catsArray = tabSuffix === 'cnv' ? this.urlConvCats_ : this.urlValCats_;
+        var idx = catsArray.indexOf(boxVal);
         // if the box is checked and the value is not already in the
         // categories array, add it to the array.
-        if (boxChecked && idx < 0) this.urlConvCats_.push(boxVal);
-        // if the box is unchecked and the value is in the array, remove
-        // it from the array.
-        else if (!boxChecked && idx >= 0) this.urlConvCats_.splice(idx, 1);
+        if (boxChecked && idx < 0) {
+          catsArray.push(boxVal);
+          // if the box is unchecked and the value is in the array, remove
+          // it from the array.
+        } else if (!boxChecked && idx >= 0) {
+          catsArray.splice(idx, 1);
+        }
       } else if (clsName === 'displayField') {
-        var _idx = this.urlConvDispFlds_.indexOf(boxVal);
-        if (boxChecked && _idx < 0) this.urlConvDispFlds_.push(boxVal);else if (!boxChecked && _idx >= 0) this.urlConvDispFlds_.splice(_idx, 1);
+        var dispArray = tabSuffix === 'cnv' ? this.urlConvDispFlds_ : this.urlValDispFlds_;
+        var _idx = dispArray.indexOf(boxVal);
+        if (boxChecked && _idx < 0) {
+          dispArray.push(boxVal);
+        } else if (!boxChecked && _idx >= 0) {
+          dispArray.splice(_idx, 1);
+        }
       } else throw new Error('An error occured while specifying your choice.');
 
       // call buildUrlAndOpts to build the url and options from the updated url
       // arrays (category and display field arrays).
-      var urlOpts = this.buildUrlAndOpts('convert');
+      var tabName = tabSuffix === 'cnv' ? 'convert' : 'validate';
+      var urlOpts = this.buildUrlAndOpts(tabName);
 
       // Call setOptions and setUrl to update the the autocompleter.
       // -- no, there is no setOptions at this point.  Leaving these lines in to remind
@@ -358,11 +371,14 @@ var UcumDemo = exports.UcumDemo = function () {
       //this.fromAuto_.setOptions(urlOpts[1]);
       //this.fromAuto_.setURL(urlOpts[0]);
 
-      // So, instead, we clear the cache and recreate the autocompleter.
+      // So, instead, we clear the cache and recreate the autocompleter(s).
       if (tabSuffix === 'cnv') {
         this.fromAuto_.clearCachedResults();
         this.fromAuto_.destroy();
         this.fromAuto_ = new Def.Autocompleter.Search('convertFrom', urlOpts[0], urlOpts[1]);
+        this.toAuto_.clearCachedResults();
+        this.toAuto_.destroy();
+        this.toAuto_ = new Def.Autocompleter.Search('convertTo', urlOpts[0], urlOpts[1]);
       } else {
         this.valAuto_.clearCachedResults();
         this.valAuto_.destroy();
