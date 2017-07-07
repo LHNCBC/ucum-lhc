@@ -38,7 +38,8 @@ export var UcumDemoConfig = {
    * Base URL for an autocompleter search query on the clinical tables search
    * service for extended UCUM data
    */
-  baseSearchURL_ : 'https://lforms-service.nlm.nih.gov/api/ucum/v3/search',
+  baseSearchURL_ : 'https://clin-table-search.lhc.nlm.nih.gov/api/ucum/v3/' +
+                   'search?q=is_simple:true',
 
   /**
    * Default column headers for an autocompleter search query when no display
@@ -53,8 +54,8 @@ export var UcumDemoConfig = {
    */
   baseSearchOpts_ : {'nonMatchSuggestions': false,
                      'tableFormat': true,
-                      'valueCols': [0],
-                      'tokens': ['/', '.']}
+                     'valueCols': [0],
+                     'tokens': ['/', '.']}
 } ;
 
 
