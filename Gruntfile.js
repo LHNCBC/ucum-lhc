@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           cwd: '.',
-          src: ['source-es5/*']
+          src: ['source-es5/*', 'dist/*', '!dist/data']
         }]
       } ,
       demo: {
