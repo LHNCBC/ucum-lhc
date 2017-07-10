@@ -65,7 +65,7 @@ export var Ucum = {
   csvCols_ : {
     'case-sensitive code' : 'csCode_',
     'LOINC property' : 'loincProperty_',
-    'name (final)' : 'name_',
+    'name (display)' : 'name_',
     'synonyms' : 'synonyms_',
     'source' : 'source_',
     'category' : 'category_',
