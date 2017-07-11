@@ -14,7 +14,7 @@
  * babel ucumDataUpdater.js --out-file ucumDataUpdater5.js
  *
  * Then use updateData5.js to get the name of the input file and to run this
- * importer.
+ * importer, i.e., node updateData5.js inputFileName
  *
  */
 var fs = require('fs');
@@ -86,7 +86,7 @@ export class UcumDataUpdater {
       // replace any carriage returns, tabs, or multiple spaces in the
       // synonyms with a single space (per instance).  Otherwise output
       // or the synonyms can get messed up.
-      record['synonyms'] = record['synonyms'].replace(/\n|\s{2,}/g, " ")
+      record['synonyms'] = record['synonyms'].replace(/\s{2,}/g, " ")
       if (existUnit) {
         upd.updateUnit(existUnit, record);
       }
