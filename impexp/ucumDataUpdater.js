@@ -67,7 +67,7 @@ export class UcumDataUpdater {
     var utils = UcumLhcUtils.getInstance();
 
     // The file reader reads the input file into the str readable stream
-    var inFile = fs.createReadStream(inputFileName);
+    var inFile = fs.createReadStream(inputFileName, {encoding: 'utf8'});
 
     // The parser pulls each row out of the readable stream and passes it
     // along the pipeline to the transformer as a hash
@@ -86,7 +86,7 @@ export class UcumDataUpdater {
       // replace any carriage returns, tabs, or multiple spaces in the
       // synonyms with a single space (per instance).  Otherwise output
       // or the synonyms can get messed up.
-      record['synonyms'] = record['synonyms'].replace(/\s{2,}/g, " ")
+      record['synonyms'] = record['synonyms'].replace(/\s+/g, " ")
       if (existUnit) {
         upd.updateUnit(existUnit, record);
       }
