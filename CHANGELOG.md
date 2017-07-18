@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [1.1.1] - 2017-07-13
+- Data file has been updated with enhanced synonyms and is also now written 
+in a a readable JSON format.
+
+
 ## [1.1.0] - 2017-07-06
 ## Changed
 - Autocompleters no longer return multiple-unit strings, e.g., kg/cm.  
@@ -14,11 +20,11 @@ changed to just use the same autocompleter as used for the "convert from" field.
 The list will now include units that cannot be converted.
 
 
-
 ## [1.0.2] - 2017-06-23
 ## Fixed
 - Allowed conversion of units with no dimensions
 - added testing for the Unit.convertFrom and Unit.convertTo functions
+
 
 ## [1.0.1] - 2017-05-30
 ## Added

@@ -3,6 +3,19 @@
  * This uses the node-csv package (https://github.com/wdavidw/node-csv)
  * to handle the input processing.
  *
+ * THIS ASSUMES that the columns named in the csvCols_ hash in config.js
+ * exist in the csv file and that the data in those columns is the data
+ * that should be written to the json file written by this code.
+ *
+ * This ALSO ASSUMES that the current ucum data file, as named and managed
+ * by the ucumJsonDefs class, exists in the location specified by that class.
+ *
+ * Use babel to translate this to ECMA 5 code, i.e.,
+ * babel ucumDataUpdater.js --out-file ucumDataUpdater5.js
+ *
+ * Then use updateData5.js to get the name of the input file and to run this
+ * importer, i.e., node updateData5.js inputFileName
+ *
  */
 var fs = require('fs');
 var stream = require('stream');
@@ -17,10 +30,6 @@ var Dimension = require('../source-es5/dimension.js').Dimension;
 var UnitTables = require('../source-es5/unitTables.js').UnitTables;
 var UnitString = require('../source-es5/unitString.js').UnitString;
 var UcumXmlDocument = require('../source-es5/ucumXmlDocument.js').UcumXmlDocument;
-
-// Load the data from the JSON file
-//var jdefs = JDefs.getInstance();
-//jdefs.loadJsonDefs();
 
 var UcumLhcUtils = require("../source-es5/ucumLhcUtils.js").UcumLhcUtils;
 var Ucum = require('../source-es5/config.js').Ucum;
@@ -50,15 +59,15 @@ export class UcumDataUpdater {
    * the end of each row, to contain confirmation of the unit string tested,
    * the result of the test, and any notes from the test.
    *
-   * @param inputFile this is the input file name, including file path
-    * @returns nothing
+   * @param inputFileName this is the input file name, including file path
+   * @returns nothing
    */
   readFile(inputFileName) {
 
     var utils = UcumLhcUtils.getInstance();
 
     // The file reader reads the input file into the str readable stream
-    var inFile = fs.createReadStream(inputFileName);
+    var inFile = fs.createReadStream(inputFileName, {encoding: 'utf8'});
 
     // The parser pulls each row out of the readable stream and passes it
     // along the pipeline to the transformer as a hash
@@ -74,6 +83,10 @@ export class UcumDataUpdater {
       var utab = UnitTables.getInstance();
       var existUnit = utab.getUnitByCode(record[Ucum.inputKey_]);
       let upd = UcumDataUpdater.getInstance();
+      // replace any carriage returns, tabs, or multiple spaces in the
+      // synonyms with a single space (per instance).  Otherwise output
+      // or the synonyms can get messed up.
+      record['synonyms'] = record['synonyms'].replace(/\s+/g, " ")
       if (existUnit) {
         upd.updateUnit(existUnit, record);
       }
