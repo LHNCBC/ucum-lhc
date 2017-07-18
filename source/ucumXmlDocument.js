@@ -437,7 +437,8 @@ export class UcumXmlDocument {
                      'units' : uArray};
     let dt = new Date();
     jsonfile.writeFileSync('../dist/data/ucumDefs' + dt.valueOf() + '.json',
-                           defsHash, {encoding: 'utf8', mode: 0o644, flag: 'w'});
+                           defsHash,
+                           {spaces: 2, encoding: 'utf8', mode: 0o644, flag: 'w'});
   } // end writeJsonFile
 
 } // end UcumXmlDocument
