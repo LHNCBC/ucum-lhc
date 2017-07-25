@@ -123,15 +123,16 @@ export class UnitString {
     // Flag used to block further processing on an unrecoverable error
     let endProcessing = retMsg.length > 0;
 
-    // If this is the first call for the string, check for spaces and throw
-    // an error if any are found.  The spec explicitly forbids spaces
-    // except in annotations, which is why this is done after the annotations
-    // are extracted instead of in _parseTheString.
+    // Check for spaces and throw an error if any are found.  The spec
+    // explicitly forbids spaces except in annotations, which is why
+    // this is done after the annotations are extracted instead of in
+    // _parseTheString.
     if (uStr.indexOf(' ') > -1) {
       throw (new Error('Blank spaces are not allowed in unit expressions.'));
-    } // end if this was called for the full string
+    } // end if blanks were found in the string
 
-    let retObj = this._parseTheString(uStr, origString, retMsg, parensUnits, annotations) ;
+    let retObj = this._parseTheString(uStr, origString, retMsg,
+                                      parensUnits, annotations) ;
     let finalUnit = retObj[0];
 
     // Do a final check to make sure that finalUnit is a unit and not
@@ -560,6 +561,8 @@ export class UnitString {
     let exp = null;
     let pfxVal = null;
     let pfxCode = null;
+    let pfxCiCode = null;
+    let pfxPrintSymbol = null;
     let pfxExp = null;
     let pfxName = null;
     let ulen = uCode.length;
@@ -726,6 +729,8 @@ export class UnitString {
           pfxVal = pfxObj.getValue();
           pfxExp = pfxObj.getExp();
           pfxName = pfxObj.getName();
+          pfxCiCode = pfxObj.getCiCode();
+          pfxPrintSymbol = pfxObj.getPrintSymbol();
           let pCodeLen = pfxCode.length;
           uCode = uCode.substr(pCodeLen);
           ulen -= pCodeLen;
@@ -744,6 +749,7 @@ export class UnitString {
             pfxVal = pfxObj.getValue();
             pfxExp = pfxObj.getExp();
             pfxName = pfxObj.getName();
+            pfxPrintSymbol = pfxObj.getPrintSymbol();
             uCode = uCode.substr(1);
             ulen -= 1;
 
@@ -770,6 +776,8 @@ export class UnitString {
         let theDim = retUnit.getProperty('dim_');
         let theMag = retUnit.getProperty('magnitude_');
         let theName = retUnit.getProperty('name_');
+        let theCiCode = retUnit.getProperty('ciCode_');
+        let thePrintSymbol = retUnit.getProperty('printSymbol_');
         // If there is an exponent for the unit, apply it to the dimension
         // and magnitude now
         if (exp) {
@@ -810,17 +818,26 @@ export class UnitString {
         if (pfxVal) {
           theName = pfxName + theName;
           theCode = pfxCode + theCode;
+          theCiCode = pfxCiCode + theCiCode;
+          thePrintSymbol = pfxPrintSymbol + thePrintSymbol;
           retUnit.assignVals({
             'name_': theName,
-            'csCode_': theCode
+            'csCode_': theCode,
+            'ciCode_' : theCiCode,
+            'printSymbol_' : thePrintSymbol
           });
         }
         if (exp) {
-          theName = theName + '<sup>' + exp.toString() + '</sup>';
-          theCode = theCode + exp.toString();
+          let expStr = exp.toString();
+          //theName = theName + '<sup>' + expStr + '</sup>';
+          //theCode = theCode + expStr;
+          //theCiCode = theCiCode + expStr;
+          //thePrintSymbol = thePrintSymbol + '<sup>' + expStr + '</sup>';
           retUnit.assignVals({
-            'name_': theName,
-            'csCode_': theCode
+            'name_': theName + '<sup>' + expStr + '</sup>',
+            'csCode_': theCode + expStr,
+            'ciCode_' : theCiCode + expStr,
+            'printSymbol_' : thePrintSymbol + '<sup>' + expStr + '</sup>'
           });
         }
       } // end if not endProcessing set from no unit found
@@ -884,17 +901,26 @@ export class UnitString {
             else {
               let nMag = nextUnit.getProperty('magnitude_');
               isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
-              let theName = finalUnit.toString() + thisOp +
-                  nextUnit.getProperty('name_');
-              let theCode = finalUnit.toString() + thisOp +
-                  nextUnit.getProperty('csCode_');
+              let uString = finalUnit.toString();
+              if (u2 == 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
+                uString = '';
+              }
+              let theName = uString + thisOp + nextUnit.getProperty('name_');
+              if (uString === '')
+                theName = theName.replace('/', 'per ');
+              let theCode = uString + thisOp + nextUnit.getProperty('csCode_');
+              let ciCode = uString + thisOp + nextUnit.getProperty('ciCode_');
+              let printSym = uString + thisOp +
+                             nextUnit.getProperty('printSymbol_');
               let theDim = nextUnit.getProperty('dim_');
               if (isDiv && theDim) {
                 theDim = theDim.minus();
               }
               finalUnit = nextUnit;
               finalUnit.assignVals({'csCode_' : theCode,
+                'ciCode_' : ciCode,
                 'name_' : theName,
+                'printSymbol_' : printSym,
                 'dim_' : theDim,
                 'magnitude_' : nMag});
             }

@@ -92,7 +92,9 @@ export class UcumXmlDocument {
       let attrs = {} ;
 
       attrs["code_"] = curPfx.attr.Code;
+      attrs["ciCode_"] = curPfx.attr.CODE;
       attrs["name_"] = curPfx.childNamed('name').val;
+      attrs["printSymbol_"] = curPfx.childNamed('printSymbol').val;
 
       // Set the prefix value.  If there is a <sup> element in the
       // value node, then this is a base 10 based prefix (10 to the x power).

@@ -373,10 +373,13 @@ export class Unit {
     let fromCnv = fromUnit.cnv_ ;
     let fromMag = fromUnit.magnitude_ ;
 
-    // if neither unit has a conversion function, multiply the "from" unit's
-    // magnitude by the number passed in and then divide that result by this
-    // unit's magnitude.  Do this for units with and without dimension vectors.
-    if (fromCnv == null && this.cnv_ == null) {
+    // If the same conversion function is specified for both units, which
+    // includes neither unit having a conversion function, multiply the
+    // "from" unit's magnitude by the number passed in and then divide
+    // that result by this unit's magnitude.  Do this for units with
+    // and without dimension vectors.  PROBLEM with 2 non-commensurable
+    // units with no dimension vector or function, e.g., byte to mol
+    if (fromCnv === this.cnv_) {
       newNum = (num * fromMag) / this.magnitude_;
     }
     // else use a function to get the number to be returned
@@ -557,6 +560,10 @@ export class Unit {
       else {
         this.name_ = this.mulString(this.name_, unit2.name_);
         this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
+        if (this.ciCode_ && unit2.ciCode_)
+          this.ciCode_ = this.mulString(this.ciCode_, unit2.ciCode_) ;
+        else if (unit2.ciCode_)
+          this.ciCode_ = unit2.ciCode_;
         if (this.guidance_ && unit2.guidance_)
           this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);
         else if (unit2.guidance_)
@@ -606,6 +613,10 @@ export class Unit {
       throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
     this.name_ = this.divString(this.name_, unit2.name_);
     this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
+    if (this.ciCode_ && unit2.ciCode_)
+      this.ciCode_ = this.divString(this.ciCode_, unit2.ciCode_);
+    else if (unit2.ciCode_)
+      this.ciCode_ = unit2.ciCode_ ;
     if (this.guidance_ && unit2.guidance_)
       this.guidance_ = this.divString(this.guidance_, unit2.guidance_);
     else if (unit2.guidance_)
