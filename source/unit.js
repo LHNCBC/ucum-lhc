@@ -387,16 +387,19 @@ export class Unit {
       let x = 0.0 ;
       let funcs = UcumFunctions.getInstance();
       if (fromCnv != null) {
-        // turn num * fromUnit.magnitude into its ratio scale equivalent
+        // turn num * fromUnit.magnitude into its ratio scale equivalent,
+        // e.g., convert Celsius to Kelvin
         let fromFunc = funcs.forName(fromCnv);
         x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
+        //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
       }
       else {
         x = num * fromMag;
       }
 
       if (this.cnv_ != null) {
-        // turn mag * origUnit on ratio scale into a non-ratio unit
+        // turn mag * origUnit on ratio scale into a non-ratio unit,
+        // e.g. convert Kelvin to Fahrenheit
         let toFunc = funcs.forName(this.cnv_);
         newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
       }

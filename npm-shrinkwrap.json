@@ -1,6 +1,6 @@
 {
   "name": "ucum",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "dependencies": {
     "abbrev": {
       "version": "1.0.7",
@@ -107,10 +107,9 @@
       "dev": true
     },
     "array-unique": {
-      "version": "0.2.1",
-      "from": "https://registry.npmjs.org/array-unique/-/array-unique-0.2.1.tgz",
-      "resolved": "https://registry.npmjs.org/array-unique/-/array-unique-0.2.1.tgz",
-      "dev": true
+      "version": "0.3.2",
+      "from": "array-unique@latest",
+      "resolved": "https://registry.npmjs.org/array-unique/-/array-unique-0.3.2.tgz"
     },
     "arrify": {
       "version": "1.0.1",
@@ -4388,7 +4387,15 @@
       "version": "2.3.7",
       "from": "https://registry.npmjs.org/micromatch/-/micromatch-2.3.7.tgz",
       "resolved": "https://registry.npmjs.org/micromatch/-/micromatch-2.3.7.tgz",
-      "dev": true
+      "dev": true,
+      "dependencies": {
+        "array-unique": {
+          "version": "0.2.1",
+          "from": "array-unique@>=0.2.1 <0.3.0",
+          "resolved": "https://registry.npmjs.org/array-unique/-/array-unique-0.2.1.tgz",
+          "dev": true
+        }
+      }
     },
     "miller-rabin": {
       "version": "4.0.0",

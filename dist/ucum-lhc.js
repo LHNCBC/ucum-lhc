@@ -53742,7 +53742,8 @@ var Unit = exports.Unit = function () {
       // includes neither unit having a conversion function, multiply the
       // "from" unit's magnitude by the number passed in and then divide
       // that result by this unit's magnitude.  Do this for units with
-      // and without dimension vectors.
+      // and without dimension vectors.  PROBLEM with 2 non-commensurable
+      // units with no dimension vector or function, e.g., byte to mol
       if (fromCnv === this.cnv_) {
         newNum = num * fromMag / this.magnitude_;
       }
@@ -53751,15 +53752,18 @@ var Unit = exports.Unit = function () {
           var x = 0.0;
           var funcs = UcumFunctions.getInstance();
           if (fromCnv != null) {
-            // turn num * fromUnit.magnitude into its ratio scale equivalent
+            // turn num * fromUnit.magnitude into its ratio scale equivalent,
+            // e.g., convert Celsius to Kelvin
             var fromFunc = funcs.forName(fromCnv);
             x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
+            //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
           } else {
             x = num * fromMag;
           }
 
           if (this.cnv_ != null) {
-            // turn mag * origUnit on ratio scale into a non-ratio unit
+            // turn mag * origUnit on ratio scale into a non-ratio unit,
+            // e.g. convert Kelvin to Fahrenheit
             var toFunc = funcs.forName(this.cnv_);
             newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
           } else {
@@ -54912,15 +54916,21 @@ var UnitString = exports.UnitString = function () {
               // if the prefix base is not 10, it won't have an exponent.
               // At the moment I don't see any units using the prefixes
               // that aren't base 10.   But if we get one the prefix value
-              // will be applied to the magnitude (below), which is what
-              // we want anyway.
+              // will be applied to the magnitude (below) if the unit does
+              // not have a conversion function, and to the conversion prefix
+              // if it does.
             } // end if there's a prefix as well as the exponent
           } // end if there's an exponent
 
-          // Now apply the prefix, if there is one, to the magnitude
+          // Now apply the prefix, if there is one, to the conversion
+          // prefix or the magnitude
           if (pfxVal) {
-            theMag *= pfxVal;
-            retUnit.assignVals({ 'magnitude_': theMag });
+            if (retUnit.cnv_) {
+              retUnit.assignVals({ 'cnvPfx_': pfxVal });
+            } else {
+              theMag *= pfxVal;
+              retUnit.assignVals({ 'magnitude_': theMag });
+            }
           }
 
           // if we have a prefix and/or an exponent, add them to the unit name

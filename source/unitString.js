@@ -802,15 +802,22 @@ export class UnitString {
             // if the prefix base is not 10, it won't have an exponent.
             // At the moment I don't see any units using the prefixes
             // that aren't base 10.   But if we get one the prefix value
-            // will be applied to the magnitude (below), which is what
-            // we want anyway.
+            // will be applied to the magnitude (below) if the unit does
+            // not have a conversion function, and to the conversion prefix
+            // if it does.
           } // end if there's a prefix as well as the exponent
         } // end if there's an exponent
 
-        // Now apply the prefix, if there is one, to the magnitude
+        // Now apply the prefix, if there is one, to the conversion
+        // prefix or the magnitude
         if (pfxVal) {
-          theMag *= pfxVal;
-          retUnit.assignVals({'magnitude_': theMag})
+          if (retUnit.cnv_) {
+            retUnit.assignVals({'cnvPfx_': pfxVal});
+          }
+          else {
+            theMag *= pfxVal;
+            retUnit.assignVals({'magnitude_': theMag})
+          }
         }
 
         // if we have a prefix and/or an exponent, add them to the unit name

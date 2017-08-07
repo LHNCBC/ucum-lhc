@@ -73,14 +73,14 @@ describe('Test Unit convertFrom/convertTo methods', function() {
     it('should return 2000 for 2 g.kmol/(mmol.kmol) to g/mol', function() {
       var respObj = uString.parseString('g.kmol/(mmol.kmol)');
       var fromUnit = respObj[0];
-      respObj = uString.parseString('g/mol');
+      var respObj = uString.parseString('g/mol');
       var toUnit = respObj[0];
       var res1 = toUnit.convertFrom(2, fromUnit);
       assert(Math.abs(2000 - res1) < 0.0000000000003, `result returned was ${res1}`);
     });
-    it('should return 2 for 2000/mol to kmol', function(){
+    it('should return 2 for 2000 mol to kmol', function(){
       var mol = uTabs.getUnitByCode('mol');
-      respObj = uString.parseString('kmol');
+      var respObj = uString.parseString('kmol');
       var kmol = respObj[0];
       var res2 = mol.convertTo(2000, kmol);
       assert.equal(res2, 2, `result returned was ${res2}`);
@@ -88,14 +88,14 @@ describe('Test Unit convertFrom/convertTo methods', function() {
     it('should return 10000 for 10/mol to /kmol', function(){
       respObj = uString.parseString('10/mol');
       var molD10 = respObj[0];
-      respObj = uString.parseString('/kmol');
+      var respObj = uString.parseString('/kmol');
       var kmolD1 = respObj[0];
       var res3 = kmolD1.convertFrom(1, molD10);
       assert.equal(res3, 10000, `result returned was ${res3}`);
     }) ;
     it('should return 2000 for 2 kmol/[CFU] to mol', function(){
       var mol = uTabs.getUnitByCode('mol');
-      respObj = uString.parseString('kmol/[CFU]');
+      var respObj = uString.parseString('kmol/[CFU]');
       var kmolCFU = respObj[0];
       var res4 = kmolCFU.convertTo(2, mol);
        assert.equal(res4, 2000, `result returned was ${res4}`);
@@ -110,10 +110,24 @@ describe('Test Unit convertFrom/convertTo methods', function() {
       assert(Math.abs(50 - resToFahr) < 0.000000000099, `result returned was ${resToFahr}`);
     });
     it("should return 0 for 32 Fahrenheit units to Celsius", function() {
-      fahrUnit = uTabs.getUnitByCode('[degF]');
-      celUnit = uTabs.getUnitByCode('Cel');
+      var fahrUnit = uTabs.getUnitByCode('[degF]');
+      var celUnit = uTabs.getUnitByCode('Cel');
       var resToCel = celUnit.convertFrom(32, fahrUnit);
       assert(Math.abs(0 - resToCel) < 0.00000000000006, `result returned was ${resToCel}`);
+    });
+    it("should return 537.75 for 1 kiloFahrenheit unit to Celsius", function() {
+      var respObj = uString.parseString('k[degF]');
+      var kfahrUnit = respObj[0];
+      var celUnit = uTabs.getUnitByCode('Cel');
+      var resToCel = celUnit.convertFrom(1, kfahrUnit);
+      assert(Math.abs(0 - resToCel) < 537.79, `result returned was ${resToCel}`);
+    });
+    it("should return 1832 for 1 kiloCelsius unit to Fahrenheit", function() {
+      var respObj = uString.parseString('kCel');
+      var kcelUnit = respObj[0];
+      var fahrUnit = uTabs.getUnitByCode('[degF]');
+      var resToFahr = fahrUnit.convertFrom(1, kcelUnit);
+      assert.equal(resToFahr, 1832, `result returned was ${resToFahr}`);
     });
   }); // end test conversion for units with no vectors but with functions
 
