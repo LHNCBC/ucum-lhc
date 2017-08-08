@@ -149,7 +149,7 @@ export class Prefix {
    */
   equals(prefix2) {
     return this.code_ === prefix2.code_ &&
-            this.ciCode_ === prefix2.coCode_ &&
+            this.ciCode_ === prefix2.ciCode_ &&
             this.name_ === prefix2.name_ &&
             this.printSymbol_ === prefix2.printSymbol_ &&
             this.value_ === prefix2.value_ &&

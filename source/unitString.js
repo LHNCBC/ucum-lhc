@@ -749,6 +749,7 @@ export class UnitString {
             pfxVal = pfxObj.getValue();
             pfxExp = pfxObj.getExp();
             pfxName = pfxObj.getName();
+            pfxCiCode = pfxObj.getCiCode();
             pfxPrintSymbol = pfxObj.getPrintSymbol();
             uCode = uCode.substr(1);
             ulen -= 1;
