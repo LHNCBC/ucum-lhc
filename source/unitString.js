@@ -910,7 +910,7 @@ export class UnitString {
               let nMag = nextUnit.getProperty('magnitude_');
               isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
               let uString = finalUnit.toString();
-              if (u2 == 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
+              if (u2 === 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
                 uString = '';
               }
               let theName = uString + thisOp + nextUnit.getProperty('name_');

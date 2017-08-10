@@ -115,12 +115,12 @@ describe('Test Unit convertFrom/convertTo methods', function() {
       var resToCel = celUnit.convertFrom(32, fahrUnit);
       assert(Math.abs(0 - resToCel) < 0.00000000000006, `result returned was ${resToCel}`);
     });
-    it("should return 537.75 for 1 kiloFahrenheit unit to Celsius", function() {
+    it("should return 537.7777777... for 1 kiloFahrenheit unit to Celsius", function() {
       var respObj = uString.parseString('k[degF]');
       var kfahrUnit = respObj[0];
       var celUnit = uTabs.getUnitByCode('Cel');
       var resToCel = celUnit.convertFrom(1, kfahrUnit);
-      assert(Math.abs(0 - resToCel) < 537.79, `result returned was ${resToCel}`);
+      assert(Math.abs(resToCel) < 537.79, `result returned was ${resToCel}`);
     });
     it("should return 1832 for 1 kiloCelsius unit to Fahrenheit", function() {
       var respObj = uString.parseString('kCel');
