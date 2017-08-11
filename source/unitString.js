@@ -910,12 +910,16 @@ export class UnitString {
               let nMag = nextUnit.getProperty('magnitude_');
               isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
               let uString = finalUnit.toString();
+              // if the original string was something like /xyz, the string was
+              // processed as if it was 1/xyz, to make sure the unit arithmetic
+              // is performed correctly.   Remove it from the string used to
+              // create the name, as it is no longer needed.  Note that this
+              // does not happen if the string is something like 7/xyz.
               if (u2 === 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
                 uString = '';
               }
               let theName = uString + thisOp + nextUnit.getProperty('name_');
-              if (uString === '')
-                theName = theName.replace('/', 'per ');
+
               let theCode = uString + thisOp + nextUnit.getProperty('csCode_');
               let ciCode = uString + thisOp + nextUnit.getProperty('ciCode_');
               let printSym = uString + thisOp +

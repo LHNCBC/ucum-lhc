@@ -619,7 +619,7 @@ export class Unit {
     if (this.ciCode_ && unit2.ciCode_)
       this.ciCode_ = this.divString(this.ciCode_, unit2.ciCode_);
     else if (unit2.ciCode_)
-      this.ciCode_ = unit2.ciCode_ ;
+      this.ciCode_ = '/' + unit2.ciCode_ ;
     if (this.guidance_ && unit2.guidance_)
       this.guidance_ = this.divString(this.guidance_, unit2.guidance_);
     else if (unit2.guidance_)
