@@ -614,17 +614,26 @@ export class Unit {
       throw (new Error(`Attempt to divide non-ratio unit ${this.name_}`));
     if (unit2.cnv_ != null)
       throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
-    this.name_ = this.divString(this.name_, unit2.name_);
+
+    if (this.name_ && unit2.name_)
+      this.name_ = this.divString(this.name_, unit2.name_);
+    else if (unit2.name_)
+      this.name_ = unit2.invertString(unit2.name_);
+
     this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
+
     if (this.ciCode_ && unit2.ciCode_)
       this.ciCode_ = this.divString(this.ciCode_, unit2.ciCode_);
     else if (unit2.ciCode_)
-      this.ciCode_ = '/' + unit2.ciCode_ ;
+      this.ciCode_ = unit2.invertString(unit2.ciCode_) ;
+
     if (this.guidance_ && unit2.guidance_)
       this.guidance_ = this.divString(this.guidance_, unit2.guidance_);
     else if (unit2.guidance_)
       this.guidance_ = unit2.guidance_ ;
+
     this.magnitude_ /= unit2.magnitude_;
+
     if (this.printSymbol_ && unit2.printSymbol_)
       this.printSymbol_ = this.divString(this.printSymbol_, unit2.printSymbol_);
     else if (unit2.printSymbol_)
@@ -666,21 +675,38 @@ export class Unit {
     if (this.cnv_ != null)
       throw (new Error(`Attempt to invert a non-ratio unit - ${this.name_}`));
 
-    if (this.name_.length > 0) {
-      let nameRep = this.name_.replace('/', "!").replace('.', '/').replace("!", '.');
-      switch(nameRep.charAt(0)) {
-        case '.' : this.name_ = nameRep.substr(1); break;
-        case '/' : this.name_ = nameRep; break;
-        default  : this.name_ = "/" + nameRep;
-      }
-    }
+    if(this.name_.length > 0)
+      this.name_ = this.invertString(this.name_);
     this.magnitude_ = 1/this.magnitude_ ;
     this.dim_.minus();
     return this;
 
   } // end invert
 
-  
+
+  /**
+   * Inverts a string, where the string is assumed to be a code or a name
+   * of a division operation where the string is the divisor and the dividend
+   * is blank.
+   *
+   * @param the string to be inverted
+   * @return the inverted string
+   */
+  invertString(theString) {
+
+    if (theString.length > 0) {
+      let stringRep = theString.replace('/', "!").replace('.', '/').replace("!", '.');
+      switch(stringRep.charAt(0)) {
+        case '.' : theString = stringRep.substr(1); break;
+        case '/' : theString = stringRep; break;
+        default  : theString = "/" + stringRep;
+      }
+    }
+    return theString;
+
+  } // end invertString
+
+
   /**
    * Raises the unit to a power.  For example
    *  kg.m/s2 raised to the -2 power would be kg-2.m-2/s-4
