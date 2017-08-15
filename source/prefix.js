@@ -18,8 +18,12 @@ export class Prefix {
    *
    * @param attrs a hash of the values to use in creating the prefix object.
    *  They should be:
-   *   code_ - which is the code used for the prefix, e.g., k for kilo
+   *   code_ - which is the case-sensitive code used for the prefix,
+   *    e.g., k for kilo
+   *   ciCode_ - which is the case-insensitive code used for the prefix,
+   *    e.g., K for kilo
    *   name_ - which is the name of the prefix, e.g., kilo
+   *   printSymbol_ - which is the print symbol for the prefix, e.g., k for kilo
    *   value_ - which is teh value to use in multiplying the magnitude of
    *    a unit, e.g., for a prefix of c the value will be .01.
    *   exp_ - which is the exponent used to get the value. For decimal based
@@ -51,9 +55,19 @@ export class Prefix {
     this.code_ = attrs['code_'];
 
     /**
+     * The case-insensitive code, e.g., K for kilo
+     */
+    this.ciCode_ = attrs['ciCode_'];
+
+    /**
      * The prefix name, e.g., kilo
      */
     this.name_ = attrs['name_'];
+
+    /**
+     * The printSymbol for the prefix, e.g., k for kilo
+     */
+    this.printSymbol_ = attrs['printSymbol_'];
 
     /**
      * The value to use in multiplying the magnitude of a unit
@@ -91,11 +105,29 @@ export class Prefix {
 
 
   /**
+   * Returns the case-insensitive code for the current prefix object
+   * @return the case_insensitive code for the current prefix object
+   */
+  getCiCode() {
+    return this.ciCode_;
+  }
+
+
+  /**
    * Returns the prefix name for the current prefix object
    * @return the name for the current prefix object
    */
   getName() {
     return this.name_;
+  }
+
+
+  /**
+   * Returns the print symbol for the current prefix object
+   * @return the print symbol for the current prefix object
+   */
+  getPrintSymbol() {
+    return this.printSymbol_;
   }
 
 
@@ -110,15 +142,17 @@ export class Prefix {
 
   /**
    * Provides way to tell if one prefix equals another.  The second prefix
-   * must all attribute values.
+   * must match all attribute values.
    *
    * @param prefix2 prefix object to check for a match
    * @return true for a match; false if one or more attributes don't match
    */
   equals(prefix2) {
     return this.code_ === prefix2.code_ &&
-        this.name_ === prefix2.name_ &&
-        this.value_ === prefix2.value_ &&
-        this.exp_ === prefix2.exp_ ;
+            this.ciCode_ === prefix2.ciCode_ &&
+            this.name_ === prefix2.name_ &&
+            this.printSymbol_ === prefix2.printSymbol_ &&
+            this.value_ === prefix2.value_ &&
+            this.exp_ === prefix2.exp_ ;
   }
 } // end Prefix class

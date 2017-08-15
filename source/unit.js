@@ -373,10 +373,13 @@ export class Unit {
     let fromCnv = fromUnit.cnv_ ;
     let fromMag = fromUnit.magnitude_ ;
 
-    // if neither unit has a conversion function, multiply the "from" unit's
-    // magnitude by the number passed in and then divide that result by this
-    // unit's magnitude.  Do this for units with and without dimension vectors.
-    if (fromCnv == null && this.cnv_ == null) {
+    // If the same conversion function is specified for both units, which
+    // includes neither unit having a conversion function, multiply the
+    // "from" unit's magnitude by the number passed in and then divide
+    // that result by this unit's magnitude.  Do this for units with
+    // and without dimension vectors.  PROBLEM with 2 non-commensurable
+    // units with no dimension vector or function, e.g., byte to mol
+    if (fromCnv === this.cnv_) {
       newNum = (num * fromMag) / this.magnitude_;
     }
     // else use a function to get the number to be returned
@@ -384,16 +387,19 @@ export class Unit {
       let x = 0.0 ;
       let funcs = UcumFunctions.getInstance();
       if (fromCnv != null) {
-        // turn num * fromUnit.magnitude into its ratio scale equivalent
+        // turn num * fromUnit.magnitude into its ratio scale equivalent,
+        // e.g., convert Celsius to Kelvin
         let fromFunc = funcs.forName(fromCnv);
         x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
+        //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
       }
       else {
         x = num * fromMag;
       }
 
       if (this.cnv_ != null) {
-        // turn mag * origUnit on ratio scale into a non-ratio unit
+        // turn mag * origUnit on ratio scale into a non-ratio unit,
+        // e.g. convert Kelvin to Fahrenheit
         let toFunc = funcs.forName(this.cnv_);
         newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
       }
@@ -557,6 +563,10 @@ export class Unit {
       else {
         this.name_ = this.mulString(this.name_, unit2.name_);
         this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
+        if (this.ciCode_ && unit2.ciCode_)
+          this.ciCode_ = this.mulString(this.ciCode_, unit2.ciCode_) ;
+        else if (unit2.ciCode_)
+          this.ciCode_ = unit2.ciCode_;
         if (this.guidance_ && unit2.guidance_)
           this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);
         else if (unit2.guidance_)
@@ -604,13 +614,26 @@ export class Unit {
       throw (new Error(`Attempt to divide non-ratio unit ${this.name_}`));
     if (unit2.cnv_ != null)
       throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
-    this.name_ = this.divString(this.name_, unit2.name_);
+
+    if (this.name_ && unit2.name_)
+      this.name_ = this.divString(this.name_, unit2.name_);
+    else if (unit2.name_)
+      this.name_ = unit2.invertString(unit2.name_);
+
     this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
+
+    if (this.ciCode_ && unit2.ciCode_)
+      this.ciCode_ = this.divString(this.ciCode_, unit2.ciCode_);
+    else if (unit2.ciCode_)
+      this.ciCode_ = unit2.invertString(unit2.ciCode_) ;
+
     if (this.guidance_ && unit2.guidance_)
       this.guidance_ = this.divString(this.guidance_, unit2.guidance_);
     else if (unit2.guidance_)
       this.guidance_ = unit2.guidance_ ;
+
     this.magnitude_ /= unit2.magnitude_;
+
     if (this.printSymbol_ && unit2.printSymbol_)
       this.printSymbol_ = this.divString(this.printSymbol_, unit2.printSymbol_);
     else if (unit2.printSymbol_)
@@ -652,21 +675,37 @@ export class Unit {
     if (this.cnv_ != null)
       throw (new Error(`Attempt to invert a non-ratio unit - ${this.name_}`));
 
-    if (this.name_.length > 0) {
-      let nameRep = this.name_.replace('/', "!").replace('.', '/').replace("!", '.');
-      switch(nameRep.charAt(0)) {
-        case '.' : this.name_ = nameRep.substr(1); break;
-        case '/' : this.name_ = nameRep; break;
-        default  : this.name_ = "/" + nameRep;
-      }
-    }
+    this.name_ = this.invertString(this.name_);
     this.magnitude_ = 1/this.magnitude_ ;
     this.dim_.minus();
     return this;
 
   } // end invert
 
-  
+
+  /**
+   * Inverts a string, where the string is assumed to be a code or a name
+   * of a division operation where the string is the divisor and the dividend
+   * is blank.
+   *
+   * @param the string to be inverted
+   * @return the inverted string
+   */
+  invertString(theString) {
+
+    if (theString.length > 0) {
+      let stringRep = theString.replace('/', "!").replace('.', '/').replace("!", '.');
+      switch(stringRep.charAt(0)) {
+        case '.' : theString = stringRep.substr(1); break;
+        case '/' : theString = stringRep; break;
+        default  : theString = "/" + stringRep;
+      }
+    }
+    return theString;
+
+  } // end invertString
+
+
   /**
    * Raises the unit to a power.  For example
    *  kg.m/s2 raised to the -2 power would be kg-2.m-2/s-4

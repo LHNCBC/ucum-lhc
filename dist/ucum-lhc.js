@@ -3,145 +3,193 @@ module.exports={
   "prefixes": [
     {
       "code_": "E",
+      "ciCode_": "EX",
       "name_": "exa",
+      "printSymbol_": "E",
       "value_": 1000000000000000000,
       "exp_": "18"
     },
     {
       "code_": "G",
+      "ciCode_": "GA",
       "name_": "giga",
+      "printSymbol_": "G",
       "value_": 1000000000,
       "exp_": "9"
     },
     {
       "code_": "Gi",
+      "ciCode_": "GIB",
       "name_": "gibi",
+      "printSymbol_": "Gi",
       "value_": 1073741824,
       "exp_": null
     },
     {
       "code_": "Ki",
+      "ciCode_": "KIB",
       "name_": "kibi",
+      "printSymbol_": "Ki",
       "value_": 1024,
       "exp_": null
     },
     {
       "code_": "M",
+      "ciCode_": "MA",
       "name_": "mega",
+      "printSymbol_": "M",
       "value_": 1000000,
       "exp_": "6"
     },
     {
       "code_": "Mi",
+      "ciCode_": "MIB",
       "name_": "mebi",
+      "printSymbol_": "Mi",
       "value_": 1048576,
       "exp_": null
     },
     {
       "code_": "P",
+      "ciCode_": "PT",
       "name_": "peta",
+      "printSymbol_": "P",
       "value_": 1000000000000000,
       "exp_": "15"
     },
     {
       "code_": "T",
+      "ciCode_": "TR",
       "name_": "tera",
+      "printSymbol_": "T",
       "value_": 1000000000000,
       "exp_": "12"
     },
     {
       "code_": "Ti",
+      "ciCode_": "TIB",
       "name_": "tebi",
+      "printSymbol_": "Ti",
       "value_": 1099511627776,
       "exp_": null
     },
     {
       "code_": "Y",
+      "ciCode_": "YA",
       "name_": "yotta",
+      "printSymbol_": "Y",
       "value_": 1e+24,
       "exp_": "24"
     },
     {
       "code_": "Z",
+      "ciCode_": "ZA",
       "name_": "zetta",
+      "printSymbol_": "Z",
       "value_": 1e+21,
       "exp_": "21"
     },
     {
       "code_": "a",
+      "ciCode_": "A",
       "name_": "atto",
+      "printSymbol_": "a",
       "value_": 1e-18,
       "exp_": "-18"
     },
     {
       "code_": "c",
+      "ciCode_": "C",
       "name_": "centi",
+      "printSymbol_": "c",
       "value_": 0.01,
       "exp_": "-2"
     },
     {
       "code_": "d",
+      "ciCode_": "D",
       "name_": "deci",
+      "printSymbol_": "d",
       "value_": 0.1,
       "exp_": "-1"
     },
     {
       "code_": "da",
+      "ciCode_": "DA",
       "name_": "deka",
+      "printSymbol_": "da",
       "value_": 10,
       "exp_": "1"
     },
     {
       "code_": "f",
+      "ciCode_": "F",
       "name_": "femto",
+      "printSymbol_": "f",
       "value_": 1e-15,
       "exp_": "-15"
     },
     {
       "code_": "h",
+      "ciCode_": "H",
       "name_": "hecto",
+      "printSymbol_": "h",
       "value_": 100,
       "exp_": "2"
     },
     {
       "code_": "k",
+      "ciCode_": "K",
       "name_": "kilo",
+      "printSymbol_": "k",
       "value_": 1000,
       "exp_": "3"
     },
     {
       "code_": "m",
+      "ciCode_": "M",
       "name_": "milli",
+      "printSymbol_": "m",
       "value_": 0.001,
       "exp_": "-3"
     },
     {
       "code_": "n",
+      "ciCode_": "N",
       "name_": "nano",
+      "printSymbol_": "n",
       "value_": 1e-9,
       "exp_": "-9"
     },
     {
       "code_": "p",
+      "ciCode_": "P",
       "name_": "pico",
+      "printSymbol_": "p",
       "value_": 1e-12,
       "exp_": "-12"
     },
     {
       "code_": "u",
+      "ciCode_": "U",
       "name_": "micro",
+      "printSymbol_": "μ",
       "value_": 0.000001,
       "exp_": "-6"
     },
     {
       "code_": "y",
+      "ciCode_": "YO",
       "name_": "yocto",
+      "printSymbol_": "y",
       "value_": 1.0000000000000001e-24,
       "exp_": "-24"
     },
     {
       "code_": "z",
+      "ciCode_": "ZO",
       "name_": "zepto",
+      "printSymbol_": "z",
       "value_": 1e-21,
       "exp_": "-21"
     }
@@ -8223,7 +8271,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
-      "synonyms_": "inches WC; inAq; in H2O; inch of water gauge; iwg; pressure",
+      "synonyms_": "inches WC; inAq; in H2O; inch of water gauge; iwg; pressure",
       "source_": "UCUM",
       "loincProperty_": "Pres",
       "category_": "Clinical",
@@ -11008,7 +11056,7 @@ module.exports={
       "isBase_": false,
       "name_": "per twelve hour",
       "csCode_": "/(12.h)",
-      "ciCode_": "HR",
+      "ciCode_": "/12.HR",
       "property_": "time",
       "magnitude_": 0.000023148148148148147,
       "dim_": {
@@ -11022,7 +11070,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "h",
+      "printSymbol_": "/12.h",
       "class_": "iso1000",
       "isMetric_": false,
       "variable_": null,
@@ -11039,6 +11087,249 @@ module.exports={
       "ciUnitString_": "MIN",
       "baseFactorStr_": "60",
       "baseFactor_": "60",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "per arbitrary unit",
+      "csCode_": "/[arb'U]",
+      "ciCode_": "/[ARB'U]",
+      "property_": "arbitrary",
+      "magnitude_": 1,
+      "dim_": null,
+      "printSymbol_": "/arb. U",
+      "class_": "chemical",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": true,
+      "synonyms_": "/arbU",
+      "source_": "LOINC",
+      "loincProperty_": "InvA ",
+      "category_": "Clinical",
+      "guidance_": "",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "1",
+      "baseFactor_": "1",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "per high power field",
+      "csCode_": "/[HPF]",
+      "ciCode_": "/[HPF]",
+      "property_": "view area in microscope",
+      "magnitude_": 1,
+      "dim_": null,
+      "printSymbol_": "/HPF",
+      "class_": "chemical",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": false,
+      "synonyms_": "/HPF; per HPF",
+      "source_": "LOINC",
+      "loincProperty_": "Naric",
+      "category_": "Clinical",
+      "guidance_": "",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "1",
+      "baseFactor_": "1",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "per international unit",
+      "csCode_": "/[IU]",
+      "ciCode_": "/[IU]",
+      "property_": "arbitrary",
+      "magnitude_": 1,
+      "dim_": null,
+      "printSymbol_": "/i.U.",
+      "class_": "chemical",
+      "isMetric_": true,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": true,
+      "synonyms_": "international units; /IU; per IU",
+      "source_": "LOINC",
+      "loincProperty_": "InvA",
+      "category_": "Clinical",
+      "guidance_": "International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO)",
+      "csUnitString_": "[iU]",
+      "ciUnitString_": "[IU]",
+      "baseFactorStr_": "1",
+      "baseFactor_": "1",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "per low power field",
+      "csCode_": "/[LPF]",
+      "ciCode_": "/[LPF]",
+      "property_": "view area in microscope",
+      "magnitude_": 1,
+      "dim_": null,
+      "printSymbol_": "/LPF",
+      "class_": "chemical",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": false,
+      "synonyms_": "/LPF; per LPF",
+      "source_": "LOINC",
+      "loincProperty_": "Naric",
+      "category_": "Clinical",
+      "guidance_": "",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "100",
+      "baseFactor_": "100",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "per 10 billion  ",
+      "csCode_": "/10*10",
+      "ciCode_": "/10*10",
+      "property_": "number",
+      "magnitude_": 1e-10,
+      "dim_": null,
+      "printSymbol_": "/10<sup>10</sup>",
+      "class_": "dimless",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": false,
+      "synonyms_": "/10^10; per 10*10",
+      "source_": "LOINC",
+      "loincProperty_": "NFr",
+      "category_": "Clinical",
+      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "10",
+      "baseFactor_": "10",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "per trillion ",
+      "csCode_": "/10*12",
+      "ciCode_": "/10*12",
+      "property_": "number",
+      "magnitude_": 1e-12,
+      "dim_": null,
+      "printSymbol_": "/10<sup>12</sup>",
+      "class_": "dimless",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": false,
+      "synonyms_": "/10^12; per 10*12",
+      "source_": "LOINC",
+      "loincProperty_": "NFr",
+      "category_": "Clinical",
+      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "10",
+      "baseFactor_": "10",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "per thousand",
+      "csCode_": "/10*3",
+      "ciCode_": "/10*3",
+      "property_": "number",
+      "magnitude_": 0.001,
+      "dim_": null,
+      "printSymbol_": "/10<sup>3</sup>",
+      "class_": "dimless",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": false,
+      "synonyms_": "/10^3; per 10*3",
+      "source_": "LOINC",
+      "loincProperty_": "NFr",
+      "category_": "Clinical",
+      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "10",
+      "baseFactor_": "10",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "per million",
+      "csCode_": "/10*6",
+      "ciCode_": "/10*6",
+      "property_": "number",
+      "magnitude_": 0.000001,
+      "dim_": null,
+      "printSymbol_": "/10<sup>6</sup>",
+      "class_": "dimless",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": false,
+      "synonyms_": "/10^6; per 10*6;",
+      "source_": "LOINC",
+      "loincProperty_": "NFr",
+      "category_": "Clinical",
+      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "10",
+      "baseFactor_": "10",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "per billion",
+      "csCode_": "/10*9",
+      "ciCode_": "/10*9",
+      "property_": "number",
+      "magnitude_": 1e-9,
+      "dim_": null,
+      "printSymbol_": "/10<sup>9</sup>",
+      "class_": "dimless",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": false,
+      "synonyms_": "/10^9; per 10*9",
+      "source_": "LOINC",
+      "loincProperty_": "NFr",
+      "category_": "Clinical",
+      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "10",
+      "baseFactor_": "10",
       "defError_": false
     },
     {
@@ -11180,7 +11471,7 @@ module.exports={
       "isBase_": false,
       "name_": "per year",
       "csCode_": "/a",
-      "ciCode_": "ANN",
+      "ciCode_": "/ANN",
       "property_": "time",
       "magnitude_": 3.168808781402895e-8,
       "dim_": {
@@ -11194,7 +11485,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "a",
+      "printSymbol_": "/a",
       "class_": "iso1000",
       "isMetric_": false,
       "variable_": null,
@@ -11217,7 +11508,7 @@ module.exports={
       "isBase_": false,
       "name_": "per centimeter of water",
       "csCode_": "/cm[H2O]",
-      "ciCode_": "M[H2O]",
+      "ciCode_": "/CM[H2O]",
       "property_": "pressure",
       "magnitude_": 0.000010197162129779282,
       "dim_": {
@@ -11231,7 +11522,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m HO<sub><r>2</r></sub>",
+      "printSymbol_": "/cm HO<sub><r>2</r></sub>",
       "class_": "clinical",
       "isMetric_": true,
       "variable_": null,
@@ -11254,7 +11545,7 @@ module.exports={
       "isBase_": false,
       "name_": "per day",
       "csCode_": "/d",
-      "ciCode_": "D",
+      "ciCode_": "/D",
       "property_": "time",
       "magnitude_": 0.000011574074074074073,
       "dim_": {
@@ -11268,7 +11559,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "d",
+      "printSymbol_": "/d",
       "class_": "iso1000",
       "isMetric_": false,
       "variable_": null,
@@ -11291,7 +11582,7 @@ module.exports={
       "isBase_": false,
       "name_": "per deciliter",
       "csCode_": "/dL",
-      "ciCode_": "",
+      "ciCode_": "/D",
       "property_": "volume",
       "magnitude_": 10000,
       "dim_": {
@@ -11305,7 +11596,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "/dL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -11328,7 +11619,7 @@ module.exports={
       "isBase_": true,
       "name_": "per gram",
       "csCode_": "/g",
-      "ciCode_": "G",
+      "ciCode_": "/G",
       "property_": "mass",
       "magnitude_": 1,
       "dim_": {
@@ -11342,7 +11633,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "/g",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -11365,7 +11656,7 @@ module.exports={
       "isBase_": false,
       "name_": "per hour",
       "csCode_": "/h",
-      "ciCode_": "HR",
+      "ciCode_": "/HR",
       "property_": "time",
       "magnitude_": 0.0002777777777777778,
       "dim_": {
@@ -11379,7 +11670,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "h",
+      "printSymbol_": "/h",
       "class_": "iso1000",
       "isMetric_": false,
       "variable_": null,
@@ -11402,7 +11693,7 @@ module.exports={
       "isBase_": true,
       "name_": "per kilogram",
       "csCode_": "/kg",
-      "ciCode_": "G",
+      "ciCode_": "/KG",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -11416,7 +11707,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "/kg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -11439,7 +11730,7 @@ module.exports={
       "isBase_": false,
       "name_": "per liter",
       "csCode_": "/L",
-      "ciCode_": "",
+      "ciCode_": "/",
       "property_": "volume",
       "magnitude_": 1000,
       "dim_": {
@@ -11453,7 +11744,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "/L",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -11476,7 +11767,7 @@ module.exports={
       "isBase_": true,
       "name_": "per square meter",
       "csCode_": "/m2",
-      "ciCode_": "M",
+      "ciCode_": "/M2",
       "property_": "length",
       "magnitude_": 1,
       "dim_": {
@@ -11490,7 +11781,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "/m<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -11513,7 +11804,7 @@ module.exports={
       "isBase_": true,
       "name_": "per cubic meter",
       "csCode_": "/m3",
-      "ciCode_": "M",
+      "ciCode_": "/M3",
       "property_": "length",
       "magnitude_": 1,
       "dim_": {
@@ -11527,7 +11818,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "/m<sup>3</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -11550,7 +11841,7 @@ module.exports={
       "isBase_": true,
       "name_": "per milligram",
       "csCode_": "/mg",
-      "ciCode_": "G",
+      "ciCode_": "/MG",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -11564,7 +11855,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "/mg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -11587,7 +11878,7 @@ module.exports={
       "isBase_": false,
       "name_": "per minute",
       "csCode_": "/min",
-      "ciCode_": "MIN",
+      "ciCode_": "/MIN",
       "property_": "time",
       "magnitude_": 0.016666666666666666,
       "dim_": {
@@ -11601,7 +11892,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "min",
+      "printSymbol_": "/min",
       "class_": "iso1000",
       "isMetric_": false,
       "variable_": null,
@@ -11624,7 +11915,7 @@ module.exports={
       "isBase_": false,
       "name_": "per milliliter",
       "csCode_": "/mL",
-      "ciCode_": "",
+      "ciCode_": "/M",
       "property_": "volume",
       "magnitude_": 1000000,
       "dim_": {
@@ -11638,7 +11929,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "/mL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -11661,7 +11952,7 @@ module.exports={
       "isBase_": true,
       "name_": "per millimeter",
       "csCode_": "/mm",
-      "ciCode_": "M",
+      "ciCode_": "/MM",
       "property_": "length",
       "magnitude_": 1000,
       "dim_": {
@@ -11675,7 +11966,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "/mm",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -11698,7 +11989,7 @@ module.exports={
       "isBase_": false,
       "name_": "per month",
       "csCode_": "/mo",
-      "ciCode_": "MO",
+      "ciCode_": "/MO",
       "property_": "time",
       "magnitude_": 3.802570537683474e-7,
       "dim_": {
@@ -11712,7 +12003,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mo",
+      "printSymbol_": "/mo",
       "class_": "iso1000",
       "isMetric_": false,
       "variable_": null,
@@ -11735,7 +12026,7 @@ module.exports={
       "isBase_": true,
       "name_": "per second",
       "csCode_": "/s",
-      "ciCode_": "S",
+      "ciCode_": "/S",
       "property_": "time",
       "magnitude_": 1,
       "dim_": {
@@ -11749,7 +12040,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "s",
+      "printSymbol_": "/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "T",
@@ -11772,7 +12063,7 @@ module.exports={
       "isBase_": false,
       "name_": "per enzyme unit",
       "csCode_": "/U",
-      "ciCode_": "U",
+      "ciCode_": "/U",
       "property_": "catalytic activity",
       "magnitude_": 9.963241120049633e-17,
       "dim_": {
@@ -11786,7 +12077,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U",
+      "printSymbol_": "/U",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -11809,7 +12100,7 @@ module.exports={
       "isBase_": false,
       "name_": "per microliter",
       "csCode_": "/uL",
-      "ciCode_": "",
+      "ciCode_": "/U",
       "property_": "volume",
       "magnitude_": 999999999.9999999,
       "dim_": {
@@ -11823,7 +12114,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "/μL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -11846,7 +12137,7 @@ module.exports={
       "isBase_": false,
       "name_": "per week",
       "csCode_": "/wk",
-      "ciCode_": "WK",
+      "ciCode_": "/WK",
       "property_": "time",
       "magnitude_": 0.0000016534391534391535,
       "dim_": {
@@ -11860,7 +12151,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "wk",
+      "printSymbol_": "/wk",
       "class_": "iso1000",
       "isMetric_": false,
       "variable_": null,
@@ -11883,7 +12174,7 @@ module.exports={
       "isBase_": false,
       "name_": "APL unit per milliliter",
       "csCode_": "[APL'U]/mL",
-      "ciCode_": "[APL'U]",
+      "ciCode_": "[APL'U]/M",
       "property_": "biologic activity of anticardiolipin IgA",
       "magnitude_": 1000000,
       "dim_": {
@@ -11897,7 +12188,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -11920,7 +12211,7 @@ module.exports={
       "isBase_": false,
       "name_": "arbitrary unit per milliliter",
       "csCode_": "[arb'U]/mL",
-      "ciCode_": "[ARB'U]",
+      "ciCode_": "[ARB'U]/M",
       "property_": "arbitrary",
       "magnitude_": 1000000,
       "dim_": {
@@ -11934,7 +12225,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "arb. U/L",
+      "printSymbol_": "arb. U/mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -11994,7 +12285,7 @@ module.exports={
       "isBase_": false,
       "name_": "colony forming units per milliliter",
       "csCode_": "[CFU]/mL",
-      "ciCode_": "[CFU]",
+      "ciCode_": "[CFU]/M",
       "property_": "amount of a proliferating organism",
       "magnitude_": 1000000,
       "dim_": {
@@ -12008,7 +12299,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "CFU/L",
+      "printSymbol_": "CFU/mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -12031,7 +12322,7 @@ module.exports={
       "isBase_": false,
       "name_": "foot per foot - US",
       "csCode_": "[ft_us]/[ft_us]",
-      "ciCode_": "[FT_US]",
+      "ciCode_": "[FT_US]/[FT_US]",
       "property_": "length",
       "magnitude_": 1,
       "dim_": {
@@ -12045,7 +12336,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ft<sub>us</sub>/ft<sub>us<.sub>",
+      "printSymbol_": "ft<sub>us</sub>/ft<sub>us</sub>",
       "class_": "us-lengths",
       "isMetric_": false,
       "variable_": null,
@@ -12068,7 +12359,7 @@ module.exports={
       "isBase_": false,
       "name_": "GPL unit per milliliter",
       "csCode_": "[GPL'U]/mL",
-      "ciCode_": "[GPL'U]",
+      "ciCode_": "[GPL'U]/M",
       "property_": "biologic activity of anticardiolipin IgG",
       "magnitude_": 1000000,
       "dim_": {
@@ -12082,7 +12373,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -12105,7 +12396,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per 2 hour",
       "csCode_": "[IU]/(2.h)",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/2.HR",
       "property_": "arbitrary",
       "magnitude_": 0.0001388888888888889,
       "dim_": {
@@ -12119,7 +12410,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./h",
+      "printSymbol_": "i.U./2.h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12142,7 +12433,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per 24 hour",
       "csCode_": "[IU]/(24.h)",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/24.HR",
       "property_": "arbitrary",
       "magnitude_": 0.000011574074074074073,
       "dim_": {
@@ -12156,7 +12447,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./h",
+      "printSymbol_": "i.U./24.h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12179,7 +12470,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per day",
       "csCode_": "[IU]/d",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/D",
       "property_": "arbitrary",
       "magnitude_": 0.000011574074074074073,
       "dim_": {
@@ -12216,7 +12507,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per deciliter",
       "csCode_": "[IU]/dL",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/D",
       "property_": "arbitrary",
       "magnitude_": 10000,
       "dim_": {
@@ -12230,7 +12521,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./L",
+      "printSymbol_": "i.U./dL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12253,7 +12544,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per gram",
       "csCode_": "[IU]/g",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/G",
       "property_": "arbitrary",
       "magnitude_": 1,
       "dim_": {
@@ -12290,7 +12581,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per hour",
       "csCode_": "[IU]/h",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/HR",
       "property_": "arbitrary",
       "magnitude_": 0.0002777777777777778,
       "dim_": {
@@ -12327,7 +12618,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per kilogram",
       "csCode_": "[IU]/kg",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/KG",
       "property_": "arbitrary",
       "magnitude_": 0.001,
       "dim_": {
@@ -12341,7 +12632,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./g",
+      "printSymbol_": "i.U./kg",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12364,7 +12655,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per kilogram per day",
       "csCode_": "[IU]/kg/d",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/KG/D",
       "property_": "arbitrary",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -12378,7 +12669,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./g/d",
+      "printSymbol_": "i.U./kg/d",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12438,7 +12729,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per minute",
       "csCode_": "[IU]/min",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/MIN",
       "property_": "arbitrary",
       "magnitude_": 0.016666666666666666,
       "dim_": {
@@ -12475,7 +12766,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per milliliter",
       "csCode_": "[IU]/mL",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/M",
       "property_": "arbitrary",
       "magnitude_": 1000000,
       "dim_": {
@@ -12489,7 +12780,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./L",
+      "printSymbol_": "i.U./mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12512,7 +12803,7 @@ module.exports={
       "isBase_": false,
       "name_": "MPL unit per milliliter",
       "csCode_": "[MPL'U]/mL",
-      "ciCode_": "[MPL'U]",
+      "ciCode_": "[MPL'U]/M",
       "property_": "biologic activity of anticardiolipin IgM",
       "magnitude_": 1000000,
       "dim_": {
@@ -12526,7 +12817,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -12543,6 +12834,60 @@ module.exports={
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
       "baseFactor_": "1",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "number per high power field",
+      "csCode_": "{#}/[HPF]",
+      "ciCode_": "1/[HPF]",
+      "property_": "view area in microscope",
+      "magnitude_": 1,
+      "dim_": null,
+      "printSymbol_": "1/HPF",
+      "class_": "chemical",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": false,
+      "synonyms_": "#/HPF; # per HPF; number/HPF; numbers per high power field",
+      "source_": "LOINC",
+      "loincProperty_": "Naric",
+      "category_": "Clinical",
+      "guidance_": "",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "1",
+      "baseFactor_": "1",
+      "defError_": false
+    },
+    {
+      "isBase_": false,
+      "name_": "number per low power field",
+      "csCode_": "{#}/[LPF]",
+      "ciCode_": "1/[LPF]",
+      "property_": "view area in microscope",
+      "magnitude_": 1,
+      "dim_": null,
+      "printSymbol_": "1/LPF",
+      "class_": "chemical",
+      "isMetric_": false,
+      "variable_": null,
+      "cnv_": null,
+      "cnvPfx_": 1,
+      "isSpecial_": false,
+      "isArbitrary_": false,
+      "synonyms_": "#/LPF; # per LPF; number/LPF; numbers per low power field",
+      "source_": "LOINC",
+      "loincProperty_": "Naric",
+      "category_": "Clinical",
+      "guidance_": "",
+      "csUnitString_": "1",
+      "ciUnitString_": "1",
+      "baseFactorStr_": "100",
+      "baseFactor_": "100",
       "defError_": false
     },
     {
@@ -12588,7 +12933,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
-      "synonyms_": "enzyme immunoassay index",
+      "synonyms_": "enzyme immunoassay index",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
       "category_": "Clinical",
@@ -12657,7 +13002,7 @@ module.exports={
       "isBase_": false,
       "name_": "trillion per liter",
       "csCode_": "10*12/L",
-      "ciCode_": "10*",
+      "ciCode_": "10*12",
       "property_": "number",
       "magnitude_": 1000000000000000,
       "dim_": {
@@ -12671,7 +13016,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>12</sup>/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12694,11 +13039,11 @@ module.exports={
       "isBase_": false,
       "name_": "10^3 (used for cell count)",
       "csCode_": "10*3",
-      "ciCode_": "10*",
+      "ciCode_": "10*3",
       "property_": "number",
       "magnitude_": 1000,
       "dim_": null,
-      "printSymbol_": "10",
+      "printSymbol_": "10<sup>3</sup>",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12721,7 +13066,7 @@ module.exports={
       "isBase_": false,
       "name_": "thousand per liter",
       "csCode_": "10*3/L",
-      "ciCode_": "10*",
+      "ciCode_": "10*3",
       "property_": "number",
       "magnitude_": 1000000,
       "dim_": {
@@ -12735,7 +13080,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>3</sup>/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12758,7 +13103,7 @@ module.exports={
       "isBase_": false,
       "name_": "thousand per milliliter",
       "csCode_": "10*3/mL",
-      "ciCode_": "10*",
+      "ciCode_": "10*3/M",
       "property_": "number",
       "magnitude_": 1000000000,
       "dim_": {
@@ -12772,7 +13117,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>3</sup>/mL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12795,7 +13140,7 @@ module.exports={
       "isBase_": false,
       "name_": "thousand per microliter",
       "csCode_": "10*3/uL",
-      "ciCode_": "10*",
+      "ciCode_": "10*3/U",
       "property_": "number",
       "magnitude_": 999999999999.9999,
       "dim_": {
@@ -12809,7 +13154,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>3</sup>/μL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12832,7 +13177,7 @@ module.exports={
       "isBase_": false,
       "name_": "10 thousand per microliter",
       "csCode_": "10*4/uL",
-      "ciCode_": "10*",
+      "ciCode_": "10*4/U",
       "property_": "number",
       "magnitude_": 10000000000000,
       "dim_": {
@@ -12846,7 +13191,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>4</sup>/μL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12869,11 +13214,11 @@ module.exports={
       "isBase_": false,
       "name_": "10^5 ",
       "csCode_": "10*5",
-      "ciCode_": "10*",
+      "ciCode_": "10*5",
       "property_": "number",
       "magnitude_": 100000,
       "dim_": null,
-      "printSymbol_": "10",
+      "printSymbol_": "10<sup>5</sup>",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12896,11 +13241,11 @@ module.exports={
       "isBase_": false,
       "name_": "10^6",
       "csCode_": "10*6",
-      "ciCode_": "10*",
+      "ciCode_": "10*6",
       "property_": "number",
       "magnitude_": 1000000,
       "dim_": null,
-      "printSymbol_": "10",
+      "printSymbol_": "10<sup>6</sup>",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12923,7 +13268,7 @@ module.exports={
       "isBase_": false,
       "name_": "million colony forming unit per liter",
       "csCode_": "10*6.[CFU]/L",
-      "ciCode_": "10*",
+      "ciCode_": "10*6.[CFU]",
       "property_": "number",
       "magnitude_": 1000000000,
       "dim_": {
@@ -12937,7 +13282,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10.CFU/L",
+      "printSymbol_": "10<sup>6</sup>.CFU/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12960,11 +13305,11 @@ module.exports={
       "isBase_": false,
       "name_": "million international unit",
       "csCode_": "10*6.[IU]",
-      "ciCode_": "10*",
+      "ciCode_": "10*6.[IU]",
       "property_": "number",
       "magnitude_": 1000000,
       "dim_": null,
-      "printSymbol_": "10.i.U.",
+      "printSymbol_": "10<sup>6</sup>.i.U.",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -12987,7 +13332,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per 24 hour",
       "csCode_": "10*6/(24.h)",
-      "ciCode_": "10*",
+      "ciCode_": "10*6/24.HR",
       "property_": "number",
       "magnitude_": 11.574074074074074,
       "dim_": {
@@ -13001,7 +13346,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/h",
+      "printSymbol_": "10<sup>6</sup>/24.h",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13024,7 +13369,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per kilogram",
       "csCode_": "10*6/kg",
-      "ciCode_": "10*",
+      "ciCode_": "10*6/KG",
       "property_": "number",
       "magnitude_": 1000,
       "dim_": {
@@ -13038,7 +13383,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/g",
+      "printSymbol_": "10<sup>6</sup>/kg",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13061,7 +13406,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per liter",
       "csCode_": "10*6/L",
-      "ciCode_": "10*",
+      "ciCode_": "10*6",
       "property_": "number",
       "magnitude_": 1000000000,
       "dim_": {
@@ -13075,7 +13420,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>6</sup>/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13098,7 +13443,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per milliliter",
       "csCode_": "10*6/mL",
-      "ciCode_": "10*",
+      "ciCode_": "10*6/M",
       "property_": "number",
       "magnitude_": 1000000000000,
       "dim_": {
@@ -13112,7 +13457,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>6</sup>/mL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13135,7 +13480,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per microliter",
       "csCode_": "10*6/uL",
-      "ciCode_": "10*",
+      "ciCode_": "10*6/U",
       "property_": "number",
       "magnitude_": 1000000000000000,
       "dim_": {
@@ -13149,7 +13494,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>6</sup>/μL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13172,11 +13517,11 @@ module.exports={
       "isBase_": false,
       "name_": "10^8",
       "csCode_": "10*8",
-      "ciCode_": "10*",
+      "ciCode_": "10*8",
       "property_": "number",
       "magnitude_": 100000000,
       "dim_": null,
-      "printSymbol_": "10",
+      "printSymbol_": "10<sup>8</sup>",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13199,7 +13544,7 @@ module.exports={
       "isBase_": false,
       "name_": "billion per liter",
       "csCode_": "10*9/L",
-      "ciCode_": "10*",
+      "ciCode_": "10*9",
       "property_": "number",
       "magnitude_": 1000000000000,
       "dim_": {
@@ -13213,7 +13558,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>9</sup>/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13236,7 +13581,7 @@ module.exports={
       "isBase_": false,
       "name_": "billion per milliliter",
       "csCode_": "10*9/mL",
-      "ciCode_": "10*",
+      "ciCode_": "10*9/M",
       "property_": "number",
       "magnitude_": 1000000000000000,
       "dim_": {
@@ -13250,7 +13595,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>9</sup>/mL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13273,7 +13618,7 @@ module.exports={
       "isBase_": false,
       "name_": "billion per microliter",
       "csCode_": "10*9/uL",
-      "ciCode_": "10*",
+      "ciCode_": "10*9/U",
       "property_": "number",
       "magnitude_": 1000000000000000000,
       "dim_": {
@@ -13287,7 +13632,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10/L",
+      "printSymbol_": "10<sup>9</sup>/μL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13310,7 +13655,7 @@ module.exports={
       "isBase_": false,
       "name_": "10 liter per minute per square meter",
       "csCode_": "10.L/(min.m2)",
-      "ciCode_": "",
+      "ciCode_": "10./MIN.M2",
       "property_": "volume",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
@@ -13324,7 +13669,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min/m",
+      "printSymbol_": "10.L/min.m<sup>2</sup>",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -13347,7 +13692,7 @@ module.exports={
       "isBase_": false,
       "name_": "10 liter per minute",
       "csCode_": "10.L/min",
-      "ciCode_": "",
+      "ciCode_": "10./MIN",
       "property_": "volume",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
@@ -13361,7 +13706,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min",
+      "printSymbol_": "10.L/min",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -13384,7 +13729,7 @@ module.exports={
       "isBase_": false,
       "name_": "10 micronewton second per centimeter to the fifth power per square meter",
       "csCode_": "10.uN.s/(cm5.m2)",
-      "ciCode_": "N",
+      "ciCode_": "10.UN.S/CM5.M2",
       "property_": "force",
       "magnitude_": 100000000,
       "dim_": {
@@ -13398,7 +13743,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "N.s/m/m",
+      "printSymbol_": "10.μN.s/cm<sup>5</sup>.m<sup>2</sup>",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -13421,7 +13766,7 @@ module.exports={
       "isBase_": false,
       "name_": "24 hour",
       "csCode_": "24.h",
-      "ciCode_": "HR",
+      "ciCode_": "24.HR",
       "property_": "time",
       "magnitude_": 86400,
       "dim_": {
@@ -13435,7 +13780,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "h",
+      "printSymbol_": "24.h",
       "class_": "iso1000",
       "isMetric_": false,
       "variable_": null,
@@ -13458,7 +13803,7 @@ module.exports={
       "isBase_": false,
       "name_": "ampere per meter",
       "csCode_": "A/m",
-      "ciCode_": "A",
+      "ciCode_": "A/M",
       "property_": "electric current",
       "magnitude_": 1,
       "dim_": {
@@ -13495,7 +13840,7 @@ module.exports={
       "isBase_": true,
       "name_": "centigram",
       "csCode_": "cg",
-      "ciCode_": "G",
+      "ciCode_": "CG",
       "property_": "mass",
       "magnitude_": 0.01,
       "dim_": {
@@ -13509,7 +13854,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "cg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -13532,7 +13877,7 @@ module.exports={
       "isBase_": false,
       "name_": "centiliter",
       "csCode_": "cL",
-      "ciCode_": "",
+      "ciCode_": "C",
       "property_": "volume",
       "magnitude_": 0.00001,
       "dim_": {
@@ -13546,7 +13891,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "cL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -13569,7 +13914,7 @@ module.exports={
       "isBase_": true,
       "name_": "centimeter",
       "csCode_": "cm",
-      "ciCode_": "M",
+      "ciCode_": "CM",
       "property_": "length",
       "magnitude_": 0.01,
       "dim_": {
@@ -13583,7 +13928,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "cm",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -13606,7 +13951,7 @@ module.exports={
       "isBase_": false,
       "name_": "centimeter of water",
       "csCode_": "cm[H2O]",
-      "ciCode_": "M[H2O]",
+      "ciCode_": "CM[H2O]",
       "property_": "pressure",
       "magnitude_": 98066.5,
       "dim_": {
@@ -13620,7 +13965,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m HO<sub><r>2</r></sub>",
+      "printSymbol_": "cm HO<sub><r>2</r></sub>",
       "class_": "clinical",
       "isMetric_": true,
       "variable_": null,
@@ -13643,7 +13988,7 @@ module.exports={
       "isBase_": false,
       "name_": "centimeter of water per liter per second",
       "csCode_": "cm[H2O]/L/s",
-      "ciCode_": "M[H2O]",
+      "ciCode_": "CM[H2O]/S",
       "property_": "pressure",
       "magnitude_": 98066500,
       "dim_": {
@@ -13657,7 +14002,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m HO<sub><r>2</r></sub>/L/s",
+      "printSymbol_": "cm HO<sub><r>2</r></sub>/L/s",
       "class_": "clinical",
       "isMetric_": true,
       "variable_": null,
@@ -13680,7 +14025,7 @@ module.exports={
       "isBase_": false,
       "name_": "centimeter of water per second per meter",
       "csCode_": "cm[H2O]/s/m",
-      "ciCode_": "M[H2O]",
+      "ciCode_": "CM[H2O]/S/M",
       "property_": "pressure",
       "magnitude_": 98066.5,
       "dim_": {
@@ -13694,7 +14039,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m HO<sub><r>2</r></sub>/s/m",
+      "printSymbol_": "cm HO<sub><r>2</r></sub>/s/m",
       "class_": "clinical",
       "isMetric_": true,
       "variable_": null,
@@ -13717,7 +14062,7 @@ module.exports={
       "isBase_": false,
       "name_": "centimeter of mercury",
       "csCode_": "cm[Hg]",
-      "ciCode_": "M[HG]",
+      "ciCode_": "CM[HG]",
       "property_": "pressure",
       "magnitude_": 1333220,
       "dim_": {
@@ -13731,7 +14076,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m Hg",
+      "printSymbol_": "cm Hg",
       "class_": "clinical",
       "isMetric_": true,
       "variable_": null,
@@ -13754,7 +14099,7 @@ module.exports={
       "isBase_": true,
       "name_": "square centimeter",
       "csCode_": "cm2",
-      "ciCode_": "M",
+      "ciCode_": "CM2",
       "property_": "length",
       "magnitude_": 0.0001,
       "dim_": {
@@ -13768,7 +14113,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "cm<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -13791,7 +14136,7 @@ module.exports={
       "isBase_": true,
       "name_": "square centimeter per second",
       "csCode_": "cm2/s",
-      "ciCode_": "M",
+      "ciCode_": "CM2/S",
       "property_": "length",
       "magnitude_": 0.0001,
       "dim_": {
@@ -13805,7 +14150,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/s",
+      "printSymbol_": "cm<sup>2</sup>/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -13828,7 +14173,7 @@ module.exports={
       "isBase_": false,
       "name_": "centipoise",
       "csCode_": "cP",
-      "ciCode_": "P",
+      "ciCode_": "CP",
       "property_": "dynamic viscosity",
       "magnitude_": 1,
       "dim_": {
@@ -13842,7 +14187,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "P",
+      "printSymbol_": "cP",
       "class_": "cgs",
       "isMetric_": true,
       "variable_": null,
@@ -13865,7 +14210,7 @@ module.exports={
       "isBase_": false,
       "name_": "centistoke",
       "csCode_": "cSt",
-      "ciCode_": "ST",
+      "ciCode_": "CST",
       "property_": "kinematic viscosity",
       "magnitude_": 0.0000010000000000000002,
       "dim_": {
@@ -13879,7 +14224,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "St",
+      "printSymbol_": "cSt",
       "class_": "cgs",
       "isMetric_": true,
       "variable_": null,
@@ -13902,7 +14247,7 @@ module.exports={
       "isBase_": false,
       "name_": "dekaliter per minute",
       "csCode_": "daL/min",
-      "ciCode_": "",
+      "ciCode_": "DA/MIN",
       "property_": "volume",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
@@ -13916,7 +14261,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min",
+      "printSymbol_": "daL/min",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -13939,7 +14284,7 @@ module.exports={
       "isBase_": false,
       "name_": "dekaliter per minute per square meter",
       "csCode_": "daL/min/m2",
-      "ciCode_": "",
+      "ciCode_": "DA/MIN/M2",
       "property_": "volume",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
@@ -13953,7 +14298,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min/m",
+      "printSymbol_": "daL/min/m<sup>2</sup>",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -13976,16 +14321,16 @@ module.exports={
       "isBase_": false,
       "name_": "decibel",
       "csCode_": "dB",
-      "ciCode_": "B",
+      "ciCode_": "DB",
       "property_": "level",
-      "magnitude_": 0.1,
+      "magnitude_": 1,
       "dim_": null,
-      "printSymbol_": "B",
+      "printSymbol_": "dB",
       "class_": "levels",
       "isMetric_": true,
       "variable_": null,
       "cnv_": "lg",
-      "cnvPfx_": 1,
+      "cnvPfx_": 0.1,
       "isSpecial_": true,
       "isArbitrary_": false,
       "synonyms_": "decibels",
@@ -14003,7 +14348,7 @@ module.exports={
       "isBase_": false,
       "name_": "degree per second",
       "csCode_": "deg/s",
-      "ciCode_": "DEG",
+      "ciCode_": "DEG/S",
       "property_": "plane angle",
       "magnitude_": 0.017453292519943295,
       "dim_": {
@@ -14040,7 +14385,7 @@ module.exports={
       "isBase_": true,
       "name_": "decigram",
       "csCode_": "dg",
-      "ciCode_": "G",
+      "ciCode_": "DG",
       "property_": "mass",
       "magnitude_": 0.1,
       "dim_": {
@@ -14054,7 +14399,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "dg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -14077,7 +14422,7 @@ module.exports={
       "isBase_": false,
       "name_": "deciliter",
       "csCode_": "dL",
-      "ciCode_": "",
+      "ciCode_": "D",
       "property_": "volume",
       "magnitude_": 0.0001,
       "dim_": {
@@ -14091,7 +14436,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "dL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -14114,7 +14459,7 @@ module.exports={
       "isBase_": true,
       "name_": "decimeter",
       "csCode_": "dm",
-      "ciCode_": "M",
+      "ciCode_": "DM",
       "property_": "length",
       "magnitude_": 0.1,
       "dim_": {
@@ -14128,7 +14473,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "dm",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -14151,7 +14496,7 @@ module.exports={
       "isBase_": true,
       "name_": "square decimeter per square second",
       "csCode_": "dm2/s2",
-      "ciCode_": "M",
+      "ciCode_": "DM2/S2",
       "property_": "length",
       "magnitude_": 0.010000000000000002,
       "dim_": {
@@ -14165,7 +14510,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/s",
+      "printSymbol_": "dm<sup>2</sup>/s<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -14188,7 +14533,7 @@ module.exports={
       "isBase_": false,
       "name_": "dyne second per centimeter per square meter",
       "csCode_": "dyn.s/(cm.m2)",
-      "ciCode_": "DYN",
+      "ciCode_": "DYN.S/CM.M2",
       "property_": "force",
       "magnitude_": 1,
       "dim_": {
@@ -14202,7 +14547,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "dyn.s/m/m",
+      "printSymbol_": "dyn.s/cm.m<sup>2</sup>",
       "class_": "cgs",
       "isMetric_": true,
       "variable_": null,
@@ -14225,7 +14570,7 @@ module.exports={
       "isBase_": false,
       "name_": "dyne second per centimeter",
       "csCode_": "dyn.s/cm",
-      "ciCode_": "DYN",
+      "ciCode_": "DYN.S/CM",
       "property_": "force",
       "magnitude_": 1,
       "dim_": {
@@ -14239,7 +14584,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "dyn.s/m",
+      "printSymbol_": "dyn.s/cm",
       "class_": "cgs",
       "isMetric_": true,
       "variable_": null,
@@ -14299,7 +14644,7 @@ module.exports={
       "isBase_": false,
       "name_": "equivalent per milliliter",
       "csCode_": "eq/mL",
-      "ciCode_": "EQ",
+      "ciCode_": "EQ/M",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+29,
       "dim_": {
@@ -14313,7 +14658,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/L",
+      "printSymbol_": "eq/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -14336,11 +14681,11 @@ module.exports={
       "isBase_": false,
       "name_": "equivalent per millimole",
       "csCode_": "eq/mmol",
-      "ciCode_": "EQ",
+      "ciCode_": "EQ/MMOL",
       "property_": "amount of substance",
       "magnitude_": 1000,
       "dim_": null,
-      "printSymbol_": "eq/mol",
+      "printSymbol_": "eq/mmol",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -14363,11 +14708,11 @@ module.exports={
       "isBase_": false,
       "name_": "equivalent per micromole",
       "csCode_": "eq/umol",
-      "ciCode_": "EQ",
+      "ciCode_": "EQ/UMOL",
       "property_": "amount of substance",
       "magnitude_": 1000000,
       "dim_": null,
-      "printSymbol_": "eq/mol",
+      "printSymbol_": "eq/μmol",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -14390,7 +14735,7 @@ module.exports={
       "isBase_": true,
       "name_": "femtogram",
       "csCode_": "fg",
-      "ciCode_": "G",
+      "ciCode_": "FG",
       "property_": "mass",
       "magnitude_": 1e-15,
       "dim_": {
@@ -14404,7 +14749,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "fg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -14427,7 +14772,7 @@ module.exports={
       "isBase_": false,
       "name_": "femtoliter",
       "csCode_": "fL",
-      "ciCode_": "",
+      "ciCode_": "F",
       "property_": "volume",
       "magnitude_": 1e-18,
       "dim_": {
@@ -14441,7 +14786,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "fL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -14464,7 +14809,7 @@ module.exports={
       "isBase_": true,
       "name_": "femtometer",
       "csCode_": "fm",
-      "ciCode_": "M",
+      "ciCode_": "FM",
       "property_": "length",
       "magnitude_": 1e-15,
       "dim_": {
@@ -14478,7 +14823,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "fm",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -14501,11 +14846,11 @@ module.exports={
       "isBase_": false,
       "name_": "femtomole",
       "csCode_": "fmol",
-      "ciCode_": "MOL",
+      "ciCode_": "FMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670,
       "dim_": null,
-      "printSymbol_": "mol",
+      "printSymbol_": "fmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -14528,7 +14873,7 @@ module.exports={
       "isBase_": false,
       "name_": "femtomole per gram",
       "csCode_": "fmol/g",
-      "ciCode_": "MOL",
+      "ciCode_": "FMOL/G",
       "property_": "amount of substance",
       "magnitude_": 602213670,
       "dim_": {
@@ -14542,7 +14887,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "fmol/g",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -14565,7 +14910,7 @@ module.exports={
       "isBase_": false,
       "name_": "femtomole per liter",
       "csCode_": "fmol/L",
-      "ciCode_": "MOL",
+      "ciCode_": "FMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000,
       "dim_": {
@@ -14579,7 +14924,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "fmol/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -14602,7 +14947,7 @@ module.exports={
       "isBase_": false,
       "name_": "femtomole per milligram",
       "csCode_": "fmol/mg",
-      "ciCode_": "MOL",
+      "ciCode_": "FMOL/MG",
       "property_": "amount of substance",
       "magnitude_": 602213670000,
       "dim_": {
@@ -14616,7 +14961,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "fmol/mg",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -14639,7 +14984,7 @@ module.exports={
       "isBase_": false,
       "name_": "femtomole per milliliter",
       "csCode_": "fmol/mL",
-      "ciCode_": "MOL",
+      "ciCode_": "FMOL/M",
       "property_": "amount of substance",
       "magnitude_": 602213670000000,
       "dim_": {
@@ -14653,7 +14998,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "fmol/mL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -14676,7 +15021,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram meter",
       "csCode_": "g.m",
-      "ciCode_": "G",
+      "ciCode_": "G.M",
       "property_": "mass",
       "magnitude_": 1,
       "dim_": {
@@ -14713,7 +15058,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 100 gram",
       "csCode_": "g/(100.g)",
-      "ciCode_": "G",
+      "ciCode_": "G/100.G",
       "property_": "mass",
       "magnitude_": 0.01,
       "dim_": {
@@ -14727,7 +15072,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "g/100.g",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -14750,7 +15095,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 12 hour",
       "csCode_": "g/(12.h)",
-      "ciCode_": "G",
+      "ciCode_": "G/12.HR",
       "property_": "mass",
       "magnitude_": 0.000023148148148148147,
       "dim_": {
@@ -14764,7 +15109,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "g/12.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -14787,7 +15132,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 24 hour",
       "csCode_": "g/(24.h)",
-      "ciCode_": "G",
+      "ciCode_": "G/24.HR",
       "property_": "mass",
       "magnitude_": 0.000011574074074074073,
       "dim_": {
@@ -14801,7 +15146,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "g/24.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -14824,7 +15169,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 3 days",
       "csCode_": "g/(3.d)",
-      "ciCode_": "G",
+      "ciCode_": "G/3.D",
       "property_": "mass",
       "magnitude_": 0.000003858024691358025,
       "dim_": {
@@ -14838,7 +15183,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/d",
+      "printSymbol_": "g/3.d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -14861,7 +15206,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 4 hour",
       "csCode_": "g/(4.h)",
-      "ciCode_": "G",
+      "ciCode_": "G/4.HR",
       "property_": "mass",
       "magnitude_": 0.00006944444444444444,
       "dim_": {
@@ -14875,7 +15220,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "g/4.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -14898,7 +15243,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 48 hour",
       "csCode_": "g/(48.h)",
-      "ciCode_": "G",
+      "ciCode_": "G/48.HR",
       "property_": "mass",
       "magnitude_": 0.000005787037037037037,
       "dim_": {
@@ -14912,7 +15257,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "g/48.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -14935,7 +15280,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 5 hour",
       "csCode_": "g/(5.h)",
-      "ciCode_": "G",
+      "ciCode_": "G/5.HR",
       "property_": "mass",
       "magnitude_": 0.00005555555555555556,
       "dim_": {
@@ -14949,7 +15294,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "g/5.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -14972,7 +15317,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 6 hour",
       "csCode_": "g/(6.h)",
-      "ciCode_": "G",
+      "ciCode_": "G/6.HR",
       "property_": "mass",
       "magnitude_": 0.000046296296296296294,
       "dim_": {
@@ -14986,7 +15331,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "g/6.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15009,7 +15354,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 72 hour",
       "csCode_": "g/(72.h)",
-      "ciCode_": "G",
+      "ciCode_": "G/72.HR",
       "property_": "mass",
       "magnitude_": 0.000003858024691358025,
       "dim_": {
@@ -15023,7 +15368,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "g/72.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15046,7 +15391,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per cubic centimeter",
       "csCode_": "g/cm3",
-      "ciCode_": "G",
+      "ciCode_": "G/CM3",
       "property_": "mass",
       "magnitude_": 999999.9999999999,
       "dim_": {
@@ -15060,7 +15405,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "g/cm<sup>3</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15083,7 +15428,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per day",
       "csCode_": "g/d",
-      "ciCode_": "G",
+      "ciCode_": "G/D",
       "property_": "mass",
       "magnitude_": 0.000011574074074074073,
       "dim_": {
@@ -15120,7 +15465,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per deciliter",
       "csCode_": "g/dL",
-      "ciCode_": "G",
+      "ciCode_": "G/D",
       "property_": "mass",
       "magnitude_": 10000,
       "dim_": {
@@ -15134,7 +15479,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "g/dL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15157,7 +15502,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per gram",
       "csCode_": "g/g",
-      "ciCode_": "G",
+      "ciCode_": "G/G",
       "property_": "mass",
       "magnitude_": 1,
       "dim_": {
@@ -15194,7 +15539,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per hour",
       "csCode_": "g/h",
-      "ciCode_": "G",
+      "ciCode_": "G/HR",
       "property_": "mass",
       "magnitude_": 0.0002777777777777778,
       "dim_": {
@@ -15231,7 +15576,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per hour per square meter",
       "csCode_": "g/h/m2",
-      "ciCode_": "G",
+      "ciCode_": "G/HR/M2",
       "property_": "mass",
       "magnitude_": 0.0002777777777777778,
       "dim_": {
@@ -15245,7 +15590,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h/m",
+      "printSymbol_": "g/h/m<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15268,7 +15613,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per kilogram",
       "csCode_": "g/kg ",
-      "ciCode_": "G",
+      "ciCode_": "G/KG",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -15282,7 +15627,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "g/kg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15305,7 +15650,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per kilogram per 8 hour ",
       "csCode_": "g/kg/(8.h)",
-      "ciCode_": "G",
+      "ciCode_": "G/KG/8.HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-8,
       "dim_": {
@@ -15319,7 +15664,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/h",
+      "printSymbol_": "g/kg/8.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15342,7 +15687,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per kilogram per day",
       "csCode_": "g/kg/d",
-      "ciCode_": "G",
+      "ciCode_": "G/KG/D",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -15356,7 +15701,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/d",
+      "printSymbol_": "g/kg/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15379,7 +15724,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per kilogram per hour",
       "csCode_": "g/kg/h",
-      "ciCode_": "G",
+      "ciCode_": "G/KG/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777776e-7,
       "dim_": {
@@ -15393,7 +15738,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/h",
+      "printSymbol_": "g/kg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15416,7 +15761,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per kilogram per minute",
       "csCode_": "g/kg/min",
-      "ciCode_": "G",
+      "ciCode_": "G/KG/MIN",
       "property_": "mass",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -15430,7 +15775,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/min",
+      "printSymbol_": "g/kg/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15490,7 +15835,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per square meter",
       "csCode_": "g/m2",
-      "ciCode_": "G",
+      "ciCode_": "G/M2",
       "property_": "mass",
       "magnitude_": 1,
       "dim_": {
@@ -15504,7 +15849,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "g/m<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15527,7 +15872,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per milligram",
       "csCode_": "g/mg",
-      "ciCode_": "G",
+      "ciCode_": "G/MG",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -15541,7 +15886,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "g/mg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15564,7 +15909,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per minute",
       "csCode_": "g/min",
-      "ciCode_": "G",
+      "ciCode_": "G/MIN",
       "property_": "mass",
       "magnitude_": 0.016666666666666666,
       "dim_": {
@@ -15601,7 +15946,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per milliliter",
       "csCode_": "g/mL",
-      "ciCode_": "G",
+      "ciCode_": "G/M",
       "property_": "mass",
       "magnitude_": 1000000,
       "dim_": {
@@ -15615,7 +15960,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "g/mL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15638,7 +15983,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per millimole",
       "csCode_": "g/mmol",
-      "ciCode_": "G",
+      "ciCode_": "G/MMOL",
       "property_": "mass",
       "magnitude_": 1.6605401866749388e-21,
       "dim_": {
@@ -15652,7 +15997,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/mol",
+      "printSymbol_": "g/mmol",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15712,7 +16057,7 @@ module.exports={
       "isBase_": true,
       "name_": "degree Kelvin per Watt",
       "csCode_": "K/W",
-      "ciCode_": "K",
+      "ciCode_": "K/W",
       "property_": "temperature",
       "magnitude_": 0.001,
       "dim_": {
@@ -15749,7 +16094,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo international unit per liter",
       "csCode_": "k[IU]/L",
-      "ciCode_": "[IU]",
+      "ciCode_": "K[IU]",
       "property_": "arbitrary",
       "magnitude_": 1000000,
       "dim_": {
@@ -15763,7 +16108,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./L",
+      "printSymbol_": "ki.U./L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -15786,7 +16131,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo international unit per milliliter",
       "csCode_": "k[IU]/mL",
-      "ciCode_": "[IU]",
+      "ciCode_": "K[IU]/M",
       "property_": "arbitrary",
       "magnitude_": 1000000000,
       "dim_": {
@@ -15800,7 +16145,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./L",
+      "printSymbol_": "ki.U./mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -15823,7 +16168,7 @@ module.exports={
       "isBase_": false,
       "name_": "katal per kilogram",
       "csCode_": "kat/kg",
-      "ciCode_": "KAT",
+      "ciCode_": "KAT/KG",
       "property_": "catalytic activity",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -15837,7 +16182,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kat/g",
+      "printSymbol_": "kat/kg",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -15897,7 +16242,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilocalorie",
       "csCode_": "kcal",
-      "ciCode_": "CAL",
+      "ciCode_": "KCAL",
       "property_": "energy",
       "magnitude_": 4184000,
       "dim_": {
@@ -15911,7 +16256,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "cal",
+      "printSymbol_": "kcal",
       "class_": "heat",
       "isMetric_": true,
       "variable_": null,
@@ -15934,7 +16279,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilocalorie per 24 hour",
       "csCode_": "kcal/(24.h)",
-      "ciCode_": "CAL",
+      "ciCode_": "KCAL/24.HR",
       "property_": "energy",
       "magnitude_": 48.425925925925924,
       "dim_": {
@@ -15948,7 +16293,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "cal/h",
+      "printSymbol_": "kcal/24.h",
       "class_": "heat",
       "isMetric_": true,
       "variable_": null,
@@ -15971,7 +16316,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilocalorie per ounce",
       "csCode_": "kcal/[oz_av]",
-      "ciCode_": "CAL",
+      "ciCode_": "KCAL/[OZ_AV]",
       "property_": "energy",
       "magnitude_": 147586.25679704445,
       "dim_": {
@@ -15985,7 +16330,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "cal/oz",
+      "printSymbol_": "kcal/oz",
       "class_": "heat",
       "isMetric_": true,
       "variable_": null,
@@ -16008,7 +16353,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilocalorie per day",
       "csCode_": "kcal/d",
-      "ciCode_": "CAL",
+      "ciCode_": "KCAL/D",
       "property_": "energy",
       "magnitude_": 48.425925925925924,
       "dim_": {
@@ -16022,7 +16367,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "cal/d",
+      "printSymbol_": "kcal/d",
       "class_": "heat",
       "isMetric_": true,
       "variable_": null,
@@ -16045,7 +16390,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilocalorie per hour",
       "csCode_": "kcal/h",
-      "ciCode_": "CAL",
+      "ciCode_": "KCAL/HR",
       "property_": "energy",
       "magnitude_": 1162.2222222222222,
       "dim_": {
@@ -16059,7 +16404,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "cal/h",
+      "printSymbol_": "kcal/h",
       "class_": "heat",
       "isMetric_": true,
       "variable_": null,
@@ -16082,7 +16427,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilocalorie per kilogram per 24 hour",
       "csCode_": "kcal/kg/(24.h)",
-      "ciCode_": "CAL",
+      "ciCode_": "KCAL/KG/24.HR",
       "property_": "energy",
       "magnitude_": 0.04842592592592593,
       "dim_": {
@@ -16096,7 +16441,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "cal/g/h",
+      "printSymbol_": "kcal/kg/24.h",
       "class_": "heat",
       "isMetric_": true,
       "variable_": null,
@@ -16119,7 +16464,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram",
       "csCode_": "kg",
-      "ciCode_": "G",
+      "ciCode_": "KG",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -16133,7 +16478,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "kg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16156,7 +16501,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram meter per second",
       "csCode_": "kg.m/s",
-      "ciCode_": "G",
+      "ciCode_": "KG.M/S",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -16170,7 +16515,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g.m/s",
+      "printSymbol_": "kg.m/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16193,7 +16538,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per second per square meter",
       "csCode_": "kg/(s.m2)",
-      "ciCode_": "G",
+      "ciCode_": "KG/S.M2",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -16207,7 +16552,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/s/m",
+      "printSymbol_": "kg/s.m<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16230,7 +16575,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per hour",
       "csCode_": "kg/h",
-      "ciCode_": "G",
+      "ciCode_": "KG/HR",
       "property_": "mass",
       "magnitude_": 0.2777777777777778,
       "dim_": {
@@ -16244,7 +16589,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "kg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16267,7 +16612,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per liter",
       "csCode_": "kg/L",
-      "ciCode_": "G",
+      "ciCode_": "KG",
       "property_": "mass",
       "magnitude_": 1000000,
       "dim_": {
@@ -16281,7 +16626,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "kg/L",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16304,7 +16649,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per square meter",
       "csCode_": "kg/m2",
-      "ciCode_": "G",
+      "ciCode_": "KG/M2",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -16318,7 +16663,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "kg/m<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16341,7 +16686,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per cubic meter",
       "csCode_": "kg/m3",
-      "ciCode_": "G",
+      "ciCode_": "KG/M3",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -16355,7 +16700,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "kg/m<sup>3</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16378,7 +16723,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per minute",
       "csCode_": "kg/min",
-      "ciCode_": "G",
+      "ciCode_": "KG/MIN",
       "property_": "mass",
       "magnitude_": 16.666666666666668,
       "dim_": {
@@ -16392,7 +16737,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/min",
+      "printSymbol_": "kg/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16415,7 +16760,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per mole",
       "csCode_": "kg/mol",
-      "ciCode_": "G",
+      "ciCode_": "KG/MOL",
       "property_": "mass",
       "magnitude_": 1.6605401866749388e-21,
       "dim_": {
@@ -16429,7 +16774,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/mol",
+      "printSymbol_": "kg/mol",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16452,7 +16797,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per second",
       "csCode_": "kg/s",
-      "ciCode_": "G",
+      "ciCode_": "KG/S",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -16466,7 +16811,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/s",
+      "printSymbol_": "kg/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16489,7 +16834,7 @@ module.exports={
       "isBase_": false,
       "name_": "kiloliter",
       "csCode_": "kL",
-      "ciCode_": "",
+      "ciCode_": "K",
       "property_": "volume",
       "magnitude_": 1,
       "dim_": {
@@ -16503,7 +16848,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "kL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -16526,7 +16871,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilometer",
       "csCode_": "km",
-      "ciCode_": "M",
+      "ciCode_": "KM",
       "property_": "length",
       "magnitude_": 1000,
       "dim_": {
@@ -16540,7 +16885,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "km",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -16563,7 +16908,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilopascal",
       "csCode_": "kPa",
-      "ciCode_": "PAL",
+      "ciCode_": "KPAL",
       "property_": "pressure",
       "magnitude_": 1000000,
       "dim_": {
@@ -16577,7 +16922,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "Pa",
+      "printSymbol_": "kPa",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -16600,7 +16945,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilosecond",
       "csCode_": "ks",
-      "ciCode_": "S",
+      "ciCode_": "KS",
       "property_": "time",
       "magnitude_": 1000,
       "dim_": {
@@ -16614,7 +16959,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "s",
+      "printSymbol_": "ks",
       "class_": null,
       "isMetric_": false,
       "variable_": "T",
@@ -16637,7 +16982,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo enzyme unit",
       "csCode_": "kU",
-      "ciCode_": "U",
+      "ciCode_": "KU",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -16651,7 +16996,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U",
+      "printSymbol_": "kU",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -16674,7 +17019,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo enzyme unit per gram",
       "csCode_": "kU/g",
-      "ciCode_": "U",
+      "ciCode_": "KU/G",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -16688,7 +17033,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/g",
+      "printSymbol_": "kU/g",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -16711,7 +17056,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo enzyme unit per liter",
       "csCode_": "kU/L",
-      "ciCode_": "U",
+      "ciCode_": "KU",
       "property_": "catalytic activity",
       "magnitude_": 1.00368945e+22,
       "dim_": {
@@ -16725,7 +17070,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L",
+      "printSymbol_": "kU/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -16748,7 +17093,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo enzyme unit per milliliter",
       "csCode_": "kU/mL",
-      "ciCode_": "U",
+      "ciCode_": "KU/M",
       "property_": "catalytic activity",
       "magnitude_": 1.00368945e+25,
       "dim_": {
@@ -16762,7 +17107,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L",
+      "printSymbol_": "kU/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -16785,7 +17130,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per 24 hour",
       "csCode_": "L/(24.h)",
-      "ciCode_": "",
+      "ciCode_": "/24/HR",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -16799,7 +17144,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "L/24.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -16822,7 +17167,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per 8 hour",
       "csCode_": "L/(8.h)",
-      "ciCode_": "",
+      "ciCode_": "/8/HR",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-8,
       "dim_": {
@@ -16836,7 +17181,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "L/8.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -16859,7 +17204,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per minute per square meter",
       "csCode_": "L/(min.m2) ",
-      "ciCode_": "",
+      "ciCode_": "/MIN/M2",
       "property_": "volume",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -16873,7 +17218,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min/m",
+      "printSymbol_": "L/min.m<sup>2</sup>",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -16896,7 +17241,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per day",
       "csCode_": "L/d",
-      "ciCode_": "",
+      "ciCode_": "/D",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -16933,7 +17278,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per hour",
       "csCode_": "L/h",
-      "ciCode_": "",
+      "ciCode_": "/HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777776e-7,
       "dim_": {
@@ -16970,7 +17315,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per kilogram",
       "csCode_": "L/kg",
-      "ciCode_": "",
+      "ciCode_": "/KG",
       "property_": "volume",
       "magnitude_": 0.000001,
       "dim_": {
@@ -16984,7 +17329,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/g",
+      "printSymbol_": "L/kg",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17044,7 +17389,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per minute",
       "csCode_": "L/min",
-      "ciCode_": "",
+      "ciCode_": "/MIN",
       "property_": "volume",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -17081,7 +17426,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per minute per square meter",
       "csCode_": "L/min/m2",
-      "ciCode_": "",
+      "ciCode_": "/MIN/M2",
       "property_": "volume",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -17095,7 +17440,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min/m",
+      "printSymbol_": "L/min/m<sup>2</sup>",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17118,7 +17463,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per second",
       "csCode_": "L/s",
-      "ciCode_": "",
+      "ciCode_": "/S",
       "property_": "volume",
       "magnitude_": 0.001,
       "dim_": {
@@ -17155,7 +17500,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per second per square second",
       "csCode_": "L/s/s2",
-      "ciCode_": "",
+      "ciCode_": "/S/S2",
       "property_": "volume",
       "magnitude_": 0.001,
       "dim_": {
@@ -17169,7 +17514,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/s/s",
+      "printSymbol_": "L/s/s<sup>2</sup>",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17192,7 +17537,7 @@ module.exports={
       "isBase_": false,
       "name_": "lumen square meter",
       "csCode_": "lm.m2",
-      "ciCode_": "LM",
+      "ciCode_": "LM.M2",
       "property_": "luminous flux",
       "magnitude_": 1,
       "dim_": {
@@ -17206,7 +17551,7 @@ module.exports={
           1
         ]
       },
-      "printSymbol_": "lm.m",
+      "printSymbol_": "lm.m<sup>2</sup>",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -17229,7 +17574,7 @@ module.exports={
       "isBase_": true,
       "name_": "meter per second",
       "csCode_": "m/s",
-      "ciCode_": "M",
+      "ciCode_": "M/S",
       "property_": "length",
       "magnitude_": 1,
       "dim_": {
@@ -17266,7 +17611,7 @@ module.exports={
       "isBase_": true,
       "name_": "meter per square second",
       "csCode_": "m/s2",
-      "ciCode_": "M",
+      "ciCode_": "M/S2",
       "property_": "length",
       "magnitude_": 1,
       "dim_": {
@@ -17280,7 +17625,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/s",
+      "printSymbol_": "m/s<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -17303,7 +17648,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli international unit per liter",
       "csCode_": "m[IU]/L",
-      "ciCode_": "[IU]",
+      "ciCode_": "M[IU]",
       "property_": "arbitrary",
       "magnitude_": 1,
       "dim_": {
@@ -17317,7 +17662,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./L",
+      "printSymbol_": "mi.U./L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17340,7 +17685,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli  international unit per milliliter",
       "csCode_": "m[IU]/mL",
-      "ciCode_": "[IU]",
+      "ciCode_": "M[IU]/M",
       "property_": "arbitrary",
       "magnitude_": 1000.0000000000001,
       "dim_": {
@@ -17354,7 +17699,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./L",
+      "printSymbol_": "mi.U./mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17377,7 +17722,7 @@ module.exports={
       "isBase_": true,
       "name_": "square meter",
       "csCode_": "m2",
-      "ciCode_": "M",
+      "ciCode_": "M2",
       "property_": "length",
       "magnitude_": 1,
       "dim_": {
@@ -17391,7 +17736,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "m<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -17414,7 +17759,7 @@ module.exports={
       "isBase_": true,
       "name_": "square meter per second",
       "csCode_": "m2/s",
-      "ciCode_": "M",
+      "ciCode_": "M2/S",
       "property_": "length",
       "magnitude_": 1,
       "dim_": {
@@ -17428,7 +17773,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/s",
+      "printSymbol_": "m<sup>2</sup>/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -17451,7 +17796,7 @@ module.exports={
       "isBase_": true,
       "name_": "cubic meter per second",
       "csCode_": "m3/s",
-      "ciCode_": "M",
+      "ciCode_": "M3/S",
       "property_": "length",
       "magnitude_": 1,
       "dim_": {
@@ -17465,7 +17810,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/s",
+      "printSymbol_": "m<sup>3</sup>/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -17488,7 +17833,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliampere",
       "csCode_": "mA",
-      "ciCode_": "A",
+      "ciCode_": "MA",
       "property_": "electric current",
       "magnitude_": 0.001,
       "dim_": {
@@ -17502,7 +17847,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "A",
+      "printSymbol_": "mA",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -17525,7 +17870,7 @@ module.exports={
       "isBase_": false,
       "name_": "millibar",
       "csCode_": "mbar",
-      "ciCode_": "BAR",
+      "ciCode_": "MBAR",
       "property_": "pressure",
       "magnitude_": 100000,
       "dim_": {
@@ -17539,7 +17884,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "bar",
+      "printSymbol_": "mbar",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17562,7 +17907,7 @@ module.exports={
       "isBase_": false,
       "name_": "millibar second per liter",
       "csCode_": "mbar.s/L",
-      "ciCode_": "BAR",
+      "ciCode_": "MBAR.S",
       "property_": "pressure",
       "magnitude_": 100000000,
       "dim_": {
@@ -17576,7 +17921,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "bar.s/L",
+      "printSymbol_": "mbar.s/L",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17599,7 +17944,7 @@ module.exports={
       "isBase_": false,
       "name_": "millibar per liter per second",
       "csCode_": "mbar/L/s",
-      "ciCode_": "BAR",
+      "ciCode_": "MBAR/S",
       "property_": "pressure",
       "magnitude_": 100000000,
       "dim_": {
@@ -17613,7 +17958,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "bar/L/s",
+      "printSymbol_": "mbar/L/s",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17636,11 +17981,11 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent",
       "csCode_": "meq",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": null,
-      "printSymbol_": "eq",
+      "printSymbol_": "meq",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17663,7 +18008,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per 2 hour",
       "csCode_": "meq/(2.h)",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/2.HR",
       "property_": "amount of substance",
       "magnitude_": 83640787500000000,
       "dim_": {
@@ -17677,7 +18022,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/h",
+      "printSymbol_": "meq/2.h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17700,7 +18045,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per 24 hour",
       "csCode_": "meq/(24.h)",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/24.HR",
       "property_": "amount of substance",
       "magnitude_": 6970065625000000,
       "dim_": {
@@ -17714,7 +18059,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/h",
+      "printSymbol_": "meq/24.h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17737,7 +18082,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per 8 hour",
       "csCode_": "meq/(8.h)",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/8.HR",
       "property_": "amount of substance",
       "magnitude_": 20910196875000000,
       "dim_": {
@@ -17751,7 +18096,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/h",
+      "printSymbol_": "meq/8.h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17774,7 +18119,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per day",
       "csCode_": "meq/d",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/D",
       "property_": "amount of substance",
       "magnitude_": 6970065625000000,
       "dim_": {
@@ -17788,7 +18133,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/d",
+      "printSymbol_": "meq/d",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17811,7 +18156,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per deciliter",
       "csCode_": "meq/dL",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/D",
       "property_": "amount of substance",
       "magnitude_": 6.022136699999999e+24,
       "dim_": {
@@ -17825,7 +18170,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/L",
+      "printSymbol_": "meq/dL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17848,7 +18193,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per gram",
       "csCode_": "meq/g",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/G",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -17862,7 +18207,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/g",
+      "printSymbol_": "meq/g",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17885,7 +18230,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per hour",
       "csCode_": "meq/h",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -17899,7 +18244,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/h",
+      "printSymbol_": "meq/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17922,7 +18267,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per kilogram",
       "csCode_": "meq/kg",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/KG",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -17936,7 +18281,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/g",
+      "printSymbol_": "meq/kg",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17959,7 +18304,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per kilogram per hour",
       "csCode_": "meq/kg/h",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/KG/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -17973,7 +18318,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/g/h",
+      "printSymbol_": "meq/kg/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17996,7 +18341,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per liter",
       "csCode_": "meq/L",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -18010,7 +18355,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/L",
+      "printSymbol_": "meq/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -18033,7 +18378,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per square meter",
       "csCode_": "meq/m2",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/M2",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -18047,7 +18392,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/m",
+      "printSymbol_": "meq/m<sup>2</sup>",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -18070,7 +18415,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per minute",
       "csCode_": "meq/min",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -18084,7 +18429,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/min",
+      "printSymbol_": "meq/min",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -18107,7 +18452,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per milliliter",
       "csCode_": "meq/mL",
-      "ciCode_": "EQ",
+      "ciCode_": "MEQ/M",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+26,
       "dim_": {
@@ -18121,7 +18466,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/L",
+      "printSymbol_": "meq/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -18144,7 +18489,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram",
       "csCode_": "mg",
-      "ciCode_": "G",
+      "ciCode_": "MG",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -18158,7 +18503,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "mg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18181,7 +18526,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 10 hour",
       "csCode_": "mg/(10.h)",
-      "ciCode_": "G",
+      "ciCode_": "MG/10.HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777777e-8,
       "dim_": {
@@ -18195,7 +18540,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "mg/10.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18218,7 +18563,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 12 hour",
       "csCode_": "mg/(12.h)",
-      "ciCode_": "G",
+      "ciCode_": "MG/12.HR",
       "property_": "mass",
       "magnitude_": 2.3148148148148148e-8,
       "dim_": {
@@ -18232,7 +18577,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "mg/12.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18255,7 +18600,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 2 hour",
       "csCode_": "mg/(2.h)",
-      "ciCode_": "G",
+      "ciCode_": "MG/2.HR",
       "property_": "mass",
       "magnitude_": 1.3888888888888888e-7,
       "dim_": {
@@ -18269,7 +18614,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "mg/2.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18292,7 +18637,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 24 hour",
       "csCode_": "mg/(24.h)",
-      "ciCode_": "G",
+      "ciCode_": "MG/24.HR",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -18306,7 +18651,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "mg/24.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18329,7 +18674,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 6 hour",
       "csCode_": "mg/(6.h)",
-      "ciCode_": "G",
+      "ciCode_": "MG/6.HR",
       "property_": "mass",
       "magnitude_": 4.6296296296296295e-8,
       "dim_": {
@@ -18343,7 +18688,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "mg/6.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18366,7 +18711,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 72 hour",
       "csCode_": "mg/(72.h)",
-      "ciCode_": "G",
+      "ciCode_": "MG/72.HR",
       "property_": "mass",
       "magnitude_": 3.858024691358025e-9,
       "dim_": {
@@ -18380,7 +18725,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "mg/72.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18403,7 +18748,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 8 hour",
       "csCode_": "mg/(8.h)",
-      "ciCode_": "G",
+      "ciCode_": "MG/8.HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-8,
       "dim_": {
@@ -18417,7 +18762,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "mg/8.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18440,7 +18785,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per day",
       "csCode_": "mg/d",
-      "ciCode_": "G",
+      "ciCode_": "MG/D",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -18454,7 +18799,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/d",
+      "printSymbol_": "mg/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18477,7 +18822,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per deciliter",
       "csCode_": "mg/dL",
-      "ciCode_": "G",
+      "ciCode_": "MG/D",
       "property_": "mass",
       "magnitude_": 10,
       "dim_": {
@@ -18491,7 +18836,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "mg/dL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18514,7 +18859,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per gram",
       "csCode_": "mg/g",
-      "ciCode_": "G",
+      "ciCode_": "MG/G",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -18528,7 +18873,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "mg/g",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18551,7 +18896,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per hour",
       "csCode_": "mg/h",
-      "ciCode_": "G",
+      "ciCode_": "MG/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777776e-7,
       "dim_": {
@@ -18565,7 +18910,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "mg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18588,7 +18933,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per kilogram",
       "csCode_": "mg/kg",
-      "ciCode_": "G",
+      "ciCode_": "MG/KG",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -18602,7 +18947,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "mg/kg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18625,7 +18970,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per kilogram per 8 hour",
       "csCode_": "mg/kg/(8.h)",
-      "ciCode_": "G",
+      "ciCode_": "MG/KG/8.HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-11,
       "dim_": {
@@ -18639,7 +18984,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/h",
+      "printSymbol_": "mg/kg/8.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18662,7 +19007,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per kilogram per day",
       "csCode_": "mg/kg/d",
-      "ciCode_": "G",
+      "ciCode_": "MG/KG/D",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -18676,7 +19021,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/d",
+      "printSymbol_": "mg/kg/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18699,7 +19044,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per kilogram per hour",
       "csCode_": "mg/kg/h",
-      "ciCode_": "G",
+      "ciCode_": "MG/KG/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777777e-10,
       "dim_": {
@@ -18713,7 +19058,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/h",
+      "printSymbol_": "mg/kg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18736,7 +19081,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per kilogram per minute",
       "csCode_": "mg/kg/min",
-      "ciCode_": "G",
+      "ciCode_": "MG/KG/MIN",
       "property_": "mass",
       "magnitude_": 1.6666666666666667e-8,
       "dim_": {
@@ -18750,7 +19095,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/min",
+      "printSymbol_": "mg/kg/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18773,7 +19118,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per liter",
       "csCode_": "mg/L",
-      "ciCode_": "G",
+      "ciCode_": "MG",
       "property_": "mass",
       "magnitude_": 1,
       "dim_": {
@@ -18787,7 +19132,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "mg/L",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18810,7 +19155,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per square meter",
       "csCode_": "mg/m2",
-      "ciCode_": "G",
+      "ciCode_": "MG/M2",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -18824,7 +19169,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "mg/m<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18847,7 +19192,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per cubic meter",
       "csCode_": "mg/m3",
-      "ciCode_": "G",
+      "ciCode_": "MG/M3",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -18861,7 +19206,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "mg/m<sup>3</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18884,7 +19229,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per milligram",
       "csCode_": "mg/mg",
-      "ciCode_": "G",
+      "ciCode_": "MG/MG",
       "property_": "mass",
       "magnitude_": 1,
       "dim_": {
@@ -18898,7 +19243,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "mg/mg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18921,7 +19266,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per minute",
       "csCode_": "mg/min",
-      "ciCode_": "G",
+      "ciCode_": "MG/MIN",
       "property_": "mass",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -18935,7 +19280,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/min",
+      "printSymbol_": "mg/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18958,7 +19303,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per milliliter",
       "csCode_": "mg/mL",
-      "ciCode_": "G",
+      "ciCode_": "MG/M",
       "property_": "mass",
       "magnitude_": 1000.0000000000001,
       "dim_": {
@@ -18972,7 +19317,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "mg/mL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18995,7 +19340,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per millimole",
       "csCode_": "mg/mmol",
-      "ciCode_": "G",
+      "ciCode_": "MG/MMOL",
       "property_": "mass",
       "magnitude_": 1.660540186674939e-24,
       "dim_": {
@@ -19009,7 +19354,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/mol",
+      "printSymbol_": "mg/mmol",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -19032,7 +19377,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per week",
       "csCode_": "mg/wk",
-      "ciCode_": "G",
+      "ciCode_": "MG/WK",
       "property_": "mass",
       "magnitude_": 1.6534391534391535e-9,
       "dim_": {
@@ -19046,7 +19391,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/wk",
+      "printSymbol_": "mg/wk",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -19069,7 +19414,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter",
       "csCode_": "mL",
-      "ciCode_": "",
+      "ciCode_": "M",
       "property_": "volume",
       "magnitude_": 0.000001,
       "dim_": {
@@ -19083,7 +19428,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "mL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19106,7 +19451,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 10 hour",
       "csCode_": "mL/(10.h)",
-      "ciCode_": "",
+      "ciCode_": "M/10.HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777777e-11,
       "dim_": {
@@ -19120,7 +19465,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/10.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19143,7 +19488,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 12 hour",
       "csCode_": "mL/(12.h)",
-      "ciCode_": "",
+      "ciCode_": "M/12.HR",
       "property_": "volume",
       "magnitude_": 2.3148148148148147e-11,
       "dim_": {
@@ -19157,7 +19502,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/12.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19180,7 +19525,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 2 hour",
       "csCode_": "mL/(2.h)",
-      "ciCode_": "",
+      "ciCode_": "M/2.HR",
       "property_": "volume",
       "magnitude_": 1.3888888888888888e-10,
       "dim_": {
@@ -19194,7 +19539,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/2.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19217,7 +19562,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 24 hour",
       "csCode_": "mL/(24.h)",
-      "ciCode_": "",
+      "ciCode_": "M/24.HR",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -19231,7 +19576,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/24.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19254,7 +19599,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 4 hour",
       "csCode_": "mL/(4.h)",
-      "ciCode_": "",
+      "ciCode_": "M/4.HR",
       "property_": "volume",
       "magnitude_": 6.944444444444444e-11,
       "dim_": {
@@ -19268,7 +19613,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/4.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19291,7 +19636,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 5 hour",
       "csCode_": "mL/(5.h)",
-      "ciCode_": "",
+      "ciCode_": "M/5.HR",
       "property_": "volume",
       "magnitude_": 5.5555555555555553e-11,
       "dim_": {
@@ -19305,7 +19650,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/5.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19328,7 +19673,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 6 hour",
       "csCode_": "mL/(6.h)",
-      "ciCode_": "",
+      "ciCode_": "M/6.HR",
       "property_": "volume",
       "magnitude_": 4.6296296296296294e-11,
       "dim_": {
@@ -19342,7 +19687,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/6.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19365,7 +19710,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 72 hour",
       "csCode_": "mL/(72.h)",
-      "ciCode_": "",
+      "ciCode_": "M/72.HR",
       "property_": "volume",
       "magnitude_": 3.8580246913580245e-12,
       "dim_": {
@@ -19379,7 +19724,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/72.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19402,7 +19747,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 8 hour",
       "csCode_": "mL/(8.h)",
-      "ciCode_": "",
+      "ciCode_": "M/8.HR",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-11,
       "dim_": {
@@ -19416,7 +19761,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/8.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19439,7 +19784,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 8 hour per kilogram",
       "csCode_": "mL/(8.h)/kg",
-      "ciCode_": "",
+      "ciCode_": "M/8.HR/KG",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-14,
       "dim_": {
@@ -19453,7 +19798,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h/g",
+      "printSymbol_": "mL/8.h/kg",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19476,7 +19821,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per square inch (international)",
       "csCode_": "mL/[sin_i]",
-      "ciCode_": "",
+      "ciCode_": "M/[SIN_I]",
       "property_": "volume",
       "magnitude_": 0.0015500031000061998,
       "dim_": {
@@ -19490,7 +19835,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "mL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19513,7 +19858,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per centimeter of water",
       "csCode_": "mL/cm[H2O]",
-      "ciCode_": "",
+      "ciCode_": "M/CM[H2O]",
       "property_": "volume",
       "magnitude_": 1.0197162129779282e-11,
       "dim_": {
@@ -19527,7 +19872,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/m HO<sub><r>2<.r></sub>",
+      "printSymbol_": "mL/cm HO<sub><r>2</r></sub>",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19550,7 +19895,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per day",
       "csCode_": "mL/d",
-      "ciCode_": "",
+      "ciCode_": "M/D",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -19564,7 +19909,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/d",
+      "printSymbol_": "mL/d",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19587,7 +19932,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per deciliter",
       "csCode_": "mL/dL",
-      "ciCode_": "",
+      "ciCode_": "M/D",
       "property_": "volume",
       "magnitude_": 0.009999999999999998,
       "dim_": {
@@ -19601,7 +19946,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/L",
+      "printSymbol_": "mL/dL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19624,7 +19969,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per hour",
       "csCode_": "mL/h",
-      "ciCode_": "",
+      "ciCode_": "M/HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777777e-10,
       "dim_": {
@@ -19638,7 +19983,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19661,7 +20006,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram",
       "csCode_": "mL/kg",
-      "ciCode_": "",
+      "ciCode_": "M/KG",
       "property_": "volume",
       "magnitude_": 9.999999999999999e-10,
       "dim_": {
@@ -19675,7 +20020,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/g",
+      "printSymbol_": "mL/kg",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19698,7 +20043,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per 8 hour",
       "csCode_": "mL/kg/(8.h)",
-      "ciCode_": "",
+      "ciCode_": "M/KG/8.HR",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-14,
       "dim_": {
@@ -19712,7 +20057,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/g/h",
+      "printSymbol_": "mL/kg/8.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19735,7 +20080,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per day",
       "csCode_": "mL/kg/d",
-      "ciCode_": "",
+      "ciCode_": "M/KG/D",
       "property_": "volume",
       "magnitude_": 1.1574074074074072e-14,
       "dim_": {
@@ -19749,7 +20094,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/g/d",
+      "printSymbol_": "mL/kg/d",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19772,7 +20117,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per hour",
       "csCode_": "mL/kg/h",
-      "ciCode_": "",
+      "ciCode_": "M/KG/HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777774e-13,
       "dim_": {
@@ -19786,7 +20131,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/g/h",
+      "printSymbol_": "mL/kg/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19809,7 +20154,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per minute",
       "csCode_": "mL/kg/min",
-      "ciCode_": "",
+      "ciCode_": "M/KG/MIN",
       "property_": "volume",
       "magnitude_": 1.6666666666666664e-11,
       "dim_": {
@@ -19823,7 +20168,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/g/min",
+      "printSymbol_": "mL/kg/min",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19846,7 +20191,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per square meter",
       "csCode_": "mL/m2",
-      "ciCode_": "",
+      "ciCode_": "M/M2",
       "property_": "volume",
       "magnitude_": 0.000001,
       "dim_": {
@@ -19860,7 +20205,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/m",
+      "printSymbol_": "mL/m<sup>2</sup>",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19883,7 +20228,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per millibar",
       "csCode_": "mL/mbar",
-      "ciCode_": "",
+      "ciCode_": "M/MBAR",
       "property_": "volume",
       "magnitude_": 1e-11,
       "dim_": {
@@ -19897,7 +20242,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/bar",
+      "printSymbol_": "mL/mbar",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19920,7 +20265,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per minute",
       "csCode_": "mL/min",
-      "ciCode_": "",
+      "ciCode_": "M/MIN",
       "property_": "volume",
       "magnitude_": 1.6666666666666667e-8,
       "dim_": {
@@ -19934,7 +20279,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min",
+      "printSymbol_": "mL/min",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19957,7 +20302,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per minute per square meter",
       "csCode_": "mL/min/m2",
-      "ciCode_": "",
+      "ciCode_": "M/MIN/M2",
       "property_": "volume",
       "magnitude_": 1.6666666666666667e-8,
       "dim_": {
@@ -19971,7 +20316,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min/m",
+      "printSymbol_": "mL/min/m<sup>2</sup>",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19994,7 +20339,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per millimeter",
       "csCode_": "mL/mm",
-      "ciCode_": "",
+      "ciCode_": "M/MM",
       "property_": "volume",
       "magnitude_": 0.001,
       "dim_": {
@@ -20008,7 +20353,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/m",
+      "printSymbol_": "mL/mm",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -20031,7 +20376,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per second",
       "csCode_": "mL/s",
-      "ciCode_": "",
+      "ciCode_": "M/S",
       "property_": "volume",
       "magnitude_": 0.000001,
       "dim_": {
@@ -20045,7 +20390,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/s",
+      "printSymbol_": "mL/s",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -20068,7 +20413,7 @@ module.exports={
       "isBase_": true,
       "name_": "millimeter",
       "csCode_": "mm",
-      "ciCode_": "M",
+      "ciCode_": "MM",
       "property_": "length",
       "magnitude_": 0.001,
       "dim_": {
@@ -20082,7 +20427,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "mm",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -20105,7 +20450,7 @@ module.exports={
       "isBase_": true,
       "name_": "millimeter per hour",
       "csCode_": "mm/h",
-      "ciCode_": "M",
+      "ciCode_": "MM/HR",
       "property_": "length",
       "magnitude_": 2.7777777777777776e-7,
       "dim_": {
@@ -20119,7 +20464,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/h",
+      "printSymbol_": "mm/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -20142,7 +20487,7 @@ module.exports={
       "isBase_": true,
       "name_": "millimeter per minute",
       "csCode_": "mm/min",
-      "ciCode_": "M",
+      "ciCode_": "MM/MIN",
       "property_": "length",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -20156,7 +20501,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/min",
+      "printSymbol_": "mm/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -20179,7 +20524,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimeter of water",
       "csCode_": "mm[H2O]",
-      "ciCode_": "M[H2O]",
+      "ciCode_": "MM[H2O]",
       "property_": "pressure",
       "magnitude_": 9806.65,
       "dim_": {
@@ -20193,7 +20538,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m HO<sub><r>2</r></sub>",
+      "printSymbol_": "mm HO<sub><r>2</r></sub>",
       "class_": "clinical",
       "isMetric_": true,
       "variable_": null,
@@ -20216,7 +20561,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimeter of mercury",
       "csCode_": "mm[Hg]",
-      "ciCode_": "M[HG]",
+      "ciCode_": "MM[HG]",
       "property_": "pressure",
       "magnitude_": 133322,
       "dim_": {
@@ -20230,7 +20575,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m Hg",
+      "printSymbol_": "mm Hg",
       "class_": "clinical",
       "isMetric_": true,
       "variable_": null,
@@ -20253,7 +20598,7 @@ module.exports={
       "isBase_": true,
       "name_": "square millimeter",
       "csCode_": "mm2",
-      "ciCode_": "M",
+      "ciCode_": "MM2",
       "property_": "length",
       "magnitude_": 0.000001,
       "dim_": {
@@ -20267,7 +20612,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "mm<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -20290,11 +20635,11 @@ module.exports={
       "isBase_": false,
       "name_": "millimole",
       "csCode_": "mmol",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": null,
-      "printSymbol_": "mol",
+      "printSymbol_": "mmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20317,7 +20662,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 12 hour",
       "csCode_": "mmol/(12.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/12.HR",
       "property_": "amount of substance",
       "magnitude_": 13940131250000000,
       "dim_": {
@@ -20331,7 +20676,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "mmol/12.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20354,7 +20699,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 2 hour",
       "csCode_": "mmol/(2.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/2.HR",
       "property_": "amount of substance",
       "magnitude_": 83640787500000000,
       "dim_": {
@@ -20368,7 +20713,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "mmol/2.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20391,7 +20736,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 24 hour",
       "csCode_": "mmol/(24.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/24.HR",
       "property_": "amount of substance",
       "magnitude_": 6970065625000000,
       "dim_": {
@@ -20405,7 +20750,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "mmol/24.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20428,7 +20773,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 5 hour",
       "csCode_": "mmol/(5.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/5.HR",
       "property_": "amount of substance",
       "magnitude_": 33456315000000000,
       "dim_": {
@@ -20442,7 +20787,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "mmol/5.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20465,7 +20810,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 6 hour",
       "csCode_": "mmol/(6.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/6.HR",
       "property_": "amount of substance",
       "magnitude_": 27880262500000000,
       "dim_": {
@@ -20479,7 +20824,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "mmol/6.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20502,7 +20847,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 8 hour",
       "csCode_": "mmol/(8.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/8.HR",
       "property_": "amount of substance",
       "magnitude_": 20910196875000000,
       "dim_": {
@@ -20516,7 +20861,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "mmol/8.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20539,7 +20884,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per day",
       "csCode_": "mmol/d",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/D",
       "property_": "amount of substance",
       "magnitude_": 6970065625000000,
       "dim_": {
@@ -20553,7 +20898,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/d",
+      "printSymbol_": "mmol/d",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20576,7 +20921,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per deciliter",
       "csCode_": "mmol/dL",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/D",
       "property_": "amount of substance",
       "magnitude_": 6.022136699999999e+24,
       "dim_": {
@@ -20590,7 +20935,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "mmol/dL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20613,7 +20958,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per gram",
       "csCode_": "mmol/g",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/G",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -20627,7 +20972,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "mmol/g",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20650,7 +20995,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per hour",
       "csCode_": "mmol/h",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -20664,7 +21009,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "mmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20687,7 +21032,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per kilogram",
       "csCode_": "mmol/kg",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/KG",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -20701,7 +21046,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "mmol/kg",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20724,7 +21069,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per kilogram per 8 hour",
       "csCode_": "mmol/kg/(8.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/KG/8.HR",
       "property_": "amount of substance",
       "magnitude_": 20910196875000,
       "dim_": {
@@ -20738,7 +21083,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g/h",
+      "printSymbol_": "mmol/kg/8.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20761,7 +21106,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per kilogram per day",
       "csCode_": "mmol/kg/d",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/KG/D",
       "property_": "amount of substance",
       "magnitude_": 6970065625000,
       "dim_": {
@@ -20775,7 +21120,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g/d",
+      "printSymbol_": "mmol/kg/d",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20798,7 +21143,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per kilogram per hour",
       "csCode_": "mmol/kg/h",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/KG/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -20812,7 +21157,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g/h",
+      "printSymbol_": "mmol/kg/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20835,7 +21180,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per kilogram per minute",
       "csCode_": "mmol/kg/min",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/KG/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -20849,7 +21194,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g/min",
+      "printSymbol_": "mmol/kg/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20872,7 +21217,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per liter",
       "csCode_": "mmol/L",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -20886,7 +21231,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "mmol/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20909,7 +21254,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per square meter",
       "csCode_": "mmol/m2",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/M2",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -20923,7 +21268,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/m",
+      "printSymbol_": "mmol/m<sup>2</sup>",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20946,7 +21291,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per minute",
       "csCode_": "mmol/min",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -20960,7 +21305,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/min",
+      "printSymbol_": "mmol/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20983,11 +21328,11 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per millimole",
       "csCode_": "mmol/mmol",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/MMOL",
       "property_": "amount of substance",
       "magnitude_": 1,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "mmol/mmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21010,11 +21355,11 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per mole",
       "csCode_": "mmol/mol",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/MOL",
       "property_": "amount of substance",
       "magnitude_": 0.001,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "mmol/mol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21037,7 +21382,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per second per liter",
       "csCode_": "mmol/s/L",
-      "ciCode_": "MOL",
+      "ciCode_": "MMOL/S",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -21051,7 +21396,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/s/L",
+      "printSymbol_": "mmol/s/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21074,7 +21419,7 @@ module.exports={
       "isBase_": false,
       "name_": "mole per kilogram",
       "csCode_": "mol/kg",
-      "ciCode_": "MOL",
+      "ciCode_": "MOL/KG",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -21088,7 +21433,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "mol/kg",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21111,7 +21456,7 @@ module.exports={
       "isBase_": false,
       "name_": "mole per kilogram per second",
       "csCode_": "mol/kg/s",
-      "ciCode_": "MOL",
+      "ciCode_": "MOL/KG/S",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -21125,7 +21470,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g/s",
+      "printSymbol_": "mol/kg/s",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21185,7 +21530,7 @@ module.exports={
       "isBase_": false,
       "name_": "mole per cubic meter",
       "csCode_": "mol/m3",
-      "ciCode_": "MOL",
+      "ciCode_": "MOL/M3",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -21199,7 +21544,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/m",
+      "printSymbol_": "mol/m<sup>3</sup>",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21222,7 +21567,7 @@ module.exports={
       "isBase_": false,
       "name_": "mole per milliliter",
       "csCode_": "mol/mL",
-      "ciCode_": "MOL",
+      "ciCode_": "MOL/M",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+29,
       "dim_": {
@@ -21236,7 +21581,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "mol/mL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21259,7 +21604,7 @@ module.exports={
       "isBase_": false,
       "name_": "mole per mole",
       "csCode_": "mol/mol",
-      "ciCode_": "MOL",
+      "ciCode_": "MOL/MOL",
       "property_": "amount of substance",
       "magnitude_": 1,
       "dim_": null,
@@ -21286,7 +21631,7 @@ module.exports={
       "isBase_": false,
       "name_": "mole per second",
       "csCode_": "mol/s",
-      "ciCode_": "MOL",
+      "ciCode_": "MOL/S",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -21323,11 +21668,11 @@ module.exports={
       "isBase_": false,
       "name_": "milliosmole",
       "csCode_": "mosm",
-      "ciCode_": "OSM",
+      "ciCode_": "MOSM",
       "property_": "amount of substance (dissolved particles)",
       "magnitude_": 602213670000000000000,
       "dim_": null,
-      "printSymbol_": "osm",
+      "printSymbol_": "mosm",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -21350,7 +21695,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliosmole per kilogram",
       "csCode_": "mosm/kg",
-      "ciCode_": "OSM",
+      "ciCode_": "MOSM/KG",
       "property_": "amount of substance (dissolved particles)",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -21364,7 +21709,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "osm/g",
+      "printSymbol_": "mosm/kg",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -21387,7 +21732,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliosmole per liter",
       "csCode_": "mosm/L",
-      "ciCode_": "OSM",
+      "ciCode_": "MOSM",
       "property_": "amount of substance (dissolved particles)",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -21401,7 +21746,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "osm/L",
+      "printSymbol_": "mosm/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -21424,7 +21769,7 @@ module.exports={
       "isBase_": false,
       "name_": "millipascal",
       "csCode_": "mPa",
-      "ciCode_": "PAL",
+      "ciCode_": "MPAL",
       "property_": "pressure",
       "magnitude_": 1,
       "dim_": {
@@ -21438,7 +21783,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "Pa",
+      "printSymbol_": "mPa",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21461,7 +21806,7 @@ module.exports={
       "isBase_": false,
       "name_": "millipascal second",
       "csCode_": "mPa.s",
-      "ciCode_": "PAL",
+      "ciCode_": "MPAL.S",
       "property_": "pressure",
       "magnitude_": 1,
       "dim_": {
@@ -21475,7 +21820,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "Pa.s",
+      "printSymbol_": "mPa.s",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21498,7 +21843,7 @@ module.exports={
       "isBase_": true,
       "name_": "millisecond",
       "csCode_": "Ms",
-      "ciCode_": "S",
+      "ciCode_": "MAS",
       "property_": "time",
       "magnitude_": 1000000,
       "dim_": {
@@ -21512,7 +21857,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "s",
+      "printSymbol_": "Ms",
       "class_": null,
       "isMetric_": false,
       "variable_": "T",
@@ -21535,7 +21880,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli enzyme unit per gram",
       "csCode_": "mU/g",
-      "ciCode_": "U",
+      "ciCode_": "MU/G",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000,
       "dim_": {
@@ -21549,7 +21894,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/g",
+      "printSymbol_": "mU/g",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -21572,7 +21917,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli enzyme unit per liter",
       "csCode_": "mU/L",
-      "ciCode_": "U",
+      "ciCode_": "MU",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -21586,7 +21931,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L",
+      "printSymbol_": "mU/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -21609,7 +21954,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli enzyme unit per milligram",
       "csCode_": "mU/mg",
-      "ciCode_": "U",
+      "ciCode_": "MU/MG",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -21623,7 +21968,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/g",
+      "printSymbol_": "mU/mg",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -21646,7 +21991,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli enzyme unit per milliliter",
       "csCode_": "mU/mL",
-      "ciCode_": "U",
+      "ciCode_": "MU/M",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -21660,7 +22005,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L",
+      "printSymbol_": "mU/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -21683,7 +22028,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli enzyme unit per milliliter per minute",
       "csCode_": "mU/mL/min",
-      "ciCode_": "U",
+      "ciCode_": "MU/M/MIN",
       "property_": "catalytic activity",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -21697,7 +22042,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L/min",
+      "printSymbol_": "mU/mL/min",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -21720,7 +22065,7 @@ module.exports={
       "isBase_": false,
       "name_": "millivolt",
       "csCode_": "mV",
-      "ciCode_": "V",
+      "ciCode_": "MV",
       "property_": "electric potential",
       "magnitude_": 1,
       "dim_": {
@@ -21734,7 +22079,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "V",
+      "printSymbol_": "mV",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21757,7 +22102,7 @@ module.exports={
       "isBase_": false,
       "name_": "Newton centimeter",
       "csCode_": "N.cm",
-      "ciCode_": "N",
+      "ciCode_": "N.CM",
       "property_": "force",
       "magnitude_": 10,
       "dim_": {
@@ -21771,7 +22116,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "N.m",
+      "printSymbol_": "N.cm",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21794,7 +22139,7 @@ module.exports={
       "isBase_": false,
       "name_": "Newton second",
       "csCode_": "N.s",
-      "ciCode_": "N",
+      "ciCode_": "N.S",
       "property_": "force",
       "magnitude_": 1000,
       "dim_": {
@@ -21831,7 +22176,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram",
       "csCode_": "ng",
-      "ciCode_": "G",
+      "ciCode_": "NG",
       "property_": "mass",
       "magnitude_": 1e-9,
       "dim_": {
@@ -21845,7 +22190,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "ng",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -21868,7 +22213,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per 24 hour",
       "csCode_": "ng/(24.h)",
-      "ciCode_": "G",
+      "ciCode_": "NG/24.HR",
       "property_": "mass",
       "magnitude_": 1.1574074074074075e-14,
       "dim_": {
@@ -21882,7 +22227,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "ng/24.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -21905,7 +22250,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per 8 hour",
       "csCode_": "ng/(8.h)",
-      "ciCode_": "G",
+      "ciCode_": "NG/8.HR",
       "property_": "mass",
       "magnitude_": 3.4722222222222224e-14,
       "dim_": {
@@ -21919,7 +22264,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "ng/8.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -21942,7 +22287,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per million",
       "csCode_": "ng/10*6",
-      "ciCode_": "G",
+      "ciCode_": "NG/10*6",
       "property_": "mass",
       "magnitude_": 1e-15,
       "dim_": {
@@ -21956,7 +22301,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/10",
+      "printSymbol_": "ng/10<sup>6</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -21979,7 +22324,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per day",
       "csCode_": "ng/d",
-      "ciCode_": "G",
+      "ciCode_": "NG/D",
       "property_": "mass",
       "magnitude_": 1.1574074074074075e-14,
       "dim_": {
@@ -21993,7 +22338,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/d",
+      "printSymbol_": "ng/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22016,7 +22361,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per deciliter",
       "csCode_": "ng/dL",
-      "ciCode_": "G",
+      "ciCode_": "NG/D",
       "property_": "mass",
       "magnitude_": 0.00001,
       "dim_": {
@@ -22030,7 +22375,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "ng/dL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22053,7 +22398,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per gram",
       "csCode_": "ng/g",
-      "ciCode_": "G",
+      "ciCode_": "NG/G",
       "property_": "mass",
       "magnitude_": 1e-9,
       "dim_": {
@@ -22067,7 +22412,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "ng/g",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22090,7 +22435,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per hour",
       "csCode_": "ng/h",
-      "ciCode_": "G",
+      "ciCode_": "NG/HR",
       "property_": "mass",
       "magnitude_": 2.777777777777778e-13,
       "dim_": {
@@ -22104,7 +22449,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "ng/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22127,7 +22472,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per kilogram",
       "csCode_": "ng/kg",
-      "ciCode_": "G",
+      "ciCode_": "NG/KG",
       "property_": "mass",
       "magnitude_": 1e-12,
       "dim_": {
@@ -22141,7 +22486,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "ng/kg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22164,7 +22509,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per kilogram per 8 hour",
       "csCode_": "ng/kg/(8.h)",
-      "ciCode_": "G",
+      "ciCode_": "NG/KG/8.HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-17,
       "dim_": {
@@ -22178,7 +22523,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/h",
+      "printSymbol_": "ng/kg/8.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22201,7 +22546,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per kilogram per hour",
       "csCode_": "ng/kg/h",
-      "ciCode_": "G",
+      "ciCode_": "NG/KG/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777775e-16,
       "dim_": {
@@ -22215,7 +22560,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/h",
+      "printSymbol_": "ng/kg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22238,7 +22583,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per kilogram per minute",
       "csCode_": "ng/kg/min",
-      "ciCode_": "G",
+      "ciCode_": "NG/KG/MIN",
       "property_": "mass",
       "magnitude_": 1.6666666666666667e-14,
       "dim_": {
@@ -22252,7 +22597,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/min",
+      "printSymbol_": "ng/kg/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22275,7 +22620,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per liter",
       "csCode_": "ng/L",
-      "ciCode_": "G",
+      "ciCode_": "NG",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -22289,7 +22634,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "ng/L",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22312,7 +22657,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per square meter",
       "csCode_": "ng/m2",
-      "ciCode_": "G",
+      "ciCode_": "NG/M2",
       "property_": "mass",
       "magnitude_": 1e-9,
       "dim_": {
@@ -22326,7 +22671,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "ng/m<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22349,7 +22694,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per milligram",
       "csCode_": "ng/mg",
-      "ciCode_": "G",
+      "ciCode_": "NG/MG",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -22363,7 +22708,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "ng/mg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22386,7 +22731,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per milligram per hour",
       "csCode_": "ng/mg/h",
-      "ciCode_": "G",
+      "ciCode_": "NG/MG/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777777e-10,
       "dim_": {
@@ -22400,7 +22745,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/h",
+      "printSymbol_": "ng/mg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22423,7 +22768,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per minute",
       "csCode_": "ng/min",
-      "ciCode_": "G",
+      "ciCode_": "NG/MIN",
       "property_": "mass",
       "magnitude_": 1.6666666666666667e-11,
       "dim_": {
@@ -22437,7 +22782,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/min",
+      "printSymbol_": "ng/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22460,7 +22805,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per millliiter",
       "csCode_": "ng/mL",
-      "ciCode_": "G",
+      "ciCode_": "NG/M",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -22474,7 +22819,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "ng/mL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22497,7 +22842,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per milliliter per hour",
       "csCode_": "ng/mL/h",
-      "ciCode_": "G",
+      "ciCode_": "NG/M/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777776e-7,
       "dim_": {
@@ -22511,7 +22856,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L/h",
+      "printSymbol_": "ng/mL/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22534,7 +22879,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per second",
       "csCode_": "ng/s",
-      "ciCode_": "G",
+      "ciCode_": "NG/S",
       "property_": "mass",
       "magnitude_": 1e-9,
       "dim_": {
@@ -22548,7 +22893,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/s",
+      "printSymbol_": "ng/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22571,7 +22916,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per enzyme unit",
       "csCode_": "ng/U",
-      "ciCode_": "G",
+      "ciCode_": "NG/U",
       "property_": "mass",
       "magnitude_": 9.963241120049634e-26,
       "dim_": {
@@ -22585,7 +22930,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/U",
+      "printSymbol_": "ng/U",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22608,7 +22953,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanokatal",
       "csCode_": "nkat",
-      "ciCode_": "KAT",
+      "ciCode_": "NKAT",
       "property_": "catalytic activity",
       "magnitude_": 602213670000000,
       "dim_": {
@@ -22622,7 +22967,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kat",
+      "printSymbol_": "nkat",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -22645,7 +22990,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanoliter",
       "csCode_": "nL",
-      "ciCode_": "",
+      "ciCode_": "N",
       "property_": "volume",
       "magnitude_": 1.0000000000000002e-12,
       "dim_": {
@@ -22659,7 +23004,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "nL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -22682,7 +23027,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanometer",
       "csCode_": "nm",
-      "ciCode_": "M",
+      "ciCode_": "NM",
       "property_": "length",
       "magnitude_": 1e-9,
       "dim_": {
@@ -22696,7 +23041,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "nm",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -22719,7 +23064,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanometer per second per liter",
       "csCode_": "nm/s/L",
-      "ciCode_": "M",
+      "ciCode_": "NM/S",
       "property_": "length",
       "magnitude_": 0.000001,
       "dim_": {
@@ -22733,7 +23078,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/s/L",
+      "printSymbol_": "nm/s/L",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -22756,11 +23101,11 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole",
       "csCode_": "nmol",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000000,
       "dim_": null,
-      "printSymbol_": "mol",
+      "printSymbol_": "nmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -22783,7 +23128,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per 24 hour",
       "csCode_": "nmol/(24.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/24.HR",
       "property_": "amount of substance",
       "magnitude_": 6970065625,
       "dim_": {
@@ -22797,7 +23142,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "nmol/24.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -22820,7 +23165,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per day",
       "csCode_": "nmol/d",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/D",
       "property_": "amount of substance",
       "magnitude_": 6970065625,
       "dim_": {
@@ -22834,7 +23179,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/d",
+      "printSymbol_": "nmol/d",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -22857,7 +23202,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per deciliter",
       "csCode_": "nmol/dL",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/D",
       "property_": "amount of substance",
       "magnitude_": 6022136700000000000,
       "dim_": {
@@ -22871,7 +23216,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "nmol/dL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -22894,7 +23239,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per gram",
       "csCode_": "nmol/g",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/G",
       "property_": "amount of substance",
       "magnitude_": 602213670000000,
       "dim_": {
@@ -22908,7 +23253,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "nmol/g",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -22931,7 +23276,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per hour per liter",
       "csCode_": "nmol/h/L",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -22945,7 +23290,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h/L",
+      "printSymbol_": "nmol/h/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -22968,7 +23313,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per liter",
       "csCode_": "nmol/L",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -22982,7 +23327,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "nmol/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23005,7 +23350,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milligram",
       "csCode_": "nmol/mg",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/MG",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -23019,7 +23364,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "nmol/mg",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23042,7 +23387,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milligram per hour",
       "csCode_": "nmol/mg/h",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/MG/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -23056,7 +23401,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g/h",
+      "printSymbol_": "nmol/mg/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23079,7 +23424,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole of 1/2 cystine per milligram of protein",
       "csCode_": "nmol/mg{prot}",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/MG",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -23093,7 +23438,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "nmol/mg",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23116,7 +23461,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per minute",
       "csCode_": "nmol/min",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000,
       "dim_": {
@@ -23130,7 +23475,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/min",
+      "printSymbol_": "nmol/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23153,7 +23498,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per minute per milliliter",
       "csCode_": "nmol/min/mL",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/MIN/M",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -23167,7 +23512,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/min/L",
+      "printSymbol_": "nmol/min/mL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23190,7 +23535,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milliliter",
       "csCode_": "nmol/mL",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/M",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -23204,7 +23549,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "nmol/mL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23227,7 +23572,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milliliter per hour",
       "csCode_": "nmol/mL/h",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/M/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -23241,7 +23586,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L/h",
+      "printSymbol_": "nmol/mL/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23264,7 +23609,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milliliter per minute",
       "csCode_": "nmol/mL/min",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/M/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -23278,7 +23623,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L/min",
+      "printSymbol_": "nmol/mL/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23301,11 +23646,11 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per millimole",
       "csCode_": "nmol/mmol",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/MMOL",
       "property_": "amount of substance",
       "magnitude_": 0.000001,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "nmol/mmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23328,11 +23673,11 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per millimole of creatinine",
       "csCode_": "nmol/mmol{creat}",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/MMOL",
       "property_": "amount of substance",
       "magnitude_": 0.000001,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "nmol/mmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23355,11 +23700,11 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per mole",
       "csCode_": "nmol/mol",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/MOL",
       "property_": "amount of substance",
       "magnitude_": 1e-9,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "nmol/mol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23382,11 +23727,11 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per nanomole",
       "csCode_": "nmol/nmol",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/NMOL",
       "property_": "amount of substance",
       "magnitude_": 1,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "nmol/nmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23409,7 +23754,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per second",
       "csCode_": "nmol/s",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/S",
       "property_": "amount of substance",
       "magnitude_": 602213670000000,
       "dim_": {
@@ -23423,7 +23768,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/s",
+      "printSymbol_": "nmol/s",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23446,7 +23791,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per second per liter",
       "csCode_": "nmol/s/L",
-      "ciCode_": "MOL",
+      "ciCode_": "NMOL/S",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -23460,7 +23805,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/s/L",
+      "printSymbol_": "nmol/s/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23483,7 +23828,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanosecond",
       "csCode_": "ns",
-      "ciCode_": "S",
+      "ciCode_": "NS",
       "property_": "time",
       "magnitude_": 1e-9,
       "dim_": {
@@ -23497,7 +23842,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "s",
+      "printSymbol_": "ns",
       "class_": null,
       "isMetric_": false,
       "variable_": "T",
@@ -23520,7 +23865,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanoenzyme unit per milliliter",
       "csCode_": "nU/mL",
-      "ciCode_": "U",
+      "ciCode_": "NU/M",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000,
       "dim_": {
@@ -23534,7 +23879,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L",
+      "printSymbol_": "nU/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -23557,7 +23902,7 @@ module.exports={
       "isBase_": false,
       "name_": "Ohm meter",
       "csCode_": "Ohm.m",
-      "ciCode_": "OHM",
+      "ciCode_": "OHM.M",
       "property_": "electric resistance",
       "magnitude_": 1000,
       "dim_": {
@@ -23594,7 +23939,7 @@ module.exports={
       "isBase_": false,
       "name_": "osmole per kilogram",
       "csCode_": "osm/kg",
-      "ciCode_": "OSM",
+      "ciCode_": "OSM/KG",
       "property_": "amount of substance (dissolved particles)",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -23608,7 +23953,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "osm/g",
+      "printSymbol_": "osm/kg",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -23668,7 +24013,7 @@ module.exports={
       "isBase_": true,
       "name_": "picogram",
       "csCode_": "pg",
-      "ciCode_": "G",
+      "ciCode_": "PG",
       "property_": "mass",
       "magnitude_": 1e-12,
       "dim_": {
@@ -23682,7 +24027,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "pg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -23705,7 +24050,7 @@ module.exports={
       "isBase_": true,
       "name_": "picogram per deciliter",
       "csCode_": "pg/dL",
-      "ciCode_": "G",
+      "ciCode_": "PG/D",
       "property_": "mass",
       "magnitude_": 9.999999999999999e-9,
       "dim_": {
@@ -23719,7 +24064,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "pg/dL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -23742,7 +24087,7 @@ module.exports={
       "isBase_": true,
       "name_": "picogram per liter",
       "csCode_": "pg/L",
-      "ciCode_": "G",
+      "ciCode_": "PG",
       "property_": "mass",
       "magnitude_": 1e-9,
       "dim_": {
@@ -23756,7 +24101,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "pg/L",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -23779,7 +24124,7 @@ module.exports={
       "isBase_": true,
       "name_": "picogram per milligram",
       "csCode_": "pg/mg",
-      "ciCode_": "G",
+      "ciCode_": "PG/MG",
       "property_": "mass",
       "magnitude_": 1e-9,
       "dim_": {
@@ -23793,7 +24138,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "pg/mg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -23816,7 +24161,7 @@ module.exports={
       "isBase_": true,
       "name_": "picogram per milliliter",
       "csCode_": "pg/mL",
-      "ciCode_": "G",
+      "ciCode_": "PG/M",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -23830,7 +24175,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "pg/mL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -23853,7 +24198,7 @@ module.exports={
       "isBase_": true,
       "name_": "picogram per millimeter",
       "csCode_": "pg/mm",
-      "ciCode_": "G",
+      "ciCode_": "PG/MM",
       "property_": "mass",
       "magnitude_": 1e-9,
       "dim_": {
@@ -23867,7 +24212,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "pg/mm",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -23890,7 +24235,7 @@ module.exports={
       "isBase_": false,
       "name_": "picokatal",
       "csCode_": "pkat",
-      "ciCode_": "KAT",
+      "ciCode_": "PKAT",
       "property_": "catalytic activity",
       "magnitude_": 602213670000,
       "dim_": {
@@ -23904,7 +24249,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kat",
+      "printSymbol_": "pkat",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -23927,7 +24272,7 @@ module.exports={
       "isBase_": false,
       "name_": "picoliter",
       "csCode_": "pL",
-      "ciCode_": "",
+      "ciCode_": "P",
       "property_": "volume",
       "magnitude_": 1e-15,
       "dim_": {
@@ -23941,7 +24286,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "pL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -23964,7 +24309,7 @@ module.exports={
       "isBase_": true,
       "name_": "picometer",
       "csCode_": "pm",
-      "ciCode_": "M",
+      "ciCode_": "PM",
       "property_": "length",
       "magnitude_": 1e-12,
       "dim_": {
@@ -23978,7 +24323,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "pm",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -24001,11 +24346,11 @@ module.exports={
       "isBase_": false,
       "name_": "picomole",
       "csCode_": "pmol",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000,
       "dim_": null,
-      "printSymbol_": "mol",
+      "printSymbol_": "pmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24028,7 +24373,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per 24 hour",
       "csCode_": "pmol/(24.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL/24.HR",
       "property_": "amount of substance",
       "magnitude_": 6970065.625,
       "dim_": {
@@ -24042,7 +24387,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "pmol/24.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24065,7 +24410,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per day",
       "csCode_": "pmol/d",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL/D",
       "property_": "amount of substance",
       "magnitude_": 6970065.625,
       "dim_": {
@@ -24079,7 +24424,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/d",
+      "printSymbol_": "pmol/d",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24102,7 +24447,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per deciliter",
       "csCode_": "pmol/dL",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL/D",
       "property_": "amount of substance",
       "magnitude_": 6022136700000000,
       "dim_": {
@@ -24116,7 +24461,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "pmol/dL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24139,7 +24484,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per gram",
       "csCode_": "pmol/g",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL/G",
       "property_": "amount of substance",
       "magnitude_": 602213670000,
       "dim_": {
@@ -24153,7 +24498,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "pmol/g",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24176,7 +24521,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per hour per milliliter ",
       "csCode_": "pmol/h/mL",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL/HR/M",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -24190,7 +24535,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h/L",
+      "printSymbol_": "pmol/h/mL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24213,7 +24558,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per liter",
       "csCode_": "pmol/L",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000000,
       "dim_": {
@@ -24227,7 +24572,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "pmol/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24250,7 +24595,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per minute",
       "csCode_": "pmol/min",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500,
       "dim_": {
@@ -24264,7 +24609,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/min",
+      "printSymbol_": "pmol/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24287,7 +24632,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per milliliter",
       "csCode_": "pmol/mL",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL/M",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -24301,7 +24646,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "pmol/mL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24324,11 +24669,11 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per micromole",
       "csCode_": "pmol/umol",
-      "ciCode_": "MOL",
+      "ciCode_": "PMOL/UMOL",
       "property_": "amount of substance",
       "magnitude_": 0.000001,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "pmol/μmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24351,7 +24696,7 @@ module.exports={
       "isBase_": true,
       "name_": "picosecond",
       "csCode_": "ps",
-      "ciCode_": "S",
+      "ciCode_": "PS",
       "property_": "time",
       "magnitude_": 1e-12,
       "dim_": {
@@ -24365,7 +24710,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "s",
+      "printSymbol_": "ps",
       "class_": null,
       "isMetric_": false,
       "variable_": "T",
@@ -24388,7 +24733,7 @@ module.exports={
       "isBase_": false,
       "name_": "picotesla",
       "csCode_": "pT",
-      "ciCode_": "T",
+      "ciCode_": "PT",
       "property_": "magnetic flux density",
       "magnitude_": 1e-9,
       "dim_": {
@@ -24402,7 +24747,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "T",
+      "printSymbol_": "pT",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24425,7 +24770,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per 12 hour",
       "csCode_": "U/(12.h)",
-      "ciCode_": "U",
+      "ciCode_": "U/12.HR",
       "property_": "catalytic activity",
       "magnitude_": 232335520833.33334,
       "dim_": {
@@ -24439,7 +24784,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/h",
+      "printSymbol_": "U/12.h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24462,7 +24807,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per 2 hour",
       "csCode_": "U/(2.h)",
-      "ciCode_": "U",
+      "ciCode_": "U/2.HR",
       "property_": "catalytic activity",
       "magnitude_": 1394013125000,
       "dim_": {
@@ -24476,7 +24821,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/h",
+      "printSymbol_": "U/2.h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24499,7 +24844,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per 24 hour",
       "csCode_": "U/(24.h)",
-      "ciCode_": "U",
+      "ciCode_": "U/24.HR",
       "property_": "catalytic activity",
       "magnitude_": 116167760416.66667,
       "dim_": {
@@ -24513,7 +24858,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/h",
+      "printSymbol_": "U/24.h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24573,7 +24918,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per 10 billion",
       "csCode_": "U/10*10",
-      "ciCode_": "U",
+      "ciCode_": "U/10*10",
       "property_": "catalytic activity",
       "magnitude_": 1003689.45,
       "dim_": {
@@ -24587,7 +24932,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/10",
+      "printSymbol_": "U/10<sup>10</sup>",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24610,7 +24955,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per trillion",
       "csCode_": "U/10*12",
-      "ciCode_": "U",
+      "ciCode_": "U/10*12",
       "property_": "catalytic activity",
       "magnitude_": 10036.8945,
       "dim_": {
@@ -24624,7 +24969,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/10",
+      "printSymbol_": "U/10<sup>12</sup>",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24647,7 +24992,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per million",
       "csCode_": "U/10*6",
-      "ciCode_": "U",
+      "ciCode_": "U/10*6",
       "property_": "catalytic activity",
       "magnitude_": 10036894500,
       "dim_": {
@@ -24661,7 +25006,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/10",
+      "printSymbol_": "U/10<sup>6</sup>",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24684,7 +25029,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per billion",
       "csCode_": "U/10*9",
-      "ciCode_": "U",
+      "ciCode_": "U/10*9",
       "property_": "catalytic activity",
       "magnitude_": 10036894.5,
       "dim_": {
@@ -24698,7 +25043,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/10",
+      "printSymbol_": "U/10<sup>9</sup>",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24721,7 +25066,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per day",
       "csCode_": "U/d",
-      "ciCode_": "U",
+      "ciCode_": "U/D",
       "property_": "catalytic activity",
       "magnitude_": 116167760416.66667,
       "dim_": {
@@ -24758,7 +25103,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per deciliter",
       "csCode_": "U/dL",
-      "ciCode_": "U",
+      "ciCode_": "U/D",
       "property_": "catalytic activity",
       "magnitude_": 100368945000000000000,
       "dim_": {
@@ -24772,7 +25117,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L",
+      "printSymbol_": "U/dL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24795,7 +25140,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per gram",
       "csCode_": "U/g",
-      "ciCode_": "U",
+      "ciCode_": "U/G",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -24832,7 +25177,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per hour",
       "csCode_": "U/h",
-      "ciCode_": "U",
+      "ciCode_": "U/HR",
       "property_": "catalytic activity",
       "magnitude_": 2788026250000,
       "dim_": {
@@ -24906,7 +25251,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per minute",
       "csCode_": "U/min",
-      "ciCode_": "U",
+      "ciCode_": "U/MIN",
       "property_": "catalytic activity",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -24943,7 +25288,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per milliliter",
       "csCode_": "U/mL",
-      "ciCode_": "U",
+      "ciCode_": "U/M",
       "property_": "catalytic activity",
       "magnitude_": 1.00368945e+22,
       "dim_": {
@@ -24957,7 +25302,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L",
+      "printSymbol_": "U/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24980,7 +25325,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per second",
       "csCode_": "U/s",
-      "ciCode_": "U",
+      "ciCode_": "U/S",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -25017,11 +25362,11 @@ module.exports={
       "isBase_": false,
       "name_": "micro international unit",
       "csCode_": "u[IU]",
-      "ciCode_": "[IU]",
+      "ciCode_": "U[IU]",
       "property_": "arbitrary",
       "magnitude_": 0.000001,
       "dim_": null,
-      "printSymbol_": "i.U.",
+      "printSymbol_": "μi.U.",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25044,7 +25389,7 @@ module.exports={
       "isBase_": false,
       "name_": "micro international unit per liter",
       "csCode_": "u[IU]/L",
-      "ciCode_": "[IU]",
+      "ciCode_": "U[IU]",
       "property_": "arbitrary",
       "magnitude_": 0.001,
       "dim_": {
@@ -25058,7 +25403,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./L",
+      "printSymbol_": "μi.U./L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25081,7 +25426,7 @@ module.exports={
       "isBase_": false,
       "name_": "micro international unit per milliliter",
       "csCode_": "u[IU]/mL",
-      "ciCode_": "[IU]",
+      "ciCode_": "U[IU]/M",
       "property_": "arbitrary",
       "magnitude_": 1,
       "dim_": {
@@ -25095,7 +25440,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./L",
+      "printSymbol_": "μi.U./mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25118,11 +25463,11 @@ module.exports={
       "isBase_": false,
       "name_": "microequivalent",
       "csCode_": "ueq",
-      "ciCode_": "EQ",
+      "ciCode_": "UEQ",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": null,
-      "printSymbol_": "eq",
+      "printSymbol_": "μeq",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25145,7 +25490,7 @@ module.exports={
       "isBase_": false,
       "name_": "microequivalent per liter",
       "csCode_": "ueq/L",
-      "ciCode_": "EQ",
+      "ciCode_": "UEQ",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -25159,7 +25504,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/L",
+      "printSymbol_": "μeq/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25182,7 +25527,7 @@ module.exports={
       "isBase_": false,
       "name_": "microequivalent per milliliter",
       "csCode_": "ueq/mL",
-      "ciCode_": "EQ",
+      "ciCode_": "UEQ/M",
       "property_": "amount of substance",
       "magnitude_": 6.0221367000000003e+23,
       "dim_": {
@@ -25196,7 +25541,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "eq/L",
+      "printSymbol_": "μeq/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25219,7 +25564,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram",
       "csCode_": "ug",
-      "ciCode_": "G",
+      "ciCode_": "UG",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -25233,7 +25578,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "μg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25256,7 +25601,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per 100 gram",
       "csCode_": "ug/(100.g)",
-      "ciCode_": "G",
+      "ciCode_": "UG/100.G",
       "property_": "mass",
       "magnitude_": 1e-8,
       "dim_": {
@@ -25270,7 +25615,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "μg/100.g",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25293,7 +25638,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per 24 hour",
       "csCode_": "ug/(24.h)",
-      "ciCode_": "G",
+      "ciCode_": "UG/24.HR",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -25307,7 +25652,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "μg/24.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25330,7 +25675,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per 8 hour",
       "csCode_": "ug/(8.h)",
-      "ciCode_": "G",
+      "ciCode_": "UG/8.HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-11,
       "dim_": {
@@ -25344,7 +25689,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "μg/8.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25367,7 +25712,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per square foot (international)",
       "csCode_": "ug/[sft_i]",
-      "ciCode_": "G",
+      "ciCode_": "UG/[SFT_I]",
       "property_": "mass",
       "magnitude_": 0.000010763910416709721,
       "dim_": {
@@ -25381,7 +25726,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g",
+      "printSymbol_": "μg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25404,7 +25749,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per day",
       "csCode_": "ug/d",
-      "ciCode_": "G",
+      "ciCode_": "UG/D",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -25418,7 +25763,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/d",
+      "printSymbol_": "μg/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25441,7 +25786,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per deciliter",
       "csCode_": "ug/dL",
-      "ciCode_": "G",
+      "ciCode_": "UG/D",
       "property_": "mass",
       "magnitude_": 0.009999999999999998,
       "dim_": {
@@ -25455,7 +25800,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "μg/dL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25478,7 +25823,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per gram",
       "csCode_": "ug/g",
-      "ciCode_": "G",
+      "ciCode_": "UG/G",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -25492,7 +25837,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "μg/g",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25515,7 +25860,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per hour",
       "csCode_": "ug/h",
-      "ciCode_": "G",
+      "ciCode_": "UG/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777777e-10,
       "dim_": {
@@ -25529,7 +25874,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h",
+      "printSymbol_": "μg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25552,7 +25897,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per kilogram",
       "csCode_": "ug/kg",
-      "ciCode_": "G",
+      "ciCode_": "UG/KG",
       "property_": "mass",
       "magnitude_": 9.999999999999999e-10,
       "dim_": {
@@ -25566,7 +25911,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "μg/kg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25589,7 +25934,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per kilogram per 8 hour",
       "csCode_": "ug/kg/(8.h)",
-      "ciCode_": "G",
+      "ciCode_": "UG/KG/8.HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-14,
       "dim_": {
@@ -25603,7 +25948,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/h",
+      "printSymbol_": "μg/kg/8.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25626,7 +25971,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per kilogram per day",
       "csCode_": "ug/kg/d",
-      "ciCode_": "G",
+      "ciCode_": "UG/KG/D",
       "property_": "mass",
       "magnitude_": 1.1574074074074072e-14,
       "dim_": {
@@ -25640,7 +25985,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/d",
+      "printSymbol_": "μg/kg/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25663,7 +26008,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per kilogram per hour",
       "csCode_": "ug/kg/h",
-      "ciCode_": "G",
+      "ciCode_": "UG/KG/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777774e-13,
       "dim_": {
@@ -25677,7 +26022,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/h",
+      "printSymbol_": "μg/kg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25700,7 +26045,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per kilogram per minute",
       "csCode_": "ug/kg/min",
-      "ciCode_": "G",
+      "ciCode_": "UG/KG/MIN",
       "property_": "mass",
       "magnitude_": 1.6666666666666664e-11,
       "dim_": {
@@ -25714,7 +26059,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g/min",
+      "printSymbol_": "μg/kg/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25737,7 +26082,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per liter",
       "csCode_": "ug/L",
-      "ciCode_": "G",
+      "ciCode_": "UG",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -25751,7 +26096,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "μg/L",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25774,7 +26119,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per liter per 24 hour",
       "csCode_": "ug/L/(24.h)",
-      "ciCode_": "G",
+      "ciCode_": "UG/24.HR",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -25788,7 +26133,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L/h",
+      "printSymbol_": "μg/L/24.h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25811,7 +26156,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per square meter",
       "csCode_": "ug/m2",
-      "ciCode_": "G",
+      "ciCode_": "UG/M2",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -25825,7 +26170,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "μg/m<sup>2</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25848,7 +26193,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per cubic meter",
       "csCode_": "ug/m3",
-      "ciCode_": "G",
+      "ciCode_": "UG/M3",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -25862,7 +26207,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m",
+      "printSymbol_": "μg/m<sup>3</sup>",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25885,7 +26230,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per milligram",
       "csCode_": "ug/mg",
-      "ciCode_": "G",
+      "ciCode_": "UG/MG",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -25899,7 +26244,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "μg/mg",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25922,7 +26267,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per minute",
       "csCode_": "ug/min",
-      "ciCode_": "G",
+      "ciCode_": "UG/MIN",
       "property_": "mass",
       "magnitude_": 1.6666666666666667e-8,
       "dim_": {
@@ -25936,7 +26281,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/min",
+      "printSymbol_": "μg/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25959,7 +26304,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per milliliter",
       "csCode_": "ug/mL",
-      "ciCode_": "G",
+      "ciCode_": "UG/M",
       "property_": "mass",
       "magnitude_": 1,
       "dim_": {
@@ -25973,7 +26318,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/L",
+      "printSymbol_": "μg/mL",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25996,7 +26341,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per millimole",
       "csCode_": "ug/mmol",
-      "ciCode_": "G",
+      "ciCode_": "UG/MMOL",
       "property_": "mass",
       "magnitude_": 1.660540186674939e-27,
       "dim_": {
@@ -26010,7 +26355,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/mol",
+      "printSymbol_": "μg/mmol",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -26033,7 +26378,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per nanogram",
       "csCode_": "ug/ng",
-      "ciCode_": "G",
+      "ciCode_": "UG/NG",
       "property_": "mass",
       "magnitude_": 999.9999999999999,
       "dim_": {
@@ -26047,7 +26392,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/g",
+      "printSymbol_": "μg/ng",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -26070,7 +26415,7 @@ module.exports={
       "isBase_": false,
       "name_": "microkatal",
       "csCode_": "ukat",
-      "ciCode_": "KAT",
+      "ciCode_": "UKAT",
       "property_": "catalytic activity",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -26084,7 +26429,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kat",
+      "printSymbol_": "μkat",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -26107,7 +26452,7 @@ module.exports={
       "isBase_": false,
       "name_": "microliter",
       "csCode_": "uL",
-      "ciCode_": "",
+      "ciCode_": "U",
       "property_": "volume",
       "magnitude_": 1e-9,
       "dim_": {
@@ -26121,7 +26466,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L",
+      "printSymbol_": "μL",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -26144,7 +26489,7 @@ module.exports={
       "isBase_": false,
       "name_": "microliter per 2 hour",
       "csCode_": "uL/(2.h)",
-      "ciCode_": "",
+      "ciCode_": "U/2.HR",
       "property_": "volume",
       "magnitude_": 1.388888888888889e-13,
       "dim_": {
@@ -26158,7 +26503,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "μL/2.h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -26181,7 +26526,7 @@ module.exports={
       "isBase_": false,
       "name_": "microliter per hour",
       "csCode_": "uL/h",
-      "ciCode_": "",
+      "ciCode_": "U/HR",
       "property_": "volume",
       "magnitude_": 2.777777777777778e-13,
       "dim_": {
@@ -26195,7 +26540,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/h",
+      "printSymbol_": "μL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -26218,7 +26563,7 @@ module.exports={
       "isBase_": true,
       "name_": "micrometer",
       "csCode_": "um",
-      "ciCode_": "M",
+      "ciCode_": "UM",
       "property_": "length",
       "magnitude_": 0.000001,
       "dim_": {
@@ -26232,7 +26577,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m",
+      "printSymbol_": "μm",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -26255,7 +26600,7 @@ module.exports={
       "isBase_": true,
       "name_": "microns per second",
       "csCode_": "um/s",
-      "ciCode_": "M",
+      "ciCode_": "UM/S",
       "property_": "length",
       "magnitude_": 0.000001,
       "dim_": {
@@ -26269,7 +26614,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/s",
+      "printSymbol_": "μm/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -26292,11 +26637,11 @@ module.exports={
       "isBase_": false,
       "name_": "micromole",
       "csCode_": "umol",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": null,
-      "printSymbol_": "mol",
+      "printSymbol_": "μmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26319,7 +26664,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per 2 hour",
       "csCode_": "umol/(2.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/2.HR",
       "property_": "amount of substance",
       "magnitude_": 83640787500000,
       "dim_": {
@@ -26333,7 +26678,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "μmol/2.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26356,7 +26701,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per 24 hour",
       "csCode_": "umol/(24.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/24.HR",
       "property_": "amount of substance",
       "magnitude_": 6970065625000,
       "dim_": {
@@ -26370,7 +26715,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "μmol/24.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26393,7 +26738,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per 8 hour",
       "csCode_": "umol/(8.h)",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/8.HR",
       "property_": "amount of substance",
       "magnitude_": 20910196875000,
       "dim_": {
@@ -26407,7 +26752,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "μmol/8.h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26430,7 +26775,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per day",
       "csCode_": "umol/d",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/D",
       "property_": "amount of substance",
       "magnitude_": 6970065625000,
       "dim_": {
@@ -26444,7 +26789,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/d",
+      "printSymbol_": "μmol/d",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26467,7 +26812,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per deciliter",
       "csCode_": "umol/dL",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/D",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+21,
       "dim_": {
@@ -26481,7 +26826,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "μmol/dL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26504,7 +26849,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per gram",
       "csCode_": "umol/g",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/G",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -26518,7 +26863,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "μmol/g",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26541,7 +26886,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per hour",
       "csCode_": "umol/h",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -26555,7 +26900,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/h",
+      "printSymbol_": "μmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26578,7 +26923,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per kilogram",
       "csCode_": "umol/kg",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/KG",
       "property_": "amount of substance",
       "magnitude_": 602213670000000,
       "dim_": {
@@ -26592,7 +26937,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "μmol/kg",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26615,7 +26960,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per liter",
       "csCode_": "umol/L",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -26629,7 +26974,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "μmol/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26652,7 +26997,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per liter per hour",
       "csCode_": "umol/L/h",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -26666,7 +27011,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L/h",
+      "printSymbol_": "μmol/L/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26689,7 +27034,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per milligram",
       "csCode_": "umol/mg",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/MG",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -26703,7 +27048,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/g",
+      "printSymbol_": "μmol/mg",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26726,7 +27071,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per minute",
       "csCode_": "umol/min",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -26740,7 +27085,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/min",
+      "printSymbol_": "μmol/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26763,7 +27108,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per minute per gram",
       "csCode_": "umol/min/g",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/MIN/G",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -26777,7 +27122,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/min/g",
+      "printSymbol_": "μmol/min/g",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26800,7 +27145,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per minute per liter",
       "csCode_": "umol/min/L",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -26814,7 +27159,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/min/L",
+      "printSymbol_": "μmol/min/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26837,7 +27182,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per milliliter",
       "csCode_": "umol/mL",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/M",
       "property_": "amount of substance",
       "magnitude_": 6.0221367000000003e+23,
       "dim_": {
@@ -26851,7 +27196,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L",
+      "printSymbol_": "μmol/mL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26874,7 +27219,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per milliliter per minute",
       "csCode_": "umol/mL/min",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/M/MIN",
       "property_": "amount of substance",
       "magnitude_": 1.00368945e+22,
       "dim_": {
@@ -26888,7 +27233,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/L/min",
+      "printSymbol_": "μmol/mL/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26911,11 +27256,11 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per millimole",
       "csCode_": "umol/mmol",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/MMOL",
       "property_": "amount of substance",
       "magnitude_": 0.001,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "μmol/mmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26938,11 +27283,11 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per mole",
       "csCode_": "umol/mol",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/MOL",
       "property_": "amount of substance",
       "magnitude_": 0.000001,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "μmol/mol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26965,11 +27310,11 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per micromole",
       "csCode_": "umol/umol",
-      "ciCode_": "MOL",
+      "ciCode_": "UMOL/UMOL",
       "property_": "amount of substance",
       "magnitude_": 1,
       "dim_": null,
-      "printSymbol_": "mol/mol",
+      "printSymbol_": "μmol/μmol",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26992,7 +27337,7 @@ module.exports={
       "isBase_": false,
       "name_": "microOhm",
       "csCode_": "uOhm",
-      "ciCode_": "OHM",
+      "ciCode_": "UOHM",
       "property_": "electric resistance",
       "magnitude_": 0.001,
       "dim_": {
@@ -27006,7 +27351,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "Ω",
+      "printSymbol_": "μΩ",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -27029,7 +27374,7 @@ module.exports={
       "isBase_": true,
       "name_": "microsecond",
       "csCode_": "us",
-      "ciCode_": "S",
+      "ciCode_": "US",
       "property_": "time",
       "magnitude_": 0.000001,
       "dim_": {
@@ -27043,7 +27388,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "s",
+      "printSymbol_": "μs",
       "class_": null,
       "isMetric_": false,
       "variable_": "T",
@@ -27066,7 +27411,7 @@ module.exports={
       "isBase_": false,
       "name_": "micro enzyme unit per gram",
       "csCode_": "uU/g",
-      "ciCode_": "U",
+      "ciCode_": "UU/G",
       "property_": "catalytic activity",
       "magnitude_": 10036894500,
       "dim_": {
@@ -27080,7 +27425,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/g",
+      "printSymbol_": "μU/g",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -27103,7 +27448,7 @@ module.exports={
       "isBase_": false,
       "name_": "micro enzyme unit per liter",
       "csCode_": "uU/L",
-      "ciCode_": "U",
+      "ciCode_": "UU",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000,
       "dim_": {
@@ -27117,7 +27462,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L",
+      "printSymbol_": "μU/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -27140,7 +27485,7 @@ module.exports={
       "isBase_": false,
       "name_": "micro enzyme unit per milliliter",
       "csCode_": "uU/mL",
-      "ciCode_": "U",
+      "ciCode_": "UU/M",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -27154,7 +27499,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/L",
+      "printSymbol_": "μU/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -27177,7 +27522,7 @@ module.exports={
       "isBase_": false,
       "name_": "microvolt",
       "csCode_": "uV",
-      "ciCode_": "V",
+      "ciCode_": "UV",
       "property_": "electric potential",
       "magnitude_": 0.001,
       "dim_": {
@@ -27191,7 +27536,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "V",
+      "printSymbol_": "μV",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -27208,303 +27553,6 @@ module.exports={
       "ciUnitString_": "J/C",
       "baseFactorStr_": "1",
       "baseFactor_": "1",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "per arbitrary unit",
-      "csCode_": "/[arb'U]",
-      "ciCode_": "[ARB'U]",
-      "property_": "arbitrary",
-      "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "arb. U",
-      "class_": "chemical",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": true,
-      "synonyms_": "/arbU",
-      "source_": "LOINC",
-      "loincProperty_": "InvA ",
-      "category_": "Clinical",
-      "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "per high power field",
-      "csCode_": "/[HPF]",
-      "ciCode_": "[HPF]",
-      "property_": "view area in microscope",
-      "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "HPF",
-      "class_": "chemical",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": false,
-      "synonyms_": "/HPF; per HPF",
-      "source_": "LOINC",
-      "loincProperty_": "Naric",
-      "category_": "Clinical",
-      "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "per international unit",
-      "csCode_": "/[IU]",
-      "ciCode_": "[IU]",
-      "property_": "arbitrary",
-      "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "i.U.",
-      "class_": "chemical",
-      "isMetric_": true,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": true,
-      "synonyms_": "international units; /IU; per IU",
-      "source_": "LOINC",
-      "loincProperty_": "InvA",
-      "category_": "Clinical",
-      "guidance_": "International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO)",
-      "csUnitString_": "[iU]",
-      "ciUnitString_": "[IU]",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "per low power field",
-      "csCode_": "/[LPF]",
-      "ciCode_": "[LPF]",
-      "property_": "view area in microscope",
-      "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "LPF",
-      "class_": "chemical",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": false,
-      "synonyms_": "/LPF; per LPF",
-      "source_": "LOINC",
-      "loincProperty_": "Naric",
-      "category_": "Clinical",
-      "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "100",
-      "baseFactor_": "100",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "per 10 billion  ",
-      "csCode_": "/10*10",
-      "ciCode_": "10*",
-      "property_": "number",
-      "magnitude_": 1e-10,
-      "dim_": null,
-      "printSymbol_": "10",
-      "class_": "dimless",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": false,
-      "synonyms_": "/10^10; per 10*10",
-      "source_": "LOINC",
-      "loincProperty_": "NFr",
-      "category_": "Clinical",
-      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "per trillion ",
-      "csCode_": "/10*12",
-      "ciCode_": "10*",
-      "property_": "number",
-      "magnitude_": 1e-12,
-      "dim_": null,
-      "printSymbol_": "10",
-      "class_": "dimless",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": false,
-      "synonyms_": "/10^12; per 10*12",
-      "source_": "LOINC",
-      "loincProperty_": "NFr",
-      "category_": "Clinical",
-      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "per thousand",
-      "csCode_": "/10*3",
-      "ciCode_": "10*",
-      "property_": "number",
-      "magnitude_": 0.001,
-      "dim_": null,
-      "printSymbol_": "10",
-      "class_": "dimless",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": false,
-      "synonyms_": "/10^3; per 10*3",
-      "source_": "LOINC",
-      "loincProperty_": "NFr",
-      "category_": "Clinical",
-      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "per million",
-      "csCode_": "/10*6",
-      "ciCode_": "10*",
-      "property_": "number",
-      "magnitude_": 0.000001,
-      "dim_": null,
-      "printSymbol_": "10",
-      "class_": "dimless",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": false,
-      "synonyms_": "/10^6; per 10*6;",
-      "source_": "LOINC",
-      "loincProperty_": "NFr",
-      "category_": "Clinical",
-      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "per billion",
-      "csCode_": "/10*9",
-      "ciCode_": "10*",
-      "property_": "number",
-      "magnitude_": 1e-9,
-      "dim_": null,
-      "printSymbol_": "10",
-      "class_": "dimless",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": false,
-      "synonyms_": "/10^9; per 10*9",
-      "source_": "LOINC",
-      "loincProperty_": "NFr",
-      "category_": "Clinical",
-      "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "number per high power field",
-      "csCode_": "{#}/[HPF]",
-      "ciCode_": "[HPF]",
-      "property_": "view area in microscope",
-      "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "HPF",
-      "class_": "chemical",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": false,
-      "synonyms_": "#/HPF; # per HPF; number/HPF; numbers per high power field",
-      "source_": "LOINC",
-      "loincProperty_": "Naric",
-      "category_": "Clinical",
-      "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
-      "defError_": false
-    },
-    {
-      "isBase_": false,
-      "name_": "number per low power field",
-      "csCode_": "{#}/[LPF]",
-      "ciCode_": "[LPF]",
-      "property_": "view area in microscope",
-      "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "LPF",
-      "class_": "chemical",
-      "isMetric_": false,
-      "variable_": null,
-      "cnv_": null,
-      "cnvPfx_": 1,
-      "isSpecial_": false,
-      "isArbitrary_": false,
-      "synonyms_": "#/LPF; # per LPF; number/LPF; numbers per low power field",
-      "source_": "LOINC",
-      "loincProperty_": "Naric",
-      "category_": "Clinical",
-      "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "100",
-      "baseFactor_": "100",
       "defError_": false
     }
   ]
@@ -51992,8 +52040,12 @@ var Prefix = exports.Prefix = function () {
    *
    * @param attrs a hash of the values to use in creating the prefix object.
    *  They should be:
-   *   code_ - which is the code used for the prefix, e.g., k for kilo
+   *   code_ - which is the case-sensitive code used for the prefix,
+   *    e.g., k for kilo
+   *   ciCode_ - which is the case-insensitive code used for the prefix,
+   *    e.g., K for kilo
    *   name_ - which is the name of the prefix, e.g., kilo
+   *   printSymbol_ - which is the print symbol for the prefix, e.g., k for kilo
    *   value_ - which is teh value to use in multiplying the magnitude of
    *    a unit, e.g., for a prefix of c the value will be .01.
    *   exp_ - which is the exponent used to get the value. For decimal based
@@ -52021,9 +52073,19 @@ var Prefix = exports.Prefix = function () {
     this.code_ = attrs['code_'];
 
     /**
+     * The case-insensitive code, e.g., K for kilo
+     */
+    this.ciCode_ = attrs['ciCode_'];
+
+    /**
      * The prefix name, e.g., kilo
      */
     this.name_ = attrs['name_'];
+
+    /**
+     * The printSymbol for the prefix, e.g., k for kilo
+     */
+    this.printSymbol_ = attrs['printSymbol_'];
 
     /**
      * The value to use in multiplying the magnitude of a unit
@@ -52062,6 +52124,17 @@ var Prefix = exports.Prefix = function () {
     }
 
     /**
+     * Returns the case-insensitive code for the current prefix object
+     * @return the case_insensitive code for the current prefix object
+     */
+
+  }, {
+    key: 'getCiCode',
+    value: function getCiCode() {
+      return this.ciCode_;
+    }
+
+    /**
      * Returns the prefix name for the current prefix object
      * @return the name for the current prefix object
      */
@@ -52070,6 +52143,17 @@ var Prefix = exports.Prefix = function () {
     key: 'getName',
     value: function getName() {
       return this.name_;
+    }
+
+    /**
+     * Returns the print symbol for the current prefix object
+     * @return the print symbol for the current prefix object
+     */
+
+  }, {
+    key: 'getPrintSymbol',
+    value: function getPrintSymbol() {
+      return this.printSymbol_;
     }
 
     /**
@@ -52085,7 +52169,7 @@ var Prefix = exports.Prefix = function () {
 
     /**
      * Provides way to tell if one prefix equals another.  The second prefix
-     * must all attribute values.
+     * must match all attribute values.
      *
      * @param prefix2 prefix object to check for a match
      * @return true for a match; false if one or more attributes don't match
@@ -52094,7 +52178,7 @@ var Prefix = exports.Prefix = function () {
   }, {
     key: 'equals',
     value: function equals(prefix2) {
-      return this.code_ === prefix2.code_ && this.name_ === prefix2.name_ && this.value_ === prefix2.value_ && this.exp_ === prefix2.exp_;
+      return this.code_ === prefix2.code_ && this.ciCode_ === prefix2.ciCode_ && this.name_ === prefix2.name_ && this.printSymbol_ === prefix2.printSymbol_ && this.value_ === prefix2.value_ && this.exp_ === prefix2.exp_;
     }
   }]);
 
@@ -53654,10 +53738,13 @@ var Unit = exports.Unit = function () {
       var fromCnv = fromUnit.cnv_;
       var fromMag = fromUnit.magnitude_;
 
-      // if neither unit has a conversion function, multiply the "from" unit's
-      // magnitude by the number passed in and then divide that result by this
-      // unit's magnitude.  Do this for units with and without dimension vectors.
-      if (fromCnv == null && this.cnv_ == null) {
+      // If the same conversion function is specified for both units, which
+      // includes neither unit having a conversion function, multiply the
+      // "from" unit's magnitude by the number passed in and then divide
+      // that result by this unit's magnitude.  Do this for units with
+      // and without dimension vectors.  PROBLEM with 2 non-commensurable
+      // units with no dimension vector or function, e.g., byte to mol
+      if (fromCnv === this.cnv_) {
         newNum = num * fromMag / this.magnitude_;
       }
       // else use a function to get the number to be returned
@@ -53665,15 +53752,18 @@ var Unit = exports.Unit = function () {
           var x = 0.0;
           var funcs = UcumFunctions.getInstance();
           if (fromCnv != null) {
-            // turn num * fromUnit.magnitude into its ratio scale equivalent
+            // turn num * fromUnit.magnitude into its ratio scale equivalent,
+            // e.g., convert Celsius to Kelvin
             var fromFunc = funcs.forName(fromCnv);
             x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
+            //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
           } else {
             x = num * fromMag;
           }
 
           if (this.cnv_ != null) {
-            // turn mag * origUnit on ratio scale into a non-ratio unit
+            // turn mag * origUnit on ratio scale into a non-ratio unit,
+            // e.g. convert Kelvin to Fahrenheit
             var toFunc = funcs.forName(this.cnv_);
             newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
           } else {
@@ -53832,6 +53922,7 @@ var Unit = exports.Unit = function () {
         } else {
           this.name_ = this.mulString(this.name_, unit2.name_);
           this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
+          if (this.ciCode_ && unit2.ciCode_) this.ciCode_ = this.mulString(this.ciCode_, unit2.ciCode_);else if (unit2.ciCode_) this.ciCode_ = unit2.ciCode_;
           if (this.guidance_ && unit2.guidance_) this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);else if (unit2.guidance_) this.guidance_ = unit2.guidance_;
           this.magnitude_ *= unit2.magnitude_;
           if (this.printSymbol_ && unit2.printSymbol_) this.printSymbol_ = this.mulString(this.printSymbol_, unit2.printSymbol_);else if (unit2.printSymbol_) this.printSymbol_ = unit2.printSymbol_;
@@ -53870,10 +53961,17 @@ var Unit = exports.Unit = function () {
 
       if (this.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + this.name_);
       if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
-      this.name_ = this.divString(this.name_, unit2.name_);
+
+      if (this.name_ && unit2.name_) this.name_ = this.divString(this.name_, unit2.name_);else if (unit2.name_) this.name_ = unit2.invertString(unit2.name_);
+
       this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
+
+      if (this.ciCode_ && unit2.ciCode_) this.ciCode_ = this.divString(this.ciCode_, unit2.ciCode_);else if (unit2.ciCode_) this.ciCode_ = unit2.invertString(unit2.ciCode_);
+
       if (this.guidance_ && unit2.guidance_) this.guidance_ = this.divString(this.guidance_, unit2.guidance_);else if (unit2.guidance_) this.guidance_ = unit2.guidance_;
+
       this.magnitude_ /= unit2.magnitude_;
+
       if (this.printSymbol_ && unit2.printSymbol_) this.printSymbol_ = this.divString(this.printSymbol_, unit2.printSymbol_);else if (unit2.printSymbol_) this.printSymbol_ = unit2.printSymbol_;
 
       // Continue if unit2 has a dimension object.
@@ -53911,21 +54009,39 @@ var Unit = exports.Unit = function () {
 
       if (this.cnv_ != null) throw new Error("Attempt to invert a non-ratio unit - " + this.name_);
 
-      if (this.name_.length > 0) {
-        var nameRep = this.name_.replace('/', "!").replace('.', '/').replace("!", '.');
-        switch (nameRep.charAt(0)) {
-          case '.':
-            this.name_ = nameRep.substr(1);break;
-          case '/':
-            this.name_ = nameRep;break;
-          default:
-            this.name_ = "/" + nameRep;
-        }
-      }
+      this.name_ = this.invertString(this.name_);
       this.magnitude_ = 1 / this.magnitude_;
       this.dim_.minus();
       return this;
     } // end invert
+
+
+    /**
+     * Inverts a string, where the string is assumed to be a code or a name
+     * of a division operation where the string is the divisor and the dividend
+     * is blank.
+     *
+     * @param the string to be inverted
+     * @return the inverted string
+     */
+
+  }, {
+    key: "invertString",
+    value: function invertString(theString) {
+
+      if (theString.length > 0) {
+        var stringRep = theString.replace('/', "!").replace('.', '/').replace("!", '.');
+        switch (stringRep.charAt(0)) {
+          case '.':
+            theString = stringRep.substr(1);break;
+          case '/':
+            theString = stringRep;break;
+          default:
+            theString = "/" + stringRep;
+        }
+      }
+      return theString;
+    } // end invertString
 
 
     /**
@@ -54177,13 +54293,13 @@ var UnitString = exports.UnitString = function () {
       // Flag used to block further processing on an unrecoverable error
       var endProcessing = retMsg.length > 0;
 
-      // If this is the first call for the string, check for spaces and throw
-      // an error if any are found.  The spec explicitly forbids spaces
-      // except in annotations, which is why this is done after the annotations
-      // are extracted instead of in _parseTheString.
+      // Check for spaces and throw an error if any are found.  The spec
+      // explicitly forbids spaces except in annotations, which is why
+      // this is done after the annotations are extracted instead of in
+      // _parseTheString.
       if (uStr.indexOf(' ') > -1) {
         throw new Error('Blank spaces are not allowed in unit expressions.');
-      } // end if this was called for the full string
+      } // end if blanks were found in the string
 
       var retObj = this._parseTheString(uStr, origString, retMsg, parensUnits, annotations);
       var finalUnit = retObj[0];
@@ -54594,6 +54710,8 @@ var UnitString = exports.UnitString = function () {
       var exp = null;
       var pfxVal = null;
       var pfxCode = null;
+      var pfxCiCode = null;
+      var pfxPrintSymbol = null;
       var pfxExp = null;
       var pfxName = null;
       var ulen = uCode.length;
@@ -54751,6 +54869,8 @@ var UnitString = exports.UnitString = function () {
             pfxVal = pfxObj.getValue();
             pfxExp = pfxObj.getExp();
             pfxName = pfxObj.getName();
+            pfxCiCode = pfxObj.getCiCode();
+            pfxPrintSymbol = pfxObj.getPrintSymbol();
             var pCodeLen = pfxCode.length;
             uCode = uCode.substr(pCodeLen);
             ulen -= pCodeLen;
@@ -54769,6 +54889,8 @@ var UnitString = exports.UnitString = function () {
               pfxVal = pfxObj.getValue();
               pfxExp = pfxObj.getExp();
               pfxName = pfxObj.getName();
+              pfxCiCode = pfxObj.getCiCode();
+              pfxPrintSymbol = pfxObj.getPrintSymbol();
               uCode = uCode.substr(1);
               ulen -= 1;
 
@@ -54794,6 +54916,8 @@ var UnitString = exports.UnitString = function () {
           var theDim = retUnit.getProperty('dim_');
           var theMag = retUnit.getProperty('magnitude_');
           var theName = retUnit.getProperty('name_');
+          var theCiCode = retUnit.getProperty('ciCode_');
+          var thePrintSymbol = retUnit.getProperty('printSymbol_');
           // If there is an exponent for the unit, apply it to the dimension
           // and magnitude now
           if (exp) {
@@ -54817,15 +54941,21 @@ var UnitString = exports.UnitString = function () {
               // if the prefix base is not 10, it won't have an exponent.
               // At the moment I don't see any units using the prefixes
               // that aren't base 10.   But if we get one the prefix value
-              // will be applied to the magnitude (below), which is what
-              // we want anyway.
+              // will be applied to the magnitude (below) if the unit does
+              // not have a conversion function, and to the conversion prefix
+              // if it does.
             } // end if there's a prefix as well as the exponent
           } // end if there's an exponent
 
-          // Now apply the prefix, if there is one, to the magnitude
+          // Now apply the prefix, if there is one, to the conversion
+          // prefix or the magnitude
           if (pfxVal) {
-            theMag *= pfxVal;
-            retUnit.assignVals({ 'magnitude_': theMag });
+            if (retUnit.cnv_) {
+              retUnit.assignVals({ 'cnvPfx_': pfxVal });
+            } else {
+              theMag *= pfxVal;
+              retUnit.assignVals({ 'magnitude_': theMag });
+            }
           }
 
           // if we have a prefix and/or an exponent, add them to the unit name
@@ -54833,17 +54963,26 @@ var UnitString = exports.UnitString = function () {
           if (pfxVal) {
             theName = pfxName + theName;
             theCode = pfxCode + theCode;
+            theCiCode = pfxCiCode + theCiCode;
+            thePrintSymbol = pfxPrintSymbol + thePrintSymbol;
             retUnit.assignVals({
               'name_': theName,
-              'csCode_': theCode
+              'csCode_': theCode,
+              'ciCode_': theCiCode,
+              'printSymbol_': thePrintSymbol
             });
           }
           if (exp) {
-            theName = theName + '<sup>' + exp.toString() + '</sup>';
-            theCode = theCode + exp.toString();
+            var expStr = exp.toString();
+            //theName = theName + '<sup>' + expStr + '</sup>';
+            //theCode = theCode + expStr;
+            //theCiCode = theCiCode + expStr;
+            //thePrintSymbol = thePrintSymbol + '<sup>' + expStr + '</sup>';
             retUnit.assignVals({
-              'name_': theName,
-              'csCode_': theCode
+              'name_': theName + '<sup>' + expStr + '</sup>',
+              'csCode_': theCode + expStr,
+              'ciCode_': theCiCode + expStr,
+              'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
             });
           }
         } // end if not endProcessing set from no unit found
@@ -54905,15 +55044,29 @@ var UnitString = exports.UnitString = function () {
               else {
                   var nMag = nextUnit.getProperty('magnitude_');
                   isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
-                  var theName = finalUnit.toString() + thisOp + nextUnit.getProperty('name_');
-                  var theCode = finalUnit.toString() + thisOp + nextUnit.getProperty('csCode_');
+                  var uString = finalUnit.toString();
+                  // if the original string was something like /xyz, the string was
+                  // processed as if it was 1/xyz, to make sure the unit arithmetic
+                  // is performed correctly.   Remove it from the string used to
+                  // create the name, as it is no longer needed.  Note that this
+                  // does not happen if the string is something like 7/xyz.
+                  if (u2 === 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
+                    uString = '';
+                  }
+                  var theName = uString + thisOp + nextUnit.getProperty('name_');
+
+                  var theCode = uString + thisOp + nextUnit.getProperty('csCode_');
+                  var ciCode = uString + thisOp + nextUnit.getProperty('ciCode_');
+                  var printSym = uString + thisOp + nextUnit.getProperty('printSymbol_');
                   var theDim = nextUnit.getProperty('dim_');
                   if (isDiv && theDim) {
                     theDim = theDim.minus();
                   }
                   finalUnit = nextUnit;
                   finalUnit.assignVals({ 'csCode_': theCode,
+                    'ciCode_': ciCode,
                     'name_': theName,
+                    'printSymbol_': printSym,
                     'dim_': theDim,
                     'magnitude_': nMag });
                 }
