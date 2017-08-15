@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.2] - 2017-08-07
+- Updated unit creation process to include updates to case-insensitve codes 
+and print symbol values when creating a unit from multiple units.
+- Updated treatment of prefixes for special units that use conversion 
+functions to record prefix values in the separate conversion prefix field.
+
 
 ## [1.1.1] - 2017-07-13
 - Data file has been updated with enhanced synonyms and is also now written 
