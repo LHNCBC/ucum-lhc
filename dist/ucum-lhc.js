@@ -54009,7 +54009,7 @@ var Unit = exports.Unit = function () {
 
       if (this.cnv_ != null) throw new Error("Attempt to invert a non-ratio unit - " + this.name_);
 
-      if (this.name_.length > 0) this.name_ = this.invertString(this.name_);
+      this.name_ = this.invertString(this.name_);
       this.magnitude_ = 1 / this.magnitude_;
       this.dim_.minus();
       return this;
