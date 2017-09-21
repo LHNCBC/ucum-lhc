@@ -106,7 +106,7 @@ export class UcumLhcUtils {
     let retObj = {};
     if (!theUnit) {
       retObj = {'status': (resp[1] !== null ? 'invalid' : 'error'),
-                'ucumCode': resp[1],
+                'ucumCode': null,
                 'msg': resp[2] };
     }
     else {

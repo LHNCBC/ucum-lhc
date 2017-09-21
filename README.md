@@ -52,7 +52,8 @@ parses the string to see if it resolves to a valid unit string.
 * _@returns_ an object with four elements:
    * 'status' contains either 'valid' or 'invalid';
    * 'ucumCode' the valid ucum code, which may differ from what was passed
-        in (e.g., if 'Gauss' is passed in, this will contain 'G'); 
+        in (e.g., if 'Gauss' is passed in, this will contain 'G') OR null if
+        the string was flagged as invalid; 
    * 'msg' contains a message, if the string is invalid, indicating
         the problem, or an explanation of a substitution such as the
         substitution of 'G' for 'Gauss'; and

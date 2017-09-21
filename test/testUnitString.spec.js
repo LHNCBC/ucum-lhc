@@ -122,7 +122,8 @@ describe('Test the processParens method', function() {
     var annotations = [];
     var retMsg = [];
     var origString = 'm.g(L';
-    var errMsg = 'Missing close parenthesis for open parenthesis at m.g(L.';
+    var errMsg = 'Missing close parenthesis for open parenthesis at m.g' +
+        uString.openEmph_ + '(' + uString.closeEmph_ + 'L';
     var resp = uString._processParens('m.g(L', origString, parensUnits,
                                       annotations, retMsg);
     var retString = resp[0];
@@ -151,7 +152,8 @@ describe('Test the processParens method', function() {
     var annotations = [];
     var retMsg = [];
     var origString = 'm.g)';
-    var errMsg = 'Missing open parenthesis for close parenthesis at m.g).';
+    var errMsg = 'Missing open parenthesis for close parenthesis at m.g' +
+        uString.openEmph_ + ')' + uString.closeEmph_ ;
     var resp = uString._processParens('m.g)', origString, parensUnits,
                                       annotations, retMsg);
     var retString = resp[0];
@@ -180,7 +182,8 @@ describe('Test the processParens method', function() {
     var annotations = [];
     var retMsg = [];
     var origString = 'm.g(L.(s/m)';
-    var errMsg = 'Missing close parenthesis for open parenthesis at m.g(L.(s/m).';
+    var errMsg = 'Missing close parenthesis for open parenthesis at m.g' +
+        uString.openEmph_ + '(' + uString.closeEmph_ + 'L.(s/m)';
     var resp = uString._processParens('m.g(L.(s/m)', origString, parensUnits,
                                       annotations, retMsg);
     var retString = resp[0];
@@ -210,15 +213,15 @@ describe('Test the processParens method', function() {
     var parseResp = uString.parseString('L.(s/m)');
     var retParenUnit = parseResp[0];
     var retMsg = [];
-    var origString = 'm.g(L.(s/m))';
-    var errMsg = 'Missing close parenthesis for open parenthesis at m.g(L.(s/m).';
+    var origString = 'm.g(L.(s/m))';;
     var resp = uString._processParens('m.g(L.(s/m))', origString, parensUnits,
                                       annotations, retMsg);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
     it("should return the unit string with placeholders", function () {
-      assert.equal('m.gparens_placeholder0parens_placeholder', retString, `retString = ${retString}`);
+      assert.equal('m.g' + uString.parensFlag_ + '0' +
+                   uString.parensFlag_, retString, `retString = ${retString}`);
     });
     it("should return no error messages", function () {
       assert.equal(0, retMsg.length, `retMsg = ${JSON.stringify(retMsg)}`);
@@ -238,6 +241,54 @@ describe('Test the processParens method', function() {
 
 }); // end test processParens method
 
+describe('Test getAnnotations method', function() {
 
+  it("should return an updated unit string and annotations array for " +
+      " L{annotation string}", function() {
+    var annotations = [] ;
+    var retMsg = [] ;
+    var retString = uString._getAnnotations('L{annotation string}', annotations, retMsg);
+    assert.equal(retString, 'L' + uString.braceFlag_ + '0' +
+                            uString.braceFlag_);
+    assert.deepEqual(annotations, ['{annotation string}']);
+    assert.deepEqual(retMsg, []);
+  });
+
+  it("should return an updated unit string and annotations array for " +
+      " L{ann1}.mg{ann2}", function() {
+    var annotations = [] ;
+    var retMsg = [] ;
+    var retString = uString._getAnnotations('L{ann1}.mg{ann2}', annotations, retMsg);
+    assert.equal(retString, 'L' + uString.braceFlag_ + '0' +
+                            uString.braceFlag_ + '.mg' + uString.braceFlag_ +
+                            '1' + uString.braceFlag_);
+    assert.deepEqual(annotations, ['{ann1}', '{ann2}']);
+    assert.deepEqual(retMsg, []);
+  });
+
+
+  it("should return a missing brace message for 'L{annotation", function() {
+    var annotations = [] ;
+    var retMsg = [] ;
+    var retString = uString._getAnnotations('L{annotation', annotations, retMsg);
+    assert.equal(retString, 'L{annotation');
+    assert.deepEqual(annotations, []);
+    assert.equal(retMsg[0], 'Missing closing brace for annotation ' +
+        'starting at ' + uString.openEmph_ +
+        '{annotation' + uString.closeEmph_);
+  });
+
+  it("should return a missing brace message for 'Lannotation}", function() {
+    var annotations = [] ;
+    var retMsg = [] ;
+    var retString = uString._getAnnotations('Lannotation}', annotations, retMsg);
+    assert.equal(retString, 'Lannotation}');
+    assert.deepEqual(annotations, []);
+    assert.equal(retMsg[0], 'Missing opening brace for closing brace ' +
+        'found at ' + uString.openEmph_ +
+        'Lannotation}' + uString.closeEmph_);
+  });
+
+}); // end test getAnnotations method
 
 

@@ -9,10 +9,12 @@ var assert = require('assert');
 var UcumJsonDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs ;
 var UTables = require("../source-es5/unitTables.js").UnitTables;
 var Utils = require("../source-es5/ucumLhcUtils.js").UcumLhcUtils;
+var UString = require("../source-es5/unitString.js").UnitString;
 
 var uTabs = UTables.getInstance();
 var uDefs = UcumJsonDefs.getInstance();
 uDefs.loadJsonDefs();
+var uString = UString.getInstance();
 
 var utils = Utils.getInstance();
 
@@ -27,9 +29,9 @@ describe('Test validateUnitString method', function() {
 
   it("should return a message for no unit found", function() {
 
-    var resp2 = utils.validateUnitString('Barack');
+    var resp2 = utils.validateUnitString('noTrump');
     assert.equal(resp2.status, 'invalid', resp2.status);
-    assert.equal(resp2.msg[0], 'Unable to find unit for Barack', resp2.msg[0]);
+    assert.equal(resp2.msg[0], 'Unable to find unit for noTrump', resp2.msg[0]);
   });
 
   it("should return an updated UCUM code and message for 'Gauss'", function() {
@@ -49,6 +51,15 @@ describe('Test validateUnitString method', function() {
       assert.equal(theUnit.guidance, 'equal to 10 amperes', theUnit.guidance);
     }
   });
+
+  it("should return a missing parenthesis message for 'L/(5.mg", function() {
+    var resp5 = utils.validateUnitString('L/(5.mg');
+    assert.equal(resp5.status, 'invalid');
+    assert.equal(resp5.unit, null);
+    assert.equal(resp5.ucumCode, null);
+    assert.equal(resp5.msg, 'Missing close parenthesis for open parenthesis' +
+        ' at L/' + uString.openEmph_ + '(' + uString.closeEmph_ + '5.mg');
+   });
 
 }); // end validateUnitString tests
 

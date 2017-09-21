@@ -38,8 +38,8 @@ describe('Validate_m2/acr', function() {
                    returnObj['status'] ? `${returnObj['status']}` : 'null');
     });
 
-    it("should return a ucumCode = m2/acr", function() {
-      assert.equal(returnObj['ucumCode'], "m2/acr", "ucumCode = " +
+    it("should return a null ucumCode", function() {
+      assert.equal(returnObj['ucumCode'], null, "ucumCode = " +
                    returnObj['ucumCode'] ? `${returnObj['ucumCode']}` : 'null');
     });
 
