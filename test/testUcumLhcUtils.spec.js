@@ -38,7 +38,8 @@ describe('Test validateUnitString method', function() {
     var resp3 = utils.validateUnitString('Gauss');
     assert.equal(resp3.status, 'valid', resp3.status);
     assert.equal(resp3.ucumCode, 'G', resp3.ucumCode);
-    assert.equal(resp3.msg[0], '(The UCUM code for Gauss is G)', resp3.msg[0]);
+    assert.equal(resp3.msg[0], 'The UCUM code for Gauss is G.\nDid you mean G?',
+                 resp3.msg[0]);
   });
 
   it("should return a unit with a code, name and guidance for 'Bi'", function() {
@@ -77,13 +78,18 @@ describe('Test convertUnitTo method', function() {
 
   it("should return a message for invalid unit strings", function() {
 
-    var resp2 = utils.convertUnitTo('Barack', 523, 'Donald');
+    var resp2 = utils.convertUnitTo('Barack', 2017, 'TheDonald');
     assert.equal(resp2.status, 'failed', resp2.status);
     assert.equal(resp2.msg[0],
-                 'Unable to find unit for Barack', resp2.msg[0]);
-    assert.equal(resp2.msg[1],
-                 'Unable to find unit for Donald', resp2.msg[1]);
-
+                 'Sorry - an error occurred while trying to validate Barack.',
+                 resp2.msg[0]);
+    assert.equal(resp2.msg[1], 'Barack is probably not a valid expression.',
+                 resp2.msg[1]);
+    assert.equal(resp2.msg[2],
+                 'Sorry - an error occurred while trying to validate TheDonald.',
+                  resp2.msg[2]);
+    assert.equal(resp2.msg[3], 'TheDonald is probably not a valid expression.',
+                 resp2.msg[3]);
   });
 
   it("should return a valid conversion value and units for grams to metric carats", function() {
@@ -117,9 +123,11 @@ describe('Test checkSynonyms method', function() {
 
   it("should return a message for no synonym found", function() {
 
-    var resp2 = utils.checkSynonyms('Barack');
+    var resp2 = utils.checkSynonyms('TheDonald');
     assert.equal('failed', resp2['status']);
-    assert.equal('Unable to find any units with synonym = Barack', resp2['msg']);
+    assert.equal('Unable to find any units with synonym = TheDonald',
+                  resp2['msg']);
+
   });
 
   it("should return multiple units for search term month", function() {

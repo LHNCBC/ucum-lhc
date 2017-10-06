@@ -88,12 +88,13 @@ export class UcumLhcUtils {
    *
    * @param uStr the string to be validated
    * @returns an object with four properties:
-   *  'status' either 'valid' or 'invalid';
+   *  'status' will be 'valid', 'invalid' or 'error';
    *  'ucumCode' the valid ucum code, which may differ from what was passed
-   *    in (e.g., if 'Gauss' is passed in, this will contain 'G');
-   *  'msg' contains a message, if the string is invalid, indicating
-   *        the problem, or an explanation of a substitution such as the
-   *        substitution of 'G' for 'Gauss'; and
+   *    in (e.g., if 'Gauss' is passed in, this will contain 'G') OR null if
+   *    the string was flagged as invalid or an error occurred;
+   *  'msg' contains a message, if the string is invalid or an error occurred,
+   *        indicating the problem, or an explanation of a substitution such as
+   *        the substitution of 'G' for 'Gauss'; and
    *  'unit' which is null if no unit is found, or a hash for a unit found:
    *    'code' is the unit's ucum code (G in the above example;
    *    'name' is the unit's name (Gauss in the above example); and
@@ -101,7 +102,7 @@ export class UcumLhcUtils {
    */
   validateUnitString(uStr) {
 
-    let resp = this.getSpecifiedUnit(uStr);
+    let resp = this.getSpecifiedUnit(uStr, 'validate');
     let theUnit = resp[0];
     let retObj = {};
     if (!theUnit) {
@@ -136,7 +137,9 @@ export class UcumLhcUtils {
    *  'toVal' the numeric value indicating the conversion amount, or null
    *     if the conversion failed (e.g., if the units are not commensurable);
    *  'msg' an array of any messages returned, specifically a description of
-   *     a failure or an error message if an error occurred;
+   *     a failure or an error message if an error occurred or a description
+   *     of any substitutions made in the from or to codes passed in, e.g.,
+   *     substituting 'G' for an input of 'Gauss';
    *  'fromUnit' the unit object for the fromUnitCode passed in; returned
    *     in case it's needed for additional data from the object; and
    *  'toUnit' the unit object for the toUnitCode passed in; returned
@@ -173,15 +176,27 @@ export class UcumLhcUtils {
       try {
         let fromUnit = null;
 
-        let parseResp = this.getSpecifiedUnit(fromUnitCode);
+        let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert');
         fromUnit = parseResp[0];
-        if (parseResp[2].length > 0)
+        if (!fromUnit) {
+          //console.log(parseResp[2]);
+          resultMsg = ['Sorry - an error occurred while trying to ' +
+            `validate ${fromUnitCode}.`, `${fromUnitCode} is probably not ` +
+            `a valid expression.`];
+        }
+        else if (parseResp[2].length > 0) {
           resultMsg = parseResp[2];
-
+        }
         let toUnit = null;
-        parseResp = this.getSpecifiedUnit(toUnitCode);
+        parseResp = this.getSpecifiedUnit(toUnitCode, 'convert');
         toUnit = parseResp[0];
-        if (parseResp[2].length > 0) {
+        if (!toUnit) {
+          //console.log(parseResp[2]);
+          resultMsg = resultMsg.concat(['Sorry - an error occurred while ' +
+          `trying to validate ${toUnitCode}.`, `${toUnitCode} is probably not ` +
+          `a valid expression.`]);
+        }
+        else if (parseResp[2].length > 0) {
           if (resultMsg.length > 0)
             resultMsg = resultMsg.concat(parseResp[2]);
           else
@@ -270,6 +285,8 @@ export class UcumLhcUtils {
    * or if any errors were encountered trying to get the unit.
    *
    * @param uName the expression/string representing the unit
+   * @param valConv indicates what type of request this is for - a request to
+   *  validate or a request to convert
    * @returns an array containing:
    *  the unit found for the string (or null if no unit was found);
    *  a (possibly) updated version of the string (for cases where a unit name
@@ -277,7 +294,7 @@ export class UcumLhcUtils {
    *    occurred; and
    *  a message array containing any error or "not found" messages.
    */
-  getSpecifiedUnit(uName) {
+  getSpecifiedUnit(uName, valConv) {
 
 
     let retMsg = [];
@@ -304,7 +321,7 @@ export class UcumLhcUtils {
       else {
         try {
           let uStrParser = UnitString.getInstance();
-          let parseResp = uStrParser.parseString(uName);
+          let parseResp = uStrParser.parseString(uName, valConv, false);
           theUnit = parseResp[0];
           retUnitString = parseResp[1];
           retMsg = parseResp[2];
@@ -340,7 +357,7 @@ export class UcumLhcUtils {
 
     let retMsg = [];
     let commUnits = null ;
-    let parseResp = this.getSpecifiedUnit(fromName);
+    let parseResp = this.getSpecifiedUnit(fromName, 'validate');
     let fromUnit = parseResp[0];
     if (parseResp[2].length > 0)
       retMsg = parseResp[2] ;

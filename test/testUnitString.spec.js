@@ -19,7 +19,7 @@ describe('Test parseString method', function() {
 
   describe('Test valid single unit string (cal)', function() {
     var calUnit = uTabs.getUnitByCode('cal');
-    var resp = uString.parseString('cal');
+    var resp = uString.parseString('cal', 'validate');
     var retUnit = resp[0];
     var origString = resp[1];
     var respMsg = resp[2];
@@ -43,7 +43,7 @@ describe('Test parseString method', function() {
     var gUnit = uTabs.getUnitByCode('g');
     var retMsg = [];
     var origString = '/g';
-    var resp = uString.parseString('/g');
+    var resp = uString.parseString('/g', 'convert');
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
@@ -60,6 +60,217 @@ describe('Test parseString method', function() {
       assert.deepEqual([], respMsg, `respMsg = ${JSON.stringify(respMsg)}`);
     });
   });
+
+  describe('Test for unit string 2mg', function() {
+    "use strict";
+    var mgUnit = uTabs.getUnitByCode('mg');
+    var retMsg = [];
+    var origString = '2mg';
+    var resp = uString.parseString('2mg', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the milligram unit multiplied by 2", function() {
+      // multiply the mgUnit by 2
+      mgUnit.multiplyThis(2);
+      assert(mgUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\ngUnit = ${JSON.stringify(mgUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('2.mg', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should a return about the missing multiplier", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('2mg is not a valid UCUM code.  Did you mean 2.mg?',
+                   respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('Test for unit string 3mg/[den]', function() {
+    "use strict";
+    var mgUnit = uTabs.getUnitByCode('mg').clone();
+    var denUnit = uTabs.getUnitByCode('[den]').clone();
+    var retMsg = [];
+    var origString = '3mg/[den]';
+    var resp = uString.parseString('3mg/[den]', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for the expression", function() {
+      // multiply the mgUnit by 3
+      mgUnit = mgUnit.multiplyThis(3);
+      // divide it by [den]
+      mgUnit.divide(denUnit);
+      assert(mgUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
+      it("should return the origString with a substitution", function() {
+        assert.equal('3.mg/[den]', retOrig, `retOrig = ${retOrig}`);
+      });
+      it("should return a message about the missing multiplier", function() {
+        assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+        assert.equal('3mg is not a valid UCUM code.  Did you mean 3.mg?',
+          respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+      });
+    });
+  }) ;
+
+  describe('Test for unit string mg/3[den]', function() {
+    "use strict";
+    var mgUnit = uTabs.getUnitByCode('mg').clone();
+    var denUnit = uTabs.getUnitByCode('[den]').clone();
+    var retMsg = [];
+    var origString = 'mg/3[den]';
+    var resp = uString.parseString('mg/3[den]', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for the expression", function() {
+      // multiply the denUnit by 3
+      denUnit = denUnit.multiplyThis(3);
+      // divide the milligram unit it by [den]
+      mgUnit.divide(denUnit);
+      assert(mgUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
+      it("should return the origString with a substitution", function() {
+        assert.equal('mg/3.[den]', retOrig, `retOrig = ${retOrig}`);
+      });
+      it("should return a message about the missing multiplier", function() {
+        assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+        assert.equal('3[den] is not a valid UCUM code.  Did you mean 3.[den]?',
+          respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+      });
+    });
+  }) ;
+
+  describe('test for unit string 3mg/3[den]', function() {
+    "use strict";
+    var mgUnit = uTabs.getUnitByCode('mg').clone();
+    var denUnit = uTabs.getUnitByCode('[den]').clone();
+    var retMsg = [];
+    var origString = '3mg/3[den]';
+    var resp = uString.parseString('3mg/3[den]', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for the expression", function() {
+      // multiply the denUnit by 3
+      denUnit = denUnit.multiplyThis(3);
+      // multiply the milligram unit by 3
+      mgUnit = mgUnit.multiplyThis(3);
+      // divide the milligram unit it by [den]
+      mgUnit = mgUnit.divide(denUnit);
+      assert(mgUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
+      it("should return the origString with a substitution", function() {
+        assert.equal('3.mg/3.[den]', retOrig, `retOrig = ${retOrig}`);
+      });
+      it("should return a message about each missing multiplier", function() {
+        assert.equal(2, respMsg.length, `respMsg.length = ${respMsg.length}`);
+        assert.equal('3mg is not a valid UCUM code.  Did you mean 3.mg?',
+          respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+        assert.equal('3[den] is not a valid UCUM code.  Did you mean 3.[den]?',
+          respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+      });
+    });
+  }) ;
+
+  describe('test for unit string day', function() {
+    "use strict";
+    var dUnit = uTabs.getUnitByCode('d');
+    var retMsg = [];
+    var origString = 'day';
+    var resp = uString.parseString('day', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the day unit", function() {
+      assert(dUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\ndUnit = ${JSON.stringify(dUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('d', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the correct code", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('The UCUM code for day is d.\nDid you mean d?',
+        respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('test for unit string {degF}', function() {
+    "use strict";
+    var degUnit = uTabs.getUnitByCode('[degF]');
+    var retMsg = [];
+    var origString = '{degF}';
+    var resp = uString.parseString('{degF}', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the [degF] unit", function() {
+      assert(degUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\ndegUnit = ${JSON.stringify(degUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('[degF]', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the correct code", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('{degF} is not a valid unit expression, but [degF] is.\n' +
+        'Did you mean [degF]?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('test for unit string in_i', function() {
+    "use strict";
+    var inUnit = uTabs.getUnitByCode('[in_i]');
+    var retMsg = [];
+    var origString = 'in_i';
+    var resp = uString.parseString('in_i', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the [in_i] unit", function() {
+      assert(inUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\ninUnit = ${JSON.stringify(inUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('[in_i]', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the correct code", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('in_i is not a valid unit expression, but [in_i] is.\n' +
+        'Did you mean [in_i]?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('test for unit string {creatine}mol', function() {
+    "use strict";
+    var molUnit = uTabs.getUnitByCode('mol');
+    var retMsg = [];
+    var origString = '{creatine}mol';
+    var resp = uString.parseString('{creatine}mol', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the mol{creatine} unit", function() {
+      assert(molUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nmolUnit = ${JSON.stringify(molUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('mol{creatine}', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the correct annotation placement", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('The annotation {creatine} before the unit code is invalid.' +
+        '\nDid you mean mol{creatine}?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+/*  NOT Handled yet.  Leaving this in for the next branch
+      describe('test for unit string {creatine}mol{blahblah}', function() {
+        "use strict";
+
+      }) ;
+      */
 }); // end test ParseString method
 
 

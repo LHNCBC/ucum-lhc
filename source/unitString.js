@@ -539,19 +539,24 @@ export class UnitString {
       uArray1.unshift("1");
     }
     else {
+
       // Check to see if there is a number preceding a unit code, e.g., 2mg
       // If so, update the first element to remove the number (2mg -> mg) and
       // add two elements to the beginning of the array - the number and the
       // multiplication operator.
 
-      let numRes = uArray1[0].match(/([0-9]+)([a-zA-Z\_0-9a-zA-Z\_]+)/);
-      if (numRes && numRes.length == 3) {
-        retMsg.push(`${uArray1[0]} is not a valid UCUM code.\n` +
-          this.vcMsgStart_ + `${numRes[1]}.${numRes[2]}` + this.vcMsgEnd_) ;
-        origString = origString.replace(uArray1[0],`${numRes[1]}.${numRes[2]}`);
-        uArray1[0] = numRes[2] ;
-        uArray1.unshift(numRes[1], '.');
-      }
+      let elem = Number(uArray1[0]);
+      if (isNaN(elem)) {
+        let numRes = uArray1[0].match(/(^[0-9]+)([\[?a-zA-Z\_0-9a-zA-Z\_\]?]+$)/);
+        if (numRes && numRes.length == 3 && numRes[1] !== '' &&
+          numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
+          retMsg.push(`${uArray1[0]} is not a valid UCUM code.  ` +
+            this.vcMsgStart_ + `${numRes[1]}.${numRes[2]}` + this.vcMsgEnd_);
+          origString = origString.replace(uArray1[0], `${numRes[1]}.${numRes[2]}`);
+          uArray1[0] = numRes[2];
+          uArray1.unshift(numRes[1], '.');
+        }
+      } // end if the first element is not a number (only)
     }
     // Create an array of unit/operator objects.  The unit is, for now, the
     // string containing the unit code (e.g., Hz for hertz) including
@@ -573,27 +578,33 @@ export class UnitString {
       // mg/2.kJ - because mg/2 would be performed, followed by .kJ.  Instead,
       // handling 2kJ as a parenthesized unit will make sure mg is divided by
       // 2.kJ.
-      let numRes = uArray1[n].match(/(^[0-9]*)([a-zA-Z]*$)/);
-      if (numRes && numRes.length == 3 && numRes[1] !== '' && numRes[2] !== '') {
-        let parensStr = '('+ numRes[1] + '.' + numRes[2] + ')';
-        let parensResp = this._processParens(parensStr, parensStr, parensUnits,
-                                             annotations, retMsg);
-        // if a "stop processing" flag was returned, set the n index to end
-        // the loop and set the endProcessing flag
-        if (parensResp[2]) {
-          n = u1;
-          endProcessing = true ;
+      let elem2 = Number(uArray1[n]);
+      if (isNaN(elem2)) {
+        let numRes2 = uArray1[n].match(/(^[0-9]+)([\[?a-zA-Z\_0-9a-zA-Z\_\]?]+$)/);
+        if (numRes2 && numRes2.length == 3 && numRes2[1] !== '' &&
+          numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
+          let parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
+          let parensResp = this._processParens(parensStr, parensStr, parensUnits,
+            annotations, retMsg);
+          // if a "stop processing" flag was returned, set the n index to end
+          // the loop and set the endProcessing flag
+          if (parensResp[2]) {
+            n = u1;
+            endProcessing = true;
+          }
+          // Otherwise let the user know about the problem and what we did
+          else {
+            parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
+            //NO - NOT parensResp[1] - that's the correct one.
+            retMsg.push(`${numRes2[0]} is not a valid UCUM code.\n` +
+              this.vcMsgStart_ + `${numRes2[1]}.${numRes2[2]}` + this.vcMsgEnd_);
+            origString = origString.replace(uArray1[n], parensResp[1]);
+            uArray.push({op: theOp, un: parensResp[0]});
+          }
         }
-        // Otherwise let the user know about the problem and what we did
         else {
-          retMsg.push(`${uArray[n]} is mot a valid UCUM code.\n` +
-            this.vcMsgStart_ + `${numRes[1]}.${numRes[2]}` + this.vcMsgEnd_) ;
-          origString = origString.replace(uArray1[n], parensResp[1]);
-          uArray.push({op: theOp, un: parensResp[0]});
+          uArray.push({op: theOp, un: uArray1[n]});
         }
-      }
-      else {
-        uArray.push({op: theOp, un: uArray1[n]});
       }
     }
     return [uArray, origString, endProcessing];
@@ -648,7 +659,12 @@ export class UnitString {
     // parensUnits array
     if (!isNaN(pNum)) {
       retUnit = parensUnits[pNum];
-      pStr = retUnit[csCode_];
+      if (isNaN(retUnit)) {
+        pStr = retUnit.csCode_;
+      }
+      else {
+        pStr = retUnit ;
+      }
     }
     // If it's not a number, it's a programming error.  Throw a fit.
     else {
@@ -752,7 +768,7 @@ export class UnitString {
         } // end if text following the parentheses not an exponent
       } // end if text following the parentheses is not an annotation
     } // end if there is text following teh parentheses
-    retUnit[csCode_] = pStr;
+    retUnit.csCode_ = pStr;
     return [retUnit, stopFlag];
   } // end _getParensUnit
 
@@ -762,6 +778,7 @@ export class UnitString {
    * the annotation and any found after the annotation.
    *
    * This should only be called from within this class (or by test code).
+   * NEEDS FIX in next branch to handle string with multiple annotations.
    *
    * @param pStr the string being parsed
    * @param origString the original string being parse
@@ -822,11 +839,13 @@ export class UnitString {
     // First try the code just as is, without looking for annotations,
     // prefixes, exponents, or elephants.
     let retUnit = this.utabs_.getUnitByCode(uCode);
+    if (retUnit) {
+      retUnit = retUnit.clone();
+    }
 
     // If we found it, we're done.  No need to parse for those elephants (or
     // other stuff).
-    // end if the uCode includes an annotation
-    if (!retUnit) if (uCode.indexOf(this.braceFlag_) >= 0) {
+    else if (uCode.indexOf(this.braceFlag_) >= 0) {
       let getAnnoRet = this._getUnitWithAnnotation(uCode, origString,
         annotations, retMsg);
       retUnit = getAnnoRet[0];
@@ -849,6 +868,7 @@ export class UnitString {
         let tryCode = uCode.replace('^', '*');
         retUnit = this.utabs_.getUnitByCode(tryCode);
         if (retUnit) {
+          retUnit = retUnit.clone();
           retUnit.csCode_ = retUnit.csCode_.replace('*', '^');
           retUnit.ciCode_ = retUnit.ciCode_.replace('*', '^');
         }
@@ -859,6 +879,7 @@ export class UnitString {
         let addBrackets = '[' + uCode + ']' ;
         retUnit = this.utabs_.getUnitByCode(addBrackets);
         if (retUnit) {
+          retUnit = retUnit.clone();
           origString = origString.replace(uCode, addBrackets);
           retMsg.push(`${uCode} is not a valid unit expression, but ` +
             `${addBrackets} is.\n` + this.vcMsgStart_ +
@@ -870,7 +891,7 @@ export class UnitString {
       if (!retUnit) {
         let retUnitAry = this.utabs_.getUnitByName(uCode);
         if (retUnitAry && retUnitAry.length > 0) {
-          retUnit = retUnitAry[0];
+          retUnit = retUnitAry[0].clone();
           let mString = 'The UCUM code for ' + uCode + ' is ' +
             retUnit.csCode_ + '.\n' + this.vcMsgStart_ +
             retUnit.csCode_ + this.vcMsgEnd_;
@@ -1104,39 +1125,59 @@ export class UnitString {
       // the annotation is the unit code (with an annotation following it).
       // Call _makeUnit for the text before the annotation.
       if (befAnnoText && !aftAnnoText) {
-        let mkUnitRet = this._makeUnit(befAnnoText, annotations,
-          retMsg, origString);
-
-        // if a unit was returned
-        if (mkUnitRet[0]) {
-          retUnit = mkUnitRet[0];
-          retUnit[csCode_] += annoText;
-          origString = mkUnitRet[1];
+        // make sure that what's before the annoText is not a number, e.g.,
+        // /100{cells}
+        let testBef = Number(befAnnoText);
+        // if it is a number, just set the return unit to the number
+        if (!isNaN(testBef)) {
+          retUnit = befAnnoText ;
         }
-        // Otherwise add a not found message
+        // Otherwise try to find a unit
         else {
-          retMsg.push(`Unable to find a unit for ${befAnnoText} that ` +
-                    `precedes the annotation ${annoText}.`);
+          let mkUnitRet = this._makeUnit(befAnnoText, annotations,
+            retMsg, origString);
+
+          // if a unit was returned
+          if (mkUnitRet[0]) {
+            retUnit = mkUnitRet[0];
+            retUnit.csCode_ += annoText;
+            origString = mkUnitRet[1];
+          }
+          // Otherwise add a not found message
+          else {
+            retMsg.push(`Unable to find a unit for ${befAnnoText} that ` +
+              `precedes the annotation ${annoText}.`);
+          }
         }
       }
       // else if there's only text after the annotation, try for a unit
       // from the after text and assume the user put the annotation in
       // the wrong place (and tell them)
       else if (!befAnnoText && aftAnnoText) {
-        let mkUnitRet = this._makeUnit(aftAnnoText, annotations,
-          retMsg, origString);
-        if (mkUnitRet[0]) {
-          retUnit = mkUnitRet[0];
-          retUnit[csCode_] += annoText;
-          origString = mkUnitRet[1];
-          retMsg.push(`The annotation ${annoText} before the unit code is ` +
-            `invalid.\n` + this.vcMsgStart_ + retUnit[csCode_] +
-            this.vcMsgEnd_);
+        // again, test for a number
+        let testAft = Number(aftAnnoText);
+        // if it is a number, just set the return unit to the number
+        if (!isNaN(testAft)) {
+          retUnit = aftAnnoText + annoText ;
+          retMsg.push(`The annotation ${annoText} before the ${aftAnnoText} is ` +
+            `invalid.\n` + this.vcMsgStart_ + retUnit + this.vcMsgEnd_);
         }
-        // Otherwise add a not found message
         else {
-          retMsg.push(`Unable to find a unit for ${befAnnoText} that ` +
-                    `follows the annotation ${annoText}.` );
+          let mkUnitRet = this._makeUnit(aftAnnoText, annotations,
+            retMsg, origString);
+          if (mkUnitRet[0]) {
+            retUnit = mkUnitRet[0];
+            retUnit.csCode_ += annoText;
+            origString = retUnit.csCode_;
+            retMsg.push(`The annotation ${annoText} before the unit code is ` +
+              `invalid.\n` + this.vcMsgStart_ + retUnit.csCode_ +
+              this.vcMsgEnd_);
+          }
+          // Otherwise add a not found message
+          else {
+            retMsg.push(`Unable to find a unit for ${befAnnoText} that ` +
+              `follows the annotation ${annoText}.`);
+          }
         }
       }
       // else it's got text before AND after the annotation.  Now what?
@@ -1177,6 +1218,10 @@ export class UnitString {
     // We only need to do the arithmetic if we have more than one unit.
     for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
       let nextUnit = uArray[u2]['un'];
+      let testNext = Number(nextUnit);
+      if (!isNaN(testNext)) {
+        nextUnit = testNext ;
+      }
       if (nextUnit === null ||
           ((typeof nextUnit !== 'number') && (!nextUnit.getProperty))) {
         let msgString = `Unit string (${origString}) contains unrecognized ` +

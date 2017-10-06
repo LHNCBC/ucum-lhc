@@ -53036,12 +53036,13 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      *
      * @param uStr the string to be validated
      * @returns an object with four properties:
-     *  'status' either 'valid' or 'invalid';
+     *  'status' will be 'valid', 'invalid' or 'error';
      *  'ucumCode' the valid ucum code, which may differ from what was passed
-     *    in (e.g., if 'Gauss' is passed in, this will contain 'G');
-     *  'msg' contains a message, if the string is invalid, indicating
-     *        the problem, or an explanation of a substitution such as the
-     *        substitution of 'G' for 'Gauss'; and
+     *    in (e.g., if 'Gauss' is passed in, this will contain 'G') OR null if
+     *    the string was flagged as invalid or an error occurred;
+     *  'msg' contains a message, if the string is invalid or an error occurred,
+     *        indicating the problem, or an explanation of a substitution such as
+     *        the substitution of 'G' for 'Gauss'; and
      *  'unit' which is null if no unit is found, or a hash for a unit found:
      *    'code' is the unit's ucum code (G in the above example;
      *    'name' is the unit's name (Gauss in the above example); and
@@ -53052,7 +53053,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     key: 'validateUnitString',
     value: function validateUnitString(uStr) {
 
-      var resp = this.getSpecifiedUnit(uStr);
+      var resp = this.getSpecifiedUnit(uStr, 'validate');
       var theUnit = resp[0];
       var retObj = {};
       if (!theUnit) {
@@ -53085,7 +53086,9 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      *  'toVal' the numeric value indicating the conversion amount, or null
      *     if the conversion failed (e.g., if the units are not commensurable);
      *  'msg' an array of any messages returned, specifically a description of
-     *     a failure or an error message if an error occurred;
+     *     a failure or an error message if an error occurred or a description
+     *     of any substitutions made in the from or to codes passed in, e.g.,
+     *     substituting 'G' for an input of 'Gauss';
      *  'fromUnit' the unit object for the fromUnitCode passed in; returned
      *     in case it's needed for additional data from the object; and
      *  'toUnit' the unit object for the toUnitCode passed in; returned
@@ -53125,14 +53128,21 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         try {
           var fromUnit = null;
 
-          var parseResp = this.getSpecifiedUnit(fromUnitCode);
+          var parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert');
           fromUnit = parseResp[0];
-          if (parseResp[2].length > 0) resultMsg = parseResp[2];
-
+          if (!fromUnit) {
+            //console.log(parseResp[2]);
+            resultMsg = ['Sorry - an error occurred while trying to ' + ('validate ' + fromUnitCode + '.'), fromUnitCode + ' is probably not ' + 'a valid expression.'];
+          } else if (parseResp[2].length > 0) {
+            resultMsg = parseResp[2];
+          }
           var toUnit = null;
-          parseResp = this.getSpecifiedUnit(toUnitCode);
+          parseResp = this.getSpecifiedUnit(toUnitCode, 'convert');
           toUnit = parseResp[0];
-          if (parseResp[2].length > 0) {
+          if (!toUnit) {
+            //console.log(parseResp[2]);
+            resultMsg = resultMsg.concat(['Sorry - an error occurred while ' + ('trying to validate ' + toUnitCode + '.'), toUnitCode + ' is probably not ' + 'a valid expression.']);
+          } else if (parseResp[2].length > 0) {
             if (resultMsg.length > 0) resultMsg = resultMsg.concat(parseResp[2]);else resultMsg = parseResp[2];
           }
 
@@ -53214,6 +53224,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * or if any errors were encountered trying to get the unit.
      *
      * @param uName the expression/string representing the unit
+     * @param valConv indicates what type of request this is for - a request to
+     *  validate or a request to convert
      * @returns an array containing:
      *  the unit found for the string (or null if no unit was found);
      *  a (possibly) updated version of the string (for cases where a unit name
@@ -53224,7 +53236,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
   }, {
     key: 'getSpecifiedUnit',
-    value: function getSpecifiedUnit(uName) {
+    value: function getSpecifiedUnit(uName, valConv) {
 
       var retMsg = [];
       var retUnitString = null;
@@ -53248,7 +53260,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         } else {
           try {
             var uStrParser = UnitString.getInstance();
-            var parseResp = uStrParser.parseString(uName);
+            var parseResp = uStrParser.parseString(uName, valConv, false);
             theUnit = parseResp[0];
             retUnitString = parseResp[1];
             retMsg = parseResp[2];
@@ -53281,7 +53293,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
       var retMsg = [];
       var commUnits = null;
-      var parseResp = this.getSpecifiedUnit(fromName);
+      var parseResp = this.getSpecifiedUnit(fromName, 'validate');
       var fromUnit = parseResp[0];
       if (parseResp[2].length > 0) retMsg = parseResp[2];
       if (!fromUnit) {
@@ -53901,6 +53913,12 @@ var Unit = exports.Unit = function () {
     value: function multiplyThis(s) {
 
       if (this.cnv_ != null) this.cnvPfx_ *= s;else this.magnitude_ *= s;
+      var mulVal = s.toString();
+      this.name_ = this.mulString(mulVal, this.name_);
+      this.csCode_ = this.mulString(mulVal, this.csCode_);
+      this.ciCode_ = this.mulString(mulVal, this.ciCode_);
+      this.printSymbol_ = this.mulString(mulVal, this.printSymbol_);
+
       return this;
     } // end multiplyThis
 
@@ -54693,18 +54711,22 @@ var UnitString = exports.UnitString = function () {
       if (uArray1[0] === "/") {
         uArray1.unshift("1");
       } else {
+
         // Check to see if there is a number preceding a unit code, e.g., 2mg
         // If so, update the first element to remove the number (2mg -> mg) and
         // add two elements to the beginning of the array - the number and the
         // multiplication operator.
 
-        var numRes = uArray1[0].match(/([0-9]+)([a-zA-Z\_0-9a-zA-Z\_]+)/);
-        if (numRes && numRes.length == 3) {
-          retMsg.push(uArray1[0] + ' is not a valid UCUM code.\n' + this.vcMsgStart_ + (numRes[1] + '.' + numRes[2]) + this.vcMsgEnd_);
-          origString = origString.replace(uArray1[0], numRes[1] + '.' + numRes[2]);
-          uArray1[0] = numRes[2];
-          uArray1.unshift(numRes[1], '.');
-        }
+        var elem = Number(uArray1[0]);
+        if (isNaN(elem)) {
+          var numRes = uArray1[0].match(/(^[0-9]+)([\[?a-zA-Z\_0-9a-zA-Z\_\]?]+$)/);
+          if (numRes && numRes.length == 3 && numRes[1] !== '' && numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
+            retMsg.push(uArray1[0] + ' is not a valid UCUM code.  ' + this.vcMsgStart_ + (numRes[1] + '.' + numRes[2]) + this.vcMsgEnd_);
+            origString = origString.replace(uArray1[0], numRes[1] + '.' + numRes[2]);
+            uArray1[0] = numRes[2];
+            uArray1.unshift(numRes[1], '.');
+          }
+        } // end if the first element is not a number (only)
       }
       // Create an array of unit/operator objects.  The unit is, for now, the
       // string containing the unit code (e.g., Hz for hertz) including
@@ -54726,24 +54748,29 @@ var UnitString = exports.UnitString = function () {
         // mg/2.kJ - because mg/2 would be performed, followed by .kJ.  Instead,
         // handling 2kJ as a parenthesized unit will make sure mg is divided by
         // 2.kJ.
-        var _numRes = uArray1[n].match(/(^[0-9]*)([a-zA-Z]*$)/);
-        if (_numRes && _numRes.length == 3 && _numRes[1] !== '' && _numRes[2] !== '') {
-          var parensStr = '(' + _numRes[1] + '.' + _numRes[2] + ')';
-          var parensResp = this._processParens(parensStr, parensStr, parensUnits, annotations, retMsg);
-          // if a "stop processing" flag was returned, set the n index to end
-          // the loop and set the endProcessing flag
-          if (parensResp[2]) {
-            n = u1;
-            endProcessing = true;
-          }
-          // Otherwise let the user know about the problem and what we did
-          else {
-              retMsg.push(uArray[n] + ' is mot a valid UCUM code.\n' + this.vcMsgStart_ + (_numRes[1] + '.' + _numRes[2]) + this.vcMsgEnd_);
-              origString = origString.replace(uArray1[n], parensResp[1]);
-              uArray.push({ op: theOp, un: parensResp[0] });
+        var elem2 = Number(uArray1[n]);
+        if (isNaN(elem2)) {
+          var numRes2 = uArray1[n].match(/(^[0-9]+)([\[?a-zA-Z\_0-9a-zA-Z\_\]?]+$)/);
+          if (numRes2 && numRes2.length == 3 && numRes2[1] !== '' && numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
+            var parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
+            var parensResp = this._processParens(parensStr, parensStr, parensUnits, annotations, retMsg);
+            // if a "stop processing" flag was returned, set the n index to end
+            // the loop and set the endProcessing flag
+            if (parensResp[2]) {
+              n = u1;
+              endProcessing = true;
             }
-        } else {
-          uArray.push({ op: theOp, un: uArray1[n] });
+            // Otherwise let the user know about the problem and what we did
+            else {
+                parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
+                //NO - NOT parensResp[1] - that's the correct one.
+                retMsg.push(numRes2[0] + ' is not a valid UCUM code.\n' + this.vcMsgStart_ + (numRes2[1] + '.' + numRes2[2]) + this.vcMsgEnd_);
+                origString = origString.replace(uArray1[n], parensResp[1]);
+                uArray.push({ op: theOp, un: parensResp[0] });
+              }
+          } else {
+            uArray.push({ op: theOp, un: uArray1[n] });
+          }
         }
       }
       return [uArray, origString, endProcessing];
@@ -54801,7 +54828,11 @@ var UnitString = exports.UnitString = function () {
       // parensUnits array
       if (!isNaN(pNum)) {
         retUnit = parensUnits[pNum];
-        pStr = retUnit[csCode_];
+        if (isNaN(retUnit)) {
+          pStr = retUnit.csCode_;
+        } else {
+          pStr = retUnit;
+        }
       }
       // If it's not a number, it's a programming error.  Throw a fit.
       else {
@@ -54890,7 +54921,7 @@ var UnitString = exports.UnitString = function () {
                 } // end if text following the parentheses not an exponent
           } // end if text following the parentheses is not an annotation
       } // end if there is text following teh parentheses
-      retUnit[csCode_] = pStr;
+      retUnit.csCode_ = pStr;
       return [retUnit, stopFlag];
     } // end _getParensUnit
 
@@ -54900,6 +54931,7 @@ var UnitString = exports.UnitString = function () {
      * the annotation and any found after the annotation.
      *
      * This should only be called from within this class (or by test code).
+     * NEEDS FIX in next branch to handle string with multiple annotations.
      *
      * @param pStr the string being parsed
      * @param origString the original string being parse
@@ -54964,213 +54996,217 @@ var UnitString = exports.UnitString = function () {
       // First try the code just as is, without looking for annotations,
       // prefixes, exponents, or elephants.
       var retUnit = this.utabs_.getUnitByCode(uCode);
+      if (retUnit) {
+        retUnit = retUnit.clone();
+      }
 
       // If we found it, we're done.  No need to parse for those elephants (or
       // other stuff).
-      // end if the uCode includes an annotation
-      if (!retUnit) if (uCode.indexOf(this.braceFlag_) >= 0) {
-        var getAnnoRet = this._getUnitWithAnnotation(uCode, origString, annotations, retMsg);
-        retUnit = getAnnoRet[0];
-        if (retUnit) {
-          origString = getAnnoRet[1];
-        }
-        // If a unit is not found, retUnit will be returned null and
-        // the retMsg array will contain a message describing the problem.
-        // If a unit is found, of course, all is good. So ... nothing left
-        // to see here, move along.
-      } // end if the uCode includes an annotation
-
-      else {
-
-          // So we didn't find a unit for the full uCode or for one with
-          // annotations.  Try looking for a unit that uses a carat (^)
-          // instead of an asterisk (*)
-
-          if (uCode.indexOf('^') > -1) {
-            var tryCode = uCode.replace('^', '*');
-            retUnit = this.utabs_.getUnitByCode(tryCode);
-            if (retUnit) {
-              retUnit.csCode_ = retUnit.csCode_.replace('*', '^');
-              retUnit.ciCode_ = retUnit.ciCode_.replace('*', '^');
-            }
+      else if (uCode.indexOf(this.braceFlag_) >= 0) {
+          var getAnnoRet = this._getUnitWithAnnotation(uCode, origString, annotations, retMsg);
+          retUnit = getAnnoRet[0];
+          if (retUnit) {
+            origString = getAnnoRet[1];
           }
-          // If that didn't work, check to see if it should have brackets
-          // around it (uCode = degF when it should be [degF]
-          if (!retUnit) {
-            var addBrackets = '[' + uCode + ']';
-            retUnit = this.utabs_.getUnitByCode(addBrackets);
-            if (retUnit) {
-              origString = origString.replace(uCode, addBrackets);
-              retMsg.push(uCode + ' is not a valid unit expression, but ' + (addBrackets + ' is.\n') + this.vcMsgStart_ + addBrackets + this.vcMsgEnd_);
-            } // end if we found the unit after adding brackets
-          } // end trying to add brackets
+          // If a unit is not found, retUnit will be returned null and
+          // the retMsg array will contain a message describing the problem.
+          // If a unit is found, of course, all is good. So ... nothing left
+          // to see here, move along.
+        } // end if the uCode includes an annotation
 
-          // If we didn't find it, try it as a name
-          if (!retUnit) {
-            var retUnitAry = this.utabs_.getUnitByName(uCode);
-            if (retUnitAry && retUnitAry.length > 0) {
-              retUnit = retUnitAry[0];
-              var mString = 'The UCUM code for ' + uCode + ' is ' + retUnit.csCode_ + '.\n' + this.vcMsgStart_ + retUnit.csCode_ + this.vcMsgEnd_;
-              var dupMsg = false;
-              for (var r = 0; r < retMsg.length && !dupMsg; r++) {
-                dupMsg = retMsg[r] === mString;
-              }if (!dupMsg) retMsg.push(mString);
-              var rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
-              var res = origString.match(rStr);
-              origString = origString.replace(rStr, res[1] + retUnit.csCode_ + res[3]);
-              uCode = retUnit.csCode_;
+        else {
+
+            // So we didn't find a unit for the full uCode or for one with
+            // annotations.  Try looking for a unit that uses a carat (^)
+            // instead of an asterisk (*)
+
+            if (uCode.indexOf('^') > -1) {
+              var tryCode = uCode.replace('^', '*');
+              retUnit = this.utabs_.getUnitByCode(tryCode);
+              if (retUnit) {
+                retUnit = retUnit.clone();
+                retUnit.csCode_ = retUnit.csCode_.replace('*', '^');
+                retUnit.ciCode_ = retUnit.ciCode_.replace('*', '^');
+              }
             }
-          }
+            // If that didn't work, check to see if it should have brackets
+            // around it (uCode = degF when it should be [degF]
+            if (!retUnit) {
+              var addBrackets = '[' + uCode + ']';
+              retUnit = this.utabs_.getUnitByCode(addBrackets);
+              if (retUnit) {
+                retUnit = retUnit.clone();
+                origString = origString.replace(uCode, addBrackets);
+                retMsg.push(uCode + ' is not a valid unit expression, but ' + (addBrackets + ' is.\n') + this.vcMsgStart_ + addBrackets + this.vcMsgEnd_);
+              } // end if we found the unit after adding brackets
+            } // end trying to add brackets
 
-          // If we still don't have a unit, try assuming a modifier (prefix and/or
-          // exponent) and look for a unit without the modifier
-          if (!retUnit) {
+            // If we didn't find it, try it as a name
+            if (!retUnit) {
+              var retUnitAry = this.utabs_.getUnitByName(uCode);
+              if (retUnitAry && retUnitAry.length > 0) {
+                retUnit = retUnitAry[0].clone();
+                var mString = 'The UCUM code for ' + uCode + ' is ' + retUnit.csCode_ + '.\n' + this.vcMsgStart_ + retUnit.csCode_ + this.vcMsgEnd_;
+                var dupMsg = false;
+                for (var r = 0; r < retMsg.length && !dupMsg; r++) {
+                  dupMsg = retMsg[r] === mString;
+                }if (!dupMsg) retMsg.push(mString);
+                var rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
+                var res = origString.match(rStr);
+                origString = origString.replace(rStr, res[1] + retUnit.csCode_ + res[3]);
+                uCode = retUnit.csCode_;
+              }
+            }
 
-            var origCode = uCode;
-            var origUnit = null;
-            var exp = null;
-            var pfxCode = null;
-            var pfxObj = null;
-            var pfxVal = null;
+            // If we still don't have a unit, try assuming a modifier (prefix and/or
+            // exponent) and look for a unit without the modifier
+            if (!retUnit) {
 
-            // Look first for an exponent
-            // This particular regex has been tweaked several times.  This one
-            // works with the following test strings:
-            // "m[H2O]-21 gives ["m{H2O]-21", "m[H2O]", "-21"]
-            // "m[H2O]+21 gives ["m{H2O]+21", "m[H2O]", "+21"]
-            // "m[H2O]21 gives ["m{H2O]-21", "m[H2O]", "21"]
-            // "s2" gives ["s2", "s, "2"]
-            // "kg" gives null
-            // "m[H2O]" gives null
-            // "m[H2O]23X" gives null
-            var _res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
+              var origCode = uCode;
+              var origUnit = null;
+              var exp = null;
+              var pfxCode = null;
+              var pfxObj = null;
+              var pfxVal = null;
 
-            // If we got a return with an exponent, separate the exponent from the
-            // unit and try to get the unit again
-            if (_res && _res[2] && _res[2] !== "") {
-              var reassemble = _res[1] + _res[2];
-              if (reassemble === uCode) {
-                uCode = _res[1];
-                exp = _res[2];
-                origUnit = this.utabs_.getUnitByCode(uCode);
-              } // end if nothing followed the exponent (if there was one)
-            } // end if we got an exponent
+              // Look first for an exponent
+              // This particular regex has been tweaked several times.  This one
+              // works with the following test strings:
+              // "m[H2O]-21 gives ["m{H2O]-21", "m[H2O]", "-21"]
+              // "m[H2O]+21 gives ["m{H2O]+21", "m[H2O]", "+21"]
+              // "m[H2O]21 gives ["m{H2O]-21", "m[H2O]", "21"]
+              // "s2" gives ["s2", "s, "2"]
+              // "kg" gives null
+              // "m[H2O]" gives null
+              // "m[H2O]23X" gives null
+              var _res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
 
-            // If we still don't have a unit, separate out the prefix, if any,
-            // and try without it.
-            if (!origUnit) {
-              // Try for a single character prefix first.
-              pfxCode = uCode.charAt(0);
-              pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
-
-              // if we got a prefix, get its info and remove it from the unit code
-              if (pfxObj) {
-                pfxVal = pfxObj.getValue();
-                var pCodeLen = pfxCode.length;
-                uCode = uCode.substr(pCodeLen);
-
-                // try again for the unit
-                origUnit = this.utabs_.getUnitByCode(uCode);
-
-                // If we still don't have a unit, see if the prefix could be the
-                // two character "da" (deka) prefix.  That's the only prefix with
-                // two characters, and without this check it's interpreted as "d"
-                // (deci) and the "a" is considered part of the unit code.
-
-                if (!origUnit && pfxCode == 'd' && uCode.substr(0, 1) == 'a') {
-                  pfxCode = 'da';
-                  pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
-                  pfxVal = pfxObj.getValue();
-                  uCode = uCode.substr(1);
-
-                  // try one more time for the unit
+              // If we got a return with an exponent, separate the exponent from the
+              // unit and try to get the unit again
+              if (_res && _res[2] && _res[2] !== "") {
+                var reassemble = _res[1] + _res[2];
+                if (reassemble === uCode) {
+                  uCode = _res[1];
+                  exp = _res[2];
                   origUnit = this.utabs_.getUnitByCode(uCode);
-                }
-              } // end if we found a prefix
-            } // end if we didn't get a unit after removing an exponent
+                } // end if nothing followed the exponent (if there was one)
+              } // end if we got an exponent
 
-            // One more thing.  If we didn't find a unit, signal an error.
-            // (We tried with the full unit string, with the unit string without
-            // the exponent, and the unit string without a prefix.  That's all
-            // we can try).
-            if (!origUnit) {
-              retMsg.push('Unable to find unit for ' + origCode);
-              retUnit = null;
-            } else {
-              // Otherwise we found a unit object.  Clone it and then apply the
-              // prefix and exponent, if any, to it.
-              retUnit = origUnit.clone();
-              var theDim = retUnit.getProperty('dim_');
-              var theMag = retUnit.getProperty('magnitude_');
-              var theName = retUnit.getProperty('name_');
-              var theCiCode = retUnit.getProperty('ciCode_');
-              var thePrintSymbol = retUnit.getProperty('printSymbol_');
-              // If there is an exponent for the unit, apply it to the dimension
-              // and magnitude now
-              if (exp) {
-                exp = parseInt(exp);
-                var expMul = exp;
-                if (theDim) theDim = theDim.mul(exp);
-                theMag = Math.pow(theMag, exp);
-                retUnit.assignVals({ 'magnitude_': theMag });
+              // If we still don't have a unit, separate out the prefix, if any,
+              // and try without it.
+              if (!origUnit) {
+                // Try for a single character prefix first.
+                pfxCode = uCode.charAt(0);
+                pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
 
-                // If there is also a prefix, apply the exponent to the prefix.
+                // if we got a prefix, get its info and remove it from the unit code
                 if (pfxObj) {
+                  pfxVal = pfxObj.getValue();
+                  var pCodeLen = pfxCode.length;
+                  uCode = uCode.substr(pCodeLen);
 
-                  // if the prefix base is 10 it will have an exponent.  Multiply
-                  // the current prefix exponent by the exponent for the unit
-                  // we're working with.  Then raise the prefix value to the level
-                  // defined by the exponent.
-                  if (pfxExp) {
-                    expMul *= pfxObj.getExp();
-                    pfxVal = Math.pow(10, expMul);
+                  // try again for the unit
+                  origUnit = this.utabs_.getUnitByCode(uCode);
+
+                  // If we still don't have a unit, see if the prefix could be the
+                  // two character "da" (deka) prefix.  That's the only prefix with
+                  // two characters, and without this check it's interpreted as "d"
+                  // (deci) and the "a" is considered part of the unit code.
+
+                  if (!origUnit && pfxCode == 'd' && uCode.substr(0, 1) == 'a') {
+                    pfxCode = 'da';
+                    pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
+                    pfxVal = pfxObj.getValue();
+                    uCode = uCode.substr(1);
+
+                    // try one more time for the unit
+                    origUnit = this.utabs_.getUnitByCode(uCode);
                   }
-                  // If the prefix base is not 10, it won't have an exponent.
-                  // At the moment I don't see any units using the prefixes
-                  // that aren't base 10.   But if we get one the prefix value
-                  // will be applied to the magnitude (below) if the unit does
-                  // not have a conversion function, and to the conversion prefix
-                  // if it does.
-                } // end if there's a prefix as well as the exponent
-              } // end if there's an exponent
+                } // end if we found a prefix
+              } // end if we didn't get a unit after removing an exponent
 
-              // Now apply the prefix, if there is one, to the conversion
-              // prefix or the magnitude
-              if (pfxObj) {
-                if (retUnit.cnv_) {
-                  retUnit.assignVals({ 'cnvPfx_': pfxVal });
-                } else {
-                  theMag *= pfxVal;
+              // One more thing.  If we didn't find a unit, signal an error.
+              // (We tried with the full unit string, with the unit string without
+              // the exponent, and the unit string without a prefix.  That's all
+              // we can try).
+              if (!origUnit) {
+                retMsg.push('Unable to find unit for ' + origCode);
+                retUnit = null;
+              } else {
+                // Otherwise we found a unit object.  Clone it and then apply the
+                // prefix and exponent, if any, to it.
+                retUnit = origUnit.clone();
+                var theDim = retUnit.getProperty('dim_');
+                var theMag = retUnit.getProperty('magnitude_');
+                var theName = retUnit.getProperty('name_');
+                var theCiCode = retUnit.getProperty('ciCode_');
+                var thePrintSymbol = retUnit.getProperty('printSymbol_');
+                // If there is an exponent for the unit, apply it to the dimension
+                // and magnitude now
+                if (exp) {
+                  exp = parseInt(exp);
+                  var expMul = exp;
+                  if (theDim) theDim = theDim.mul(exp);
+                  theMag = Math.pow(theMag, exp);
                   retUnit.assignVals({ 'magnitude_': theMag });
+
+                  // If there is also a prefix, apply the exponent to the prefix.
+                  if (pfxObj) {
+
+                    // if the prefix base is 10 it will have an exponent.  Multiply
+                    // the current prefix exponent by the exponent for the unit
+                    // we're working with.  Then raise the prefix value to the level
+                    // defined by the exponent.
+                    if (pfxExp) {
+                      expMul *= pfxObj.getExp();
+                      pfxVal = Math.pow(10, expMul);
+                    }
+                    // If the prefix base is not 10, it won't have an exponent.
+                    // At the moment I don't see any units using the prefixes
+                    // that aren't base 10.   But if we get one the prefix value
+                    // will be applied to the magnitude (below) if the unit does
+                    // not have a conversion function, and to the conversion prefix
+                    // if it does.
+                  } // end if there's a prefix as well as the exponent
+                } // end if there's an exponent
+
+                // Now apply the prefix, if there is one, to the conversion
+                // prefix or the magnitude
+                if (pfxObj) {
+                  if (retUnit.cnv_) {
+                    retUnit.assignVals({ 'cnvPfx_': pfxVal });
+                  } else {
+                    theMag *= pfxVal;
+                    retUnit.assignVals({ 'magnitude_': theMag });
+                  }
                 }
-              }
-              // if we have a prefix and/or an exponent, add them to the unit
-              // attributes - name, csCode, ciCode and print symbol
-              var theCode = retUnit.csCode_;
-              if (pfxObj) {
-                theName = pfxObj.getName() + theName;
-                theCode = pfxCode + theCode;
-                theCiCode = pfxObj.getCiCode() + theCiCode;
-                thePrintSymbol = pfxObj.getPrintSymbol() + thePrintSymbol;
-                retUnit.assignVals({
-                  'name_': theName,
-                  'csCode_': theCode,
-                  'ciCode_': theCiCode,
-                  'printSymbol_': thePrintSymbol
-                });
-              }
-              if (exp) {
-                var expStr = exp.toString();
-                retUnit.assignVals({
-                  'name_': theName + '<sup>' + expStr + '</sup>',
-                  'csCode_': theCode + expStr,
-                  'ciCode_': theCiCode + expStr,
-                  'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
-                });
-              }
-            } // end if an original unit was found (without prefix and/or exponent)
-          } // end if we didn't get a unit for the full unit code (w/out modifiers)
-        } // end if we didn't find the unit on the first try, before parsing
+                // if we have a prefix and/or an exponent, add them to the unit
+                // attributes - name, csCode, ciCode and print symbol
+                var theCode = retUnit.csCode_;
+                if (pfxObj) {
+                  theName = pfxObj.getName() + theName;
+                  theCode = pfxCode + theCode;
+                  theCiCode = pfxObj.getCiCode() + theCiCode;
+                  thePrintSymbol = pfxObj.getPrintSymbol() + thePrintSymbol;
+                  retUnit.assignVals({
+                    'name_': theName,
+                    'csCode_': theCode,
+                    'ciCode_': theCiCode,
+                    'printSymbol_': thePrintSymbol
+                  });
+                }
+                if (exp) {
+                  var expStr = exp.toString();
+                  retUnit.assignVals({
+                    'name_': theName + '<sup>' + expStr + '</sup>',
+                    'csCode_': theCode + expStr,
+                    'ciCode_': theCiCode + expStr,
+                    'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
+                  });
+                }
+              } // end if an original unit was found (without prefix and/or exponent)
+            } // end if we didn't get a unit for the full unit code (w/out modifiers)
+          } // end if we didn't find the unit on the first try, before parsing
       return [retUnit, origString];
     } // end _makeUnit
 
@@ -55235,34 +55271,52 @@ var UnitString = exports.UnitString = function () {
           // the annotation is the unit code (with an annotation following it).
           // Call _makeUnit for the text before the annotation.
           if (befAnnoText && !aftAnnoText) {
-            var _mkUnitRet = this._makeUnit(befAnnoText, annotations, retMsg, origString);
-
-            // if a unit was returned
-            if (_mkUnitRet[0]) {
-              retUnit = _mkUnitRet[0];
-              retUnit[csCode_] += annoText;
-              origString = _mkUnitRet[1];
+            // make sure that what's before the annoText is not a number, e.g.,
+            // /100{cells}
+            var testBef = Number(befAnnoText);
+            // if it is a number, just set the return unit to the number
+            if (!isNaN(testBef)) {
+              retUnit = befAnnoText;
             }
-            // Otherwise add a not found message
+            // Otherwise try to find a unit
             else {
-                retMsg.push('Unable to find a unit for ' + befAnnoText + ' that ' + ('precedes the annotation ' + annoText + '.'));
+                var _mkUnitRet = this._makeUnit(befAnnoText, annotations, retMsg, origString);
+
+                // if a unit was returned
+                if (_mkUnitRet[0]) {
+                  retUnit = _mkUnitRet[0];
+                  retUnit.csCode_ += annoText;
+                  origString = _mkUnitRet[1];
+                }
+                // Otherwise add a not found message
+                else {
+                    retMsg.push('Unable to find a unit for ' + befAnnoText + ' that ' + ('precedes the annotation ' + annoText + '.'));
+                  }
               }
           }
           // else if there's only text after the annotation, try for a unit
           // from the after text and assume the user put the annotation in
           // the wrong place (and tell them)
           else if (!befAnnoText && aftAnnoText) {
-              var _mkUnitRet2 = this._makeUnit(aftAnnoText, annotations, retMsg, origString);
-              if (_mkUnitRet2[0]) {
-                retUnit = _mkUnitRet2[0];
-                retUnit[csCode_] += annoText;
-                origString = _mkUnitRet2[1];
-                retMsg.push('The annotation ' + annoText + ' before the unit code is ' + 'invalid.\n' + this.vcMsgStart_ + retUnit[csCode_] + this.vcMsgEnd_);
-              }
-              // Otherwise add a not found message
-              else {
-                  retMsg.push('Unable to find a unit for ' + befAnnoText + ' that ' + ('follows the annotation ' + annoText + '.'));
+              // again, test for a number
+              var testAft = Number(aftAnnoText);
+              // if it is a number, just set the return unit to the number
+              if (!isNaN(testAft)) {
+                retUnit = aftAnnoText + annoText;
+                retMsg.push('The annotation ' + annoText + ' before the ' + aftAnnoText + ' is ' + 'invalid.\n' + this.vcMsgStart_ + retUnit + this.vcMsgEnd_);
+              } else {
+                var _mkUnitRet2 = this._makeUnit(aftAnnoText, annotations, retMsg, origString);
+                if (_mkUnitRet2[0]) {
+                  retUnit = _mkUnitRet2[0];
+                  retUnit.csCode_ += annoText;
+                  origString = retUnit.csCode_;
+                  retMsg.push('The annotation ' + annoText + ' before the unit code is ' + 'invalid.\n' + this.vcMsgStart_ + retUnit.csCode_ + this.vcMsgEnd_);
                 }
+                // Otherwise add a not found message
+                else {
+                    retMsg.push('Unable to find a unit for ' + befAnnoText + ' that ' + ('follows the annotation ' + annoText + '.'));
+                  }
+              }
             }
             // else it's got text before AND after the annotation.  Now what?
             // For now this is an error.  This may be a case of a missing
@@ -55302,6 +55356,10 @@ var UnitString = exports.UnitString = function () {
       // We only need to do the arithmetic if we have more than one unit.
       for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
         var nextUnit = uArray[u2]['un'];
+        var testNext = Number(nextUnit);
+        if (!isNaN(testNext)) {
+          nextUnit = testNext;
+        }
         if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
           var msgString = 'Unit string (' + origString + ') contains unrecognized ' + 'element';
           if (nextUnit) {
