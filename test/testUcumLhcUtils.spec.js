@@ -29,9 +29,9 @@ describe('Test validateUnitString method', function() {
 
   it("should return a message for no unit found", function() {
 
-    var resp2 = utils.validateUnitString('noTrump');
+    var resp2 = utils.validateUnitString('noFool');
     assert.equal(resp2.status, 'invalid', resp2.status);
-    assert.equal(resp2.msg[0], 'Unable to find unit for noTrump', resp2.msg[0]);
+    assert.equal(resp2.msg[0], 'Unable to find unit for noFool', resp2.msg[0]);
   });
 
   it("should return an updated UCUM code and message for 'Gauss'", function() {
@@ -78,17 +78,17 @@ describe('Test convertUnitTo method', function() {
 
   it("should return a message for invalid unit strings", function() {
 
-    var resp2 = utils.convertUnitTo('Barack', 2017, 'TheDonald');
+    var resp2 = utils.convertUnitTo('good', 2017, 'bad');
     assert.equal(resp2.status, 'failed', resp2.status);
     assert.equal(resp2.msg[0],
-                 'Sorry - an error occurred while trying to validate Barack.',
+                 'Sorry - an error occurred while trying to validate good.',
                  resp2.msg[0]);
-    assert.equal(resp2.msg[1], 'Barack is probably not a valid expression.',
+    assert.equal(resp2.msg[1], 'good is probably not a valid expression.',
                  resp2.msg[1]);
     assert.equal(resp2.msg[2],
-                 'Sorry - an error occurred while trying to validate TheDonald.',
+                 'Sorry - an error occurred while trying to validate bad.',
                   resp2.msg[2]);
-    assert.equal(resp2.msg[3], 'TheDonald is probably not a valid expression.',
+    assert.equal(resp2.msg[3], 'bad is probably not a valid expression.',
                  resp2.msg[3]);
   });
 
@@ -123,9 +123,9 @@ describe('Test checkSynonyms method', function() {
 
   it("should return a message for no synonym found", function() {
 
-    var resp2 = utils.checkSynonyms('TheDonald');
+    var resp2 = utils.checkSynonyms('Amess');
     assert.equal('failed', resp2['status']);
-    assert.equal('Unable to find any units with synonym = TheDonald',
+    assert.equal('Unable to find any units with synonym = Amess',
                   resp2['msg']);
 
   });

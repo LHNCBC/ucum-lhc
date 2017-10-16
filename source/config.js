@@ -43,7 +43,7 @@ export var Ucum = {
   openEmph_ : ' ->',
 
   /**
-   * Default closing HTML used to emphasize portions of error messages.
+   * Default closing string used to emphasize portions of error messages.
    * Used when NOT displaying messages on a web site, i.e., for output
    * from the library methods or to a file.
    */
@@ -88,6 +88,9 @@ export var Ucum = {
    * Name of the column in the csv file that serves as the key
    */
   inputKey_ : 'case-sensitive code'
+
+
+  /// ^[0-9]*$
 } ;
 
 

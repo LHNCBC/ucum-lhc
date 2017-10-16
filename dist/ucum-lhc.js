@@ -51586,7 +51586,7 @@ var Ucum = exports.Ucum = {
   openEmph_: ' ->',
 
   /**
-   * Default closing HTML used to emphasize portions of error messages.
+   * Default closing string used to emphasize portions of error messages.
    * Used when NOT displaying messages on a web site, i.e., for output
    * from the library methods or to a file.
    */
@@ -51630,6 +51630,8 @@ var Ucum = exports.Ucum = {
    * Name of the column in the csv file that serves as the key
    */
   inputKey_: 'case-sensitive code'
+
+  /// ^[0-9]*$
 };
 
 
@@ -53111,8 +53113,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         returnObj.status = 'error';
         returnObj.msg.push('No "from" unit expression specified.');
       }
-
-      if (!fromVal || isNaN(fromVal)) {
+      var us = UnitString.getInstance();
+      if (!fromVal || us._isNumericString(fromVal)) {
         returnObj.status = 'error';
         returnObj.msg.push('No "from" value specified.');
       }
@@ -53224,9 +53226,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * or if any errors were encountered trying to get the unit.
      *
      * @param uName the expression/string representing the unit
-     * @param valConv indicates what type of request this is for - a request to
-     *  validate or a request to convert
-     * @returns an array containing:
+      * @returns an array containing:
      *  the unit found for the string (or null if no unit was found);
      *  a (possibly) updated version of the string (for cases where a unit name
      *    was specified and the code was found for it) or null if an error
@@ -54307,7 +54307,12 @@ var UnitString = exports.UnitString = function () {
      * explaining the substitution.
      *
      * @param uStr the string defining the unit
-     *
+     * @param valConv indicates what type of request this is for - a request to
+     *  validate (pass in 'validate') or a request to convert (pass in 'convert');
+     *  optional, defaults to 'validate'
+     * @param suggest indicates whether or not to include suggestions for a
+     *  string where no unit could be found; 'suggest' will cause suggestions
+     *  to be included; anything else, or unspecified, will omit suggestions
      * @returns an array containing: 1) the unit object (or null if there were
      *  problems creating the unit); 2) the possibly updated unit string passed
      *  in; and 2) an array of user messages (informational, error or warning).
@@ -54332,7 +54337,7 @@ var UnitString = exports.UnitString = function () {
         this.vcMsgEnd_ = this.cnvMsgEnd_;
       }
 
-      if (suggest !== undefined && suggest) {
+      if (suggest !== undefined && suggest === 'suggest') {
         this.suggest_ = true;
       }
 
@@ -54371,7 +54376,7 @@ var UnitString = exports.UnitString = function () {
         // Do a final check to make sure that finalUnit is a unit and not
         // just a number.  Something like "1/{HCP}" will return a "unit" of 1
         // - which is not a unit.
-        if (finalUnit && !isNaN(finalUnit) && finalUnit !== 1) {
+        if (finalUnit && this._isNumericString(finalUnit) && finalUnit !== 1) {
           var newUnit = new Unit({ 'csCode_': origString });
           if (newUnit) {
             newUnit['magnitude_'] = finalUnit;
@@ -54448,9 +54453,8 @@ var UnitString = exports.UnitString = function () {
 
             // Check to see if it's a number.  If so write the number version of
             // the number back to the "un" attribute and move on
-            var curCodeNum = Number(curCode);
-            if (!isNaN(curCodeNum)) {
-              uArray[u1]['un'] = curCodeNum;
+            if (this._isNumericString(curCode)) {
+              uArray[u1]['un'] = Number(curCode);
             } else {
               // The current unit array element is a string.  Check now to see
               // if it is or contains a parenthesized unit from the parensUnits
@@ -54569,7 +54573,7 @@ var UnitString = exports.UnitString = function () {
      *  unit strings; passed through when _parseTheString called recursively
      * @param retMsg the array to contain any user messages (error and warning)
      * @returns an array containing the string after the parentheses are replaced,
-     *  the original string, and a flag indicating whether or not an error
+     *  the original string, and a boolean flag indicating whether or not an error
      *  occurred that should stop processing.
      * with placeholders
      */
@@ -54686,11 +54690,15 @@ var UnitString = exports.UnitString = function () {
      * This should only be called from within this class (or by test code).
      *
      * @param uStr the unit string being parsed
-     * @param origString passed through to _getParensUnit if it is called
-     * @param parensUnits passed through to _getParensUnit if it is called
-     * @param annotations passed through to _getParensUnit if it is called
-     * @param retMsg passed through to _getParensUnit if it is called
-     * @returns an array containing: the array representing the unit string
+     * @param origString the original string passed to parseString
+     * @param parensUnits the array containing the units created for parenthetical
+     *  expressions; passed through to _processParensUnit if it is called
+     * @param annotations the array containing annotation text; passed through
+     *  to _processParensUnit if it is called
+     * @param retMsg the array containing error and informational messages;
+     *  passed through to _processParensUnit if it is called
+     * @returns an array containing: the array representing the unit string,
+     *  the original string passed in, possibly updated with corrections,
      *  and a flag indicating whether or not processing can continue
      */
 
@@ -54704,6 +54712,7 @@ var UnitString = exports.UnitString = function () {
 
       var uArray1 = uStr.match(/([./]|[^./]+)/g);
       var endProcessing = false;
+      var startNumCheck = /(^[0-9]+)(\[?[a-zA-Z\_0-9a-zA-Z\_]+\]?$)/;
 
       // If the first element in the array is a division operator (/), the
       // string started with '/'.  Add a first element containing 1 to the
@@ -54711,16 +54720,14 @@ var UnitString = exports.UnitString = function () {
       if (uArray1[0] === "/") {
         uArray1.unshift("1");
       } else {
-
         // Check to see if there is a number preceding a unit code, e.g., 2mg
         // If so, update the first element to remove the number (2mg -> mg) and
         // add two elements to the beginning of the array - the number and the
         // multiplication operator.
 
-        var elem = Number(uArray1[0]);
-        if (isNaN(elem)) {
-          var numRes = uArray1[0].match(/(^[0-9]+)([\[?a-zA-Z\_0-9a-zA-Z\_\]?]+$)/);
-          if (numRes && numRes.length == 3 && numRes[1] !== '' && numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
+        if (!this._isNumericString(uArray1[0])) {
+          var numRes = uArray1[0].match(startNumCheck);
+          if (numRes && numRes.length === 3 && numRes[1] !== '' && numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
             retMsg.push(uArray1[0] + ' is not a valid UCUM code.  ' + this.vcMsgStart_ + (numRes[1] + '.' + numRes[2]) + this.vcMsgEnd_);
             origString = origString.replace(uArray1[0], numRes[1] + '.' + numRes[2]);
             uArray1[0] = numRes[2];
@@ -54748,10 +54755,9 @@ var UnitString = exports.UnitString = function () {
         // mg/2.kJ - because mg/2 would be performed, followed by .kJ.  Instead,
         // handling 2kJ as a parenthesized unit will make sure mg is divided by
         // 2.kJ.
-        var elem2 = Number(uArray1[n]);
-        if (isNaN(elem2)) {
-          var numRes2 = uArray1[n].match(/(^[0-9]+)([\[?a-zA-Z\_0-9a-zA-Z\_\]?]+$)/);
-          if (numRes2 && numRes2.length == 3 && numRes2[1] !== '' && numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
+        if (!this._isNumericString(uArray1[n])) {
+          var numRes2 = uArray1[n].match(startNumCheck);
+          if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' && numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
             var parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
             var parensResp = this._processParens(parensStr, parensStr, parensUnits, annotations, retMsg);
             // if a "stop processing" flag was returned, set the n index to end
@@ -54823,12 +54829,12 @@ var UnitString = exports.UnitString = function () {
 
       // Get the text between the flags
       var pNumText = pStr.substring(psIdx + this.pFlagLen_, peIdx);
-      var pNum = Number(pNumText);
-      // Make sure it's a number, and if it is, get the unit from the
+
+      // Make sure the index is a number, and if it is, get the unit from the
       // parensUnits array
-      if (!isNaN(pNum)) {
-        retUnit = parensUnits[pNum];
-        if (isNaN(retUnit)) {
+      if (this._isNumericString(pNumText)) {
+        retUnit = parensUnits[Number(pNumText)];
+        if (!this._isNumericString(retUnit)) {
           pStr = retUnit.csCode_;
         } else {
           pStr = retUnit;
@@ -54836,18 +54842,16 @@ var UnitString = exports.UnitString = function () {
       }
       // If it's not a number, it's a programming error.  Throw a fit.
       else {
-          throw new Error('Processing error - invalid parens number ' + ('found in ' + pStr + '.'));
+          throw new Error('Processing error - invalid parens number ' + pNumText + ' ' + ('found in ' + pStr + '.'));
         }
 
       // If there's something in front of the starting parentheses flag, check to
       // see if it's a number or an annotation.
       if (befText) {
-        var befNum = Number(befText);
-
         // If it's a number, assume that multiplication was assumed
-        if (!isNaN(befNum)) {
+        if (this._isNumericString(befText)) {
           var nMag = retUnit.getProperty('magnitude_');
-          nMag *= befNum;
+          nMag *= Number(befText);
           retUnit.assignVals({ 'magnitude_': nMag });
           pStr = befText + '.' + pStr;
           retMsg.push('' + befText + pStr + ' is not a valid UCUM code.\n' + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
@@ -54901,10 +54905,10 @@ var UnitString = exports.UnitString = function () {
         // Otherwise check to see if it's an exponent.  If so, warn the
         // user that it's not valid - but try it anyway
         else {
-            var aftNum = Number(aftText);
-            if (!isNaN(aftNum)) {
+
+            if (this._isNumericString(aftText)) {
               pStr += aftText;
-              retUnit = retUnit.power(aftNum);
+              retUnit = retUnit.power(Number(aftText));
               retMsg.push('An exponent (' + aftText + ') following a parenthesis is ' + 'invalid as of revision 1.9 of the UCUM Specification.\n  ' + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
             }
             // else the text after the parentheses is neither a number nor
@@ -54934,7 +54938,7 @@ var UnitString = exports.UnitString = function () {
      * NEEDS FIX in next branch to handle string with multiple annotations.
      *
      * @param pStr the string being parsed
-     * @param origString the original string being parse
+     * @param origString the original string being parsed
      * @param annotations the array of annotations extracted from the origString
      * @param retMsg the array containing messages to be returned
      * @returns an array containing the annotation for the pStr, any text found
@@ -54962,8 +54966,8 @@ var UnitString = exports.UnitString = function () {
       // to make sure it's valid, and if not, throw an error
       var idx = pStr.substring(this.bFlagLen_, aeIdx);
       var idxNum = Number(idx);
-      if (isNaN(idxNum) || idxNum >= annotations.length) {
-        throw new Error('Processing Error - invalid annotation index found ' + ('in ' + pStr + ' that was created from ' + origString));
+      if (!this._isNumericString(idx) || idxNum >= annotations.length) {
+        throw new Error('Processing Error - invalid annotation index ' + idx + ' found ' + ('in ' + pStr + ' that was created from ' + origString));
       }
 
       // Replace the flags and annotation index with the annotation expression
@@ -55272,10 +55276,9 @@ var UnitString = exports.UnitString = function () {
           // Call _makeUnit for the text before the annotation.
           if (befAnnoText && !aftAnnoText) {
             // make sure that what's before the annoText is not a number, e.g.,
-            // /100{cells}
-            var testBef = Number(befAnnoText);
-            // if it is a number, just set the return unit to the number
-            if (!isNaN(testBef)) {
+            // /100{cells}.  But f it is a number, just set the return unit to
+            // the number.
+            if (this._isNumericString(befAnnoText)) {
               retUnit = befAnnoText;
             }
             // Otherwise try to find a unit
@@ -55298,10 +55301,9 @@ var UnitString = exports.UnitString = function () {
           // from the after text and assume the user put the annotation in
           // the wrong place (and tell them)
           else if (!befAnnoText && aftAnnoText) {
-              // again, test for a number
-              var testAft = Number(aftAnnoText);
-              // if it is a number, just set the return unit to the number
-              if (!isNaN(testAft)) {
+              // Again, test for a number and if it is a number, set the return
+              // unit to the number.
+              if (this._isNumericString(aftAnnoText)) {
                 retUnit = aftAnnoText + annoText;
                 retMsg.push('The annotation ' + annoText + ' before the ' + aftAnnoText + ' is ' + 'invalid.\n' + this.vcMsgStart_ + retUnit + this.vcMsgEnd_);
               } else {
@@ -55354,11 +55356,10 @@ var UnitString = exports.UnitString = function () {
       var endProcessing = false;
       // Perform the arithmetic for the units, starting with the first 2 units.
       // We only need to do the arithmetic if we have more than one unit.
-      for (var u2 = 1; u2 < uLen; u2++, !endProcessing) {
+      for (var u2 = 1; u2 < uLen && !endProcessing; u2++) {
         var nextUnit = uArray[u2]['un'];
-        var testNext = Number(nextUnit);
-        if (!isNaN(testNext)) {
-          nextUnit = testNext;
+        if (this._isNumericString(nextUnit)) {
+          nextUnit = Number(nextUnit);
         }
         if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
           var msgString = 'Unit string (' + origString + ') contains unrecognized ' + 'element';
@@ -55441,6 +55442,28 @@ var UnitString = exports.UnitString = function () {
       } // end do for each unit after the first one
       return finalUnit;
     } // end _performUnitArithmetic
+
+
+    /**
+     * This tests a string to see if it contains only numbers.  Using isNaN and
+     * Number.isNaN is too frustrating, given the limitations of both - isNaN
+     * and Number.isNaN both return false, i.e., the value is a number, for
+     * booleans, nulls, empty strings and strings that only contain spaces.
+     *
+     * @params theString
+     * @returns true if the string contains only numbers; false otherwise
+     */
+
+  }, {
+    key: '_isNumericString',
+    value: function _isNumericString(theString) {
+      var isNumStr = false;
+      if (theString && typeof theString === 'string') {
+        var ret = theString.match(/^[0-9\.]*$/);
+        isNumStr = ret !== null;
+      }
+      return isNumStr;
+    } // end _isNumericString
 
   }]);
 

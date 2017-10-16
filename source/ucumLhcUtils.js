@@ -159,8 +159,8 @@ export class UcumLhcUtils {
       returnObj.status = 'error';
       returnObj.msg.push('No "from" unit expression specified.');
     }
-
-    if (!fromVal || (isNaN(fromVal))) {
+    let us = UnitString.getInstance() ;
+    if (!fromVal || (us._isNumericString(fromVal))) {
       returnObj.status = 'error';
       returnObj.msg.push('No "from" value specified.');
     }
@@ -285,8 +285,7 @@ export class UcumLhcUtils {
    * or if any errors were encountered trying to get the unit.
    *
    * @param uName the expression/string representing the unit
-   * @param valConv indicates what type of request this is for - a request to
-   *  validate or a request to convert
+
    * @returns an array containing:
    *  the unit found for the string (or null if no unit was found);
    *  a (possibly) updated version of the string (for cases where a unit name
