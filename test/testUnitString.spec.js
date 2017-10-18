@@ -299,6 +299,96 @@ describe('Test makeUnit method', function() {
     });
   });
 
+  describe('Test makeUnit for unit code m[H2O]-21', function () {
+    var annotations = [];
+    var retMsg = [];
+    var origString = 'm[H2O]-21';
+    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    it("should return a unit with a csCode_ of m[H2O]-21", function () {
+      assert.equal('m[H2O]-21', retUnit['csCode_']);
+    });
+    it("should a unit with a ciCode_ of M[H2O]-21", function () {
+      assert.equal('M[H2O]-21', retUnit['ciCode_']);
+    });
+    it("should a unit with a name_ of meter of water column<sup>-21</sup>", function () {
+      assert.equal('meter of water column<sup>-21</sup>', retUnit['name_']);
+    });
+    it("should return a unit with a class_ of clinical", function () {
+      assert.equal('clinical', retUnit['class_']);
+    });
+    it("should return a unit with isBase_ false", function () {
+      assert.equal(false, retUnit['isBase_']);
+    });
+    it("should return a unit with a magnitude_ = 1.5068353943453534e-147", function () {
+      assert.equal(1.5068353943453534e-147, retUnit['magnitude_']);
+    });
+    it("should return a unit with a dimension vector = [21,42,-21,-0,-0,-0]", function () {
+      assert.equal('21,42,-21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
+    });
+  });
+
+  describe('Test makeUnit for unit code m[H2O]+21', function () {
+    var annotations = [];
+    var retMsg = [];
+    var origString = 'm[H2O]+21';
+    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    it("should return a unit with a csCode_ of m[H2O]21", function () {
+      assert.equal('m[H2O]21', retUnit['csCode_']);
+    });
+    it("should a unit with a ciCode_ of M[H2O]21", function () {
+      assert.equal('M[H2O]21', retUnit['ciCode_']);
+    });
+    it("should a unit with a name_ of meter of water column<sup>21</sup>", function () {
+      assert.equal('meter of water column<sup>21</sup>', retUnit['name_']);
+    });
+    it("should return a unit with a class_ of clinical", function () {
+      assert.equal('clinical', retUnit['class_']);
+    });
+    it("should return a unit with isBase_ false", function () {
+      assert.equal(false, retUnit['isBase_']);
+    });
+    it("should return a unit with a magnitude_ = 6.6364249456354935e+146", function () {
+      assert.equal(6.6364249456354935e+146, retUnit['magnitude_']);
+    });
+    it("should return a unit with a dimension vector = [-21,42,-21,-0,-0,-0]", function () {
+      assert.equal('-21,-42,21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
+    });
+  });
+
+  describe('Test makeUnit for unit code m[H2O]21', function () {
+    var annotations = [];
+    var retMsg = [];
+    var origString = 'm[H2O]21';
+    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    it("should return a unit with a csCode_ of m[H2O]21", function () {
+      assert.equal('m[H2O]21', retUnit['csCode_']);
+    });
+    it("should a unit with a ciCode_ of M[H2O]21", function () {
+      assert.equal('M[H2O]21', retUnit['ciCode_']);
+    });
+    it("should a unit with a name_ of meter of water column<sup>21</sup>", function () {
+      assert.equal('meter of water column<sup>21</sup>', retUnit['name_']);
+    });
+    it("should return a unit with a class_ of clinical", function () {
+      assert.equal('clinical', retUnit['class_']);
+    });
+    it("should return a unit with isBase_ false", function () {
+      assert.equal(false, retUnit['isBase_']);
+    });
+    it("should return a unit with a magnitude_ = 6.6364249456354935e+146", function () {
+      assert.equal(6.6364249456354935e+146, retUnit['magnitude_']);
+    });
+    it("should return a unit with a dimension vector = [-21,42,-21,-0,-0,-0]", function () {
+      assert.equal('-21,-42,21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
+    });
+  });
+
 }); // end test makeUnit method
 
 describe('Test the processParens method', function() {
@@ -502,4 +592,48 @@ describe('Test getAnnotations method', function() {
 
 }); // end test getAnnotations method
 
+
+describe('Test _isCodeWithExponent method', function() {
+
+  it("should return ['m[H2O]', '-21'] for 'm[H2O]-21'", function() {
+    var retArray = uString._isCodeWithExponent('m[H2O]-21');
+    assert.equal(retArray[0], 'm[H2O]');
+    assert.equal(retArray[1], '-21');
+  });
+
+  it("should return ['m[H2O]', '+21'] for 'm[H2O]+21'", function() {
+    var retArray = uString._isCodeWithExponent('m[H2O]+21');
+    assert.equal(retArray[0], 'm[H2O]');
+    assert.equal(retArray[1], '+21');
+  });
+
+  it("should return ['m[H2O]', '21'] for 'm[H2O]21'", function() {
+    var retArray = uString._isCodeWithExponent('m[H2O]21');
+    assert.equal(retArray[0], 'm[H2O]');
+    assert.equal(retArray[1], '21');
+  });
+
+  it("should return ['s', '2'] for 's2'", function() {
+    var retArray = uString._isCodeWithExponent('s2');
+    assert.equal(retArray[0], 's');
+    assert.equal(retArray[1], '2');
+  });
+
+  it("should  return null for 'kg'", function() {
+    var retArray = uString._isCodeWithExponent('kg');
+    assert.equal(retArray, null);
+  });
+
+  it("should  return null for 'm[H2O]'", function() {
+    var retArray = uString._isCodeWithExponent('m{H2O]');
+    assert.equal(retArray, null);
+  });
+
+  it("should  return null for 'm{H2O]23X'", function() {
+    var retArray = uString._isCodeWithExponent('m[H2O]23X');
+    assert.equal(retArray, null);
+  });
+
+
+}); // end test _isCodeWithExponent method
 

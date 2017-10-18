@@ -285,7 +285,8 @@ export class UcumLhcUtils {
    * or if any errors were encountered trying to get the unit.
    *
    * @param uName the expression/string representing the unit
-
+   * @param valConv indicates what type of request this is for - a request to
+   *  validate (pass in 'validate') or a request to convert (pass in 'convert')
    * @returns an array containing:
    *  the unit found for the string (or null if no unit was found);
    *  a (possibly) updated version of the string (for cases where a unit name

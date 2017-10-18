@@ -922,12 +922,20 @@ export class UnitString {
         let pfxObj = null;
         let pfxVal = null;
 
-        // Look first for an exponent
-        // This particular regex has been tweaked several times.  This one
+        // Look first for an exponent.  If we got one, separate it out and
+        // try to get the unit again
+        let codeAndExp = this._isCodeWithExponent(uCode);
+        if (codeAndExp) {
+          uCode = codeAndExp[0];
+          exp = codeAndExp[1];
+          origUnit = this.utabs_.getUnitByCode(uCode);
+        }
+
+     /*   // This particular regex has been tweaked several times.  This one
         // works with the following test strings:
-        // "m[H2O]-21 gives ["m{H2O]-21", "m[H2O]", "-21"]
-        // "m[H2O]+21 gives ["m{H2O]+21", "m[H2O]", "+21"]
-        // "m[H2O]21 gives ["m{H2O]-21", "m[H2O]", "21"]
+        // "m[H2O]-21 gives ["m[H2O]-21", "m[H2O]", "-21"]
+        // "m[H2O]+21 gives ["m[H2O]+21", "m[H2O]", "+21"]
+        // "m[H2O]21 gives ["m[H2O]-21", "m[H2O]", "21"]
         // "s2" gives ["s2", "s, "2"]
         // "kg" gives null
         // "m[H2O]" gives null
@@ -943,7 +951,7 @@ export class UnitString {
             exp = res[2];
             origUnit = this.utabs_.getUnitByCode(uCode);
           } // end if nothing followed the exponent (if there was one)
-        } // end if we got an exponent
+        } // end if we got an exponent*/
 
         // If we still don't have a unit, separate out the prefix, if any,
         // and try without it.
@@ -1318,13 +1326,14 @@ export class UnitString {
 
 
   /**
-   * This tests a string to see if it contains only numbers.  Using isNaN and
-   * Number.isNaN is too frustrating, given the limitations of both - isNaN
-   * and Number.isNaN both return false, i.e., the value is a number, for
-   * booleans, nulls, empty strings and strings that only contain spaces.
+   * This tests a string to see if it contains only numbers/digits (0-9).
+   * Using isNaN and Number.isNaN is too frustrating, given the limitations
+   * of both - isNaN and Number.isNaN both return false, i.e., the value is
+   * a number, for booleans, nulls, empty strings and strings that only
+   * contain spaces.
    *
    * @params theString
-   * @returns true if the string contains only numbers; false otherwise
+   * @returns true if the string contains only digits; false otherwise
    */
   _isNumericString(theString) {
     let isNumStr = false ;
@@ -1334,7 +1343,52 @@ export class UnitString {
     }
     return isNumStr ;
   } // end _isNumericString
-  } // end class UnitString
+
+  /**
+   * This tests a string to see if it starts with characters and ends with
+   * digits.  This is used to test for an exponent on a UCUM code (or what
+   * we think might be a UCUM code).  This is broken out to a separate
+   * function so that the regular expression can be verified to provide the
+   * results we expect, in case someone changes it.  (Per Paul Lynch)
+   * See "Test _isCodeWithExponent methoc" in testUnitString.spec.js
+   *
+   * This particular regex has been tweaked several times.  This one
+   * works with the following test strings:
+   * "m[H2O]-21 gives ["m[H2O]-21", "m[H2O]", "-21"]
+   * "m[H2O]+21 gives ["m[H2O]+21", "m[H2O]", "+21"]
+   * "m[H2O]21 gives ["m[H2O]-21", "m[H2O]", "21"]
+   * "s2" gives ["s2", "s, "2"]
+   * "kg" gives null
+   * "m[H2O]" gives null
+   * "m[H2O]23X" gives null
+   *
+   * @params uCode the code being tested
+   * @returns an array containing: (1) the code without the exponent (or
+   *  trailing number); and (2) the exponent/trailing number.  Returns null
+   *  if there is no trailing number or something follows the trailing
+   *  number, or if the first part is not characters.
+   */
+  _isCodeWithExponent(uCode) {
+
+    let ret = [] ;
+    let res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
+
+    // If we got a return with an exponent, separate the exponent from the
+    // unit and return both (as separate values)
+    if (res && res[2] && res[2] !== "") {
+      let reassemble = res[1] + res[2];
+      if (reassemble === uCode) {
+        ret.push(res[1]);
+        ret.push(res[2]);
+      } // end if nothing followed the exponent (if there was one)
+    } // end if we got an exponent
+    else {
+      ret = null ;
+    }
+    return ret ;
+  } // end _isCodeWithExponent
+  
+} // end class UnitString
 
 
 /**
