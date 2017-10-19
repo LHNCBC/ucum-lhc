@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2017-10-06
+- Enhanced unit string validation to accommodate/correct:
+  - missing multiplication operators, e.g., **2mg** instead of **2.mg**;
+  - unit name specified instead of ucum code, e.g., **day** instead of **d**;
+  - misplaced annotations, e.g., **{creatine}**mol** instead of mol**{creatine}**;
+  - missing square brackets, e.g., **in_i** instead of **[in_i]**; and
+  - braces instead of brackets, e.g., **{degF}** instead of **[degF]**. 
+
 ## [1.1.2] - 2017-08-07
 - Updated unit creation process to include updates to case-insensitve codes 
 and print symbol values when creating a unit from multiple units.

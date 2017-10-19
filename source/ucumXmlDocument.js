@@ -368,7 +368,8 @@ export class UcumXmlDocument {
           // object and magnitude before it's multiplied by the one
           // specified in the input node.
           try {
-            let retObj = uStrParser.parseString(attrs['csUnitString_']);
+            let retObj = uStrParser.parseString(attrs['csUnitString_'],
+                                                'validate', false);
             let ret = retObj[0];
             let retString = retObj[1];
             let retMsg = retObj[2];

@@ -1,6 +1,6 @@
 {
   "name": "ucum",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "dist/ucum-lhc.js",
   "directories": {
@@ -44,6 +44,7 @@
     "istanbul": "^0.3.22",
     "jit-grunt": "^0.10.0",
     "mocha": "https://registry.npmjs.org/mocha/-/mocha-2.5.3.tgz",
+    "nsp": "^2.8.1",
     "serve-index": "^1.8.0",
     "serve-static": "^1.12.2",
     "time-grunt": "^1.4.0"

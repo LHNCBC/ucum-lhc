@@ -131,6 +131,12 @@ module.exports = function(grunt) {
       src: ['./test/*.spec.js']
     },
 
+    // using nsp for security checking
+    nsp: {
+      package: grunt.file.readJSON('./package.json') ,
+      shrinkwrap: grunt.file.readJSON('./npm-shrinkwrap.json')
+    } ,
+
     // watch application files to see if they need to be re-browserified,
     // and bower components to see if they change
     watch: {
@@ -166,6 +172,7 @@ module.exports = function(grunt) {
                                "build:demo",
                                "build:test"]);
   grunt.registerTask("test", ['build',
-                              'mochaTest']);
+                              'mochaTest',
+                              'nsp']);
 
 };

@@ -524,6 +524,12 @@ export class Unit {
       this.cnvPfx_ *= s;
     else
       this.magnitude_ *= s;
+    let mulVal = s.toString();
+    this.name_ = this.mulString(mulVal, this.name_);
+    this.csCode_ = this.mulString(mulVal, this.csCode_);
+    this.ciCode_ = this.mulString(mulVal, this.ciCode_) ;
+    this.printSymbol_ = this.mulString(mulVal, this.printSymbol_);
+
     return this;
 
   } // end multiplyThis

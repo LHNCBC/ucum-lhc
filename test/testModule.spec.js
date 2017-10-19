@@ -38,8 +38,8 @@ describe('Validate_m2/acr', function() {
                    returnObj['status'] ? `${returnObj['status']}` : 'null');
     });
 
-    it("should return a ucumCode = m2/acr", function() {
-      assert.equal(returnObj['ucumCode'], "m2/acr", "ucumCode = " +
+    it("should return a null ucumCode", function() {
+      assert.equal(returnObj['ucumCode'], null, "ucumCode = " +
                    returnObj['ucumCode'] ? `${returnObj['ucumCode']}` : 'null');
     });
 
@@ -138,9 +138,12 @@ describe('Convert fathoms to acrs', function() {
     });
 
     it("should return error message = acr is not a valid unit expresion.", function() {
-      assert.equal("Unable to find unit for acr", returnObj['msg'][0],
-                   "msg = " + returnObj['msg'] ?
-                   `${returnObj['msg'].join()}` : 'null')
+      assert.equal(2, returnObj['msg'].length);
+      assert.equal("Sorry - an error occurred while trying to validate acr.",
+                   returnObj['msg'][0], "msg = " + returnObj['msg']?
+                   `${returnObj['msg'][0]}` : 'null');
+      assert.equal("acr is probably not a valid expression.", returnObj['msg'][1],
+                   "msg = " + returnObj['msg']? `${returnObj['msg'][1]}` : 'null');
     });
 
     it("should return a null fromUnit value", function() {
