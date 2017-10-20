@@ -112,7 +112,7 @@ describe('Test convertUnitTo method', function() {
 }); // end convertUnitTo tests
 
 
-describe('Test checkSynonyms method', function() {
+describe('Test getSynonyms method', function() {
 
   it("should return an error message for no synonym supplied", function() {
 

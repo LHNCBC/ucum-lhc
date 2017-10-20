@@ -10,6 +10,7 @@ var UnitTables = require('./unitTables.js').UnitTables;
 var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
 var Prefix = require('./prefix.js').Prefix;
+var UcumInternalUtils = require('./ucumInternalUtils.js').UcumInternalUtils;
 var fs = require('fs');
 
 /**
@@ -100,9 +101,9 @@ export class UcumLhcUtils {
    *    'name' is the unit's name (Gauss in the above example); and
    *    'guidance' is the unit's guidance/description data
    */
-  validateUnitString(uStr) {
+  validateUnitString(uStr, suggest) {
 
-    let resp = this.getSpecifiedUnit(uStr, 'validate');
+    let resp = this.getSpecifiedUnit(uStr, 'validate', suggest);
     let theUnit = resp[0];
     let retObj = {};
     if (!theUnit) {
@@ -145,7 +146,7 @@ export class UcumLhcUtils {
    *  'toUnit' the unit object for the toUnitCode passed in; returned
    *     in case it's needed for additional data from the object.
    */
-  convertUnitTo(fromUnitCode, fromVal, toUnitCode) {
+  convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest) {
 
     let resultMsg = [];
     let returnObj = {'status' : 'failed',
@@ -159,8 +160,8 @@ export class UcumLhcUtils {
       returnObj.status = 'error';
       returnObj.msg.push('No "from" unit expression specified.');
     }
-    let us = UnitString.getInstance() ;
-    if (!fromVal || (us._isNumericString(fromVal))) {
+    let intUtils = UcumInternalUtils.getInstance() ;
+    if (!fromVal || (intUtils.isNumericString(fromVal))) {
       returnObj.status = 'error';
       returnObj.msg.push('No "from" value specified.');
     }
@@ -176,7 +177,7 @@ export class UcumLhcUtils {
       try {
         let fromUnit = null;
 
-        let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert');
+        let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
         fromUnit = parseResp[0];
         if (!fromUnit) {
           //console.log(parseResp[2]);
@@ -188,7 +189,7 @@ export class UcumLhcUtils {
           resultMsg = parseResp[2];
         }
         let toUnit = null;
-        parseResp = this.getSpecifiedUnit(toUnitCode, 'convert');
+        parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
         toUnit = parseResp[0];
         if (!toUnit) {
           //console.log(parseResp[2]);
@@ -251,29 +252,10 @@ export class UcumLhcUtils {
       retObj['msg'] = 'No term specified for synonym search.'
     }
     else {
-      let utab = UnitTables.getInstance();
-      let resp = {} ;
-      resp = utab.getUnitBySynonym(theSyn);
-
-      // If we didn't get any units, transfer the status and message
-      if (!resp['units']) {
-        retObj['status'] = resp['status'];
-        retObj['msg'] = resp['msg'];
-      }
-      else {
-        retObj['status'] = 'succeeded';
-        let aLen = resp['units'].length ;
-        retObj['units'] = [];
-        for (let a = 0; a < aLen; a++) {
-          let theUnit = resp['units'][a];
-          retObj['units'][a] = {
-            'code': theUnit.csCode_,
-            'name': theUnit.name_,
-            'guidance': theUnit.guidance_
-          }
-        } // end do for all units returned
-      } // else we got a units list
+      let intUtils = UcumInternalUtils.getInstance();
+      retObj = intUtils.getSynonyms(theSyn);
     } // end if a search synonym was supplied
+
     return retObj ;
 
   } // end checkSynonyms
@@ -294,7 +276,7 @@ export class UcumLhcUtils {
    *    occurred; and
    *  a message array containing any error or "not found" messages.
    */
-  getSpecifiedUnit(uName, valConv) {
+  getSpecifiedUnit(uName, valConv, suggest) {
 
 
     let retMsg = [];
@@ -321,7 +303,7 @@ export class UcumLhcUtils {
       else {
         try {
           let uStrParser = UnitString.getInstance();
-          let parseResp = uStrParser.parseString(uName, valConv, false);
+          let parseResp = uStrParser.parseString(uName, valConv, suggest);
           theUnit = parseResp[0];
           retUnitString = parseResp[1];
           retMsg = parseResp[2];
@@ -421,3 +403,6 @@ UcumLhcUtils.getInstance = function(){
 // Perform the first request for the utils object, to get the
 // getInstance method set.
 UcumLhcUtils.getInstance();
+
+
+

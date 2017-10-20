@@ -399,7 +399,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
   }, {
     key: 'reportUnitStringValidity',
-    value: function reportUnitStringValidity(elementID, returnElementID) {
+    value: function reportUnitStringValidity(elementID, returnElementID, suggest) {
 
       this.utils_.useHTMLInMessages(true);
       this.utils_.useBraceMsgForEachString(true);
@@ -413,7 +413,7 @@ var UcumDemo = exports.UcumDemo = function () {
         retMsg.push("Please specify a unit string to be validated.");
       } else {
         try {
-          var parseResp = this.utils_.validateUnitString(uStr);
+          var parseResp = this.utils_.validateUnitString(uStr, suggest);
           if (parseResp['status'] === 'valid') valMsg = parseResp['ucumCode'] + ' is a valid unit expression.';else if (parseResp['status'] === 'invalid') {
             valMsg = uStr + ' is NOT a valid unit expression.';
           } else {
@@ -446,7 +446,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
   }, {
     key: 'convertUnit',
-    value: function convertUnit(fromField, numField, toField) {
+    value: function convertUnit(fromField, numField, toField, suggest) {
 
       this.utils_.useHTMLInMessages(true);
       this.utils_.useBraceMsgForEachString(true);
@@ -488,7 +488,7 @@ var UcumDemo = exports.UcumDemo = function () {
       if (entryErrMsg.length > 0) {
         resultString.innerHTML = entryErrMsg.join('<BR>');
       } else {
-        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName);
+        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, suggest);
         if (resultObj['status'] === 'succeeded') {
           var toVal = resultObj['toVal'];
           // convert the value to a fixed value with the specified number of

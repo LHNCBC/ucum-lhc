@@ -304,7 +304,7 @@ export class UcumDemo {
    *  return validation message
    * @returns nothing directly; return is the validation message
    */
-  reportUnitStringValidity(elementID, returnElementID) {
+  reportUnitStringValidity(elementID, returnElementID, suggest) {
 
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
@@ -319,7 +319,7 @@ export class UcumDemo {
     }
     else {
       try {
-        let parseResp = this.utils_.validateUnitString(uStr);
+        let parseResp = this.utils_.validateUnitString(uStr, suggest);
         if (parseResp['status'] === 'valid')
           valMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
         else if (parseResp['status'] === 'invalid') {
@@ -356,7 +356,7 @@ export class UcumDemo {
    * @param toField the ID of the field containing the name of the unit that
    *  the from field is to be converted to
    */
-  convertUnit(fromField, numField, toField) {
+  convertUnit(fromField, numField, toField, suggest) {
 
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
@@ -403,7 +403,8 @@ export class UcumDemo {
       resultString.innerHTML = entryErrMsg.join('<BR>');
     }
     else {
-      let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName);
+      let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
+                                                suggest);
       if (resultObj['status'] === 'succeeded') {
         let toVal = resultObj['toVal'];
         // convert the value to a fixed value with the specified number of
