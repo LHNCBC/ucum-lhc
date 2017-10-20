@@ -413,15 +413,18 @@ var UcumDemo = exports.UcumDemo = function () {
         retMsg.push("Please specify a unit string to be validated.");
       } else {
         try {
-          var parseResp = this.utils_.getSpecifiedUnit(uStr);
-          if (parseResp[0]) valMsg = parseResp[1] + ' is a valid unit expression.';else {
-            if (parseResp[2].length === 0) {
-              valMsg = parseResp[1] + ' is NOT a valid unit expression.';
-            }
+          var parseResp = this.utils_.validateUnitString(uStr);
+          if (parseResp['status'] === 'valid') valMsg = parseResp['ucumCode'] + ' is a valid unit expression.';else if (parseResp['status'] === 'invalid') {
+            valMsg = uStr + ' is NOT a valid unit expression.';
+          } else {
+            // assume status is 'error'
+            console.log(retMsg.concat(parseResp['msg']));
+            retMsg = ['Sorry - an error occurred while trying to validate ' + uStr < br > uStr + ' is probably not a valid expression.'];
           }
-          if (parseResp[2].length > 0) retMsg = retMsg.concat(parseResp[2]);
+          if (parseResp['status'] !== 'error' && parseResp['msg'].length > 0) retMsg = retMsg.concat(parseResp['msg']);
         } catch (err) {
-          retMsg.push(err.message);
+          console.log(err.message);
+          retMsg = ['Sorry - an error occurred while trying to validate ' + uStr + '<br>' + uStr + ' is probably not a valid expression.'];
         }
       }
       var finalMsg = retMsg.join('<br>');
@@ -500,6 +503,13 @@ var UcumDemo = exports.UcumDemo = function () {
           // unit objects returned.  Although the user will PROBABLY enter a
           // valid unit code from the web page, they don't have to.
           resultString.innerHTML = fromVal.toString() + ' ' + (resultObj['fromUnit'].getProperty('csCode_') + ' = ') + (toVal.toString() + ' ') + ('' + resultObj['toUnit'].getProperty('csCode_'));
+          if (resultObj['msg'].length > 0) {
+            for (var r = 0; r < resultObj['msg'].length; r++) {
+              resultString.innerHTML += '<br>' + resultObj['msg'][r];
+            }
+          }
+        } else if (resultObj['status'] === 'error') {
+          resultString.innerHTML = 'Sorry - an error occurred while trying to ' + ('validate ' + uStr + '.<br>' + uStr + ' is probably not a valid expression.');
         } else {
           resultString.innerHTML = resultObj['msg'].join('<BR>');
         } // end if conversion did/didn't succeed

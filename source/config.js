@@ -36,20 +36,32 @@ export var Ucum = {
   codeSep_ : ': ',
 
   /**
+   * Default opening string used to emphasize portions of error messages.
+   * Used when NOT displaying messages on a web site, i.e., for output
+   * from the library methods or to a file.
+   */
+  openEmph_ : ' ->',
+
+  /**
+   * Default closing string used to emphasize portions of error messages.
+   * Used when NOT displaying messages on a web site, i.e., for output
+   * from the library methods or to a file.
+   */
+  closeEmph_ : '<- ' ,
+
+  /**
    * Opening HTML used to emphasize portions of error messages.  Used when
    * displaying messages on a web site; should be blank when output is
-   * to a file.  See UnitString.parseString where they start out blank in
-   * the constructor.
+   * to a file.
    */
-  openEmph_ : '<span class="emphSpan">',
+  openEmphHTML_ : '<span class="emphSpan">',
 
   /**
    * Closing HTML used to emphasize portions of error messages.  Used when
    * displaying messages on a web site; should be blank when output is
-   * to a file.  See UnitString.parseString where they start out blank in
-   * the constructor.
+   * to a file.
    */
-  closeEmph_ : '</span>' ,
+  closeEmphHTML_ : '</span>' ,
 
   /**
    * Message that is displayed when annotations are included in a unit
@@ -76,6 +88,9 @@ export var Ucum = {
    * Name of the column in the csv file that serves as the key
    */
   inputKey_ : 'case-sensitive code'
+
+
+  /// ^[0-9]*$
 } ;
 
 

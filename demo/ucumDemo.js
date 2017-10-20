@@ -320,19 +320,24 @@ export class UcumDemo {
     }
     else {
       try {
-        let parseResp = this.utils_.getSpecifiedUnit(uStr);
-        if (parseResp[0])
-          valMsg = `${parseResp[1]} is a valid unit expression.`;
-        else {
-          if (parseResp[2].length === 0) {
-            valMsg = `${parseResp[1]} is NOT a valid unit expression.`;
-          }
+        let parseResp = this.utils_.validateUnitString(uStr);
+        if (parseResp['status'] === 'valid')
+          valMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
+        else if (parseResp['status'] === 'invalid') {
+          valMsg = `${uStr} is NOT a valid unit expression.`;
         }
-        if (parseResp[2].length > 0)
-          retMsg = retMsg.concat(parseResp[2]);
+        else { // assume status is 'error'
+          console.log(retMsg.concat(parseResp['msg']));
+          retMsg = ['Sorry - an error occurred while trying to validate ' +
+                    uStr<br>uStr + ' is probably not a valid expression.'];
+        }
+        if (parseResp['status'] !== 'error' && parseResp['msg'].length > 0)
+          retMsg = retMsg.concat(parseResp['msg']);
       }
       catch (err) {
-        retMsg.push(err.message);
+        console.log(err.message);
+        retMsg = ['Sorry - an error occurred while trying to validate ' +
+            uStr + '<br>' + uStr + ' is probably not a valid expression.'];
       }
     }
     let finalMsg = retMsg.join('<br>');
@@ -417,9 +422,17 @@ export class UcumDemo {
             `${resultObj['fromUnit'].getProperty('csCode_')} = ` +
             `${toVal.toString()} ` +
             `${resultObj['toUnit'].getProperty('csCode_')}`;
+        if (resultObj['msg'].length > 0) {
+          for (let r = 0; r < resultObj['msg'].length; r++)
+          resultString.innerHTML += '<br>' + resultObj['msg'][r] ;
+        }
+      }
+      else if (resultObj['status'] === 'error') {
+        resultString.innerHTML = 'Sorry - an error occurred while trying to ' +
+          `validate ${uStr}.<br>${uStr} is probably not a valid expression.`;
       }
       else {
-        resultString.innerHTML = resultObj['msg'].join('<BR>');
+          resultString.innerHTML = resultObj['msg'].join('<BR>');
       } // end if conversion did/didn't succeed
     } // end if there were/weren't entry errors
   } // end convertUnit

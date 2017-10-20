@@ -19,7 +19,7 @@ describe('Test parseString method', function() {
 
   describe('Test valid single unit string (cal)', function() {
     var calUnit = uTabs.getUnitByCode('cal');
-    var resp = uString.parseString('cal');
+    var resp = uString.parseString('cal', 'validate');
     var retUnit = resp[0];
     var origString = resp[1];
     var respMsg = resp[2];
@@ -43,7 +43,7 @@ describe('Test parseString method', function() {
     var gUnit = uTabs.getUnitByCode('g');
     var retMsg = [];
     var origString = '/g';
-    var resp = uString.parseString('/g');
+    var resp = uString.parseString('/g', 'convert');
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
@@ -60,6 +60,217 @@ describe('Test parseString method', function() {
       assert.deepEqual([], respMsg, `respMsg = ${JSON.stringify(respMsg)}`);
     });
   });
+
+  describe('Test for unit string 2mg', function() {
+    "use strict";
+    var mgUnit = uTabs.getUnitByCode('mg');
+    var retMsg = [];
+    var origString = '2mg';
+    var resp = uString.parseString('2mg', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the milligram unit multiplied by 2", function() {
+      // multiply the mgUnit by 2
+      mgUnit.multiplyThis(2);
+      assert(mgUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\ngUnit = ${JSON.stringify(mgUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('2.mg', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should a return about the missing multiplier", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('2mg is not a valid UCUM code.  Did you mean 2.mg?',
+                   respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('Test for unit string 3mg/[den]', function() {
+    "use strict";
+    var mgUnit = uTabs.getUnitByCode('mg').clone();
+    var denUnit = uTabs.getUnitByCode('[den]').clone();
+    var retMsg = [];
+    var origString = '3mg/[den]';
+    var resp = uString.parseString('3mg/[den]', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for the expression", function() {
+      // multiply the mgUnit by 3
+      mgUnit = mgUnit.multiplyThis(3);
+      // divide it by [den]
+      mgUnit.divide(denUnit);
+      assert(mgUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
+      it("should return the origString with a substitution", function() {
+        assert.equal('3.mg/[den]', retOrig, `retOrig = ${retOrig}`);
+      });
+      it("should return a message about the missing multiplier", function() {
+        assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+        assert.equal('3mg is not a valid UCUM code.  Did you mean 3.mg?',
+          respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+      });
+    });
+  }) ;
+
+  describe('Test for unit string mg/3[den]', function() {
+    "use strict";
+    var mgUnit = uTabs.getUnitByCode('mg').clone();
+    var denUnit = uTabs.getUnitByCode('[den]').clone();
+    var retMsg = [];
+    var origString = 'mg/3[den]';
+    var resp = uString.parseString('mg/3[den]', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for the expression", function() {
+      // multiply the denUnit by 3
+      denUnit = denUnit.multiplyThis(3);
+      // divide the milligram unit it by [den]
+      mgUnit.divide(denUnit);
+      assert(mgUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
+      it("should return the origString with a substitution", function() {
+        assert.equal('mg/3.[den]', retOrig, `retOrig = ${retOrig}`);
+      });
+      it("should return a message about the missing multiplier", function() {
+        assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+        assert.equal('3[den] is not a valid UCUM code.  Did you mean 3.[den]?',
+          respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+      });
+    });
+  }) ;
+
+  describe('test for unit string 3mg/3[den]', function() {
+    "use strict";
+    var mgUnit = uTabs.getUnitByCode('mg').clone();
+    var denUnit = uTabs.getUnitByCode('[den]').clone();
+    var retMsg = [];
+    var origString = '3mg/3[den]';
+    var resp = uString.parseString('3mg/3[den]', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for the expression", function() {
+      // multiply the denUnit by 3
+      denUnit = denUnit.multiplyThis(3);
+      // multiply the milligram unit by 3
+      mgUnit = mgUnit.multiplyThis(3);
+      // divide the milligram unit it by [den]
+      mgUnit = mgUnit.divide(denUnit);
+      assert(mgUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
+      it("should return the origString with a substitution", function() {
+        assert.equal('3.mg/3.[den]', retOrig, `retOrig = ${retOrig}`);
+      });
+      it("should return a message about each missing multiplier", function() {
+        assert.equal(2, respMsg.length, `respMsg.length = ${respMsg.length}`);
+        assert.equal('3mg is not a valid UCUM code.  Did you mean 3.mg?',
+          respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+        assert.equal('3[den] is not a valid UCUM code.  Did you mean 3.[den]?',
+          respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+      });
+    });
+  }) ;
+
+  describe('test for unit string day', function() {
+    "use strict";
+    var dUnit = uTabs.getUnitByCode('d');
+    var retMsg = [];
+    var origString = 'day';
+    var resp = uString.parseString('day', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the day unit", function() {
+      assert(dUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\ndUnit = ${JSON.stringify(dUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('d', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the correct code", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('The UCUM code for day is d.\nDid you mean d?',
+        respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('test for unit string {degF}', function() {
+    "use strict";
+    var degUnit = uTabs.getUnitByCode('[degF]');
+    var retMsg = [];
+    var origString = '{degF}';
+    var resp = uString.parseString('{degF}', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the [degF] unit", function() {
+      assert(degUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\ndegUnit = ${JSON.stringify(degUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('[degF]', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the correct code", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('{degF} is not a valid unit expression, but [degF] is.\n' +
+        'Did you mean [degF]?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('test for unit string in_i', function() {
+    "use strict";
+    var inUnit = uTabs.getUnitByCode('[in_i]');
+    var retMsg = [];
+    var origString = 'in_i';
+    var resp = uString.parseString('in_i', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the [in_i] unit", function() {
+      assert(inUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\ninUnit = ${JSON.stringify(inUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('[in_i]', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the correct code", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('in_i is not a valid unit expression, but [in_i] is.\n' +
+        'Did you mean [in_i]?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('test for unit string {creatine}mol', function() {
+    "use strict";
+    var molUnit = uTabs.getUnitByCode('mol');
+    var retMsg = [];
+    var origString = '{creatine}mol';
+    var resp = uString.parseString('{creatine}mol', 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit matching the mol{creatine} unit", function() {
+      assert(molUnit.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nmolUnit = ${JSON.stringify(molUnit)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('mol{creatine}', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the correct annotation placement", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('The annotation {creatine} before the unit code is invalid.' +
+        '\nDid you mean mol{creatine}?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+/*  NOT Handled yet.  Leaving this in for the next branch
+      describe('test for unit string {creatine}mol{blahblah}', function() {
+        "use strict";
+
+      }) ;
+      */
 }); // end test ParseString method
 
 
@@ -85,6 +296,96 @@ describe('Test makeUnit method', function() {
     it("should return a match to the current mL unit]", function () {
       assert(mlUnit.equals(retUnit),
              `mlUnit = ${JSON.stringify(mlUnit)}\nretUnit = ${JSON.stringify(retUnit)}`);
+    });
+  });
+
+  describe('Test makeUnit for unit code m[H2O]-21', function () {
+    var annotations = [];
+    var retMsg = [];
+    var origString = 'm[H2O]-21';
+    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    it("should return a unit with a csCode_ of m[H2O]-21", function () {
+      assert.equal('m[H2O]-21', retUnit['csCode_']);
+    });
+    it("should a unit with a ciCode_ of M[H2O]-21", function () {
+      assert.equal('M[H2O]-21', retUnit['ciCode_']);
+    });
+    it("should a unit with a name_ of meter of water column<sup>-21</sup>", function () {
+      assert.equal('meter of water column<sup>-21</sup>', retUnit['name_']);
+    });
+    it("should return a unit with a class_ of clinical", function () {
+      assert.equal('clinical', retUnit['class_']);
+    });
+    it("should return a unit with isBase_ false", function () {
+      assert.equal(false, retUnit['isBase_']);
+    });
+    it("should return a unit with a magnitude_ = 1.5068353943453534e-147", function () {
+      assert.equal(1.5068353943453534e-147, retUnit['magnitude_']);
+    });
+    it("should return a unit with a dimension vector = [21,42,-21,-0,-0,-0]", function () {
+      assert.equal('21,42,-21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
+    });
+  });
+
+  describe('Test makeUnit for unit code m[H2O]+21', function () {
+    var annotations = [];
+    var retMsg = [];
+    var origString = 'm[H2O]+21';
+    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    it("should return a unit with a csCode_ of m[H2O]21", function () {
+      assert.equal('m[H2O]21', retUnit['csCode_']);
+    });
+    it("should a unit with a ciCode_ of M[H2O]21", function () {
+      assert.equal('M[H2O]21', retUnit['ciCode_']);
+    });
+    it("should a unit with a name_ of meter of water column<sup>21</sup>", function () {
+      assert.equal('meter of water column<sup>21</sup>', retUnit['name_']);
+    });
+    it("should return a unit with a class_ of clinical", function () {
+      assert.equal('clinical', retUnit['class_']);
+    });
+    it("should return a unit with isBase_ false", function () {
+      assert.equal(false, retUnit['isBase_']);
+    });
+    it("should return a unit with a magnitude_ = 6.6364249456354935e+146", function () {
+      assert.equal(6.6364249456354935e+146, retUnit['magnitude_']);
+    });
+    it("should return a unit with a dimension vector = [-21,42,-21,-0,-0,-0]", function () {
+      assert.equal('-21,-42,21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
+    });
+  });
+
+  describe('Test makeUnit for unit code m[H2O]21', function () {
+    var annotations = [];
+    var retMsg = [];
+    var origString = 'm[H2O]21';
+    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    it("should return a unit with a csCode_ of m[H2O]21", function () {
+      assert.equal('m[H2O]21', retUnit['csCode_']);
+    });
+    it("should a unit with a ciCode_ of M[H2O]21", function () {
+      assert.equal('M[H2O]21', retUnit['ciCode_']);
+    });
+    it("should a unit with a name_ of meter of water column<sup>21</sup>", function () {
+      assert.equal('meter of water column<sup>21</sup>', retUnit['name_']);
+    });
+    it("should return a unit with a class_ of clinical", function () {
+      assert.equal('clinical', retUnit['class_']);
+    });
+    it("should return a unit with isBase_ false", function () {
+      assert.equal(false, retUnit['isBase_']);
+    });
+    it("should return a unit with a magnitude_ = 6.6364249456354935e+146", function () {
+      assert.equal(6.6364249456354935e+146, retUnit['magnitude_']);
+    });
+    it("should return a unit with a dimension vector = [-21,42,-21,-0,-0,-0]", function () {
+      assert.equal('-21,-42,21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
     });
   });
 
@@ -122,7 +423,8 @@ describe('Test the processParens method', function() {
     var annotations = [];
     var retMsg = [];
     var origString = 'm.g(L';
-    var errMsg = 'Missing close parenthesis for open parenthesis at m.g(L.';
+    var errMsg = 'Missing close parenthesis for open parenthesis at m.g' +
+        uString.openEmph_ + '(' + uString.closeEmph_ + 'L';
     var resp = uString._processParens('m.g(L', origString, parensUnits,
                                       annotations, retMsg);
     var retString = resp[0];
@@ -151,7 +453,8 @@ describe('Test the processParens method', function() {
     var annotations = [];
     var retMsg = [];
     var origString = 'm.g)';
-    var errMsg = 'Missing open parenthesis for close parenthesis at m.g).';
+    var errMsg = 'Missing open parenthesis for close parenthesis at m.g' +
+        uString.openEmph_ + ')' + uString.closeEmph_ ;
     var resp = uString._processParens('m.g)', origString, parensUnits,
                                       annotations, retMsg);
     var retString = resp[0];
@@ -180,7 +483,8 @@ describe('Test the processParens method', function() {
     var annotations = [];
     var retMsg = [];
     var origString = 'm.g(L.(s/m)';
-    var errMsg = 'Missing close parenthesis for open parenthesis at m.g(L.(s/m).';
+    var errMsg = 'Missing close parenthesis for open parenthesis at m.g' +
+        uString.openEmph_ + '(' + uString.closeEmph_ + 'L.(s/m)';
     var resp = uString._processParens('m.g(L.(s/m)', origString, parensUnits,
                                       annotations, retMsg);
     var retString = resp[0];
@@ -210,15 +514,15 @@ describe('Test the processParens method', function() {
     var parseResp = uString.parseString('L.(s/m)');
     var retParenUnit = parseResp[0];
     var retMsg = [];
-    var origString = 'm.g(L.(s/m))';
-    var errMsg = 'Missing close parenthesis for open parenthesis at m.g(L.(s/m).';
+    var origString = 'm.g(L.(s/m))';;
     var resp = uString._processParens('m.g(L.(s/m))', origString, parensUnits,
                                       annotations, retMsg);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
     it("should return the unit string with placeholders", function () {
-      assert.equal('m.gparens_placeholder0parens_placeholder', retString, `retString = ${retString}`);
+      assert.equal('m.g' + uString.parensFlag_ + '0' +
+                   uString.parensFlag_, retString, `retString = ${retString}`);
     });
     it("should return no error messages", function () {
       assert.equal(0, retMsg.length, `retMsg = ${JSON.stringify(retMsg)}`);
@@ -238,6 +542,98 @@ describe('Test the processParens method', function() {
 
 }); // end test processParens method
 
+describe('Test getAnnotations method', function() {
+
+  it("should return an updated unit string and annotations array for " +
+      " L{annotation string}", function() {
+    var annotations = [] ;
+    var retMsg = [] ;
+    var retString = uString._getAnnotations('L{annotation string}', annotations, retMsg);
+    assert.equal(retString, 'L' + uString.braceFlag_ + '0' +
+                            uString.braceFlag_);
+    assert.deepEqual(annotations, ['{annotation string}']);
+    assert.deepEqual(retMsg, []);
+  });
+
+  it("should return an updated unit string and annotations array for " +
+      " L{ann1}.mg{ann2}", function() {
+    var annotations = [] ;
+    var retMsg = [] ;
+    var retString = uString._getAnnotations('L{ann1}.mg{ann2}', annotations, retMsg);
+    assert.equal(retString, 'L' + uString.braceFlag_ + '0' +
+                            uString.braceFlag_ + '.mg' + uString.braceFlag_ +
+                            '1' + uString.braceFlag_);
+    assert.deepEqual(annotations, ['{ann1}', '{ann2}']);
+    assert.deepEqual(retMsg, []);
+  });
 
 
+  it("should return a missing brace message for 'L{annotation", function() {
+    var annotations = [] ;
+    var retMsg = [] ;
+    var retString = uString._getAnnotations('L{annotation', annotations, retMsg);
+    assert.equal(retString, 'L{annotation');
+    assert.deepEqual(annotations, []);
+    assert.equal(retMsg[0], 'Missing closing brace for annotation ' +
+        'starting at ' + uString.openEmph_ +
+        '{annotation' + uString.closeEmph_);
+  });
+
+  it("should return a missing brace message for 'Lannotation}", function() {
+    var annotations = [] ;
+    var retMsg = [] ;
+    var retString = uString._getAnnotations('Lannotation}', annotations, retMsg);
+    assert.equal(retString, 'Lannotation}');
+    assert.deepEqual(annotations, []);
+    assert.equal(retMsg[0], 'Missing opening brace for closing brace ' +
+        'found at ' + uString.openEmph_ +
+        'Lannotation}' + uString.closeEmph_);
+  });
+
+}); // end test getAnnotations method
+
+
+describe('Test _isCodeWithExponent method', function() {
+
+  it("should return ['m[H2O]', '-21'] for 'm[H2O]-21'", function() {
+    var retArray = uString._isCodeWithExponent('m[H2O]-21');
+    assert.equal(retArray[0], 'm[H2O]');
+    assert.equal(retArray[1], '-21');
+  });
+
+  it("should return ['m[H2O]', '+21'] for 'm[H2O]+21'", function() {
+    var retArray = uString._isCodeWithExponent('m[H2O]+21');
+    assert.equal(retArray[0], 'm[H2O]');
+    assert.equal(retArray[1], '+21');
+  });
+
+  it("should return ['m[H2O]', '21'] for 'm[H2O]21'", function() {
+    var retArray = uString._isCodeWithExponent('m[H2O]21');
+    assert.equal(retArray[0], 'm[H2O]');
+    assert.equal(retArray[1], '21');
+  });
+
+  it("should return ['s', '2'] for 's2'", function() {
+    var retArray = uString._isCodeWithExponent('s2');
+    assert.equal(retArray[0], 's');
+    assert.equal(retArray[1], '2');
+  });
+
+  it("should  return null for 'kg'", function() {
+    var retArray = uString._isCodeWithExponent('kg');
+    assert.equal(retArray, null);
+  });
+
+  it("should  return null for 'm[H2O]'", function() {
+    var retArray = uString._isCodeWithExponent('m{H2O]');
+    assert.equal(retArray, null);
+  });
+
+  it("should  return null for 'm{H2O]23X'", function() {
+    var retArray = uString._isCodeWithExponent('m[H2O]23X');
+    assert.equal(retArray, null);
+  });
+
+
+}); // end test _isCodeWithExponent method
 
