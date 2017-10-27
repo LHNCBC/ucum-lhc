@@ -52839,7 +52839,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Internal utilities used by multiple UCUM classes.  For example,
  * isNumericString is used by both the UnitString and UcumLhcUtils
  * classes.  If it's in the UnitString class the UcumLhcUtils class
- * needs to require the UnitString class.  But the CheckSynonyms
+ * needs to require the UnitString class.  But the checkSynonyms
  * class is used by the UnitString class - but was in the UcumLhcUtils
  * class.  Requiring the UcumLhcUtils class from the UnitString class
  * made everything break (cyclical requires).
@@ -53219,16 +53219,17 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       var retObj = {};
       if (!theUnit) {
         retObj = { 'status': resp[1] !== null ? 'invalid' : 'error',
-          'ucumCode': null,
-          'msg': resp[2] };
+          'ucumCode': null };
+      } else if (resp[1] !== uStr) {
+        retObj = { 'status': 'invalid' };
       } else {
         retObj = { 'status': 'valid',
           'ucumCode': resp[1],
-          'msg': resp[2],
           'unit': { 'code': theUnit.csCode_,
             'name': theUnit.name_,
             'guidance': theUnit.guidance_ } };
       }
+      retObj['msg'] = resp[2];
       return retObj;
     } // end validateUnitString
 
@@ -53293,7 +53294,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
           fromUnit = parseResp[0];
           if (!fromUnit) {
             //console.log(parseResp[2]);
-            resultMsg = ['Sorry - an error occurred while trying to ' + ('validate ' + fromUnitCode + '.'), fromUnitCode + ' is probably not ' + 'a valid expression.'];
+            resultMsg = parseResp[2];
+            resultMsg.push('Unable to find a unit for ' + fromUnitCode + ' ' + 'so no conversion could be performed.');
           } else if (parseResp[2].length > 0) {
             resultMsg = parseResp[2];
           }
@@ -54334,10 +54336,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['suggestions were found.'], ['suggestions were found.']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
@@ -54488,6 +54486,8 @@ var UnitString = exports.UnitString = function () {
 
       if (suggest !== undefined && suggest === 'suggest') {
         this.suggest_ = true;
+      } else {
+        this.suggest_ = false;
       }
 
       var origString = uStr;
@@ -54641,7 +54641,7 @@ var UnitString = exports.UnitString = function () {
       // If we're still good, continue
       if (!endProcessing) {
         // Process the units (and numbers) to create one final unit object
-        if (uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined || uArray[0]['un'] == null) {
+        if ((uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined || uArray[0]['un'] == null) && retMsg.length === 0) {
           // not sure what this might be, but this is a safeguard
           retMsg.push('Unit string (' + origString + ') did not contain anything that ' + 'could be used to create a unit, or else something that is not ' + 'handled yet by this package.  Sorry');
           endProcessing = true;
@@ -55038,7 +55038,7 @@ var UnitString = exports.UnitString = function () {
             }
             // otherwise try for suggestions
             else {
-                var suggestStat = this._getSuggestions(befText);
+                var suggestStat = this._getSuggestions(befText, retMsg);
                 stopFlag = suggestStat !== 'succeeded';
               } // end if a brace was found or, if not, suggestions were not or
           // were requested
@@ -55079,7 +55079,7 @@ var UnitString = exports.UnitString = function () {
               }
               // otherwise try for suggestions
               else {
-                  var _suggestStat = this._getSuggestions(befText);
+                  var _suggestStat = this._getSuggestions(befText, retMsg);
                   stopFlag = _suggestStat !== 'succeeded';
                 } // end if text following the parentheses not an exponent
           } // end if text following the parentheses is not an annotation
@@ -55119,7 +55119,7 @@ var UnitString = exports.UnitString = function () {
       }
 
       // Get the location of the end flag and, if text follows it, get the text
-      var aeIdx = pStr.lastIndexOf(this.braceFlag_);
+      var aeIdx = pStr.substr(asIdx + 1).indexOf(this.braceFlag_) + asIdx + 1;
       var endText = aeIdx + this.bFlagLen_ < pStr.length ? pStr.substr(aeIdx + this.bFlagLen_) : null;
 
       // Get the index of the annotation in the annotations array.  Check it
@@ -55157,17 +55157,21 @@ var UnitString = exports.UnitString = function () {
     key: '_getSuggestions',
     value: function _getSuggestions(pStr, retMsg) {
 
-      var retObj = this.utils_.checkSynonyms(pStr);
+      var retObj = this.utils_.getSynonyms(pStr);
       if (retObj['status'] === 'succeeded') {
         retMsg.push(pStr + ' is not a valid UCUM code.  We found possible ' + 'units that might be what was meant:');
         var synLen = retObj['units'].length;
         for (var s = 0; s < synLen; s++) {
           var unit = retObj['units'][s];
-          retMsg.push(unit['code'] + ' - ' + unit['name'] + ' - ' + unit['guidance']);
+          var msgString = '&nbsp;&nbsp;' + this.openEmph_ + unit['code'] + (this.closeEmph_ + ' - ' + unit['name']);
+          if (unit['guidance']) {
+            msgString += ' - ' + unit['guidance'];
+          }
+          retMsg.push(msgString);
         }
       } else {
-        retMsg.push(retObj['msg']);
-        retMsg.push((pStr + ' is not a valid UCUM code.  No alternative ')(_templateObject));
+        //retMsg.push(retObj['msg']);
+        retMsg.push(pStr + ' is not a valid UCUM code.  No alternatives ' + 'were found.');
       }
       return retObj['status'];
     } // end getSuggestions
@@ -55312,13 +55316,19 @@ var UnitString = exports.UnitString = function () {
                 } // end if we found a prefix
               } // end if we didn't get a unit after removing an exponent
 
-              // One more thing.  If we didn't find a unit, signal an error.
-              // (We tried with the full unit string, with the unit string without
-              // the exponent, and the unit string without a prefix.  That's all
-              // we can try).
+              // If we still haven't found anything, we're done looking.
+              // (We tried with the full unit string, with the unit string
+              // without the exponent, the unit string without a prefix,
+              // common errors, etc. That's all we can try).
               if (!origUnit) {
-                retMsg.push('Unable to find unit for ' + origCode);
                 retUnit = null;
+                // BUT if the user asked for suggestions, at least look
+                // for them
+                if (this.suggest_) {
+                  var suggestStat = this._getSuggestions(origCode, retMsg);
+                } else {
+                  retMsg.push(origCode + ' is not a valid UCUM code.');
+                }
               } else {
                 // Otherwise we found a unit object.  Clone it and then apply the
                 // prefix and exponent, if any, to it.
@@ -55484,6 +55494,7 @@ var UnitString = exports.UnitString = function () {
           // from the after text and assume the user put the annotation in
           // the wrong place (and tell them)
           else if (!befAnnoText && aftAnnoText) {
+
               // Again, test for a number and if it is a number, set the return
               // unit to the number.
               if (this.utils_.isNumericString(aftAnnoText)) {
@@ -56214,6 +56225,7 @@ var UnitTables = exports.UnitTables = function () {
         var foundCodes = [];
         foundCodes = this.unitSynonyms_[uSyn];
         if (foundCodes) {
+          retObj['status'] = 'succeeded';
           var fLen = foundCodes.length;
           for (var f = 0; f < fLen; f++) {
             unitsArray.push(this.unitCodes_[foundCodes[f]]);

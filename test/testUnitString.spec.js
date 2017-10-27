@@ -18,6 +18,7 @@ var uString = UnitString.getInstance();
 describe('Test parseString method', function() {
 
   describe('Test valid single unit string (cal)', function() {
+    var thisParser = UnitString.getInstance();
     var calUnit = uTabs.getUnitByCode('cal');
     var resp = uString.parseString('cal', 'validate');
     var retUnit = resp[0];
@@ -265,6 +266,109 @@ describe('Test parseString method', function() {
         '\nDid you mean mol{creatine}?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
     });
   }) ;
+
+  describe('test for unit string culture/2mg with suggestions', function() {
+    "use strict";
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var origString = 'culture/2mg';
+    var resp = uString.parseString('culture/2mg', 'validate',
+                                   'suggest');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return the origString updated", function() {
+      assert.equal(retOrig, "culture/2.mg");
+    });
+    it("should return 4 messages", function() {
+      assert.equal(respMsg.length, 4);
+      assert.equal(respMsg[0],
+                '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
+      assert.equal(respMsg[1], "culture is not a valid UCUM code.  " +
+          "We found possible units that might be what was meant:");
+      assert.equal(respMsg[2], '&nbsp;&nbsp; ->[CCID_50]<- ' +
+        " - 50% cell culture infectious dose");
+      assert.equal(respMsg[3], '&nbsp;&nbsp; ->[TCID_50]<- ' +
+        " - 50% tissue culture infectious dose");
+    });
+  }) ;
+
+  describe('test for unit string culture/2mg without suggestions', function() {
+    "use strict";
+    var noSugg = UnitString.getInstance();
+    var retMsg = [];
+    var origString = 'culture/2mg';
+    var resp = noSugg.parseString('culture/2mg', 'validate', 'nosuggest');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return the origString updated", function() {
+      assert.equal(retOrig, "culture/2.mg");
+    });
+    it("should return 2 messages", function() {
+      assert.equal(respMsg.length, 2);
+      assert.equal(respMsg[0],
+        '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
+      assert.equal(respMsg[1], "culture is not a valid UCUM code.");
+    });
+  }) ;
+
+  describe('test for unit string 2mg/culture with suggestions', function() {
+    "use strict";
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var resp = uString.parseString('2mg/culture', 'validate',
+      'suggest');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return the origString updated", function() {
+      assert.equal(retOrig, "2.mg/culture");
+    });
+    it("should return 4 messages", function() {
+      assert.equal(respMsg.length, 4);
+      assert.equal(respMsg[0],
+        '2mg is not a valid UCUM code.  Did you mean 2.mg?');
+      assert.equal(respMsg[1], "culture is not a valid UCUM code.  " +
+        "We found possible units that might be what was meant:");
+      assert.equal(respMsg[2], '&nbsp;&nbsp; ->[CCID_50]<- ' +
+        " - 50% cell culture infectious dose");
+      assert.equal(respMsg[3], '&nbsp;&nbsp; ->[TCID_50]<- ' +
+        " - 50% tissue culture infectious dose");
+    });
+  }) ;
+
+  describe('test for unit string 2mg/culture without suggestions', function() {
+    "use strict";
+    var noSugg = UnitString.getInstance();
+    var retMsg = [];
+    var resp = noSugg.parseString('2mg/culture', 'validate', 'nosuggest');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return the origString updated", function() {
+      assert.equal(retOrig, "2.mg/culture");
+    });
+    it("should return 2 messages", function() {
+      assert.equal(respMsg.length, 2);
+      assert.equal(respMsg[0],
+        '2mg is not a valid UCUM code.  Did you mean 2.mg?');
+      assert.equal(respMsg[1], "culture is not a valid UCUM code.");
+    });
+  }) ;
+
 /*  NOT Handled yet.  Leaving this in for the next branch
       describe('test for unit string {creatine}mol{blahblah}', function() {
         "use strict";

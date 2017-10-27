@@ -503,6 +503,7 @@ export class UnitTables {
       let foundCodes = [];
       foundCodes = this.unitSynonyms_[uSyn];
       if (foundCodes) {
+        retObj['status'] = 'succeeded';
         let fLen = foundCodes.length;
         for (let f = 0; f < fLen; f++)
           unitsArray.push(this.unitCodes_[foundCodes[f]]);

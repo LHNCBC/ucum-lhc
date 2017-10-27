@@ -45,7 +45,7 @@ describe('Validate_m2/acr', function() {
 
     it("should return error message = m2/acr is not a valid unit expression.", function() {
       assert.equal(returnObj['msg'][0],
-                   "Unable to find unit for acr", "msg = " +
+                   "acr is not a valid UCUM code.", "msg = " +
                    returnObj['msg'] ? `${returnObj['msg'].join()}` : 'null');
     });
   });

@@ -415,7 +415,7 @@ var UcumDemo = exports.UcumDemo = function () {
         try {
           var parseResp = this.utils_.validateUnitString(uStr, suggest);
           if (parseResp['status'] === 'valid') valMsg = parseResp['ucumCode'] + ' is a valid unit expression.';else if (parseResp['status'] === 'invalid') {
-            valMsg = uStr + ' is NOT a valid unit expression.';
+            //valMsg = `${uStr} is NOT a valid unit expression.`;
           } else {
             // assume status is 'error'
             console.log(retMsg.concat(parseResp['msg']));

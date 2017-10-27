@@ -108,17 +108,19 @@ export class UcumLhcUtils {
     let retObj = {};
     if (!theUnit) {
       retObj = {'status': (resp[1] !== null ? 'invalid' : 'error'),
-                'ucumCode': null,
-                'msg': resp[2] };
+                'ucumCode': null};
+    }
+    else if (resp[1] !== uStr) {
+      retObj = {'status' : 'invalid'}
     }
     else {
       retObj = {'status': 'valid',
                 'ucumCode': resp[1],
-                'msg': resp[2],
                 'unit': {'code': theUnit.csCode_,
                          'name': theUnit.name_,
                          'guidance': theUnit.guidance_ }};
     }
+    retObj['msg'] = resp[2];
     return retObj;
 
   } // end validateUnitString
@@ -181,9 +183,9 @@ export class UcumLhcUtils {
         fromUnit = parseResp[0];
         if (!fromUnit) {
           //console.log(parseResp[2]);
-          resultMsg = ['Sorry - an error occurred while trying to ' +
-            `validate ${fromUnitCode}.`, `${fromUnitCode} is probably not ` +
-            `a valid expression.`];
+          resultMsg = parseResp[2];
+          resultMsg.push(`Unable to find a unit for ${fromUnitCode} ` +
+                       `so no conversion could be performed.`);
         }
         else if (parseResp[2].length > 0) {
           resultMsg = parseResp[2];

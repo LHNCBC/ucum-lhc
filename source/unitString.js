@@ -146,6 +146,9 @@ export class UnitString {
     if (suggest !== undefined && suggest === 'suggest') {
       this.suggest_ = true;
     }
+    else {
+      this.suggest_ = false ;
+    }
 
     let origString = uStr;
     let retMsg = [];
@@ -308,8 +311,8 @@ export class UnitString {
     // If we're still good, continue
     if (!endProcessing) {
       // Process the units (and numbers) to create one final unit object
-      if (uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined ||
-        uArray[0]['un'] == null) {
+      if ((uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined ||
+        uArray[0]['un'] == null) && retMsg.length === 0) {
         // not sure what this might be, but this is a safeguard
         retMsg.push(`Unit string (${origString}) did not contain anything that ` +
           'could be used to create a unit, or else something that is not ' +
@@ -733,7 +736,7 @@ export class UnitString {
         }
         // otherwise try for suggestions
         else {
-          let suggestStat = this._getSuggestions(befText);
+          let suggestStat = this._getSuggestions(befText, retMsg);
           stopFlag =  (suggestStat !== 'succeeded');
 
         } // end if a brace was found or, if not, suggestions were not or
@@ -781,7 +784,7 @@ export class UnitString {
         }
         // otherwise try for suggestions
         else {
-          let suggestStat = this._getSuggestions(befText);
+          let suggestStat = this._getSuggestions(befText, retMsg);
           stopFlag =  (suggestStat !== 'succeeded');
         } // end if text following the parentheses not an exponent
       } // end if text following the parentheses is not an annotation
@@ -818,7 +821,7 @@ export class UnitString {
     }
 
     // Get the location of the end flag and, if text follows it, get the text
-    let aeIdx = pStr.lastIndexOf(this.braceFlag_);
+    let aeIdx = pStr.substr(asIdx + 1).indexOf(this.braceFlag_) + asIdx + 1;
     let endText = ((aeIdx + this.bFlagLen_) < pStr.length) ?
       pStr.substr(aeIdx + this.bFlagLen_) : null;
 
@@ -855,20 +858,25 @@ export class UnitString {
    */
   _getSuggestions(pStr, retMsg) {
 
-    let retObj = this.utils_.checkSynonyms(pStr);
+    let retObj = this.utils_.getSynonyms(pStr);
     if (retObj['status'] === 'succeeded') {
       retMsg.push(`${pStr} is not a valid UCUM code.  We found possible ` +
         `units that might be what was meant:`);
       let synLen = retObj['units'].length ;
       for (let s = 0; s < synLen; s++) {
         let unit = retObj['units'][s];
-        retMsg.push(`${unit['code']} - ${unit['name']} - ${unit['guidance']}`) ;
+        let msgString = `&nbsp;&nbsp;${this.openEmph_}${unit['code']}` +
+                        `${this.closeEmph_} - ${unit['name']}` ;
+        if (unit['guidance']) {
+          msgString += ` - ${unit['guidance']}` ;
+        }
+        retMsg.push(msgString) ;
       }
     }
     else {
-      retMsg.push(retObj['msg']);
-      retMsg.push(`${pStr} is not a valid UCUM code.  No alternative `
-                  `suggestions were found.`);
+      //retMsg.push(retObj['msg']);
+      retMsg.push(`${pStr} is not a valid UCUM code.  No alternatives ` +
+                  `were found.`);
     }
     return retObj['status'] ;
   } // end getSuggestions
@@ -1017,13 +1025,20 @@ export class UnitString {
           } // end if we found a prefix
         } // end if we didn't get a unit after removing an exponent
 
-        // One more thing.  If we didn't find a unit, signal an error.
-        // (We tried with the full unit string, with the unit string without
-        // the exponent, and the unit string without a prefix.  That's all
-        // we can try).
+        // If we still haven't found anything, we're done looking.
+        // (We tried with the full unit string, with the unit string
+        // without the exponent, the unit string without a prefix,
+        // common errors, etc. That's all we can try).
         if (!origUnit) {
-          retMsg.push(`Unable to find unit for ${origCode}`);
-          retUnit = null;
+          retUnit = null ;
+          // BUT if the user asked for suggestions, at least look
+          // for them
+          if (this.suggest_) {
+            let suggestStat = this._getSuggestions(origCode, retMsg);
+          }
+          else {
+            retMsg.push(`${origCode} is not a valid UCUM code.`);
+          }
         }
         else {
           // Otherwise we found a unit object.  Clone it and then apply the
@@ -1196,6 +1211,7 @@ export class UnitString {
       // from the after text and assume the user put the annotation in
       // the wrong place (and tell them)
       else if (!befAnnoText && aftAnnoText) {
+
         // Again, test for a number and if it is a number, set the return
         // unit to the number.
         if (this.utils_.isNumericString(aftAnnoText)) {
