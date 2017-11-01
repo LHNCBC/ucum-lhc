@@ -142,7 +142,7 @@ export class UnitString {
       this.vcMsgEnd_ = this.cnvMsgEnd_;
     }
 
-    if (suggest !== undefined && suggest === 'suggest') {
+    if (suggest === 'suggest') {
       this.suggest_ = true;
     }
     else {
@@ -820,7 +820,7 @@ export class UnitString {
     }
 
     // Get the location of the end flag and, if text follows it, get the text
-    let aeIdx = pStr.substr(asIdx + 1).indexOf(this.braceFlag_) + asIdx + 1;
+    let aeIdx = pStr.indexOf(this.braceFlag_, 1);
     let endText = ((aeIdx + this.bFlagLen_) < pStr.length) ?
       pStr.substr(aeIdx + this.bFlagLen_) : null;
 

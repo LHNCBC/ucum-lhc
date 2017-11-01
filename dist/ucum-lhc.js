@@ -54429,7 +54429,7 @@ var UnitString = exports.UnitString = function () {
         this.vcMsgEnd_ = this.cnvMsgEnd_;
       }
 
-      if (suggest !== undefined && suggest === 'suggest') {
+      if (suggest === 'suggest') {
         this.suggest_ = true;
       } else {
         this.suggest_ = false;
@@ -55064,7 +55064,7 @@ var UnitString = exports.UnitString = function () {
       }
 
       // Get the location of the end flag and, if text follows it, get the text
-      var aeIdx = pStr.substr(asIdx + 1).indexOf(this.braceFlag_) + asIdx + 1;
+      var aeIdx = pStr.indexOf(this.braceFlag_, 1);
       var endText = aeIdx + this.bFlagLen_ < pStr.length ? pStr.substr(aeIdx + this.bFlagLen_) : null;
 
       // Get the index of the annotation in the annotations array.  Check it
