@@ -72,26 +72,23 @@ describe('Test convertUnitTo method', function() {
     var resp1 = utils.convertUnitTo();
     assert.equal(resp1.status, 'error', resp1.status);
     assert.equal(resp1.msg[0], 'No "from" unit expression specified.', resp1.msg[0]);
-    assert.equal(resp1.msg[1], 'No "from" value specified.', resp1.msg[1]);
+    assert.equal(resp1.msg[1], 'No "from" value, or an invalid "from" value, ' +
+                               'was specified.', resp1.msg[1]);
     assert.equal(resp1.msg[2], 'No "to" unit expression specified.', resp1.msg[2]);
   });
-/*
-  it("should return a message for invalid unit strings", function() {
 
-    var resp2 = utils.convertUnitTo('good', 2017, 'bad');
-    assert.equal(resp2.status, 'failed', resp2.status);
-    assert.equal(resp2.msg[0],
-                 'Sorry - an error occurred while trying to validate good.',
-                 resp2.msg[0]);
-    assert.equal(resp2.msg[1], 'good is probably not a valid expression.',
-                 resp2.msg[1]);
-    assert.equal(resp2.msg[2],
-                 'Sorry - an error occurred while trying to validate bad.',
-                  resp2.msg[2]);
-    assert.equal(resp2.msg[3], 'bad is probably not a valid expression.',
-                 resp2.msg[3]);
-  });
-*/
+it("should return a message for invalid unit strings", function() {
+
+  var resp2 = utils.convertUnitTo('good', 2017, 'bad');
+  assert.equal(resp2.status, 'failed', resp2.status);
+  assert.equal(resp2.msg[0], 'good is not a valid UCUM code.', resp2.msg[0]);
+  assert.equal(resp2.msg[1], 'Unable to find a unit for good so no ' +
+                             'conversion could be performed.', resp2.msg[1]);
+  assert.equal(resp2.msg[2], 'bad is not a valid UCUM code.', resp2.msg[2]);
+  assert.equal(resp2.msg[3], 'Unable to find a unit for bad so no ' +
+                             'conversion could be performed.', resp2.msg[3]);
+});
+
   it("should return a valid conversion value and units for grams to metric carats", function() {
     var resp3 = utils.convertUnitTo('g', 56, '[car_m]');
     assert.equal(resp3.status, 'succeeded', resp3.status);

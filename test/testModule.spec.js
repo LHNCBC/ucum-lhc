@@ -139,10 +139,11 @@ describe('Convert fathoms to acrs', function() {
 
     it("should return error message = acr is not a valid unit expresion.", function() {
       assert.equal(2, returnObj['msg'].length);
-      assert.equal("Sorry - an error occurred while trying to validate acr.",
+      assert.equal("acr is not a valid UCUM code.",
                    returnObj['msg'][0], "msg = " + returnObj['msg']?
                    `${returnObj['msg'][0]}` : 'null');
-      assert.equal("acr is probably not a valid expression.", returnObj['msg'][1],
+      assert.equal("Unable to find a unit for acr so no conversion could be " +
+                   "performed.", returnObj['msg'][1],
                    "msg = " + returnObj['msg']? `${returnObj['msg'][1]}` : 'null');
     });
 

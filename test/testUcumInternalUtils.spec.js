@@ -5,18 +5,19 @@
  * or 'grunt test'
  */
 var assert = require('assert');
-var Utils = require("../source-es5/ucumInternalUtils.js").UcumInternalUtils;
+//var Utils = require("../source-es5/ucumInternalUtils.js").UcumInternalUtils;
 var UnitTables = require("../source-es5/unitTables.js").UnitTables;
 var UcumJsonDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs ;
 
 var uDefs = UcumJsonDefs.getInstance();
 uDefs.loadJsonDefs();
-var utils = Utils.getInstance();
+//var utils = Utils.getInstance();
 var uTabs = UnitTables.getInstance();
 
+import * as utils from "../source-es5/ucumInternalUtils.js";
 
 describe('Test isNumericString', function() {
-  it("should false for no parameter passed", function() {
+  it("should return false for no parameter passed", function() {
     var noParam = utils.isNumericString();
     assert.equal(noParam, false);
   });
@@ -55,7 +56,7 @@ describe('Test isNumericString', function() {
       var negParam = utils.isNumericString('-23');
       assert.equal(negParam, true);
     });
-  it("should return false for a string containing digits followed by a -",
+  it("should return false for a string containing digits followed by a +",
     function() {
       var badNegParam = utils.isNumericString('32+');
       assert.equal(badNegParam, false);

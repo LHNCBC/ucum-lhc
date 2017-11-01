@@ -302,6 +302,9 @@ export class UcumDemo {
    *  string to be validated
    * @param returnElementID the ID of the web page element to receive the
    *  return validation message
+   * @param suggest indicates whether or not to include suggestions for a
+   *  string where no unit could be found; 'suggest' will cause suggestions
+   *  to be included; anything else, or unspecified, will omit suggestions
    * @returns nothing directly; return is the validation message
    */
   reportUnitStringValidity(elementID, returnElementID, suggest) {
@@ -355,6 +358,10 @@ export class UcumDemo {
    *  to be converted to "to" units
    * @param toField the ID of the field containing the name of the unit that
    *  the from field is to be converted to
+   * @param suggest indicates whether or not to include suggestions for a
+   *  string where no unit could be found; 'suggest' will cause suggestions
+   *  to be included; anything else, or unspecified, will omit suggestions
+
    */
   convertUnit(fromField, numField, toField, suggest) {
 

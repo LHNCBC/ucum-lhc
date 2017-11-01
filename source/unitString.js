@@ -6,8 +6,8 @@ var Ucum = require('./config.js').Ucum;
 var Unit = require('./unit.js').Unit;
 var UnitTables = require('./unitTables.js').UnitTables;
 var PrefixTables = require('./prefixTables.js').PrefixTables;
-var UcumInternalUtils = require('./ucumInternalUtils.js').UcumInternalUtils;
 
+import * as intUtils_ from "./ucumInternalUtils.js";
 
 export class UnitString {
 
@@ -19,7 +19,6 @@ export class UnitString {
     // Get instances of the unit and prefix tables and the utilities
     this.utabs_ = UnitTables.getInstance();
     this.pfxTabs_ = PrefixTables.getInstance();
-    this.utils_ = UcumInternalUtils.getInstance();
 
     // Set emphasis characters to defaults.  These are used to emphasize
     // certain characters or strings in user messages.  They can be reset in
@@ -187,8 +186,7 @@ export class UnitString {
       // Do a final check to make sure that finalUnit is a unit and not
       // just a number.  Something like "1/{HCP}" will return a "unit" of 1
       // - which is not a unit.
-      if (finalUnit && this.utils_.isNumericString(finalUnit) &&
-          finalUnit !== 1) {
+      if (intUtils_.isNumericString(finalUnit) && finalUnit !== 1) {
         let newUnit = new Unit({'csCode_': origString});
         if (newUnit) {
           newUnit['magnitude_'] = finalUnit;
@@ -266,7 +264,7 @@ export class UnitString {
 
           // Check to see if it's a number.  If so write the number version of
           // the number back to the "un" attribute and move on
-          if (this.utils_.isNumericString(curCode)) {
+          if (intUtils_.isNumericString(curCode)) {
             uArray[u1]['un'] = Number(curCode);
           }
 
@@ -311,8 +309,9 @@ export class UnitString {
     // If we're still good, continue
     if (!endProcessing) {
       // Process the units (and numbers) to create one final unit object
-      if ((uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined ||
-        uArray[0]['un'] == null) && retMsg.length === 0) {
+      if ((uArray[0] === null || uArray[0] === ' ' ||
+           uArray[0]['un'] === undefined || uArray[0]['un'] === null)
+          && retMsg.length === 0) {
         // not sure what this might be, but this is a safeguard
         retMsg.push(`Unit string (${origString}) did not contain anything that ` +
           'could be used to create a unit, or else something that is not ' +
@@ -560,7 +559,7 @@ export class UnitString {
       // add two elements to the beginning of the array - the number and the
       // multiplication operator.
 
-      if (!this.utils_.isNumericString(uArray1[0])) {
+      if (!intUtils_.isNumericString(uArray1[0])) {
         let numRes = uArray1[0].match(startNumCheck);
         if (numRes && numRes.length === 3 && numRes[1] !== '' &&
           numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
@@ -592,7 +591,7 @@ export class UnitString {
       // mg/2.kJ - because mg/2 would be performed, followed by .kJ.  Instead,
       // handling 2kJ as a parenthesized unit will make sure mg is divided by
       // 2.kJ.
-      if (!this.utils_.isNumericString(uArray1[n])) {
+      if (!intUtils_.isNumericString(uArray1[n])) {
         let numRes2 = uArray1[n].match(startNumCheck);
         if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' &&
           numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
@@ -645,14 +644,14 @@ export class UnitString {
    * @param retMsg the array of messages to be returned
    * @returns an array containing the unit object and a flag indicating whether
    *    or not the pStr was valid whether or not corrections were made.  True
-   *    indicates that the string ws invalid and no corrections (substitutions
+   *    indicates that the string was invalid and no corrections (substitutions
    *    or suggestions) could be found.  False indicates that it was either
    *    valid or substitutions/suggestions were made.
    * @throws an error if an invalid parensUnit index was found.  This is
    *    a processing error.
    */
   _getParensUnit(pStr, parensUnits, origString, annotations, retMsg) {
-    let stopFlag = false;
+    let endProcessing = false;
     let retAry = [];
     let retUnit = null;
     let befAnnoText = null;
@@ -680,9 +679,9 @@ export class UnitString {
 
     // Make sure the index is a number, and if it is, get the unit from the
     // parensUnits array
-    if (this.utils_.isNumericString(pNumText)) {
+    if (intUtils_.isNumericString(pNumText)) {
       retUnit = parensUnits[Number(pNumText)];
-      if (!this.utils_.isNumericString(retUnit)) {
+      if (!intUtils_.isNumericString(retUnit)) {
         pStr = retUnit.csCode_;
       }
       else {
@@ -699,7 +698,7 @@ export class UnitString {
     // see if it's a number or an annotation.
     if (befText) {
       // If it's a number, assume that multiplication was assumed
-      if (this.utils_.isNumericString(befText)) {
+      if (intUtils_.isNumericString(befText)) {
         let nMag = retUnit.getProperty('magnitude_');
         nMag *= Number(befText);
         retUnit.assignVals({'magnitude_': nMag});
@@ -732,12 +731,12 @@ export class UnitString {
         else if (!this.suggest_) {
           retMsg.push(`${befText} preceding the unit code ${pStr} ` +
             `is invalid.  Unable to make a substitution.`);
-          stopFlag = true;
+          endProcessing = true;
         }
         // otherwise try for suggestions
         else {
           let suggestStat = this._getSuggestions(befText, retMsg);
-          stopFlag =  (suggestStat !== 'succeeded');
+          endProcessing =  (suggestStat !== 'succeeded');
 
         } // end if a brace was found or, if not, suggestions were not or
           // were requested
@@ -767,7 +766,7 @@ export class UnitString {
       // user that it's not valid - but try it anyway
       else {
 
-        if (this.utils_.isNumericString(aftText)) {
+        if (intUtils_.isNumericString(aftText)) {
           pStr += aftText;
           retUnit = retUnit.power(Number(aftText));
           retMsg.push(`An exponent (${aftText}) following a parenthesis is ` +
@@ -780,17 +779,17 @@ export class UnitString {
         else if (!this.suggest_) {
           retMsg.push(`Text ${aftText} following the unit code ${pStr} ` +
             `is invalid.  Unable to make a substitution.`);
-          stopFlag = true;
+          endProcessing = true;
         }
         // otherwise try for suggestions
         else {
           let suggestStat = this._getSuggestions(befText, retMsg);
-          stopFlag =  (suggestStat !== 'succeeded');
+          endProcessing =  (suggestStat !== 'succeeded');
         } // end if text following the parentheses not an exponent
       } // end if text following the parentheses is not an annotation
-    } // end if there is text following teh parentheses
+    } // end if there is text following the parentheses
     retUnit.csCode_ = pStr;
-    return [retUnit, stopFlag];
+    return [retUnit, endProcessing];
   } // end _getParensUnit
 
   /**
@@ -829,7 +828,7 @@ export class UnitString {
     // to make sure it's valid, and if not, throw an error
     let idx = pStr.substring(this.bFlagLen_, aeIdx);
     let idxNum = Number(idx);
-    if (!this.utils_.isNumericString(idx) || idxNum >= annotations.length) {
+    if (!intUtils_.isNumericString(idx) || idxNum >= annotations.length) {
       throw (new Error(`Processing Error - invalid annotation index ${idx} found ` +
         `in ${pStr} that was created from ${origString}`));
     }
@@ -858,7 +857,7 @@ export class UnitString {
    */
   _getSuggestions(pStr, retMsg) {
 
-    let retObj = this.utils_.getSynonyms(pStr);
+    let retObj = intUtils_.getSynonyms(pStr);
     if (retObj['status'] === 'succeeded') {
       retMsg.push(`${pStr} is not a valid UCUM code.  We found possible ` +
         `units that might be what was meant:`);
@@ -1186,7 +1185,7 @@ export class UnitString {
         // make sure that what's before the annoText is not a number, e.g.,
         // /100{cells}.  But f it is a number, just set the return unit to
         // the number.
-        if (this.utils_.isNumericString(befAnnoText)) {
+        if (intUtils_.isNumericString(befAnnoText)) {
           retUnit = befAnnoText ;
         }
         // Otherwise try to find a unit
@@ -1214,7 +1213,7 @@ export class UnitString {
 
         // Again, test for a number and if it is a number, set the return
         // unit to the number.
-        if (this.utils_.isNumericString(aftAnnoText)) {
+        if (intUtils_.isNumericString(aftAnnoText)) {
           retUnit = aftAnnoText + annoText ;
           retMsg.push(`The annotation ${annoText} before the ${aftAnnoText} is ` +
             `invalid.\n` + this.vcMsgStart_ + retUnit + this.vcMsgEnd_);
@@ -1275,7 +1274,7 @@ export class UnitString {
     // We only need to do the arithmetic if we have more than one unit.
     for (var u2 = 1; (u2 < uLen) && !endProcessing; u2++) {
       let nextUnit = uArray[u2]['un'];
-      if (this.utils_.isNumericString(nextUnit)) {
+      if (intUtils_.isNumericString(nextUnit)) {
         nextUnit = Number(nextUnit) ;
       }
       if (nextUnit === null ||

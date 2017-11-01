@@ -10,11 +10,12 @@ var UnitTables = require('./unitTables.js').UnitTables;
 var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
 var Prefix = require('./prefix.js').Prefix;
-var UcumInternalUtils = require('./ucumInternalUtils.js').UcumInternalUtils;
 var fs = require('fs');
 
+import * as intUtils_ from "./ucumInternalUtils.js";
+
 /**
- * UCUM utilities class
+ * UCUM external utilities class
  */
 export class UcumLhcUtils {
 
@@ -162,10 +163,11 @@ export class UcumLhcUtils {
       returnObj.status = 'error';
       returnObj.msg.push('No "from" unit expression specified.');
     }
-    let intUtils = UcumInternalUtils.getInstance() ;
-    if (!fromVal || (intUtils.isNumericString(fromVal))) {
+    if (!fromVal || (typeof fromVal !== 'number' &&
+        !intUtils_.isNumericString(fromVal))) {
       returnObj.status = 'error';
-      returnObj.msg.push('No "from" value specified.');
+      returnObj.msg.push('No "from" value, or an invalid "from" value, ' +
+                         'was specified.');
     }
 
     if (toUnitCode) {
@@ -194,10 +196,9 @@ export class UcumLhcUtils {
         parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
         toUnit = parseResp[0];
         if (!toUnit) {
-          //console.log(parseResp[2]);
-          resultMsg = resultMsg.concat(['Sorry - an error occurred while ' +
-          `trying to validate ${toUnitCode}.`, `${toUnitCode} is probably not ` +
-          `a valid expression.`]);
+          resultMsg = resultMsg.concat(parseResp[2]);
+          resultMsg = resultMsg.concat([`Unable to find a unit for ${toUnitCode} ` +
+                                       `so no conversion could be performed.`]);
         }
         else if (parseResp[2].length > 0) {
           if (resultMsg.length > 0)
@@ -254,8 +255,7 @@ export class UcumLhcUtils {
       retObj['msg'] = 'No term specified for synonym search.'
     }
     else {
-      let intUtils = UcumInternalUtils.getInstance();
-      retObj = intUtils.getSynonyms(theSyn);
+      retObj = intUtils_.getSynonyms(theSyn);
     } // end if a search synonym was supplied
 
     return retObj ;
