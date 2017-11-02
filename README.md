@@ -48,15 +48,27 @@ This method validates a unit string.  It first checks to see if the string passe
 in is a unit code that is found in the unit codes table. If it is not found it 
 parses the string to see if it resolves to a valid unit string.
 
+If a valid unit cannot be found, the string is tested for some common errors,
+such as missing brackets or a missing multiplication operator.  If found, the
+error is reported in the messages array that is returned.
+
+If a valid unit cannot be found and an error cannot be discerned, this may
+return, if requested, a list of suggested units in the messages array that
+is returned.  Suggestions are based on matching the expression with unit
+names and synonyms.
+
 * _@param_ uStr the string to be validated
+* _@param_ suggest "suggest' if suggestions are requested for a string that
+cannot be resolved to a valid unit; anything or nothing (undefined) otherwise
 * _@returns_ an object with four elements:
    * 'status' will be 'valid', 'invalid', or 'error';
    * 'ucumCode' the valid ucum code, which may differ from what was passed
         in (e.g., if 'Gauss' is passed in, this will contain 'G') OR null if
         the string was flagged as invalid or an error occurred; 
-   * 'msg' contains a message, if the string is invalid or an error occurred, 
-        indicating the problem, or an explanation of a substitution such as the
-        substitution of 'G' for 'Gauss'; and
+   * 'msg' is an array of messages, if the string is invalid or an
+        error occurred, indicating the problem, or an explanation of a
+        substitution such as the substitution of 'G' for 'Gauss', or a list
+        of suggested units; and
    * 'unit' which is null if no unit is found, or a hash for a unit found:
      * 'code' is the unit's ucum code (G in the above example);
      * 'name' is the unit's name (Gauss in the above example); and
@@ -96,16 +108,18 @@ rounded to any particular precision or significant digits.
 * _@param_ fromVal the number of "from" units to be converted to "to" units
 * _@param_ toUnitCode the unit code/expression/string of the unit that the from 
   field is to be converted to
+* _@param_ suggest "suggest' if suggestions are requested for a string that
+cannot be resolved to a valid unit; anything or nothing (undefined) otherwise
 * _@returns_ a hash with five elements:
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
       the units are not commensurable; or 'error' if an error occurred;
    * 'toVal' the numeric value indicating the conversion amount, or null
       if the conversion failed (e.g., the units are not commensurable);
-   * 'msg' an array of messages returned, specifically a description of
-      a failure or an error message if an error occurred or a description
-      of any substitutions made in the from or to codes passed in, e.g., 
-      substituting 'G' for an input of 'Gauss';
+   * 'msg' is an array of messages, if the string is invalid or an
+      error occurred, indicating the problem, or an explanation of a
+      substitution such as the substitution of 'G' for 'Gauss', or a list
+      of suggested units; and
    * 'fromUnit' the unit object for the fromUnitCode passed in; returned
       in case it's needed for additional data from the object; and
    * 'toUnit' the unit object for the toUnitCode passed in; returned
