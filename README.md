@@ -42,7 +42,7 @@ the ucum-lhc code is to have the validation and conversion capabilities for
 units of measure on your system.  Those functions are available from the 
 _ucumPkg.UcumLhcUtils_ class.  Here are the function descriptions:
 
-**validateUnitString(uStr)**
+**validateUnitString(uStr, suggest)**
 
 This method validates a unit string.  It first checks to see if the string passed 
 in is a unit code that is found in the unit codes table. If it is not found it 
@@ -98,7 +98,7 @@ of unit strings, and includes a link to the
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
 the full deal.
 
-**convertUnitTo(fromUnitCode, fromVal, toUnitCode)**
+**convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest)**
 
 This method converts a number of one type of unit to the equivalent number of
 another type of unit.  Note that the number returned is not trimmed or
