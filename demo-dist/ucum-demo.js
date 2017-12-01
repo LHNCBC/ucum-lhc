@@ -138,18 +138,18 @@ var UcumDemo = exports.UcumDemo = function () {
     // in the "from" field.  Changed to search autocompleter per Clem
     // this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
 
-    // Make this a singleton.  See UnitTables constructor for details.
-    var holdThis = UcumDemo.prototype;
-    UcumDemo = function UcumDemo() {
-      throw new Error('UcumDemo is a Singleton.  ' + 'Use UcumDemo.getInstance() instead.');
-    };
-    if (exports) exports.UcumDemo = UcumDemo;
-    UcumDemo.prototype = holdThis;
-
-    var self = this;
-    UcumDemo.getInstance = function () {
-      return self;
-    };
+    /*    // Make this a singleton.  See UnitTables constructor for details.
+        let holdThis = UcumDemo.prototype;
+        UcumDemo = function () {
+          throw (new Error('UcumDemo is a Singleton.  ' +
+                           'Use UcumDemo.getInstance() instead.'));
+        };
+        if (exports)
+          exports.UcumDemo = UcumDemo;
+        UcumDemo.prototype = holdThis;
+    
+        let self = this ;
+        UcumDemo.getInstance = function(){return self} ;*/
   }
 
   /**
@@ -417,7 +417,9 @@ var UcumDemo = exports.UcumDemo = function () {
       } else {
         try {
           var parseResp = this.utils_.validateUnitString(uStr, suggest);
-          if (parseResp['status'] === 'valid') valMsg = parseResp['ucumCode'] + ' is a valid unit expression.';else if (parseResp['status'] === 'invalid') {
+          if (parseResp['status'] === 'valid') {
+            valMsg = parseResp['ucumCode'] + ' is a valid unit expression.';
+          } else if (parseResp['status'] === 'invalid') {
             //valMsg = `${uStr} is NOT a valid unit expression.`;
           } else {
             // assume status is 'error'
@@ -789,7 +791,7 @@ UcumDemo.getInstance = function () {
 
 // Perform the first request for the demo object, to get the
 // getInstance method set.
-UcumDemo.getInstance();
+//UcumDemo.getInstance();
 
 
 },{"./demoConfig":1,"browserify-fs":6,"sanitize-html":112}],4:[function(require,module,exports){

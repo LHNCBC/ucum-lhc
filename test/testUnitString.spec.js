@@ -13,12 +13,12 @@ var UnitString = require("../source-es5/unitString.js").UnitString;
 var uTabs = UTables.getInstance();
 var uDefs = UcumJsonDefs.getInstance();
 uDefs.loadJsonDefs();
-var uString = UnitString.getInstance();
+
 
 describe('Test parseString method', function() {
 
   describe('Test valid single unit string (cal)', function() {
-    var thisParser = UnitString.getInstance();
+    var uString = UnitString.getInstance();
     var calUnit = uTabs.getUnitByCode('cal');
     var resp = uString.parseString('cal', 'validate');
     var retUnit = resp[0];
@@ -41,6 +41,7 @@ describe('Test parseString method', function() {
   });
 
   describe('Test for unit code /g', function() {
+    var uString = UnitString.getInstance();
     var gUnit = uTabs.getUnitByCode('g');
     var retMsg = [];
     var origString = '/g';
@@ -63,7 +64,7 @@ describe('Test parseString method', function() {
   });
 
   describe('Test for unit string 2mg', function() {
-    "use strict";
+    var uString = UnitString.getInstance();
     var mgUnit = uTabs.getUnitByCode('mg');
     var retMsg = [];
     var origString = '2mg';
@@ -88,7 +89,7 @@ describe('Test parseString method', function() {
   }) ;
 
   describe('Test for unit string 3mg/[den]', function() {
-    "use strict";
+    var uString = UnitString.getInstance();
     var mgUnit = uTabs.getUnitByCode('mg').clone();
     var denUnit = uTabs.getUnitByCode('[den]').clone();
     var retMsg = [];
@@ -116,7 +117,7 @@ describe('Test parseString method', function() {
   }) ;
 
   describe('Test for unit string mg/3[den]', function() {
-    "use strict";
+    var uString = UnitString.getInstance();
     var mgUnit = uTabs.getUnitByCode('mg').clone();
     var denUnit = uTabs.getUnitByCode('[den]').clone();
     var retMsg = [];
@@ -144,7 +145,7 @@ describe('Test parseString method', function() {
   }) ;
 
   describe('test for unit string 3mg/3[den]', function() {
-    "use strict";
+    var uString = UnitString.getInstance();
     var mgUnit = uTabs.getUnitByCode('mg').clone();
     var denUnit = uTabs.getUnitByCode('[den]').clone();
     var retMsg = [];
@@ -176,7 +177,7 @@ describe('Test parseString method', function() {
   }) ;
 
   describe('test for unit string day', function() {
-    "use strict";
+    var uString = UnitString.getInstance();
     var dUnit = uTabs.getUnitByCode('d');
     var retMsg = [];
     var origString = 'day';
@@ -199,7 +200,7 @@ describe('Test parseString method', function() {
   }) ;
 
   describe('test for unit string {degF}', function() {
-    "use strict";
+    var uString = UnitString.getInstance();
     var degUnit = uTabs.getUnitByCode('[degF]');
     var retMsg = [];
     var origString = '{degF}';
@@ -222,7 +223,7 @@ describe('Test parseString method', function() {
   }) ;
 
   describe('test for unit string in_i', function() {
-    "use strict";
+    var uString = UnitString.getInstance();
     var inUnit = uTabs.getUnitByCode('[in_i]');
     var retMsg = [];
     var origString = 'in_i';
@@ -245,7 +246,7 @@ describe('Test parseString method', function() {
   }) ;
 
   describe('test for unit string {creatine}mol', function() {
-    "use strict";
+    var uString = UnitString.getInstance();
     var molUnit = uTabs.getUnitByCode('mol');
     var retMsg = [];
     var origString = '{creatine}mol';
@@ -268,40 +269,41 @@ describe('Test parseString method', function() {
   }) ;
 
   describe('test for unit string culture/2mg with suggestions', function() {
-    "use strict";
     var uString = UnitString.getInstance();
     var retMsg = [];
     var origString = 'culture/2mg';
-    var resp = uString.parseString('culture/2mg', 'validate',
-                                   'suggest');
+    var resp = uString.parseString('culture/2mg', 'validate', 'suggest');
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
+    var respSugg = resp[3];
     it("should not return a unit", function() {
       assert.equal(retUnit, null);
     });
     it("should return the origString updated", function() {
       assert.equal(retOrig, "culture/2.mg");
     });
-    it("should return 4 messages", function() {
-      assert.equal(respMsg.length, 4);
+    it("should return 2 messages", function() {
+      assert.equal(respMsg.length, 2);
       assert.equal(respMsg[0],
                 '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
       assert.equal(respMsg[1], "culture is not a valid UCUM code.  " +
           "We found possible units that might be what was meant:");
-      assert.equal(respMsg[2], '&nbsp;&nbsp; ->[CCID_50]<- ' +
-        " - 50% cell culture infectious dose");
-      assert.equal(respMsg[3], '&nbsp;&nbsp; ->[TCID_50]<- ' +
-        " - 50% tissue culture infectious dose");
+    });
+    it("should return 2 suggestions", function() {
+      assert.equal(respSugg.length, 2);
+      assert.deepEqual(respSugg[0],
+        ["[CCID_50]","50% cell culture infectious dose",null]);
+      assert.deepEqual(respSugg[1],
+        ["[TCID_50]","50% tissue culture infectious dose",null]);
     });
   }) ;
 
   describe('test for unit string culture/2mg without suggestions', function() {
-    "use strict";
-    var noSugg = UnitString.getInstance();
+    var uString = UnitString.getInstance();
     var retMsg = [];
     var origString = 'culture/2mg';
-    var resp = noSugg.parseString('culture/2mg', 'validate', 'nosuggest');
+    var resp = uString.parseString('culture/2mg', 'validate', 'nosuggest');
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
@@ -317,41 +319,45 @@ describe('Test parseString method', function() {
         '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
       assert.equal(respMsg[1], "culture is not a valid UCUM code.");
     });
+    it("should not return any suggestions", function() {
+      assert(!resp[3]);
+    });
   }) ;
 
   describe('test for unit string 2mg/culture with suggestions', function() {
-    "use strict";
     var uString = UnitString.getInstance();
     var retMsg = [];
-    var resp = uString.parseString('2mg/culture', 'validate',
-      'suggest');
+    var resp = uString.parseString('2mg/culture', 'validate', 'suggest');
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
+    var respSugg = resp[3];
     it("should not return a unit", function() {
       assert.equal(retUnit, null);
     });
     it("should return the origString updated", function() {
       assert.equal(retOrig, "2.mg/culture");
     });
-    it("should return 4 messages", function() {
-      assert.equal(respMsg.length, 4);
+    it("should return 2 messages", function() {
+      assert.equal(respMsg.length, 2);
       assert.equal(respMsg[0],
         '2mg is not a valid UCUM code.  Did you mean 2.mg?');
       assert.equal(respMsg[1], "culture is not a valid UCUM code.  " +
         "We found possible units that might be what was meant:");
-      assert.equal(respMsg[2], '&nbsp;&nbsp; ->[CCID_50]<- ' +
-        " - 50% cell culture infectious dose");
-      assert.equal(respMsg[3], '&nbsp;&nbsp; ->[TCID_50]<- ' +
-        " - 50% tissue culture infectious dose");
+    });
+    it("should return 2 suggestions", function() {
+      assert.equal(respSugg.length, 2);
+      assert.deepEqual(respSugg[0],
+        ["[CCID_50]","50% cell culture infectious dose",null]);
+      assert.deepEqual(respSugg[1],
+        ["[TCID_50]","50% tissue culture infectious dose",null]);
     });
   }) ;
 
   describe('test for unit string 2mg/culture without suggestions', function() {
-    "use strict";
-    var noSugg = UnitString.getInstance();
+    var uString = UnitString.getInstance();
     var retMsg = [];
-    var resp = noSugg.parseString('2mg/culture', 'validate', 'nosuggest');
+    var resp = uString.parseString('2mg/culture', 'validate', 'nosuggest');
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
@@ -367,6 +373,9 @@ describe('Test parseString method', function() {
         '2mg is not a valid UCUM code.  Did you mean 2.mg?');
       assert.equal(respMsg[1], "culture is not a valid UCUM code.");
     });
+    it("should return not return any suggestions", function() {
+      assert(!resp[3]);
+    });
   }) ;
 
 /*  NOT Handled yet.  Leaving this in for the next branch
@@ -375,24 +384,26 @@ describe('Test parseString method', function() {
 
       }) ;
       */
+
 }); // end test ParseString method
 
 
 describe('Test makeUnit method', function() {
 
   describe('Test makeUnit for unit code mL', function () {
+    var uString = UnitString.getInstance();
     var mlUnit = uTabs.getUnitByCode('mL');
-    var annotations = [];
-    var retMsg = [];
     var origString = 'mL';
-    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    uString.retMsg_ = [] ;
+    uString.annotations_ = [] ;
+    var resp = uString._makeUnit(origString, origString);
     var retUnit = resp[0];
     var retOrig = resp[1];
     it("should not change the annotations array", function () {
-      assert.deepEqual([], annotations);
+      assert.deepEqual([], uString.annotations_);
     });
     it("should not return any messages", function () {
-      assert.deepEqual([], retMsg, `retMsg = ${JSON.stringify(retMsg)}`);
+      assert.deepEqual([], uString.retMsg_);
     });
     it("should not return any changes to the original string", function () {
       assert.equal(origString, retOrig, `retOrig = ${retOrig}`);
@@ -404,10 +415,9 @@ describe('Test makeUnit method', function() {
   });
 
   describe('Test makeUnit for unit code m[H2O]-21', function () {
-    var annotations = [];
-    var retMsg = [];
+    var uString = UnitString.getInstance();
     var origString = 'm[H2O]-21';
-    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    var resp = uString._makeUnit(origString, origString);
     var retUnit = resp[0];
     var retOrig = resp[1];
     it("should return a unit with a csCode_ of m[H2O]-21", function () {
@@ -434,10 +444,9 @@ describe('Test makeUnit method', function() {
   });
 
   describe('Test makeUnit for unit code m[H2O]+21', function () {
-    var annotations = [];
-    var retMsg = [];
+    var uString = UnitString.getInstance();
     var origString = 'm[H2O]+21';
-    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    var resp = uString._makeUnit(origString, origString);
     var retUnit = resp[0];
     var retOrig = resp[1];
     it("should return a unit with a csCode_ of m[H2O]21", function () {
@@ -464,10 +473,9 @@ describe('Test makeUnit method', function() {
   });
 
   describe('Test makeUnit for unit code m[H2O]21', function () {
-    var annotations = [];
-    var retMsg = [];
+    var uString = UnitString.getInstance();
     var origString = 'm[H2O]21';
-    var resp = uString._makeUnit(origString, annotations, retMsg, origString);
+    var resp = uString._makeUnit(origString, origString);
     var retUnit = resp[0];
     var retOrig = resp[1];
     it("should return a unit with a csCode_ of m[H2O]21", function () {
@@ -498,39 +506,33 @@ describe('Test makeUnit method', function() {
 describe('Test the processParens method', function() {
 
   describe('Test processParens for unit code mL', function () {
-    var parensUnits = [];
-    var annotations = [];
-    var retMsg = [];
+    var uString = UnitString.getInstance();
     var origString = 'mL';
-    var resp = uString._processParens('mL', origString, parensUnits,
-                                      annotations, retMsg);
+    var resp = uString._processParens('mL', origString);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
     it("should return the unit string with no changes", function () {
-      assert.equal('mL', retString, `retString = ${retString}`);
+      assert.equal('mL', retString);
     });
     it("should not return any messages", function () {
-      assert.deepEqual([], retMsg, `retMsg = ${JSON.stringify(retMsg)}`);
+      assert.deepEqual([], uString.retMsg_);
     });
     it("should not return any changes to the original string", function () {
       assert.equal(origString, retOrigString, `retOrig = ${retOrigString}`);
     });
     it("should return an empty parensUnits array", function () {
-      assert.deepEqual([], parensUnits,
-           `parensUnits = ${JSON.stringify(parensUnits)}`);
+      assert.deepEqual([], uString.parensUnits_);
     });
   });
 
   describe('Test processParens for unit code m.g(L', function () {
-    var parensUnits = [];
-    var annotations = [];
-    var retMsg = [];
+    "use strict";
+    var uString = UnitString.getInstance();
     var origString = 'm.g(L';
     var errMsg = 'Missing close parenthesis for open parenthesis at m.g' +
-        uString.openEmph_ + '(' + uString.closeEmph_ + 'L';
-    var resp = uString._processParens('m.g(L', origString, parensUnits,
-                                      annotations, retMsg);
+      uString.openEmph_ + '(' + uString.closeEmph_ + 'L';
+    var resp = uString._processParens('m.g(L', origString);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
@@ -538,29 +540,25 @@ describe('Test the processParens method', function() {
       assert.equal('m.g(L', retString, `retString = ${retString}`);
     });
     it("should return one error message", function () {
-      assert.equal(1, retMsg.length, `retMsg = ${JSON.stringify(retMsg)}`);
+      assert.equal(1, uString.retMsg_.length);
     });
     it("should return the error message about a missing close parenthesis", function () {
-      assert.equal(errMsg, retMsg[0], `retMsg = ${JSON.stringify(retMsg)}`);
+      assert.equal(errMsg, uString.retMsg_[0]);
     });
     it("should not return any changes to the original string", function () {
-      assert.equal(origString, retOrigString, `retOrig = ${retOrigString}`);
+      assert.equal(origString, retOrigString);
     });
     it("should return an empty parensUnits array", function () {
-      assert.deepEqual([], parensUnits,
-          `parensUnits = ${JSON.stringify(parensUnits)}`);
+      assert.deepEqual([], uString.parensUnits_);
     });
   });
 
   describe('Test processParens for unit code m.g)', function () {
-    var parensUnits = [];
-    var annotations = [];
-    var retMsg = [];
+    var uString = UnitString.getInstance();
     var origString = 'm.g)';
     var errMsg = 'Missing open parenthesis for close parenthesis at m.g' +
         uString.openEmph_ + ')' + uString.closeEmph_ ;
-    var resp = uString._processParens('m.g)', origString, parensUnits,
-                                      annotations, retMsg);
+    var resp = uString._processParens('m.g)', origString);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
@@ -568,29 +566,25 @@ describe('Test the processParens method', function() {
       assert.equal('m.g)', retString, `retString = ${retString}`);
     });
     it("should return one error message", function () {
-      assert.equal(1, retMsg.length, `retMsg = ${JSON.stringify(retMsg)}`);
+      assert.equal(1, uString.retMsg_.length);
     });
     it("should return the error message about a missing open parenthesis", function () {
-      assert.equal(errMsg, retMsg[0], `retMsg = ${JSON.stringify(retMsg)}`);
+      assert.equal(errMsg, uString.retMsg_[0]);
     });
     it("should not return any changes to the original string", function () {
       assert.equal(origString, retOrigString, `retOrig = ${retOrigString}`);
     });
     it("should return an empty parensUnits array", function () {
-      assert.deepEqual([], parensUnits,
-          `parensUnits = ${JSON.stringify(parensUnits)}`);
+      assert.deepEqual([], uString.parensUnits_);
     });
   });
 
   describe('Test processParens for unit code m.g/(L.(s/m)', function () {
-    var parensUnits = [];
-    var annotations = [];
-    var retMsg = [];
+    var uString = UnitString.getInstance();
     var origString = 'm.g(L.(s/m)';
     var errMsg = 'Missing close parenthesis for open parenthesis at m.g' +
         uString.openEmph_ + '(' + uString.closeEmph_ + 'L.(s/m)';
-    var resp = uString._processParens('m.g(L.(s/m)', origString, parensUnits,
-                                      annotations, retMsg);
+    var resp = uString._processParens('m.g(L.(s/m)', origString);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
@@ -598,49 +592,45 @@ describe('Test the processParens method', function() {
       assert.equal('m.g(L.(s/m)', retString, `retString = ${retString}`);
     });
     it("should return one error message", function () {
-      assert.equal(1, retMsg.length, `retMsg = ${JSON.stringify(retMsg)}`);
+      assert.equal(1, uString.retMsg_.length);
     });
     it("should return the error message about a missing close parenthesis", function () {
-      assert.equal(errMsg, retMsg[0], `retMsg = ${JSON.stringify(retMsg)}`);
+      assert.equal(errMsg, uString.retMsg_[0]);
     });
     it("should not return any changes to the original string", function () {
       assert.equal(origString, retOrigString, `retOrig = ${retOrigString}`);
     });
     it("should return an empty parensUnits array", function () {
-      assert.deepEqual([], parensUnits,
-          `parensUnits = ${JSON.stringify(parensUnits)}`);
+      assert.deepEqual([], uString.parensUnits_);
     });
   });
 
   describe('Test processParens for unit code m.g/(L.(s/m))', function () {
-    var parensUnits = [];
-    var annotations = [];
+    var uString = UnitString.getInstance();
     var parseResp = uString.parseString('L.(s/m)');
     var retParenUnit = parseResp[0];
-    var retMsg = [];
-    var origString = 'm.g(L.(s/m))';;
-    var resp = uString._processParens('m.g(L.(s/m))', origString, parensUnits,
-                                      annotations, retMsg);
+    uString.parensUnits_ = [] ;
+    uString.retMsg_ = [];
+    var origString = 'm.g(L.(s/m))';
+    var resp = uString._processParens('m.g(L.(s/m))', origString);
     var retString = resp[0];
     var retOrigString = resp[1];
     var stopProcessing = resp[2];
     it("should return the unit string with placeholders", function () {
       assert.equal('m.g' + uString.parensFlag_ + '0' +
-                   uString.parensFlag_, retString, `retString = ${retString}`);
+                   uString.parensFlag_, retString);
     });
     it("should return no error messages", function () {
-      assert.equal(0, retMsg.length, `retMsg = ${JSON.stringify(retMsg)}`);
+      assert.equal(0, uString.retMsg_.length);
     });
     it("should not return any changes to the original string", function () {
-      assert.equal(origString, retOrigString, `retOrig = ${retOrigString}`);
+      assert.equal(origString, retOrigString);
     });
     it("should return a parensUnits array with one unit", function () {
-      assert.equal(1, parensUnits.length,
-          `parensUnits = ${JSON.stringify(parensUnits)}`);
+      assert.equal(1, uString.parensUnits_.length);
     });
     it("should return a parensUnits array with a unit of L.(s/m)", function () {
-      assert.deepEqual(retParenUnit, parensUnits[0],
-          `parensUnits = ${JSON.stringify(parensUnits)}`);
+      assert.deepEqual(retParenUnit, uString.parensUnits_[0]);
     });
   });
 
@@ -650,46 +640,42 @@ describe('Test getAnnotations method', function() {
 
   it("should return an updated unit string and annotations array for " +
       " L{annotation string}", function() {
-    var annotations = [] ;
-    var retMsg = [] ;
-    var retString = uString._getAnnotations('L{annotation string}', annotations, retMsg);
+    var uString = UnitString.getInstance();
+    var retString = uString._getAnnotations('L{annotation string}');
     assert.equal(retString, 'L' + uString.braceFlag_ + '0' +
                             uString.braceFlag_);
-    assert.deepEqual(annotations, ['{annotation string}']);
-    assert.deepEqual(retMsg, []);
+    assert.deepEqual(uString.annotations_, ['{annotation string}']);
+    assert.deepEqual(uString.retMsg_, []);
   });
 
   it("should return an updated unit string and annotations array for " +
       " L{ann1}.mg{ann2}", function() {
-    var annotations = [] ;
-    var retMsg = [] ;
-    var retString = uString._getAnnotations('L{ann1}.mg{ann2}', annotations, retMsg);
+    var uString = UnitString.getInstance();
+    var retString = uString._getAnnotations('L{ann1}.mg{ann2}');
     assert.equal(retString, 'L' + uString.braceFlag_ + '0' +
                             uString.braceFlag_ + '.mg' + uString.braceFlag_ +
                             '1' + uString.braceFlag_);
-    assert.deepEqual(annotations, ['{ann1}', '{ann2}']);
-    assert.deepEqual(retMsg, []);
+    assert.deepEqual(uString.annotations_, ['{ann1}', '{ann2}']);
+    assert.deepEqual(uString.retMsg_, []);
   });
 
 
   it("should return a missing brace message for 'L{annotation", function() {
-    var annotations = [] ;
-    var retMsg = [] ;
-    var retString = uString._getAnnotations('L{annotation', annotations, retMsg);
+    var uString = UnitString.getInstance();
+    var retString = uString._getAnnotations('L{annotation');
     assert.equal(retString, 'L{annotation');
-    assert.deepEqual(annotations, []);
-    assert.equal(retMsg[0], 'Missing closing brace for annotation ' +
+    assert.deepEqual(uString.annotations_, []);
+    assert.equal(uString.retMsg_[0], 'Missing closing brace for annotation ' +
         'starting at ' + uString.openEmph_ +
         '{annotation' + uString.closeEmph_);
   });
 
   it("should return a missing brace message for 'Lannotation}", function() {
-    var annotations = [] ;
-    var retMsg = [] ;
-    var retString = uString._getAnnotations('Lannotation}', annotations, retMsg);
+    var uString = UnitString.getInstance();
+    var retString = uString._getAnnotations('Lannotation}');
     assert.equal(retString, 'Lannotation}');
-    assert.deepEqual(annotations, []);
-    assert.equal(retMsg[0], 'Missing opening brace for closing brace ' +
+    assert.deepEqual(uString.annotations_, []);
+    assert.equal(uString.retMsg_[0], 'Missing opening brace for closing brace ' +
         'found at ' + uString.openEmph_ +
         'Lannotation}' + uString.closeEmph_);
   });
@@ -700,44 +686,50 @@ describe('Test getAnnotations method', function() {
 describe('Test _isCodeWithExponent method', function() {
 
   it("should return ['m[H2O]', '-21'] for 'm[H2O]-21'", function() {
+    var uString = UnitString.getInstance();
     var retArray = uString._isCodeWithExponent('m[H2O]-21');
     assert.equal(retArray[0], 'm[H2O]');
     assert.equal(retArray[1], '-21');
   });
 
   it("should return ['m[H2O]', '+21'] for 'm[H2O]+21'", function() {
+    var uString = UnitString.getInstance();
     var retArray = uString._isCodeWithExponent('m[H2O]+21');
     assert.equal(retArray[0], 'm[H2O]');
     assert.equal(retArray[1], '+21');
   });
 
   it("should return ['m[H2O]', '21'] for 'm[H2O]21'", function() {
+    var uString = UnitString.getInstance();
     var retArray = uString._isCodeWithExponent('m[H2O]21');
     assert.equal(retArray[0], 'm[H2O]');
     assert.equal(retArray[1], '21');
   });
 
   it("should return ['s', '2'] for 's2'", function() {
+    var uString = UnitString.getInstance();
     var retArray = uString._isCodeWithExponent('s2');
     assert.equal(retArray[0], 's');
     assert.equal(retArray[1], '2');
   });
 
   it("should  return null for 'kg'", function() {
+    var uString = UnitString.getInstance();
     var retArray = uString._isCodeWithExponent('kg');
     assert.equal(retArray, null);
   });
 
   it("should  return null for 'm[H2O]'", function() {
+    var uString = UnitString.getInstance();
     var retArray = uString._isCodeWithExponent('m{H2O]');
     assert.equal(retArray, null);
   });
 
   it("should  return null for 'm{H2O]23X'", function() {
+    var uString = UnitString.getInstance();
     var retArray = uString._isCodeWithExponent('m[H2O]23X');
     assert.equal(retArray, null);
   });
-
 
 }); // end test _isCodeWithExponent method
 

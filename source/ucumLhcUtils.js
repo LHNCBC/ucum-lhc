@@ -33,8 +33,12 @@ export class UcumLhcUtils {
         uDefs.loadJsonDefs();
       }
 
+      // Get the UnitString parser that will be used with this instance
+      // of the LHC Utilities
+      this.uStrParser_ = UnitString.getInstance();
+
       // Make this a singleton.  See UnitTables constructor for details.
-      let holdThis = UcumLhcUtils.prototype;
+ /*     let holdThis = UcumLhcUtils.prototype;
       UcumLhcUtils = function () {
         throw (new Error('UcumLhcUtils is a Singleton. ' +
         'Use UcumLhcUtils.getInstance() instead.'));
@@ -44,30 +48,29 @@ export class UcumLhcUtils {
       UcumLhcUtils.prototype = holdThis;
 
     let self = this ;
-    UcumLhcUtils.getInstance = function(){return self} ;
+    UcumLhcUtils.getInstance = function(){return self} ;*/
 
   } // end constructor
 
 
   /**
-   * This method calls the useHTMLInMessages method on the (singleton)
-   * UnitString object.  It should be called by web applications that use
+   * This method calls the useHTMLInMessages method on the UnitString
+   * object.  It should be called by web applications that use
    * these utilities.
    *
    * @param use flag indicating whether or not to use the braces message;
    *  defaults to true
    */
   useHTMLInMessages(use) {
-    let us = UnitString.getInstance() ;
     if (use === undefined)
       use = true ;
-    us.useHTMLInMessages(use);
+    this.uStrParser_.useHTMLInMessages(use);
   }
 
 
   /**
-   * This method calls the useBraceMsgForEachString method on the (singleton)
-   * UnitString object.  It should be called by web applications where unit
+   * This method calls the useBraceMsgForEachString method on the UnitString
+   * object.  It should be called by web applications where unit
    * strings are validated individually (as opposed to validating a whole
    * file of unit strings).
    *
@@ -75,10 +78,9 @@ export class UcumLhcUtils {
    *  defaults to true
    */
   useBraceMsgForEachString(use) {
-    let us = UnitString.getInstance() ;
     if (use === undefined)
       use = true ;
-    us.useBraceMsgForEachString(use);
+    this.uStrParser_.useBraceMsgForEachString(use);
   }
 
 
@@ -109,32 +111,40 @@ export class UcumLhcUtils {
    *  'msg' is an array message, if the string is invalid or an error occurred,
    *        indicating the problem, or an explanation of a substitution such as
    *        the substitution of 'G' for 'Gauss', or a list of suggested
-   *        units; and
+   *        units;
    *  'unit' which is null if no unit is found, or a hash for a unit found:
    *    'code' is the unit's ucum code (G in the above example;
    *    'name' is the unit's name (Gauss in the above example); and
-   *    'guidance' is the unit's guidance/description data
+   *    'guidance' is the unit's guidance/description data; and
+   *  'suggestions' if suggestions were requested, this is an array of
+   *     arrays, where each inner array contains a unit code, unit name, and
+   *     unit guidance (where available) for each suggestion found (if no
+   *     unit was found)
    */
   validateUnitString(uStr, suggest) {
 
     let resp = this.getSpecifiedUnit(uStr, 'validate', suggest);
-    let theUnit = resp[0];
+    let theUnit = resp['unit'];
     let retObj = {};
     if (!theUnit) {
-      retObj = {'status': (resp[1] !== null ? 'invalid' : 'error'),
+      retObj = {'status': (!resp['origString'] || resp['origString'] === null) ?
+                           'error' : 'invalid',
                 'ucumCode': null};
     }
-    else if (resp[1] !== uStr) {
+    else if (resp['origString'] !== uStr) {
       retObj = {'status' : 'invalid'}
     }
     else {
       retObj = {'status': 'valid',
-                'ucumCode': resp[1],
+                'ucumCode': resp['origString'],
                 'unit': {'code': theUnit.csCode_,
                          'name': theUnit.name_,
                          'guidance': theUnit.guidance_ }};
+      if (resp['suggestions']) {
+        retObj['suggestions'] = resp['suggestions'];
+      }
     }
-    retObj['msg'] = resp[2];
+    retObj['msg'] = resp['retMsg'];
     return retObj;
 
   } // end validateUnitString
@@ -150,7 +160,7 @@ export class UcumLhcUtils {
    * @param suggest "suggest' if suggestions are requested for a string that
    *  cannot be resolved to a valid unit; anything or nothing (undefined)
    *  otherwise
-   * @returns a hash with five elements:
+   * @returns a hash with six elements:
    *  'status' that will be: 'succeeded' if the conversion was successfully
    *     calculated; 'failed' if the conversion could not be made, e.g., if
    *     the units are not commensurable; or 'error' if an error occurred;
@@ -159,7 +169,11 @@ export class UcumLhcUtils {
    *  'msg' is an array message, if the string is invalid or an error occurred,
    *        indicating the problem, or an explanation of a substitution such as
    *        the substitution of 'G' for 'Gauss', or a list of suggested
-   *        units; and
+   *        units;
+   *  'suggestions' if suggestions were requested, this is an array of
+   *     arrays, where each inner array contains a unit code, unit name, and
+   *     unit guidance (where available) for each suggestion found (if no
+   *     unit was found);
    *  'fromUnit' the unit object for the fromUnitCode passed in; returned
    *     in case it's needed for additional data from the object; and
    *  'toUnit' the unit object for the toUnitCode passed in; returned
@@ -167,22 +181,22 @@ export class UcumLhcUtils {
    */
   convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest) {
 
-    let resultMsg = [];
     let returnObj = {'status' : 'failed',
                      'toVal' : null,
-                     'msg' : []} ;
+                     'msg' : [],
+                     'suggestions' : []} ;
 
     if (fromUnitCode) {
       fromUnitCode = fromUnitCode.trim();
     }
     if (!fromUnitCode || fromUnitCode == '') {
-      returnObj.status = 'error';
-      returnObj.msg.push('No "from" unit expression specified.');
+      returnObj['status'] = 'error';
+      returnObj['msg'].push('No "from" unit expression specified.');
     }
     if (!fromVal || (typeof fromVal !== 'number' &&
         !intUtils_.isNumericString(fromVal))) {
-      returnObj.status = 'error';
-      returnObj.msg.push('No "from" value, or an invalid "from" value, ' +
+      returnObj['status'] = 'error';
+      returnObj['msg'].push('No "from" value, or an invalid "from" value, ' +
                          'was specified.');
     }
 
@@ -190,37 +204,36 @@ export class UcumLhcUtils {
       toUnitCode = toUnitCode.trim();
     }
     if (!toUnitCode || toUnitCode == '') {
-      returnObj.status = 'error';
-      returnObj.msg.push('No "to" unit expression specified.');
+      returnObj['status'] = 'error';
+      returnObj['msg'].push('No "to" unit expression specified.');
     }
-    if (returnObj.status !== 'error') {
+    if (returnObj['status'] !== 'error') {
       try {
         let fromUnit = null;
 
         let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
-        fromUnit = parseResp[0];
+        fromUnit = parseResp['unit'];
+        if (parseResp['retMsg'])
+          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+        returnObj['suggestions'] = parseResp['suggestions'];
         if (!fromUnit) {
-          //console.log(parseResp[2]);
-          resultMsg = parseResp[2];
-          resultMsg.push(`Unable to find a unit for ${fromUnitCode} ` +
-                       `so no conversion could be performed.`);
+          returnObj['msg'].push(`Unable to find a unit for ${fromUnitCode}, ` +
+                                `so no conversion could be performed.`);
         }
-        else if (parseResp[2].length > 0) {
-          resultMsg = parseResp[2];
-        }
+
         let toUnit = null;
         parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
-        toUnit = parseResp[0];
+        toUnit = parseResp['unit'];
+        if (parseResp['retMsg'])
+          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+        if (parseResp['suggestions'])
+          returnObj['suggestions'] =
+            returnObj['suggestions'].concat(parseResp['suggestions']);
+        // else
+        //   returnObj['suggestions'] = parseResp['suggestions'];
         if (!toUnit) {
-          resultMsg = resultMsg.concat(parseResp[2]);
-          resultMsg = resultMsg.concat([`Unable to find a unit for ${toUnitCode} ` +
-                                       `so no conversion could be performed.`]);
-        }
-        else if (parseResp[2].length > 0) {
-          if (resultMsg.length > 0)
-            resultMsg = resultMsg.concat(parseResp[2]);
-          else
-            resultMsg = parseResp[2];
+          returnObj['msg'].push(`Unable to find a unit for ${toUnitCode}, ` +
+                                `so no conversion could be performed.`);
         }
 
         if (fromUnit && toUnit) {
@@ -232,17 +245,15 @@ export class UcumLhcUtils {
           }
           catch (err) {
             returnObj['status'] = 'failed';
-            resultMsg.push(err.message);
+            returnObj['msg'].push(err.message);
           }
         }  // end if we have the from and to units
       }
       catch (err) {
         returnObj['status'] = 'error';
-        resultMsg.push(err.message);
+        returnObj['msg'].push(err.message);
       }
     }
-    if (resultMsg.length > 0)
-      returnObj['msg'] = resultMsg;
 
     return returnObj ;
 
@@ -287,58 +298,59 @@ export class UcumLhcUtils {
    * @param uName the expression/string representing the unit
    * @param valConv indicates what type of request this is for - a request to
    *  validate (pass in 'validate') or a request to convert (pass in 'convert')
-   * @returns an array containing:
-   *  the unit found for the string (or null if no unit was found);
-   *  a (possibly) updated version of the string (for cases where a unit name
-   *    was specified and the code was found for it) or null if an error
-   *    occurred; and
-   *  a message array containing any error or "not found" messages.
+   * @returns a hash containing:
+   *   'unit' the unit object (or null if there were problems creating the
+   *     unit);
+   *   'origString' the possibly updated unit string passed in;
+   *   'retMsg' an array of user messages (informational, error or warning) if
+   *     any were generated (IF any were generated, otherwise will not be
+   *     included); and
+   *  'suggestions' if suggestions were requested, this is an array of
+   *     arrays, where each inner array contains a unit code, unit name, and
+   *     unit guidance (where available) for each suggestion found (if no
+   *     unit was found).
    */
   getSpecifiedUnit(uName, valConv, suggest) {
 
-
-    let retMsg = [];
-    let retUnitString = null;
-    let theUnit = null ;
+    let retObj = {};
+    retObj['retMsg'] = [];
 
     if (!uName) {
-      retMsg.push('No unit string specified.')
+      retObj['retMsg'].push('No unit string specified.');
     }
     else {
       let utab = UnitTables.getInstance();
-      let errorThrown = false ;
       uName = uName.trim();
 
       // go ahead and just try using the name as the code.  This may or may not
       // work, but if it does, it cuts out a lot of parsing.
-      theUnit = utab.getUnitByCode(uName);
+      let theUnit = utab.getUnitByCode(uName);
 
       // If we found it, set the returned unit string to what was passed in;
       // otherwise try parsing as a unit string
       if (theUnit) {
-        retUnitString = uName;
+        retObj['unit'] = theUnit ;
+        retObj['origString'] = uName;
       }
       else {
         try {
-          let uStrParser = UnitString.getInstance();
-          let parseResp = uStrParser.parseString(uName, valConv, suggest);
-          theUnit = parseResp[0];
-          retUnitString = parseResp[1];
-          retMsg = parseResp[2];
+          let resp = this.uStrParser_.parseString(uName, valConv, suggest);
+          retObj['unit'] = resp[0];
+          retObj['origString'] = resp[1];
+          if (resp[2])
+            retObj['retMsg'] = resp[2];
+          retObj['suggestions'] = resp[3];
         }
         catch (err) {
           console.log(`Unit requested for unit string ${uName}.` +
             'request unsuccessful; error thrown = ' + err.message);
-          if (uName)
-            retMsg.unshift(`${uName} is not a valid unit.  ${err.message}`);
-          else
-            retMsg.unshift(err.message);
-          errorThrown = true;
+            retObj['retMsg'].unshift(`${uName} is not a valid unit.  ` +
+                                     `${err.message}`);
         }
-      }
+      } // end if the unit was not found as a unit name
     } // end if a unit expression was specified
 
-    return [theUnit, retUnitString, retMsg];
+    return retObj;
 
   } // end getSpecifiedUnit
 
@@ -357,10 +369,10 @@ export class UcumLhcUtils {
 
     let retMsg = [];
     let commUnits = null ;
-    let parseResp = this.getSpecifiedUnit(fromName, 'validate');
-    let fromUnit = parseResp[0];
-    if (parseResp[2].length > 0)
-      retMsg = parseResp[2] ;
+    let parseResp = this.getSpecifiedUnit(fromName, 'validate', false);
+    let fromUnit = parseResp['unit'];
+    if (parseResp['retMsg'].length > 0)
+      retMsg = parseResp['retMsg'] ;
     if (!fromUnit) {
       retMsg.push(`Could not find unit ${fromName}.`);
     }
@@ -420,7 +432,7 @@ UcumLhcUtils.getInstance = function(){
 
 // Perform the first request for the utils object, to get the
 // getInstance method set.
-UcumLhcUtils.getInstance();
+//UcumLhcUtils.getInstance();
 
 
 

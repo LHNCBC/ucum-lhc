@@ -82,10 +82,10 @@ it("should return a message for invalid unit strings", function() {
   var resp2 = utils.convertUnitTo('good', 2017, 'bad');
   assert.equal(resp2.status, 'failed', resp2.status);
   assert.equal(resp2.msg[0], 'good is not a valid UCUM code.', resp2.msg[0]);
-  assert.equal(resp2.msg[1], 'Unable to find a unit for good so no ' +
+  assert.equal(resp2.msg[1], 'Unable to find a unit for good, so no ' +
                              'conversion could be performed.', resp2.msg[1]);
   assert.equal(resp2.msg[2], 'bad is not a valid UCUM code.', resp2.msg[2]);
-  assert.equal(resp2.msg[3], 'Unable to find a unit for bad so no ' +
+  assert.equal(resp2.msg[3], 'Unable to find a unit for bad, so no ' +
                              'conversion could be performed.', resp2.msg[3]);
 });
 

@@ -46,7 +46,7 @@ export class UcumDemo {
     // in the "from" field.  Changed to search autocompleter per Clem
     // this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
 
-    // Make this a singleton.  See UnitTables constructor for details.
+/*    // Make this a singleton.  See UnitTables constructor for details.
     let holdThis = UcumDemo.prototype;
     UcumDemo = function () {
       throw (new Error('UcumDemo is a Singleton.  ' +
@@ -57,7 +57,7 @@ export class UcumDemo {
     UcumDemo.prototype = holdThis;
 
     let self = this ;
-    UcumDemo.getInstance = function(){return self} ;
+    UcumDemo.getInstance = function(){return self} ;*/
   }
 
   /**
@@ -323,8 +323,9 @@ export class UcumDemo {
     else {
       try {
         let parseResp = this.utils_.validateUnitString(uStr, suggest);
-        if (parseResp['status'] === 'valid')
+        if (parseResp['status'] === 'valid') {
           valMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
+        }
         else if (parseResp['status'] === 'invalid') {
           //valMsg = `${uStr} is NOT a valid unit expression.`;
         }
@@ -700,4 +701,4 @@ UcumDemo.getInstance = function(){
 
 // Perform the first request for the demo object, to get the
 // getInstance method set.
-UcumDemo.getInstance();
+//UcumDemo.getInstance();

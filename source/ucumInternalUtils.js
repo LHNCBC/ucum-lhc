@@ -52,10 +52,8 @@ export function isNumericString(theString) {
  *  'status' contains the status of the request, which can be 'error',
  *    'failed' or succeeded';
  *  'msg' which contains a message for an error or if no units were found; and
- *  'units' which is an array that contains one hash for each unit found:
- *    'code' is the unit's csCode_
- *    'name' is the unit's name_
- *    'guidance' is the unit's guidance_
+ *  'units' which is an array that contains one array for each unit found:
+ *    the unit's csCode_, the unit's name_, and the unit's guidance_
  *
  */
 export function getSynonyms(theSyn) {
@@ -79,8 +77,7 @@ export function getSynonyms(theSyn) {
       retObj['units'][a] = {
         'code': theUnit.csCode_,
         'name': theUnit.name_,
-        'guidance': theUnit.guidance_
-      }
+        'guidance': theUnit.guidance_};
     } // end do for all units returned
   } // end if we got a units list
   return retObj ;
