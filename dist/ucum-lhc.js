@@ -53148,23 +53148,25 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * @param suggest "suggest' if suggestions are requested for a string that
      *  cannot be resolved to a valid unit; anything or nothing (undefined)
      *  otherwise
-     * @returns an object with four properties:
+     * @returns an object with five properties:
      *  'status' will be 'valid', 'invalid' or 'error';
      *  'ucumCode' the valid ucum code, which may differ from what was passed
      *    in (e.g., if 'Gauss' is passed in, this will contain 'G') OR null if
      *    the string was flagged as invalid or an error occurred;
-     *  'msg' is an array message, if the string is invalid or an error occurred,
-     *        indicating the problem, or an explanation of a substitution such as
-     *        the substitution of 'G' for 'Gauss', or a list of suggested
-     *        units;
+     *  'msg' is an array of one or more messages, if the string is invalid or
+     *        an error occurred, indicating the problem, or an explanation of a
+     *        substitution such as the substitution of 'G' for 'Gauss';
      *  'unit' which is null if no unit is found, or a hash for a unit found:
      *    'code' is the unit's ucum code (G in the above example;
      *    'name' is the unit's name (Gauss in the above example); and
      *    'guidance' is the unit's guidance/description data; and
-     *  'suggestions' if suggestions were requested, this is an array of
-     *     arrays, where each inner array contains a unit code, unit name, and
-     *     unit guidance (where available) for each suggestion found (if no
-     *     unit was found)
+     *  'suggestions' if suggestions were requested and found, this is an array
+     *     one or more hash objects.  Each hash contains two elements:
+     *     'msg' which is a message indicating what unit expression the
+     *        suggestions are for; and
+     *     'units' which is an array of data for each suggested unit found.
+     *        Each array will contain the unit code, the unit name and the
+     *        unit guidance (if any).
      */
 
   }, {
@@ -53185,9 +53187,9 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
           'unit': { 'code': theUnit.csCode_,
             'name': theUnit.name_,
             'guidance': theUnit.guidance_ } };
-        if (resp['suggestions']) {
-          retObj['suggestions'] = resp['suggestions'];
-        }
+      }
+      if (resp['suggestions']) {
+        retObj['suggestions'] = resp['suggestions'];
       }
       retObj['msg'] = resp['retMsg'];
       return retObj;
@@ -53212,12 +53214,25 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      *     if the conversion failed (e.g., if the units are not commensurable);
      *  'msg' is an array message, if the string is invalid or an error occurred,
      *        indicating the problem, or an explanation of a substitution such as
-     *        the substitution of 'G' for 'Gauss', or a list of suggested
-     *        units;
-     *  'suggestions' if suggestions were requested, this is an array of
-     *     arrays, where each inner array contains a unit code, unit name, and
-     *     unit guidance (where available) for each suggestion found (if no
-     *     unit was found);
+     *        the substitution of 'G' for 'Gauss';
+     *  'suggestions' if suggestions were requested and found, this is a hash
+     *     that contains at most two elements:
+     *     'from' which, if the "from" unit expression or one or more of its
+     *       components could not be found, is an array one or more hash objects.
+     *       Each hash contains two elements:
+     *         'msg' which is a message indicating what unit expression the
+     *            suggestions are for; and
+     *         'units' which is an array of data for each suggested unit found.
+     *            Each array will contain the unit code, the unit name and the
+     *            unit guidance (if any).
+     *     'to' which, if the "to" unit expression or one or more of its
+     *       components could not be found, is an array one or more hash objects.  Each hash
+     *       contains two elements:
+     *         'msg' which is a message indicating what unit expression the
+     *            suggestions are for; and
+     *         'units' which is an array of data for each suggested unit found.
+     *            Each array will contain the unit code, the unit name and the
+     *            unit guidance (if any).
      *  'fromUnit' the unit object for the fromUnitCode passed in; returned
      *     in case it's needed for additional data from the object; and
      *  'toUnit' the unit object for the toUnitCode passed in; returned
@@ -53230,8 +53245,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
       var returnObj = { 'status': 'failed',
         'toVal': null,
-        'msg': [],
-        'suggestions': [] };
+        'msg': [] };
 
       if (fromUnitCode) {
         fromUnitCode = fromUnitCode.trim();
@@ -53259,7 +53273,10 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
           var parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
           fromUnit = parseResp['unit'];
           if (parseResp['retMsg']) returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
-          returnObj['suggestions'] = parseResp['suggestions'];
+          if (parseResp['suggestions']) {
+            returnObj['suggestions'] = {};
+            returnObj['suggestions']['from'] = parseResp['suggestions'];
+          }
           if (!fromUnit) {
             returnObj['msg'].push('Unable to find a unit for ' + fromUnitCode + ', ' + 'so no conversion could be performed.');
           }
@@ -53268,9 +53285,10 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
           parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
           toUnit = parseResp['unit'];
           if (parseResp['retMsg']) returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
-          if (parseResp['suggestions']) returnObj['suggestions'] = returnObj['suggestions'].concat(parseResp['suggestions']);
-          // else
-          //   returnObj['suggestions'] = parseResp['suggestions'];
+          if (parseResp['suggestions']) {
+            if (!returnObj['suggestions']) returnObj['suggestions'] = {};
+            returnObj['suggestions']['to'] = parseResp['suggestions'];
+          }
           if (!toUnit) {
             returnObj['msg'].push('Unable to find a unit for ' + toUnitCode + ', ' + 'so no conversion could be performed.');
           }
@@ -53342,10 +53360,15 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      *   'retMsg' an array of user messages (informational, error or warning) if
      *     any were generated (IF any were generated, otherwise will not be
      *     included); and
-     *  'suggestions' if suggestions were requested, this is an array of
-     *     arrays, where each inner array contains a unit code, unit name, and
-     *     unit guidance (where available) for each suggestion found (if no
-     *     unit was found).
+     *  'suggestions' is an array of 1 or more hash objects.  Each hash
+     *     contains two elements:
+     *       'msg' which is a message indicating what unit expression the
+     *          suggestions are for; and
+     *       'units' which is an array of data for each suggested unit found.
+     *          Each array will contain the unit code, the unit name and the
+     *          unit guidance (if any).
+     *   The return hash will not contain a suggestions array if a valid unit
+     *   was found or if suggestions were not requested.
      */
 
   }, {
@@ -54459,9 +54482,15 @@ var UnitString = exports.UnitString = function () {
      *   'origString' the possibly updated unit string passed in;
      *   'retMsg' an array of any user messages (informational, error or warning)
      *     generated (or an empty array); and
-     *   'suggestions' an array of suggested units if no unit could be found but
-     *     suggested units were requested and found (IF any, otherwise will not
-     *     be included).
+     *   'suggestions' an array of hash objects (1 or more).  Each hash contains
+     *     two elements:
+     *     'msg' which is a message indicating what unit expression the
+     *       suggestions are for; and
+     *     'units' which is an array of data for each suggested unit found.
+     *        Each array will contain the unit code, the unit name and the
+     *        unit guidance (if any).
+     *   The return hash will not contain a suggestions array if a valid unit
+     *   was found or if suggestions were not requested.
      * @throws an error if nothing was specified.
      */
 
@@ -55158,9 +55187,13 @@ var UnitString = exports.UnitString = function () {
      *
      * the this.retMsg_ array will be updated with a message indicating whether
      *  or not synonyms/suggestions  were found
-     * the this.suggestions_ array will be updated with an array of data for each
-     *   suggested unit found, if any.  Each array will contain the unit code,
-     *   the unit name and the unit guidance (if any).
+     * the this.suggestions_ array will be updated with a hash (added to the
+     *   array if it already contains others) that contains two elements:
+     *   'msg' which is a message indicating what unit expression the
+     *      suggestions are for; and
+     *   'units' which is an array of data for each suggested unit found.
+     *       Each array will contain the unit code, the unit name and the
+     *       unit guidance (if any).
      */
 
   }, {
@@ -55169,14 +55202,17 @@ var UnitString = exports.UnitString = function () {
 
       var retObj = intUtils_.getSynonyms(pStr);
       if (retObj['status'] === 'succeeded') {
-        this.retMsg_.push(pStr + ' is not a valid UCUM code.  We found possible ' + 'units that might be what was meant:');
+        var suggSet = {};
+        suggSet['msg'] = pStr + ' is not a valid UCUM code.  We found possible ' + 'units that might be what was meant:';
         var synLen = retObj['units'].length;
+        suggSet['units'] = [];
         for (var s = 0; s < synLen; s++) {
           var unit = retObj['units'][s];
           var unitArray = [unit['code'], unit['name'], unit['guidance']];
 
-          this.suggestions_.push(unitArray);
+          suggSet['units'].push(unitArray);
         }
+        this.suggestions_.push(suggSet);
       } else {
         this.retMsg_.push(pStr + ' is not a valid UCUM code.  No alternatives ' + 'were found.');
       }

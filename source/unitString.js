@@ -142,9 +142,15 @@ export class UnitString {
    *   'origString' the possibly updated unit string passed in;
    *   'retMsg' an array of any user messages (informational, error or warning)
    *     generated (or an empty array); and
-   *   'suggestions' an array of suggested units if no unit could be found but
-   *     suggested units were requested and found (IF any, otherwise will not
-   *     be included).
+   *   'suggestions' an array of hash objects (1 or more).  Each hash contains
+   *     two elements:
+   *     'msg' which is a message indicating what unit expression the
+   *       suggestions are for; and
+   *     'units' which is an array of data for each suggested unit found.
+   *        Each array will contain the unit code, the unit name and the
+   *        unit guidance (if any).
+   *   The return hash will not contain a suggestions array if a valid unit
+   *   was found or if suggestions were not requested.
    * @throws an error if nothing was specified.
    */
   parseString(uStr, valConv, suggest) {
@@ -876,23 +882,30 @@ export class UnitString {
    *
    * the this.retMsg_ array will be updated with a message indicating whether
    *  or not synonyms/suggestions  were found
-   * the this.suggestions_ array will be updated with an array of data for each
-   *   suggested unit found, if any.  Each array will contain the unit code,
-   *   the unit name and the unit guidance (if any).
+   * the this.suggestions_ array will be updated with a hash (added to the
+   *   array if it already contains others) that contains two elements:
+   *   'msg' which is a message indicating what unit expression the
+   *      suggestions are for; and
+   *   'units' which is an array of data for each suggested unit found.
+   *       Each array will contain the unit code, the unit name and the
+   *       unit guidance (if any).
    */
   _getSuggestions(pStr) {
 
     let retObj = intUtils_.getSynonyms(pStr);
     if (retObj['status'] === 'succeeded') {
-      this.retMsg_.push(`${pStr} is not a valid UCUM code.  We found possible ` +
-        `units that might be what was meant:`);
+      let suggSet = {} ;
+      suggSet['msg'] = `${pStr} is not a valid UCUM code.  We found possible ` +
+                       `units that might be what was meant:`;
       let synLen = retObj['units'].length ;
+      suggSet['units'] = [] ;
       for (let s = 0; s < synLen; s++) {
         let unit = retObj['units'][s];
         let unitArray = [unit['code'], unit['name'], unit['guidance']];
 
-        this.suggestions_.push(unitArray) ;
+        suggSet['units'].push(unitArray) ;
       }
+      this.suggestions_.push(suggSet);
     }
     else {
       this.retMsg_.push(`${pStr} is not a valid UCUM code.  No alternatives ` +

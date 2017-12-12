@@ -67,16 +67,18 @@ cannot be resolved to a valid unit; anything or nothing (undefined) otherwise
         the string was flagged as invalid or an error occurred; 
    * 'msg' is an array of messages, if the string is invalid or an
         error occurred, indicating the problem, or an explanation of a
-        substitution such as the substitution of 'G' for 'Gauss', or a list
-        of suggested units;
-   * 'suggestions' if suggestions were requested, this is an array of
-        arrays, where each inner array contains a unit code, unit name, and
-        unit guidance (where available) for each suggestion found (if no
-        unit was found); and
+        substitution such as the substitution of 'G' for 'Gauss';
    * 'unit' which is null if no unit is found, or a hash for a unit found:
      * 'code' is the unit's ucum code (G in the above example);
      * 'name' is the unit's name (Gauss in the above example); and
      * 'guidance' is the unit's guidance/description data.
+   * 'suggestions' if suggestions were requested and found, this is an array
+         one or more hash objects.  Each hash contains two elements:
+     * 'msg' which is a message indicating what unit expression the
+         suggestions are for; and
+     * 'units' which is an array of data for each suggested unit found.
+          Each array will contain the unit code, the unit name and the
+          unit guidance (if any).
 
 For example, to validate a unit string of m2/g4:
  
@@ -124,10 +126,24 @@ cannot be resolved to a valid unit; anything or nothing (undefined) otherwise
       error occurred, indicating the problem, or an explanation of a
       substitution such as the substitution of 'G' for 'Gauss', or a list
       of suggested units;
-   * 'suggestions' if suggestions were requested, this is an array of
-      arrays, where each inner array contains a unit code, unit name, and
-      unit guidance (where available) for each suggestion found (if no
-      unit was found);
+   * 'suggestions' if suggestions were requested and found, this is a hash
+        that contains at most two elements:
+     * 'from' which, if the "from" unit expression or one or more of its
+         components could not be found, is an array one or more hash
+         objects.  Each hash contains two elements:
+       * 'msg' which is a message indicating what unit expression the
+           suggestions are for; and
+       * 'units' which is an array of data for each suggested unit found.
+           Each array will contain the unit code, the unit name and the
+           unit guidance (if any).
+     * 'to' which, if the "to" unit expression or one or more of its
+         components could not be found, is an array one or more hash
+         objects.  Each hash contains two elements:
+       * 'msg' which is a message indicating what unit expression the
+           suggestions are for; and
+       * 'units' which is an array of data for each suggested unit found.
+           Each array will contain the unit code, the unit name and the
+           unit guidance (if any).
    * 'fromUnit' the unit object for the fromUnitCode passed in; returned
       in case it's needed for additional data from the object; and
    * 'toUnit' the unit object for the toUnitCode passed in; returned

@@ -62,6 +62,25 @@ describe('Test validateUnitString method', function() {
         ' at L/' + uString.openEmph_ + '(' + uString.closeEmph_ + '5.mg');
    });
 
+  it("should return 3 suggestions for allergen", function() {
+    var resp6 = utils.validateUnitString('allergen', 'suggest');
+    assert.equal(resp6.status, 'invalid');
+    assert.equal(resp6.unit, null);
+    assert.equal(resp6.ucumCode, null);
+    var suggs = resp6['suggestions'][0] ;
+    assert.equal(suggs['units'].length, 3);
+    assert.equal(suggs['msg'], 'allergen is not a valid ' +
+      'UCUM code.  We found possible units that might be what was meant:');
+    assert.deepEqual(suggs['units'][0],
+       ['[BAU]','bioequivalent allergen unit', null]) ;
+    assert.deepEqual(suggs['units'][1], ['[AU]', 'allergy unit',
+       'Most standard test allergy units are reported as [IU] or as %. ']);
+    assert.deepEqual(suggs['units'][2], ["[Amb'a'1'U]",
+       'allergen unit for Ambrosia artemisiifolia', 'Amb a 1 is the major ' +
+       'allergen in short ragweed, and can be converted Bioequivalent ' +
+       'allergen units (BAU) where 350 Amb a 1 U/mL = 100,000 BAU/mL']);
+  });
+
 }); // end validateUnitString tests
 
 
@@ -104,6 +123,39 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp4.toVal, null, resp4.toVal);
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
+  });
+
+  it("should return 3 suggestions for allergen and 2 for culture", function() {
+    var resp5 = utils.convertUnitTo('allergen', 3, 'culture', 'suggest');
+    assert.equal(resp5.status, 'failed');
+    assert.equal(resp5.toVal, null);
+    assert.equal(resp5.fromUnit, null);
+    assert.equal(resp5.toUnit, null);
+    assert.equal(resp5.msg.length, 2);
+    assert.deepEqual(resp5.msg[0], 'Unable to find a unit for allergen, ' +
+                     'so no conversion could be performed.');
+    assert.deepEqual(resp5.msg[1], 'Unable to find a unit for culture, ' +
+      'so no conversion could be performed.');
+    var suggsFrom = resp5['suggestions']['from'][0] ;
+    assert.deepEqual(suggsFrom['units'].length, 3);
+    assert.deepEqual(suggsFrom['msg'], 'allergen is not a valid ' +
+      'UCUM code.  We found possible units that might be what was meant:');
+    assert.deepEqual(suggsFrom['units'][0],
+      ['[BAU]','bioequivalent allergen unit', null]) ;
+    assert.deepEqual(suggsFrom['units'][1], ['[AU]', 'allergy unit',
+      'Most standard test allergy units are reported as [IU] or as %. ']);
+    assert.deepEqual(suggsFrom['units'][2], ["[Amb'a'1'U]",
+      'allergen unit for Ambrosia artemisiifolia', 'Amb a 1 is the major ' +
+      'allergen in short ragweed, and can be converted Bioequivalent ' +
+      'allergen units (BAU) where 350 Amb a 1 U/mL = 100,000 BAU/mL']);
+    var suggsTo = resp5['suggestions']['to'][0] ;
+    assert.deepEqual(suggsTo['units'].length, 2);
+    assert.deepEqual(suggsTo['msg'], 'culture is not a valid ' +
+      'UCUM code.  We found possible units that might be what was meant:');
+    assert.deepEqual(suggsTo['units'][0], ['[CCID_50]',
+      '50% cell culture infectious dose', null]);
+    assert.deepEqual(suggsTo['units'][1], ['[TCID_50]',
+      '50% tissue culture infectious dose', null]);
   });
 
 }); // end convertUnitTo tests

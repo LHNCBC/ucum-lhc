@@ -283,18 +283,18 @@ describe('Test parseString method', function() {
     it("should return the origString updated", function() {
       assert.equal(retOrig, "culture/2.mg");
     });
-    it("should return 2 messages", function() {
-      assert.equal(respMsg.length, 2);
+    it("should return 1 message", function() {
+      assert.equal(respMsg.length, 1);
       assert.equal(respMsg[0],
                 '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
-      assert.equal(respMsg[1], "culture is not a valid UCUM code.  " +
-          "We found possible units that might be what was meant:");
     });
     it("should return 2 suggestions", function() {
-      assert.equal(respSugg.length, 2);
-      assert.deepEqual(respSugg[0],
+      assert.equal(respSugg[0]['units'].length, 2);
+      assert.deepEqual(respSugg[0]['msg'], "culture is not a valid UCUM code.  " +
+        "We found possible units that might be what was meant:");
+      assert.deepEqual(respSugg[0]['units'][0],
         ["[CCID_50]","50% cell culture infectious dose",null]);
-      assert.deepEqual(respSugg[1],
+      assert.deepEqual(respSugg[0]['units'][1],
         ["[TCID_50]","50% tissue culture infectious dose",null]);
     });
   }) ;
@@ -338,18 +338,19 @@ describe('Test parseString method', function() {
     it("should return the origString updated", function() {
       assert.equal(retOrig, "2.mg/culture");
     });
-    it("should return 2 messages", function() {
-      assert.equal(respMsg.length, 2);
+    it("should return 1 message", function() {
+      assert.equal(respMsg.length, 1);
       assert.equal(respMsg[0],
         '2mg is not a valid UCUM code.  Did you mean 2.mg?');
-      assert.equal(respMsg[1], "culture is not a valid UCUM code.  " +
-        "We found possible units that might be what was meant:");
     });
     it("should return 2 suggestions", function() {
-      assert.equal(respSugg.length, 2);
-      assert.deepEqual(respSugg[0],
+      assert.equal(respSugg.length, 1);
+      assert.equal(respSugg[0]['units'].length, 2);
+      assert.deepEqual(respSugg[0]['msg'], "culture is not a valid UCUM " +
+        "code.  We found possible units that might be what was meant:");
+      assert.deepEqual(respSugg[0]['units'][0],
         ["[CCID_50]","50% cell culture infectious dose",null]);
-      assert.deepEqual(respSugg[1],
+      assert.deepEqual(respSugg[0]['units'][1],
         ["[TCID_50]","50% tissue culture infectious dose",null]);
     });
   }) ;

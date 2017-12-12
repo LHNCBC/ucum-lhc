@@ -46,7 +46,7 @@ export class UcumDemo {
     // in the "from" field.  Changed to search autocompleter per Clem
     // this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
 
-/*    // Make this a singleton.  See UnitTables constructor for details.
+    // Make this a singleton.  See UnitTables constructor for details.
     let holdThis = UcumDemo.prototype;
     UcumDemo = function () {
       throw (new Error('UcumDemo is a Singleton.  ' +
@@ -57,7 +57,7 @@ export class UcumDemo {
     UcumDemo.prototype = holdThis;
 
     let self = this ;
-    UcumDemo.getInstance = function(){return self} ;*/
+    UcumDemo.getInstance = function(){return self} ;
   }
 
   /**
@@ -315,38 +315,44 @@ export class UcumDemo {
     let uStr = sanitizeHtml(document.getElementById(elementID).value);
     let valFld = document.getElementById(returnElementID);
     valFld.innerHTML = '';
-    let retMsg = [];
-    let valMsg = '';
+
+    let retMsg = '';
+    let parseResp = {};
+
     if (uStr === "") {
-      retMsg.push("Please specify a unit string to be validated.");
+      retMsg = "Please specify a unit string to be validated.";
     }
     else {
       try {
-        let parseResp = this.utils_.validateUnitString(uStr, suggest);
+        parseResp = this.utils_.validateUnitString(uStr, suggest);
         if (parseResp['status'] === 'valid') {
-          valMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
+          retMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
         }
+        // If the status is invalid and we have suggestions, put the suggestion
+        // output in the return message.   If we don't have suggestions there
+        // should be an explanation in the parse response's 'msg' element, and
+        // will be transferred to the returned message below.
         else if (parseResp['status'] === 'invalid') {
-          //valMsg = `${uStr} is NOT a valid unit expression.`;
+          if (parseResp['suggestions'])
+            retMsg = this._suggSetOutput(parseResp['suggestions']);
         }
+
         else { // assume status is 'error'
           console.log(retMsg.concat(parseResp['msg']));
-          retMsg = ['Sorry - an error occurred while trying to validate ' +
-                    uStr<br>uStr + ' is probably not a valid expression.'];
+          retMsg = 'Sorry - an error occurred while trying to validate ' + uStr;
         }
-        if (parseResp['status'] !== 'error' && parseResp['msg'].length > 0)
-          retMsg = retMsg.concat(parseResp['msg']);
       }
       catch (err) {
         console.log(err.message);
-        retMsg = ['Sorry - an error occurred while trying to validate ' +
-            uStr + '<br>' + uStr + ' is probably not a valid expression.'];
+        retMsg += 'Sorry - an error occurred while trying to validate ' +  uStr;
       }
     }
-    let finalMsg = retMsg.join('<br>');
-    if (valMsg.length > 0)
-      finalMsg = valMsg + '<br>' + finalMsg ;
-    valFld.innerHTML = finalMsg;
+    if (parseResp['msg']) {
+      if (retMsg != '')
+        retMsg += '<BR>' ;
+      retMsg += parseResp['msg'].join('<BR>');
+    }
+    valFld.innerHTML = retMsg;
   } // end reportUnitStringValidity
 
 
@@ -435,11 +441,29 @@ export class UcumDemo {
           resultString.innerHTML += '<br>' + resultObj['msg'][r] ;
         }
       }
+      // Else if an error was signalled, transfer the error message to
+      // the result field
       else if (resultObj['status'] === 'error') {
         resultString.innerHTML = 'Sorry - an error occurred while trying to ' +
-          `validate ${uStr}.<br>${uStr} is probably not a valid expression.`;
+          `validate ${uStr}.`;
       }
+      // Else 1 or more invalid unit expressions were found (status = 'failed')
       else {
+        // if suggestions were found, output any included messages followed
+        // by the suggestions to the result field
+        if (resultObj['suggestions']) {
+          let suggString = '';
+          if (resultObj['msg'])
+            suggString = resultObj['msg'].join('<BR>') + '<BR>';
+          if (resultObj['suggestions']['from'])
+            suggString += this._suggSetOutput(resultObj['suggestions']['from']);
+          if (resultObj['suggestions']['to'])
+            suggString += this._suggSetOutput(resultObj['suggestions']['to']);
+          resultString.innerHTML = suggString ;
+        }
+        // if suggestions were not found, output whatever message(s) were
+        // returned that would indicate the problem
+        else
           resultString.innerHTML = resultObj['msg'].join('<BR>');
       } // end if conversion did/didn't succeed
     } // end if there were/weren't entry errors
@@ -681,6 +705,34 @@ export class UcumDemo {
     colDiv.setAttribute('style', 'display:none');
   }
 
+
+  /**
+   * This creates HTML output text for an array of suggestion sets.  A
+   * suggestion set is returned by the parsing code for each suggestion
+   * found (when suggestions were requested for unit strings found to be
+   * invalid).  Each set is a hash object that includes two elements:
+   *   'msg' - which is a message identifying the problem string; and
+   *   'units' - which is an array of arrays, where each inner array is
+   *             created for each suggestion.  The inner arrays contain
+   *             the unit code, name and guidance text (if any) for a
+   *             suggested unit.
+   *
+   * @param suggSet the array of sets for which to create HTML output text
+   * @returns {string} the string containing the HTML
+   * @private
+   */
+  _suggSetOutput(suggSet) {
+
+    let suggString = '';
+    for (let s = 0; s < suggSet.length; s++) {
+      suggString += suggSet[s]['msg'] + '<BR>';
+      for (let u = 0; u < suggSet[s]['units'].length; u++) {
+        suggString += suggSet[s]['units'][u].join(', ') + '<BR>';
+      } // end do for each unit
+    }
+    return suggString ;
+  } // end suggSetOutput
+
 } // end class UcumDemo
 
 
@@ -701,4 +753,4 @@ UcumDemo.getInstance = function(){
 
 // Perform the first request for the demo object, to get the
 // getInstance method set.
-//UcumDemo.getInstance();
+UcumDemo.getInstance();
