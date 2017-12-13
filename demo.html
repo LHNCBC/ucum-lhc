@@ -25,7 +25,9 @@
       <li class="active"><a id="validation-link" href="#validation" class="tablinks"
                             data-toggle="tab">
              Validator</a></li>
-      <li><a id="conversion-link" href="#conversion" class="tablinks" data-toggle="tab">
+      <li><a id="conversion-link" href="#conversion" class="tablinks"
+             data-toggle="tab"
+             onclick="demoPkg.UcumDemo.getInstance().showConvertTab()">
              Converter</a></li>
     </ul>
     <div class="tab-content">
@@ -34,7 +36,12 @@
       <div id="convSection" class="section">
         <h3>Convert values from one UCUM unit to another</h3>
         <p>Enter or select a valid UCUM code for the unit you want to convert:
-          <input type="text" id="convertFrom" placeholder="begin typing ...">
+          <input type="text" id="convertFrom" placeholder="begin typing ..."
+          onchange=
+          "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
+          'validationString',
+          'suggest')">&nbsp;
+
              <!---  Not using this list -- for now
           onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                   'convertTo',
@@ -72,7 +79,7 @@
                                        onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
                                                              'convertNum',
                                                              'convertTo', 'suggest')"
-                                       type="button">Convert</button>
+                                       type="button" disabled>Convert</button>
         </div>
         <p id="resultString">&nbsp;&nbsp;</p>
       </div> <!-- end convSection div -->

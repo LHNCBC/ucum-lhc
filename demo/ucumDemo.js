@@ -41,12 +41,18 @@ export class UcumDemo {
     this.valAuto_ = new Def.Autocompleter.Search('valString',
         urlOpts[0], urlOpts[1]);
 
+    // Flags indicating validitity of the "from" and "to" unit fields on
+    // the conversion page.
+    this.convFromUnit = false ;
+    this.convToUnit = false ;
+
     // Set up the prefetch autocompleter for the "to" conversion field.  It will
     // be populated with commensurable units in based on what the user enters
     // in the "from" field.  Changed to search autocompleter per Clem
     // this.toAuto_ = new Def.Autocompleter.Prefetch('convertTo', []);
 
-    // Make this a singleton.  See UnitTables constructor for details.
+    // Because this code is loaded with the page, there is no danger in
+    // this being a singleton.
     let holdThis = UcumDemo.prototype;
     UcumDemo = function () {
       throw (new Error('UcumDemo is a Singleton.  ' +
@@ -176,7 +182,7 @@ export class UcumDemo {
 
   /**
    * This method builds one set of checkboxes for the advanced settings section
-   * of the converter tab.  The checkboxes are either checked as defaults or
+   * on both tabs of the form.  The checkboxes are either checked as defaults or
    * are not.
    *
    * This is called on the body onload event.
@@ -339,12 +345,12 @@ export class UcumDemo {
 
         else { // assume status is 'error'
           console.log(retMsg.concat(parseResp['msg']));
-          retMsg = 'Sorry - an error occurred while trying to validate ' + uStr;
+          retMsg = [`Sorry - an error occurred while trying to validate ${uStr}`];
         }
       }
       catch (err) {
         console.log(err.message);
-        retMsg += 'Sorry - an error occurred while trying to validate ' +  uStr;
+        retMsg = [`Sorry - an error occurred while trying to validate ${uStr}`];
       }
     }
     if (parseResp['msg']) {
@@ -355,6 +361,35 @@ export class UcumDemo {
     valFld.innerHTML = retMsg;
   } // end reportUnitStringValidity
 
+
+  /**
+   *
+   */
+  showConvertTab(){
+    this.convFromUnit = false ;
+    this.convToUnit = false ;
+  }
+  /**
+   *
+   */
+  checkUnitString(formField, resultString, validFlag) {
+    // get the contents of the form field
+    let uString = sanitizeHtml(document.getElementById(formField).value) ;
+    if (uString !== '' && uString !== null) {
+
+      // validate it
+      let valResp = this.utils_.getSpecifiedUnit(uString, 'validate', 'suggest');
+      if (!valResp[0] || valResp[2].length > 0) {
+
+      }
+      // if an error or invalid
+      // put message in result string
+      // set validFlag false
+      // else
+      // set validFlag true
+      // check for all true
+    } // end if the field contained anything
+  } // end validateUnitString
 
   /**
    * This method converts one unit to another
@@ -417,6 +452,8 @@ export class UcumDemo {
       resultString.innerHTML = entryErrMsg.join('<BR>');
     }
     else {
+      let convertButton = document.getElementById("doConversionButton");
+      convertBut
       let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
                                                 suggest);
       if (resultObj['status'] === 'succeeded') {
