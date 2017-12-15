@@ -292,6 +292,7 @@ describe('Test parseString method', function() {
       assert.equal(respSugg[0]['units'].length, 2);
       assert.deepEqual(respSugg[0]['msg'], "culture is not a valid UCUM code.  " +
         "We found possible units that might be what was meant:");
+      assert.deepEqual(respSugg[0]['invalidUnit'], 'culture');
       assert.deepEqual(respSugg[0]['units'][0],
         ["[CCID_50]","50% cell culture infectious dose",null]);
       assert.deepEqual(respSugg[0]['units'][1],
@@ -348,6 +349,7 @@ describe('Test parseString method', function() {
       assert.equal(respSugg[0]['units'].length, 2);
       assert.deepEqual(respSugg[0]['msg'], "culture is not a valid UCUM " +
         "code.  We found possible units that might be what was meant:");
+      assert.deepEqual(respSugg[0]['invalidUnit'], 'culture');
       assert.deepEqual(respSugg[0]['units'][0],
         ["[CCID_50]","50% cell culture infectious dose",null]);
       assert.deepEqual(respSugg[0]['units'][1],

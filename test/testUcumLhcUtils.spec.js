@@ -71,6 +71,7 @@ describe('Test validateUnitString method', function() {
     assert.equal(suggs['units'].length, 3);
     assert.equal(suggs['msg'], 'allergen is not a valid ' +
       'UCUM code.  We found possible units that might be what was meant:');
+    assert.equal(suggs['invalidUnit'], 'allergen');
     assert.deepEqual(suggs['units'][0],
        ['[BAU]','bioequivalent allergen unit', null]) ;
     assert.deepEqual(suggs['units'][1], ['[AU]', 'allergy unit',
@@ -140,6 +141,7 @@ it("should return a message for invalid unit strings", function() {
     assert.deepEqual(suggsFrom['units'].length, 3);
     assert.deepEqual(suggsFrom['msg'], 'allergen is not a valid ' +
       'UCUM code.  We found possible units that might be what was meant:');
+    assert.deepEqual(suggsFrom['invalidUnit'], 'allergen');
     assert.deepEqual(suggsFrom['units'][0],
       ['[BAU]','bioequivalent allergen unit', null]) ;
     assert.deepEqual(suggsFrom['units'][1], ['[AU]', 'allergy unit',
@@ -152,6 +154,7 @@ it("should return a message for invalid unit strings", function() {
     assert.deepEqual(suggsTo['units'].length, 2);
     assert.deepEqual(suggsTo['msg'], 'culture is not a valid ' +
       'UCUM code.  We found possible units that might be what was meant:');
+    assert.deepEqual(suggsTo['invalidUnit'], 'culture');
     assert.deepEqual(suggsTo['units'][0], ['[CCID_50]',
       '50% cell culture infectious dose', null]);
     assert.deepEqual(suggsTo['units'][1], ['[TCID_50]',

@@ -143,9 +143,11 @@ export class UnitString {
    *   'retMsg' an array of any user messages (informational, error or warning)
    *     generated (or an empty array); and
    *   'suggestions' an array of hash objects (1 or more).  Each hash contains
-   *     two elements:
+   *     three elements:
    *     'msg' which is a message indicating what unit expression the
-   *       suggestions are for; and
+   *       suggestions are for;
+   *     'invalidUnit' which is the unit expression the suggestions are
+   *       for; and
    *     'units' which is an array of data for each suggested unit found.
    *        Each array will contain the unit code, the unit name and the
    *        unit guidance (if any).
@@ -883,9 +885,10 @@ export class UnitString {
    * the this.retMsg_ array will be updated with a message indicating whether
    *  or not synonyms/suggestions  were found
    * the this.suggestions_ array will be updated with a hash (added to the
-   *   array if it already contains others) that contains two elements:
+   *   array if it already contains others) that contains three elements:
    *   'msg' which is a message indicating what unit expression the
-   *      suggestions are for; and
+   *      suggestions are for;
+   *   'invalidUnit' which is the unit expression the suggestions are for; and
    *   'units' which is an array of data for each suggested unit found.
    *       Each array will contain the unit code, the unit name and the
    *       unit guidance (if any).
@@ -897,6 +900,7 @@ export class UnitString {
       let suggSet = {} ;
       suggSet['msg'] = `${pStr} is not a valid UCUM code.  We found possible ` +
                        `units that might be what was meant:`;
+      suggSet['invalidUnit'] = pStr ;
       let synLen = retObj['units'].length ;
       suggSet['units'] = [] ;
       for (let s = 0; s < synLen; s++) {

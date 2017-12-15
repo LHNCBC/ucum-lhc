@@ -78,9 +78,11 @@ cannot be resolved to a valid unit; anything or nothing (undefined) otherwise
      * 'name' is the unit's name (Gauss in the above example); and
      * 'guidance' is the unit's guidance/description data.
    * 'suggestions' if suggestions were requested and found, this is an array
-         of one or more hash objects.  Each hash contains two elements:
+         of one or more hash objects.  Each hash contains three elements:
      * 'msg' which is a message indicating what part of the uStr input
-         parameter the suggestions are for; and
+         parameter the suggestions are for;
+     * 'invalidUnit' which is the unit expression the suggestions are
+         for; and
      * 'units' which is an array of data for each suggested unit found.
           Each array will contain the unit code, the unit name and the
           unit guidance (if any).
@@ -137,9 +139,11 @@ cannot be resolved to a valid unit; anything or nothing (undefined) otherwise
         that contains at most two elements:
      * 'from' which, if the fromUnitCode input parameter or one or more of
          its components could not be found, is an array one or more hash
-         objects.  Each hash contains two elements:
+         objects.  Each hash contains three elements:
        * 'msg' which is a message indicating what unit expression the
-           suggestions are for; and
+           suggestions are for;
+       * 'invalidUnit' which is the unit expression the suggestions are
+           for; and
        * 'units' which is an array of data for each suggested unit found.
            Each array will contain the unit code, the unit name and the
            unit guidance (if any).
@@ -147,9 +151,11 @@ cannot be resolved to a valid unit; anything or nothing (undefined) otherwise
          will not be included.
      * 'to' which, if the "to" unit expression or one or more of its
          components could not be found, is an array one or more hash
-         objects.  Each hash contains two elements:
+         objects.  Each hash contains three elements:
        * 'msg' which is a message indicating what part of the toUnitCode
-           input parameter the suggestions are for; and
+           input parameter the suggestions are for;
+       * 'invalidUnit' which is the unit expression the suggestions
+           are for; and
        * 'units' which is an array of data for each suggested unit found.
            Each array will contain the unit code, the unit name and the
            unit guidance (if any).
