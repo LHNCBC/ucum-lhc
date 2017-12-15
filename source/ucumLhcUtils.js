@@ -121,9 +121,11 @@ export class UcumLhcUtils {
    *    'name' is the unit's name (Gauss in the above example); and
    *    'guidance' is the unit's guidance/description data; and
    *  'suggestions' if suggestions were requested and found, this is an array
-   *     of one or more hash objects.  Each hash contains two elements:
+   *     of one or more hash objects.  Each hash contains three elements:
    *     'msg' which is a message indicating what part of the uStr input
-   *        parameter the suggestions are for; and
+   *        parameter the suggestions are for;
+   *     'invalidUnit' which is the unit expression the suggestions are
+   *        for; and
    *     'units' which is an array of data for each suggested unit found.
    *        Each array will contain the unit code, the unit name and the
    *        unit guidance (if any).
@@ -183,9 +185,11 @@ export class UcumLhcUtils {
    *     that contains at most two elements:
    *     'from' which, if the fromUnitCode input parameter or one or more of
    *       its components could not be found, is an array one or more hash
-   *       objects.  Each hash contains two elements:
+   *       objects.  Each hash contains three elements:
    *         'msg' which is a message indicating what unit expression the
-   *            suggestions are for; and
+   *            suggestions are for;
+   *         'invalidUnit' which is the unit expression the suggestions
+   *            are for; and
    *         'units' which is an array of data for each suggested unit found.
    *            Each array will contain the unit code, the unit name and the
    *            unit guidance (if any).
@@ -193,9 +197,11 @@ export class UcumLhcUtils {
    *       will not be included.
    *     'to' which, if the "to" unit expression or one or more of its
    *       components could not be found, is an array one or more hash objects.  Each hash
-   *       contains two elements:
+   *       contains three elements:
    *         'msg' which is a message indicating what toUnitCode input
-   *            parameter the suggestions are for; and
+   *            parameter the suggestions are for;
+   *         'invalidUnit' which is the unit expression the suggestions
+   *            are for; and
    *         'units' which is an array of data for each suggested unit found.
    *            Each array will contain the unit code, the unit name and the
    *            unit guidance (if any).
@@ -336,9 +342,11 @@ export class UcumLhcUtils {
    *     any were generated (IF any were generated, otherwise will be an
    *     empty array); and
    *  'suggestions' is an array of 1 or more hash objects.  Each hash
-   *     contains two elements:
+   *     contains three elements:
    *       'msg' which is a message indicating what unit expression the
-   *          suggestions are for; and
+   *          suggestions are for;
+   *       'invalidUnit' which is the unit expression the suggestions are
+   *          for; and
    *       'units' which is an array of data for each suggested unit found.
    *          Each array will contain the unit code, the unit name and the
    *          unit guidance (if any).
