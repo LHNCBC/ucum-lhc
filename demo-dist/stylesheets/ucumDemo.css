@@ -207,6 +207,10 @@ ul.tab li a {
   width: 10em;
 }
 
+#doConversionButton {
+  visibility: hidden;
+}
+
 #precision {
   width: 3em;
 }

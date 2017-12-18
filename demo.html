@@ -38,9 +38,8 @@
         <p>Enter or select a valid UCUM code for the unit you want to convert:
           <input type="text" id="convertFrom" placeholder="begin typing ..."
           onchange=
-          "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
-          'validationString',
-          'suggest')">&nbsp;
+          "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertFrom',
+          'resultString', 'from')">&nbsp;
 
              <!---  Not using this list -- for now
           onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
@@ -63,13 +62,19 @@
           <!-- this section is built in the demo code when the page is loaded -->
         </div> <!-- advancedSearchCnv division -->
         <br><br><p>Enter the numeric value you want to convert:
-        <input type="text" id="convertNum">&nbsp; &nbsp;
+        <input type="text" id="convertNum"
+               onchange=
+                       "demoPkg.UcumDemo.getInstance().checkFromVal('convertNum')">
+        &nbsp; &nbsp;
         Result rounded to <input type="number" min="0" max="20" id="precision"> decimal digits.
       </p><br>
         <div id="convertToDivs">
           <div id="convertLeft">
             <p>Enter or select the unit that you want to convert to:
-              <input type="text" id="convertTo">
+              <input type="text" id="convertTo"
+                     onchange=
+                             "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertTo',
+          'resultString', 'to')"&nbsp;>
           </div>
           <div id="convertRight" style="visibility: hidden">
             You can enter other commensurate units that are not on this list.
@@ -78,8 +83,8 @@
         <div><br>&nbsp;&nbsp;  <button id="doConversionButton"
                                        onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
                                                              'convertNum',
-                                                             'convertTo', 'suggest')"
-                                       type="button" disabled>Convert</button>
+                                                             'convertTo')"
+                                       type="button">Convert</button>
         </div>
         <p id="resultString">&nbsp;&nbsp;</p>
       </div> <!-- end convSection div -->
@@ -218,8 +223,8 @@
   <!-- end page footer -->
 
     <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/10.1.1/autocomplete-lhc_jQuery.min.js"></script>
-    <script src="dist/ucum-lhc.min.js"></script>
-    <script src="demo-dist/ucum-demo.min.js"></script>
+    <script src="dist/ucum-lhc.js"></script>
+    <script src="demo-dist/ucum-demo.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
