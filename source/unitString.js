@@ -133,9 +133,10 @@ export class UnitString {
    * @param valConv indicates what type of request this is for - a request to
    *  validate (pass in 'validate') or a request to convert (pass in 'convert');
    *  optional, defaults to 'validate'
-   * @param suggest indicates whether or not to include suggestions for a
-   *  string where no unit could be found; 'suggest' will cause suggestions
-   *  to be included; anything else, or unspecified, will omit suggestions
+   * @param suggest a boolean to indicate whether or not suggestions are
+   *  requested for a string that cannot be resolved to a valid unit;
+   *  true indicates suggestions are wanted; false indicates they are not,
+   *  and is the default if the parameter is not specified;
    * @returns a hash containing:
    *   'unit' the unit object (or null if there were problems creating the
    *     unit);
@@ -172,11 +173,11 @@ export class UnitString {
       this.vcMsgEnd_ = this.cnvMsgEnd_;
     }
 
-    if (suggest === 'suggest') {
-      this.suggestions_ = [];
+    if (suggest === undefined || suggest === false) {
+      this.suggestions_ = null;
     }
     else {
-      this.suggestions_ = null ;
+      this.suggestions_ = [] ;
     }
     this.retMsg_ = [];
     this.parensUnits_ = [];

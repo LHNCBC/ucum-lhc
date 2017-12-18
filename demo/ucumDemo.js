@@ -539,8 +539,7 @@ export class UcumDemo {
           if (resultObj['suggestions']['from'])
             suggString += this._suggSetOutput(resultObj['suggestions']['from']);
           if (resultObj['suggestions']['to'])
-            suggString += this._suggSetOutput(resultObj['suggestions']['to']);
-          resultString.innerHTML = suggString ;
+            suggString += this._suggSetOutput(resultObj['suggestions']['to']);          resultString.innerHTML = suggString ;
         }
         // if suggestions were not found, output whatever message(s) were
         // returned that would indicate the problem

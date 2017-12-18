@@ -100,9 +100,10 @@ export class UcumLhcUtils {
    * with unit names and synonyms.
    *
    * @param uStr the string to be validated
-   * @param suggest "suggest' if suggestions are requested for a string that
-   *  cannot be resolved to a valid unit; anything or nothing (undefined)
-   *  otherwise
+   * @param suggest a boolean to indicate whether or not suggestions are
+   *  requested for a string that cannot be resolved to a valid unit;
+   *  true indicates suggestions are wanted; false indicates they are not,
+   *  and is the default if the parameter is not specified;
    * @returns an object with five properties:
    *  'status' will be 'valid' (the uStr is a valid UCUM code), 'invalid'
    *     (the uStr is not a valid UCUM code, and substitutions or
@@ -133,6 +134,9 @@ export class UcumLhcUtils {
    *     returned.
    */
   validateUnitString(uStr, suggest) {
+
+    if (suggest === undefined)
+      suggest = false ;
 
     let resp = this.getSpecifiedUnit(uStr, 'validate', suggest);
     let theUnit = resp['unit'];
@@ -168,9 +172,10 @@ export class UcumLhcUtils {
    * @param fromVal the number of "from" units to be converted to "to" units
    * @param toUnitCode the unit code/expression/string of the unit that the from
    *  field is to be converted to
-   * @param suggest "suggest' if suggestions are requested for a string that
-   *  cannot be resolved to a valid unit; anything or nothing (undefined)
-   *  otherwise
+   * @param suggest a boolean to indicate whether or not suggestions are
+   *  requested for a string that cannot be resolved to a valid unit;
+   *  true indicates suggestions are wanted; false indicates they are not,
+   *  and is the default if the parameter is not specified;
    * @returns a hash with six elements:
    *  'status' that will be: 'succeeded' if the conversion was successfully
    *     calculated; 'failed' if the conversion could not be made, e.g., if
@@ -214,6 +219,9 @@ export class UcumLhcUtils {
    *     in case it's needed for additional data from the object.
    */
   convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest) {
+
+    if (suggest === undefined)
+      suggest = false ;
 
     let returnObj = {'status' : 'failed',
                      'toVal' : null,
@@ -334,6 +342,10 @@ export class UcumLhcUtils {
    * @param uName the expression/string representing the unit
    * @param valConv indicates what type of request this is for - a request to
    *  validate (pass in 'validate') or a request to convert (pass in 'convert')
+   * @param suggest a boolean to indicate whether or not suggestions are
+   *  requested for a string that cannot be resolved to a valid unit;
+   *  true indicates suggestions are wanted; false indicates they are not,
+   *  and is the default if the parameter is not specified;
    * @returns a hash containing:
    *   'unit' the unit object (or null if there were problems creating the
    *     unit);
@@ -354,6 +366,9 @@ export class UcumLhcUtils {
    *   was found or if suggestions were not requested and found.
    */
   getSpecifiedUnit(uName, valConv, suggest) {
+
+    if (suggest === undefined)
+      suggest = false ;
 
     let retObj = {};
     retObj['retMsg'] = [];

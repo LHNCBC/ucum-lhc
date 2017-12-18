@@ -272,7 +272,7 @@ describe('Test parseString method', function() {
     var uString = UnitString.getInstance();
     var retMsg = [];
     var origString = 'culture/2mg';
-    var resp = uString.parseString('culture/2mg', 'validate', 'suggest');
+    var resp = uString.parseString('culture/2mg', 'validate', true);
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
@@ -304,7 +304,7 @@ describe('Test parseString method', function() {
     var uString = UnitString.getInstance();
     var retMsg = [];
     var origString = 'culture/2mg';
-    var resp = uString.parseString('culture/2mg', 'validate', 'nosuggest');
+    var resp = uString.parseString('culture/2mg', 'validate', false);
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
@@ -328,7 +328,7 @@ describe('Test parseString method', function() {
   describe('test for unit string 2mg/culture with suggestions', function() {
     var uString = UnitString.getInstance();
     var retMsg = [];
-    var resp = uString.parseString('2mg/culture', 'validate', 'suggest');
+    var resp = uString.parseString('2mg/culture', 'validate', true);
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
@@ -360,7 +360,7 @@ describe('Test parseString method', function() {
   describe('test for unit string 2mg/culture without suggestions', function() {
     var uString = UnitString.getInstance();
     var retMsg = [];
-    var resp = uString.parseString('2mg/culture', 'validate', 'nosuggest');
+    var resp = uString.parseString('2mg/culture', 'validate');
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;

@@ -58,8 +58,10 @@ that is returned.  Suggestions are based on matching the expression with
 unit names and synonyms.
 
 * _@param_ uStr the string to be validated
-* _@param_ suggest "suggest' if suggestions are requested for a string that
-cannot be resolved to a valid unit; anything or nothing (undefined) otherwise
+* _@param_ suggest a boolean to indicate whether or not suggestions are
+    requested for a string that cannot be resolved to a valid unit;
+    true indicates suggestions are wanted; false indicates they are not,
+    and is the default if the parameter is not specified;
 * _@returns_ an object with five properties:
    * 'status' will be 'valid' (the uStr is a valid UCUM code), 'invalid'
         (the uStr is not a valid UCUM code, and substitutions or
@@ -123,8 +125,10 @@ rounded to any particular precision or significant digits.
 * _@param_ fromVal the number of "from" units to be converted to "to" units
 * _@param_ toUnitCode the unit code/expression/string of the unit that the from 
   field is to be converted to
-* _@param_ suggest "suggest' if suggestions are requested for a string that
-cannot be resolved to a valid unit; anything or nothing (undefined) otherwise
+* _@param_ suggest a boolean to indicate whether or not suggestions are
+   requested for a string that cannot be resolved to a valid unit;
+   true indicates suggestions are wanted; false indicates they are not,
+   and is the default if the parameter is not specified;
 * _@returns_ a hash with six elements:
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if

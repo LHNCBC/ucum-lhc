@@ -83,7 +83,7 @@
         <div><br>&nbsp;&nbsp;  <button id="doConversionButton"
                                        onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
                                                              'convertNum',
-                                                             'convertTo')"
+                                                             'convertTo', true)"
                                        type="button">Convert</button>
         </div>
         <p id="resultString">&nbsp;&nbsp;</p>
@@ -99,7 +99,7 @@
                  onchange=
                  "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString',
-                                                                   'suggest')">&nbsp; &nbsp;
+                                                                   true)">&nbsp; &nbsp;
           Press tab or return to validate the expression</p>
           <p class="small-print">If you are not finding a unit that you think should be there, check the
           advanced search options to see if you should add a category (or categories)
@@ -223,8 +223,8 @@
   <!-- end page footer -->
 
     <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/10.1.1/autocomplete-lhc_jQuery.min.js"></script>
-    <script src="dist/ucum-lhc.js"></script>
-    <script src="demo-dist/ucum-demo.js"></script>
+    <script src="dist/ucum-lhc.min.js"></script>
+    <script src="demo-dist/ucum-demo.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
