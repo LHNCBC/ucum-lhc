@@ -17,6 +17,7 @@ var str = require('string-to-stream') ;
 var UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
 var Ucum = require('./config.js').Ucum;
 
+
 export class UcumFileValidator {
 
   constructor() {
@@ -89,15 +90,28 @@ export class UcumFileValidator {
         record[unitTestedCol] = uStr;
 
         try {
-          let parseResp = utils.validateUnitString(uStr);
+          let parseResp = utils.validateUnitString(uStr, true);
           if (parseResp['status'] === 'valid')
             record[resultCol] = parseResp['ucumCode'] + " is a valid UCUM unit.";
           else
             record[resultCol] = uStr + " is not a valid UCUM unit.";
+          record[commentCol] = '';
           if (parseResp['msg'] && parseResp['msg'].length > 0)
             record[commentCol] = parseResp['msg'].join('; ');
-          else
-            record[commentCol] = '';
+            if (parseResp['suggestions'])
+              record[commentCol] += '\n';
+          if (parseResp['suggestions']) {
+            let suggSet = parseResp['suggestions'];
+            let suggString = '';
+            for (let s = 0; s < suggSet.length; s++) {
+              suggString += s[s]['msg'] + '\n';
+              for (let u = 0; u < suggSet[s]['units'].length; u++) {
+                suggString += suggSet[s]['units'][u].join(', ') + '\n';
+              } // end do for each unit
+            }
+            record[commentCol] = intUtils_.suggestionSetOutput(
+              parseResp['suggestions'], '\n');
+          }
         }
         catch (err) {
           record[resultCol] = 'ERROR';

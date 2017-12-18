@@ -52492,9 +52492,22 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
           record[unitTestedCol] = uStr;
 
           try {
-            var _parseResp = utils.validateUnitString(uStr);
+            var _parseResp = utils.validateUnitString(uStr, true);
             if (_parseResp['status'] === 'valid') record[resultCol] = _parseResp['ucumCode'] + " is a valid UCUM unit.";else record[resultCol] = uStr + " is not a valid UCUM unit.";
-            if (_parseResp['msg'] && _parseResp['msg'].length > 0) record[commentCol] = _parseResp['msg'].join('; ');else record[commentCol] = '';
+            record[commentCol] = '';
+            if (_parseResp['msg'] && _parseResp['msg'].length > 0) record[commentCol] = _parseResp['msg'].join('; ');
+            if (_parseResp['suggestions']) record[commentCol] += '\n';
+            if (_parseResp['suggestions']) {
+              var suggSet = _parseResp['suggestions'];
+              var suggString = '';
+              for (var s = 0; s < suggSet.length; s++) {
+                suggString += s[s]['msg'] + '\n';
+                for (var u = 0; u < suggSet[s]['units'].length; u++) {
+                  suggString += suggSet[s]['units'][u].join(', ') + '\n';
+                } // end do for each unit
+              }
+              record[commentCol] = intUtils_.suggestionSetOutput(_parseResp['suggestions'], '\n');
+            }
           } catch (err) {
             record[resultCol] = 'ERROR';
             record[commentCol] = err.message;
@@ -53145,9 +53158,10 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * with unit names and synonyms.
      *
      * @param uStr the string to be validated
-     * @param suggest "suggest' if suggestions are requested for a string that
-     *  cannot be resolved to a valid unit; anything or nothing (undefined)
-     *  otherwise
+     * @param suggest a boolean to indicate whether or not suggestions are
+     *  requested for a string that cannot be resolved to a valid unit;
+     *  true indicates suggestions are wanted; false indicates they are not,
+     *  and is the default if the parameter is not specified;
      * @returns an object with five properties:
      *  'status' will be 'valid' (the uStr is a valid UCUM code), 'invalid'
      *     (the uStr is not a valid UCUM code, and substitutions or
@@ -53182,6 +53196,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     key: 'validateUnitString',
     value: function validateUnitString(uStr, suggest) {
 
+      if (suggest === undefined) suggest = false;
+
       var resp = this.getSpecifiedUnit(uStr, 'validate', suggest);
       var theUnit = resp['unit'];
       var retObj = {};
@@ -53212,9 +53228,10 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * @param fromVal the number of "from" units to be converted to "to" units
      * @param toUnitCode the unit code/expression/string of the unit that the from
      *  field is to be converted to
-     * @param suggest "suggest' if suggestions are requested for a string that
-     *  cannot be resolved to a valid unit; anything or nothing (undefined)
-     *  otherwise
+     * @param suggest a boolean to indicate whether or not suggestions are
+     *  requested for a string that cannot be resolved to a valid unit;
+     *  true indicates suggestions are wanted; false indicates they are not,
+     *  and is the default if the parameter is not specified;
      * @returns a hash with six elements:
      *  'status' that will be: 'succeeded' if the conversion was successfully
      *     calculated; 'failed' if the conversion could not be made, e.g., if
@@ -53261,6 +53278,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
   }, {
     key: 'convertUnitTo',
     value: function convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest) {
+
+      if (suggest === undefined) suggest = false;
 
       var returnObj = { 'status': 'failed',
         'toVal': null,
@@ -53372,6 +53391,10 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      * @param uName the expression/string representing the unit
      * @param valConv indicates what type of request this is for - a request to
      *  validate (pass in 'validate') or a request to convert (pass in 'convert')
+     * @param suggest a boolean to indicate whether or not suggestions are
+     *  requested for a string that cannot be resolved to a valid unit;
+     *  true indicates suggestions are wanted; false indicates they are not,
+     *  and is the default if the parameter is not specified;
      * @returns a hash containing:
      *   'unit' the unit object (or null if there were problems creating the
      *     unit);
@@ -53395,6 +53418,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
   }, {
     key: 'getSpecifiedUnit',
     value: function getSpecifiedUnit(uName, valConv, suggest) {
+
+      if (suggest === undefined) suggest = false;
 
       var retObj = {};
       retObj['retMsg'] = [];
@@ -54494,9 +54519,10 @@ var UnitString = exports.UnitString = function () {
      * @param valConv indicates what type of request this is for - a request to
      *  validate (pass in 'validate') or a request to convert (pass in 'convert');
      *  optional, defaults to 'validate'
-     * @param suggest indicates whether or not to include suggestions for a
-     *  string where no unit could be found; 'suggest' will cause suggestions
-     *  to be included; anything else, or unspecified, will omit suggestions
+     * @param suggest a boolean to indicate whether or not suggestions are
+     *  requested for a string that cannot be resolved to a valid unit;
+     *  true indicates suggestions are wanted; false indicates they are not,
+     *  and is the default if the parameter is not specified;
      * @returns a hash containing:
      *   'unit' the unit object (or null if there were problems creating the
      *     unit);
@@ -54535,10 +54561,10 @@ var UnitString = exports.UnitString = function () {
         this.vcMsgEnd_ = this.cnvMsgEnd_;
       }
 
-      if (suggest === 'suggest') {
-        this.suggestions_ = [];
-      } else {
+      if (suggest === undefined || suggest === false) {
         this.suggestions_ = null;
+      } else {
+        this.suggestions_ = [];
       }
       this.retMsg_ = [];
       this.parensUnits_ = [];
