@@ -43,9 +43,9 @@ export class UcumDemo {
 
     // Flags indicating validitity of the "from" and "to" unit fields on
     // the conversion page.
-    this.convFromUnit = false ;
-    this.convToUnit = false ;
-    this.convFromVal = false ;
+    this.convFromUnit_ = false ;
+    this.convToUnit_ = false ;
+    this.convFromVal_ = false ;
 
     // Set up the prefetch autocompleter for the "to" conversion field.  It will
     // be populated with commensurable units in based on what the user enters
@@ -400,46 +400,90 @@ export class UcumDemo {
 
 
   /**
-   *
+   * This method is run when the Converter tab is displayed, to reset the
+   * variables that track the validity of the three inputs ("from" unit code,
+   * "from" value, and "to" unit code) that must be correct to attempt a
+   * conversion.
    */
   showConvertTab(){
-    this.convFromUnit = false ;
-    this.convToUnit = false ;
+    this.convFromUnit_ = false ;
+    this.convFromVal_ = false ;
+    this.convToUnit_ = false ;
   }
 
+
   /**
+   * This method sets the appropriate validity variable and display attributes
+   * (via the "invalid" class attribute) for one of the three inputs that
+   * must be correct to allow the user to request conversion.
+   *
+   * This also checks to see if all three are correct and if they are, it
+   * makes the convert button visible. If they are not the convert button
+   * is hidden (or remains hidden).
+   *
+   * @param whichSetting indicates which input was checked:
+   *   "from" means the "from" unit code field was checked;
+   *   "to" means the "to" unit code fields was checked; and
+   *   "fromNum" means the number of units field was checked.
+   * @param true indicates that the value is valid; false means it's not.
    *
    */
   setConvertValues(whichSetting, value) {
-    if (whichSetting === 'from')
-      this.convFromUnit = value ;
-    else if (whichSetting === 'to')
-      this.convToUnit = value ;
-    else
-      this.convFromVal = value ;
-
+    if (whichSetting === 'from') {
+      this.convFromUnit_ = value;
+      if (value === false)
+        document.getElementById('convertFrom').setAttribute("class", "invalid");
+      else
+        document.getElementById('convertFrom').removeAttribute("class");
+    }
+    else if (whichSetting === 'to') {
+      this.convToUnit_ = value;
+      if (value === false)
+        document.getElementById('convertTo').setAttribute("class", "invalid");
+      else
+        document.getElementById('convertTo').removeAttribute("class");
+    }
+    else { // assume from value
+      this.convFromVal_ = value;
+      if (value === false)
+        document.getElementById('convertNum').setAttribute("class", "invalid");
+      else
+        document.getElementById('convertNum').removeAttribute("class");
+    }
     let convertButton = document.getElementById("doConversionButton");
-    if (this.convFromUnit === true && this.convToUnit === true &&
-        this.convFromVal === true)
-      convertButton.style.visibility = "visible" ;
+    if (this.convFromUnit_ === true && this.convToUnit_ === true &&
+        this.convFromVal_ === true)
+      convertButton.style.visibility = "visible";
     else
       convertButton.style.visibility = "hidden";
-  }
 
+  } // end setConvertValues
+
+
+  /**
+   * This method checks the number of units value to make sure it's a valid
+   * number.  It calls setConvertValues to set the validity state flag for
+   * the number of units field as appropriate.
+   *
+   * @param numField the name of the number of units field
+   *
+   */
   checkFromVal(numField) {
     let fromVal = document.getElementById(numField).value ;
     let parsedNum = parseFloat(fromVal);
     if (isNaN(parsedNum)) {
-      this.setConvertValues('button', false);
+      this.setConvertValues('fromNum', false);
       if (fromVal !== '') {
         let resultString = document.getElementById("resultString");
         resultString.innerHTML = `${fromVal} is not a valid number.`;
       }
     }
     else {
-      this.setConvertValues('button', true);
+      this.setConvertValues('fromNum', true);
     }
-  }
+  } // end checkFromVal
+
+
   /**
    * This method converts one unit to another
    *
