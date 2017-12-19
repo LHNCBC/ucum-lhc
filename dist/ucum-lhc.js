@@ -52503,7 +52503,7 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
               var suggSet = _parseResp['suggestions'];
               var suggString = '';
               for (var s = 0; s < suggSet.length; s++) {
-                suggString += s[s]['msg'] + '\n';
+                suggString += suggSet[s]['msg'] + '\n';
                 for (var u = 0; u < suggSet[s]['units'].length; u++) {
                   suggString += suggSet[s]['units'][u].join(', ') + '\n';
                 } // end do for each unit
