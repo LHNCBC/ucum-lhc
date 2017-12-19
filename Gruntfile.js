@@ -67,7 +67,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: '.',
           flatten: true,
-          src: ['./test/*.js', "!./test/*.spec.js"],
+          src: ['./test/*.js'],
           dest: './test-es5'
         }]
       }
@@ -128,7 +128,7 @@ module.exports = function(grunt) {
       options: {
         reporter: 'spec'
       } ,
-      src: ['./test/*.spec.js']
+      src: ['./test-es5/*.spec.js']
     },
 
     // using nsp for security checking

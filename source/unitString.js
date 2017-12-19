@@ -7,6 +7,8 @@ var Unit = require('./unit.js').Unit;
 var UnitTables = require('./unitTables.js').UnitTables;
 var PrefixTables = require('./prefixTables.js').PrefixTables;
 
+import * as intUtils_ from "./ucumInternalUtils.js";
+
 export class UnitString {
 
   /**
@@ -14,7 +16,7 @@ export class UnitString {
    */
   constructor() {
 
-    // Get the unit and prefix tables
+    // Get instances of the unit and prefix tables and the utilities
     this.utabs_ = UnitTables.getInstance();
     this.pfxTabs_ = PrefixTables.getInstance();
 
@@ -49,9 +51,24 @@ export class UnitString {
     this.vcMsgStart_ = null;
     this.vcMsgEnd_ = null;
 
-    this.suggest_ = false;
+    // Arrays used by multiple methods within this class to hold persistent
+    // data.  Just gets too bulky to pass these guys around.
+
+    // Messages to be returned to the calling function
+    this.retMsg_ = [] ;
+
+    // Units for parenthetical unit strings
+    this.parensUnits_ = [] ;
+
+    // annotation text for annotations found in unit strings
+    this.annotations_ = [] ;
+
+    // suggestions for unit strings that for which no unit was found
+    this.suggestions = [] ;
+
 
     // Make this a singleton.  See UnitTables constructor for details.
+    /*
     let holdThis = UnitString.prototype;
     UnitString = function () {
       throw (new Error('UnitString is a Singleton. ' +
@@ -65,14 +82,15 @@ export class UnitString {
     UnitString.getInstance = function () {
       return self
     };
-  }
+    */
+  } // end constructor
 
 
   /**
    * Sets the emphasis strings to the HTML used in the webpage display - or
    * blanks them out, depending on the use parameter.
    *
-   * @param use flag indicating whether or not to use the braces message;
+   * @param use flag indicating whether or not to use the html message format;
    *  defaults to true
    */
   useHTMLInMessages(use) {
@@ -104,7 +122,7 @@ export class UnitString {
 
   /**
    * Parses a unit string, returns a unit, a possibly updated version of
-   * the string passed in, and messages where appropriate.
+   * the string passed in, and messages and suggestions where appropriate.
    *
    * The string returned may be updated if the input string contained unit
    * names, e.g., "pound".  The unit code ([lb_av] for pound) is placed in
@@ -115,12 +133,27 @@ export class UnitString {
    * @param valConv indicates what type of request this is for - a request to
    *  validate (pass in 'validate') or a request to convert (pass in 'convert');
    *  optional, defaults to 'validate'
-   * @param suggest indicates whether or not to include suggestions for a
-   *  string where no unit could be found; 'suggest' will cause suggestions
-   *  to be included; anything else, or unspecified, will omit suggestions
-   * @returns an array containing: 1) the unit object (or null if there were
-   *  problems creating the unit); 2) the possibly updated unit string passed
-   *  in; and 2) an array of user messages (informational, error or warning).
+   * @param suggest a boolean to indicate whether or not suggestions are
+   *  requested for a string that cannot be resolved to a valid unit;
+   *  true indicates suggestions are wanted; false indicates they are not,
+   *  and is the default if the parameter is not specified;
+   * @returns a hash containing:
+   *   'unit' the unit object (or null if there were problems creating the
+   *     unit);
+   *   'origString' the possibly updated unit string passed in;
+   *   'retMsg' an array of any user messages (informational, error or warning)
+   *     generated (or an empty array); and
+   *   'suggestions' an array of hash objects (1 or more).  Each hash contains
+   *     three elements:
+   *     'msg' which is a message indicating what unit expression the
+   *       suggestions are for;
+   *     'invalidUnit' which is the unit expression the suggestions are
+   *       for; and
+   *     'units' which is an array of data for each suggested unit found.
+   *        Each array will contain the unit code, the unit name and the
+   *        unit guidance (if any).
+   *   The return hash will not contain a suggestions array if a valid unit
+   *   was found or if suggestions were not requested.
    * @throws an error if nothing was specified.
    */
   parseString(uStr, valConv, suggest) {
@@ -140,48 +173,49 @@ export class UnitString {
       this.vcMsgEnd_ = this.cnvMsgEnd_;
     }
 
-    if (suggest !== undefined && suggest === 'suggest') {
-      this.suggest_ = true;
+    if (suggest === undefined || suggest === false) {
+      this.suggestions_ = null;
     }
+    else {
+      this.suggestions_ = [] ;
+    }
+    this.retMsg_ = [];
+    this.parensUnits_ = [];
+    this.annotations_ = [] ;
 
     let origString = uStr;
-    let retMsg = [];
-    let parensUnits = [];
     let retObj = [];
 
     // Extract any annotations, i.e., text enclosed in braces ({}) from the
-    // string before further processing.  Store each one in the annotations
+    // string before further processing.  Store each one in this.annotations_
     // array and put a placeholder in the string for the annotation.  Do
     // this before other processing in case an annotation contains characters
     // that will be interpreted as parenthetical markers or operators in
     // subsequent processing.
-    let annotations = [];
-    uStr = this._getAnnotations(uStr, annotations, retMsg);
-    if (retMsg.length > 0) {
+
+    uStr = this._getAnnotations(uStr);
+    if (this.retMsg_.length > 0) {
       retObj[0] = null;
       retObj[1] = null;
-      retObj[2] = retMsg;
     }
     else {
       // Flag used to block further processing on an unrecoverable error
-      let endProcessing = retMsg.length > 0;
+      let endProcessing = this.retMsg_.length > 0;
 
       // Check for spaces and throw an error if any are found.  The spec
-      // explicitly forbids spaces except in annotations, which is why
-      // this is done after the annotations are extracted instead of in
-      // _parseTheString.
+      // explicitly forbids spaces except in annotations, which is why any
+      // annotations are extracted before this check is made.
       if (uStr.indexOf(' ') > -1) {
         throw (new Error('Blank spaces are not allowed in unit expressions.'));
       } // end if blanks were found in the string
 
-      retObj = this._parseTheString(uStr, origString, retMsg,
-        parensUnits, annotations);
+      retObj = this._parseTheString(uStr, origString);
       let finalUnit = retObj[0];
 
       // Do a final check to make sure that finalUnit is a unit and not
       // just a number.  Something like "1/{HCP}" will return a "unit" of 1
       // - which is not a unit.
-      if (finalUnit && this._isNumericString(finalUnit) && finalUnit !== 1) {
+      if (intUtils_.isNumericString(finalUnit) && finalUnit !== 1) {
         let newUnit = new Unit({'csCode_': origString});
         if (newUnit) {
           newUnit['magnitude_'] = finalUnit;
@@ -192,6 +226,9 @@ export class UnitString {
         retObj[0] = newUnit;
       } // end final check
     } // end if no annotation errors were found
+    retObj[2] = this.retMsg_;
+    if (this.suggestions_ && this.suggestions_.length > 0)
+      retObj[3] = this.suggestions_ ;
     return retObj;
 
   } // end parseString
@@ -209,28 +246,32 @@ export class UnitString {
    *
    * @param uStr the string defining the unit
    * @param origString the original unit string passed in
-   * @param retMsg the array of messages to be returned
-   * @param parensUnits an array to to hold unit objects obtained from
-   *  parenthetical strings
-   * @param annotations an array to hold annotations found in the original
-   *  string
-   * @returns an array containing: 1) the unit object (or null if there were
-   *  problems creating the unit); 2) the possibly updated unit string passed
-   *  in; and 2) an array of user messages (informational, error or warning).
+   * @returns
+   *  an array containing:
+   *    the unit object (or null if there were problems creating the unit); and
+   *    the possibly updated unit string passed in.
+   *
+   * the this.retMsg_ array will be updated with any user messages
+   *   (informational, error or warning) generated by this or called methods
+   * the this.parensUnits_ array is referenced and possibly populated by
+   *   methods called within this one
+   * the this.annotations_ array is referenced by methods called within
+   *   this one
+   * the this.suggestions_ array may be populated by methods called within
+   *   this one
    */
-  _parseTheString(uStr, origString, retMsg, parensUnits, annotations) {
+  _parseTheString(uStr, origString) {
 
     // Unit to be returned
     let finalUnit = null;
 
     // Flag used to block further processing on an unrecoverable error
-    let endProcessing = retMsg.length > 0;
+    let endProcessing = this.retMsg_.length > 0;
 
     // Call _processParens to search for and process any/all parenthetical
     // strings in uStr.  Units created for parenthetical strings will be
-    // stored in the parensUnits array.
-    let parensResp = this._processParens(uStr, origString, parensUnits,
-      annotations, retMsg);
+    // stored in the this.parensUnits_ array.
+    let parensResp = this._processParens(uStr, origString);
     endProcessing = parensResp[2];
 
     // The array used to hold the units and their operators.
@@ -243,8 +284,7 @@ export class UnitString {
 
       // Call _makeUnitsArray to convert the string to an array of unit
       // descriptors with operators.
-      let mkUArray = this._makeUnitsArray(uStr, origString, parensUnits,
-                                          annotations, retMsg);
+      let mkUArray = this._makeUnitsArray(uStr, origString);
 
       endProcessing = mkUArray[2] ;
       if (!endProcessing) {
@@ -259,19 +299,17 @@ export class UnitString {
 
           // Check to see if it's a number.  If so write the number version of
           // the number back to the "un" attribute and move on
-          if (this._isNumericString(curCode)) {
+          if (intUtils_.isNumericString(curCode)) {
             uArray[u1]['un'] = Number(curCode);
           }
 
           else {
             // The current unit array element is a string.  Check now to see
-            // if it is or contains a parenthesized unit from the parensUnits
-            // array.  If so, call _getParens to process the string and get the
-            // unit.
+            // if it is or contains a parenthesized unit from this.parensUnits_.
+            // If so, call _getParens to process the string and get the unit.
 
             if (curCode.indexOf(this.parensFlag_) >= 0) {
-              let parenUnit = this._getParensUnit(curCode, parensUnits, origString,
-                annotations, retMsg);
+              let parenUnit = this._getParensUnit(curCode, origString);
               // if we couldn't process the string, set the end flag and bypass
               // further processing.
               endProcessing = parenUnit[1];
@@ -287,8 +325,7 @@ export class UnitString {
             // Else it's not a parenthetical unit and not a number. Call
             // _makeUnit to create a unit for it.
             else {
-              let uRet = this._makeUnit(curCode, annotations,
-                retMsg, origString);
+              let uRet = this._makeUnit(curCode, origString);
               if (uRet[0] === null)
                 endProcessing = true;
               else {
@@ -304,58 +341,53 @@ export class UnitString {
     // If we're still good, continue
     if (!endProcessing) {
       // Process the units (and numbers) to create one final unit object
-      if (uArray[0] === null || uArray == "'" || uArray[0]['un'] === undefined ||
-        uArray[0]['un'] == null) {
+      if ((uArray[0] === null || uArray[0] === ' ' ||
+           uArray[0]['un'] === undefined || uArray[0]['un'] === null)
+          && this.retMsg_.length === 0) {
         // not sure what this might be, but this is a safeguard
-        retMsg.push(`Unit string (${origString}) did not contain anything that ` +
-          'could be used to create a unit, or else something that is not ' +
-          'handled yet by this package.  Sorry');
+        this.retMsg_.push(`Unit string (${origString}) did not contain ` +
+          `anything that could be used to create a unit, or else something ` +
+          `that is not handled yet by this package.  Sorry`);
         endProcessing = true;
       }
     }
     if (!endProcessing)
-      finalUnit = this._performUnitArithmetic(uArray, retMsg, origString);
+      finalUnit = this._performUnitArithmetic(uArray, origString);
 
-
-    // // check for any annotation flags still there and replace them with
-    // // the annotations
-    // let anoLen = annotations.length;
-    // for (let a = 0; a < anoLen; a++) {
-    //   origString = origString.replace(this.braceFlag_ + a +
-    //       this.braceFlag_, annotations[a]);
-    // }
-    return [finalUnit, origString, retMsg];
+    return [finalUnit, origString];
   } // end _parseTheString
 
 
   /**
    * Extracts all annotations from a unit string, replacing them with
    * placeholders for later evaluation.  The annotations are stored in the
-   * annotations array.  This should only be called from within this class
-   * (or by test code).
+   * this.annotations_ array.  This should only be called from within this
+   * class (or by test code).
    *
    * @param uString the unit string being parsed
-   * @param annotations the array to contain the extracted annotations
-   * @param retMsg the array to contain any user messages (error and warning)
    * @returns the string after the annotations are replaced with placeholders
+   *
+   * the this.retMsg_ array will be updated with any user messages
+   *   (informational, error or warning) generated by this or called methods
+   * the this.annotations_ array is populated by this method
    */
-  _getAnnotations(uString, annotations, retMsg) {
+  _getAnnotations(uString) {
     let openBrace = uString.indexOf('{');
     while (openBrace >= 0) {
 
       let closeBrace = uString.indexOf('}');
       if (closeBrace < 0) {
-        retMsg.push('Missing closing brace for annotation starting at ' +
+        this.retMsg_.push('Missing closing brace for annotation starting at ' +
           this.openEmph_ + uString.substr(openBrace) +
           this.closeEmph_);
         openBrace = -1;
       }
       else {
         let braceStr = uString.substring(openBrace, closeBrace + 1);
-        let aIdx = annotations.length.toString();
+        let aIdx = this.annotations_.length.toString();
         uString = uString.replace(braceStr, this.braceFlag_ + aIdx +
           this.braceFlag_);
-        annotations.push(braceStr);
+        this.annotations_.push(braceStr);
         openBrace = uString.indexOf('{');
       }
     } // end do while we have an opening brace
@@ -363,7 +395,7 @@ export class UnitString {
     // check for a stray/unmatched closing brace
     let closeBrace = uString.indexOf('}');
     if (closeBrace >= 0)
-      retMsg.push('Missing opening brace for closing brace found at ' +
+      this.retMsg_.push('Missing opening brace for closing brace found at ' +
         this.openEmph_ + uString.substring(0, closeBrace + 1) +
         this.closeEmph_);
     return uString;
@@ -376,36 +408,38 @@ export class UnitString {
    *
    * Nested parenthesized strings are processed from the inside out.  The
    * parseString function is called from within this one for each parenthesized
-   * unit string, and the resulting unit object is stored in the parensUnits
-   * array, to be processed after all strings are translated to units.
+   * unit string, and the resulting unit object is stored in this.parensUnits_,
+   * to be processed after all strings are translated to units.
    *
    * A placeholder is placed in the unit string returned to indicate that the
-   * unit object should be obtained from the parensUnits array.  The placeholder
-   * consists of the parenthesis flag (this.parensFlag_) followed by the index
-   * of the unit in the parensUnits array followed by this.parensFlag_.
+   * unit object should be obtained from the this.parensUnits_ array.  The
+   * placeholder consists of the parenthesis flag (this.parensFlag_) followed
+   * by the index of the unit in this.parensUnits_ followed by this.parensFlag_.
    *
-   * @param uStr the unit string being parsed, where this will be the full
+   * @param uString the unit string being parsed, where this will be the full
    *  string the first time this is called and parenthesized strings on any
    *  subsequent calls
    * @param origString the original string first passed in to parseString
-   * @param parensUnits the array to contain the unit objects for the
-   *  parenthesized unit strings
-   * @param annotations the array that contains any annotations in the
-   *  unit strings; passed through when _parseTheString called recursively
-   * @param retMsg the array to contain any user messages (error and warning)
-   * @returns an array containing the string after the parentheses are replaced,
-   *  the original string, and a boolean flag indicating whether or not an error
-   *  occurred that should stop processing.
-   * with placeholders
+   * @returns
+   *  an array containing:
+   *   the string after the parentheses are replaced;
+   *   the original string; and
+   *   a boolean flag indicating whether or not an error occurred that
+   *     should stop processing.
+   *
+   * the this.retMsg_ array will be updated with any user messages
+   *   (informational, error or warning) generated by this or called methods
+   * this this.parensUnits_ array will be populated with units found for
+   *   parenthetical unit strings
    */
-  _processParens(uString, origString, parensUnits, annotations, retMsg) {
+  _processParens(uString, origString) {
 
     // Unit strings array and index
     let uStrArray = [];
     let uStrAryPos = 0;
     let stopProcessing = false;
 
-    let pu = parensUnits.length;
+    let pu = this.parensUnits_.length;
 
     // Count of characters trimmed off the beginning of the unit string (uString)
     // as units are removed from it; used for error messages to provide
@@ -415,7 +449,7 @@ export class UnitString {
     // Break the unit string into pieces that consist of text outside of
     // parenthetical strings and placeholders for the parenthetical units.
     // This method is called recursively for parenthetical strings and the units
-    // returned are stored in the parensUnits array.
+    // returned are stored in the this.parensUnits_ array.
     while (uString !== "" && !stopProcessing) {
       let openCt = 0;
       let closeCt = 0;
@@ -433,7 +467,7 @@ export class UnitString {
           if (closePos < uString.length - 1) {
             theMsg += `${uString.substr(closePos + 1)}`;
           }
-          retMsg.push(theMsg);
+          this.retMsg_.push(theMsg);
           uStrArray[uStrAryPos] = uString;
           stopProcessing = true;
         } // end if a close parenthesis was found
@@ -475,7 +509,7 @@ export class UnitString {
 
         // Put a placeholder for the group in the unit strings array and recursively
         // call this method for the parenthetical group.  Put the unit returned
-        // in the parensUnit array.  Set the unit string to whatever follows
+        // in this.parensUnits_.  Set the unit string to whatever follows
         // the position of the closing parenthesis for this group, to be
         // processed by the next iteration of this loop.  If there's nothing
         // left uString is set to "".
@@ -483,13 +517,12 @@ export class UnitString {
           closePos = c;
           uStrArray[uStrAryPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
           let parseResp = this._parseTheString(
-            uString.substring(openPos + 1, closePos - 1),
-            origString, retMsg, parensUnits, annotations);
+            uString.substring(openPos + 1, closePos - 1), origString);
           if (parseResp[0] === null)
             stopProcessing = true;
           else {
             origString = parseResp[1];
-            parensUnits[pu++] = parseResp[0];
+            this.parensUnits_[pu++] = parseResp[0];
             uString = uString.substr(closePos);
             trimmedCt = closePos;
           }
@@ -499,7 +532,7 @@ export class UnitString {
         // an error.
         else {
           uStrArray.push(origString.substr(openPos));
-          retMsg.push(`Missing close parenthesis for open parenthesis at ` +
+          this.retMsg_.push(`Missing close parenthesis for open parenthesis at ` +
             `${origString.substring(0, openPos + trimmedCt)}` +
             `${this.openEmph_}${origString.substr(openPos, 1)}` +
             `${this.closeEmph_}${origString.substr(openPos + 1)}`);
@@ -507,6 +540,8 @@ export class UnitString {
         }
       } // end if an open parenthesis was found
     } // end do while the input string is not empty
+    if (stopProcessing)
+      this.parensUnits_ = [];
     return [uStrArray.join(''), origString, stopProcessing]
   } // end _processParens
 
@@ -521,17 +556,16 @@ export class UnitString {
    *
    * @param uStr the unit string being parsed
    * @param origString the original string passed to parseString
-   * @param parensUnits the array containing the units created for parenthetical
-   *  expressions; passed through to _processParensUnit if it is called
-   * @param annotations the array containing annotation text; passed through
-   *  to _processParensUnit if it is called
-   * @param retMsg the array containing error and informational messages;
-   *  passed through to _processParensUnit if it is called
-   * @returns an array containing: the array representing the unit string,
-   *  the original string passed in, possibly updated with corrections,
-   *  and a flag indicating whether or not processing can continue
+   * @returns
+   *  an array containing:
+   *    the array representing the unit string;
+   *    the original string passed in, possibly updated with corrections; and
+   *    and a flag indicating whether or not processing can continue.
+   *
+   * the this.retMsg_ array will be updated with any user messages
+   *   (informational, error or warning) generated by this or called methods
    */
-  _makeUnitsArray(uStr, origString, parensUnits, annotations, retMsg) {
+  _makeUnitsArray(uStr, origString) {
 
     // Separate the string into pieces based on delimiters / (division) and .
     // (multiplication).  The idea is to get an array of units on which we
@@ -553,11 +587,11 @@ export class UnitString {
       // add two elements to the beginning of the array - the number and the
       // multiplication operator.
 
-      if (!this._isNumericString(uArray1[0])) {
+      if (!intUtils_.isNumericString(uArray1[0])) {
         let numRes = uArray1[0].match(startNumCheck);
         if (numRes && numRes.length === 3 && numRes[1] !== '' &&
           numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
-          retMsg.push(`${uArray1[0]} is not a valid UCUM code.  ` +
+          this.retMsg_.push(`${uArray1[0]} is not a valid UCUM code.  ` +
             this.vcMsgStart_ + `${numRes[1]}.${numRes[2]}` + this.vcMsgEnd_);
           origString = origString.replace(uArray1[0], `${numRes[1]}.${numRes[2]}`);
           uArray1[0] = numRes[2];
@@ -585,13 +619,12 @@ export class UnitString {
       // mg/2.kJ - because mg/2 would be performed, followed by .kJ.  Instead,
       // handling 2kJ as a parenthesized unit will make sure mg is divided by
       // 2.kJ.
-      if (!this._isNumericString(uArray1[n])) {
+      if (!intUtils_.isNumericString(uArray1[n])) {
         let numRes2 = uArray1[n].match(startNumCheck);
         if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' &&
           numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
           let parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
-          let parensResp = this._processParens(parensStr, parensStr, parensUnits,
-            annotations, retMsg);
+          let parensResp = this._processParens(parensStr, parensStr);
           // if a "stop processing" flag was returned, set the n index to end
           // the loop and set the endProcessing flag
           if (parensResp[2]) {
@@ -601,8 +634,7 @@ export class UnitString {
           // Otherwise let the user know about the problem and what we did
           else {
             parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
-            //NO - NOT parensResp[1] - that's the correct one.
-            retMsg.push(`${numRes2[0]} is not a valid UCUM code.\n` +
+            this.retMsg_.push(`${numRes2[0]} is not a valid UCUM code.\n` +
               this.vcMsgStart_ + `${numRes2[1]}.${numRes2[2]}` + this.vcMsgEnd_);
             origString = origString.replace(uArray1[n], parensResp[1]);
             uArray.push({op: theOp, un: parensResp[0]});
@@ -627,15 +659,26 @@ export class UnitString {
    * This should only be called from within this class (or by test code).
    *
    * @param pStr the string being parsed
-   * @returns an array containing the unit object and a flag indicating whether
-   *    or not the pStr was valid whether or not corrections were made.  True
-   *    indicates that no corrections (substitutions or suggestions) could be
-   *    found.
+   * @param origString the original unit string passed in; passed through
+   *  to _getAnnonText if annotation flags are found in any text preceding
+   *  or following the parenthetical unit
+   * @returns
+   *   an array containing
+   *     the unit object; and
+   *     a flag indicating whether or not processing should be ended.
+   *       True indicates that the string was invalid and no corrections
+   *         (substitutions or suggestions) could be found;
+   *       False indicates that it was either valid or substitutions/suggestions
+   *          were made.
+   *   the this.retMsg_ array will be updated with any user messages
+   *     (informational, error or warning) generated by this or called methods
+   *   this this.parensUnits_ array contains the units that are acquired by
+   *     this method
    * @throws an error if an invalid parensUnit index was found.  This is
    *    a processing error.
    */
-  _getParensUnit(pStr, parensUnits, origString, annotations, retMsg) {
-    let stopFlag = false;
+  _getParensUnit(pStr, origString) {
+    let endProcessing = false;
     let retAry = [];
     let retUnit = null;
     let befAnnoText = null;
@@ -662,10 +705,10 @@ export class UnitString {
     let pNumText = pStr.substring(psIdx + this.pFlagLen_, peIdx);
 
     // Make sure the index is a number, and if it is, get the unit from the
-    // parensUnits array
-    if (this._isNumericString(pNumText)) {
-      retUnit = parensUnits[Number(pNumText)];
-      if (!this._isNumericString(retUnit)) {
+    // this.parensUnits_ array
+    if (intUtils_.isNumericString(pNumText)) {
+      retUnit = this.parensUnits_[Number(pNumText)];
+      if (!intUtils_.isNumericString(retUnit)) {
         pStr = retUnit.csCode_;
       }
       else {
@@ -682,18 +725,17 @@ export class UnitString {
     // see if it's a number or an annotation.
     if (befText) {
       // If it's a number, assume that multiplication was assumed
-      if (this._isNumericString(befText)) {
+      if (intUtils_.isNumericString(befText)) {
         let nMag = retUnit.getProperty('magnitude_');
         nMag *= Number(befText);
         retUnit.assignVals({'magnitude_': nMag});
         pStr = `${befText}.${pStr}`;
-        retMsg.push(`${befText}${pStr} is not a valid UCUM code.\n` +
+        this.retMsg_.push(`${befText}${pStr} is not a valid UCUM code.\n` +
           this.vcMsgStart_ + pStr + this.vcMsgEnd_);
       }
       else {
         if (befText.indexOf(this.braceFlag_) >= 0) {
-          let annoRet = this._getAnnoText(befText, origString,
-            annotations, retMsg);
+          let annoRet = this._getAnnoText(befText, origString);
           // if we found not only an annotation, but text before or after
           // the annotation (remembering that this is all before the
           // parentheses) throw an error - because we don't know what
@@ -706,21 +748,21 @@ export class UnitString {
           // Otherwise put the annotation after the unit string and note
           // the misplacement.
           pStr += annoRet[0];
-          retMsg.push(`The annotation ${annoRet[0]} before the unit code is ` +
-            `invalid.\n` + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
+          this.retMsg_.push(`The annotation ${annoRet[0]} before the unit ` +
+            `code is invalid.\n` + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
         }
         // else the text before the parentheses is neither a number nor
         // an annotation.  If suggestions were NOT requested, record an
         // error.
-        else if (!this.suggest_) {
-          retMsg.push(`${befText} preceding the unit code ${pStr} ` +
+        else if (!this.suggestions_) {
+          this.retMsg_.push(`${befText} preceding the unit code ${pStr} ` +
             `is invalid.  Unable to make a substitution.`);
-          stopFlag = true;
+          endProcessing = true;
         }
         // otherwise try for suggestions
         else {
-          // DO _getSuggestions HERE***
-          let suggestAry = this._getSuggestions(befText);
+          let suggestStat = this._getSuggestions(befText);
+          endProcessing =  (suggestStat !== 'succeeded');
 
         } // end if a brace was found or, if not, suggestions were not or
           // were requested
@@ -731,8 +773,7 @@ export class UnitString {
     if (aftText) {
       // if it's an annotation, get it and add it to the pStr
       if (aftText.indexOf(this.braceFlag_) >= 0) {
-        let annoRet = this._getAnnoText(aftText, origString,
-          annotations, retMsg);
+        let annoRet = this._getAnnoText(aftText, origString);
         // if we found not only an annotation, but text before or after
         // the annotation (remembering that this is all after the
         // parentheses) throw an error - because we don't know what
@@ -750,30 +791,30 @@ export class UnitString {
       // user that it's not valid - but try it anyway
       else {
 
-        if (this._isNumericString(aftText)) {
+        if (intUtils_.isNumericString(aftText)) {
           pStr += aftText;
           retUnit = retUnit.power(Number(aftText));
-          retMsg.push(`An exponent (${aftText}) following a parenthesis is ` +
-            `invalid as of revision 1.9 of the UCUM Specification.\n  ` +
+          this.retMsg_.push(`An exponent (${aftText}) following a parenthesis ` +
+            `is invalid as of revision 1.9 of the UCUM Specification.\n  ` +
             this.vcMsgStart_ + pStr + this.vcMsgEnd_);
         }
         // else the text after the parentheses is neither a number nor
         // an annotation.  If suggestions were NOT requested, record an
         // error.
-        else if (!this.suggest_) {
-          retMsg.push(`Text ${aftText} following the unit code ${pStr} ` +
+        else if (!this.suggestions_) {
+          this.retMsg_.push(`Text ${aftText} following the unit code ${pStr} ` +
             `is invalid.  Unable to make a substitution.`);
-          stopFlag = true;
+          endProcessing = true;
         }
         // otherwise try for suggestions
         else {
-          // DO _getSuggestions HERE***
-          let suggestAry = this._getSuggestions(befText);
+          let suggestStat = this._getSuggestions(befText);
+          endProcessing =  (suggestStat !== 'succeeded');
         } // end if text following the parentheses not an exponent
       } // end if text following the parentheses is not an annotation
-    } // end if there is text following teh parentheses
+    } // end if there is text following the parentheses
     retUnit.csCode_ = pStr;
-    return [retUnit, stopFlag];
+    return [retUnit, endProcessing];
   } // end _getParensUnit
 
   /**
@@ -785,14 +826,20 @@ export class UnitString {
    * NEEDS FIX in next branch to handle string with multiple annotations.
    *
    * @param pStr the string being parsed
-   * @param origString the original string being parsed
-   * @param annotations the array of annotations extracted from the origString
-   * @param retMsg the array containing messages to be returned
-   * @returns an array containing the annotation for the pStr, any text found
-   *          before the annotation, and any text found after the annotation
+   * @param origString the original string being parsed; used in error msg
+   *  thrown for an invalid index to the annotations array
+   * @returns
+   *  an array containing
+   *    the annotation for the pStr;
+   *    any text found before the annotation; and
+   *    any text found after the annotation.
+   *
+   * the this.retMsg_ array will be updated with any user messages
+   *   (informational, error or warning) generated by this or called methods
+   * the this.annotations_ array is used as the source for the annotations text
    * @throws an error if for a processing error - an invalid annotation index.
    */
-  _getAnnoText(pStr, origString, annotations, retMsg) {
+  _getAnnoText(pStr, origString) {
 
     // if the starting braces flag is not at index 0, get the starting
     // text and the adjust the pStr to omit it.
@@ -803,23 +850,74 @@ export class UnitString {
     }
 
     // Get the location of the end flag and, if text follows it, get the text
-    let aeIdx = pStr.lastIndexOf(this.braceFlag_);
+    let aeIdx = pStr.indexOf(this.braceFlag_, 1);
     let endText = ((aeIdx + this.bFlagLen_) < pStr.length) ?
       pStr.substr(aeIdx + this.bFlagLen_) : null;
 
-    // Get the index of the annotation in the annotations array.  Check it
-    // to make sure it's valid, and if not, throw an error
+    // Get the index of the annotation in this.annotations_.
+    // Check it to make sure it's valid, and if not, throw an error
     let idx = pStr.substring(this.bFlagLen_, aeIdx);
     let idxNum = Number(idx);
-    if (!this._isNumericString(idx) || idxNum >= annotations.length) {
+    if (!intUtils_.isNumericString(idx) || idxNum >= this.annotations_.length) {
       throw (new Error(`Processing Error - invalid annotation index ${idx} found ` +
         `in ${pStr} that was created from ${origString}`));
     }
 
     // Replace the flags and annotation index with the annotation expression
-    pStr = annotations[idxNum];
+    pStr = this.annotations_[idxNum];
     return [pStr, startText, endText];
   } // end _getAnnoText
+
+
+  /**
+   * Takes a unit string and looks for suggested units.  This should be
+   * called for unit strings that cannot be resolved to unit codes.  The
+   * string is searched for in the synonyms table found in the UnitTables
+   * class.  That table includes all synonyms and unit names for the units
+   * in the unit data table.
+   *
+   * @param pStr the string being parsed
+   * @returns an object that contains an element named 'status', whose
+   *  value indicates the status of the request:
+   *   'succeeded' indicates that synonyms were found;
+   *   'failed' indicates that no synonyms were found; or
+   *   'error' which indicates that an error occurred
+   *
+   * the this.retMsg_ array will be updated with a message indicating whether
+   *  or not synonyms/suggestions  were found
+   * the this.suggestions_ array will be updated with a hash (added to the
+   *   array if it already contains others) that contains three elements:
+   *   'msg' which is a message indicating what unit expression the
+   *      suggestions are for;
+   *   'invalidUnit' which is the unit expression the suggestions are for; and
+   *   'units' which is an array of data for each suggested unit found.
+   *       Each array will contain the unit code, the unit name and the
+   *       unit guidance (if any).
+   */
+  _getSuggestions(pStr) {
+
+    let retObj = intUtils_.getSynonyms(pStr);
+    if (retObj['status'] === 'succeeded') {
+      let suggSet = {} ;
+      suggSet['msg'] = `${pStr} is not a valid UCUM code.  We found possible ` +
+                       `units that might be what was meant:`;
+      suggSet['invalidUnit'] = pStr ;
+      let synLen = retObj['units'].length ;
+      suggSet['units'] = [] ;
+      for (let s = 0; s < synLen; s++) {
+        let unit = retObj['units'][s];
+        let unitArray = [unit['code'], unit['name'], unit['guidance']];
+
+        suggSet['units'].push(unitArray) ;
+      }
+      this.suggestions_.push(suggSet);
+    }
+    else {
+      this.retMsg_.push(`${pStr} is not a valid UCUM code.  No alternatives ` +
+                  `were found.`);
+    }
+    return retObj['status'] ;
+  } // end getSuggestions
 
 
   /**
@@ -830,15 +928,20 @@ export class UnitString {
    * class (or by test code).
    *
    * @params uCode the string defining the unit
-   * @param annotations the array to contain the extracted annotations
-   * @param retMsg the array to contain any user messages (error and warning)
    * @param origString the original string to be parsed; used to provide
    *  context for messages
-   * @returns an array containing:  1) a unit object, or null if there were
-   *  problems creating the unit; and 2) the origString passed in, which may
-   *  be updated if a unit name was translated to a unit code
+   * @returns
+   *  an array containing:
+   *    a unit object, or null if there were problems creating the unit; and
+   *    the origString passed in, which may be updated if a unit name was
+   *    translated to a unit code.
+   *
+   *  the this.retMsg_ array will be updated with any user messages
+   *    (informational, error or warning) generated by this or called methods
+   *  the this.suggestions_ array will be populated if no unit (with or without
+   *    substitutions) could be found and suggestions were requested
    */
-  _makeUnit(uCode, annotations, retMsg, origString) {
+  _makeUnit(uCode, origString) {
 
     // First try the code just as is, without looking for annotations,
     // prefixes, exponents, or elephants.
@@ -850,14 +953,13 @@ export class UnitString {
     // If we found it, we're done.  No need to parse for those elephants (or
     // other stuff).
     else if (uCode.indexOf(this.braceFlag_) >= 0) {
-      let getAnnoRet = this._getUnitWithAnnotation(uCode, origString,
-        annotations, retMsg);
+      let getAnnoRet = this._getUnitWithAnnotation(uCode, origString);
       retUnit = getAnnoRet[0];
       if (retUnit) {
         origString = getAnnoRet[1];
       }
       // If a unit is not found, retUnit will be returned null and
-      // the retMsg array will contain a message describing the problem.
+      // the this.retMsg_ array will contain a message describing the problem.
       // If a unit is found, of course, all is good. So ... nothing left
       // to see here, move along.
     } // end if the uCode includes an annotation
@@ -885,7 +987,7 @@ export class UnitString {
         if (retUnit) {
           retUnit = retUnit.clone();
           origString = origString.replace(uCode, addBrackets);
-          retMsg.push(`${uCode} is not a valid unit expression, but ` +
+          this.retMsg_.push(`${uCode} is not a valid unit expression, but ` +
             `${addBrackets} is.\n` + this.vcMsgStart_ +
             addBrackets + this.vcMsgEnd_);
         } // end if we found the unit after adding brackets
@@ -900,10 +1002,10 @@ export class UnitString {
             retUnit.csCode_ + '.\n' + this.vcMsgStart_ +
             retUnit.csCode_ + this.vcMsgEnd_;
           let dupMsg = false;
-          for (let r = 0; r < retMsg.length && !dupMsg; r++)
-            dupMsg = retMsg[r] === mString;
+          for (let r = 0; r < this.retMsg_.length && !dupMsg; r++)
+            dupMsg = this.retMsg_[r] === mString;
           if (!dupMsg)
-            retMsg.push(mString);
+            this.retMsg_.push(mString);
           let rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
           let res = origString.match(rStr);
           origString = origString.replace(rStr, res[1] + retUnit.csCode_ + res[3]);
@@ -965,13 +1067,19 @@ export class UnitString {
           } // end if we found a prefix
         } // end if we didn't get a unit after removing an exponent
 
-        // One more thing.  If we didn't find a unit, signal an error.
-        // (We tried with the full unit string, with the unit string without
-        // the exponent, and the unit string without a prefix.  That's all
-        // we can try).
+        // If we still haven't found anything, we're done looking.
+        // (We tried with the full unit string, with the unit string
+        // without the exponent, the unit string without a prefix,
+        // common errors, etc. That's all we can try).
         if (!origUnit) {
-          retMsg.push(`Unable to find unit for ${origCode}`);
-          retUnit = null;
+          retUnit = null ;
+          // BUT if the user asked for suggestions, at least look for them
+          if (this.suggestions_) {
+            let suggestStat = this._getSuggestions(origCode);
+          }
+          else {
+            this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
+          }
         }
         else {
           // Otherwise we found a unit object.  Clone it and then apply the
@@ -1063,16 +1171,17 @@ export class UnitString {
    *
    * @param uCode the string defining the unit
    * @param origString the original full string submitted to parseString
-   * @param annotations the array containing extracted annotations
-   * @param retMsg the array used for user messages
    * @returns the unit object found, or null if one could not be found
+   *
+   * the this.retMsg_ array will be updated with any user messages
+   *   (informational, error or warning) generated by this or called methods
    */
-  _getUnitWithAnnotation(uCode, origString, annotations, retMsg) {
+  _getUnitWithAnnotation(uCode, origString) {
 
     let retUnit = null;
 
     // Get the annotation and anything that precedes or follows it.
-    let annoRet = this._getAnnoText(uCode, origString, annotations, retMsg);
+    let annoRet = this._getAnnoText(uCode, origString);
     let annoText = annoRet[0];
     let befAnnoText = annoRet[1];
     let aftAnnoText = annoRet[2];
@@ -1084,15 +1193,14 @@ export class UnitString {
     // we assume it should be a 1.
     if (!befAnnoText && !aftAnnoText) {
       let tryBrackets = '[' + annoText.substring(1, annoText.length - 1) + ']';
-      let mkUnitRet = this._makeUnit(tryBrackets, annotations,
-        retMsg, origString);
+      let mkUnitRet = this._makeUnit(tryBrackets, origString);
 
       // If we got back a unit, assign it to the returned unit, and add
       // a message to advise the user that brackets should enclose the code
       if (mkUnitRet[0]) {
         retUnit = mkUnitRet[0];
         origString = origString.replace(annoText, tryBrackets);
-        retMsg.push(`${annoText} is not a valid unit expression, but ` +
+        this.retMsg_.push(`${annoText} is not a valid unit expression, but ` +
           `${tryBrackets} is.\n` + this.vcMsgStart_ +
           tryBrackets + this.vcMsgEnd_);
       }
@@ -1101,11 +1209,11 @@ export class UnitString {
         uCode = 1;
         if (this.bracesMsg_) {
           let dup = false;
-          for (let r = 0; !dup && r < retMsg.length; r++) {
-            dup = (retMsg[r] === this.bracesMsg_);
+          for (let r = 0; !dup && r < this.retMsg_.length; r++) {
+            dup = (this.retMsg_[r] === this.bracesMsg_);
           }
           if (!dup)
-            retMsg.push(this.bracesMsg_);
+            this.retMsg_.push(this.bracesMsg_);
         }
         retUnit = 1;
       }
@@ -1119,13 +1227,12 @@ export class UnitString {
         // make sure that what's before the annoText is not a number, e.g.,
         // /100{cells}.  But f it is a number, just set the return unit to
         // the number.
-        if (this._isNumericString(befAnnoText)) {
+        if (intUtils_.isNumericString(befAnnoText)) {
           retUnit = befAnnoText ;
         }
         // Otherwise try to find a unit
         else {
-          let mkUnitRet = this._makeUnit(befAnnoText, annotations,
-            retMsg, origString);
+          let mkUnitRet = this._makeUnit(befAnnoText, origString);
 
           // if a unit was returned
           if (mkUnitRet[0]) {
@@ -1135,7 +1242,7 @@ export class UnitString {
           }
           // Otherwise add a not found message
           else {
-            retMsg.push(`Unable to find a unit for ${befAnnoText} that ` +
+            this.retMsg_.push(`Unable to find a unit for ${befAnnoText} that ` +
               `precedes the annotation ${annoText}.`);
           }
         }
@@ -1144,27 +1251,28 @@ export class UnitString {
       // from the after text and assume the user put the annotation in
       // the wrong place (and tell them)
       else if (!befAnnoText && aftAnnoText) {
+
         // Again, test for a number and if it is a number, set the return
         // unit to the number.
-        if (this._isNumericString(aftAnnoText)) {
+        if (intUtils_.isNumericString(aftAnnoText)) {
           retUnit = aftAnnoText + annoText ;
-          retMsg.push(`The annotation ${annoText} before the ${aftAnnoText} is ` +
-            `invalid.\n` + this.vcMsgStart_ + retUnit + this.vcMsgEnd_);
+          this.retMsg_.push(`The annotation ${annoText} before the `
+            `${aftAnnoText} is invalid.\n` + this.vcMsgStart_ + retUnit +
+            this.vcMsgEnd_);
         }
         else {
-          let mkUnitRet = this._makeUnit(aftAnnoText, annotations,
-            retMsg, origString);
+          let mkUnitRet = this._makeUnit(aftAnnoText, origString);
           if (mkUnitRet[0]) {
             retUnit = mkUnitRet[0];
             retUnit.csCode_ += annoText;
             origString = retUnit.csCode_;
-            retMsg.push(`The annotation ${annoText} before the unit code is ` +
-              `invalid.\n` + this.vcMsgStart_ + retUnit.csCode_ +
+            this.retMsg_.push(`The annotation ${annoText} before the unit ` +
+              `code is invalid.\n` + this.vcMsgStart_ + retUnit.csCode_ +
               this.vcMsgEnd_);
           }
           // Otherwise add a not found message
           else {
-            retMsg.push(`Unable to find a unit for ${befAnnoText} that ` +
+            this.retMsg_.push(`Unable to find a unit for ${befAnnoText} that ` +
               `follows the annotation ${annoText}.`);
           }
         }
@@ -1173,7 +1281,7 @@ export class UnitString {
       // For now this is an error.  This may be a case of a missing
       // operator but that is not handled yet.
       else {
-        retMsg.push(`Unable to find a unit for ${befAnnoText}${annoText}` +
+        this.retMsg_.push(`Unable to find a unit for ${befAnnoText}${annoText}` +
           `${aftAnnoText}.\nWe are not sure how to interpret text both before ` +
           `and after the annotation.  Sorry`);
       }
@@ -1192,22 +1300,23 @@ export class UnitString {
    *
    * @params uArray the array that contains the units, numbers and operators
    *  derived from the unit string passed in to parseString
-   * @param retMsg the array that contains any/all user messages (error and
-   *  warning); may be empty when passed in or might not
    * @param origString the original string to be parsed; used to provide
    *  context for messages
    * @returns a single unit object that is the result of the unit arithmetic
+   *
+   * the this.retMsg_ array will be updated with any user messages
+   *   (informational, error or warning) generated by this or called methods
    */
-  _performUnitArithmetic(uArray, retMsg, origString) {
+  _performUnitArithmetic(uArray, origString) {
 
     let finalUnit = uArray[0]['un'];
     let uLen = uArray.length ;
     let endProcessing = false ;
     // Perform the arithmetic for the units, starting with the first 2 units.
     // We only need to do the arithmetic if we have more than one unit.
-    for (var u2 = 1; (u2 < uLen) && !endProcessing; u2++) {
+    for (let u2 = 1; (u2 < uLen) && !endProcessing; u2++) {
       let nextUnit = uArray[u2]['un'];
-      if (this._isNumericString(nextUnit)) {
+      if (intUtils_.isNumericString(nextUnit)) {
         nextUnit = Number(nextUnit) ;
       }
       if (nextUnit === null ||
@@ -1219,7 +1328,7 @@ export class UnitString {
                        `${this.closeEmph_})`;
         }
         msgString += '; could not parse full string.  Sorry';
-        retMsg.push(msgString);
+        this.retMsg_.push(msgString);
         endProcessing = true;
       }
       else {
@@ -1294,7 +1403,7 @@ export class UnitString {
           } // end if nextUnit is a number
         }
         catch (err) {
-          retMsg.unshift(err.message) ;
+          this.retMsg_.unshift(err.message) ;
           endProcessing = true ;
           finalUnit = null ;
         }
@@ -1303,25 +1412,6 @@ export class UnitString {
     return finalUnit ;
   }  // end _performUnitArithmetic
 
-
-  /**
-   * This tests a string to see if it contains only numbers/digits (0-9).
-   * Using isNaN and Number.isNaN is too frustrating, given the limitations
-   * of both - isNaN and Number.isNaN both return false, i.e., the value is
-   * a number, for booleans, nulls, empty strings and strings that only
-   * contain spaces.
-   *
-   * @params theString
-   * @returns true if the string contains only digits; false otherwise
-   */
-  _isNumericString(theString) {
-    let isNumStr = false ;
-    if (theString && typeof theString === 'string') {
-      let ret = theString.match(/^[0-9\.]*$/);
-      isNumStr = (ret !== null);
-    }
-    return isNumStr ;
-  } // end _isNumericString
 
   /**
    * This tests a string to see if it starts with characters and ends with
@@ -1363,7 +1453,7 @@ export class UnitString {
     }
     return ret ;
   } // end _isCodeWithExponent
-  
+
 } // end class UnitString
 
 
@@ -1382,5 +1472,8 @@ UnitString.getInstance = function(){
   return new UnitString();
 } ;
 
+/*
 // Perform the first request for the object, to set the getInstance method.
 UnitString.getInstance();
+
+*/

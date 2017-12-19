@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-12-01
+- Added ability to get suggestions for invalid unit expressions.
+
 ## [1.2.0] - 2017-10-06
 - Enhanced unit string validation to accommodate/correct:
   - missing multiplication operators, e.g., **2mg** instead of **2.mg**;

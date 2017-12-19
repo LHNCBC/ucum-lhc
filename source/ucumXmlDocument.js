@@ -370,9 +370,9 @@ export class UcumXmlDocument {
           try {
             let retObj = uStrParser.parseString(attrs['csUnitString_'],
                                                 'validate', false);
-            let ret = retObj[0];
-            let retString = retObj[1];
-            let retMsg = retObj[2];
+            let ret = retObj['unit'];
+            let retString = retObj['origString'];
+            let retMsg = retObj['retMsg'];
 
             // Get the dimension object and magnitude (and adjust by
             // specified magnitude factor) from the unit created and
