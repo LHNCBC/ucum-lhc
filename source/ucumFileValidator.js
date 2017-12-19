@@ -96,10 +96,11 @@ export class UcumFileValidator {
           else
             record[resultCol] = uStr + " is not a valid UCUM unit.";
           record[commentCol] = '';
-          if (parseResp['msg'] && parseResp['msg'].length > 0)
+          if (parseResp['msg'] && parseResp['msg'].length > 0) {
             record[commentCol] = parseResp['msg'].join('; ');
             if (parseResp['suggestions'])
               record[commentCol] += '\n';
+          }
           if (parseResp['suggestions']) {
             let suggSet = parseResp['suggestions'];
             let suggString = '';
@@ -109,8 +110,7 @@ export class UcumFileValidator {
                 suggString += suggSet[s]['units'][u].join(', ') + '\n';
               } // end do for each unit
             }
-            record[commentCol] = intUtils_.suggestionSetOutput(
-              parseResp['suggestions'], '\n');
+            record[commentCol] = suggString ;
           }
         }
         catch (err) {
