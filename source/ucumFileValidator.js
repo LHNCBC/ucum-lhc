@@ -105,7 +105,7 @@ export class UcumFileValidator {
             let suggSet = parseResp['suggestions'];
             let suggString = '';
             for (let s = 0; s < suggSet.length; s++) {
-              suggString += s[s]['msg'] + '\n';
+              suggString += suggSet[s]['msg'] + '\n';
               for (let u = 0; u < suggSet[s]['units'].length; u++) {
                 suggString += suggSet[s]['units'][u].join(', ') + '\n';
               } // end do for each unit
