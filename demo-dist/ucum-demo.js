@@ -394,12 +394,15 @@ var UcumDemo = exports.UcumDemo = function () {
      *  string to be validated
      * @param returnElementID the ID of the web page element to receive the
      *  return validation message
+     * @param suggest indicates whether or not to include suggestions for a
+     *  string where no unit could be found; 'suggest' will cause suggestions
+     *  to be included; anything else, or unspecified, will omit suggestions
      * @returns nothing directly; return is the validation message
      */
 
   }, {
     key: 'reportUnitStringValidity',
-    value: function reportUnitStringValidity(elementID, returnElementID) {
+    value: function reportUnitStringValidity(elementID, returnElementID, suggest) {
 
       this.utils_.useHTMLInMessages(true);
       this.utils_.useBraceMsgForEachString(true);
@@ -407,29 +410,39 @@ var UcumDemo = exports.UcumDemo = function () {
       var uStr = sanitizeHtml(document.getElementById(elementID).value);
       var valFld = document.getElementById(returnElementID);
       valFld.innerHTML = '';
-      var retMsg = [];
-      var valMsg = '';
+
+      var retMsg = '';
+      var parseResp = {};
+
       if (uStr === "") {
-        retMsg.push("Please specify a unit string to be validated.");
+        retMsg = "Please specify a unit string to be validated.";
       } else {
         try {
-          var parseResp = this.utils_.validateUnitString(uStr);
-          if (parseResp['status'] === 'valid') valMsg = parseResp['ucumCode'] + ' is a valid unit expression.';else if (parseResp['status'] === 'invalid') {
-            valMsg = uStr + ' is NOT a valid unit expression.';
-          } else {
-            // assume status is 'error'
-            console.log(retMsg.concat(parseResp['msg']));
-            retMsg = ['Sorry - an error occurred while trying to validate ' + uStr < br > uStr + ' is probably not a valid expression.'];
+          parseResp = this.utils_.validateUnitString(uStr, suggest);
+          if (parseResp['status'] === 'valid') {
+            retMsg = parseResp['ucumCode'] + ' is a valid unit expression.';
           }
-          if (parseResp['status'] !== 'error' && parseResp['msg'].length > 0) retMsg = retMsg.concat(parseResp['msg']);
+          // If the status is invalid and we have suggestions, put the suggestion
+          // output in the return message.   If we don't have suggestions there
+          // should be an explanation in the parse response's 'msg' element, and
+          // will be transferred to the returned message below.
+          else if (parseResp['status'] === 'invalid') {
+              if (parseResp['suggestions']) retMsg = this._suggSetOutput(parseResp['suggestions']);
+            } else {
+              // assume status is 'error'
+              console.log(retMsg.concat(parseResp['msg']));
+              retMsg = 'Sorry - an error occurred while trying to validate ' + uStr;
+            }
         } catch (err) {
           console.log(err.message);
-          retMsg = ['Sorry - an error occurred while trying to validate ' + uStr + '<br>' + uStr + ' is probably not a valid expression.'];
+          retMsg += 'Sorry - an error occurred while trying to validate ' + uStr;
         }
       }
-      var finalMsg = retMsg.join('<br>');
-      if (valMsg.length > 0) finalMsg = valMsg + '<br>' + finalMsg;
-      valFld.innerHTML = finalMsg;
+      if (parseResp['msg']) {
+        if (retMsg != '') retMsg += '<BR>';
+        retMsg += parseResp['msg'].join('<BR>');
+      }
+      valFld.innerHTML = retMsg;
     } // end reportUnitStringValidity
 
 
@@ -442,11 +455,14 @@ var UcumDemo = exports.UcumDemo = function () {
      *  to be converted to "to" units
      * @param toField the ID of the field containing the name of the unit that
      *  the from field is to be converted to
-     */
+     * @param suggest indicates whether or not to include suggestions for a
+     *  string where no unit could be found; 'suggest' will cause suggestions
+     *  to be included; anything else, or unspecified, will omit suggestions
+      */
 
   }, {
     key: 'convertUnit',
-    value: function convertUnit(fromField, numField, toField) {
+    value: function convertUnit(fromField, numField, toField, suggest) {
 
       this.utils_.useHTMLInMessages(true);
       this.utils_.useBraceMsgForEachString(true);
@@ -488,7 +504,7 @@ var UcumDemo = exports.UcumDemo = function () {
       if (entryErrMsg.length > 0) {
         resultString.innerHTML = entryErrMsg.join('<BR>');
       } else {
-        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName);
+        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, suggest);
         if (resultObj['status'] === 'succeeded') {
           var toVal = resultObj['toVal'];
           // convert the value to a fixed value with the specified number of
@@ -508,11 +524,26 @@ var UcumDemo = exports.UcumDemo = function () {
               resultString.innerHTML += '<br>' + resultObj['msg'][r];
             }
           }
-        } else if (resultObj['status'] === 'error') {
-          resultString.innerHTML = 'Sorry - an error occurred while trying to ' + ('validate ' + uStr + '.<br>' + uStr + ' is probably not a valid expression.');
-        } else {
-          resultString.innerHTML = resultObj['msg'].join('<BR>');
-        } // end if conversion did/didn't succeed
+        }
+        // Else if an error was signalled, transfer the error message to
+        // the result field
+        else if (resultObj['status'] === 'error') {
+            resultString.innerHTML = 'Sorry - an error occurred while trying to ' + ('validate ' + uStr + '.');
+          }
+          // Else 1 or more invalid unit expressions were found (status = 'failed')
+          else {
+              // if suggestions were found, output any included messages followed
+              // by the suggestions to the result field
+              if (resultObj['suggestions']) {
+                var suggString = '';
+                if (resultObj['msg']) suggString = resultObj['msg'].join('<BR>') + '<BR>';
+                if (resultObj['suggestions']['from']) suggString += this._suggSetOutput(resultObj['suggestions']['from']);
+                if (resultObj['suggestions']['to']) suggString += this._suggSetOutput(resultObj['suggestions']['to']);resultString.innerHTML = suggString;
+              }
+              // if suggestions were not found, output whatever message(s) were
+              // returned that would indicate the problem
+              else resultString.innerHTML = resultObj['msg'].join('<BR>');
+            } // end if conversion did/didn't succeed
       } // end if there were/weren't entry errors
     } // end convertUnit
 
@@ -758,6 +789,37 @@ var UcumDemo = exports.UcumDemo = function () {
       var colDiv = document.getElementById('colNameDiv');
       colDiv.setAttribute('style', 'display:none');
     }
+
+    /**
+     * This creates HTML output text for an array of suggestion sets.  A
+     * suggestion set is returned by the parsing code for each suggestion
+     * found (when suggestions were requested for unit strings found to be
+     * invalid).  Each set is a hash object that includes two elements:
+     *   'msg' - which is a message identifying the problem string; and
+     *   'units' - which is an array of arrays, where each inner array is
+     *             created for each suggestion.  The inner arrays contain
+     *             the unit code, name and guidance text (if any) for a
+     *             suggested unit.
+     *
+     * @param suggSet the array of sets for which to create HTML output text
+     * @returns {string} the string containing the HTML
+     * @private
+     */
+
+  }, {
+    key: '_suggSetOutput',
+    value: function _suggSetOutput(suggSet) {
+
+      var suggString = '';
+      for (var s = 0; s < suggSet.length; s++) {
+        suggString += suggSet[s]['msg'] + '<BR>';
+        for (var u = 0; u < suggSet[s]['units'].length; u++) {
+          suggString += suggSet[s]['units'][u].join(', ') + '<BR>';
+        } // end do for each unit
+      }
+      return suggString;
+    } // end suggSetOutput
+
   }]);
 
   return UcumDemo;

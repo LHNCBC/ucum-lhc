@@ -1,8 +1,8 @@
 /**
- * Mocha tests for the UcumLhcUtils class.  Starting out with just testing the
- * checkSynonyms method.  More tests to be added later.
+ * Mocha tests for the UcumLhcUtils class.
  *
- * Run from the command line with 'mocha testUcumLhcUtils.js' or 'grunt test'
+ * Run from the command line with 'mocha testUcumLhcUtils.js' or
+ * 'grunt test'Intern
  */
 
 var assert = require('assert');
@@ -29,15 +29,15 @@ describe('Test validateUnitString method', function() {
 
   it("should return a message for no unit found", function() {
 
-    var resp2 = utils.validateUnitString('noFool');
+    var resp2 = utils.validateUnitString('noFool', 'suggest');
     assert.equal(resp2.status, 'invalid', resp2.status);
-    assert.equal(resp2.msg[0], 'Unable to find unit for noFool', resp2.msg[0]);
+    assert.equal(resp2.msg[0], 'noFool is not a valid UCUM code.  ' +
+                 'No alternatives were found.', resp2.msg[0]);
   });
 
-  it("should return an updated UCUM code and message for 'Gauss'", function() {
+  it("should return a message for 'Gauss'", function() {
     var resp3 = utils.validateUnitString('Gauss');
-    assert.equal(resp3.status, 'valid', resp3.status);
-    assert.equal(resp3.ucumCode, 'G', resp3.ucumCode);
+    assert.equal(resp3.status, 'invalid', resp3.status);
     assert.equal(resp3.msg[0], 'The UCUM code for Gauss is G.\nDid you mean G?',
                  resp3.msg[0]);
   });
@@ -62,6 +62,26 @@ describe('Test validateUnitString method', function() {
         ' at L/' + uString.openEmph_ + '(' + uString.closeEmph_ + '5.mg');
    });
 
+  it("should return 3 suggestions for allergen", function() {
+    var resp6 = utils.validateUnitString('allergen', 'suggest');
+    assert.equal(resp6.status, 'invalid');
+    assert.equal(resp6.unit, null);
+    assert.equal(resp6.ucumCode, null);
+    var suggs = resp6['suggestions'][0] ;
+    assert.equal(suggs['units'].length, 3);
+    assert.equal(suggs['msg'], 'allergen is not a valid ' +
+      'UCUM code.  We found possible units that might be what was meant:');
+    assert.equal(suggs['invalidUnit'], 'allergen');
+    assert.deepEqual(suggs['units'][0],
+       ['[BAU]','bioequivalent allergen unit', null]) ;
+    assert.deepEqual(suggs['units'][1], ['[AU]', 'allergy unit',
+       'Most standard test allergy units are reported as [IU] or as %. ']);
+    assert.deepEqual(suggs['units'][2], ["[Amb'a'1'U]",
+       'allergen unit for Ambrosia artemisiifolia', 'Amb a 1 is the major ' +
+       'allergen in short ragweed, and can be converted Bioequivalent ' +
+       'allergen units (BAU) where 350 Amb a 1 U/mL = 100,000 BAU/mL']);
+  });
+
 }); // end validateUnitString tests
 
 
@@ -72,25 +92,22 @@ describe('Test convertUnitTo method', function() {
     var resp1 = utils.convertUnitTo();
     assert.equal(resp1.status, 'error', resp1.status);
     assert.equal(resp1.msg[0], 'No "from" unit expression specified.', resp1.msg[0]);
-    assert.equal(resp1.msg[1], 'No "from" value specified.', resp1.msg[1]);
+    assert.equal(resp1.msg[1], 'No "from" value, or an invalid "from" value, ' +
+                               'was specified.', resp1.msg[1]);
     assert.equal(resp1.msg[2], 'No "to" unit expression specified.', resp1.msg[2]);
   });
 
-  it("should return a message for invalid unit strings", function() {
+it("should return a message for invalid unit strings", function() {
 
-    var resp2 = utils.convertUnitTo('good', 2017, 'bad');
-    assert.equal(resp2.status, 'failed', resp2.status);
-    assert.equal(resp2.msg[0],
-                 'Sorry - an error occurred while trying to validate good.',
-                 resp2.msg[0]);
-    assert.equal(resp2.msg[1], 'good is probably not a valid expression.',
-                 resp2.msg[1]);
-    assert.equal(resp2.msg[2],
-                 'Sorry - an error occurred while trying to validate bad.',
-                  resp2.msg[2]);
-    assert.equal(resp2.msg[3], 'bad is probably not a valid expression.',
-                 resp2.msg[3]);
-  });
+  var resp2 = utils.convertUnitTo('good', 2017, 'bad');
+  assert.equal(resp2.status, 'failed', resp2.status);
+  assert.equal(resp2.msg[0], 'good is not a valid UCUM code.', resp2.msg[0]);
+  assert.equal(resp2.msg[1], 'Unable to find a unit for good, so no ' +
+                             'conversion could be performed.', resp2.msg[1]);
+  assert.equal(resp2.msg[2], 'bad is not a valid UCUM code.', resp2.msg[2]);
+  assert.equal(resp2.msg[3], 'Unable to find a unit for bad, so no ' +
+                             'conversion could be performed.', resp2.msg[3]);
+});
 
   it("should return a valid conversion value and units for grams to metric carats", function() {
     var resp3 = utils.convertUnitTo('g', 56, '[car_m]');
@@ -109,10 +126,45 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
   });
 
+  it("should return 3 suggestions for allergen and 2 for culture", function() {
+    var resp5 = utils.convertUnitTo('allergen', 3, 'culture', 'suggest');
+    assert.equal(resp5.status, 'failed');
+    assert.equal(resp5.toVal, null);
+    assert.equal(resp5.fromUnit, null);
+    assert.equal(resp5.toUnit, null);
+    assert.equal(resp5.msg.length, 2);
+    assert.deepEqual(resp5.msg[0], 'Unable to find a unit for allergen, ' +
+                     'so no conversion could be performed.');
+    assert.deepEqual(resp5.msg[1], 'Unable to find a unit for culture, ' +
+      'so no conversion could be performed.');
+    var suggsFrom = resp5['suggestions']['from'][0] ;
+    assert.deepEqual(suggsFrom['units'].length, 3);
+    assert.deepEqual(suggsFrom['msg'], 'allergen is not a valid ' +
+      'UCUM code.  We found possible units that might be what was meant:');
+    assert.deepEqual(suggsFrom['invalidUnit'], 'allergen');
+    assert.deepEqual(suggsFrom['units'][0],
+      ['[BAU]','bioequivalent allergen unit', null]) ;
+    assert.deepEqual(suggsFrom['units'][1], ['[AU]', 'allergy unit',
+      'Most standard test allergy units are reported as [IU] or as %. ']);
+    assert.deepEqual(suggsFrom['units'][2], ["[Amb'a'1'U]",
+      'allergen unit for Ambrosia artemisiifolia', 'Amb a 1 is the major ' +
+      'allergen in short ragweed, and can be converted Bioequivalent ' +
+      'allergen units (BAU) where 350 Amb a 1 U/mL = 100,000 BAU/mL']);
+    var suggsTo = resp5['suggestions']['to'][0] ;
+    assert.deepEqual(suggsTo['units'].length, 2);
+    assert.deepEqual(suggsTo['msg'], 'culture is not a valid ' +
+      'UCUM code.  We found possible units that might be what was meant:');
+    assert.deepEqual(suggsTo['invalidUnit'], 'culture');
+    assert.deepEqual(suggsTo['units'][0], ['[CCID_50]',
+      '50% cell culture infectious dose', null]);
+    assert.deepEqual(suggsTo['units'][1], ['[TCID_50]',
+      '50% tissue culture infectious dose', null]);
+  });
+
 }); // end convertUnitTo tests
 
 
-describe('Test checkSynonyms method', function() {
+describe('Test getSynonyms method', function() {
 
   it("should return an error message for no synonym supplied", function() {
 
