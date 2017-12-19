@@ -52495,8 +52495,10 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
             var _parseResp = utils.validateUnitString(uStr, true);
             if (_parseResp['status'] === 'valid') record[resultCol] = _parseResp['ucumCode'] + " is a valid UCUM unit.";else record[resultCol] = uStr + " is not a valid UCUM unit.";
             record[commentCol] = '';
-            if (_parseResp['msg'] && _parseResp['msg'].length > 0) record[commentCol] = _parseResp['msg'].join('; ');
-            if (_parseResp['suggestions']) record[commentCol] += '\n';
+            if (_parseResp['msg'] && _parseResp['msg'].length > 0) {
+              record[commentCol] = _parseResp['msg'].join('; ');
+              if (_parseResp['suggestions']) record[commentCol] += '\n';
+            }
             if (_parseResp['suggestions']) {
               var suggSet = _parseResp['suggestions'];
               var suggString = '';
@@ -52506,7 +52508,7 @@ var UcumFileValidator = exports.UcumFileValidator = function () {
                   suggString += suggSet[s]['units'][u].join(', ') + '\n';
                 } // end do for each unit
               }
-              record[commentCol] = intUtils_.suggestionSetOutput(_parseResp['suggestions'], '\n');
+              record[commentCol] = suggString;
             }
           } catch (err) {
             record[resultCol] = 'ERROR';
