@@ -268,7 +268,7 @@ export class UcumDemo {
       }
     }
     else
-      throw(new Error('An error occured while specifying your choice.'));
+      throw(new Error('An error occurred while specifying your choice.'));
 
     // call buildUrlAndOpts to build the url and options from the updated url
     // arrays (category and display field arrays).
@@ -433,6 +433,11 @@ export class UcumDemo {
    *   "to" means the "to" unit code fields was checked; and
    *   "fromNum" means the number of units field was checked.
    * @param value true indicates that the value is valid; false means it's not.
+   * @param clear an optional bulletin that signals a request to remove
+   *   highlighting (currently a red border) of the form element being updated.
+   *   This should be passed as true when the user clears the contents of a
+   *   field.  The input is not a valid value, but no message or highlighting
+   *   is required.  Default value is false.
    *
    */
   setConvertValues(whichSetting, value, clear) {
