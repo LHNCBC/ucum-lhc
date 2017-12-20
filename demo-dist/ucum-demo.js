@@ -431,7 +431,7 @@ var UcumDemo = exports.UcumDemo = function () {
         if (reportValid === 'display') {
           retMsg = "Please specify a unit string to be validated.";
         } else {
-          this.setConvertValues(reportValid, false);
+          this.setConvertValues(reportValid, false, true);
         }
       } else {
         try {
@@ -494,8 +494,15 @@ var UcumDemo = exports.UcumDemo = function () {
     key: 'showConvertTab',
     value: function showConvertTab() {
       this.convFromUnit_ = false;
+      document.getElementById('convertFrom').value = null;
+
       this.convFromVal_ = false;
+      document.getElementById('convertNum').value = null;
+
       this.convToUnit_ = false;
+      document.getElementById('convertTo').value = null;
+
+      document.getElementById("doConversionButton").disabled = true;
     }
 
     /**
@@ -511,26 +518,37 @@ var UcumDemo = exports.UcumDemo = function () {
      *   "from" means the "from" unit code field was checked;
      *   "to" means the "to" unit code fields was checked; and
      *   "fromNum" means the number of units field was checked.
-     * @param true indicates that the value is valid; false means it's not.
+     * @param value true indicates that the value is valid; false means it's not.
      *
      */
 
   }, {
     key: 'setConvertValues',
-    value: function setConvertValues(whichSetting, value) {
+    value: function setConvertValues(whichSetting, value, clear) {
+
+      if (clear === undefined) {
+        clear = false;
+      }
       if (whichSetting === 'from') {
         this.convFromUnit_ = value;
-        if (value === false) document.getElementById('convertFrom').setAttribute("class", "invalid");else document.getElementById('convertFrom').removeAttribute("class");
+        var fromField = document.getElementById('convertFrom');
+        if (value === false && !clear) fromField.setAttribute("class", "invalid");else fromField.removeAttribute("class");
       } else if (whichSetting === 'to') {
         this.convToUnit_ = value;
-        if (value === false) document.getElementById('convertTo').setAttribute("class", "invalid");else document.getElementById('convertTo').removeAttribute("class");
+        var toField = document.getElementById('convertTo');
+        if (value === false && !clear) toField.setAttribute("class", "invalid");else toField.removeAttribute("class");
       } else {
         // assume from value
         this.convFromVal_ = value;
-        if (value === false) document.getElementById('convertNum').setAttribute("class", "invalid");else document.getElementById('convertNum').removeAttribute("class");
+        var fromNumField = document.getElementById('convertNum');
+        if (value === false && !clear) fromNumField.setAttribute("class", "invalid");else fromNumField.removeAttribute("class");
       }
       var convertButton = document.getElementById("doConversionButton");
-      if (this.convFromUnit_ === true && this.convToUnit_ === true && this.convFromVal_ === true) convertButton.style.visibility = "visible";else convertButton.style.visibility = "hidden";
+      if (this.convFromUnit_ === true && this.convToUnit_ === true && this.convFromVal_ === true)
+        //convertButton.style.visibility = "visible";
+        convertButton.disabled = false;else
+        //convertButton.style.visibility = "hidden";
+        convertButton.disabled = true;
     } // end setConvertValues
 
 
@@ -547,15 +565,18 @@ var UcumDemo = exports.UcumDemo = function () {
     key: 'checkFromVal',
     value: function checkFromVal(numField) {
       var fromVal = document.getElementById(numField).value;
-      var parsedNum = parseFloat(fromVal);
-      if (isNaN(parsedNum)) {
-        this.setConvertValues('fromNum', false);
-        if (fromVal !== '') {
-          var resultString = document.getElementById("resultString");
+      var resultString = document.getElementById("resultString");
+      if (fromVal !== '') {
+        var parsedNum = parseFloat(fromVal);
+        if (isNaN(parsedNum)) {
           resultString.innerHTML = fromVal + ' is not a valid number.';
+          this.setConvertValues('fromNum', false);
+        } else {
+          this.setConvertValues('fromNum', true);
         }
       } else {
-        this.setConvertValues('fromNum', true);
+        resultString.innerHTML = '';
+        this.setConvertValues('fromNum', false, true);
       }
     } // end checkFromVal
 
@@ -615,8 +636,7 @@ var UcumDemo = exports.UcumDemo = function () {
       if (entryErrMsg.length > 0) {
         resultString.innerHTML = entryErrMsg.join('<BR>');
       } else {
-        var convertButton = document.getElementById("doConversionButton");
-        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, 'suggest');
+        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, true);
         if (resultObj['status'] === 'succeeded') {
           var toVal = resultObj['toVal'];
           // convert the value to a fixed value with the specified number of
@@ -640,7 +660,7 @@ var UcumDemo = exports.UcumDemo = function () {
         // Else if an error was signalled, transfer the error message to
         // the result field
         else if (resultObj['status'] === 'error') {
-            resultString.innerHTML = 'Sorry - an error occurred while trying to ' + 'perform the conversion ';
+            resultString.innerHTML = 'Sorry - an error occurred while trying to ' + 'perform the conversion.';
           }
           // Else 1 or more invalid unit expressions were found (status = 'failed')
           else {

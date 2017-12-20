@@ -337,12 +337,12 @@ export class UcumDemo {
         retMsg = "Please specify a unit string to be validated.";
       }
       else {
-        this.setConvertValues(reportValid, false);
+        this.setConvertValues(reportValid, false, true);
       }
     }
     else {
       try {
-        parseResp = this.utils_.validateUnitString(uStr, 'suggest');
+        parseResp = this.utils_.validateUnitString(uStr, true);
         if (parseResp['status'] === 'valid') {
           if (reportValid === 'display') {
             retMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
@@ -407,8 +407,15 @@ export class UcumDemo {
    */
   showConvertTab(){
     this.convFromUnit_ = false ;
+    document.getElementById('convertFrom').value = null;
+
     this.convFromVal_ = false ;
+    document.getElementById('convertNum').value = null;
+
     this.convToUnit_ = false ;
+    document.getElementById('convertTo').value = null;
+
+    document.getElementById("doConversionButton").disabled = true;
   }
 
 
@@ -425,37 +432,46 @@ export class UcumDemo {
    *   "from" means the "from" unit code field was checked;
    *   "to" means the "to" unit code fields was checked; and
    *   "fromNum" means the number of units field was checked.
-   * @param true indicates that the value is valid; false means it's not.
+   * @param value true indicates that the value is valid; false means it's not.
    *
    */
-  setConvertValues(whichSetting, value) {
+  setConvertValues(whichSetting, value, clear) {
+
+    if (clear === undefined) {
+      clear = false ;
+    }
     if (whichSetting === 'from') {
       this.convFromUnit_ = value;
-      if (value === false)
-        document.getElementById('convertFrom').setAttribute("class", "invalid");
+      let fromField = document.getElementById('convertFrom');
+      if (value === false && !clear)
+        fromField.setAttribute("class", "invalid");
       else
-        document.getElementById('convertFrom').removeAttribute("class");
+        fromField.removeAttribute("class");
     }
     else if (whichSetting === 'to') {
       this.convToUnit_ = value;
-      if (value === false)
-        document.getElementById('convertTo').setAttribute("class", "invalid");
+      let toField = document.getElementById('convertTo');
+      if (value === false && !clear)
+        toField.setAttribute("class", "invalid");
       else
-        document.getElementById('convertTo').removeAttribute("class");
+        toField.removeAttribute("class");
     }
     else { // assume from value
       this.convFromVal_ = value;
-      if (value === false)
-        document.getElementById('convertNum').setAttribute("class", "invalid");
+      let fromNumField = document.getElementById('convertNum');
+      if (value === false && !clear)
+        fromNumField.setAttribute("class", "invalid");
       else
-        document.getElementById('convertNum').removeAttribute("class");
+        fromNumField.removeAttribute("class");
     }
     let convertButton = document.getElementById("doConversionButton");
     if (this.convFromUnit_ === true && this.convToUnit_ === true &&
         this.convFromVal_ === true)
-      convertButton.style.visibility = "visible";
+      //convertButton.style.visibility = "visible";
+      convertButton.disabled = false ;
     else
-      convertButton.style.visibility = "hidden";
+      //convertButton.style.visibility = "hidden";
+      convertButton.disabled = true ;
 
   } // end setConvertValues
 
@@ -470,16 +486,20 @@ export class UcumDemo {
    */
   checkFromVal(numField) {
     let fromVal = document.getElementById(numField).value ;
-    let parsedNum = parseFloat(fromVal);
-    if (isNaN(parsedNum)) {
-      this.setConvertValues('fromNum', false);
-      if (fromVal !== '') {
-        let resultString = document.getElementById("resultString");
+    let resultString = document.getElementById("resultString");
+    if (fromVal !== '') {
+      let parsedNum = parseFloat(fromVal);
+      if (isNaN(parsedNum)) {
         resultString.innerHTML = `${fromVal} is not a valid number.`;
+        this.setConvertValues('fromNum', false);
+      }
+      else {
+        this.setConvertValues('fromNum', true);
       }
     }
     else {
-      this.setConvertValues('fromNum', true);
+      resultString.innerHTML = '';
+      this.setConvertValues('fromNum', false, true);
     }
   } // end checkFromVal
 
@@ -541,9 +561,8 @@ export class UcumDemo {
       resultString.innerHTML = entryErrMsg.join('<BR>');
     }
     else {
-      let convertButton = document.getElementById("doConversionButton");
       let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
-                                                'suggest');
+                                                true);
       if (resultObj['status'] === 'succeeded') {
         let toVal = resultObj['toVal'];
         // convert the value to a fixed value with the specified number of
@@ -570,7 +589,7 @@ export class UcumDemo {
       // the result field
       else if (resultObj['status'] === 'error') {
         resultString.innerHTML = 'Sorry - an error occurred while trying to ' +
-          'perform the conversion ';
+          'perform the conversion.';
       }
       // Else 1 or more invalid unit expressions were found (status = 'failed')
       else {
