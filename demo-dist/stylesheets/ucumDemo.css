@@ -159,6 +159,14 @@ a {
   font-weight: 500;
 }
 
+input.invalid {
+  border: 3px solid red;
+}
+
+#resultString.invalid, #validationString.invalid {
+  color: red ;
+}
+
 /* Override the standard autocompleter settings for an input
    field when a value is typed in that doesn't match what's on
    the list presented
@@ -205,6 +213,10 @@ ul.tab li a {
 
 #convertNum {
   width: 10em;
+}
+
+button[disabled] {
+  color: gray;
 }
 
 #precision {
