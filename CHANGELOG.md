@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [2.1.0] - 2017-12-21
+- Upgraded the validation processing for conversion request on the
+demo page; validation is now performed on the fly as each element
+is entered.  This is a change only to the demo page.
+
 ## [2.0.0] - 2017-12-01
 - Added ability to get suggestions for invalid unit expressions.
 

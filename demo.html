@@ -14,7 +14,7 @@
         <img src="demo-dist/assets/images/lhncbc.jpg" alt="Home" />
       </a>
       <div id="siteNameBox">
-        <a href="/"><span id=siteName>Units of Measure (UCUM) Validator and Converter</span><br>
+        <a href="index.html"><span id=siteName>Units of Measure (UCUM) Validator and Converter</span><br>
           <span id=tagline>A demonstration site for the LHC UCUM service</span></a>
       </div>
     </div>
@@ -25,7 +25,9 @@
       <li class="active"><a id="validation-link" href="#validation" class="tablinks"
                             data-toggle="tab">
              Validator</a></li>
-      <li><a id="conversion-link" href="#conversion" class="tablinks" data-toggle="tab">
+      <li><a id="conversion-link" href="#conversion" class="tablinks"
+             data-toggle="tab"
+             onclick="demoPkg.UcumDemo.getInstance().showConvertTab()">
              Converter</a></li>
     </ul>
     <div class="tab-content">
@@ -34,7 +36,11 @@
       <div id="convSection" class="section">
         <h3>Convert values from one UCUM unit to another</h3>
         <p>Enter or select a valid UCUM code for the unit you want to convert:
-          <input type="text" id="convertFrom" placeholder="begin typing ...">
+          <input type="text" id="convertFrom" placeholder="begin typing ..."
+          onchange=
+          "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertFrom',
+          'resultString', 'from')">&nbsp;
+
              <!---  Not using this list -- for now
           onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                   'convertTo',
@@ -56,15 +62,21 @@
           <!-- this section is built in the demo code when the page is loaded -->
         </div> <!-- advancedSearchCnv division -->
         <br><br><p>Enter the numeric value you want to convert:
-        <input type="text" id="convertNum">&nbsp; &nbsp;
+        <input type="text" id="convertNum"
+               onchange=
+                       "demoPkg.UcumDemo.getInstance().checkFromVal('convertNum')">
+        &nbsp; &nbsp;
         Result rounded to <input type="number" min="0" max="20" id="precision"> decimal digits.
       </p><br>
         <div id="convertToDivs">
           <div id="convertLeft">
             <p>Enter or select the unit that you want to convert to:
-              <input type="text" id="convertTo">
+              <input type="text" id="convertTo"
+                     onchange=
+                             "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertTo',
+          'resultString', 'to')">
           </div>
-          <div id="convertRight" style="visibility: hidden">
+          <div id="convertRight">
             You can enter other commensurate units that are not on this list.
           </div>
         </div>
@@ -87,7 +99,7 @@
                  onchange=
                  "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString',
-                                                                   true)">&nbsp; &nbsp;
+                                                                   'display')">&nbsp; &nbsp;
           Press tab or return to validate the expression</p>
           <p class="small-print">If you are not finding a unit that you think should be there, check the
           advanced search options to see if you should add a category (or categories)
@@ -101,7 +113,7 @@
         <div id="advancedSearchVal" style="display: none">
           <!-- this section is built in the demo code when the page is loaded -->
         </div> <!-- advancedSearchVal division -->
-        </p>&nbsp;&nbsp;
+        <br>&nbsp;&nbsp;
         <p id="validationString">&nbsp;&nbsp;</p>
         <p id="validList"></p>
         <p><button id="toggleHints"
@@ -160,7 +172,7 @@
           change the name of the output file at that time.
         </li>
       </ul>
-        </p>
+
         <input type="file" id="inputfile"
                onchange="demoPkg.UcumDemo.getInstance().fileSelected()">
         <div id="colNameDiv" style="display:none">
@@ -184,6 +196,7 @@
         Software Library.</li>
         <li>The code is available from the
           <a href="https://github.com/lhncbc/ucum-lhc">GitHub code repository</a>.</li>
+        </ul>
       </div> <!-- end otherstuff div -->
     </div> <!-- end validation div -->
 </div> <!-- end tab-content div -->
