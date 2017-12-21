@@ -23,26 +23,44 @@ export class UcumDemo {
     this.utils_ = UcumLhcUtils.getInstance();
     this.utabs_ = UnitTables.getInstance();
 
-    // Set up the search autocompleter for the "from" unit code input field
-    // on the Converter tab section
-    this.urlConvCats_ = UcumDemoConfig.defCategories_ ;
-    this.urlConvDispFlds_ = UcumDemoConfig.defCols_ ;
-    let urlOpts = this.buildUrlAndOpts('convert');
-    this.fromAuto_ = new Def.Autocompleter.Search('convertFrom',
-                     urlOpts[0], urlOpts[1]);
-    this.toAuto_ = new Def.Autocompleter.Search('convertTo',
-                     urlOpts[0], urlOpts[1]);
-
-    // Set up the search autocompleter for the validation string input field
-    // on the Validator tab section
+    // Set up the category and display column defaults for the validator
+    // tab and call buildUrlAndOpts to build them
     this.urlValCats_ = UcumDemoConfig.defCategories_ ;
     this.urlValDispFlds_ = UcumDemoConfig.defCols_ ;
     urlOpts = this.buildUrlAndOpts('validate');
     this.valAuto_ = new Def.Autocompleter.Search('valString',
-        urlOpts[0], urlOpts[1]);
+      urlOpts[0], urlOpts[1]);
 
-    // Flags indicating validitity of the "from" and "to" unit fields on
-    // the conversion page.
+    // Set up the default category and display column defaults for the
+    // converter tab and call buildUrlAndOpts to build them
+    this.urlConvCats_ = UcumDemoConfig.defCategories_ ;
+    this.urlConvDispFlds_ = UcumDemoConfig.defCols_ ;
+    let urlOpts = this.buildUrlAndOpts('convert');
+
+    // Set up the search autocompleters for the "from" unit code input field
+    // on the Converter tab section
+    this.fromAuto_ = new Def.Autocompleter.Search('convertFrom',
+                     urlOpts[0], urlOpts[1]);
+    Def.Autocompleter.Event.observeListSelections('convertFrom',
+      (function(demoInstance) {
+        return function () {
+          demoInstance.reportUnitStringValidity('convertFrom',
+            'resultString', 'from');
+        }
+      })(this));
+
+    this.toAuto_ = new Def.Autocompleter.Search('convertTo',
+                     urlOpts[0], urlOpts[1]);
+    Def.Autocompleter.Event.observeListSelections('convertTo',
+      (function(demoInstance) {
+        return function () {
+          demoInstance.reportUnitStringValidity('convertTo',
+            'resultString', 'to');
+        }
+      })(this));
+
+    // Flags indicating validity of the "from" and "to" unit fields and
+    // the from number field on the conversion tab.
     this.convFromUnit_ = false ;
     this.convToUnit_ = false ;
     this.convFromVal_ = false ;
@@ -335,6 +353,7 @@ export class UcumDemo {
     if (uStr === "") {
       if(reportValid === 'display') {
         retMsg = "Please specify a unit string to be validated.";
+        valFld.setAttribute("class", "invalid");
       }
       else {
         this.setConvertValues(reportValid, false, true);
@@ -346,6 +365,7 @@ export class UcumDemo {
         if (parseResp['status'] === 'valid') {
           if (reportValid === 'display') {
             retMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
+            valFld.removeAttribute("class");
           }
           else if (reportValid === 'from' || reportValid === 'to') {
             this.setConvertValues(reportValid, true);
@@ -353,6 +373,7 @@ export class UcumDemo {
           else {
             console.log(`Invalid reportValid parameter supplied - ${reportValid}`);
             retMsg = [`Sorry - an error occurred while trying to validate ${uStr}`];
+            valFld.setAttribute("class", "invalid");
           }
         }
         // If the status is invalid and we have suggestions, put the suggestion
@@ -361,11 +382,11 @@ export class UcumDemo {
         // will be transferred to the returned message below.
         else {
           this.setConvertValues(reportValid, false) ;
+          valFld.setAttribute("class", "invalid")
           if (parseResp['status'] === 'invalid') {
             if (parseResp['suggestions'])
               retMsg = this._suggSetOutput(parseResp['suggestions']);
           }
-
           else { // assume status is 'error'
             console.log(retMsg.concat(parseResp['msg']));
             if (reportValid === 'display') {
@@ -381,6 +402,7 @@ export class UcumDemo {
         console.log(err.message);
         if (reportValid === 'display') {
           retMsg = [`Sorry - an error occurred while trying to validate ${uStr}`];
+          valFld.setAttribute("class", "invalid");
         }
         else {
           this.setConvertValues(reportValid, false);
@@ -407,14 +429,21 @@ export class UcumDemo {
    */
   showConvertTab(){
     this.convFromUnit_ = false ;
-    document.getElementById('convertFrom').value = null;
+    let fromField = document.getElementById('convertFrom');
+    fromField.value = null;
+    fromField.removeAttribute("class");
 
     this.convFromVal_ = false ;
-    document.getElementById('convertNum').value = null;
+    let numField = document.getElementById('convertNum');
+    numField.value = null;
+    numField.removeAttribute("class");
 
     this.convToUnit_ = false ;
-    document.getElementById('convertTo').value = null;
+    let toField = document.getElementById('convertTo');
+    toField.value = null;
+    toField.removeAttribute("class");
 
+    document.getElementById('resultString').innerHTML = null ;
     document.getElementById("doConversionButton").disabled = true;
   }
 
@@ -445,37 +474,36 @@ export class UcumDemo {
     if (clear === undefined) {
       clear = false ;
     }
+    let msgField = document.getElementById('resultString')
+    let targetField = null ;
     if (whichSetting === 'from') {
       this.convFromUnit_ = value;
-      let fromField = document.getElementById('convertFrom');
-      if (value === false && !clear)
-        fromField.setAttribute("class", "invalid");
-      else
-        fromField.removeAttribute("class");
+      targetField = document.getElementById('convertFrom');
     }
     else if (whichSetting === 'to') {
       this.convToUnit_ = value;
-      let toField = document.getElementById('convertTo');
-      if (value === false && !clear)
-        toField.setAttribute("class", "invalid");
-      else
-        toField.removeAttribute("class");
+      targetField = document.getElementById('convertTo');
     }
     else { // assume from value
       this.convFromVal_ = value;
-      let fromNumField = document.getElementById('convertNum');
-      if (value === false && !clear)
-        fromNumField.setAttribute("class", "invalid");
-      else
-        fromNumField.removeAttribute("class");
+      targetField = document.getElementById('convertNum');
     }
+
+    // set or remove the indicator (currently a red border) on the invalid field
+    if (value === false && !clear) {
+      targetField.setAttribute("class", "invalid");
+      msgField.setAttribute("class", "invalid");
+    }
+    else {
+      targetField.removeAttribute("class");
+      msgField.removeAttribute("class");
+    }
+
     let convertButton = document.getElementById("doConversionButton");
     if (this.convFromUnit_ === true && this.convToUnit_ === true &&
         this.convFromVal_ === true)
-      //convertButton.style.visibility = "visible";
       convertButton.disabled = false ;
     else
-      //convertButton.style.visibility = "hidden";
       convertButton.disabled = true ;
 
   } // end setConvertValues

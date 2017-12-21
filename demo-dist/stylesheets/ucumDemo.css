@@ -159,8 +159,12 @@ a {
   font-weight: 500;
 }
 
-.invalid {
+input.invalid {
   border: 3px solid red;
+}
+
+#resultString.invalid, #validationString.invalid {
+  color: red ;
 }
 
 /* Override the standard autocompleter settings for an input
@@ -211,11 +215,10 @@ ul.tab li a {
   width: 10em;
 }
 
-/*
-#doConversionButton {
-  visibility: hidden;
+button[disabled] {
+  color: gray;
 }
-*/
+
 #precision {
   width: 3em;
 }
