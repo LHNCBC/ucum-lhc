@@ -545,7 +545,7 @@ var UcumDemo = exports.UcumDemo = function () {
      *   "to" means the "to" unit code fields was checked; and
      *   "fromNum" means the number of units field was checked.
      * @param value true indicates that the value is valid; false means it's not.
-     * @param clear an optional bulletin that signals a request to remove
+     * @param clear an optional boolean that signals a request to remove
      *   highlighting (currently a red border) of the form element being updated.
      *   This should be passed as true when the user clears the contents of a
      *   field.  The input is not a valid value, but no message or highlighting
