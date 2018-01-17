@@ -28,11 +28,14 @@ var UnitTables = require('./unitTables.js').UnitTables ;
  * for booleans, nulls, empty strings and strings that only contain
  * spaces.
  *
+ * If theString parameter is already a number (instead of a string), this
+ * returns true.
+ *
  * @params theString
  * @returns true if the string contains only numbers; false otherwise
  */
 export function isNumericString(theString) {
-  let isNumStr = false ;
+  let isNumStr = typeof theString === 'number' ;
   if (theString && typeof theString === 'string') {
     let ret = theString.match(/^[-|+]?[0-9\.]*$/);
     isNumStr = (ret !== null);

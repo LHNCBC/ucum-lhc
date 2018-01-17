@@ -21,10 +21,10 @@ describe('Test isNumericString', function() {
     var noParam = utils.isNumericString();
     assert.equal(noParam, false);
   });
-  it("should return false for a number passed in", function() {
+  it("should return true for a number passed in", function() {
     "use strict";
     var numParam = utils.isNumericString(234.5);
-    assert.equal(numParam, false);
+    assert.equal(numParam, true);
   });
   it("should return false for a string containing blanks", function() {
     "use strict";

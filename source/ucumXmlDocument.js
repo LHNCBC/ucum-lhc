@@ -11,6 +11,7 @@ var Unit = require("./unit.js").Unit;
 var UnitString = require("./unitString.js").UnitString;
 var UnitTables = require('./unitTables.js').UnitTables;
 var jsonfile = require('jsonfile');
+var fs = require('fs');
 
 var xmldoc = require('xmldoc');
 var fs = require('fs');
@@ -69,6 +70,7 @@ export class UcumXmlDocument {
 
     // Create the json file of the prefix and unit definitions
     this.writeJsonFile();
+    this.writeVersionText();
 
   }
 
@@ -180,9 +182,13 @@ export class UcumXmlDocument {
       let curUA = unitStrings[a];
       let attrs = {};
       attrs['isBase_'] = false;
+      attrs['source_'] = 'UCUM';
       attrs['name_'] = curUA.childNamed('name').val;
       attrs['csCode_'] = curUA.attr.Code;
-      attrs['ciCode_'] = curUA.attr.CODE;
+      if (curUA.attr.CODE)
+        attrs['ciCode_'] = curUA.attr.CODE;
+      else
+        attrs['ciCode_'] = curUA.attr.Code.toUpperCase();
       attrs['property_'] = curUA.childNamed('property').val;
       if (curUA.childNamed('printSymbol')) {
         let sym = curUA.childNamed('printSymbol') ;
@@ -277,7 +283,7 @@ export class UcumXmlDocument {
       } // end if this is not a special unit
 
       // Arbitrary units are defined in the UCUM spec as "not of any
-      // specific dimension and are not commesurable with any other
+      // specific dimension and are not commensurable with any other
       // unit" (3.2.24).  All arbitrary units in the units definition
       // XML file currently have a unit string of 1 and a base factor of 1
       // except the "international unit" with a code of [IU].  Its
@@ -370,9 +376,9 @@ export class UcumXmlDocument {
           try {
             let retObj = uStrParser.parseString(attrs['csUnitString_'],
                                                 'validate', false);
-            let ret = retObj['unit'];
-            let retString = retObj['origString'];
-            let retMsg = retObj['retMsg'];
+            let ret = retObj[0];
+            let retString = retObj[1];
+            let retMsg = retObj[2];
 
             // Get the dimension object and magnitude (and adjust by
             // specified magnitude factor) from the unit created and
@@ -385,11 +391,12 @@ export class UcumXmlDocument {
               attrs['magnitude_'] = newMag;
               haveUnit = true ;
             }
-            // if there's no unit string, report an error
+            // if there's no unit, report an error
             else {
               attrs['defError_'] = true;
               console.log(`unit definition error; code = ${attrs['csCode_']}; `+
                           `msg = ${retMsg}`);
+              //console.log('return from parseString = ' + JSON.stringify(retObj));
               attrs['dim_'] = null;
               attrs['magnitude_'] = null;
             }
@@ -406,7 +413,6 @@ export class UcumXmlDocument {
         // Now create the unit we want based on the attributes we've
         // accumulated from the xml input and from figuring the dimension
         // and magnitude.  Add it to the unit tables
-        attrs['source_'] = 'UCUM';
         let newUnit = new Unit(attrs);
         utab.addUnit(newUnit);
 
@@ -443,6 +449,35 @@ export class UcumXmlDocument {
                            defsHash,
                            {spaces: 2, encoding: 'utf8', mode: 0o644, flag: 'w'});
   } // end writeJsonFile
+
+  /**
+   * This writes out the ucumDefs data file, which contains all prefixes and
+   * units (base units and others) read and parsed from the XML file.
+   *
+   * This creates the file in the dist/data directory and appends the
+   * current Date object value to "ucumDefs" so that this does not run
+   * into problems with a previously existing file.
+   */
+  writeVersionText() {
+
+    let rootNode = xmlInput_;
+    let versionNum = rootNode.attr.version;
+    let revNum = rootNode.attr.revision;
+    revNum = revNum.replace('$Revision:', '');
+    revNum = revNum.replace('$', '');
+    revNum = revNum.trim();
+    let rootString = rootNode.toString({compressed:true});
+    let dateIdx = rootString.indexOf('$Date:');
+    rootString = rootString.substr(dateIdx + 6);
+    let nextDolIdx = rootString.indexOf('$');
+    let revDate = rootString.substr(0, nextDolIdx ).replace('$','');
+    revDate = revDate.trim();
+    let versionText = `version ${versionNum}, revision ${revNum}, ` +
+             `dated ${revDate}`;
+
+    fs.writeFileSync('../dist/data/ucumEssenceVersion.txt',
+      versionText, {encoding: 'utf8', mode: 0o666, flag: 'w'});
+  } // end writeVersionText
 
 } // end UcumXmlDocument
 

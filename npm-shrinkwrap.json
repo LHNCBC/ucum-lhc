@@ -1,6 +1,6 @@
 {
   "name": "ucum",
-  "version": "1.2.0",
+  "version": "2.1.0",
   "dependencies": {
     "abbrev": {
       "version": "1.0.7",
@@ -5443,6 +5443,20 @@
       "from": "https://registry.npmjs.org/sshpk/-/sshpk-1.7.4.tgz",
       "resolved": "https://registry.npmjs.org/sshpk/-/sshpk-1.7.4.tgz",
       "dev": true
+    },
+    "ssi": {
+      "version": "0.3.0",
+      "from": "ssi@latest",
+      "resolved": "https://registry.npmjs.org/ssi/-/ssi-0.3.0.tgz",
+      "dev": true,
+      "dependencies": {
+        "glob": {
+          "version": "6.0.4",
+          "from": "glob@>=6.0.1 <7.0.0",
+          "resolved": "https://registry.npmjs.org/glob/-/glob-6.0.4.tgz",
+          "dev": true
+        }
+      }
     },
     "statuses": {
       "version": "1.2.1",

@@ -213,7 +213,8 @@ export class UcumLhcUtils {
    *       If no suggestions were found for the toUnitCode this element
    *       will not be included.
    *    No 'suggestions' element will be included in the returned hash
-   *    object if none were found, whether or not they were requested.   *  'fromUnit' the unit object for the fromUnitCode passed in; returned
+   *    object if none were found, whether or not they were requested.
+   *  'fromUnit' the unit object for the fromUnitCode passed in; returned
    *     in case it's needed for additional data from the object; and
    *  'toUnit' the unit object for the toUnitCode passed in; returned
    *     in case it's needed for additional data from the object.
@@ -240,7 +241,11 @@ export class UcumLhcUtils {
       returnObj['msg'].push('No "from" value, or an invalid "from" value, ' +
                          'was specified.');
     }
-
+    else if (fromVal && parseFloat(fromVal) <= 0) {
+      returnObj['status'] = 'error';
+      returnObj['msg'].push(`${fromVal} is not a valid number of units to ` +
+        'be converted.');
+    }
     if (toUnitCode) {
       toUnitCode = toUnitCode.trim();
     }
