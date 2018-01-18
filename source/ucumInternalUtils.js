@@ -37,7 +37,7 @@ var UnitTables = require('./unitTables.js').UnitTables ;
 export function isNumericString(theString) {
   let isNumStr = typeof theString === 'number' ;
   if (theString && typeof theString === 'string') {
-    let ret = theString.match(/^[-|*]?[0-9\.]*$/);
+    let ret = theString.match(/^[-|+]?[0-9]*\.?[0-9]*$/);
     isNumStr = (ret !== null);
   }
   return isNumStr ;

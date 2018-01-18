@@ -52885,7 +52885,7 @@ var UnitTables = require('./unitTables.js').UnitTables;
 function isNumericString(theString) {
   var isNumStr = typeof theString === 'number';
   if (theString && typeof theString === 'string') {
-    var ret = theString.match(/^[-|+]?[0-9\.]*$/);
+    var ret = theString.match(/^[-|+]?[0-9]*\.?[0-9]*$/);
     isNumStr = ret !== null;
   }
   return isNumStr;
@@ -53301,9 +53301,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       if (!fromVal || typeof fromVal !== 'number' && !intUtils_.isNumericString(fromVal)) {
         returnObj['status'] = 'error';
         returnObj['msg'].push('No "from" value, or an invalid "from" value, ' + 'was specified.');
-      } else if (fromVal && parseFloat(fromVal) <= 0) {
-        returnObj['status'] = 'error';
-        returnObj['msg'].push(fromVal + ' is not a valid number of units to ' + 'be converted.');
       }
       if (toUnitCode) {
         toUnitCode = toUnitCode.trim();
@@ -54536,7 +54533,8 @@ var UnitString = exports.UnitString = function () {
      *   the possibly updated unit string passed in;
      *   an array of any user messages (informational, error or warning)
      *     generated (or an empty array); and
-     *   an array of hash objects (1 or more).  Each hash contains three elements:
+     *   a suggestions array of hash objects (1 or more).  Each hash contains
+     *   three elements:
      *     'msg' which is a message indicating what unit expression the
      *       suggestions are for;
      *     'invalidUnit' which is the unit expression the suggestions are

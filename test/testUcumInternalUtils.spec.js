@@ -61,6 +61,16 @@ describe('Test isNumericString', function() {
       var badNegParam = utils.isNumericString('32+');
       assert.equal(badNegParam, false);
     });
+  it("should return false for a string containing just decimal points",
+    function() {
+      var badDecParam = utils.isNumericString('...');
+      assert.equal(badDecParam, false);
+    });
+  it("should return false for a string containing multiple decimal points",
+    function() {
+      var multDecParam = utils.isNumericString('1.2.3.');
+      assert.equal(multDecParam, false);
+    });
 }); // end isNumericString tests
 
 

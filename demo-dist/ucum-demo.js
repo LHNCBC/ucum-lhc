@@ -607,9 +607,6 @@ var UcumDemo = exports.UcumDemo = function () {
         if (isNaN(parsedNum)) {
           resultString.innerHTML = fromVal + ' is not a valid number.';
           this.setConvertValues('fromNum', false);
-        } else if (parsedNum <= 0) {
-          resultString.innerHTML = fromVal + ' units is not a valid ' + 'number of units to be converted.';
-          this.setConvertValues('fromNum', false);
         } else {
           this.setConvertValues('fromNum', true);
         }
