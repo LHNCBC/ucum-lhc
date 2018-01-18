@@ -142,7 +142,8 @@ export class UnitString {
    *   the possibly updated unit string passed in;
    *   an array of any user messages (informational, error or warning)
    *     generated (or an empty array); and
-   *   an array of hash objects (1 or more).  Each hash contains three elements:
+   *   a suggestions array of hash objects (1 or more).  Each hash contains
+   *   three elements:
    *     'msg' which is a message indicating what unit expression the
    *       suggestions are for;
    *     'invalidUnit' which is the unit expression the suggestions are

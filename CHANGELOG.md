@@ -12,8 +12,7 @@ refer back to itself.
 units are validated.  Prefixes on their own are not validated.
 - updated the ucumDefs.json with version 2.1 (November 21, 2017) of the
 ucum-essence.xml file from unitsofmeasure.org
-- fixed bug where an attempt to convert a zero amount of a unit resulted
-in a general error message instead of one that explains the problem.
+- fixed bug where a zero or negative number of units was considered an error.
 
 
 ## [2.1.0] - 2017-12-21

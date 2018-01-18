@@ -396,7 +396,6 @@ export class UcumXmlDocument {
               attrs['defError_'] = true;
               console.log(`unit definition error; code = ${attrs['csCode_']}; `+
                           `msg = ${retMsg}`);
-              //console.log('return from parseString = ' + JSON.stringify(retObj));
               attrs['dim_'] = null;
               attrs['magnitude_'] = null;
             }
@@ -476,7 +475,7 @@ export class UcumXmlDocument {
              `dated ${revDate}`;
 
     fs.writeFileSync('../dist/data/ucumEssenceVersion.txt',
-      versionText, {encoding: 'utf8', mode: 0o666, flag: 'w'});
+      versionText, {encoding: 'utf8', mode: 0o644, flag: 'w'});
   } // end writeVersionText
 
 } // end UcumXmlDocument

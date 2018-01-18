@@ -241,11 +241,6 @@ export class UcumLhcUtils {
       returnObj['msg'].push('No "from" value, or an invalid "from" value, ' +
                          'was specified.');
     }
-    else if (fromVal && parseFloat(fromVal) <= 0) {
-      returnObj['status'] = 'error';
-      returnObj['msg'].push(`${fromVal} is not a valid number of units to ` +
-        'be converted.');
-    }
     if (toUnitCode) {
       toUnitCode = toUnitCode.trim();
     }
