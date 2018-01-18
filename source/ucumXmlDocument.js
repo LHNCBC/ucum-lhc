@@ -465,8 +465,6 @@ export class UcumXmlDocument {
     revNum = revNum.replace('$Revision:', '');
     revNum = revNum.replace('$', '');
     revNum = revNum.trim();
-    let newRevDate = rootNode.attr['revision-date'];
-    console.log(`newRevDate = ${newRevDate}`);
     let rootString = rootNode.toString({compressed:true});
     let dateIdx = rootString.indexOf('$Date:');
     rootString = rootString.substr(dateIdx + 6);
