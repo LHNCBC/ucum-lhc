@@ -52885,7 +52885,7 @@ var UnitTables = require('./unitTables.js').UnitTables;
 function isNumericString(theString) {
   var isNumStr = typeof theString === 'number';
   if (theString && typeof theString === 'string') {
-    var ret = theString.match(/^[-|+]?[0-9]*\.?[0-9]*$/);
+    var ret = theString.match(/^[-|+]?[0-9]+\.?[0-9]*$/);
     isNumStr = ret !== null;
   }
   return isNumStr;
