@@ -600,7 +600,7 @@ var UcumDemo = exports.UcumDemo = function () {
   }, {
     key: 'checkFromVal',
     value: function checkFromVal(numField) {
-      var fromVal = document.getElementById(numField).value;
+      var fromVal = sanitizeHtml(document.getElementById(numField).value);
       var resultString = document.getElementById("resultString");
       if (fromVal !== '') {
         var parsedNum = parseFloat(fromVal);

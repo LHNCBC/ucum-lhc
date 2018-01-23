@@ -518,7 +518,7 @@ export class UcumDemo {
    *
    */
   checkFromVal(numField) {
-    let fromVal = document.getElementById(numField).value ;
+    let fromVal =  sanitizeHtml(document.getElementById(numField).value) ;
     let resultString = document.getElementById("resultString");
     if (fromVal !== '') {
       let parsedNum = parseFloat(fromVal);
