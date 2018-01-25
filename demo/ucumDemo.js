@@ -7,6 +7,7 @@
 
 var fs = require('browserify-fs');
 var escapeHtml = require('escape-html');
+var sanitizeHtml = require('sanitize-html');
 
 var Ucum = ucumPkg.Ucum;
 var UcumDemoConfig = require('./demoConfig').UcumDemoConfig;
@@ -347,7 +348,7 @@ export class UcumDemo {
     let parseResp = {};
 
     let valFld = document.getElementById(elementID);
-    let uStr = escapeHtml(valFld.value);
+    let uStr = valFld.value ;
     let resFld = document.getElementById(returnElementID);
     resFld.innerHTML = '';
 
@@ -403,7 +404,6 @@ export class UcumDemo {
           this.setConvertValues(reportResult, false);
         }
       } // end catch
-
       if (parseResp['msg']) {
         if (parseResp['status'] !== 'valid') {
           if (retMsg != '')
@@ -415,7 +415,7 @@ export class UcumDemo {
 
     // If there's a message to be displayed, do it now
     if (retMsg != '')
-      resFld.innerHTML = retMsg;
+      resFld.innerHTML = escapeHtml(retMsg);
   } // end reportUnitStringValidity
 
 
@@ -518,32 +518,22 @@ export class UcumDemo {
   checkFromVal(numField) {
 
     let fromFld = document.getElementById(numField);
-    let fromVal = escapeHtml(fromFld.value);
+    let fromVal = fromFld.value;
     let resultString = document.getElementById("resultString");
     resultString.innerHTML = '';
 
+    // If the value is blank, just ignore it - no further processing
     if (fromVal !== '') {
-      let parsedNum = parseFloat(fromVal);
-      if (isNaN(parsedNum)) {
-        resultString.innerHTML = `${fromVal} is not a valid number.`;
+      let parsedNum = "" + fromVal; parseFloat(fromVal);
+      if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
+        resultString.innerHTML =
+                         escapeHtml(`${fromVal} is not a valid number.`);
         this.setConvertValues('fromNum', false);
       }
       else {
         this.setConvertValues('fromNum', true);
       }
-    }
-    // if the escaped value is blank, tailor the response on whether
-    // or not the escaped value is also blank, e.g. "<6>" will give
-    // a blank escaped value but a non-blank escaped value.
-    else {
-      if (fromVal !== '') {
-        resultString.innerHTML = `${fromVal} is not a valid number.`;
-        this.setConvertValues('fromNum', false);
-      }
-      else {
-        this.setConvertValues('fromNum', false, true);
-      }
-    }
+    } // end if a value was specified
   } // end checkFromVal
 
 
@@ -562,6 +552,7 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
+    let resultMsg = '';
     let prec = document.getElementById("precision");
     let decDigits = parseInt(prec.value);
     if (isNaN(decDigits)) {
@@ -571,7 +562,7 @@ export class UcumDemo {
 
     let entryErrMsg = [];
 
-    let fromName = escapeHtml(document.getElementById(fromField).value) ;
+    let fromName = document.getElementById(fromField).value ;
     if (fromName === '' || fromName === null) {
       entryErrMsg.push('Please specify a code for the units you want to convert.');
     }
@@ -584,7 +575,7 @@ export class UcumDemo {
     if (isNaN(fromVal)) {
       entryErrMsg.push('Please specify the number of units to be converted.');
     }
-    let toName = escapeHtml(document.getElementById(toField).value);
+    let toName = document.getElementById(toField).value;
     if (toName === '' || toName === null) {
       entryErrMsg.push('Please specify a code that you want the units to be converted to.');
     }
@@ -601,7 +592,7 @@ export class UcumDemo {
     // the response in the form field.  Otherwise fill that field with the
     // entry message(s).
     if (entryErrMsg.length > 0) {
-      resultString.innerHTML = entryErrMsg.join('<BR>');
+      resultMsg = entryErrMsg.join('<BR>');
     }
     else {
       let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
@@ -619,19 +610,19 @@ export class UcumDemo {
         // Set the return message.   Use the UCUM code from the "from" and "to"
         // unit objects returned.  Although the user will PROBABLY enter a
         // valid unit code from the web page, they don't have to.
-        resultString.innerHTML = `${fromVal.toString()} ` +
+        resultMsg = `${fromVal.toString()} ` +
             `${resultObj['fromUnit'].getProperty('csCode_')} = ` +
             `${toVal.toString()} ` +
             `${resultObj['toUnit'].getProperty('csCode_')}`;
         if (resultObj['msg'].length > 0) {
           for (let r = 0; r < resultObj['msg'].length; r++)
-          resultString.innerHTML += '<br>' + resultObj['msg'][r] ;
+          resultMsg += '<br>' + resultObj['msg'][r] ;
         }
       }
       // Else if an error was signalled, transfer the error message to
       // the result field
       else if (resultObj['status'] === 'error') {
-        resultString.innerHTML = 'Sorry - an error occurred while trying to ' +
+        resultMsg = 'Sorry - an error occurred while trying to ' +
           'perform the conversion.';
       }
       // Else 1 or more invalid unit expressions were found (status = 'failed')
@@ -639,20 +630,21 @@ export class UcumDemo {
         // if suggestions were found, output any included messages followed
         // by the suggestions to the result field
         if (resultObj['suggestions']) {
-          let suggString = '';
           if (resultObj['msg'])
-            suggString = resultObj['msg'].join('<BR>') + '<BR>';
+            resultMsg += resultObj['msg'].join('<BR>') + '<BR>';
           if (resultObj['suggestions']['from'])
-            suggString += this._suggSetOutput(resultObj['suggestions']['from']);
+            resultMsg += this._suggSetOutput(resultObj['suggestions']['from']);
           if (resultObj['suggestions']['to'])
-            suggString += this._suggSetOutput(resultObj['suggestions']['to']);          resultString.innerHTML = suggString ;
+            resultMsg += this._suggSetOutput(resultObj['suggestions']['to']);          resultString.innerHTML = suggString ;
         }
         // if suggestions were not found, output whatever message(s) were
         // returned that would indicate the problem
         else
-          resultString.innerHTML = resultObj['msg'].join('<BR>');
+          resultMsg = resultObj['msg'].join('<BR>');
       } // end if conversion did/didn't succeed
     } // end if there were/weren't entry errors
+    if (resultMsg !== '')
+      resultString.innerHTML = escapeHtml(resultMsg);
   } // end convertUnit
 
 
@@ -682,7 +674,7 @@ export class UcumDemo {
     let resultString = document.getElementById(resultField);
     resultString.innerHTML = '';
 
-    let fromName = escapeHtml(document.getElementById(fromField).value);
+    let fromName = document.getElementById(fromField).value;
     if (fromName === '' || fromName === null) {
       resultMsg.push('Please specify a code for the units you want to convert.');
     }
@@ -719,7 +711,7 @@ export class UcumDemo {
       }
     }
     if (resultMsg.length > 0) {
-      resultString.innerHTML = resultMsg.join('<BR>') ;
+      resultString.innerHTML = escapeHtml(resultMsg.join('<BR>')) ;
     }
   } // end getCommensurables
 
@@ -789,7 +781,7 @@ export class UcumDemo {
    *  It also disables the column name input field.
    */
   columnSpecified() {
-    let colName = escapeHtml(document.getElementById('colName').value);
+    let colName = document.getElementById('colName').value;
     this.utils_.useHTMLInMessages(false);
     this.utils_.useBraceMsgForEachString(false);
 
