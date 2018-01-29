@@ -7,7 +7,6 @@
 
 var fs = require('browserify-fs');
 var escapeHtml = require('escape-html');
-var sanitizeHtml = require('sanitize-html');
 
 var Ucum = ucumPkg.Ucum;
 var UcumDemoConfig = require('./demoConfig').UcumDemoConfig;
