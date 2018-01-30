@@ -7,6 +7,7 @@
 
 var fs = require('browserify-fs');
 var escapeHtml = require('escape-html');
+var sanitizeHtml = require('sanitize-html');
 
 var Ucum = ucumPkg.Ucum;
 var UcumDemoConfig = require('./demoConfig').UcumDemoConfig;
@@ -347,7 +348,9 @@ export class UcumDemo {
     let parseResp = {};
 
     let valFld = document.getElementById(elementID);
-    let uStr = valFld.value ;
+    valFld.removeAttribute("class");
+    let uStr = sanitizeHtml(valFld.value) ;
+    let escVal = escapeHtml(valFld.value);
     let resFld = document.getElementById(returnElementID);
     resFld.innerHTML = '';
 
@@ -356,8 +359,21 @@ export class UcumDemo {
     if (reportResult !== 'displayOnly' && reportResult !== 'from' &&
       reportResult !== 'to') {
       console.log(`Invalid reportResult parameter supplied - ${reportResult}`);
-      retMsg = [`Sorry - an error occurred while trying to validate ${uStr}`];
+      retMsg = [`Sorry - an error occurred while trying to validate ${escVal}`];
       valFld.setAttribute("class", "invalid");
+    }
+    // If the string specified sanitized down to nothing, e.g., '<h1>', which
+    // sanitizes down to '', but something WAS specified, issue an error
+    // message and be done.  If nothing was specified make sure the
+    // convert button is disabled and ignore the rest.
+    else if (uStr === '') {
+      if (escVal !== '') {
+        retMsg = `${escVal} is not a valid UCUM code.  No alternatives were found.`;
+        this.setConvertValues(reportResult, false);
+      }
+      else {
+        document.getElementById("doConversionButton").disabled = true ;
+      }
     }
     // Else continue processing if something was specified.
     // If nothing was specified just ignore the request.
@@ -391,13 +407,13 @@ export class UcumDemo {
           }
           else { // assume status is 'error'
             console.log(retMsg.concat(parseResp['msg']));
-            retMsg = `Sorry - an error occurred while trying to validate ${uStr}`;
+            retMsg = `Sorry - an error occurred while trying to validate ${escVal}`;
           } // end if the status returned was not 'invalid'
         } // end if the string is not valid
       } // end try
       catch (err) {
         console.log(err.message);
-        retMsg = `Sorry - an error occurred while trying to validate ${uStr}`;
+        retMsg = `Sorry - an error occurred while trying to validate ${escVal}`;
         valFld.setAttribute("class", "invalid");
         if (reportResult !== 'displayOnly') {
           this.setConvertValues(reportResult, false);
@@ -413,8 +429,14 @@ export class UcumDemo {
     } // end if a value was specified
 
     // If there's a message to be displayed, do it now
-    if (retMsg != '')
-      resFld.innerHTML = escapeHtml(retMsg);
+    if (retMsg != '') {
+      if (uStr !== escVal && uStr !== '') {
+        while (retMsg.includes(uStr)) {
+          retMsg = retMsg.replace(uStr, escVal);
+        }
+      }
+      resFld.innerHTML = retMsg;
+    }
   } // end reportUnitStringValidity
 
 
@@ -517,16 +539,19 @@ export class UcumDemo {
   checkFromVal(numField) {
 
     let fromFld = document.getElementById(numField);
-    let fromVal = fromFld.value;
+    let fromVal = escapeHtml(fromFld.value);
     let resultString = document.getElementById("resultString");
     resultString.innerHTML = '';
 
-    // If the value is blank, just ignore it - no further processing
-    if (fromVal !== '') {
-      let parsedNum = "" + fromVal; parseFloat(fromVal);
+    // If the value is blank, just make sure the convert button is
+    // disabled and do no further processing
+    if (fromVal === '') {
+      document.getElementById("doConversionButton").disabled = true ;
+    }
+    else {
+      let parsedNum = "" + fromVal;
       if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
-        resultString.innerHTML =
-                         escapeHtml(`${fromVal} is not a valid number.`);
+        resultString.innerHTML = `${fromVal} is not a valid number.`;
         this.setConvertValues('fromNum', false);
       }
       else {
@@ -553,7 +578,7 @@ export class UcumDemo {
 
     let resultMsg = '';
     let prec = document.getElementById("precision");
-    let decDigits = parseInt(prec.value);
+    let decDigits = parseInt(escapeHtml(prec.value));
     if (isNaN(decDigits)) {
       decDigits = Ucum.decDigits_;
       prec.value = decDigits;
@@ -562,6 +587,8 @@ export class UcumDemo {
     let entryErrMsg = [];
 
     let fromName = document.getElementById(fromField).value ;
+    let escFromName = escapeHtml(fromName);
+    fromName = sanitizeHtml(fromName);
     if (fromName === '' || fromName === null) {
       entryErrMsg.push('Please specify a code for the units you want to convert.');
     }
@@ -570,11 +597,13 @@ export class UcumDemo {
       if (hypIdx > 0)
         fromName = fromName.substr(0, hypIdx);
     }
-    let fromVal = parseFloat(document.getElementById(numField).value);
+    let fromVal = parseFloat(escapeHtml(document.getElementById(numField).value));
     if (isNaN(fromVal)) {
       entryErrMsg.push('Please specify the number of units to be converted.');
     }
     let toName = document.getElementById(toField).value;
+    let escToName = escapeHtml(toName);
+    toName = sanitizeHtml(toName);
     if (toName === '' || toName === null) {
       entryErrMsg.push('Please specify a code that you want the units to be converted to.');
     }
@@ -642,8 +671,19 @@ export class UcumDemo {
           resultMsg = resultObj['msg'].join('<BR>');
       } // end if conversion did/didn't succeed
     } // end if there were/weren't entry errors
-    if (resultMsg !== '')
-      resultString.innerHTML = escapeHtml(resultMsg);
+    if (resultMsg !== '') {
+      if (fromName !== escFromName && fromName !== '') {
+        while (resultMsg.includes(fromName)) {
+          resultMsg = resultMsg.replace(fromName, escFromName);
+        }
+      }
+      if (toName !== escToName && toName !== '') {
+        while (resultMsg.includes(toName)) {
+          resultMsg = resultMsg.replace(toName, escToName);
+        }
+      }
+      resultString.innerHTML = resultMsg;
+    }
   } // end convertUnit
 
 
@@ -674,6 +714,8 @@ export class UcumDemo {
     resultString.innerHTML = '';
 
     let fromName = document.getElementById(fromField).value;
+    let escFromName = escapeHtml(fromName);
+    fromName = sanitizeHtml(fromName);
     if (fromName === '' || fromName === null) {
       resultMsg.push('Please specify a code for the units you want to convert.');
     }
@@ -710,7 +752,13 @@ export class UcumDemo {
       }
     }
     if (resultMsg.length > 0) {
-      resultString.innerHTML = escapeHtml(resultMsg.join('<BR>')) ;
+      resultMsg = resultMsg.join('<BR>');
+      if (fromName !== escFromName && fromName !== '') {
+        while (resultMsg.includes(fromName)) {
+          resultMsg = resultMsg.replace(fromName, escFromNamel);
+        }
+      }
+      resultString.innerHTML = resultMsg ;
     }
   } // end getCommensurables
 
@@ -780,7 +828,7 @@ export class UcumDemo {
    *  It also disables the column name input field.
    */
   columnSpecified() {
-    let colName = document.getElementById('colName').value;
+    let colName = sanitizeHtml(document.getElementById('colName').value);
     this.utils_.useHTMLInMessages(false);
     this.utils_.useBraceMsgForEachString(false);
 
