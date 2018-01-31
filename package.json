@@ -39,7 +39,6 @@
     "mocha": "https://registry.npmjs.org/mocha/-/mocha-2.5.3.tgz",
     "nsp": "^2.8.1",
     "path": "^0.12.7",
-    "sanitize-html": "^1.17.0",
     "serve-index": "^1.8.0",
     "serve-static": "^1.12.2",
     "ssi": "^0.3.0",
