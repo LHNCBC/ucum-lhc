@@ -40,7 +40,12 @@ source code you need for the validation and conversion functions as well as the
 ucum code definitions file.  We assume that your main motivation for including 
 the ucum-lhc code is to have the validation and conversion capabilities for 
 units of measure on your system.  Those functions are available from the 
-_ucumPkg.UcumLhcUtils_ class.  Here are the function descriptions:
+_ucumPkg.UcumLhcUtils_ class.  In your browser code, or elsewhere if no
+brower is involved, you'll need to specify the ucum-lhc.min.js file, e.g.,
+<script src="path-to-the-file/ucum-lhc.min.js"></script>.
+
+
+Here are the function descriptions:
 
 **validateUnitString(uStr, suggest)**
 
@@ -92,10 +97,8 @@ unit names and synonyms.
         returned.
 
 For example, to validate a unit string of m2/g4:
- 
-    var Pkg = require('ucum-lhc.js');  // include path to file where necessary
-     
-     var utils = Pkg.UcumLhcUtils.getInstance();
+
+     var utils = ucumPkg.UcumLhcUtils.getInstance();
      var returnObj = utils.validateUnitString('m2/g4');
      if (returnObj['status'] === 'valid')
        /* the string is valid; returnObj['ucumCode'] will contain the valid 
@@ -174,9 +177,7 @@ rounded to any particular precision or significant digits.
 
 For example, to convert 27 U.S. fathoms to U.S. inches
  
-    var Pkg = require('ucum-lhc.js');   // include path to file where necessary
-     
-    var utils = Pkg.UcumLhcUtils.getInstance();
+    var utils = ucumPkg.UcumLhcUtils.getInstance();
     var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]');
     if (returnObj['status'] === 'succeeded')
       /* the conversion was successful.
@@ -233,16 +234,14 @@ of possible pound units.
     * {"code":"\[lb_ap\]","name":"pound - apothecary","guidance":null}
     * {"code":"\[psi\]","name":"pound per square inch","guidance":null}
 
- 
-    var Pkg = require('ucum-lhc.js');   // include path to file where necessary
      
-    var utils = Pkg.UcumLhcUtils.getInstance();
+    var utils = ucumPkg.UcumLhcUtils.getInstance();
     var returnObj = utils.checkSynonyms('pound');
     if (returnObj['status'] === 'succeeded')
-      /* one or more units was found.  returnObj['msg'] will be null and the 
+      /* one or more units was found.  returnObj['msg'] will be null and the
          returnObj['units'] array will contain the data listed above */
     else if (returnObj['status'] === 'failed')
-      /* no units were found and the returnObj['msg'] string will indicate that 
+      /* no units were found and the returnObj['msg'] string will indicate that
       */
     else
       /* returnObj['status'] will be 'error' and returnObj['msg'] will indicate
