@@ -419,7 +419,7 @@ var UcumDemo = exports.UcumDemo = function () {
      *  string messages:
      *  'displayOnly' indicates that messages should be displayed only, in the page
      *    element specified by the returnElementID.  No flag conversion flag
-     *    settings are needed.  (this would be set from the Validator tab).
+     *    settings are needed.  (This would be set from the Validator tab).
      *  'from' indicates that in addition to a message, the convFromUnit flag
      *    should be set to true if the string is valid; false if it is not.
      *  'to' indicates that in addition to a message, the convToUnit flag
@@ -814,7 +814,7 @@ var UcumDemo = exports.UcumDemo = function () {
         resultMsg = resultMsg.join('<BR>');
         if (fromName !== escFromName && fromName !== '') {
           while (resultMsg.includes(fromName)) {
-            resultMsg = resultMsg.replace(fromName, escFromNamel);
+            resultMsg = resultMsg.replace(fromName, escFromName);
           }
         }
         resultString.innerHTML = resultMsg;
