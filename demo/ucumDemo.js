@@ -742,7 +742,7 @@ export class UcumDemo {
       resultMsg = resultMsg.join('<BR>');
       if (fromName !== escFromName && fromName !== '') {
         while (resultMsg.includes(fromName)) {
-          resultMsg = resultMsg.replace(fromName, escFromNamel);
+          resultMsg = resultMsg.replace(fromName, escFromName);
         }
       }
       resultString.innerHTML = resultMsg ;
