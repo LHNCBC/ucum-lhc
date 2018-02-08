@@ -421,9 +421,8 @@ export class UcumDemo {
     // If there's a message to be displayed, do it now
     if (retMsg != '') {
       if (uStr !== escVal && uStr !== '') {
-        while (retMsg.includes(uStr)) {
-          retMsg = retMsg.replace(uStr, escVal);
-        }
+        retMsg = retMsg.replace(new RegExp(
+          uStr.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"), escVal);
       }
       resFld.innerHTML = retMsg;
     }
@@ -659,16 +658,17 @@ export class UcumDemo {
           resultMsg = resultObj['msg'].join('<BR>');
       } // end if conversion did/didn't succeed
     } // end if there were/weren't entry errors
+
     if (resultMsg !== '') {
       if (fromName !== escFromName && fromName !== '') {
-        while (resultMsg.includes(fromName)) {
-          resultMsg = resultMsg.replace(fromName, escFromName);
-        }
+        resultMsg = resultMsg.replace(new RegExp(
+          fromName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
+          escFromName);
       }
       if (toName !== escToName && toName !== '') {
-        while (resultMsg.includes(toName)) {
-          resultMsg = resultMsg.replace(toName, escToName);
-        }
+        resultMsg = resultMsg.replace(new RegExp(
+          toName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
+          escToName);
       }
       resultString.innerHTML = resultMsg;
     }
@@ -741,9 +741,9 @@ export class UcumDemo {
     if (resultMsg.length > 0) {
       resultMsg = resultMsg.join('<BR>');
       if (fromName !== escFromName && fromName !== '') {
-        while (resultMsg.includes(fromName)) {
-          resultMsg = resultMsg.replace(fromName, escFromName);
-        }
+        resultMsg = resultMsg.replace(new RegExp(
+          fromName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
+          escFromName);
       }
       resultString.innerHTML = resultMsg ;
     }
