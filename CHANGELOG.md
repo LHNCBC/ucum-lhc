@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.1] - 2018-01-25
+- updated link at the top of the demo page to refer back to the
+overview page - and the link at the top of the overview page to
+refer back to itself.
+- added text to the demo file validation to clarify that only
+units are validated.  Prefixes on their own are not validated.
+- updated the ucumDefs.json with version 2.1 (November 21, 2017) of the
+ucum-essence.xml file from unitsofmeasure.org
+- fixed bug where a zero or negative number of units was considered an error.
+
 
 ## [2.1.0] - 2017-12-21
 - Upgraded the validation processing for conversion request on the

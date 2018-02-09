@@ -370,7 +370,7 @@ module.exports={
       "isSpecial_": false,
       "isArbitrary_": false,
       "synonyms_": "Kelvin; degrees",
-      "source_": "LOINC",
+      "source_": "UCUM",
       "loincProperty_": "Temp",
       "category_": "Clinical",
       "guidance_": "absolute, thermodynamic temperature scale ",
@@ -835,7 +835,7 @@ module.exports={
       "isSpecial_": false,
       "isArbitrary_": false,
       "synonyms_": "picoamperes",
-      "source_": "LOINC",
+      "source_": "UCUM",
       "loincProperty_": "",
       "category_": "Clinical",
       "guidance_": "equal to 10^-12 amperes",
@@ -1109,7 +1109,7 @@ module.exports={
       "name_": "weber",
       "csCode_": "Wb",
       "ciCode_": "WB",
-      "property_": "magentic flux",
+      "property_": "magnetic flux",
       "magnitude_": 1000,
       "dim_": {
         "dimVec_": [
@@ -1626,7 +1626,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters",
       "csCode_": "L",
-      "ciCode_": "",
+      "ciCode_": "L",
       "property_": "volume",
       "magnitude_": 0.001,
       "dim_": {
@@ -5312,7 +5312,7 @@ module.exports={
       "isSpecial_": false,
       "isArbitrary_": false,
       "synonyms_": "US gallons; US liquid gallon; gal us; Queen Anne's wine gallon",
-      "source_": "LOINC",
+      "source_": "UCUM",
       "loincProperty_": "Vol",
       "category_": "Nonclinical",
       "guidance_": "only gallon unit used in the US; [gal_us] is only used in some other countries in South American and Africa to measure gasoline volume",
@@ -8436,7 +8436,7 @@ module.exports={
       "csCode_": "[p'diop]",
       "ciCode_": "[P'DIOP]",
       "property_": "refraction of a prism",
-      "magnitude_": 0.017453292519943295,
+      "magnitude_": 1,
       "dim_": {
         "dimVec_": [
           0,
@@ -8461,7 +8461,7 @@ module.exports={
       "loincProperty_": "Angle",
       "category_": "Clinical",
       "guidance_": "unit for prism correction in eyeglass prescriptions",
-      "csUnitString_": "deg",
+      "csUnitString_": "rad",
       "ciUnitString_": null,
       "baseFactorStr_": null,
       "baseFactor_": "1",
@@ -8568,7 +8568,7 @@ module.exports={
       "isSpecial_": false,
       "isArbitrary_": false,
       "synonyms_": "Charrières, French scales; French gauges; Fr, Fg, Ga, FR, Ch",
-      "source_": "LOINC",
+      "source_": "UCUM",
       "loincProperty_": "Len; Circ; Diam",
       "category_": "Clinical",
       "guidance_": "",
@@ -9907,7 +9907,7 @@ module.exports={
       "isSpecial_": false,
       "isArbitrary_": true,
       "synonyms_": "CFU",
-      "source_": "LOINC",
+      "source_": "UCUM",
       "loincProperty_": "Num",
       "category_": "Clinical",
       "guidance_": "",
@@ -9988,7 +9988,7 @@ module.exports={
       "isSpecial_": false,
       "isArbitrary_": true,
       "synonyms_": "allergy units; allergen units; AU",
-      "source_": "LOINC",
+      "source_": "UCUM",
       "loincProperty_": "Arb",
       "category_": "Clinical",
       "guidance_": "Most standard test allergy units are reported as [IU] or as %. ",
@@ -11582,7 +11582,7 @@ module.exports={
       "isBase_": false,
       "name_": "per deciliter",
       "csCode_": "/dL",
-      "ciCode_": "/D",
+      "ciCode_": "/DL",
       "property_": "volume",
       "magnitude_": 10000,
       "dim_": {
@@ -11730,7 +11730,7 @@ module.exports={
       "isBase_": false,
       "name_": "per liter",
       "csCode_": "/L",
-      "ciCode_": "/",
+      "ciCode_": "/L",
       "property_": "volume",
       "magnitude_": 1000,
       "dim_": {
@@ -11915,7 +11915,7 @@ module.exports={
       "isBase_": false,
       "name_": "per milliliter",
       "csCode_": "/mL",
-      "ciCode_": "/M",
+      "ciCode_": "/ML",
       "property_": "volume",
       "magnitude_": 1000000,
       "dim_": {
@@ -12100,7 +12100,7 @@ module.exports={
       "isBase_": false,
       "name_": "per microliter",
       "csCode_": "/uL",
-      "ciCode_": "/U",
+      "ciCode_": "/UL",
       "property_": "volume",
       "magnitude_": 999999999.9999999,
       "dim_": {
@@ -12174,7 +12174,7 @@ module.exports={
       "isBase_": false,
       "name_": "APL unit per milliliter",
       "csCode_": "[APL'U]/mL",
-      "ciCode_": "[APL'U]/M",
+      "ciCode_": "[APL'U]/ML",
       "property_": "biologic activity of anticardiolipin IgA",
       "magnitude_": 1000000,
       "dim_": {
@@ -12211,7 +12211,7 @@ module.exports={
       "isBase_": false,
       "name_": "arbitrary unit per milliliter",
       "csCode_": "[arb'U]/mL",
-      "ciCode_": "[ARB'U]/M",
+      "ciCode_": "[ARB'U]/ML",
       "property_": "arbitrary",
       "magnitude_": 1000000,
       "dim_": {
@@ -12248,7 +12248,7 @@ module.exports={
       "isBase_": false,
       "name_": "colony forming units per liter",
       "csCode_": "[CFU]/L",
-      "ciCode_": "[CFU]",
+      "ciCode_": "[CFU]/L",
       "property_": "amount of a proliferating organism",
       "magnitude_": 1000,
       "dim_": {
@@ -12285,7 +12285,7 @@ module.exports={
       "isBase_": false,
       "name_": "colony forming units per milliliter",
       "csCode_": "[CFU]/mL",
-      "ciCode_": "[CFU]/M",
+      "ciCode_": "[CFU]/ML",
       "property_": "amount of a proliferating organism",
       "magnitude_": 1000000,
       "dim_": {
@@ -12359,7 +12359,7 @@ module.exports={
       "isBase_": false,
       "name_": "GPL unit per milliliter",
       "csCode_": "[GPL'U]/mL",
-      "ciCode_": "[GPL'U]/M",
+      "ciCode_": "[GPL'U]/ML",
       "property_": "biologic activity of anticardiolipin IgG",
       "magnitude_": 1000000,
       "dim_": {
@@ -12507,7 +12507,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per deciliter",
       "csCode_": "[IU]/dL",
-      "ciCode_": "[IU]/D",
+      "ciCode_": "[IU]/DL",
       "property_": "arbitrary",
       "magnitude_": 10000,
       "dim_": {
@@ -12692,7 +12692,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per liter",
       "csCode_": "[IU]/L",
-      "ciCode_": "[IU]",
+      "ciCode_": "[IU]/L",
       "property_": "arbitrary",
       "magnitude_": 1000,
       "dim_": {
@@ -12766,7 +12766,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per milliliter",
       "csCode_": "[IU]/mL",
-      "ciCode_": "[IU]/M",
+      "ciCode_": "[IU]/ML",
       "property_": "arbitrary",
       "magnitude_": 1000000,
       "dim_": {
@@ -12803,7 +12803,7 @@ module.exports={
       "isBase_": false,
       "name_": "MPL unit per milliliter",
       "csCode_": "[MPL'U]/mL",
-      "ciCode_": "[MPL'U]/M",
+      "ciCode_": "[MPL'U]/ML",
       "property_": "biologic activity of anticardiolipin IgM",
       "magnitude_": 1000000,
       "dim_": {
@@ -13002,7 +13002,7 @@ module.exports={
       "isBase_": false,
       "name_": "trillion per liter",
       "csCode_": "10*12/L",
-      "ciCode_": "10*12",
+      "ciCode_": "10*12/L",
       "property_": "number",
       "magnitude_": 1000000000000000,
       "dim_": {
@@ -13066,7 +13066,7 @@ module.exports={
       "isBase_": false,
       "name_": "thousand per liter",
       "csCode_": "10*3/L",
-      "ciCode_": "10*3",
+      "ciCode_": "10*3/L",
       "property_": "number",
       "magnitude_": 1000000,
       "dim_": {
@@ -13103,7 +13103,7 @@ module.exports={
       "isBase_": false,
       "name_": "thousand per milliliter",
       "csCode_": "10*3/mL",
-      "ciCode_": "10*3/M",
+      "ciCode_": "10*3/ML",
       "property_": "number",
       "magnitude_": 1000000000,
       "dim_": {
@@ -13140,7 +13140,7 @@ module.exports={
       "isBase_": false,
       "name_": "thousand per microliter",
       "csCode_": "10*3/uL",
-      "ciCode_": "10*3/U",
+      "ciCode_": "10*3/UL",
       "property_": "number",
       "magnitude_": 999999999999.9999,
       "dim_": {
@@ -13177,7 +13177,7 @@ module.exports={
       "isBase_": false,
       "name_": "10 thousand per microliter",
       "csCode_": "10*4/uL",
-      "ciCode_": "10*4/U",
+      "ciCode_": "10*4/UL",
       "property_": "number",
       "magnitude_": 10000000000000,
       "dim_": {
@@ -13268,7 +13268,7 @@ module.exports={
       "isBase_": false,
       "name_": "million colony forming unit per liter",
       "csCode_": "10*6.[CFU]/L",
-      "ciCode_": "10*6.[CFU]",
+      "ciCode_": "10*6.[CFU]/L",
       "property_": "number",
       "magnitude_": 1000000000,
       "dim_": {
@@ -13406,7 +13406,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per liter",
       "csCode_": "10*6/L",
-      "ciCode_": "10*6",
+      "ciCode_": "10*6/L",
       "property_": "number",
       "magnitude_": 1000000000,
       "dim_": {
@@ -13443,7 +13443,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per milliliter",
       "csCode_": "10*6/mL",
-      "ciCode_": "10*6/M",
+      "ciCode_": "10*6/ML",
       "property_": "number",
       "magnitude_": 1000000000000,
       "dim_": {
@@ -13480,7 +13480,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per microliter",
       "csCode_": "10*6/uL",
-      "ciCode_": "10*6/U",
+      "ciCode_": "10*6/UL",
       "property_": "number",
       "magnitude_": 1000000000000000,
       "dim_": {
@@ -13544,7 +13544,7 @@ module.exports={
       "isBase_": false,
       "name_": "billion per liter",
       "csCode_": "10*9/L",
-      "ciCode_": "10*9",
+      "ciCode_": "10*9/L",
       "property_": "number",
       "magnitude_": 1000000000000,
       "dim_": {
@@ -13581,7 +13581,7 @@ module.exports={
       "isBase_": false,
       "name_": "billion per milliliter",
       "csCode_": "10*9/mL",
-      "ciCode_": "10*9/M",
+      "ciCode_": "10*9/ML",
       "property_": "number",
       "magnitude_": 1000000000000000,
       "dim_": {
@@ -13618,7 +13618,7 @@ module.exports={
       "isBase_": false,
       "name_": "billion per microliter",
       "csCode_": "10*9/uL",
-      "ciCode_": "10*9/U",
+      "ciCode_": "10*9/UL",
       "property_": "number",
       "magnitude_": 1000000000000000000,
       "dim_": {
@@ -13655,7 +13655,7 @@ module.exports={
       "isBase_": false,
       "name_": "10 liter per minute per square meter",
       "csCode_": "10.L/(min.m2)",
-      "ciCode_": "10./MIN.M2",
+      "ciCode_": "10.L/MIN.M2",
       "property_": "volume",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
@@ -13692,7 +13692,7 @@ module.exports={
       "isBase_": false,
       "name_": "10 liter per minute",
       "csCode_": "10.L/min",
-      "ciCode_": "10./MIN",
+      "ciCode_": "10.L/MIN",
       "property_": "volume",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
@@ -13877,7 +13877,7 @@ module.exports={
       "isBase_": false,
       "name_": "centiliter",
       "csCode_": "cL",
-      "ciCode_": "C",
+      "ciCode_": "CL",
       "property_": "volume",
       "magnitude_": 0.00001,
       "dim_": {
@@ -13988,7 +13988,7 @@ module.exports={
       "isBase_": false,
       "name_": "centimeter of water per liter per second",
       "csCode_": "cm[H2O]/L/s",
-      "ciCode_": "CM[H2O]/S",
+      "ciCode_": "CM[H2O]/L/S",
       "property_": "pressure",
       "magnitude_": 98066500,
       "dim_": {
@@ -14247,7 +14247,7 @@ module.exports={
       "isBase_": false,
       "name_": "dekaliter per minute",
       "csCode_": "daL/min",
-      "ciCode_": "DA/MIN",
+      "ciCode_": "DAL/MIN",
       "property_": "volume",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
@@ -14284,7 +14284,7 @@ module.exports={
       "isBase_": false,
       "name_": "dekaliter per minute per square meter",
       "csCode_": "daL/min/m2",
-      "ciCode_": "DA/MIN/M2",
+      "ciCode_": "DAL/MIN/M2",
       "property_": "volume",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
@@ -14422,7 +14422,7 @@ module.exports={
       "isBase_": false,
       "name_": "deciliter",
       "csCode_": "dL",
-      "ciCode_": "D",
+      "ciCode_": "DL",
       "property_": "volume",
       "magnitude_": 0.0001,
       "dim_": {
@@ -14607,7 +14607,7 @@ module.exports={
       "isBase_": false,
       "name_": "equivalent per liter",
       "csCode_": "eq/L",
-      "ciCode_": "EQ",
+      "ciCode_": "EQ/L",
       "property_": "amount of substance",
       "magnitude_": 6.0221366999999994e+26,
       "dim_": {
@@ -14644,7 +14644,7 @@ module.exports={
       "isBase_": false,
       "name_": "equivalent per milliliter",
       "csCode_": "eq/mL",
-      "ciCode_": "EQ/M",
+      "ciCode_": "EQ/ML",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+29,
       "dim_": {
@@ -14772,7 +14772,7 @@ module.exports={
       "isBase_": false,
       "name_": "femtoliter",
       "csCode_": "fL",
-      "ciCode_": "F",
+      "ciCode_": "FL",
       "property_": "volume",
       "magnitude_": 1e-18,
       "dim_": {
@@ -14910,7 +14910,7 @@ module.exports={
       "isBase_": false,
       "name_": "femtomole per liter",
       "csCode_": "fmol/L",
-      "ciCode_": "FMOL",
+      "ciCode_": "FMOL/L",
       "property_": "amount of substance",
       "magnitude_": 602213670000,
       "dim_": {
@@ -14984,7 +14984,7 @@ module.exports={
       "isBase_": false,
       "name_": "femtomole per milliliter",
       "csCode_": "fmol/mL",
-      "ciCode_": "FMOL/M",
+      "ciCode_": "FMOL/ML",
       "property_": "amount of substance",
       "magnitude_": 602213670000000,
       "dim_": {
@@ -15465,7 +15465,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per deciliter",
       "csCode_": "g/dL",
-      "ciCode_": "G/D",
+      "ciCode_": "G/DL",
       "property_": "mass",
       "magnitude_": 10000,
       "dim_": {
@@ -15798,7 +15798,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per liter",
       "csCode_": "g/L",
-      "ciCode_": "G",
+      "ciCode_": "G/L",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -15946,7 +15946,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per milliliter",
       "csCode_": "g/mL",
-      "ciCode_": "G/M",
+      "ciCode_": "G/ML",
       "property_": "mass",
       "magnitude_": 1000000,
       "dim_": {
@@ -16020,7 +16020,7 @@ module.exports={
       "isBase_": false,
       "name_": "joule per liter",
       "csCode_": "J/L",
-      "ciCode_": "J",
+      "ciCode_": "J/L",
       "property_": "energy",
       "magnitude_": 1000000,
       "dim_": {
@@ -16094,7 +16094,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo international unit per liter",
       "csCode_": "k[IU]/L",
-      "ciCode_": "K[IU]",
+      "ciCode_": "K[IU]/L",
       "property_": "arbitrary",
       "magnitude_": 1000000,
       "dim_": {
@@ -16131,7 +16131,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo international unit per milliliter",
       "csCode_": "k[IU]/mL",
-      "ciCode_": "K[IU]/M",
+      "ciCode_": "K[IU]/ML",
       "property_": "arbitrary",
       "magnitude_": 1000000000,
       "dim_": {
@@ -16205,7 +16205,7 @@ module.exports={
       "isBase_": false,
       "name_": "katal per liter",
       "csCode_": "kat/L",
-      "ciCode_": "KAT",
+      "ciCode_": "KAT/L",
       "property_": "catalytic activity",
       "magnitude_": 6.0221366999999994e+26,
       "dim_": {
@@ -16612,7 +16612,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per liter",
       "csCode_": "kg/L",
-      "ciCode_": "KG",
+      "ciCode_": "KG/L",
       "property_": "mass",
       "magnitude_": 1000000,
       "dim_": {
@@ -16834,7 +16834,7 @@ module.exports={
       "isBase_": false,
       "name_": "kiloliter",
       "csCode_": "kL",
-      "ciCode_": "K",
+      "ciCode_": "KL",
       "property_": "volume",
       "magnitude_": 1,
       "dim_": {
@@ -17056,7 +17056,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo enzyme unit per liter",
       "csCode_": "kU/L",
-      "ciCode_": "KU",
+      "ciCode_": "KU/L",
       "property_": "catalytic activity",
       "magnitude_": 1.00368945e+22,
       "dim_": {
@@ -17093,7 +17093,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilo enzyme unit per milliliter",
       "csCode_": "kU/mL",
-      "ciCode_": "KU/M",
+      "ciCode_": "KU/ML",
       "property_": "catalytic activity",
       "magnitude_": 1.00368945e+25,
       "dim_": {
@@ -17130,7 +17130,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per 24 hour",
       "csCode_": "L/(24.h)",
-      "ciCode_": "/24/HR",
+      "ciCode_": "L/24.HR",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -17167,7 +17167,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per 8 hour",
       "csCode_": "L/(8.h)",
-      "ciCode_": "/8/HR",
+      "ciCode_": "L/8.HR",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-8,
       "dim_": {
@@ -17204,7 +17204,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per minute per square meter",
       "csCode_": "L/(min.m2) ",
-      "ciCode_": "/MIN/M2",
+      "ciCode_": "L/MIN.M2",
       "property_": "volume",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -17241,7 +17241,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per day",
       "csCode_": "L/d",
-      "ciCode_": "/D",
+      "ciCode_": "L/D",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -17278,7 +17278,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per hour",
       "csCode_": "L/h",
-      "ciCode_": "/HR",
+      "ciCode_": "L/HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777776e-7,
       "dim_": {
@@ -17315,7 +17315,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per kilogram",
       "csCode_": "L/kg",
-      "ciCode_": "/KG",
+      "ciCode_": "L/KG",
       "property_": "volume",
       "magnitude_": 0.000001,
       "dim_": {
@@ -17352,7 +17352,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per liter",
       "csCode_": "L/L",
-      "ciCode_": "",
+      "ciCode_": "L/L",
       "property_": "volume",
       "magnitude_": 1,
       "dim_": {
@@ -17389,7 +17389,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per minute",
       "csCode_": "L/min",
-      "ciCode_": "/MIN",
+      "ciCode_": "L/MIN",
       "property_": "volume",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -17426,7 +17426,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per minute per square meter",
       "csCode_": "L/min/m2",
-      "ciCode_": "/MIN/M2",
+      "ciCode_": "L/MIN/M2",
       "property_": "volume",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -17463,7 +17463,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per second",
       "csCode_": "L/s",
-      "ciCode_": "/S",
+      "ciCode_": "L/S",
       "property_": "volume",
       "magnitude_": 0.001,
       "dim_": {
@@ -17500,7 +17500,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per second per square second",
       "csCode_": "L/s/s2",
-      "ciCode_": "/S/S2",
+      "ciCode_": "L/S/S2",
       "property_": "volume",
       "magnitude_": 0.001,
       "dim_": {
@@ -17648,7 +17648,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli international unit per liter",
       "csCode_": "m[IU]/L",
-      "ciCode_": "M[IU]",
+      "ciCode_": "M[IU]/L",
       "property_": "arbitrary",
       "magnitude_": 1,
       "dim_": {
@@ -17685,7 +17685,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli  international unit per milliliter",
       "csCode_": "m[IU]/mL",
-      "ciCode_": "M[IU]/M",
+      "ciCode_": "M[IU]/ML",
       "property_": "arbitrary",
       "magnitude_": 1000.0000000000001,
       "dim_": {
@@ -17907,7 +17907,7 @@ module.exports={
       "isBase_": false,
       "name_": "millibar second per liter",
       "csCode_": "mbar.s/L",
-      "ciCode_": "MBAR.S",
+      "ciCode_": "MBAR.S/L",
       "property_": "pressure",
       "magnitude_": 100000000,
       "dim_": {
@@ -17944,7 +17944,7 @@ module.exports={
       "isBase_": false,
       "name_": "millibar per liter per second",
       "csCode_": "mbar/L/s",
-      "ciCode_": "MBAR/S",
+      "ciCode_": "MBAR/L/S",
       "property_": "pressure",
       "magnitude_": 100000000,
       "dim_": {
@@ -18156,7 +18156,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per deciliter",
       "csCode_": "meq/dL",
-      "ciCode_": "MEQ/D",
+      "ciCode_": "MEQ/DL",
       "property_": "amount of substance",
       "magnitude_": 6.022136699999999e+24,
       "dim_": {
@@ -18341,7 +18341,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per liter",
       "csCode_": "meq/L",
-      "ciCode_": "MEQ",
+      "ciCode_": "MEQ/L",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -18452,7 +18452,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per milliliter",
       "csCode_": "meq/mL",
-      "ciCode_": "MEQ/M",
+      "ciCode_": "MEQ/ML",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+26,
       "dim_": {
@@ -18822,7 +18822,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per deciliter",
       "csCode_": "mg/dL",
-      "ciCode_": "MG/D",
+      "ciCode_": "MG/DL",
       "property_": "mass",
       "magnitude_": 10,
       "dim_": {
@@ -19118,7 +19118,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per liter",
       "csCode_": "mg/L",
-      "ciCode_": "MG",
+      "ciCode_": "MG/L",
       "property_": "mass",
       "magnitude_": 1,
       "dim_": {
@@ -19303,7 +19303,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per milliliter",
       "csCode_": "mg/mL",
-      "ciCode_": "MG/M",
+      "ciCode_": "MG/ML",
       "property_": "mass",
       "magnitude_": 1000.0000000000001,
       "dim_": {
@@ -19414,7 +19414,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter",
       "csCode_": "mL",
-      "ciCode_": "M",
+      "ciCode_": "ML",
       "property_": "volume",
       "magnitude_": 0.000001,
       "dim_": {
@@ -19451,7 +19451,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 10 hour",
       "csCode_": "mL/(10.h)",
-      "ciCode_": "M/10.HR",
+      "ciCode_": "ML/10.HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777777e-11,
       "dim_": {
@@ -19488,7 +19488,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 12 hour",
       "csCode_": "mL/(12.h)",
-      "ciCode_": "M/12.HR",
+      "ciCode_": "ML/12.HR",
       "property_": "volume",
       "magnitude_": 2.3148148148148147e-11,
       "dim_": {
@@ -19525,7 +19525,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 2 hour",
       "csCode_": "mL/(2.h)",
-      "ciCode_": "M/2.HR",
+      "ciCode_": "ML/2.HR",
       "property_": "volume",
       "magnitude_": 1.3888888888888888e-10,
       "dim_": {
@@ -19562,7 +19562,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 24 hour",
       "csCode_": "mL/(24.h)",
-      "ciCode_": "M/24.HR",
+      "ciCode_": "ML/24.HR",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -19599,7 +19599,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 4 hour",
       "csCode_": "mL/(4.h)",
-      "ciCode_": "M/4.HR",
+      "ciCode_": "ML/4.HR",
       "property_": "volume",
       "magnitude_": 6.944444444444444e-11,
       "dim_": {
@@ -19636,7 +19636,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 5 hour",
       "csCode_": "mL/(5.h)",
-      "ciCode_": "M/5.HR",
+      "ciCode_": "ML/5.HR",
       "property_": "volume",
       "magnitude_": 5.5555555555555553e-11,
       "dim_": {
@@ -19673,7 +19673,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 6 hour",
       "csCode_": "mL/(6.h)",
-      "ciCode_": "M/6.HR",
+      "ciCode_": "ML/6.HR",
       "property_": "volume",
       "magnitude_": 4.6296296296296294e-11,
       "dim_": {
@@ -19710,7 +19710,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 72 hour",
       "csCode_": "mL/(72.h)",
-      "ciCode_": "M/72.HR",
+      "ciCode_": "ML/72.HR",
       "property_": "volume",
       "magnitude_": 3.8580246913580245e-12,
       "dim_": {
@@ -19747,7 +19747,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 8 hour",
       "csCode_": "mL/(8.h)",
-      "ciCode_": "M/8.HR",
+      "ciCode_": "ML/8.HR",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-11,
       "dim_": {
@@ -19784,7 +19784,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 8 hour per kilogram",
       "csCode_": "mL/(8.h)/kg",
-      "ciCode_": "M/8.HR/KG",
+      "ciCode_": "ML/8.HR/KG",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-14,
       "dim_": {
@@ -19821,7 +19821,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per square inch (international)",
       "csCode_": "mL/[sin_i]",
-      "ciCode_": "M/[SIN_I]",
+      "ciCode_": "ML/[SIN_I]",
       "property_": "volume",
       "magnitude_": 0.0015500031000061998,
       "dim_": {
@@ -19858,7 +19858,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per centimeter of water",
       "csCode_": "mL/cm[H2O]",
-      "ciCode_": "M/CM[H2O]",
+      "ciCode_": "ML/CM[H2O]",
       "property_": "volume",
       "magnitude_": 1.0197162129779282e-11,
       "dim_": {
@@ -19895,7 +19895,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per day",
       "csCode_": "mL/d",
-      "ciCode_": "M/D",
+      "ciCode_": "ML/D",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -19932,7 +19932,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per deciliter",
       "csCode_": "mL/dL",
-      "ciCode_": "M/D",
+      "ciCode_": "ML/DL",
       "property_": "volume",
       "magnitude_": 0.009999999999999998,
       "dim_": {
@@ -19969,7 +19969,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per hour",
       "csCode_": "mL/h",
-      "ciCode_": "M/HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777777e-10,
       "dim_": {
@@ -20006,7 +20006,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram",
       "csCode_": "mL/kg",
-      "ciCode_": "M/KG",
+      "ciCode_": "ML/KG",
       "property_": "volume",
       "magnitude_": 9.999999999999999e-10,
       "dim_": {
@@ -20043,7 +20043,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per 8 hour",
       "csCode_": "mL/kg/(8.h)",
-      "ciCode_": "M/KG/8.HR",
+      "ciCode_": "ML/KG/8.HR",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-14,
       "dim_": {
@@ -20080,7 +20080,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per day",
       "csCode_": "mL/kg/d",
-      "ciCode_": "M/KG/D",
+      "ciCode_": "ML/KG/D",
       "property_": "volume",
       "magnitude_": 1.1574074074074072e-14,
       "dim_": {
@@ -20117,7 +20117,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per hour",
       "csCode_": "mL/kg/h",
-      "ciCode_": "M/KG/HR",
+      "ciCode_": "ML/KG/HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777774e-13,
       "dim_": {
@@ -20154,7 +20154,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per minute",
       "csCode_": "mL/kg/min",
-      "ciCode_": "M/KG/MIN",
+      "ciCode_": "ML/KG/MIN",
       "property_": "volume",
       "magnitude_": 1.6666666666666664e-11,
       "dim_": {
@@ -20191,7 +20191,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per square meter",
       "csCode_": "mL/m2",
-      "ciCode_": "M/M2",
+      "ciCode_": "ML/M2",
       "property_": "volume",
       "magnitude_": 0.000001,
       "dim_": {
@@ -20228,7 +20228,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per millibar",
       "csCode_": "mL/mbar",
-      "ciCode_": "M/MBAR",
+      "ciCode_": "ML/MBAR",
       "property_": "volume",
       "magnitude_": 1e-11,
       "dim_": {
@@ -20265,7 +20265,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per minute",
       "csCode_": "mL/min",
-      "ciCode_": "M/MIN",
+      "ciCode_": "ML/MIN",
       "property_": "volume",
       "magnitude_": 1.6666666666666667e-8,
       "dim_": {
@@ -20302,7 +20302,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per minute per square meter",
       "csCode_": "mL/min/m2",
-      "ciCode_": "M/MIN/M2",
+      "ciCode_": "ML/MIN/M2",
       "property_": "volume",
       "magnitude_": 1.6666666666666667e-8,
       "dim_": {
@@ -20339,7 +20339,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per millimeter",
       "csCode_": "mL/mm",
-      "ciCode_": "M/MM",
+      "ciCode_": "ML/MM",
       "property_": "volume",
       "magnitude_": 0.001,
       "dim_": {
@@ -20376,7 +20376,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per second",
       "csCode_": "mL/s",
-      "ciCode_": "M/S",
+      "ciCode_": "ML/S",
       "property_": "volume",
       "magnitude_": 0.000001,
       "dim_": {
@@ -20921,7 +20921,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per deciliter",
       "csCode_": "mmol/dL",
-      "ciCode_": "MMOL/D",
+      "ciCode_": "MMOL/DL",
       "property_": "amount of substance",
       "magnitude_": 6.022136699999999e+24,
       "dim_": {
@@ -21217,7 +21217,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per liter",
       "csCode_": "mmol/L",
-      "ciCode_": "MMOL",
+      "ciCode_": "MMOL/L",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -21382,7 +21382,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per second per liter",
       "csCode_": "mmol/s/L",
-      "ciCode_": "MMOL/S",
+      "ciCode_": "MMOL/S/L",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -21493,7 +21493,7 @@ module.exports={
       "isBase_": false,
       "name_": "mole per liter",
       "csCode_": "mol/L",
-      "ciCode_": "MOL",
+      "ciCode_": "MOL/L",
       "property_": "amount of substance",
       "magnitude_": 6.0221366999999994e+26,
       "dim_": {
@@ -21567,7 +21567,7 @@ module.exports={
       "isBase_": false,
       "name_": "mole per milliliter",
       "csCode_": "mol/mL",
-      "ciCode_": "MOL/M",
+      "ciCode_": "MOL/ML",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+29,
       "dim_": {
@@ -21732,7 +21732,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliosmole per liter",
       "csCode_": "mosm/L",
-      "ciCode_": "MOSM",
+      "ciCode_": "MOSM/L",
       "property_": "amount of substance (dissolved particles)",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -21917,7 +21917,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli enzyme unit per liter",
       "csCode_": "mU/L",
-      "ciCode_": "MU",
+      "ciCode_": "MU/L",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -21991,7 +21991,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli enzyme unit per milliliter",
       "csCode_": "mU/mL",
-      "ciCode_": "MU/M",
+      "ciCode_": "MU/ML",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -22028,7 +22028,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli enzyme unit per milliliter per minute",
       "csCode_": "mU/mL/min",
-      "ciCode_": "MU/M/MIN",
+      "ciCode_": "MU/ML/MIN",
       "property_": "catalytic activity",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -22361,7 +22361,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per deciliter",
       "csCode_": "ng/dL",
-      "ciCode_": "NG/D",
+      "ciCode_": "NG/DL",
       "property_": "mass",
       "magnitude_": 0.00001,
       "dim_": {
@@ -22620,7 +22620,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per liter",
       "csCode_": "ng/L",
-      "ciCode_": "NG",
+      "ciCode_": "NG/L",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -22805,7 +22805,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per millliiter",
       "csCode_": "ng/mL",
-      "ciCode_": "NG/M",
+      "ciCode_": "NG/ML",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -22842,7 +22842,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per milliliter per hour",
       "csCode_": "ng/mL/h",
-      "ciCode_": "NG/M/HR",
+      "ciCode_": "NG/ML/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777776e-7,
       "dim_": {
@@ -22990,7 +22990,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanoliter",
       "csCode_": "nL",
-      "ciCode_": "N",
+      "ciCode_": "NL",
       "property_": "volume",
       "magnitude_": 1.0000000000000002e-12,
       "dim_": {
@@ -23064,7 +23064,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanometer per second per liter",
       "csCode_": "nm/s/L",
-      "ciCode_": "NM/S",
+      "ciCode_": "NM/S/L",
       "property_": "length",
       "magnitude_": 0.000001,
       "dim_": {
@@ -23202,7 +23202,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per deciliter",
       "csCode_": "nmol/dL",
-      "ciCode_": "NMOL/D",
+      "ciCode_": "NMOL/DL",
       "property_": "amount of substance",
       "magnitude_": 6022136700000000000,
       "dim_": {
@@ -23276,7 +23276,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per hour per liter",
       "csCode_": "nmol/h/L",
-      "ciCode_": "NMOL/HR",
+      "ciCode_": "NMOL/HR/L",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -23313,7 +23313,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per liter",
       "csCode_": "nmol/L",
-      "ciCode_": "NMOL",
+      "ciCode_": "NMOL/L",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -23498,7 +23498,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per minute per milliliter",
       "csCode_": "nmol/min/mL",
-      "ciCode_": "NMOL/MIN/M",
+      "ciCode_": "NMOL/MIN/ML",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -23535,7 +23535,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milliliter",
       "csCode_": "nmol/mL",
-      "ciCode_": "NMOL/M",
+      "ciCode_": "NMOL/ML",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -23572,7 +23572,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milliliter per hour",
       "csCode_": "nmol/mL/h",
-      "ciCode_": "NMOL/M/HR",
+      "ciCode_": "NMOL/ML/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -23609,7 +23609,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milliliter per minute",
       "csCode_": "nmol/mL/min",
-      "ciCode_": "NMOL/M/MIN",
+      "ciCode_": "NMOL/ML/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -23791,7 +23791,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per second per liter",
       "csCode_": "nmol/s/L",
-      "ciCode_": "NMOL/S",
+      "ciCode_": "NMOL/S/L",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -23865,7 +23865,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanoenzyme unit per milliliter",
       "csCode_": "nU/mL",
-      "ciCode_": "NU/M",
+      "ciCode_": "NU/ML",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000,
       "dim_": {
@@ -23976,7 +23976,7 @@ module.exports={
       "isBase_": false,
       "name_": "osmole per liter",
       "csCode_": "osm/L",
-      "ciCode_": "OSM",
+      "ciCode_": "OSM/L",
       "property_": "amount of substance (dissolved particles)",
       "magnitude_": 6.0221366999999994e+26,
       "dim_": {
@@ -24050,7 +24050,7 @@ module.exports={
       "isBase_": true,
       "name_": "picogram per deciliter",
       "csCode_": "pg/dL",
-      "ciCode_": "PG/D",
+      "ciCode_": "PG/DL",
       "property_": "mass",
       "magnitude_": 9.999999999999999e-9,
       "dim_": {
@@ -24087,7 +24087,7 @@ module.exports={
       "isBase_": true,
       "name_": "picogram per liter",
       "csCode_": "pg/L",
-      "ciCode_": "PG",
+      "ciCode_": "PG/L",
       "property_": "mass",
       "magnitude_": 1e-9,
       "dim_": {
@@ -24161,7 +24161,7 @@ module.exports={
       "isBase_": true,
       "name_": "picogram per milliliter",
       "csCode_": "pg/mL",
-      "ciCode_": "PG/M",
+      "ciCode_": "PG/ML",
       "property_": "mass",
       "magnitude_": 0.000001,
       "dim_": {
@@ -24272,7 +24272,7 @@ module.exports={
       "isBase_": false,
       "name_": "picoliter",
       "csCode_": "pL",
-      "ciCode_": "P",
+      "ciCode_": "PL",
       "property_": "volume",
       "magnitude_": 1e-15,
       "dim_": {
@@ -24447,7 +24447,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per deciliter",
       "csCode_": "pmol/dL",
-      "ciCode_": "PMOL/D",
+      "ciCode_": "PMOL/DL",
       "property_": "amount of substance",
       "magnitude_": 6022136700000000,
       "dim_": {
@@ -24521,7 +24521,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per hour per milliliter ",
       "csCode_": "pmol/h/mL",
-      "ciCode_": "PMOL/HR/M",
+      "ciCode_": "PMOL/HR/ML",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -24558,7 +24558,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per liter",
       "csCode_": "pmol/L",
-      "ciCode_": "PMOL",
+      "ciCode_": "PMOL/L",
       "property_": "amount of substance",
       "magnitude_": 602213670000000,
       "dim_": {
@@ -24632,7 +24632,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per milliliter",
       "csCode_": "pmol/mL",
-      "ciCode_": "PMOL/M",
+      "ciCode_": "PMOL/ML",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -25103,7 +25103,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per deciliter",
       "csCode_": "U/dL",
-      "ciCode_": "U/D",
+      "ciCode_": "U/DL",
       "property_": "catalytic activity",
       "magnitude_": 100368945000000000000,
       "dim_": {
@@ -25214,7 +25214,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per liter",
       "csCode_": "U/L",
-      "ciCode_": "U",
+      "ciCode_": "U/L",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -25288,7 +25288,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per milliliter",
       "csCode_": "U/mL",
-      "ciCode_": "U/M",
+      "ciCode_": "U/ML",
       "property_": "catalytic activity",
       "magnitude_": 1.00368945e+22,
       "dim_": {
@@ -25389,7 +25389,7 @@ module.exports={
       "isBase_": false,
       "name_": "micro international unit per liter",
       "csCode_": "u[IU]/L",
-      "ciCode_": "U[IU]",
+      "ciCode_": "U[IU]/L",
       "property_": "arbitrary",
       "magnitude_": 0.001,
       "dim_": {
@@ -25426,7 +25426,7 @@ module.exports={
       "isBase_": false,
       "name_": "micro international unit per milliliter",
       "csCode_": "u[IU]/mL",
-      "ciCode_": "U[IU]/M",
+      "ciCode_": "U[IU]/ML",
       "property_": "arbitrary",
       "magnitude_": 1,
       "dim_": {
@@ -25490,7 +25490,7 @@ module.exports={
       "isBase_": false,
       "name_": "microequivalent per liter",
       "csCode_": "ueq/L",
-      "ciCode_": "UEQ",
+      "ciCode_": "UEQ/L",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -25527,7 +25527,7 @@ module.exports={
       "isBase_": false,
       "name_": "microequivalent per milliliter",
       "csCode_": "ueq/mL",
-      "ciCode_": "UEQ/M",
+      "ciCode_": "UEQ/ML",
       "property_": "amount of substance",
       "magnitude_": 6.0221367000000003e+23,
       "dim_": {
@@ -25786,7 +25786,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per deciliter",
       "csCode_": "ug/dL",
-      "ciCode_": "UG/D",
+      "ciCode_": "UG/DL",
       "property_": "mass",
       "magnitude_": 0.009999999999999998,
       "dim_": {
@@ -26082,7 +26082,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per liter",
       "csCode_": "ug/L",
-      "ciCode_": "UG",
+      "ciCode_": "UG/L",
       "property_": "mass",
       "magnitude_": 0.001,
       "dim_": {
@@ -26119,7 +26119,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per liter per 24 hour",
       "csCode_": "ug/L/(24.h)",
-      "ciCode_": "UG/24.HR",
+      "ciCode_": "UG/L/24.HR",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -26304,7 +26304,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per milliliter",
       "csCode_": "ug/mL",
-      "ciCode_": "UG/M",
+      "ciCode_": "UG/ML",
       "property_": "mass",
       "magnitude_": 1,
       "dim_": {
@@ -26452,7 +26452,7 @@ module.exports={
       "isBase_": false,
       "name_": "microliter",
       "csCode_": "uL",
-      "ciCode_": "U",
+      "ciCode_": "UL",
       "property_": "volume",
       "magnitude_": 1e-9,
       "dim_": {
@@ -26489,7 +26489,7 @@ module.exports={
       "isBase_": false,
       "name_": "microliter per 2 hour",
       "csCode_": "uL/(2.h)",
-      "ciCode_": "U/2.HR",
+      "ciCode_": "UL/2.HR",
       "property_": "volume",
       "magnitude_": 1.388888888888889e-13,
       "dim_": {
@@ -26526,7 +26526,7 @@ module.exports={
       "isBase_": false,
       "name_": "microliter per hour",
       "csCode_": "uL/h",
-      "ciCode_": "U/HR",
+      "ciCode_": "UL/HR",
       "property_": "volume",
       "magnitude_": 2.777777777777778e-13,
       "dim_": {
@@ -26812,7 +26812,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per deciliter",
       "csCode_": "umol/dL",
-      "ciCode_": "UMOL/D",
+      "ciCode_": "UMOL/DL",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+21,
       "dim_": {
@@ -26960,7 +26960,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per liter",
       "csCode_": "umol/L",
-      "ciCode_": "UMOL",
+      "ciCode_": "UMOL/L",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -26997,7 +26997,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per liter per hour",
       "csCode_": "umol/L/h",
-      "ciCode_": "UMOL/HR",
+      "ciCode_": "UMOL/L/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -27145,7 +27145,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per minute per liter",
       "csCode_": "umol/min/L",
-      "ciCode_": "UMOL/MIN",
+      "ciCode_": "UMOL/MIN/L",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -27182,7 +27182,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per milliliter",
       "csCode_": "umol/mL",
-      "ciCode_": "UMOL/M",
+      "ciCode_": "UMOL/ML",
       "property_": "amount of substance",
       "magnitude_": 6.0221367000000003e+23,
       "dim_": {
@@ -27219,7 +27219,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per milliliter per minute",
       "csCode_": "umol/mL/min",
-      "ciCode_": "UMOL/M/MIN",
+      "ciCode_": "UMOL/ML/MIN",
       "property_": "amount of substance",
       "magnitude_": 1.00368945e+22,
       "dim_": {
@@ -27448,7 +27448,7 @@ module.exports={
       "isBase_": false,
       "name_": "micro enzyme unit per liter",
       "csCode_": "uU/L",
-      "ciCode_": "UU",
+      "ciCode_": "UU/L",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000,
       "dim_": {
@@ -27485,7 +27485,7 @@ module.exports={
       "isBase_": false,
       "name_": "micro enzyme unit per milliliter",
       "csCode_": "uU/mL",
-      "ciCode_": "UU/M",
+      "ciCode_": "UU/ML",
       "property_": "catalytic activity",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -30021,7 +30021,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"_process":105,"buffer":87,"core-util-is":90,"events":94,"inherits":96,"isarray":100,"stream":148,"string_decoder/":159}],15:[function(require,module,exports){
+},{"_process":105,"buffer":87,"core-util-is":90,"events":94,"inherits":96,"isarray":100,"stream":117,"string_decoder/":128}],15:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -30623,7 +30623,7 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":12,"_process":105,"buffer":87,"core-util-is":90,"inherits":96,"stream":148}],17:[function(require,module,exports){
+},{"./_stream_duplex":12,"_process":105,"buffer":87,"core-util-is":90,"inherits":96,"stream":117}],17:[function(require,module,exports){
 (function (process){
 var Stream = require('stream'); // hack to fix a circular dependency issue when used with browserify
 exports = module.exports = require('./lib/_stream_readable.js');
@@ -30638,7 +30638,7 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable') {
 }
 
 }).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":12,"./lib/_stream_passthrough.js":13,"./lib/_stream_readable.js":14,"./lib/_stream_transform.js":15,"./lib/_stream_writable.js":16,"_process":105,"stream":148}],18:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":12,"./lib/_stream_passthrough.js":13,"./lib/_stream_readable.js":14,"./lib/_stream_transform.js":15,"./lib/_stream_writable.js":16,"_process":105,"stream":117}],18:[function(require,module,exports){
 module.exports = require("./lib/_stream_writable.js")
 
 },{"./lib/_stream_writable.js":16}],19:[function(require,module,exports){
@@ -31036,7 +31036,7 @@ module.exports = function(db, opts) {
 	return blobs;
 };
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":105,"buffer":87,"level-peek":27,"once":102,"readable-stream/readable":25,"readable-stream/writable":26,"util":163}],20:[function(require,module,exports){
+},{"_process":105,"buffer":87,"level-peek":27,"once":102,"readable-stream/readable":25,"readable-stream/writable":26,"util":132}],20:[function(require,module,exports){
 arguments[4][12][0].apply(exports,arguments)
 },{"./_stream_readable":22,"./_stream_writable":24,"_process":105,"core-util-is":90,"dup":12,"inherits":96}],21:[function(require,module,exports){
 arguments[4][13][0].apply(exports,arguments)
@@ -31995,7 +31995,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":20,"_process":105,"buffer":87,"core-util-is":90,"events":94,"inherits":96,"isarray":100,"stream":148,"string_decoder/":159,"util":3}],23:[function(require,module,exports){
+},{"./_stream_duplex":20,"_process":105,"buffer":87,"core-util-is":90,"events":94,"inherits":96,"isarray":100,"stream":117,"string_decoder/":128,"util":3}],23:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -32687,7 +32687,7 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":20,"_process":105,"buffer":87,"core-util-is":90,"inherits":96,"stream":148}],25:[function(require,module,exports){
+},{"./_stream_duplex":20,"_process":105,"buffer":87,"core-util-is":90,"inherits":96,"stream":117}],25:[function(require,module,exports){
 (function (process){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = require('stream');
@@ -32701,7 +32701,7 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable') {
 }
 
 }).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":20,"./lib/_stream_passthrough.js":21,"./lib/_stream_readable.js":22,"./lib/_stream_transform.js":23,"./lib/_stream_writable.js":24,"_process":105,"stream":148}],26:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":20,"./lib/_stream_passthrough.js":21,"./lib/_stream_readable.js":22,"./lib/_stream_transform.js":23,"./lib/_stream_writable.js":24,"_process":105,"stream":117}],26:[function(require,module,exports){
 arguments[4][18][0].apply(exports,arguments)
 },{"./lib/_stream_writable.js":24,"dup":18}],27:[function(require,module,exports){
 var fixRange = require('level-fix-range')
@@ -34445,7 +34445,7 @@ SDB.post = function (range, hook) {
 var exports = module.exports = SubDB
 
 
-},{"./batch":29,"events":94,"level-fix-range":31,"string-range":34,"util":163,"xtend":36}],42:[function(require,module,exports){
+},{"./batch":29,"events":94,"level-fix-range":31,"string-range":34,"util":132,"xtend":36}],42:[function(require,module,exports){
 module.exports = function (num, base) {
   return parseInt(num.toString(), base || 8)
 }
@@ -34880,7 +34880,7 @@ var checkKeyValue = Level.prototype._checkKeyValue = function (obj, type) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"./iterator":49,"abstract-leveldown":52,"buffer":87,"idb-wrapper":54,"isbuffer":55,"typedarray-to-buffer":57,"util":163,"xtend":59}],49:[function(require,module,exports){
+},{"./iterator":49,"abstract-leveldown":52,"buffer":87,"idb-wrapper":54,"isbuffer":55,"typedarray-to-buffer":57,"util":132,"xtend":59}],49:[function(require,module,exports){
 var util = require('util')
 var AbstractIterator  = require('abstract-leveldown').AbstractIterator
 var ltgt = require('ltgt')
@@ -34954,7 +34954,7 @@ Iterator.prototype._next = function (callback) {
   this.callback = callback
 }
 
-},{"abstract-leveldown":52,"ltgt":56,"util":163}],50:[function(require,module,exports){
+},{"abstract-leveldown":52,"ltgt":56,"util":132}],50:[function(require,module,exports){
 (function (process){
 /* Copyright (c) 2013 Rod Vagg, MIT License */
 
@@ -37619,7 +37619,7 @@ module.exports.destroy = utilStatic('destroy')
 module.exports.repair  = utilStatic('repair')
 
 }).call(this,require('_process'))
-},{"./batch":64,"./errors":65,"./read-stream":67,"./util":68,"./write-stream":69,"_process":105,"deferred-leveldown":71,"events":94,"prr":77,"util":163,"xtend":84}],67:[function(require,module,exports){
+},{"./batch":64,"./errors":65,"./read-stream":67,"./util":68,"./write-stream":69,"_process":105,"deferred-leveldown":71,"events":94,"prr":77,"util":132,"xtend":84}],67:[function(require,module,exports){
 /* Copyright (c) 2012-2014 LevelUP contributors
  * See list at <https://github.com/rvagg/node-levelup#contributing>
  * MIT License <https://github.com/rvagg/node-levelup/blob/master/LICENSE.md>
@@ -37747,7 +37747,7 @@ ReadStream.prototype.toString = function () {
 
 module.exports = ReadStream
 
-},{"./errors":65,"./util":68,"readable-stream":83,"util":163,"xtend":84}],68:[function(require,module,exports){
+},{"./errors":65,"./util":68,"readable-stream":83,"util":132,"xtend":84}],68:[function(require,module,exports){
 (function (process,Buffer){
 /* Copyright (c) 2012-2014 LevelUP contributors
  * See list at <https://github.com/rvagg/node-levelup#contributing>
@@ -38115,7 +38115,7 @@ WriteStream.prototype.toString = function () {
 module.exports = WriteStream
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./util":68,"_process":105,"bl":70,"stream":148,"util":163,"xtend":84}],70:[function(require,module,exports){
+},{"./util":68,"_process":105,"bl":70,"stream":117,"util":132,"xtend":84}],70:[function(require,module,exports){
 (function (Buffer){
 var DuplexStream = require('readable-stream').Duplex
   , util         = require('util')
@@ -38332,7 +38332,7 @@ BufferList.prototype.destroy = function () {
 module.exports = BufferList
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":87,"readable-stream":83,"util":163}],71:[function(require,module,exports){
+},{"buffer":87,"readable-stream":83,"util":132}],71:[function(require,module,exports){
 (function (Buffer,process){
 var util              = require('util')
   , AbstractLevelDOWN = require('abstract-leveldown').AbstractLevelDOWN
@@ -38383,7 +38383,7 @@ DeferredLevelDOWN.prototype._iterator = function () {
 module.exports = DeferredLevelDOWN
 
 }).call(this,{"isBuffer":require("../../../../../is-buffer/index.js")},require('_process'))
-},{"../../../../../is-buffer/index.js":97,"_process":105,"abstract-leveldown":74,"util":163}],72:[function(require,module,exports){
+},{"../../../../../is-buffer/index.js":97,"_process":105,"abstract-leveldown":74,"util":132}],72:[function(require,module,exports){
 arguments[4][50][0].apply(exports,arguments)
 },{"_process":105,"dup":50}],73:[function(require,module,exports){
 arguments[4][51][0].apply(exports,arguments)
@@ -38659,13 +38659,13 @@ arguments[4][12][0].apply(exports,arguments)
 arguments[4][13][0].apply(exports,arguments)
 },{"./_stream_transform":81,"core-util-is":90,"dup":13,"inherits":96}],80:[function(require,module,exports){
 arguments[4][14][0].apply(exports,arguments)
-},{"_process":105,"buffer":87,"core-util-is":90,"dup":14,"events":94,"inherits":96,"isarray":100,"stream":148,"string_decoder/":159}],81:[function(require,module,exports){
+},{"_process":105,"buffer":87,"core-util-is":90,"dup":14,"events":94,"inherits":96,"isarray":100,"stream":117,"string_decoder/":128}],81:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
 },{"./_stream_duplex":78,"core-util-is":90,"dup":15,"inherits":96}],82:[function(require,module,exports){
 arguments[4][16][0].apply(exports,arguments)
-},{"./_stream_duplex":78,"_process":105,"buffer":87,"core-util-is":90,"dup":16,"inherits":96,"stream":148}],83:[function(require,module,exports){
+},{"./_stream_duplex":78,"_process":105,"buffer":87,"core-util-is":90,"dup":16,"inherits":96,"stream":117}],83:[function(require,module,exports){
 arguments[4][17][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":78,"./lib/_stream_passthrough.js":79,"./lib/_stream_readable.js":80,"./lib/_stream_transform.js":81,"./lib/_stream_writable.js":82,"_process":105,"dup":17,"stream":148}],84:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":78,"./lib/_stream_passthrough.js":79,"./lib/_stream_readable.js":80,"./lib/_stream_transform.js":81,"./lib/_stream_writable.js":82,"_process":105,"dup":17,"stream":117}],84:[function(require,module,exports){
 arguments[4][53][0].apply(exports,arguments)
 },{"dup":53}],85:[function(require,module,exports){
 module.exports={
@@ -40412,7 +40412,7 @@ function u8Concat (parts) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":87,"inherits":96,"readable-stream":114,"typedarray":160}],90:[function(require,module,exports){
+},{"buffer":87,"inherits":96,"readable-stream":114,"typedarray":129}],90:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -40999,7 +40999,7 @@ Parser.prototype.__write = function(chars, end, callback) {
 };
 
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":105,"buffer":87,"stream":148,"string_decoder":159,"util":163}],92:[function(require,module,exports){
+},{"_process":105,"buffer":87,"stream":117,"string_decoder":128,"util":132}],92:[function(require,module,exports){
 (function (process){
 // Generated by CoffeeScript 1.10.0
 var Stringifier, get, stream, util;
@@ -41312,7 +41312,7 @@ Stringifier.prototype.stringify = function(line) {
 };
 
 }).call(this,require('_process'))
-},{"_process":105,"lodash.get":93,"stream":148,"util":163}],93:[function(require,module,exports){
+},{"_process":105,"lodash.get":93,"stream":117,"util":132}],93:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -42729,7 +42729,7 @@ function once (fn) {
   return f
 }
 
-},{"wrappy":164}],103:[function(require,module,exports){
+},{"wrappy":133}],103:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -44062,7 +44062,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":107,"_process":105,"buffer":87,"core-util-is":90,"events":94,"inherits":96,"isarray":112,"process-nextick-args":104,"string_decoder/":159,"util":3}],110:[function(require,module,exports){
+},{"./_stream_duplex":107,"_process":105,"buffer":87,"core-util-is":90,"events":94,"inherits":96,"isarray":112,"process-nextick-args":104,"string_decoder/":128,"util":3}],110:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -44762,7 +44762,7 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":107,"_process":105,"buffer":87,"core-util-is":90,"events":94,"inherits":96,"process-nextick-args":104,"util-deprecate":161}],112:[function(require,module,exports){
+},{"./_stream_duplex":107,"_process":105,"buffer":87,"core-util-is":90,"events":94,"inherits":96,"process-nextick-args":104,"util-deprecate":130}],112:[function(require,module,exports){
 arguments[4][88][0].apply(exports,arguments)
 },{"dup":88}],113:[function(require,module,exports){
 module.exports = require("./lib/_stream_passthrough.js")
@@ -44787,3112 +44787,6 @@ module.exports = require("./lib/_stream_transform.js")
 },{"./lib/_stream_transform.js":110}],116:[function(require,module,exports){
 arguments[4][18][0].apply(exports,arguments)
 },{"./lib/_stream_writable.js":111,"dup":18}],117:[function(require,module,exports){
-var htmlparser = require('htmlparser2');
-var extend = require('xtend');
-var quoteRegexp = require('regexp-quote');
-
-function each(obj, cb) {
-  if (obj) Object.keys(obj).forEach(function (key) {
-    cb(obj[key], key);
-  });
-}
-
-// Avoid false positives with .__proto__, .hasOwnProperty, etc.
-function has(obj, key) {
-  return ({}).hasOwnProperty.call(obj, key);
-}
-
-module.exports = sanitizeHtml;
-
-// Ignore the _recursing flag; it's there for recursive
-// invocation as a guard against this exploit:
-// https://github.com/fb55/htmlparser2/issues/105
-
-function sanitizeHtml(html, options, _recursing) {
-  var result = '';
-
-  function Frame(tag, attribs) {
-    var that = this;
-    this.tag = tag;
-    this.attribs = attribs || {};
-    this.tagPosition = result.length;
-    this.text = ''; // Node inner text
-
-    this.updateParentNodeText = function() {
-      if (stack.length) {
-          var parentFrame = stack[stack.length - 1];
-          parentFrame.text += that.text;
-      }
-    };
-  }
-
-  if (!options) {
-    options = sanitizeHtml.defaults;
-    options.parser = htmlParserDefaults;
-  } else {
-    options = extend(sanitizeHtml.defaults, options);
-    if (options.parser) {
-      options.parser = extend(htmlParserDefaults, options.parser);
-    } else {
-      options.parser = htmlParserDefaults;
-    }
-  }
-
-  // Tags that contain something other than HTML, or where discarding
-  // the text when the tag is disallowed makes sense for other reasons.
-  // If we are not allowing these tags, we should drop their content too.
-  // For other tags you would drop the tag but keep its content.
-  var nonTextTagsArray = options.nonTextTags || [ 'script', 'style', 'textarea' ];
-  var allowedAttributesMap;
-  var allowedAttributesGlobMap;
-  if(options.allowedAttributes) {
-    allowedAttributesMap = {};
-    allowedAttributesGlobMap = {};
-    each(options.allowedAttributes, function(attributes, tag) {
-      allowedAttributesMap[tag] = [];
-      var globRegex = [];
-      attributes.forEach(function(name) {
-        if(name.indexOf('*') >= 0) {
-          globRegex.push(quoteRegexp(name).replace(/\\\*/g, '.*'));
-        } else {
-          allowedAttributesMap[tag].push(name);
-        }
-      });
-      allowedAttributesGlobMap[tag] = new RegExp('^(' + globRegex.join('|') + ')$');
-    });
-  }
-  var allowedClassesMap = {};
-  each(options.allowedClasses, function(classes, tag) {
-    // Implicitly allows the class attribute
-    if(allowedAttributesMap) {
-      if (!has(allowedAttributesMap, tag)) {
-        allowedAttributesMap[tag] = [];
-      }
-      allowedAttributesMap[tag].push('class');
-    }
-
-    allowedClassesMap[tag] = classes;
-  });
-
-  var transformTagsMap = {};
-  var transformTagsAll;
-  each(options.transformTags, function(transform, tag) {
-    var transFun;
-    if (typeof transform === 'function') {
-      transFun = transform;
-    } else if (typeof transform === "string") {
-      transFun = sanitizeHtml.simpleTransform(transform);
-    }
-    if (tag === '*') {
-      transformTagsAll = transFun;
-    } else {
-      transformTagsMap[tag] = transFun;
-    }
-  });
-
-  var depth = 0;
-  var stack = [];
-  var skipMap = {};
-  var transformMap = {};
-  var skipText = false;
-  var skipTextDepth = 0;
-
-  var parser = new htmlparser.Parser({
-    onopentag: function(name, attribs) {
-      if (skipText) {
-        skipTextDepth++;
-        return;
-      }
-      var frame = new Frame(name, attribs);
-      stack.push(frame);
-
-      var skip = false;
-      var hasText = frame.text ? true : false;
-      var transformedTag;
-      if (has(transformTagsMap, name)) {
-        transformedTag = transformTagsMap[name](name, attribs);
-
-        frame.attribs = attribs = transformedTag.attribs;
-
-        if (transformedTag.text !== undefined) {
-          frame.innerText = transformedTag.text;
-        }
-
-        if (name !== transformedTag.tagName) {
-          frame.name = name = transformedTag.tagName;
-          transformMap[depth] = transformedTag.tagName;
-        }
-      }
-      if (transformTagsAll) {
-        transformedTag = transformTagsAll(name, attribs);
-
-        frame.attribs = attribs = transformedTag.attribs;
-        if (name !== transformedTag.tagName) {
-          frame.name = name = transformedTag.tagName;
-          transformMap[depth] = transformedTag.tagName;
-        }
-      }
-
-      if (options.allowedTags && options.allowedTags.indexOf(name) === -1) {
-        skip = true;
-        if (nonTextTagsArray.indexOf(name) !== -1) {
-          skipText = true;
-          skipTextDepth = 1;
-        }
-        skipMap[depth] = true;
-      }
-      depth++;
-      if (skip) {
-        // We want the contents but not this tag
-        return;
-      }
-      result += '<' + name;
-      if (!allowedAttributesMap || has(allowedAttributesMap, name) || allowedAttributesMap['*']) {
-        each(attribs, function(value, a) {
-          if (!allowedAttributesMap ||
-              (has(allowedAttributesMap, name) && allowedAttributesMap[name].indexOf(a) !== -1 ) ||
-              (allowedAttributesMap['*'] && allowedAttributesMap['*'].indexOf(a) !== -1 ) ||
-              (has(allowedAttributesGlobMap, name) && allowedAttributesGlobMap[name].test(a)) ||
-              (allowedAttributesGlobMap['*'] && allowedAttributesGlobMap['*'].test(a))) {
-            if ((a === 'href') || (a === 'src')) {
-              if (naughtyHref(name, value)) {
-                delete frame.attribs[a];
-                return;
-              }
-            }
-            if (a === 'class') {
-              value = filterClasses(value, allowedClassesMap[name]);
-              if (!value.length) {
-                delete frame.attribs[a];
-                return;
-              }
-            }
-            result += ' ' + a;
-            if (value.length) {
-              result += '="' + escapeHtml(value) + '"';
-            }
-          } else {
-            delete frame.attribs[a];
-          }
-        });
-      }
-      if (options.selfClosing.indexOf(name) !== -1) {
-        result += " />";
-      } else {
-        result += ">";
-        if (frame.innerText && !hasText && !options.textFilter) {
-          result += frame.innerText;
-        }
-      }
-    },
-    ontext: function(text) {
-      if (skipText) {
-        return;
-      }
-      var lastFrame = stack[stack.length-1];
-      var tag;
-
-      if (lastFrame) {
-        tag = lastFrame.tag;
-        // If inner text was set by transform function then let's use it
-        text = lastFrame.innerText !== undefined ? lastFrame.innerText : text;
-      }
-
-      if ((tag === 'script') || (tag === 'style')) {
-        // htmlparser2 gives us these as-is. Escaping them ruins the content. Allowing
-        // script tags is, by definition, game over for XSS protection, so if that's
-        // your concern, don't allow them. The same is essentially true for style tags
-        // which have their own collection of XSS vectors.
-        result += text;
-      } else {
-        var escaped = escapeHtml(text);
-        if (options.textFilter) {
-          result += options.textFilter(escaped);
-        } else {
-          result += escaped;
-        }
-      }
-      if (stack.length) {
-           var frame = stack[stack.length - 1];
-           frame.text += text;
-      }
-    },
-    onclosetag: function(name) {
-
-      if (skipText) {
-        skipTextDepth--;
-        if (!skipTextDepth) {
-          skipText = false;
-        } else {
-          return;
-        }
-      }
-
-      var frame = stack.pop();
-      if (!frame) {
-        // Do not crash on bad markup
-        return;
-      }
-      skipText = false;
-      depth--;
-      if (skipMap[depth]) {
-        delete skipMap[depth];
-        frame.updateParentNodeText();
-        return;
-      }
-
-      if (transformMap[depth]) {
-        name = transformMap[depth];
-        delete transformMap[depth];
-      }
-
-      if (options.exclusiveFilter && options.exclusiveFilter(frame)) {
-         result = result.substr(0, frame.tagPosition);
-         return;
-      }
-
-      frame.updateParentNodeText();
-
-      if (options.selfClosing.indexOf(name) !== -1) {
-         // Already output />
-         return;
-      }
-
-      result += "</" + name + ">";
-    }
-  }, options.parser);
-  parser.write(html);
-  parser.end();
-
-  return result;
-
-  function escapeHtml(s) {
-    if (typeof(s) !== 'string') {
-      s = s + '';
-    }
-    return s.replace(/\&/g, '&amp;').replace(/</g, '&lt;').replace(/\>/g, '&gt;').replace(/\"/g, '&quot;');
-  }
-
-  function naughtyHref(name, href) {
-    // Browsers ignore character codes of 32 (space) and below in a surprising
-    // number of situations. Start reading here:
-    // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Embedded_tab
-    href = href.replace(/[\x00-\x20]+/g, '');
-    // Clobber any comments in URLs, which the browser might
-    // interpret inside an XML data island, allowing
-    // a javascript: URL to be snuck through
-    href = href.replace(/<\!\-\-.*?\-\-\>/g, '');
-    // Case insensitive so we don't get faked out by JAVASCRIPT #1
-    var matches = href.match(/^([a-zA-Z]+)\:/);
-    if (!matches) {
-      // No scheme = no way to inject js (right?)
-      return false;
-    }
-    var scheme = matches[1].toLowerCase();
-
-    if (has(options.allowedSchemesByTag, name)) {
-      return options.allowedSchemesByTag[name].indexOf(scheme) === -1;
-    }
-
-    return !options.allowedSchemes || options.allowedSchemes.indexOf(scheme) === -1;
-  }
-
-  function filterClasses(classes, allowed) {
-    if (!allowed) {
-      // The class attribute is allowed without filtering on this tag
-      return classes;
-    }
-    classes = classes.split(/\s+/);
-    return classes.filter(function(clss) {
-      return allowed.indexOf(clss) !== -1;
-    }).join(' ');
-  }
-}
-
-// Defaults are accessible to you so that you can use them as a starting point
-// programmatically if you wish
-
-var htmlParserDefaults = {
-  decodeEntities: true
-};
-sanitizeHtml.defaults = {
-  allowedTags: [ 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
-    'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-    'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre' ],
-  allowedAttributes: {
-    a: [ 'href', 'name', 'target' ],
-    // We don't currently allow img itself by default, but this
-    // would make sense if we did
-    img: [ 'src' ]
-  },
-  // Lots of these won't come up by default because we don't allow them
-  selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
-  // URL schemes we permit
-  allowedSchemes: [ 'http', 'https', 'ftp', 'mailto' ],
-  allowedSchemesByTag: {}
-};
-
-sanitizeHtml.simpleTransform = function(newTagName, newAttribs, merge) {
-  merge = (merge === undefined) ? true : merge;
-  newAttribs = newAttribs || {};
-
-  return function(tagName, attribs) {
-    var attrib;
-    if (merge) {
-      for (attrib in newAttribs) {
-        attribs[attrib] = newAttribs[attrib];
-      }
-    } else {
-      attribs = newAttribs;
-    }
-
-    return {
-      tagName: newTagName,
-      attribs: attribs
-    };
-  };
-};
-
-},{"htmlparser2":125,"regexp-quote":147,"xtend":165}],118:[function(require,module,exports){
-module.exports = CollectingHandler;
-
-function CollectingHandler(cbs){
-	this._cbs = cbs || {};
-	this.events = [];
-}
-
-var EVENTS = require("./").EVENTS;
-Object.keys(EVENTS).forEach(function(name){
-	if(EVENTS[name] === 0){
-		name = "on" + name;
-		CollectingHandler.prototype[name] = function(){
-			this.events.push([name]);
-			if(this._cbs[name]) this._cbs[name]();
-		};
-	} else if(EVENTS[name] === 1){
-		name = "on" + name;
-		CollectingHandler.prototype[name] = function(a){
-			this.events.push([name, a]);
-			if(this._cbs[name]) this._cbs[name](a);
-		};
-	} else if(EVENTS[name] === 2){
-		name = "on" + name;
-		CollectingHandler.prototype[name] = function(a, b){
-			this.events.push([name, a, b]);
-			if(this._cbs[name]) this._cbs[name](a, b);
-		};
-	} else {
-		throw Error("wrong number of arguments");
-	}
-});
-
-CollectingHandler.prototype.onreset = function(){
-	this.events = [];
-	if(this._cbs.onreset) this._cbs.onreset();
-};
-
-CollectingHandler.prototype.restart = function(){
-	if(this._cbs.onreset) this._cbs.onreset();
-
-	for(var i = 0, len = this.events.length; i < len; i++){
-		if(this._cbs[this.events[i][0]]){
-
-			var num = this.events[i].length;
-
-			if(num === 1){
-				this._cbs[this.events[i][0]]();
-			} else if(num === 2){
-				this._cbs[this.events[i][0]](this.events[i][1]);
-			} else {
-				this._cbs[this.events[i][0]](this.events[i][1], this.events[i][2]);
-			}
-		}
-	}
-};
-
-},{"./":125}],119:[function(require,module,exports){
-var index = require("./index.js"),
-    DomHandler = index.DomHandler,
-    DomUtils = index.DomUtils;
-
-//TODO: make this a streamable handler
-function FeedHandler(callback, options){
-	this.init(callback, options);
-}
-
-require("inherits")(FeedHandler, DomHandler);
-
-FeedHandler.prototype.init = DomHandler;
-
-function getElements(what, where){
-	return DomUtils.getElementsByTagName(what, where, true);
-}
-function getOneElement(what, where){
-	return DomUtils.getElementsByTagName(what, where, true, 1)[0];
-}
-function fetch(what, where, recurse){
-	return DomUtils.getText(
-		DomUtils.getElementsByTagName(what, where, recurse, 1)
-	).trim();
-}
-
-function addConditionally(obj, prop, what, where, recurse){
-	var tmp = fetch(what, where, recurse);
-	if(tmp) obj[prop] = tmp;
-}
-
-var isValidFeed = function(value){
-	return value === "rss" || value === "feed" || value === "rdf:RDF";
-};
-
-FeedHandler.prototype.onend = function(){
-	var feed = {},
-	    feedRoot = getOneElement(isValidFeed, this.dom),
-	    tmp, childs;
-
-	if(feedRoot){
-		if(feedRoot.name === "feed"){
-			childs = feedRoot.children;
-
-			feed.type = "atom";
-			addConditionally(feed, "id", "id", childs);
-			addConditionally(feed, "title", "title", childs);
-			if((tmp = getOneElement("link", childs)) && (tmp = tmp.attribs) && (tmp = tmp.href)) feed.link = tmp;
-			addConditionally(feed, "description", "subtitle", childs);
-			if((tmp = fetch("updated", childs))) feed.updated = new Date(tmp);
-			addConditionally(feed, "author", "email", childs, true);
-
-			feed.items = getElements("entry", childs).map(function(item){
-				var entry = {}, tmp;
-
-				item = item.children;
-
-				addConditionally(entry, "id", "id", item);
-				addConditionally(entry, "title", "title", item);
-				if((tmp = getOneElement("link", item)) && (tmp = tmp.attribs) && (tmp = tmp.href)) entry.link = tmp;
-				if((tmp = fetch("summary", item) || fetch("content", item))) entry.description = tmp;
-				if((tmp = fetch("updated", item))) entry.pubDate = new Date(tmp);
-				return entry;
-			});
-		} else {
-			childs = getOneElement("channel", feedRoot.children).children;
-
-			feed.type = feedRoot.name.substr(0, 3);
-			feed.id = "";
-			addConditionally(feed, "title", "title", childs);
-			addConditionally(feed, "link", "link", childs);
-			addConditionally(feed, "description", "description", childs);
-			if((tmp = fetch("lastBuildDate", childs))) feed.updated = new Date(tmp);
-			addConditionally(feed, "author", "managingEditor", childs, true);
-
-			feed.items = getElements("item", feedRoot.children).map(function(item){
-				var entry = {}, tmp;
-
-				item = item.children;
-
-				addConditionally(entry, "id", "guid", item);
-				addConditionally(entry, "title", "title", item);
-				addConditionally(entry, "link", "link", item);
-				addConditionally(entry, "description", "description", item);
-				if((tmp = fetch("pubDate", item))) entry.pubDate = new Date(tmp);
-				return entry;
-			});
-		}
-	}
-	this.dom = feed;
-	DomHandler.prototype._handleCallback.call(
-		this, feedRoot ? null : Error("couldn't find root of feed")
-	);
-};
-
-module.exports = FeedHandler;
-
-},{"./index.js":125,"inherits":96}],120:[function(require,module,exports){
-var Tokenizer = require("./Tokenizer.js");
-
-/*
-	Options:
-
-	xmlMode: Disables the special behavior for script/style tags (false by default)
-	lowerCaseAttributeNames: call .toLowerCase for each attribute name (true if xmlMode is `false`)
-	lowerCaseTags: call .toLowerCase for each tag name (true if xmlMode is `false`)
-*/
-
-/*
-	Callbacks:
-
-	oncdataend,
-	oncdatastart,
-	onclosetag,
-	oncomment,
-	oncommentend,
-	onerror,
-	onopentag,
-	onprocessinginstruction,
-	onreset,
-	ontext
-*/
-
-var formTags = {
-	input: true,
-	option: true,
-	optgroup: true,
-	select: true,
-	button: true,
-	datalist: true,
-	textarea: true
-};
-
-var openImpliesClose = {
-	tr      : { tr:true, th:true, td:true },
-	th      : { th:true },
-	td      : { thead:true, th:true, td:true },
-	body    : { head:true, link:true, script:true },
-	li      : { li:true },
-	p       : { p:true },
-	h1      : { p:true },
-	h2      : { p:true },
-	h3      : { p:true },
-	h4      : { p:true },
-	h5      : { p:true },
-	h6      : { p:true },
-	select  : formTags,
-	input   : formTags,
-	output  : formTags,
-	button  : formTags,
-	datalist: formTags,
-	textarea: formTags,
-	option  : { option:true },
-	optgroup: { optgroup:true }
-};
-
-var voidElements = {
-	__proto__: null,
-	area: true,
-	base: true,
-	basefont: true,
-	br: true,
-	col: true,
-	command: true,
-	embed: true,
-	frame: true,
-	hr: true,
-	img: true,
-	input: true,
-	isindex: true,
-	keygen: true,
-	link: true,
-	meta: true,
-	param: true,
-	source: true,
-	track: true,
-	wbr: true,
-
-	//common self closing svg elements
-	path: true,
-	circle: true,
-	ellipse: true,
-	line: true,
-	rect: true,
-	use: true,
-	stop: true,
-	polyline: true,
-	polygon: true
-};
-
-var re_nameEnd = /\s|\//;
-
-function Parser(cbs, options){
-	this._options = options || {};
-	this._cbs = cbs || {};
-
-	this._tagname = "";
-	this._attribname = "";
-	this._attribvalue = "";
-	this._attribs = null;
-	this._stack = [];
-
-	this.startIndex = 0;
-	this.endIndex = null;
-
-	this._lowerCaseTagNames = "lowerCaseTags" in this._options ?
-									!!this._options.lowerCaseTags :
-									!this._options.xmlMode;
-	this._lowerCaseAttributeNames = "lowerCaseAttributeNames" in this._options ?
-									!!this._options.lowerCaseAttributeNames :
-									!this._options.xmlMode;
-
-	if(this._options.Tokenizer) {
-		Tokenizer = this._options.Tokenizer;
-	}
-	this._tokenizer = new Tokenizer(this._options, this);
-
-	if(this._cbs.onparserinit) this._cbs.onparserinit(this);
-}
-
-require("inherits")(Parser, require("events").EventEmitter);
-
-Parser.prototype._updatePosition = function(initialOffset){
-	if(this.endIndex === null){
-		if(this._tokenizer._sectionStart <= initialOffset){
-			this.startIndex = 0;
-		} else {
-			this.startIndex = this._tokenizer._sectionStart - initialOffset;
-		}
-	}
-	else this.startIndex = this.endIndex + 1;
-	this.endIndex = this._tokenizer.getAbsoluteIndex();
-};
-
-//Tokenizer event handlers
-Parser.prototype.ontext = function(data){
-	this._updatePosition(1);
-	this.endIndex--;
-
-	if(this._cbs.ontext) this._cbs.ontext(data);
-};
-
-Parser.prototype.onopentagname = function(name){
-	if(this._lowerCaseTagNames){
-		name = name.toLowerCase();
-	}
-
-	this._tagname = name;
-
-	if(!this._options.xmlMode && name in openImpliesClose) {
-		for(
-			var el;
-			(el = this._stack[this._stack.length - 1]) in openImpliesClose[name];
-			this.onclosetag(el)
-		);
-	}
-
-	if(this._options.xmlMode || !(name in voidElements)){
-		this._stack.push(name);
-	}
-
-	if(this._cbs.onopentagname) this._cbs.onopentagname(name);
-	if(this._cbs.onopentag) this._attribs = {};
-};
-
-Parser.prototype.onopentagend = function(){
-	this._updatePosition(1);
-
-	if(this._attribs){
-		if(this._cbs.onopentag) this._cbs.onopentag(this._tagname, this._attribs);
-		this._attribs = null;
-	}
-
-	if(!this._options.xmlMode && this._cbs.onclosetag && this._tagname in voidElements){
-		this._cbs.onclosetag(this._tagname);
-	}
-
-	this._tagname = "";
-};
-
-Parser.prototype.onclosetag = function(name){
-	this._updatePosition(1);
-
-	if(this._lowerCaseTagNames){
-		name = name.toLowerCase();
-	}
-
-	if(this._stack.length && (!(name in voidElements) || this._options.xmlMode)){
-		var pos = this._stack.lastIndexOf(name);
-		if(pos !== -1){
-			if(this._cbs.onclosetag){
-				pos = this._stack.length - pos;
-				while(pos--) this._cbs.onclosetag(this._stack.pop());
-			}
-			else this._stack.length = pos;
-		} else if(name === "p" && !this._options.xmlMode){
-			this.onopentagname(name);
-			this._closeCurrentTag();
-		}
-	} else if(!this._options.xmlMode && (name === "br" || name === "p")){
-		this.onopentagname(name);
-		this._closeCurrentTag();
-	}
-};
-
-Parser.prototype.onselfclosingtag = function(){
-	if(this._options.xmlMode || this._options.recognizeSelfClosing){
-		this._closeCurrentTag();
-	} else {
-		this.onopentagend();
-	}
-};
-
-Parser.prototype._closeCurrentTag = function(){
-	var name = this._tagname;
-
-	this.onopentagend();
-
-	//self-closing tags will be on the top of the stack
-	//(cheaper check than in onclosetag)
-	if(this._stack[this._stack.length - 1] === name){
-		if(this._cbs.onclosetag){
-			this._cbs.onclosetag(name);
-		}
-		this._stack.pop();
-	}
-};
-
-Parser.prototype.onattribname = function(name){
-	if(this._lowerCaseAttributeNames){
-		name = name.toLowerCase();
-	}
-	this._attribname = name;
-};
-
-Parser.prototype.onattribdata = function(value){
-	this._attribvalue += value;
-};
-
-Parser.prototype.onattribend = function(){
-	if(this._cbs.onattribute) this._cbs.onattribute(this._attribname, this._attribvalue);
-	if(
-		this._attribs &&
-		!Object.prototype.hasOwnProperty.call(this._attribs, this._attribname)
-	){
-		this._attribs[this._attribname] = this._attribvalue;
-	}
-	this._attribname = "";
-	this._attribvalue = "";
-};
-
-Parser.prototype._getInstructionName = function(value){
-	var idx = value.search(re_nameEnd),
-	    name = idx < 0 ? value : value.substr(0, idx);
-
-	if(this._lowerCaseTagNames){
-		name = name.toLowerCase();
-	}
-
-	return name;
-};
-
-Parser.prototype.ondeclaration = function(value){
-	if(this._cbs.onprocessinginstruction){
-		var name = this._getInstructionName(value);
-		this._cbs.onprocessinginstruction("!" + name, "!" + value);
-	}
-};
-
-Parser.prototype.onprocessinginstruction = function(value){
-	if(this._cbs.onprocessinginstruction){
-		var name = this._getInstructionName(value);
-		this._cbs.onprocessinginstruction("?" + name, "?" + value);
-	}
-};
-
-Parser.prototype.oncomment = function(value){
-	this._updatePosition(4);
-
-	if(this._cbs.oncomment) this._cbs.oncomment(value);
-	if(this._cbs.oncommentend) this._cbs.oncommentend();
-};
-
-Parser.prototype.oncdata = function(value){
-	this._updatePosition(1);
-
-	if(this._options.xmlMode || this._options.recognizeCDATA){
-		if(this._cbs.oncdatastart) this._cbs.oncdatastart();
-		if(this._cbs.ontext) this._cbs.ontext(value);
-		if(this._cbs.oncdataend) this._cbs.oncdataend();
-	} else {
-		this.oncomment("[CDATA[" + value + "]]");
-	}
-};
-
-Parser.prototype.onerror = function(err){
-	if(this._cbs.onerror) this._cbs.onerror(err);
-};
-
-Parser.prototype.onend = function(){
-	if(this._cbs.onclosetag){
-		for(
-			var i = this._stack.length;
-			i > 0;
-			this._cbs.onclosetag(this._stack[--i])
-		);
-	}
-	if(this._cbs.onend) this._cbs.onend();
-};
-
-
-//Resets the parser to a blank state, ready to parse a new HTML document
-Parser.prototype.reset = function(){
-	if(this._cbs.onreset) this._cbs.onreset();
-	this._tokenizer.reset();
-
-	this._tagname = "";
-	this._attribname = "";
-	this._attribs = null;
-	this._stack = [];
-
-	if(this._cbs.onparserinit) this._cbs.onparserinit(this);
-};
-
-//Parses a complete HTML document and pushes it to the handler
-Parser.prototype.parseComplete = function(data){
-	this.reset();
-	this.end(data);
-};
-
-Parser.prototype.write = function(chunk){
-	this._tokenizer.write(chunk);
-};
-
-Parser.prototype.end = function(chunk){
-	this._tokenizer.end(chunk);
-};
-
-Parser.prototype.pause = function(){
-	this._tokenizer.pause();
-};
-
-Parser.prototype.resume = function(){
-	this._tokenizer.resume();
-};
-
-//alias for backwards compat
-Parser.prototype.parseChunk = Parser.prototype.write;
-Parser.prototype.done = Parser.prototype.end;
-
-module.exports = Parser;
-
-},{"./Tokenizer.js":123,"events":94,"inherits":96}],121:[function(require,module,exports){
-module.exports = ProxyHandler;
-
-function ProxyHandler(cbs){
-	this._cbs = cbs || {};
-}
-
-var EVENTS = require("./").EVENTS;
-Object.keys(EVENTS).forEach(function(name){
-	if(EVENTS[name] === 0){
-		name = "on" + name;
-		ProxyHandler.prototype[name] = function(){
-			if(this._cbs[name]) this._cbs[name]();
-		};
-	} else if(EVENTS[name] === 1){
-		name = "on" + name;
-		ProxyHandler.prototype[name] = function(a){
-			if(this._cbs[name]) this._cbs[name](a);
-		};
-	} else if(EVENTS[name] === 2){
-		name = "on" + name;
-		ProxyHandler.prototype[name] = function(a, b){
-			if(this._cbs[name]) this._cbs[name](a, b);
-		};
-	} else {
-		throw Error("wrong number of arguments");
-	}
-});
-},{"./":125}],122:[function(require,module,exports){
-module.exports = Stream;
-
-var Parser = require("./WritableStream.js");
-
-function Stream(options){
-	Parser.call(this, new Cbs(this), options);
-}
-
-require("inherits")(Stream, Parser);
-
-Stream.prototype.readable = true;
-
-function Cbs(scope){
-	this.scope = scope;
-}
-
-var EVENTS = require("../").EVENTS;
-
-Object.keys(EVENTS).forEach(function(name){
-	if(EVENTS[name] === 0){
-		Cbs.prototype["on" + name] = function(){
-			this.scope.emit(name);
-		};
-	} else if(EVENTS[name] === 1){
-		Cbs.prototype["on" + name] = function(a){
-			this.scope.emit(name, a);
-		};
-	} else if(EVENTS[name] === 2){
-		Cbs.prototype["on" + name] = function(a, b){
-			this.scope.emit(name, a, b);
-		};
-	} else {
-		throw Error("wrong number of arguments!");
-	}
-});
-},{"../":125,"./WritableStream.js":124,"inherits":96}],123:[function(require,module,exports){
-module.exports = Tokenizer;
-
-var decodeCodePoint = require("entities/lib/decode_codepoint.js"),
-    entityMap = require("entities/maps/entities.json"),
-    legacyMap = require("entities/maps/legacy.json"),
-    xmlMap    = require("entities/maps/xml.json"),
-
-    i = 0,
-
-    TEXT                      = i++,
-    BEFORE_TAG_NAME           = i++, //after <
-    IN_TAG_NAME               = i++,
-    IN_SELF_CLOSING_TAG       = i++,
-    BEFORE_CLOSING_TAG_NAME   = i++,
-    IN_CLOSING_TAG_NAME       = i++,
-    AFTER_CLOSING_TAG_NAME    = i++,
-
-    //attributes
-    BEFORE_ATTRIBUTE_NAME     = i++,
-    IN_ATTRIBUTE_NAME         = i++,
-    AFTER_ATTRIBUTE_NAME      = i++,
-    BEFORE_ATTRIBUTE_VALUE    = i++,
-    IN_ATTRIBUTE_VALUE_DQ     = i++, // "
-    IN_ATTRIBUTE_VALUE_SQ     = i++, // '
-    IN_ATTRIBUTE_VALUE_NQ     = i++,
-
-    //declarations
-    BEFORE_DECLARATION        = i++, // !
-    IN_DECLARATION            = i++,
-
-    //processing instructions
-    IN_PROCESSING_INSTRUCTION = i++, // ?
-
-    //comments
-    BEFORE_COMMENT            = i++,
-    IN_COMMENT                = i++,
-    AFTER_COMMENT_1           = i++,
-    AFTER_COMMENT_2           = i++,
-
-    //cdata
-    BEFORE_CDATA_1            = i++, // [
-    BEFORE_CDATA_2            = i++, // C
-    BEFORE_CDATA_3            = i++, // D
-    BEFORE_CDATA_4            = i++, // A
-    BEFORE_CDATA_5            = i++, // T
-    BEFORE_CDATA_6            = i++, // A
-    IN_CDATA                  = i++, // [
-    AFTER_CDATA_1             = i++, // ]
-    AFTER_CDATA_2             = i++, // ]
-
-    //special tags
-    BEFORE_SPECIAL            = i++, //S
-    BEFORE_SPECIAL_END        = i++,   //S
-
-    BEFORE_SCRIPT_1           = i++, //C
-    BEFORE_SCRIPT_2           = i++, //R
-    BEFORE_SCRIPT_3           = i++, //I
-    BEFORE_SCRIPT_4           = i++, //P
-    BEFORE_SCRIPT_5           = i++, //T
-    AFTER_SCRIPT_1            = i++, //C
-    AFTER_SCRIPT_2            = i++, //R
-    AFTER_SCRIPT_3            = i++, //I
-    AFTER_SCRIPT_4            = i++, //P
-    AFTER_SCRIPT_5            = i++, //T
-
-    BEFORE_STYLE_1            = i++, //T
-    BEFORE_STYLE_2            = i++, //Y
-    BEFORE_STYLE_3            = i++, //L
-    BEFORE_STYLE_4            = i++, //E
-    AFTER_STYLE_1             = i++, //T
-    AFTER_STYLE_2             = i++, //Y
-    AFTER_STYLE_3             = i++, //L
-    AFTER_STYLE_4             = i++, //E
-
-    BEFORE_ENTITY             = i++, //&
-    BEFORE_NUMERIC_ENTITY     = i++, //#
-    IN_NAMED_ENTITY           = i++,
-    IN_NUMERIC_ENTITY         = i++,
-    IN_HEX_ENTITY             = i++, //X
-
-    j = 0,
-
-    SPECIAL_NONE              = j++,
-    SPECIAL_SCRIPT            = j++,
-    SPECIAL_STYLE             = j++;
-
-function whitespace(c){
-	return c === " " || c === "\n" || c === "\t" || c === "\f" || c === "\r";
-}
-
-function characterState(char, SUCCESS){
-	return function(c){
-		if(c === char) this._state = SUCCESS;
-	};
-}
-
-function ifElseState(upper, SUCCESS, FAILURE){
-	var lower = upper.toLowerCase();
-
-	if(upper === lower){
-		return function(c){
-			if(c === lower){
-				this._state = SUCCESS;
-			} else {
-				this._state = FAILURE;
-				this._index--;
-			}
-		};
-	} else {
-		return function(c){
-			if(c === lower || c === upper){
-				this._state = SUCCESS;
-			} else {
-				this._state = FAILURE;
-				this._index--;
-			}
-		};
-	}
-}
-
-function consumeSpecialNameChar(upper, NEXT_STATE){
-	var lower = upper.toLowerCase();
-
-	return function(c){
-		if(c === lower || c === upper){
-			this._state = NEXT_STATE;
-		} else {
-			this._state = IN_TAG_NAME;
-			this._index--; //consume the token again
-		}
-	};
-}
-
-function Tokenizer(options, cbs){
-	this._state = TEXT;
-	this._buffer = "";
-	this._sectionStart = 0;
-	this._index = 0;
-	this._bufferOffset = 0; //chars removed from _buffer
-	this._baseState = TEXT;
-	this._special = SPECIAL_NONE;
-	this._cbs = cbs;
-	this._running = true;
-	this._ended = false;
-	this._xmlMode = !!(options && options.xmlMode);
-	this._decodeEntities = !!(options && options.decodeEntities);
-}
-
-Tokenizer.prototype._stateText = function(c){
-	if(c === "<"){
-		if(this._index > this._sectionStart){
-			this._cbs.ontext(this._getSection());
-		}
-		this._state = BEFORE_TAG_NAME;
-		this._sectionStart = this._index;
-	} else if(this._decodeEntities && this._special === SPECIAL_NONE && c === "&"){
-		if(this._index > this._sectionStart){
-			this._cbs.ontext(this._getSection());
-		}
-		this._baseState = TEXT;
-		this._state = BEFORE_ENTITY;
-		this._sectionStart = this._index;
-	}
-};
-
-Tokenizer.prototype._stateBeforeTagName = function(c){
-	if(c === "/"){
-		this._state = BEFORE_CLOSING_TAG_NAME;
-	} else if(c === "<"){
-		this._cbs.ontext(this._getSection());
-		this._sectionStart = this._index;
-	} else if(c === ">" || this._special !== SPECIAL_NONE || whitespace(c)) {
-		this._state = TEXT;
-	} else if(c === "!"){
-		this._state = BEFORE_DECLARATION;
-		this._sectionStart = this._index + 1;
-	} else if(c === "?"){
-		this._state = IN_PROCESSING_INSTRUCTION;
-		this._sectionStart = this._index + 1;
-	} else {
-		this._state = (!this._xmlMode && (c === "s" || c === "S")) ?
-						BEFORE_SPECIAL : IN_TAG_NAME;
-		this._sectionStart = this._index;
-	}
-};
-
-Tokenizer.prototype._stateInTagName = function(c){
-	if(c === "/" || c === ">" || whitespace(c)){
-		this._emitToken("onopentagname");
-		this._state = BEFORE_ATTRIBUTE_NAME;
-		this._index--;
-	}
-};
-
-Tokenizer.prototype._stateBeforeCloseingTagName = function(c){
-	if(whitespace(c));
-	else if(c === ">"){
-		this._state = TEXT;
-	} else if(this._special !== SPECIAL_NONE){
-		if(c === "s" || c === "S"){
-			this._state = BEFORE_SPECIAL_END;
-		} else {
-			this._state = TEXT;
-			this._index--;
-		}
-	} else {
-		this._state = IN_CLOSING_TAG_NAME;
-		this._sectionStart = this._index;
-	}
-};
-
-Tokenizer.prototype._stateInCloseingTagName = function(c){
-	if(c === ">" || whitespace(c)){
-		this._emitToken("onclosetag");
-		this._state = AFTER_CLOSING_TAG_NAME;
-		this._index--;
-	}
-};
-
-Tokenizer.prototype._stateAfterCloseingTagName = function(c){
-	//skip everything until ">"
-	if(c === ">"){
-		this._state = TEXT;
-		this._sectionStart = this._index + 1;
-	}
-};
-
-Tokenizer.prototype._stateBeforeAttributeName = function(c){
-	if(c === ">"){
-		this._cbs.onopentagend();
-		this._state = TEXT;
-		this._sectionStart = this._index + 1;
-	} else if(c === "/"){
-		this._state = IN_SELF_CLOSING_TAG;
-	} else if(!whitespace(c)){
-		this._state = IN_ATTRIBUTE_NAME;
-		this._sectionStart = this._index;
-	}
-};
-
-Tokenizer.prototype._stateInSelfClosingTag = function(c){
-	if(c === ">"){
-		this._cbs.onselfclosingtag();
-		this._state = TEXT;
-		this._sectionStart = this._index + 1;
-	} else if(!whitespace(c)){
-		this._state = BEFORE_ATTRIBUTE_NAME;
-		this._index--;
-	}
-};
-
-Tokenizer.prototype._stateInAttributeName = function(c){
-	if(c === "=" || c === "/" || c === ">" || whitespace(c)){
-		this._cbs.onattribname(this._getSection());
-		this._sectionStart = -1;
-		this._state = AFTER_ATTRIBUTE_NAME;
-		this._index--;
-	}
-};
-
-Tokenizer.prototype._stateAfterAttributeName = function(c){
-	if(c === "="){
-		this._state = BEFORE_ATTRIBUTE_VALUE;
-	} else if(c === "/" || c === ">"){
-		this._cbs.onattribend();
-		this._state = BEFORE_ATTRIBUTE_NAME;
-		this._index--;
-	} else if(!whitespace(c)){
-		this._cbs.onattribend();
-		this._state = IN_ATTRIBUTE_NAME;
-		this._sectionStart = this._index;
-	}
-};
-
-Tokenizer.prototype._stateBeforeAttributeValue = function(c){
-	if(c === "\""){
-		this._state = IN_ATTRIBUTE_VALUE_DQ;
-		this._sectionStart = this._index + 1;
-	} else if(c === "'"){
-		this._state = IN_ATTRIBUTE_VALUE_SQ;
-		this._sectionStart = this._index + 1;
-	} else if(!whitespace(c)){
-		this._state = IN_ATTRIBUTE_VALUE_NQ;
-		this._sectionStart = this._index;
-		this._index--; //reconsume token
-	}
-};
-
-Tokenizer.prototype._stateInAttributeValueDoubleQuotes = function(c){
-	if(c === "\""){
-		this._emitToken("onattribdata");
-		this._cbs.onattribend();
-		this._state = BEFORE_ATTRIBUTE_NAME;
-	} else if(this._decodeEntities && c === "&"){
-		this._emitToken("onattribdata");
-		this._baseState = this._state;
-		this._state = BEFORE_ENTITY;
-		this._sectionStart = this._index;
-	}
-};
-
-Tokenizer.prototype._stateInAttributeValueSingleQuotes = function(c){
-	if(c === "'"){
-		this._emitToken("onattribdata");
-		this._cbs.onattribend();
-		this._state = BEFORE_ATTRIBUTE_NAME;
-	} else if(this._decodeEntities && c === "&"){
-		this._emitToken("onattribdata");
-		this._baseState = this._state;
-		this._state = BEFORE_ENTITY;
-		this._sectionStart = this._index;
-	}
-};
-
-Tokenizer.prototype._stateInAttributeValueNoQuotes = function(c){
-	if(whitespace(c) || c === ">"){
-		this._emitToken("onattribdata");
-		this._cbs.onattribend();
-		this._state = BEFORE_ATTRIBUTE_NAME;
-		this._index--;
-	} else if(this._decodeEntities && c === "&"){
-		this._emitToken("onattribdata");
-		this._baseState = this._state;
-		this._state = BEFORE_ENTITY;
-		this._sectionStart = this._index;
-	}
-};
-
-Tokenizer.prototype._stateBeforeDeclaration = function(c){
-	this._state = c === "[" ? BEFORE_CDATA_1 :
-					c === "-" ? BEFORE_COMMENT :
-						IN_DECLARATION;
-};
-
-Tokenizer.prototype._stateInDeclaration = function(c){
-	if(c === ">"){
-		this._cbs.ondeclaration(this._getSection());
-		this._state = TEXT;
-		this._sectionStart = this._index + 1;
-	}
-};
-
-Tokenizer.prototype._stateInProcessingInstruction = function(c){
-	if(c === ">"){
-		this._cbs.onprocessinginstruction(this._getSection());
-		this._state = TEXT;
-		this._sectionStart = this._index + 1;
-	}
-};
-
-Tokenizer.prototype._stateBeforeComment = function(c){
-	if(c === "-"){
-		this._state = IN_COMMENT;
-		this._sectionStart = this._index + 1;
-	} else {
-		this._state = IN_DECLARATION;
-	}
-};
-
-Tokenizer.prototype._stateInComment = function(c){
-	if(c === "-") this._state = AFTER_COMMENT_1;
-};
-
-Tokenizer.prototype._stateAfterComment1 = function(c){
-	if(c === "-"){
-		this._state = AFTER_COMMENT_2;
-	} else {
-		this._state = IN_COMMENT;
-	}
-};
-
-Tokenizer.prototype._stateAfterComment2 = function(c){
-	if(c === ">"){
-		//remove 2 trailing chars
-		this._cbs.oncomment(this._buffer.substring(this._sectionStart, this._index - 2));
-		this._state = TEXT;
-		this._sectionStart = this._index + 1;
-	} else if(c !== "-"){
-		this._state = IN_COMMENT;
-	}
-	// else: stay in AFTER_COMMENT_2 (`--->`)
-};
-
-Tokenizer.prototype._stateBeforeCdata1 = ifElseState("C", BEFORE_CDATA_2, IN_DECLARATION);
-Tokenizer.prototype._stateBeforeCdata2 = ifElseState("D", BEFORE_CDATA_3, IN_DECLARATION);
-Tokenizer.prototype._stateBeforeCdata3 = ifElseState("A", BEFORE_CDATA_4, IN_DECLARATION);
-Tokenizer.prototype._stateBeforeCdata4 = ifElseState("T", BEFORE_CDATA_5, IN_DECLARATION);
-Tokenizer.prototype._stateBeforeCdata5 = ifElseState("A", BEFORE_CDATA_6, IN_DECLARATION);
-
-Tokenizer.prototype._stateBeforeCdata6 = function(c){
-	if(c === "["){
-		this._state = IN_CDATA;
-		this._sectionStart = this._index + 1;
-	} else {
-		this._state = IN_DECLARATION;
-		this._index--;
-	}
-};
-
-Tokenizer.prototype._stateInCdata = function(c){
-	if(c === "]") this._state = AFTER_CDATA_1;
-};
-
-Tokenizer.prototype._stateAfterCdata1 = characterState("]", AFTER_CDATA_2);
-
-Tokenizer.prototype._stateAfterCdata2 = function(c){
-	if(c === ">"){
-		//remove 2 trailing chars
-		this._cbs.oncdata(this._buffer.substring(this._sectionStart, this._index - 2));
-		this._state = TEXT;
-		this._sectionStart = this._index + 1;
-	} else if(c !== "]") {
-		this._state = IN_CDATA;
-	}
-	//else: stay in AFTER_CDATA_2 (`]]]>`)
-};
-
-Tokenizer.prototype._stateBeforeSpecial = function(c){
-	if(c === "c" || c === "C"){
-		this._state = BEFORE_SCRIPT_1;
-	} else if(c === "t" || c === "T"){
-		this._state = BEFORE_STYLE_1;
-	} else {
-		this._state = IN_TAG_NAME;
-		this._index--; //consume the token again
-	}
-};
-
-Tokenizer.prototype._stateBeforeSpecialEnd = function(c){
-	if(this._special === SPECIAL_SCRIPT && (c === "c" || c === "C")){
-		this._state = AFTER_SCRIPT_1;
-	} else if(this._special === SPECIAL_STYLE && (c === "t" || c === "T")){
-		this._state = AFTER_STYLE_1;
-	}
-	else this._state = TEXT;
-};
-
-Tokenizer.prototype._stateBeforeScript1 = consumeSpecialNameChar("R", BEFORE_SCRIPT_2);
-Tokenizer.prototype._stateBeforeScript2 = consumeSpecialNameChar("I", BEFORE_SCRIPT_3);
-Tokenizer.prototype._stateBeforeScript3 = consumeSpecialNameChar("P", BEFORE_SCRIPT_4);
-Tokenizer.prototype._stateBeforeScript4 = consumeSpecialNameChar("T", BEFORE_SCRIPT_5);
-
-Tokenizer.prototype._stateBeforeScript5 = function(c){
-	if(c === "/" || c === ">" || whitespace(c)){
-		this._special = SPECIAL_SCRIPT;
-	}
-	this._state = IN_TAG_NAME;
-	this._index--; //consume the token again
-};
-
-Tokenizer.prototype._stateAfterScript1 = ifElseState("R", AFTER_SCRIPT_2, TEXT);
-Tokenizer.prototype._stateAfterScript2 = ifElseState("I", AFTER_SCRIPT_3, TEXT);
-Tokenizer.prototype._stateAfterScript3 = ifElseState("P", AFTER_SCRIPT_4, TEXT);
-Tokenizer.prototype._stateAfterScript4 = ifElseState("T", AFTER_SCRIPT_5, TEXT);
-
-Tokenizer.prototype._stateAfterScript5 = function(c){
-	if(c === ">" || whitespace(c)){
-		this._special = SPECIAL_NONE;
-		this._state = IN_CLOSING_TAG_NAME;
-		this._sectionStart = this._index - 6;
-		this._index--; //reconsume the token
-	}
-	else this._state = TEXT;
-};
-
-Tokenizer.prototype._stateBeforeStyle1 = consumeSpecialNameChar("Y", BEFORE_STYLE_2);
-Tokenizer.prototype._stateBeforeStyle2 = consumeSpecialNameChar("L", BEFORE_STYLE_3);
-Tokenizer.prototype._stateBeforeStyle3 = consumeSpecialNameChar("E", BEFORE_STYLE_4);
-
-Tokenizer.prototype._stateBeforeStyle4 = function(c){
-	if(c === "/" || c === ">" || whitespace(c)){
-		this._special = SPECIAL_STYLE;
-	}
-	this._state = IN_TAG_NAME;
-	this._index--; //consume the token again
-};
-
-Tokenizer.prototype._stateAfterStyle1 = ifElseState("Y", AFTER_STYLE_2, TEXT);
-Tokenizer.prototype._stateAfterStyle2 = ifElseState("L", AFTER_STYLE_3, TEXT);
-Tokenizer.prototype._stateAfterStyle3 = ifElseState("E", AFTER_STYLE_4, TEXT);
-
-Tokenizer.prototype._stateAfterStyle4 = function(c){
-	if(c === ">" || whitespace(c)){
-		this._special = SPECIAL_NONE;
-		this._state = IN_CLOSING_TAG_NAME;
-		this._sectionStart = this._index - 5;
-		this._index--; //reconsume the token
-	}
-	else this._state = TEXT;
-};
-
-Tokenizer.prototype._stateBeforeEntity = ifElseState("#", BEFORE_NUMERIC_ENTITY, IN_NAMED_ENTITY);
-Tokenizer.prototype._stateBeforeNumericEntity = ifElseState("X", IN_HEX_ENTITY, IN_NUMERIC_ENTITY);
-
-//for entities terminated with a semicolon
-Tokenizer.prototype._parseNamedEntityStrict = function(){
-	//offset = 1
-	if(this._sectionStart + 1 < this._index){
-		var entity = this._buffer.substring(this._sectionStart + 1, this._index),
-		    map = this._xmlMode ? xmlMap : entityMap;
-
-		if(map.hasOwnProperty(entity)){
-			this._emitPartial(map[entity]);
-			this._sectionStart = this._index + 1;
-		}
-	}
-};
-
-
-//parses legacy entities (without trailing semicolon)
-Tokenizer.prototype._parseLegacyEntity = function(){
-	var start = this._sectionStart + 1,
-	    limit = this._index - start;
-
-	if(limit > 6) limit = 6; //the max length of legacy entities is 6
-
-	while(limit >= 2){ //the min length of legacy entities is 2
-		var entity = this._buffer.substr(start, limit);
-
-		if(legacyMap.hasOwnProperty(entity)){
-			this._emitPartial(legacyMap[entity]);
-			this._sectionStart += limit + 1;
-			return;
-		} else {
-			limit--;
-		}
-	}
-};
-
-Tokenizer.prototype._stateInNamedEntity = function(c){
-	if(c === ";"){
-		this._parseNamedEntityStrict();
-		if(this._sectionStart + 1 < this._index && !this._xmlMode){
-			this._parseLegacyEntity();
-		}
-		this._state = this._baseState;
-	} else if((c < "a" || c > "z") && (c < "A" || c > "Z") && (c < "0" || c > "9")){
-		if(this._xmlMode);
-		else if(this._sectionStart + 1 === this._index);
-		else if(this._baseState !== TEXT){
-			if(c !== "="){
-				this._parseNamedEntityStrict();
-			}
-		} else {
-			this._parseLegacyEntity();
-		}
-
-		this._state = this._baseState;
-		this._index--;
-	}
-};
-
-Tokenizer.prototype._decodeNumericEntity = function(offset, base){
-	var sectionStart = this._sectionStart + offset;
-
-	if(sectionStart !== this._index){
-		//parse entity
-		var entity = this._buffer.substring(sectionStart, this._index);
-		var parsed = parseInt(entity, base);
-
-		this._emitPartial(decodeCodePoint(parsed));
-		this._sectionStart = this._index;
-	} else {
-		this._sectionStart--;
-	}
-
-	this._state = this._baseState;
-};
-
-Tokenizer.prototype._stateInNumericEntity = function(c){
-	if(c === ";"){
-		this._decodeNumericEntity(2, 10);
-		this._sectionStart++;
-	} else if(c < "0" || c > "9"){
-		if(!this._xmlMode){
-			this._decodeNumericEntity(2, 10);
-		} else {
-			this._state = this._baseState;
-		}
-		this._index--;
-	}
-};
-
-Tokenizer.prototype._stateInHexEntity = function(c){
-	if(c === ";"){
-		this._decodeNumericEntity(3, 16);
-		this._sectionStart++;
-	} else if((c < "a" || c > "f") && (c < "A" || c > "F") && (c < "0" || c > "9")){
-		if(!this._xmlMode){
-			this._decodeNumericEntity(3, 16);
-		} else {
-			this._state = this._baseState;
-		}
-		this._index--;
-	}
-};
-
-Tokenizer.prototype._cleanup = function (){
-	if(this._sectionStart < 0){
-		this._buffer = "";
-		this._bufferOffset += this._index;
-		this._index = 0;
-	} else if(this._running){
-		if(this._state === TEXT){
-			if(this._sectionStart !== this._index){
-				this._cbs.ontext(this._buffer.substr(this._sectionStart));
-			}
-			this._buffer = "";
-			this._bufferOffset += this._index;
-			this._index = 0;
-		} else if(this._sectionStart === this._index){
-			//the section just started
-			this._buffer = "";
-			this._bufferOffset += this._index;
-			this._index = 0;
-		} else {
-			//remove everything unnecessary
-			this._buffer = this._buffer.substr(this._sectionStart);
-			this._index -= this._sectionStart;
-			this._bufferOffset += this._sectionStart;
-		}
-
-		this._sectionStart = 0;
-	}
-};
-
-//TODO make events conditional
-Tokenizer.prototype.write = function(chunk){
-	if(this._ended) this._cbs.onerror(Error(".write() after done!"));
-
-	this._buffer += chunk;
-	this._parse();
-};
-
-Tokenizer.prototype._parse = function(){
-	while(this._index < this._buffer.length && this._running){
-		var c = this._buffer.charAt(this._index);
-		if(this._state === TEXT) {
-			this._stateText(c);
-		} else if(this._state === BEFORE_TAG_NAME){
-			this._stateBeforeTagName(c);
-		} else if(this._state === IN_TAG_NAME) {
-			this._stateInTagName(c);
-		} else if(this._state === BEFORE_CLOSING_TAG_NAME){
-			this._stateBeforeCloseingTagName(c);
-		} else if(this._state === IN_CLOSING_TAG_NAME){
-			this._stateInCloseingTagName(c);
-		} else if(this._state === AFTER_CLOSING_TAG_NAME){
-			this._stateAfterCloseingTagName(c);
-		} else if(this._state === IN_SELF_CLOSING_TAG){
-			this._stateInSelfClosingTag(c);
-		}
-
-		/*
-		*	attributes
-		*/
-		else if(this._state === BEFORE_ATTRIBUTE_NAME){
-			this._stateBeforeAttributeName(c);
-		} else if(this._state === IN_ATTRIBUTE_NAME){
-			this._stateInAttributeName(c);
-		} else if(this._state === AFTER_ATTRIBUTE_NAME){
-			this._stateAfterAttributeName(c);
-		} else if(this._state === BEFORE_ATTRIBUTE_VALUE){
-			this._stateBeforeAttributeValue(c);
-		} else if(this._state === IN_ATTRIBUTE_VALUE_DQ){
-			this._stateInAttributeValueDoubleQuotes(c);
-		} else if(this._state === IN_ATTRIBUTE_VALUE_SQ){
-			this._stateInAttributeValueSingleQuotes(c);
-		} else if(this._state === IN_ATTRIBUTE_VALUE_NQ){
-			this._stateInAttributeValueNoQuotes(c);
-		}
-
-		/*
-		*	declarations
-		*/
-		else if(this._state === BEFORE_DECLARATION){
-			this._stateBeforeDeclaration(c);
-		} else if(this._state === IN_DECLARATION){
-			this._stateInDeclaration(c);
-		}
-
-		/*
-		*	processing instructions
-		*/
-		else if(this._state === IN_PROCESSING_INSTRUCTION){
-			this._stateInProcessingInstruction(c);
-		}
-
-		/*
-		*	comments
-		*/
-		else if(this._state === BEFORE_COMMENT){
-			this._stateBeforeComment(c);
-		} else if(this._state === IN_COMMENT){
-			this._stateInComment(c);
-		} else if(this._state === AFTER_COMMENT_1){
-			this._stateAfterComment1(c);
-		} else if(this._state === AFTER_COMMENT_2){
-			this._stateAfterComment2(c);
-		}
-
-		/*
-		*	cdata
-		*/
-		else if(this._state === BEFORE_CDATA_1){
-			this._stateBeforeCdata1(c);
-		} else if(this._state === BEFORE_CDATA_2){
-			this._stateBeforeCdata2(c);
-		} else if(this._state === BEFORE_CDATA_3){
-			this._stateBeforeCdata3(c);
-		} else if(this._state === BEFORE_CDATA_4){
-			this._stateBeforeCdata4(c);
-		} else if(this._state === BEFORE_CDATA_5){
-			this._stateBeforeCdata5(c);
-		} else if(this._state === BEFORE_CDATA_6){
-			this._stateBeforeCdata6(c);
-		} else if(this._state === IN_CDATA){
-			this._stateInCdata(c);
-		} else if(this._state === AFTER_CDATA_1){
-			this._stateAfterCdata1(c);
-		} else if(this._state === AFTER_CDATA_2){
-			this._stateAfterCdata2(c);
-		}
-
-		/*
-		* special tags
-		*/
-		else if(this._state === BEFORE_SPECIAL){
-			this._stateBeforeSpecial(c);
-		} else if(this._state === BEFORE_SPECIAL_END){
-			this._stateBeforeSpecialEnd(c);
-		}
-
-		/*
-		* script
-		*/
-		else if(this._state === BEFORE_SCRIPT_1){
-			this._stateBeforeScript1(c);
-		} else if(this._state === BEFORE_SCRIPT_2){
-			this._stateBeforeScript2(c);
-		} else if(this._state === BEFORE_SCRIPT_3){
-			this._stateBeforeScript3(c);
-		} else if(this._state === BEFORE_SCRIPT_4){
-			this._stateBeforeScript4(c);
-		} else if(this._state === BEFORE_SCRIPT_5){
-			this._stateBeforeScript5(c);
-		}
-
-		else if(this._state === AFTER_SCRIPT_1){
-			this._stateAfterScript1(c);
-		} else if(this._state === AFTER_SCRIPT_2){
-			this._stateAfterScript2(c);
-		} else if(this._state === AFTER_SCRIPT_3){
-			this._stateAfterScript3(c);
-		} else if(this._state === AFTER_SCRIPT_4){
-			this._stateAfterScript4(c);
-		} else if(this._state === AFTER_SCRIPT_5){
-			this._stateAfterScript5(c);
-		}
-
-		/*
-		* style
-		*/
-		else if(this._state === BEFORE_STYLE_1){
-			this._stateBeforeStyle1(c);
-		} else if(this._state === BEFORE_STYLE_2){
-			this._stateBeforeStyle2(c);
-		} else if(this._state === BEFORE_STYLE_3){
-			this._stateBeforeStyle3(c);
-		} else if(this._state === BEFORE_STYLE_4){
-			this._stateBeforeStyle4(c);
-		}
-
-		else if(this._state === AFTER_STYLE_1){
-			this._stateAfterStyle1(c);
-		} else if(this._state === AFTER_STYLE_2){
-			this._stateAfterStyle2(c);
-		} else if(this._state === AFTER_STYLE_3){
-			this._stateAfterStyle3(c);
-		} else if(this._state === AFTER_STYLE_4){
-			this._stateAfterStyle4(c);
-		}
-
-		/*
-		* entities
-		*/
-		else if(this._state === BEFORE_ENTITY){
-			this._stateBeforeEntity(c);
-		} else if(this._state === BEFORE_NUMERIC_ENTITY){
-			this._stateBeforeNumericEntity(c);
-		} else if(this._state === IN_NAMED_ENTITY){
-			this._stateInNamedEntity(c);
-		} else if(this._state === IN_NUMERIC_ENTITY){
-			this._stateInNumericEntity(c);
-		} else if(this._state === IN_HEX_ENTITY){
-			this._stateInHexEntity(c);
-		}
-
-		else {
-			this._cbs.onerror(Error("unknown _state"), this._state);
-		}
-
-		this._index++;
-	}
-
-	this._cleanup();
-};
-
-Tokenizer.prototype.pause = function(){
-	this._running = false;
-};
-Tokenizer.prototype.resume = function(){
-	this._running = true;
-
-	if(this._index < this._buffer.length){
-		this._parse();
-	}
-	if(this._ended){
-		this._finish();
-	}
-};
-
-Tokenizer.prototype.end = function(chunk){
-	if(this._ended) this._cbs.onerror(Error(".end() after done!"));
-	if(chunk) this.write(chunk);
-
-	this._ended = true;
-
-	if(this._running) this._finish();
-};
-
-Tokenizer.prototype._finish = function(){
-	//if there is remaining data, emit it in a reasonable way
-	if(this._sectionStart < this._index){
-		this._handleTrailingData();
-	}
-
-	this._cbs.onend();
-};
-
-Tokenizer.prototype._handleTrailingData = function(){
-	var data = this._buffer.substr(this._sectionStart);
-
-	if(this._state === IN_CDATA || this._state === AFTER_CDATA_1 || this._state === AFTER_CDATA_2){
-		this._cbs.oncdata(data);
-	} else if(this._state === IN_COMMENT || this._state === AFTER_COMMENT_1 || this._state === AFTER_COMMENT_2){
-		this._cbs.oncomment(data);
-	} else if(this._state === IN_NAMED_ENTITY && !this._xmlMode){
-		this._parseLegacyEntity();
-		if(this._sectionStart < this._index){
-			this._state = this._baseState;
-			this._handleTrailingData();
-		}
-	} else if(this._state === IN_NUMERIC_ENTITY && !this._xmlMode){
-		this._decodeNumericEntity(2, 10);
-		if(this._sectionStart < this._index){
-			this._state = this._baseState;
-			this._handleTrailingData();
-		}
-	} else if(this._state === IN_HEX_ENTITY && !this._xmlMode){
-		this._decodeNumericEntity(3, 16);
-		if(this._sectionStart < this._index){
-			this._state = this._baseState;
-			this._handleTrailingData();
-		}
-	} else if(
-		this._state !== IN_TAG_NAME &&
-		this._state !== BEFORE_ATTRIBUTE_NAME &&
-		this._state !== BEFORE_ATTRIBUTE_VALUE &&
-		this._state !== AFTER_ATTRIBUTE_NAME &&
-		this._state !== IN_ATTRIBUTE_NAME &&
-		this._state !== IN_ATTRIBUTE_VALUE_SQ &&
-		this._state !== IN_ATTRIBUTE_VALUE_DQ &&
-		this._state !== IN_ATTRIBUTE_VALUE_NQ &&
-		this._state !== IN_CLOSING_TAG_NAME
-	){
-		this._cbs.ontext(data);
-	}
-	//else, ignore remaining data
-	//TODO add a way to remove current tag
-};
-
-Tokenizer.prototype.reset = function(){
-	Tokenizer.call(this, {xmlMode: this._xmlMode, decodeEntities: this._decodeEntities}, this._cbs);
-};
-
-Tokenizer.prototype.getAbsoluteIndex = function(){
-	return this._bufferOffset + this._index;
-};
-
-Tokenizer.prototype._getSection = function(){
-	return this._buffer.substring(this._sectionStart, this._index);
-};
-
-Tokenizer.prototype._emitToken = function(name){
-	this._cbs[name](this._getSection());
-	this._sectionStart = -1;
-};
-
-Tokenizer.prototype._emitPartial = function(value){
-	if(this._baseState !== TEXT){
-		this._cbs.onattribdata(value); //TODO implement the new event
-	} else {
-		this._cbs.ontext(value);
-	}
-};
-
-},{"entities/lib/decode_codepoint.js":141,"entities/maps/entities.json":144,"entities/maps/legacy.json":145,"entities/maps/xml.json":146}],124:[function(require,module,exports){
-module.exports = Stream;
-
-var Parser = require("./Parser.js"),
-    WritableStream = require("stream").Writable || require("readable-stream").Writable,
-    StringDecoder = require("string_decoder").StringDecoder,
-    Buffer = require("buffer").Buffer;
-
-function Stream(cbs, options){
-	var parser = this._parser = new Parser(cbs, options);
-	var decoder = this._decoder = new StringDecoder();
-
-	WritableStream.call(this, {decodeStrings: false});
-
-	this.once("finish", function(){
-		parser.end(decoder.end());
-	});
-}
-
-require("inherits")(Stream, WritableStream);
-
-WritableStream.prototype._write = function(chunk, encoding, cb){
-	if(chunk instanceof Buffer) chunk = this._decoder.write(chunk);
-	this._parser.write(chunk);
-	cb();
-};
-},{"./Parser.js":120,"buffer":87,"inherits":96,"readable-stream":3,"stream":148,"string_decoder":159}],125:[function(require,module,exports){
-var Parser = require("./Parser.js"),
-    DomHandler = require("domhandler");
-
-function defineProp(name, value){
-	delete module.exports[name];
-	module.exports[name] = value;
-	return value;
-}
-
-module.exports = {
-	Parser: Parser,
-	Tokenizer: require("./Tokenizer.js"),
-	ElementType: require("domelementtype"),
-	DomHandler: DomHandler,
-	get FeedHandler(){
-		return defineProp("FeedHandler", require("./FeedHandler.js"));
-	},
-	get Stream(){
-		return defineProp("Stream", require("./Stream.js"));
-	},
-	get WritableStream(){
-		return defineProp("WritableStream", require("./WritableStream.js"));
-	},
-	get ProxyHandler(){
-		return defineProp("ProxyHandler", require("./ProxyHandler.js"));
-	},
-	get DomUtils(){
-		return defineProp("DomUtils", require("domutils"));
-	},
-	get CollectingHandler(){
-		return defineProp("CollectingHandler", require("./CollectingHandler.js"));
-	},
-	// For legacy support
-	DefaultHandler: DomHandler,
-	get RssHandler(){
-		return defineProp("RssHandler", this.FeedHandler);
-	},
-	//helper methods
-	parseDOM: function(data, options){
-		var handler = new DomHandler(options);
-		new Parser(handler, options).end(data);
-		return handler.dom;
-	},
-	parseFeed: function(feed, options){
-		var handler = new module.exports.FeedHandler(options);
-		new Parser(handler, options).end(feed);
-		return handler.dom;
-	},
-	createDomStream: function(cb, options, elementCb){
-		var handler = new DomHandler(cb, options, elementCb);
-		return new Parser(handler, options);
-	},
-	// List of all events that the parser emits
-	EVENTS: { /* Format: eventname: number of arguments */
-		attribute: 2,
-		cdatastart: 0,
-		cdataend: 0,
-		text: 1,
-		processinginstruction: 2,
-		comment: 1,
-		commentend: 0,
-		closetag: 1,
-		opentag: 2,
-		opentagname: 1,
-		error: 1,
-		end: 0
-	}
-};
-
-},{"./CollectingHandler.js":118,"./FeedHandler.js":119,"./Parser.js":120,"./ProxyHandler.js":121,"./Stream.js":122,"./Tokenizer.js":123,"./WritableStream.js":124,"domelementtype":126,"domhandler":127,"domutils":130}],126:[function(require,module,exports){
-//Types of elements found in the DOM
-module.exports = {
-	Text: "text", //Text
-	Directive: "directive", //<? ... ?>
-	Comment: "comment", //<!-- ... -->
-	Script: "script", //<script> tags
-	Style: "style", //<style> tags
-	Tag: "tag", //Any tag
-	CDATA: "cdata", //<![CDATA[ ... ]]>
-	Doctype: "doctype",
-
-	isTag: function(elem){
-		return elem.type === "tag" || elem.type === "script" || elem.type === "style";
-	}
-};
-
-},{}],127:[function(require,module,exports){
-var ElementType = require("domelementtype");
-
-var re_whitespace = /\s+/g;
-var NodePrototype = require("./lib/node");
-var ElementPrototype = require("./lib/element");
-
-function DomHandler(callback, options, elementCB){
-	if(typeof callback === "object"){
-		elementCB = options;
-		options = callback;
-		callback = null;
-	} else if(typeof options === "function"){
-		elementCB = options;
-		options = defaultOpts;
-	}
-	this._callback = callback;
-	this._options = options || defaultOpts;
-	this._elementCB = elementCB;
-	this.dom = [];
-	this._done = false;
-	this._tagStack = [];
-	this._parser = this._parser || null;
-}
-
-//default options
-var defaultOpts = {
-	normalizeWhitespace: false, //Replace all whitespace with single spaces
-	withStartIndices: false, //Add startIndex properties to nodes
-};
-
-DomHandler.prototype.onparserinit = function(parser){
-	this._parser = parser;
-};
-
-//Resets the handler back to starting state
-DomHandler.prototype.onreset = function(){
-	DomHandler.call(this, this._callback, this._options, this._elementCB);
-};
-
-//Signals the handler that parsing is done
-DomHandler.prototype.onend = function(){
-	if(this._done) return;
-	this._done = true;
-	this._parser = null;
-	this._handleCallback(null);
-};
-
-DomHandler.prototype._handleCallback =
-DomHandler.prototype.onerror = function(error){
-	if(typeof this._callback === "function"){
-		this._callback(error, this.dom);
-	} else {
-		if(error) throw error;
-	}
-};
-
-DomHandler.prototype.onclosetag = function(){
-	//if(this._tagStack.pop().name !== name) this._handleCallback(Error("Tagname didn't match!"));
-	var elem = this._tagStack.pop();
-	if(this._elementCB) this._elementCB(elem);
-};
-
-DomHandler.prototype._addDomElement = function(element){
-	var parent = this._tagStack[this._tagStack.length - 1];
-	var siblings = parent ? parent.children : this.dom;
-	var previousSibling = siblings[siblings.length - 1];
-
-	element.next = null;
-
-	if(this._options.withStartIndices){
-		element.startIndex = this._parser.startIndex;
-	}
-
-	if (this._options.withDomLvl1) {
-		element.__proto__ = element.type === "tag" ? ElementPrototype : NodePrototype;
-	}
-
-	if(previousSibling){
-		element.prev = previousSibling;
-		previousSibling.next = element;
-	} else {
-		element.prev = null;
-	}
-
-	siblings.push(element);
-	element.parent = parent || null;
-};
-
-DomHandler.prototype.onopentag = function(name, attribs){
-	var element = {
-		type: name === "script" ? ElementType.Script : name === "style" ? ElementType.Style : ElementType.Tag,
-		name: name,
-		attribs: attribs,
-		children: []
-	};
-
-	this._addDomElement(element);
-
-	this._tagStack.push(element);
-};
-
-DomHandler.prototype.ontext = function(data){
-	//the ignoreWhitespace is officially dropped, but for now,
-	//it's an alias for normalizeWhitespace
-	var normalize = this._options.normalizeWhitespace || this._options.ignoreWhitespace;
-
-	var lastTag;
-
-	if(!this._tagStack.length && this.dom.length && (lastTag = this.dom[this.dom.length-1]).type === ElementType.Text){
-		if(normalize){
-			lastTag.data = (lastTag.data + data).replace(re_whitespace, " ");
-		} else {
-			lastTag.data += data;
-		}
-	} else {
-		if(
-			this._tagStack.length &&
-			(lastTag = this._tagStack[this._tagStack.length - 1]) &&
-			(lastTag = lastTag.children[lastTag.children.length - 1]) &&
-			lastTag.type === ElementType.Text
-		){
-			if(normalize){
-				lastTag.data = (lastTag.data + data).replace(re_whitespace, " ");
-			} else {
-				lastTag.data += data;
-			}
-		} else {
-			if(normalize){
-				data = data.replace(re_whitespace, " ");
-			}
-
-			this._addDomElement({
-				data: data,
-				type: ElementType.Text
-			});
-		}
-	}
-};
-
-DomHandler.prototype.oncomment = function(data){
-	var lastTag = this._tagStack[this._tagStack.length - 1];
-
-	if(lastTag && lastTag.type === ElementType.Comment){
-		lastTag.data += data;
-		return;
-	}
-
-	var element = {
-		data: data,
-		type: ElementType.Comment
-	};
-
-	this._addDomElement(element);
-	this._tagStack.push(element);
-};
-
-DomHandler.prototype.oncdatastart = function(){
-	var element = {
-		children: [{
-			data: "",
-			type: ElementType.Text
-		}],
-		type: ElementType.CDATA
-	};
-
-	this._addDomElement(element);
-	this._tagStack.push(element);
-};
-
-DomHandler.prototype.oncommentend = DomHandler.prototype.oncdataend = function(){
-	this._tagStack.pop();
-};
-
-DomHandler.prototype.onprocessinginstruction = function(name, data){
-	this._addDomElement({
-		name: name,
-		data: data,
-		type: ElementType.Directive
-	});
-};
-
-module.exports = DomHandler;
-
-},{"./lib/element":128,"./lib/node":129,"domelementtype":126}],128:[function(require,module,exports){
-// DOM-Level-1-compliant structure
-var NodePrototype = require('./node');
-var ElementPrototype = module.exports = Object.create(NodePrototype);
-
-var domLvl1 = {
-	tagName: "name"
-};
-
-Object.keys(domLvl1).forEach(function(key) {
-	var shorthand = domLvl1[key];
-	Object.defineProperty(ElementPrototype, key, {
-		get: function() {
-			return this[shorthand] || null;
-		},
-		set: function(val) {
-			this[shorthand] = val;
-			return val;
-		}
-	});
-});
-
-},{"./node":129}],129:[function(require,module,exports){
-// This object will be used as the prototype for Nodes when creating a
-// DOM-Level-1-compliant structure.
-var NodePrototype = module.exports = {
-	get firstChild() {
-		var children = this.children;
-		return children && children[0] || null;
-	},
-	get lastChild() {
-		var children = this.children;
-		return children && children[children.length - 1] || null;
-	},
-	get nodeType() {
-		return nodeTypes[this.type] || nodeTypes.element;
-	}
-};
-
-var domLvl1 = {
-	tagName: "name",
-	childNodes: "children",
-	parentNode: "parent",
-	previousSibling: "prev",
-	nextSibling: "next",
-	nodeValue: "data"
-};
-
-var nodeTypes = {
-	element: 1,
-	text: 3,
-	cdata: 4,
-	comment: 8
-};
-
-Object.keys(domLvl1).forEach(function(key) {
-	var shorthand = domLvl1[key];
-	Object.defineProperty(NodePrototype, key, {
-		get: function() {
-			return this[shorthand] || null;
-		},
-		set: function(val) {
-			this[shorthand] = val;
-			return val;
-		}
-	});
-});
-
-},{}],130:[function(require,module,exports){
-var DomUtils = module.exports;
-
-[
-	require("./lib/stringify"),
-	require("./lib/traversal"),
-	require("./lib/manipulation"),
-	require("./lib/querying"),
-	require("./lib/legacy"),
-	require("./lib/helpers")
-].forEach(function(ext){
-	Object.keys(ext).forEach(function(key){
-		DomUtils[key] = ext[key].bind(DomUtils);
-	});
-});
-
-},{"./lib/helpers":131,"./lib/legacy":132,"./lib/manipulation":133,"./lib/querying":134,"./lib/stringify":135,"./lib/traversal":136}],131:[function(require,module,exports){
-// removeSubsets
-// Given an array of nodes, remove any member that is contained by another.
-exports.removeSubsets = function(nodes) {
-	var idx = nodes.length, node, ancestor, replace;
-
-	// Check if each node (or one of its ancestors) is already contained in the
-	// array.
-	while (--idx > -1) {
-		node = ancestor = nodes[idx];
-
-		// Temporarily remove the node under consideration
-		nodes[idx] = null;
-		replace = true;
-
-		while (ancestor) {
-			if (nodes.indexOf(ancestor) > -1) {
-				replace = false;
-				nodes.splice(idx, 1);
-				break;
-			}
-			ancestor = ancestor.parent;
-		}
-
-		// If the node has been found to be unique, re-insert it.
-		if (replace) {
-			nodes[idx] = node;
-		}
-	}
-
-	return nodes;
-};
-
-// Source: http://dom.spec.whatwg.org/#dom-node-comparedocumentposition
-var POSITION = {
-	DISCONNECTED: 1,
-	PRECEDING: 2,
-	FOLLOWING: 4,
-	CONTAINS: 8,
-	CONTAINED_BY: 16
-};
-
-// Compare the position of one node against another node in any other document.
-// The return value is a bitmask with the following values:
-//
-// document order:
-// > There is an ordering, document order, defined on all the nodes in the
-// > document corresponding to the order in which the first character of the
-// > XML representation of each node occurs in the XML representation of the
-// > document after expansion of general entities. Thus, the document element
-// > node will be the first node. Element nodes occur before their children.
-// > Thus, document order orders element nodes in order of the occurrence of
-// > their start-tag in the XML (after expansion of entities). The attribute
-// > nodes of an element occur after the element and before its children. The
-// > relative order of attribute nodes is implementation-dependent./
-// Source:
-// http://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-document-order
-//
-// @argument {Node} nodaA The first node to use in the comparison
-// @argument {Node} nodeB The second node to use in the comparison
-//
-// @return {Number} A bitmask describing the input nodes' relative position.
-//         See http://dom.spec.whatwg.org/#dom-node-comparedocumentposition for
-//         a description of these values.
-var comparePos = exports.compareDocumentPosition = function(nodeA, nodeB) {
-	var aParents = [];
-	var bParents = [];
-	var current, sharedParent, siblings, aSibling, bSibling, idx;
-
-	if (nodeA === nodeB) {
-		return 0;
-	}
-
-	current = nodeA;
-	while (current) {
-		aParents.unshift(current);
-		current = current.parent;
-	}
-	current = nodeB;
-	while (current) {
-		bParents.unshift(current);
-		current = current.parent;
-	}
-
-	idx = 0;
-	while (aParents[idx] === bParents[idx]) {
-		idx++;
-	}
-
-	if (idx === 0) {
-		return POSITION.DISCONNECTED;
-	}
-
-	sharedParent = aParents[idx - 1];
-	siblings = sharedParent.children;
-	aSibling = aParents[idx];
-	bSibling = bParents[idx];
-
-	if (siblings.indexOf(aSibling) > siblings.indexOf(bSibling)) {
-		if (sharedParent === nodeB) {
-			return POSITION.FOLLOWING | POSITION.CONTAINED_BY;
-		}
-		return POSITION.FOLLOWING;
-	} else {
-		if (sharedParent === nodeA) {
-			return POSITION.PRECEDING | POSITION.CONTAINS;
-		}
-		return POSITION.PRECEDING;
-	}
-};
-
-// Sort an array of nodes based on their relative position in the document and
-// remove any duplicate nodes. If the array contains nodes that do not belong
-// to the same document, sort order is unspecified.
-//
-// @argument {Array} nodes Array of DOM nodes
-//
-// @returns {Array} collection of unique nodes, sorted in document order
-exports.uniqueSort = function(nodes) {
-	var idx = nodes.length, node, position;
-
-	nodes = nodes.slice();
-
-	while (--idx > -1) {
-		node = nodes[idx];
-		position = nodes.indexOf(node);
-		if (position > -1 && position < idx) {
-			nodes.splice(idx, 1);
-		}
-	}
-	nodes.sort(function(a, b) {
-		var relative = comparePos(a, b);
-		if (relative & POSITION.PRECEDING) {
-			return -1;
-		} else if (relative & POSITION.FOLLOWING) {
-			return 1;
-		}
-		return 0;
-	});
-
-	return nodes;
-};
-
-},{}],132:[function(require,module,exports){
-var ElementType = require("domelementtype");
-var isTag = exports.isTag = ElementType.isTag;
-
-exports.testElement = function(options, element){
-	for(var key in options){
-		if(!options.hasOwnProperty(key));
-		else if(key === "tag_name"){
-			if(!isTag(element) || !options.tag_name(element.name)){
-				return false;
-			}
-		} else if(key === "tag_type"){
-			if(!options.tag_type(element.type)) return false;
-		} else if(key === "tag_contains"){
-			if(isTag(element) || !options.tag_contains(element.data)){
-				return false;
-			}
-		} else if(!element.attribs || !options[key](element.attribs[key])){
-			return false;
-		}
-	}
-	return true;
-};
-
-var Checks = {
-	tag_name: function(name){
-		if(typeof name === "function"){
-			return function(elem){ return isTag(elem) && name(elem.name); };
-		} else if(name === "*"){
-			return isTag;
-		} else {
-			return function(elem){ return isTag(elem) && elem.name === name; };
-		}
-	},
-	tag_type: function(type){
-		if(typeof type === "function"){
-			return function(elem){ return type(elem.type); };
-		} else {
-			return function(elem){ return elem.type === type; };
-		}
-	},
-	tag_contains: function(data){
-		if(typeof data === "function"){
-			return function(elem){ return !isTag(elem) && data(elem.data); };
-		} else {
-			return function(elem){ return !isTag(elem) && elem.data === data; };
-		}
-	}
-};
-
-function getAttribCheck(attrib, value){
-	if(typeof value === "function"){
-		return function(elem){ return elem.attribs && value(elem.attribs[attrib]); };
-	} else {
-		return function(elem){ return elem.attribs && elem.attribs[attrib] === value; };
-	}
-}
-
-function combineFuncs(a, b){
-	return function(elem){
-		return a(elem) || b(elem);
-	};
-}
-
-exports.getElements = function(options, element, recurse, limit){
-	var funcs = Object.keys(options).map(function(key){
-		var value = options[key];
-		return key in Checks ? Checks[key](value) : getAttribCheck(key, value);
-	});
-
-	return funcs.length === 0 ? [] : this.filter(
-		funcs.reduce(combineFuncs),
-		element, recurse, limit
-	);
-};
-
-exports.getElementById = function(id, element, recurse){
-	if(!Array.isArray(element)) element = [element];
-	return this.findOne(getAttribCheck("id", id), element, recurse !== false);
-};
-
-exports.getElementsByTagName = function(name, element, recurse, limit){
-	return this.filter(Checks.tag_name(name), element, recurse, limit);
-};
-
-exports.getElementsByTagType = function(type, element, recurse, limit){
-	return this.filter(Checks.tag_type(type), element, recurse, limit);
-};
-
-},{"domelementtype":126}],133:[function(require,module,exports){
-exports.removeElement = function(elem){
-	if(elem.prev) elem.prev.next = elem.next;
-	if(elem.next) elem.next.prev = elem.prev;
-
-	if(elem.parent){
-		var childs = elem.parent.children;
-		childs.splice(childs.lastIndexOf(elem), 1);
-	}
-};
-
-exports.replaceElement = function(elem, replacement){
-	var prev = replacement.prev = elem.prev;
-	if(prev){
-		prev.next = replacement;
-	}
-
-	var next = replacement.next = elem.next;
-	if(next){
-		next.prev = replacement;
-	}
-
-	var parent = replacement.parent = elem.parent;
-	if(parent){
-		var childs = parent.children;
-		childs[childs.lastIndexOf(elem)] = replacement;
-	}
-};
-
-exports.appendChild = function(elem, child){
-	child.parent = elem;
-
-	if(elem.children.push(child) !== 1){
-		var sibling = elem.children[elem.children.length - 2];
-		sibling.next = child;
-		child.prev = sibling;
-		child.next = null;
-	}
-};
-
-exports.append = function(elem, next){
-	var parent = elem.parent,
-		currNext = elem.next;
-
-	next.next = currNext;
-	next.prev = elem;
-	elem.next = next;
-	next.parent = parent;
-
-	if(currNext){
-		currNext.prev = next;
-		if(parent){
-			var childs = parent.children;
-			childs.splice(childs.lastIndexOf(currNext), 0, next);
-		}
-	} else if(parent){
-		parent.children.push(next);
-	}
-};
-
-exports.prepend = function(elem, prev){
-	var parent = elem.parent;
-	if(parent){
-		var childs = parent.children;
-		childs.splice(childs.lastIndexOf(elem), 0, prev);
-	}
-
-	if(elem.prev){
-		elem.prev.next = prev;
-	}
-	
-	prev.parent = parent;
-	prev.prev = elem.prev;
-	prev.next = elem;
-	elem.prev = prev;
-};
-
-
-
-},{}],134:[function(require,module,exports){
-var isTag = require("domelementtype").isTag;
-
-module.exports = {
-	filter: filter,
-	find: find,
-	findOneChild: findOneChild,
-	findOne: findOne,
-	existsOne: existsOne,
-	findAll: findAll
-};
-
-function filter(test, element, recurse, limit){
-	if(!Array.isArray(element)) element = [element];
-
-	if(typeof limit !== "number" || !isFinite(limit)){
-		limit = Infinity;
-	}
-	return find(test, element, recurse !== false, limit);
-}
-
-function find(test, elems, recurse, limit){
-	var result = [], childs;
-
-	for(var i = 0, j = elems.length; i < j; i++){
-		if(test(elems[i])){
-			result.push(elems[i]);
-			if(--limit <= 0) break;
-		}
-
-		childs = elems[i].children;
-		if(recurse && childs && childs.length > 0){
-			childs = find(test, childs, recurse, limit);
-			result = result.concat(childs);
-			limit -= childs.length;
-			if(limit <= 0) break;
-		}
-	}
-
-	return result;
-}
-
-function findOneChild(test, elems){
-	for(var i = 0, l = elems.length; i < l; i++){
-		if(test(elems[i])) return elems[i];
-	}
-
-	return null;
-}
-
-function findOne(test, elems){
-	var elem = null;
-
-	for(var i = 0, l = elems.length; i < l && !elem; i++){
-		if(!isTag(elems[i])){
-			continue;
-		} else if(test(elems[i])){
-			elem = elems[i];
-		} else if(elems[i].children.length > 0){
-			elem = findOne(test, elems[i].children);
-		}
-	}
-
-	return elem;
-}
-
-function existsOne(test, elems){
-	for(var i = 0, l = elems.length; i < l; i++){
-		if(
-			isTag(elems[i]) && (
-				test(elems[i]) || (
-					elems[i].children.length > 0 &&
-					existsOne(test, elems[i].children)
-				)
-			)
-		){
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function findAll(test, elems){
-	var result = [];
-	for(var i = 0, j = elems.length; i < j; i++){
-		if(!isTag(elems[i])) continue;
-		if(test(elems[i])) result.push(elems[i]);
-
-		if(elems[i].children.length > 0){
-			result = result.concat(findAll(test, elems[i].children));
-		}
-	}
-	return result;
-}
-
-},{"domelementtype":126}],135:[function(require,module,exports){
-var ElementType = require("domelementtype"),
-    getOuterHTML = require("dom-serializer"),
-    isTag = ElementType.isTag;
-
-module.exports = {
-	getInnerHTML: getInnerHTML,
-	getOuterHTML: getOuterHTML,
-	getText: getText
-};
-
-function getInnerHTML(elem, opts){
-	return elem.children ? elem.children.map(function(elem){
-		return getOuterHTML(elem, opts);
-	}).join("") : "";
-}
-
-function getText(elem){
-	if(Array.isArray(elem)) return elem.map(getText).join("");
-	if(isTag(elem) || elem.type === ElementType.CDATA) return getText(elem.children);
-	if(elem.type === ElementType.Text) return elem.data;
-	return "";
-}
-
-},{"dom-serializer":137,"domelementtype":126}],136:[function(require,module,exports){
-var getChildren = exports.getChildren = function(elem){
-	return elem.children;
-};
-
-var getParent = exports.getParent = function(elem){
-	return elem.parent;
-};
-
-exports.getSiblings = function(elem){
-	var parent = getParent(elem);
-	return parent ? getChildren(parent) : [elem];
-};
-
-exports.getAttributeValue = function(elem, name){
-	return elem.attribs && elem.attribs[name];
-};
-
-exports.hasAttrib = function(elem, name){
-	return !!elem.attribs && hasOwnProperty.call(elem.attribs, name);
-};
-
-exports.getName = function(elem){
-	return elem.name;
-};
-
-},{}],137:[function(require,module,exports){
-/*
-  Module dependencies
-*/
-var ElementType = require('domelementtype');
-var entities = require('entities');
-
-/*
-  Boolean Attributes
-*/
-var booleanAttributes = {
-  __proto__: null,
-  allowfullscreen: true,
-  async: true,
-  autofocus: true,
-  autoplay: true,
-  checked: true,
-  controls: true,
-  default: true,
-  defer: true,
-  disabled: true,
-  hidden: true,
-  ismap: true,
-  loop: true,
-  multiple: true,
-  muted: true,
-  open: true,
-  readonly: true,
-  required: true,
-  reversed: true,
-  scoped: true,
-  seamless: true,
-  selected: true,
-  typemustmatch: true
-};
-
-var unencodedElements = {
-  __proto__: null,
-  style: true,
-  script: true,
-  xmp: true,
-  iframe: true,
-  noembed: true,
-  noframes: true,
-  plaintext: true,
-  noscript: true
-};
-
-/*
-  Format attributes
-*/
-function formatAttrs(attributes, opts) {
-  if (!attributes) return;
-
-  var output = '',
-      value;
-
-  // Loop through the attributes
-  for (var key in attributes) {
-    value = attributes[key];
-    if (output) {
-      output += ' ';
-    }
-
-    if (!value && booleanAttributes[key]) {
-      output += key;
-    } else {
-      output += key + '="' + (opts.decodeEntities ? entities.encodeXML(value) : value) + '"';
-    }
-  }
-
-  return output;
-}
-
-/*
-  Self-enclosing tags (stolen from node-htmlparser)
-*/
-var singleTag = {
-  __proto__: null,
-  area: true,
-  base: true,
-  basefont: true,
-  br: true,
-  col: true,
-  command: true,
-  embed: true,
-  frame: true,
-  hr: true,
-  img: true,
-  input: true,
-  isindex: true,
-  keygen: true,
-  link: true,
-  meta: true,
-  param: true,
-  source: true,
-  track: true,
-  wbr: true,
-};
-
-
-var render = module.exports = function(dom, opts) {
-  if (!Array.isArray(dom) && !dom.cheerio) dom = [dom];
-  opts = opts || {};
-
-  var output = '';
-
-  for(var i = 0; i < dom.length; i++){
-    var elem = dom[i];
-
-    if (elem.type === 'root')
-      output += render(elem.children, opts);
-    else if (ElementType.isTag(elem))
-      output += renderTag(elem, opts);
-    else if (elem.type === ElementType.Directive)
-      output += renderDirective(elem);
-    else if (elem.type === ElementType.Comment)
-      output += renderComment(elem);
-    else if (elem.type === ElementType.CDATA)
-      output += renderCdata(elem);
-    else
-      output += renderText(elem, opts);
-  }
-
-  return output;
-};
-
-function renderTag(elem, opts) {
-  // Handle SVG
-  if (elem.name === "svg") opts = {decodeEntities: opts.decodeEntities, xmlMode: true};
-
-  var tag = '<' + elem.name,
-      attribs = formatAttrs(elem.attribs, opts);
-
-  if (attribs) {
-    tag += ' ' + attribs;
-  }
-
-  if (
-    opts.xmlMode
-    && (!elem.children || elem.children.length === 0)
-  ) {
-    tag += '/>';
-  } else {
-    tag += '>';
-    if (elem.children) {
-      tag += render(elem.children, opts);
-    }
-
-    if (!singleTag[elem.name] || opts.xmlMode) {
-      tag += '</' + elem.name + '>';
-    }
-  }
-
-  return tag;
-}
-
-function renderDirective(elem) {
-  return '<' + elem.data + '>';
-}
-
-function renderText(elem, opts) {
-  var data = elem.data || '';
-
-  // if entities weren't decoded, no need to encode them back
-  if (opts.decodeEntities && !(elem.parent && elem.parent.name in unencodedElements)) {
-    data = entities.encodeXML(data);
-  }
-
-  return data;
-}
-
-function renderCdata(elem) {
-  return '<![CDATA[' + elem.children[0].data + ']]>';
-}
-
-function renderComment(elem) {
-  return '<!--' + elem.data + '-->';
-}
-
-},{"domelementtype":138,"entities":139}],138:[function(require,module,exports){
-//Types of elements found in the DOM
-module.exports = {
-	Text: "text", //Text
-	Directive: "directive", //<? ... ?>
-	Comment: "comment", //<!-- ... -->
-	Script: "script", //<script> tags
-	Style: "style", //<style> tags
-	Tag: "tag", //Any tag
-	CDATA: "cdata", //<![CDATA[ ... ]]>
-
-	isTag: function(elem){
-		return elem.type === "tag" || elem.type === "script" || elem.type === "style";
-	}
-};
-},{}],139:[function(require,module,exports){
-var encode = require("./lib/encode.js"),
-    decode = require("./lib/decode.js");
-
-exports.decode = function(data, level){
-	return (!level || level <= 0 ? decode.XML : decode.HTML)(data);
-};
-
-exports.decodeStrict = function(data, level){
-	return (!level || level <= 0 ? decode.XML : decode.HTMLStrict)(data);
-};
-
-exports.encode = function(data, level){
-	return (!level || level <= 0 ? encode.XML : encode.HTML)(data);
-};
-
-exports.encodeXML = encode.XML;
-
-exports.encodeHTML4 =
-exports.encodeHTML5 =
-exports.encodeHTML  = encode.HTML;
-
-exports.decodeXML =
-exports.decodeXMLStrict = decode.XML;
-
-exports.decodeHTML4 =
-exports.decodeHTML5 =
-exports.decodeHTML = decode.HTML;
-
-exports.decodeHTML4Strict =
-exports.decodeHTML5Strict =
-exports.decodeHTMLStrict = decode.HTMLStrict;
-
-exports.escape = encode.escape;
-
-},{"./lib/decode.js":140,"./lib/encode.js":142}],140:[function(require,module,exports){
-var entityMap = require("../maps/entities.json"),
-    legacyMap = require("../maps/legacy.json"),
-    xmlMap    = require("../maps/xml.json"),
-    decodeCodePoint = require("./decode_codepoint.js");
-
-var decodeXMLStrict  = getStrictDecoder(xmlMap),
-    decodeHTMLStrict = getStrictDecoder(entityMap);
-
-function getStrictDecoder(map){
-	var keys = Object.keys(map).join("|"),
-	    replace = getReplacer(map);
-
-	keys += "|#[xX][\\da-fA-F]+|#\\d+";
-
-	var re = new RegExp("&(?:" + keys + ");", "g");
-
-	return function(str){
-		return String(str).replace(re, replace);
-	};
-}
-
-var decodeHTML = (function(){
-	var legacy = Object.keys(legacyMap)
-		.sort(sorter);
-
-	var keys = Object.keys(entityMap)
-		.sort(sorter);
-
-	for(var i = 0, j = 0; i < keys.length; i++){
-		if(legacy[j] === keys[i]){
-			keys[i] += ";?";
-			j++;
-		} else {
-			keys[i] += ";";
-		}
-	}
-
-	var re = new RegExp("&(?:" + keys.join("|") + "|#[xX][\\da-fA-F]+;?|#\\d+;?)", "g"),
-	    replace = getReplacer(entityMap);
-
-	function replacer(str){
-		if(str.substr(-1) !== ";") str += ";";
-		return replace(str);
-	}
-
-	//TODO consider creating a merged map
-	return function(str){
-		return String(str).replace(re, replacer);
-	};
-}());
-
-function sorter(a, b){
-	return a < b ? 1 : -1;
-}
-
-function getReplacer(map){
-	return function replace(str){
-		if(str.charAt(1) === "#"){
-			if(str.charAt(2) === "X" || str.charAt(2) === "x"){
-				return decodeCodePoint(parseInt(str.substr(3), 16));
-			}
-			return decodeCodePoint(parseInt(str.substr(2), 10));
-		}
-		return map[str.slice(1, -1)];
-	};
-}
-
-module.exports = {
-	XML: decodeXMLStrict,
-	HTML: decodeHTML,
-	HTMLStrict: decodeHTMLStrict
-};
-},{"../maps/entities.json":144,"../maps/legacy.json":145,"../maps/xml.json":146,"./decode_codepoint.js":141}],141:[function(require,module,exports){
-var decodeMap = require("../maps/decode.json");
-
-module.exports = decodeCodePoint;
-
-// modified version of https://github.com/mathiasbynens/he/blob/master/src/he.js#L94-L119
-function decodeCodePoint(codePoint){
-
-	if((codePoint >= 0xD800 && codePoint <= 0xDFFF) || codePoint > 0x10FFFF){
-		return "\uFFFD";
-	}
-
-	if(codePoint in decodeMap){
-		codePoint = decodeMap[codePoint];
-	}
-
-	var output = "";
-
-	if(codePoint > 0xFFFF){
-		codePoint -= 0x10000;
-		output += String.fromCharCode(codePoint >>> 10 & 0x3FF | 0xD800);
-		codePoint = 0xDC00 | codePoint & 0x3FF;
-	}
-
-	output += String.fromCharCode(codePoint);
-	return output;
-}
-
-},{"../maps/decode.json":143}],142:[function(require,module,exports){
-var inverseXML = getInverseObj(require("../maps/xml.json")),
-    xmlReplacer = getInverseReplacer(inverseXML);
-
-exports.XML = getInverse(inverseXML, xmlReplacer);
-
-var inverseHTML = getInverseObj(require("../maps/entities.json")),
-    htmlReplacer = getInverseReplacer(inverseHTML);
-
-exports.HTML = getInverse(inverseHTML, htmlReplacer);
-
-function getInverseObj(obj){
-	return Object.keys(obj).sort().reduce(function(inverse, name){
-		inverse[obj[name]] = "&" + name + ";";
-		return inverse;
-	}, {});
-}
-
-function getInverseReplacer(inverse){
-	var single = [],
-	    multiple = [];
-
-	Object.keys(inverse).forEach(function(k){
-		if(k.length === 1){
-			single.push("\\" + k);
-		} else {
-			multiple.push(k);
-		}
-	});
-
-	//TODO add ranges
-	multiple.unshift("[" + single.join("") + "]");
-
-	return new RegExp(multiple.join("|"), "g");
-}
-
-var re_nonASCII = /[^\0-\x7F]/g,
-    re_astralSymbols = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
-
-function singleCharReplacer(c){
-	return "&#x" + c.charCodeAt(0).toString(16).toUpperCase() + ";";
-}
-
-function astralReplacer(c){
-	// http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-	var high = c.charCodeAt(0);
-	var low  = c.charCodeAt(1);
-	var codePoint = (high - 0xD800) * 0x400 + low - 0xDC00 + 0x10000;
-	return "&#x" + codePoint.toString(16).toUpperCase() + ";";
-}
-
-function getInverse(inverse, re){
-	function func(name){
-		return inverse[name];
-	}
-
-	return function(data){
-		return data
-				.replace(re, func)
-				.replace(re_astralSymbols, astralReplacer)
-				.replace(re_nonASCII, singleCharReplacer);
-	};
-}
-
-var re_xmlChars = getInverseReplacer(inverseXML);
-
-function escapeXML(data){
-	return data
-			.replace(re_xmlChars, singleCharReplacer)
-			.replace(re_astralSymbols, astralReplacer)
-			.replace(re_nonASCII, singleCharReplacer);
-}
-
-exports.escape = escapeXML;
-
-},{"../maps/entities.json":144,"../maps/xml.json":146}],143:[function(require,module,exports){
-module.exports={"0":65533,"128":8364,"130":8218,"131":402,"132":8222,"133":8230,"134":8224,"135":8225,"136":710,"137":8240,"138":352,"139":8249,"140":338,"142":381,"145":8216,"146":8217,"147":8220,"148":8221,"149":8226,"150":8211,"151":8212,"152":732,"153":8482,"154":353,"155":8250,"156":339,"158":382,"159":376}
-},{}],144:[function(require,module,exports){
-module.exports={"Aacute":"\u00C1","aacute":"\u00E1","Abreve":"\u0102","abreve":"\u0103","ac":"\u223E","acd":"\u223F","acE":"\u223E\u0333","Acirc":"\u00C2","acirc":"\u00E2","acute":"\u00B4","Acy":"\u0410","acy":"\u0430","AElig":"\u00C6","aelig":"\u00E6","af":"\u2061","Afr":"\uD835\uDD04","afr":"\uD835\uDD1E","Agrave":"\u00C0","agrave":"\u00E0","alefsym":"\u2135","aleph":"\u2135","Alpha":"\u0391","alpha":"\u03B1","Amacr":"\u0100","amacr":"\u0101","amalg":"\u2A3F","amp":"&","AMP":"&","andand":"\u2A55","And":"\u2A53","and":"\u2227","andd":"\u2A5C","andslope":"\u2A58","andv":"\u2A5A","ang":"\u2220","ange":"\u29A4","angle":"\u2220","angmsdaa":"\u29A8","angmsdab":"\u29A9","angmsdac":"\u29AA","angmsdad":"\u29AB","angmsdae":"\u29AC","angmsdaf":"\u29AD","angmsdag":"\u29AE","angmsdah":"\u29AF","angmsd":"\u2221","angrt":"\u221F","angrtvb":"\u22BE","angrtvbd":"\u299D","angsph":"\u2222","angst":"\u00C5","angzarr":"\u237C","Aogon":"\u0104","aogon":"\u0105","Aopf":"\uD835\uDD38","aopf":"\uD835\uDD52","apacir":"\u2A6F","ap":"\u2248","apE":"\u2A70","ape":"\u224A","apid":"\u224B","apos":"'","ApplyFunction":"\u2061","approx":"\u2248","approxeq":"\u224A","Aring":"\u00C5","aring":"\u00E5","Ascr":"\uD835\uDC9C","ascr":"\uD835\uDCB6","Assign":"\u2254","ast":"*","asymp":"\u2248","asympeq":"\u224D","Atilde":"\u00C3","atilde":"\u00E3","Auml":"\u00C4","auml":"\u00E4","awconint":"\u2233","awint":"\u2A11","backcong":"\u224C","backepsilon":"\u03F6","backprime":"\u2035","backsim":"\u223D","backsimeq":"\u22CD","Backslash":"\u2216","Barv":"\u2AE7","barvee":"\u22BD","barwed":"\u2305","Barwed":"\u2306","barwedge":"\u2305","bbrk":"\u23B5","bbrktbrk":"\u23B6","bcong":"\u224C","Bcy":"\u0411","bcy":"\u0431","bdquo":"\u201E","becaus":"\u2235","because":"\u2235","Because":"\u2235","bemptyv":"\u29B0","bepsi":"\u03F6","bernou":"\u212C","Bernoullis":"\u212C","Beta":"\u0392","beta":"\u03B2","beth":"\u2136","between":"\u226C","Bfr":"\uD835\uDD05","bfr":"\uD835\uDD1F","bigcap":"\u22C2","bigcirc":"\u25EF","bigcup":"\u22C3","bigodot":"\u2A00","bigoplus":"\u2A01","bigotimes":"\u2A02","bigsqcup":"\u2A06","bigstar":"\u2605","bigtriangledown":"\u25BD","bigtriangleup":"\u25B3","biguplus":"\u2A04","bigvee":"\u22C1","bigwedge":"\u22C0","bkarow":"\u290D","blacklozenge":"\u29EB","blacksquare":"\u25AA","blacktriangle":"\u25B4","blacktriangledown":"\u25BE","blacktriangleleft":"\u25C2","blacktriangleright":"\u25B8","blank":"\u2423","blk12":"\u2592","blk14":"\u2591","blk34":"\u2593","block":"\u2588","bne":"=\u20E5","bnequiv":"\u2261\u20E5","bNot":"\u2AED","bnot":"\u2310","Bopf":"\uD835\uDD39","bopf":"\uD835\uDD53","bot":"\u22A5","bottom":"\u22A5","bowtie":"\u22C8","boxbox":"\u29C9","boxdl":"\u2510","boxdL":"\u2555","boxDl":"\u2556","boxDL":"\u2557","boxdr":"\u250C","boxdR":"\u2552","boxDr":"\u2553","boxDR":"\u2554","boxh":"\u2500","boxH":"\u2550","boxhd":"\u252C","boxHd":"\u2564","boxhD":"\u2565","boxHD":"\u2566","boxhu":"\u2534","boxHu":"\u2567","boxhU":"\u2568","boxHU":"\u2569","boxminus":"\u229F","boxplus":"\u229E","boxtimes":"\u22A0","boxul":"\u2518","boxuL":"\u255B","boxUl":"\u255C","boxUL":"\u255D","boxur":"\u2514","boxuR":"\u2558","boxUr":"\u2559","boxUR":"\u255A","boxv":"\u2502","boxV":"\u2551","boxvh":"\u253C","boxvH":"\u256A","boxVh":"\u256B","boxVH":"\u256C","boxvl":"\u2524","boxvL":"\u2561","boxVl":"\u2562","boxVL":"\u2563","boxvr":"\u251C","boxvR":"\u255E","boxVr":"\u255F","boxVR":"\u2560","bprime":"\u2035","breve":"\u02D8","Breve":"\u02D8","brvbar":"\u00A6","bscr":"\uD835\uDCB7","Bscr":"\u212C","bsemi":"\u204F","bsim":"\u223D","bsime":"\u22CD","bsolb":"\u29C5","bsol":"\\","bsolhsub":"\u27C8","bull":"\u2022","bullet":"\u2022","bump":"\u224E","bumpE":"\u2AAE","bumpe":"\u224F","Bumpeq":"\u224E","bumpeq":"\u224F","Cacute":"\u0106","cacute":"\u0107","capand":"\u2A44","capbrcup":"\u2A49","capcap":"\u2A4B","cap":"\u2229","Cap":"\u22D2","capcup":"\u2A47","capdot":"\u2A40","CapitalDifferentialD":"\u2145","caps":"\u2229\uFE00","caret":"\u2041","caron":"\u02C7","Cayleys":"\u212D","ccaps":"\u2A4D","Ccaron":"\u010C","ccaron":"\u010D","Ccedil":"\u00C7","ccedil":"\u00E7","Ccirc":"\u0108","ccirc":"\u0109","Cconint":"\u2230","ccups":"\u2A4C","ccupssm":"\u2A50","Cdot":"\u010A","cdot":"\u010B","cedil":"\u00B8","Cedilla":"\u00B8","cemptyv":"\u29B2","cent":"\u00A2","centerdot":"\u00B7","CenterDot":"\u00B7","cfr":"\uD835\uDD20","Cfr":"\u212D","CHcy":"\u0427","chcy":"\u0447","check":"\u2713","checkmark":"\u2713","Chi":"\u03A7","chi":"\u03C7","circ":"\u02C6","circeq":"\u2257","circlearrowleft":"\u21BA","circlearrowright":"\u21BB","circledast":"\u229B","circledcirc":"\u229A","circleddash":"\u229D","CircleDot":"\u2299","circledR":"\u00AE","circledS":"\u24C8","CircleMinus":"\u2296","CirclePlus":"\u2295","CircleTimes":"\u2297","cir":"\u25CB","cirE":"\u29C3","cire":"\u2257","cirfnint":"\u2A10","cirmid":"\u2AEF","cirscir":"\u29C2","ClockwiseContourIntegral":"\u2232","CloseCurlyDoubleQuote":"\u201D","CloseCurlyQuote":"\u2019","clubs":"\u2663","clubsuit":"\u2663","colon":":","Colon":"\u2237","Colone":"\u2A74","colone":"\u2254","coloneq":"\u2254","comma":",","commat":"@","comp":"\u2201","compfn":"\u2218","complement":"\u2201","complexes":"\u2102","cong":"\u2245","congdot":"\u2A6D","Congruent":"\u2261","conint":"\u222E","Conint":"\u222F","ContourIntegral":"\u222E","copf":"\uD835\uDD54","Copf":"\u2102","coprod":"\u2210","Coproduct":"\u2210","copy":"\u00A9","COPY":"\u00A9","copysr":"\u2117","CounterClockwiseContourIntegral":"\u2233","crarr":"\u21B5","cross":"\u2717","Cross":"\u2A2F","Cscr":"\uD835\uDC9E","cscr":"\uD835\uDCB8","csub":"\u2ACF","csube":"\u2AD1","csup":"\u2AD0","csupe":"\u2AD2","ctdot":"\u22EF","cudarrl":"\u2938","cudarrr":"\u2935","cuepr":"\u22DE","cuesc":"\u22DF","cularr":"\u21B6","cularrp":"\u293D","cupbrcap":"\u2A48","cupcap":"\u2A46","CupCap":"\u224D","cup":"\u222A","Cup":"\u22D3","cupcup":"\u2A4A","cupdot":"\u228D","cupor":"\u2A45","cups":"\u222A\uFE00","curarr":"\u21B7","curarrm":"\u293C","curlyeqprec":"\u22DE","curlyeqsucc":"\u22DF","curlyvee":"\u22CE","curlywedge":"\u22CF","curren":"\u00A4","curvearrowleft":"\u21B6","curvearrowright":"\u21B7","cuvee":"\u22CE","cuwed":"\u22CF","cwconint":"\u2232","cwint":"\u2231","cylcty":"\u232D","dagger":"\u2020","Dagger":"\u2021","daleth":"\u2138","darr":"\u2193","Darr":"\u21A1","dArr":"\u21D3","dash":"\u2010","Dashv":"\u2AE4","dashv":"\u22A3","dbkarow":"\u290F","dblac":"\u02DD","Dcaron":"\u010E","dcaron":"\u010F","Dcy":"\u0414","dcy":"\u0434","ddagger":"\u2021","ddarr":"\u21CA","DD":"\u2145","dd":"\u2146","DDotrahd":"\u2911","ddotseq":"\u2A77","deg":"\u00B0","Del":"\u2207","Delta":"\u0394","delta":"\u03B4","demptyv":"\u29B1","dfisht":"\u297F","Dfr":"\uD835\uDD07","dfr":"\uD835\uDD21","dHar":"\u2965","dharl":"\u21C3","dharr":"\u21C2","DiacriticalAcute":"\u00B4","DiacriticalDot":"\u02D9","DiacriticalDoubleAcute":"\u02DD","DiacriticalGrave":"`","DiacriticalTilde":"\u02DC","diam":"\u22C4","diamond":"\u22C4","Diamond":"\u22C4","diamondsuit":"\u2666","diams":"\u2666","die":"\u00A8","DifferentialD":"\u2146","digamma":"\u03DD","disin":"\u22F2","div":"\u00F7","divide":"\u00F7","divideontimes":"\u22C7","divonx":"\u22C7","DJcy":"\u0402","djcy":"\u0452","dlcorn":"\u231E","dlcrop":"\u230D","dollar":"$","Dopf":"\uD835\uDD3B","dopf":"\uD835\uDD55","Dot":"\u00A8","dot":"\u02D9","DotDot":"\u20DC","doteq":"\u2250","doteqdot":"\u2251","DotEqual":"\u2250","dotminus":"\u2238","dotplus":"\u2214","dotsquare":"\u22A1","doublebarwedge":"\u2306","DoubleContourIntegral":"\u222F","DoubleDot":"\u00A8","DoubleDownArrow":"\u21D3","DoubleLeftArrow":"\u21D0","DoubleLeftRightArrow":"\u21D4","DoubleLeftTee":"\u2AE4","DoubleLongLeftArrow":"\u27F8","DoubleLongLeftRightArrow":"\u27FA","DoubleLongRightArrow":"\u27F9","DoubleRightArrow":"\u21D2","DoubleRightTee":"\u22A8","DoubleUpArrow":"\u21D1","DoubleUpDownArrow":"\u21D5","DoubleVerticalBar":"\u2225","DownArrowBar":"\u2913","downarrow":"\u2193","DownArrow":"\u2193","Downarrow":"\u21D3","DownArrowUpArrow":"\u21F5","DownBreve":"\u0311","downdownarrows":"\u21CA","downharpoonleft":"\u21C3","downharpoonright":"\u21C2","DownLeftRightVector":"\u2950","DownLeftTeeVector":"\u295E","DownLeftVectorBar":"\u2956","DownLeftVector":"\u21BD","DownRightTeeVector":"\u295F","DownRightVectorBar":"\u2957","DownRightVector":"\u21C1","DownTeeArrow":"\u21A7","DownTee":"\u22A4","drbkarow":"\u2910","drcorn":"\u231F","drcrop":"\u230C","Dscr":"\uD835\uDC9F","dscr":"\uD835\uDCB9","DScy":"\u0405","dscy":"\u0455","dsol":"\u29F6","Dstrok":"\u0110","dstrok":"\u0111","dtdot":"\u22F1","dtri":"\u25BF","dtrif":"\u25BE","duarr":"\u21F5","duhar":"\u296F","dwangle":"\u29A6","DZcy":"\u040F","dzcy":"\u045F","dzigrarr":"\u27FF","Eacute":"\u00C9","eacute":"\u00E9","easter":"\u2A6E","Ecaron":"\u011A","ecaron":"\u011B","Ecirc":"\u00CA","ecirc":"\u00EA","ecir":"\u2256","ecolon":"\u2255","Ecy":"\u042D","ecy":"\u044D","eDDot":"\u2A77","Edot":"\u0116","edot":"\u0117","eDot":"\u2251","ee":"\u2147","efDot":"\u2252","Efr":"\uD835\uDD08","efr":"\uD835\uDD22","eg":"\u2A9A","Egrave":"\u00C8","egrave":"\u00E8","egs":"\u2A96","egsdot":"\u2A98","el":"\u2A99","Element":"\u2208","elinters":"\u23E7","ell":"\u2113","els":"\u2A95","elsdot":"\u2A97","Emacr":"\u0112","emacr":"\u0113","empty":"\u2205","emptyset":"\u2205","EmptySmallSquare":"\u25FB","emptyv":"\u2205","EmptyVerySmallSquare":"\u25AB","emsp13":"\u2004","emsp14":"\u2005","emsp":"\u2003","ENG":"\u014A","eng":"\u014B","ensp":"\u2002","Eogon":"\u0118","eogon":"\u0119","Eopf":"\uD835\uDD3C","eopf":"\uD835\uDD56","epar":"\u22D5","eparsl":"\u29E3","eplus":"\u2A71","epsi":"\u03B5","Epsilon":"\u0395","epsilon":"\u03B5","epsiv":"\u03F5","eqcirc":"\u2256","eqcolon":"\u2255","eqsim":"\u2242","eqslantgtr":"\u2A96","eqslantless":"\u2A95","Equal":"\u2A75","equals":"=","EqualTilde":"\u2242","equest":"\u225F","Equilibrium":"\u21CC","equiv":"\u2261","equivDD":"\u2A78","eqvparsl":"\u29E5","erarr":"\u2971","erDot":"\u2253","escr":"\u212F","Escr":"\u2130","esdot":"\u2250","Esim":"\u2A73","esim":"\u2242","Eta":"\u0397","eta":"\u03B7","ETH":"\u00D0","eth":"\u00F0","Euml":"\u00CB","euml":"\u00EB","euro":"\u20AC","excl":"!","exist":"\u2203","Exists":"\u2203","expectation":"\u2130","exponentiale":"\u2147","ExponentialE":"\u2147","fallingdotseq":"\u2252","Fcy":"\u0424","fcy":"\u0444","female":"\u2640","ffilig":"\uFB03","fflig":"\uFB00","ffllig":"\uFB04","Ffr":"\uD835\uDD09","ffr":"\uD835\uDD23","filig":"\uFB01","FilledSmallSquare":"\u25FC","FilledVerySmallSquare":"\u25AA","fjlig":"fj","flat":"\u266D","fllig":"\uFB02","fltns":"\u25B1","fnof":"\u0192","Fopf":"\uD835\uDD3D","fopf":"\uD835\uDD57","forall":"\u2200","ForAll":"\u2200","fork":"\u22D4","forkv":"\u2AD9","Fouriertrf":"\u2131","fpartint":"\u2A0D","frac12":"\u00BD","frac13":"\u2153","frac14":"\u00BC","frac15":"\u2155","frac16":"\u2159","frac18":"\u215B","frac23":"\u2154","frac25":"\u2156","frac34":"\u00BE","frac35":"\u2157","frac38":"\u215C","frac45":"\u2158","frac56":"\u215A","frac58":"\u215D","frac78":"\u215E","frasl":"\u2044","frown":"\u2322","fscr":"\uD835\uDCBB","Fscr":"\u2131","gacute":"\u01F5","Gamma":"\u0393","gamma":"\u03B3","Gammad":"\u03DC","gammad":"\u03DD","gap":"\u2A86","Gbreve":"\u011E","gbreve":"\u011F","Gcedil":"\u0122","Gcirc":"\u011C","gcirc":"\u011D","Gcy":"\u0413","gcy":"\u0433","Gdot":"\u0120","gdot":"\u0121","ge":"\u2265","gE":"\u2267","gEl":"\u2A8C","gel":"\u22DB","geq":"\u2265","geqq":"\u2267","geqslant":"\u2A7E","gescc":"\u2AA9","ges":"\u2A7E","gesdot":"\u2A80","gesdoto":"\u2A82","gesdotol":"\u2A84","gesl":"\u22DB\uFE00","gesles":"\u2A94","Gfr":"\uD835\uDD0A","gfr":"\uD835\uDD24","gg":"\u226B","Gg":"\u22D9","ggg":"\u22D9","gimel":"\u2137","GJcy":"\u0403","gjcy":"\u0453","gla":"\u2AA5","gl":"\u2277","glE":"\u2A92","glj":"\u2AA4","gnap":"\u2A8A","gnapprox":"\u2A8A","gne":"\u2A88","gnE":"\u2269","gneq":"\u2A88","gneqq":"\u2269","gnsim":"\u22E7","Gopf":"\uD835\uDD3E","gopf":"\uD835\uDD58","grave":"`","GreaterEqual":"\u2265","GreaterEqualLess":"\u22DB","GreaterFullEqual":"\u2267","GreaterGreater":"\u2AA2","GreaterLess":"\u2277","GreaterSlantEqual":"\u2A7E","GreaterTilde":"\u2273","Gscr":"\uD835\uDCA2","gscr":"\u210A","gsim":"\u2273","gsime":"\u2A8E","gsiml":"\u2A90","gtcc":"\u2AA7","gtcir":"\u2A7A","gt":">","GT":">","Gt":"\u226B","gtdot":"\u22D7","gtlPar":"\u2995","gtquest":"\u2A7C","gtrapprox":"\u2A86","gtrarr":"\u2978","gtrdot":"\u22D7","gtreqless":"\u22DB","gtreqqless":"\u2A8C","gtrless":"\u2277","gtrsim":"\u2273","gvertneqq":"\u2269\uFE00","gvnE":"\u2269\uFE00","Hacek":"\u02C7","hairsp":"\u200A","half":"\u00BD","hamilt":"\u210B","HARDcy":"\u042A","hardcy":"\u044A","harrcir":"\u2948","harr":"\u2194","hArr":"\u21D4","harrw":"\u21AD","Hat":"^","hbar":"\u210F","Hcirc":"\u0124","hcirc":"\u0125","hearts":"\u2665","heartsuit":"\u2665","hellip":"\u2026","hercon":"\u22B9","hfr":"\uD835\uDD25","Hfr":"\u210C","HilbertSpace":"\u210B","hksearow":"\u2925","hkswarow":"\u2926","hoarr":"\u21FF","homtht":"\u223B","hookleftarrow":"\u21A9","hookrightarrow":"\u21AA","hopf":"\uD835\uDD59","Hopf":"\u210D","horbar":"\u2015","HorizontalLine":"\u2500","hscr":"\uD835\uDCBD","Hscr":"\u210B","hslash":"\u210F","Hstrok":"\u0126","hstrok":"\u0127","HumpDownHump":"\u224E","HumpEqual":"\u224F","hybull":"\u2043","hyphen":"\u2010","Iacute":"\u00CD","iacute":"\u00ED","ic":"\u2063","Icirc":"\u00CE","icirc":"\u00EE","Icy":"\u0418","icy":"\u0438","Idot":"\u0130","IEcy":"\u0415","iecy":"\u0435","iexcl":"\u00A1","iff":"\u21D4","ifr":"\uD835\uDD26","Ifr":"\u2111","Igrave":"\u00CC","igrave":"\u00EC","ii":"\u2148","iiiint":"\u2A0C","iiint":"\u222D","iinfin":"\u29DC","iiota":"\u2129","IJlig":"\u0132","ijlig":"\u0133","Imacr":"\u012A","imacr":"\u012B","image":"\u2111","ImaginaryI":"\u2148","imagline":"\u2110","imagpart":"\u2111","imath":"\u0131","Im":"\u2111","imof":"\u22B7","imped":"\u01B5","Implies":"\u21D2","incare":"\u2105","in":"\u2208","infin":"\u221E","infintie":"\u29DD","inodot":"\u0131","intcal":"\u22BA","int":"\u222B","Int":"\u222C","integers":"\u2124","Integral":"\u222B","intercal":"\u22BA","Intersection":"\u22C2","intlarhk":"\u2A17","intprod":"\u2A3C","InvisibleComma":"\u2063","InvisibleTimes":"\u2062","IOcy":"\u0401","iocy":"\u0451","Iogon":"\u012E","iogon":"\u012F","Iopf":"\uD835\uDD40","iopf":"\uD835\uDD5A","Iota":"\u0399","iota":"\u03B9","iprod":"\u2A3C","iquest":"\u00BF","iscr":"\uD835\uDCBE","Iscr":"\u2110","isin":"\u2208","isindot":"\u22F5","isinE":"\u22F9","isins":"\u22F4","isinsv":"\u22F3","isinv":"\u2208","it":"\u2062","Itilde":"\u0128","itilde":"\u0129","Iukcy":"\u0406","iukcy":"\u0456","Iuml":"\u00CF","iuml":"\u00EF","Jcirc":"\u0134","jcirc":"\u0135","Jcy":"\u0419","jcy":"\u0439","Jfr":"\uD835\uDD0D","jfr":"\uD835\uDD27","jmath":"\u0237","Jopf":"\uD835\uDD41","jopf":"\uD835\uDD5B","Jscr":"\uD835\uDCA5","jscr":"\uD835\uDCBF","Jsercy":"\u0408","jsercy":"\u0458","Jukcy":"\u0404","jukcy":"\u0454","Kappa":"\u039A","kappa":"\u03BA","kappav":"\u03F0","Kcedil":"\u0136","kcedil":"\u0137","Kcy":"\u041A","kcy":"\u043A","Kfr":"\uD835\uDD0E","kfr":"\uD835\uDD28","kgreen":"\u0138","KHcy":"\u0425","khcy":"\u0445","KJcy":"\u040C","kjcy":"\u045C","Kopf":"\uD835\uDD42","kopf":"\uD835\uDD5C","Kscr":"\uD835\uDCA6","kscr":"\uD835\uDCC0","lAarr":"\u21DA","Lacute":"\u0139","lacute":"\u013A","laemptyv":"\u29B4","lagran":"\u2112","Lambda":"\u039B","lambda":"\u03BB","lang":"\u27E8","Lang":"\u27EA","langd":"\u2991","langle":"\u27E8","lap":"\u2A85","Laplacetrf":"\u2112","laquo":"\u00AB","larrb":"\u21E4","larrbfs":"\u291F","larr":"\u2190","Larr":"\u219E","lArr":"\u21D0","larrfs":"\u291D","larrhk":"\u21A9","larrlp":"\u21AB","larrpl":"\u2939","larrsim":"\u2973","larrtl":"\u21A2","latail":"\u2919","lAtail":"\u291B","lat":"\u2AAB","late":"\u2AAD","lates":"\u2AAD\uFE00","lbarr":"\u290C","lBarr":"\u290E","lbbrk":"\u2772","lbrace":"{","lbrack":"[","lbrke":"\u298B","lbrksld":"\u298F","lbrkslu":"\u298D","Lcaron":"\u013D","lcaron":"\u013E","Lcedil":"\u013B","lcedil":"\u013C","lceil":"\u2308","lcub":"{","Lcy":"\u041B","lcy":"\u043B","ldca":"\u2936","ldquo":"\u201C","ldquor":"\u201E","ldrdhar":"\u2967","ldrushar":"\u294B","ldsh":"\u21B2","le":"\u2264","lE":"\u2266","LeftAngleBracket":"\u27E8","LeftArrowBar":"\u21E4","leftarrow":"\u2190","LeftArrow":"\u2190","Leftarrow":"\u21D0","LeftArrowRightArrow":"\u21C6","leftarrowtail":"\u21A2","LeftCeiling":"\u2308","LeftDoubleBracket":"\u27E6","LeftDownTeeVector":"\u2961","LeftDownVectorBar":"\u2959","LeftDownVector":"\u21C3","LeftFloor":"\u230A","leftharpoondown":"\u21BD","leftharpoonup":"\u21BC","leftleftarrows":"\u21C7","leftrightarrow":"\u2194","LeftRightArrow":"\u2194","Leftrightarrow":"\u21D4","leftrightarrows":"\u21C6","leftrightharpoons":"\u21CB","leftrightsquigarrow":"\u21AD","LeftRightVector":"\u294E","LeftTeeArrow":"\u21A4","LeftTee":"\u22A3","LeftTeeVector":"\u295A","leftthreetimes":"\u22CB","LeftTriangleBar":"\u29CF","LeftTriangle":"\u22B2","LeftTriangleEqual":"\u22B4","LeftUpDownVector":"\u2951","LeftUpTeeVector":"\u2960","LeftUpVectorBar":"\u2958","LeftUpVector":"\u21BF","LeftVectorBar":"\u2952","LeftVector":"\u21BC","lEg":"\u2A8B","leg":"\u22DA","leq":"\u2264","leqq":"\u2266","leqslant":"\u2A7D","lescc":"\u2AA8","les":"\u2A7D","lesdot":"\u2A7F","lesdoto":"\u2A81","lesdotor":"\u2A83","lesg":"\u22DA\uFE00","lesges":"\u2A93","lessapprox":"\u2A85","lessdot":"\u22D6","lesseqgtr":"\u22DA","lesseqqgtr":"\u2A8B","LessEqualGreater":"\u22DA","LessFullEqual":"\u2266","LessGreater":"\u2276","lessgtr":"\u2276","LessLess":"\u2AA1","lesssim":"\u2272","LessSlantEqual":"\u2A7D","LessTilde":"\u2272","lfisht":"\u297C","lfloor":"\u230A","Lfr":"\uD835\uDD0F","lfr":"\uD835\uDD29","lg":"\u2276","lgE":"\u2A91","lHar":"\u2962","lhard":"\u21BD","lharu":"\u21BC","lharul":"\u296A","lhblk":"\u2584","LJcy":"\u0409","ljcy":"\u0459","llarr":"\u21C7","ll":"\u226A","Ll":"\u22D8","llcorner":"\u231E","Lleftarrow":"\u21DA","llhard":"\u296B","lltri":"\u25FA","Lmidot":"\u013F","lmidot":"\u0140","lmoustache":"\u23B0","lmoust":"\u23B0","lnap":"\u2A89","lnapprox":"\u2A89","lne":"\u2A87","lnE":"\u2268","lneq":"\u2A87","lneqq":"\u2268","lnsim":"\u22E6","loang":"\u27EC","loarr":"\u21FD","lobrk":"\u27E6","longleftarrow":"\u27F5","LongLeftArrow":"\u27F5","Longleftarrow":"\u27F8","longleftrightarrow":"\u27F7","LongLeftRightArrow":"\u27F7","Longleftrightarrow":"\u27FA","longmapsto":"\u27FC","longrightarrow":"\u27F6","LongRightArrow":"\u27F6","Longrightarrow":"\u27F9","looparrowleft":"\u21AB","looparrowright":"\u21AC","lopar":"\u2985","Lopf":"\uD835\uDD43","lopf":"\uD835\uDD5D","loplus":"\u2A2D","lotimes":"\u2A34","lowast":"\u2217","lowbar":"_","LowerLeftArrow":"\u2199","LowerRightArrow":"\u2198","loz":"\u25CA","lozenge":"\u25CA","lozf":"\u29EB","lpar":"(","lparlt":"\u2993","lrarr":"\u21C6","lrcorner":"\u231F","lrhar":"\u21CB","lrhard":"\u296D","lrm":"\u200E","lrtri":"\u22BF","lsaquo":"\u2039","lscr":"\uD835\uDCC1","Lscr":"\u2112","lsh":"\u21B0","Lsh":"\u21B0","lsim":"\u2272","lsime":"\u2A8D","lsimg":"\u2A8F","lsqb":"[","lsquo":"\u2018","lsquor":"\u201A","Lstrok":"\u0141","lstrok":"\u0142","ltcc":"\u2AA6","ltcir":"\u2A79","lt":"<","LT":"<","Lt":"\u226A","ltdot":"\u22D6","lthree":"\u22CB","ltimes":"\u22C9","ltlarr":"\u2976","ltquest":"\u2A7B","ltri":"\u25C3","ltrie":"\u22B4","ltrif":"\u25C2","ltrPar":"\u2996","lurdshar":"\u294A","luruhar":"\u2966","lvertneqq":"\u2268\uFE00","lvnE":"\u2268\uFE00","macr":"\u00AF","male":"\u2642","malt":"\u2720","maltese":"\u2720","Map":"\u2905","map":"\u21A6","mapsto":"\u21A6","mapstodown":"\u21A7","mapstoleft":"\u21A4","mapstoup":"\u21A5","marker":"\u25AE","mcomma":"\u2A29","Mcy":"\u041C","mcy":"\u043C","mdash":"\u2014","mDDot":"\u223A","measuredangle":"\u2221","MediumSpace":"\u205F","Mellintrf":"\u2133","Mfr":"\uD835\uDD10","mfr":"\uD835\uDD2A","mho":"\u2127","micro":"\u00B5","midast":"*","midcir":"\u2AF0","mid":"\u2223","middot":"\u00B7","minusb":"\u229F","minus":"\u2212","minusd":"\u2238","minusdu":"\u2A2A","MinusPlus":"\u2213","mlcp":"\u2ADB","mldr":"\u2026","mnplus":"\u2213","models":"\u22A7","Mopf":"\uD835\uDD44","mopf":"\uD835\uDD5E","mp":"\u2213","mscr":"\uD835\uDCC2","Mscr":"\u2133","mstpos":"\u223E","Mu":"\u039C","mu":"\u03BC","multimap":"\u22B8","mumap":"\u22B8","nabla":"\u2207","Nacute":"\u0143","nacute":"\u0144","nang":"\u2220\u20D2","nap":"\u2249","napE":"\u2A70\u0338","napid":"\u224B\u0338","napos":"\u0149","napprox":"\u2249","natural":"\u266E","naturals":"\u2115","natur":"\u266E","nbsp":"\u00A0","nbump":"\u224E\u0338","nbumpe":"\u224F\u0338","ncap":"\u2A43","Ncaron":"\u0147","ncaron":"\u0148","Ncedil":"\u0145","ncedil":"\u0146","ncong":"\u2247","ncongdot":"\u2A6D\u0338","ncup":"\u2A42","Ncy":"\u041D","ncy":"\u043D","ndash":"\u2013","nearhk":"\u2924","nearr":"\u2197","neArr":"\u21D7","nearrow":"\u2197","ne":"\u2260","nedot":"\u2250\u0338","NegativeMediumSpace":"\u200B","NegativeThickSpace":"\u200B","NegativeThinSpace":"\u200B","NegativeVeryThinSpace":"\u200B","nequiv":"\u2262","nesear":"\u2928","nesim":"\u2242\u0338","NestedGreaterGreater":"\u226B","NestedLessLess":"\u226A","NewLine":"\n","nexist":"\u2204","nexists":"\u2204","Nfr":"\uD835\uDD11","nfr":"\uD835\uDD2B","ngE":"\u2267\u0338","nge":"\u2271","ngeq":"\u2271","ngeqq":"\u2267\u0338","ngeqslant":"\u2A7E\u0338","nges":"\u2A7E\u0338","nGg":"\u22D9\u0338","ngsim":"\u2275","nGt":"\u226B\u20D2","ngt":"\u226F","ngtr":"\u226F","nGtv":"\u226B\u0338","nharr":"\u21AE","nhArr":"\u21CE","nhpar":"\u2AF2","ni":"\u220B","nis":"\u22FC","nisd":"\u22FA","niv":"\u220B","NJcy":"\u040A","njcy":"\u045A","nlarr":"\u219A","nlArr":"\u21CD","nldr":"\u2025","nlE":"\u2266\u0338","nle":"\u2270","nleftarrow":"\u219A","nLeftarrow":"\u21CD","nleftrightarrow":"\u21AE","nLeftrightarrow":"\u21CE","nleq":"\u2270","nleqq":"\u2266\u0338","nleqslant":"\u2A7D\u0338","nles":"\u2A7D\u0338","nless":"\u226E","nLl":"\u22D8\u0338","nlsim":"\u2274","nLt":"\u226A\u20D2","nlt":"\u226E","nltri":"\u22EA","nltrie":"\u22EC","nLtv":"\u226A\u0338","nmid":"\u2224","NoBreak":"\u2060","NonBreakingSpace":"\u00A0","nopf":"\uD835\uDD5F","Nopf":"\u2115","Not":"\u2AEC","not":"\u00AC","NotCongruent":"\u2262","NotCupCap":"\u226D","NotDoubleVerticalBar":"\u2226","NotElement":"\u2209","NotEqual":"\u2260","NotEqualTilde":"\u2242\u0338","NotExists":"\u2204","NotGreater":"\u226F","NotGreaterEqual":"\u2271","NotGreaterFullEqual":"\u2267\u0338","NotGreaterGreater":"\u226B\u0338","NotGreaterLess":"\u2279","NotGreaterSlantEqual":"\u2A7E\u0338","NotGreaterTilde":"\u2275","NotHumpDownHump":"\u224E\u0338","NotHumpEqual":"\u224F\u0338","notin":"\u2209","notindot":"\u22F5\u0338","notinE":"\u22F9\u0338","notinva":"\u2209","notinvb":"\u22F7","notinvc":"\u22F6","NotLeftTriangleBar":"\u29CF\u0338","NotLeftTriangle":"\u22EA","NotLeftTriangleEqual":"\u22EC","NotLess":"\u226E","NotLessEqual":"\u2270","NotLessGreater":"\u2278","NotLessLess":"\u226A\u0338","NotLessSlantEqual":"\u2A7D\u0338","NotLessTilde":"\u2274","NotNestedGreaterGreater":"\u2AA2\u0338","NotNestedLessLess":"\u2AA1\u0338","notni":"\u220C","notniva":"\u220C","notnivb":"\u22FE","notnivc":"\u22FD","NotPrecedes":"\u2280","NotPrecedesEqual":"\u2AAF\u0338","NotPrecedesSlantEqual":"\u22E0","NotReverseElement":"\u220C","NotRightTriangleBar":"\u29D0\u0338","NotRightTriangle":"\u22EB","NotRightTriangleEqual":"\u22ED","NotSquareSubset":"\u228F\u0338","NotSquareSubsetEqual":"\u22E2","NotSquareSuperset":"\u2290\u0338","NotSquareSupersetEqual":"\u22E3","NotSubset":"\u2282\u20D2","NotSubsetEqual":"\u2288","NotSucceeds":"\u2281","NotSucceedsEqual":"\u2AB0\u0338","NotSucceedsSlantEqual":"\u22E1","NotSucceedsTilde":"\u227F\u0338","NotSuperset":"\u2283\u20D2","NotSupersetEqual":"\u2289","NotTilde":"\u2241","NotTildeEqual":"\u2244","NotTildeFullEqual":"\u2247","NotTildeTilde":"\u2249","NotVerticalBar":"\u2224","nparallel":"\u2226","npar":"\u2226","nparsl":"\u2AFD\u20E5","npart":"\u2202\u0338","npolint":"\u2A14","npr":"\u2280","nprcue":"\u22E0","nprec":"\u2280","npreceq":"\u2AAF\u0338","npre":"\u2AAF\u0338","nrarrc":"\u2933\u0338","nrarr":"\u219B","nrArr":"\u21CF","nrarrw":"\u219D\u0338","nrightarrow":"\u219B","nRightarrow":"\u21CF","nrtri":"\u22EB","nrtrie":"\u22ED","nsc":"\u2281","nsccue":"\u22E1","nsce":"\u2AB0\u0338","Nscr":"\uD835\uDCA9","nscr":"\uD835\uDCC3","nshortmid":"\u2224","nshortparallel":"\u2226","nsim":"\u2241","nsime":"\u2244","nsimeq":"\u2244","nsmid":"\u2224","nspar":"\u2226","nsqsube":"\u22E2","nsqsupe":"\u22E3","nsub":"\u2284","nsubE":"\u2AC5\u0338","nsube":"\u2288","nsubset":"\u2282\u20D2","nsubseteq":"\u2288","nsubseteqq":"\u2AC5\u0338","nsucc":"\u2281","nsucceq":"\u2AB0\u0338","nsup":"\u2285","nsupE":"\u2AC6\u0338","nsupe":"\u2289","nsupset":"\u2283\u20D2","nsupseteq":"\u2289","nsupseteqq":"\u2AC6\u0338","ntgl":"\u2279","Ntilde":"\u00D1","ntilde":"\u00F1","ntlg":"\u2278","ntriangleleft":"\u22EA","ntrianglelefteq":"\u22EC","ntriangleright":"\u22EB","ntrianglerighteq":"\u22ED","Nu":"\u039D","nu":"\u03BD","num":"#","numero":"\u2116","numsp":"\u2007","nvap":"\u224D\u20D2","nvdash":"\u22AC","nvDash":"\u22AD","nVdash":"\u22AE","nVDash":"\u22AF","nvge":"\u2265\u20D2","nvgt":">\u20D2","nvHarr":"\u2904","nvinfin":"\u29DE","nvlArr":"\u2902","nvle":"\u2264\u20D2","nvlt":"<\u20D2","nvltrie":"\u22B4\u20D2","nvrArr":"\u2903","nvrtrie":"\u22B5\u20D2","nvsim":"\u223C\u20D2","nwarhk":"\u2923","nwarr":"\u2196","nwArr":"\u21D6","nwarrow":"\u2196","nwnear":"\u2927","Oacute":"\u00D3","oacute":"\u00F3","oast":"\u229B","Ocirc":"\u00D4","ocirc":"\u00F4","ocir":"\u229A","Ocy":"\u041E","ocy":"\u043E","odash":"\u229D","Odblac":"\u0150","odblac":"\u0151","odiv":"\u2A38","odot":"\u2299","odsold":"\u29BC","OElig":"\u0152","oelig":"\u0153","ofcir":"\u29BF","Ofr":"\uD835\uDD12","ofr":"\uD835\uDD2C","ogon":"\u02DB","Ograve":"\u00D2","ograve":"\u00F2","ogt":"\u29C1","ohbar":"\u29B5","ohm":"\u03A9","oint":"\u222E","olarr":"\u21BA","olcir":"\u29BE","olcross":"\u29BB","oline":"\u203E","olt":"\u29C0","Omacr":"\u014C","omacr":"\u014D","Omega":"\u03A9","omega":"\u03C9","Omicron":"\u039F","omicron":"\u03BF","omid":"\u29B6","ominus":"\u2296","Oopf":"\uD835\uDD46","oopf":"\uD835\uDD60","opar":"\u29B7","OpenCurlyDoubleQuote":"\u201C","OpenCurlyQuote":"\u2018","operp":"\u29B9","oplus":"\u2295","orarr":"\u21BB","Or":"\u2A54","or":"\u2228","ord":"\u2A5D","order":"\u2134","orderof":"\u2134","ordf":"\u00AA","ordm":"\u00BA","origof":"\u22B6","oror":"\u2A56","orslope":"\u2A57","orv":"\u2A5B","oS":"\u24C8","Oscr":"\uD835\uDCAA","oscr":"\u2134","Oslash":"\u00D8","oslash":"\u00F8","osol":"\u2298","Otilde":"\u00D5","otilde":"\u00F5","otimesas":"\u2A36","Otimes":"\u2A37","otimes":"\u2297","Ouml":"\u00D6","ouml":"\u00F6","ovbar":"\u233D","OverBar":"\u203E","OverBrace":"\u23DE","OverBracket":"\u23B4","OverParenthesis":"\u23DC","para":"\u00B6","parallel":"\u2225","par":"\u2225","parsim":"\u2AF3","parsl":"\u2AFD","part":"\u2202","PartialD":"\u2202","Pcy":"\u041F","pcy":"\u043F","percnt":"%","period":".","permil":"\u2030","perp":"\u22A5","pertenk":"\u2031","Pfr":"\uD835\uDD13","pfr":"\uD835\uDD2D","Phi":"\u03A6","phi":"\u03C6","phiv":"\u03D5","phmmat":"\u2133","phone":"\u260E","Pi":"\u03A0","pi":"\u03C0","pitchfork":"\u22D4","piv":"\u03D6","planck":"\u210F","planckh":"\u210E","plankv":"\u210F","plusacir":"\u2A23","plusb":"\u229E","pluscir":"\u2A22","plus":"+","plusdo":"\u2214","plusdu":"\u2A25","pluse":"\u2A72","PlusMinus":"\u00B1","plusmn":"\u00B1","plussim":"\u2A26","plustwo":"\u2A27","pm":"\u00B1","Poincareplane":"\u210C","pointint":"\u2A15","popf":"\uD835\uDD61","Popf":"\u2119","pound":"\u00A3","prap":"\u2AB7","Pr":"\u2ABB","pr":"\u227A","prcue":"\u227C","precapprox":"\u2AB7","prec":"\u227A","preccurlyeq":"\u227C","Precedes":"\u227A","PrecedesEqual":"\u2AAF","PrecedesSlantEqual":"\u227C","PrecedesTilde":"\u227E","preceq":"\u2AAF","precnapprox":"\u2AB9","precneqq":"\u2AB5","precnsim":"\u22E8","pre":"\u2AAF","prE":"\u2AB3","precsim":"\u227E","prime":"\u2032","Prime":"\u2033","primes":"\u2119","prnap":"\u2AB9","prnE":"\u2AB5","prnsim":"\u22E8","prod":"\u220F","Product":"\u220F","profalar":"\u232E","profline":"\u2312","profsurf":"\u2313","prop":"\u221D","Proportional":"\u221D","Proportion":"\u2237","propto":"\u221D","prsim":"\u227E","prurel":"\u22B0","Pscr":"\uD835\uDCAB","pscr":"\uD835\uDCC5","Psi":"\u03A8","psi":"\u03C8","puncsp":"\u2008","Qfr":"\uD835\uDD14","qfr":"\uD835\uDD2E","qint":"\u2A0C","qopf":"\uD835\uDD62","Qopf":"\u211A","qprime":"\u2057","Qscr":"\uD835\uDCAC","qscr":"\uD835\uDCC6","quaternions":"\u210D","quatint":"\u2A16","quest":"?","questeq":"\u225F","quot":"\"","QUOT":"\"","rAarr":"\u21DB","race":"\u223D\u0331","Racute":"\u0154","racute":"\u0155","radic":"\u221A","raemptyv":"\u29B3","rang":"\u27E9","Rang":"\u27EB","rangd":"\u2992","range":"\u29A5","rangle":"\u27E9","raquo":"\u00BB","rarrap":"\u2975","rarrb":"\u21E5","rarrbfs":"\u2920","rarrc":"\u2933","rarr":"\u2192","Rarr":"\u21A0","rArr":"\u21D2","rarrfs":"\u291E","rarrhk":"\u21AA","rarrlp":"\u21AC","rarrpl":"\u2945","rarrsim":"\u2974","Rarrtl":"\u2916","rarrtl":"\u21A3","rarrw":"\u219D","ratail":"\u291A","rAtail":"\u291C","ratio":"\u2236","rationals":"\u211A","rbarr":"\u290D","rBarr":"\u290F","RBarr":"\u2910","rbbrk":"\u2773","rbrace":"}","rbrack":"]","rbrke":"\u298C","rbrksld":"\u298E","rbrkslu":"\u2990","Rcaron":"\u0158","rcaron":"\u0159","Rcedil":"\u0156","rcedil":"\u0157","rceil":"\u2309","rcub":"}","Rcy":"\u0420","rcy":"\u0440","rdca":"\u2937","rdldhar":"\u2969","rdquo":"\u201D","rdquor":"\u201D","rdsh":"\u21B3","real":"\u211C","realine":"\u211B","realpart":"\u211C","reals":"\u211D","Re":"\u211C","rect":"\u25AD","reg":"\u00AE","REG":"\u00AE","ReverseElement":"\u220B","ReverseEquilibrium":"\u21CB","ReverseUpEquilibrium":"\u296F","rfisht":"\u297D","rfloor":"\u230B","rfr":"\uD835\uDD2F","Rfr":"\u211C","rHar":"\u2964","rhard":"\u21C1","rharu":"\u21C0","rharul":"\u296C","Rho":"\u03A1","rho":"\u03C1","rhov":"\u03F1","RightAngleBracket":"\u27E9","RightArrowBar":"\u21E5","rightarrow":"\u2192","RightArrow":"\u2192","Rightarrow":"\u21D2","RightArrowLeftArrow":"\u21C4","rightarrowtail":"\u21A3","RightCeiling":"\u2309","RightDoubleBracket":"\u27E7","RightDownTeeVector":"\u295D","RightDownVectorBar":"\u2955","RightDownVector":"\u21C2","RightFloor":"\u230B","rightharpoondown":"\u21C1","rightharpoonup":"\u21C0","rightleftarrows":"\u21C4","rightleftharpoons":"\u21CC","rightrightarrows":"\u21C9","rightsquigarrow":"\u219D","RightTeeArrow":"\u21A6","RightTee":"\u22A2","RightTeeVector":"\u295B","rightthreetimes":"\u22CC","RightTriangleBar":"\u29D0","RightTriangle":"\u22B3","RightTriangleEqual":"\u22B5","RightUpDownVector":"\u294F","RightUpTeeVector":"\u295C","RightUpVectorBar":"\u2954","RightUpVector":"\u21BE","RightVectorBar":"\u2953","RightVector":"\u21C0","ring":"\u02DA","risingdotseq":"\u2253","rlarr":"\u21C4","rlhar":"\u21CC","rlm":"\u200F","rmoustache":"\u23B1","rmoust":"\u23B1","rnmid":"\u2AEE","roang":"\u27ED","roarr":"\u21FE","robrk":"\u27E7","ropar":"\u2986","ropf":"\uD835\uDD63","Ropf":"\u211D","roplus":"\u2A2E","rotimes":"\u2A35","RoundImplies":"\u2970","rpar":")","rpargt":"\u2994","rppolint":"\u2A12","rrarr":"\u21C9","Rrightarrow":"\u21DB","rsaquo":"\u203A","rscr":"\uD835\uDCC7","Rscr":"\u211B","rsh":"\u21B1","Rsh":"\u21B1","rsqb":"]","rsquo":"\u2019","rsquor":"\u2019","rthree":"\u22CC","rtimes":"\u22CA","rtri":"\u25B9","rtrie":"\u22B5","rtrif":"\u25B8","rtriltri":"\u29CE","RuleDelayed":"\u29F4","ruluhar":"\u2968","rx":"\u211E","Sacute":"\u015A","sacute":"\u015B","sbquo":"\u201A","scap":"\u2AB8","Scaron":"\u0160","scaron":"\u0161","Sc":"\u2ABC","sc":"\u227B","sccue":"\u227D","sce":"\u2AB0","scE":"\u2AB4","Scedil":"\u015E","scedil":"\u015F","Scirc":"\u015C","scirc":"\u015D","scnap":"\u2ABA","scnE":"\u2AB6","scnsim":"\u22E9","scpolint":"\u2A13","scsim":"\u227F","Scy":"\u0421","scy":"\u0441","sdotb":"\u22A1","sdot":"\u22C5","sdote":"\u2A66","searhk":"\u2925","searr":"\u2198","seArr":"\u21D8","searrow":"\u2198","sect":"\u00A7","semi":";","seswar":"\u2929","setminus":"\u2216","setmn":"\u2216","sext":"\u2736","Sfr":"\uD835\uDD16","sfr":"\uD835\uDD30","sfrown":"\u2322","sharp":"\u266F","SHCHcy":"\u0429","shchcy":"\u0449","SHcy":"\u0428","shcy":"\u0448","ShortDownArrow":"\u2193","ShortLeftArrow":"\u2190","shortmid":"\u2223","shortparallel":"\u2225","ShortRightArrow":"\u2192","ShortUpArrow":"\u2191","shy":"\u00AD","Sigma":"\u03A3","sigma":"\u03C3","sigmaf":"\u03C2","sigmav":"\u03C2","sim":"\u223C","simdot":"\u2A6A","sime":"\u2243","simeq":"\u2243","simg":"\u2A9E","simgE":"\u2AA0","siml":"\u2A9D","simlE":"\u2A9F","simne":"\u2246","simplus":"\u2A24","simrarr":"\u2972","slarr":"\u2190","SmallCircle":"\u2218","smallsetminus":"\u2216","smashp":"\u2A33","smeparsl":"\u29E4","smid":"\u2223","smile":"\u2323","smt":"\u2AAA","smte":"\u2AAC","smtes":"\u2AAC\uFE00","SOFTcy":"\u042C","softcy":"\u044C","solbar":"\u233F","solb":"\u29C4","sol":"/","Sopf":"\uD835\uDD4A","sopf":"\uD835\uDD64","spades":"\u2660","spadesuit":"\u2660","spar":"\u2225","sqcap":"\u2293","sqcaps":"\u2293\uFE00","sqcup":"\u2294","sqcups":"\u2294\uFE00","Sqrt":"\u221A","sqsub":"\u228F","sqsube":"\u2291","sqsubset":"\u228F","sqsubseteq":"\u2291","sqsup":"\u2290","sqsupe":"\u2292","sqsupset":"\u2290","sqsupseteq":"\u2292","square":"\u25A1","Square":"\u25A1","SquareIntersection":"\u2293","SquareSubset":"\u228F","SquareSubsetEqual":"\u2291","SquareSuperset":"\u2290","SquareSupersetEqual":"\u2292","SquareUnion":"\u2294","squarf":"\u25AA","squ":"\u25A1","squf":"\u25AA","srarr":"\u2192","Sscr":"\uD835\uDCAE","sscr":"\uD835\uDCC8","ssetmn":"\u2216","ssmile":"\u2323","sstarf":"\u22C6","Star":"\u22C6","star":"\u2606","starf":"\u2605","straightepsilon":"\u03F5","straightphi":"\u03D5","strns":"\u00AF","sub":"\u2282","Sub":"\u22D0","subdot":"\u2ABD","subE":"\u2AC5","sube":"\u2286","subedot":"\u2AC3","submult":"\u2AC1","subnE":"\u2ACB","subne":"\u228A","subplus":"\u2ABF","subrarr":"\u2979","subset":"\u2282","Subset":"\u22D0","subseteq":"\u2286","subseteqq":"\u2AC5","SubsetEqual":"\u2286","subsetneq":"\u228A","subsetneqq":"\u2ACB","subsim":"\u2AC7","subsub":"\u2AD5","subsup":"\u2AD3","succapprox":"\u2AB8","succ":"\u227B","succcurlyeq":"\u227D","Succeeds":"\u227B","SucceedsEqual":"\u2AB0","SucceedsSlantEqual":"\u227D","SucceedsTilde":"\u227F","succeq":"\u2AB0","succnapprox":"\u2ABA","succneqq":"\u2AB6","succnsim":"\u22E9","succsim":"\u227F","SuchThat":"\u220B","sum":"\u2211","Sum":"\u2211","sung":"\u266A","sup1":"\u00B9","sup2":"\u00B2","sup3":"\u00B3","sup":"\u2283","Sup":"\u22D1","supdot":"\u2ABE","supdsub":"\u2AD8","supE":"\u2AC6","supe":"\u2287","supedot":"\u2AC4","Superset":"\u2283","SupersetEqual":"\u2287","suphsol":"\u27C9","suphsub":"\u2AD7","suplarr":"\u297B","supmult":"\u2AC2","supnE":"\u2ACC","supne":"\u228B","supplus":"\u2AC0","supset":"\u2283","Supset":"\u22D1","supseteq":"\u2287","supseteqq":"\u2AC6","supsetneq":"\u228B","supsetneqq":"\u2ACC","supsim":"\u2AC8","supsub":"\u2AD4","supsup":"\u2AD6","swarhk":"\u2926","swarr":"\u2199","swArr":"\u21D9","swarrow":"\u2199","swnwar":"\u292A","szlig":"\u00DF","Tab":"\t","target":"\u2316","Tau":"\u03A4","tau":"\u03C4","tbrk":"\u23B4","Tcaron":"\u0164","tcaron":"\u0165","Tcedil":"\u0162","tcedil":"\u0163","Tcy":"\u0422","tcy":"\u0442","tdot":"\u20DB","telrec":"\u2315","Tfr":"\uD835\uDD17","tfr":"\uD835\uDD31","there4":"\u2234","therefore":"\u2234","Therefore":"\u2234","Theta":"\u0398","theta":"\u03B8","thetasym":"\u03D1","thetav":"\u03D1","thickapprox":"\u2248","thicksim":"\u223C","ThickSpace":"\u205F\u200A","ThinSpace":"\u2009","thinsp":"\u2009","thkap":"\u2248","thksim":"\u223C","THORN":"\u00DE","thorn":"\u00FE","tilde":"\u02DC","Tilde":"\u223C","TildeEqual":"\u2243","TildeFullEqual":"\u2245","TildeTilde":"\u2248","timesbar":"\u2A31","timesb":"\u22A0","times":"\u00D7","timesd":"\u2A30","tint":"\u222D","toea":"\u2928","topbot":"\u2336","topcir":"\u2AF1","top":"\u22A4","Topf":"\uD835\uDD4B","topf":"\uD835\uDD65","topfork":"\u2ADA","tosa":"\u2929","tprime":"\u2034","trade":"\u2122","TRADE":"\u2122","triangle":"\u25B5","triangledown":"\u25BF","triangleleft":"\u25C3","trianglelefteq":"\u22B4","triangleq":"\u225C","triangleright":"\u25B9","trianglerighteq":"\u22B5","tridot":"\u25EC","trie":"\u225C","triminus":"\u2A3A","TripleDot":"\u20DB","triplus":"\u2A39","trisb":"\u29CD","tritime":"\u2A3B","trpezium":"\u23E2","Tscr":"\uD835\uDCAF","tscr":"\uD835\uDCC9","TScy":"\u0426","tscy":"\u0446","TSHcy":"\u040B","tshcy":"\u045B","Tstrok":"\u0166","tstrok":"\u0167","twixt":"\u226C","twoheadleftarrow":"\u219E","twoheadrightarrow":"\u21A0","Uacute":"\u00DA","uacute":"\u00FA","uarr":"\u2191","Uarr":"\u219F","uArr":"\u21D1","Uarrocir":"\u2949","Ubrcy":"\u040E","ubrcy":"\u045E","Ubreve":"\u016C","ubreve":"\u016D","Ucirc":"\u00DB","ucirc":"\u00FB","Ucy":"\u0423","ucy":"\u0443","udarr":"\u21C5","Udblac":"\u0170","udblac":"\u0171","udhar":"\u296E","ufisht":"\u297E","Ufr":"\uD835\uDD18","ufr":"\uD835\uDD32","Ugrave":"\u00D9","ugrave":"\u00F9","uHar":"\u2963","uharl":"\u21BF","uharr":"\u21BE","uhblk":"\u2580","ulcorn":"\u231C","ulcorner":"\u231C","ulcrop":"\u230F","ultri":"\u25F8","Umacr":"\u016A","umacr":"\u016B","uml":"\u00A8","UnderBar":"_","UnderBrace":"\u23DF","UnderBracket":"\u23B5","UnderParenthesis":"\u23DD","Union":"\u22C3","UnionPlus":"\u228E","Uogon":"\u0172","uogon":"\u0173","Uopf":"\uD835\uDD4C","uopf":"\uD835\uDD66","UpArrowBar":"\u2912","uparrow":"\u2191","UpArrow":"\u2191","Uparrow":"\u21D1","UpArrowDownArrow":"\u21C5","updownarrow":"\u2195","UpDownArrow":"\u2195","Updownarrow":"\u21D5","UpEquilibrium":"\u296E","upharpoonleft":"\u21BF","upharpoonright":"\u21BE","uplus":"\u228E","UpperLeftArrow":"\u2196","UpperRightArrow":"\u2197","upsi":"\u03C5","Upsi":"\u03D2","upsih":"\u03D2","Upsilon":"\u03A5","upsilon":"\u03C5","UpTeeArrow":"\u21A5","UpTee":"\u22A5","upuparrows":"\u21C8","urcorn":"\u231D","urcorner":"\u231D","urcrop":"\u230E","Uring":"\u016E","uring":"\u016F","urtri":"\u25F9","Uscr":"\uD835\uDCB0","uscr":"\uD835\uDCCA","utdot":"\u22F0","Utilde":"\u0168","utilde":"\u0169","utri":"\u25B5","utrif":"\u25B4","uuarr":"\u21C8","Uuml":"\u00DC","uuml":"\u00FC","uwangle":"\u29A7","vangrt":"\u299C","varepsilon":"\u03F5","varkappa":"\u03F0","varnothing":"\u2205","varphi":"\u03D5","varpi":"\u03D6","varpropto":"\u221D","varr":"\u2195","vArr":"\u21D5","varrho":"\u03F1","varsigma":"\u03C2","varsubsetneq":"\u228A\uFE00","varsubsetneqq":"\u2ACB\uFE00","varsupsetneq":"\u228B\uFE00","varsupsetneqq":"\u2ACC\uFE00","vartheta":"\u03D1","vartriangleleft":"\u22B2","vartriangleright":"\u22B3","vBar":"\u2AE8","Vbar":"\u2AEB","vBarv":"\u2AE9","Vcy":"\u0412","vcy":"\u0432","vdash":"\u22A2","vDash":"\u22A8","Vdash":"\u22A9","VDash":"\u22AB","Vdashl":"\u2AE6","veebar":"\u22BB","vee":"\u2228","Vee":"\u22C1","veeeq":"\u225A","vellip":"\u22EE","verbar":"|","Verbar":"\u2016","vert":"|","Vert":"\u2016","VerticalBar":"\u2223","VerticalLine":"|","VerticalSeparator":"\u2758","VerticalTilde":"\u2240","VeryThinSpace":"\u200A","Vfr":"\uD835\uDD19","vfr":"\uD835\uDD33","vltri":"\u22B2","vnsub":"\u2282\u20D2","vnsup":"\u2283\u20D2","Vopf":"\uD835\uDD4D","vopf":"\uD835\uDD67","vprop":"\u221D","vrtri":"\u22B3","Vscr":"\uD835\uDCB1","vscr":"\uD835\uDCCB","vsubnE":"\u2ACB\uFE00","vsubne":"\u228A\uFE00","vsupnE":"\u2ACC\uFE00","vsupne":"\u228B\uFE00","Vvdash":"\u22AA","vzigzag":"\u299A","Wcirc":"\u0174","wcirc":"\u0175","wedbar":"\u2A5F","wedge":"\u2227","Wedge":"\u22C0","wedgeq":"\u2259","weierp":"\u2118","Wfr":"\uD835\uDD1A","wfr":"\uD835\uDD34","Wopf":"\uD835\uDD4E","wopf":"\uD835\uDD68","wp":"\u2118","wr":"\u2240","wreath":"\u2240","Wscr":"\uD835\uDCB2","wscr":"\uD835\uDCCC","xcap":"\u22C2","xcirc":"\u25EF","xcup":"\u22C3","xdtri":"\u25BD","Xfr":"\uD835\uDD1B","xfr":"\uD835\uDD35","xharr":"\u27F7","xhArr":"\u27FA","Xi":"\u039E","xi":"\u03BE","xlarr":"\u27F5","xlArr":"\u27F8","xmap":"\u27FC","xnis":"\u22FB","xodot":"\u2A00","Xopf":"\uD835\uDD4F","xopf":"\uD835\uDD69","xoplus":"\u2A01","xotime":"\u2A02","xrarr":"\u27F6","xrArr":"\u27F9","Xscr":"\uD835\uDCB3","xscr":"\uD835\uDCCD","xsqcup":"\u2A06","xuplus":"\u2A04","xutri":"\u25B3","xvee":"\u22C1","xwedge":"\u22C0","Yacute":"\u00DD","yacute":"\u00FD","YAcy":"\u042F","yacy":"\u044F","Ycirc":"\u0176","ycirc":"\u0177","Ycy":"\u042B","ycy":"\u044B","yen":"\u00A5","Yfr":"\uD835\uDD1C","yfr":"\uD835\uDD36","YIcy":"\u0407","yicy":"\u0457","Yopf":"\uD835\uDD50","yopf":"\uD835\uDD6A","Yscr":"\uD835\uDCB4","yscr":"\uD835\uDCCE","YUcy":"\u042E","yucy":"\u044E","yuml":"\u00FF","Yuml":"\u0178","Zacute":"\u0179","zacute":"\u017A","Zcaron":"\u017D","zcaron":"\u017E","Zcy":"\u0417","zcy":"\u0437","Zdot":"\u017B","zdot":"\u017C","zeetrf":"\u2128","ZeroWidthSpace":"\u200B","Zeta":"\u0396","zeta":"\u03B6","zfr":"\uD835\uDD37","Zfr":"\u2128","ZHcy":"\u0416","zhcy":"\u0436","zigrarr":"\u21DD","zopf":"\uD835\uDD6B","Zopf":"\u2124","Zscr":"\uD835\uDCB5","zscr":"\uD835\uDCCF","zwj":"\u200D","zwnj":"\u200C"}
-},{}],145:[function(require,module,exports){
-module.exports={"Aacute":"\u00C1","aacute":"\u00E1","Acirc":"\u00C2","acirc":"\u00E2","acute":"\u00B4","AElig":"\u00C6","aelig":"\u00E6","Agrave":"\u00C0","agrave":"\u00E0","amp":"&","AMP":"&","Aring":"\u00C5","aring":"\u00E5","Atilde":"\u00C3","atilde":"\u00E3","Auml":"\u00C4","auml":"\u00E4","brvbar":"\u00A6","Ccedil":"\u00C7","ccedil":"\u00E7","cedil":"\u00B8","cent":"\u00A2","copy":"\u00A9","COPY":"\u00A9","curren":"\u00A4","deg":"\u00B0","divide":"\u00F7","Eacute":"\u00C9","eacute":"\u00E9","Ecirc":"\u00CA","ecirc":"\u00EA","Egrave":"\u00C8","egrave":"\u00E8","ETH":"\u00D0","eth":"\u00F0","Euml":"\u00CB","euml":"\u00EB","frac12":"\u00BD","frac14":"\u00BC","frac34":"\u00BE","gt":">","GT":">","Iacute":"\u00CD","iacute":"\u00ED","Icirc":"\u00CE","icirc":"\u00EE","iexcl":"\u00A1","Igrave":"\u00CC","igrave":"\u00EC","iquest":"\u00BF","Iuml":"\u00CF","iuml":"\u00EF","laquo":"\u00AB","lt":"<","LT":"<","macr":"\u00AF","micro":"\u00B5","middot":"\u00B7","nbsp":"\u00A0","not":"\u00AC","Ntilde":"\u00D1","ntilde":"\u00F1","Oacute":"\u00D3","oacute":"\u00F3","Ocirc":"\u00D4","ocirc":"\u00F4","Ograve":"\u00D2","ograve":"\u00F2","ordf":"\u00AA","ordm":"\u00BA","Oslash":"\u00D8","oslash":"\u00F8","Otilde":"\u00D5","otilde":"\u00F5","Ouml":"\u00D6","ouml":"\u00F6","para":"\u00B6","plusmn":"\u00B1","pound":"\u00A3","quot":"\"","QUOT":"\"","raquo":"\u00BB","reg":"\u00AE","REG":"\u00AE","sect":"\u00A7","shy":"\u00AD","sup1":"\u00B9","sup2":"\u00B2","sup3":"\u00B3","szlig":"\u00DF","THORN":"\u00DE","thorn":"\u00FE","times":"\u00D7","Uacute":"\u00DA","uacute":"\u00FA","Ucirc":"\u00DB","ucirc":"\u00FB","Ugrave":"\u00D9","ugrave":"\u00F9","uml":"\u00A8","Uuml":"\u00DC","uuml":"\u00FC","Yacute":"\u00DD","yacute":"\u00FD","yen":"\u00A5","yuml":"\u00FF"}
-},{}],146:[function(require,module,exports){
-module.exports={"amp":"&","apos":"'","gt":">","lt":"<","quot":"\""}
-
-},{}],147:[function(require,module,exports){
-module.exports = function (string) {
-  return string.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
-}
-
-},{}],148:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -48021,7 +44915,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":94,"inherits":96,"readable-stream/duplex.js":106,"readable-stream/passthrough.js":113,"readable-stream/readable.js":114,"readable-stream/transform.js":115,"readable-stream/writable.js":116}],149:[function(require,module,exports){
+},{"events":94,"inherits":96,"readable-stream/duplex.js":106,"readable-stream/passthrough.js":113,"readable-stream/readable.js":114,"readable-stream/transform.js":115,"readable-stream/writable.js":116}],118:[function(require,module,exports){
 (function (process){
 // Generated by CoffeeScript 1.9.2
 var Transformer, stream, util,
@@ -48185,7 +45079,7 @@ Transformer.prototype._done = function(err, chunks, cb) {
 };
 
 }).call(this,require('_process'))
-},{"_process":105,"stream":148,"util":163}],150:[function(require,module,exports){
+},{"_process":105,"stream":117,"util":132}],119:[function(require,module,exports){
 (function (process,Buffer){
 module.exports = StringStream
 
@@ -48212,11 +45106,11 @@ StringStream.prototype._read = function () {
 }
 
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":105,"buffer":87,"inherits":96,"readable-stream":158}],151:[function(require,module,exports){
+},{"_process":105,"buffer":87,"inherits":96,"readable-stream":127}],120:[function(require,module,exports){
 arguments[4][107][0].apply(exports,arguments)
-},{"./_stream_readable":153,"./_stream_writable":155,"core-util-is":90,"dup":107,"inherits":96,"process-nextick-args":104}],152:[function(require,module,exports){
+},{"./_stream_readable":122,"./_stream_writable":124,"core-util-is":90,"dup":107,"inherits":96,"process-nextick-args":104}],121:[function(require,module,exports){
 arguments[4][108][0].apply(exports,arguments)
-},{"./_stream_transform":154,"core-util-is":90,"dup":108,"inherits":96}],153:[function(require,module,exports){
+},{"./_stream_transform":123,"core-util-is":90,"dup":108,"inherits":96}],122:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -49112,7 +46006,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":151,"_process":105,"buffer":87,"buffer-shims":156,"core-util-is":90,"events":94,"inherits":96,"isarray":157,"process-nextick-args":104,"string_decoder/":159,"util":3}],154:[function(require,module,exports){
+},{"./_stream_duplex":120,"_process":105,"buffer":87,"buffer-shims":125,"core-util-is":90,"events":94,"inherits":96,"isarray":126,"process-nextick-args":104,"string_decoder/":128,"util":3}],123:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -49293,7 +46187,7 @@ function done(stream, er) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":151,"core-util-is":90,"inherits":96}],155:[function(require,module,exports){
+},{"./_stream_duplex":120,"core-util-is":90,"inherits":96}],124:[function(require,module,exports){
 (function (process){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
@@ -49822,7 +46716,7 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":151,"_process":105,"buffer":87,"buffer-shims":156,"core-util-is":90,"events":94,"inherits":96,"process-nextick-args":104,"util-deprecate":161}],156:[function(require,module,exports){
+},{"./_stream_duplex":120,"_process":105,"buffer":87,"buffer-shims":125,"core-util-is":90,"events":94,"inherits":96,"process-nextick-args":104,"util-deprecate":130}],125:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -49934,9 +46828,9 @@ exports.allocUnsafeSlow = function allocUnsafeSlow(size) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"buffer":87}],157:[function(require,module,exports){
+},{"buffer":87}],126:[function(require,module,exports){
 arguments[4][88][0].apply(exports,arguments)
-},{"dup":88}],158:[function(require,module,exports){
+},{"dup":88}],127:[function(require,module,exports){
 (function (process){
 var Stream = (function (){
   try {
@@ -49956,7 +46850,7 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
 }
 
 }).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":151,"./lib/_stream_passthrough.js":152,"./lib/_stream_readable.js":153,"./lib/_stream_transform.js":154,"./lib/_stream_writable.js":155,"_process":105}],159:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":120,"./lib/_stream_passthrough.js":121,"./lib/_stream_readable.js":122,"./lib/_stream_transform.js":123,"./lib/_stream_writable.js":124,"_process":105}],128:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -50179,7 +47073,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":87}],160:[function(require,module,exports){
+},{"buffer":87}],129:[function(require,module,exports){
 var undefined = (void 0); // Paranoia
 
 // Beyond this value, index getters/setters (i.e. array[0], array[1]) are so slow to
@@ -50811,7 +47705,7 @@ function packF32(v) { return packIEEE754(v, 8, 23); }
 
 }());
 
-},{}],161:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 (function (global){
 
 /**
@@ -50882,14 +47776,14 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],162:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],163:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -51479,7 +48373,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":162,"_process":105,"inherits":96}],164:[function(require,module,exports){
+},{"./support/isBuffer":131,"_process":105,"inherits":96}],133:[function(require,module,exports){
 // Returns a wrapper function that returns a wrapped callback
 // The wrapper function should do some stuff, and return a
 // presumably different callback function.
@@ -51514,28 +48408,7 @@ function wrappy (fn, cb) {
   }
 }
 
-},{}],165:[function(require,module,exports){
-module.exports = extend
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function extend() {
-    var target = {}
-
-    for (var i = 0; i < arguments.length; i++) {
-        var source = arguments[i]
-
-        for (var key in source) {
-            if (hasOwnProperty.call(source, key)) {
-                target[key] = source[key]
-            }
-        }
-    }
-
-    return target
-}
-
-},{}],166:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -51635,7 +48508,7 @@ var Ucum = exports.Ucum = {
 };
 
 
-},{}],167:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52023,7 +48896,7 @@ var Dimension = exports.Dimension = function () {
 }(); // end Dimension class
 
 
-},{"./config.js":166,"is-integer":99}],168:[function(require,module,exports){
+},{"./config.js":134,"is-integer":99}],136:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52200,7 +49073,7 @@ var Prefix = exports.Prefix = function () {
 }(); // end Prefix class
 
 
-},{"./config.js":166}],169:[function(require,module,exports){
+},{"./config.js":134}],137:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52387,7 +49260,7 @@ PrefixTables.getInstance = function () {
 PrefixTables.getInstance();
 
 
-},{}],170:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52406,7 +49279,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *
  */
 var fs = require('browserify-fs');
-var sanitizeHtml = require('sanitize-html');
 
 var stream = require('stream');
 var parse = require('csv-parse');
@@ -52592,7 +49464,7 @@ UcumFileValidator.getInstance = function () {
 UcumFileValidator.getInstance();
 
 
-},{"./config.js":166,"./ucumLhcUtils.js":174,"browserify-fs":4,"csv-parse":91,"csv-stringify":92,"sanitize-html":117,"stream":148,"stream-transform":149,"string-to-stream":150}],171:[function(require,module,exports){
+},{"./config.js":134,"./ucumLhcUtils.js":142,"browserify-fs":4,"csv-parse":91,"csv-stringify":92,"stream":117,"stream-transform":118,"string-to-stream":119}],139:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -52839,7 +49711,7 @@ UcumFunctions.getInstance = function () {
 UcumFunctions.getInstance();
 
 
-},{}],172:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52870,22 +49742,16 @@ var UnitTables = require('./unitTables.js').UnitTables;
 
 /**
  * This function tests a string to see if it contains only numbers (digits,
- * a period, leading - or +).  Using isNaN and Number.isNaN is too
- * frustrating, given the limitations of both - isNaN and
- * Number.isNaN both return false, i.e., the value is a number,
- * for booleans, nulls, empty strings and strings that only contain
- * spaces.
+ * a period, leading - or +).  This code was taken from a stackoverflow
+ * solution:
+ * https://stackoverflow.com/questions/175739/is-there-a-built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number/42356340#42356340
  *
  * @params theString
  * @returns true if the string contains only numbers; false otherwise
  */
 function isNumericString(theString) {
-  var isNumStr = false;
-  if (theString && typeof theString === 'string') {
-    var ret = theString.match(/^[-|+]?[0-9\.]*$/);
-    isNumStr = ret !== null;
-  }
-  return isNumStr;
+  var num = "" + theString; //coerce num to be a string
+  return !isNaN(num) && !isNaN(parseFloat(num));
 } // end isNumericString
 
 
@@ -52931,7 +49797,7 @@ function getSynonyms(theSyn) {
 } // end getSynonyms
 
 
-},{"./unitTables.js":178}],173:[function(require,module,exports){
+},{"./unitTables.js":146}],141:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53040,7 +49906,7 @@ UcumJsonDefs.getInstance = function () {
 };
 
 
-},{"../dist/data/ucumDefs.json":1,"./prefix.js":168,"./prefixTables.js":169,"./unit.js":176,"./unitTables.js":178}],174:[function(require,module,exports){
+},{"../dist/data/ucumDefs.json":1,"./prefix.js":136,"./prefixTables.js":137,"./unit.js":144,"./unitTables.js":146}],142:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -53271,7 +50137,8 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      *       If no suggestions were found for the toUnitCode this element
      *       will not be included.
      *    No 'suggestions' element will be included in the returned hash
-     *    object if none were found, whether or not they were requested.   *  'fromUnit' the unit object for the fromUnitCode passed in; returned
+     *    object if none were found, whether or not they were requested.
+     *  'fromUnit' the unit object for the fromUnitCode passed in; returned
      *     in case it's needed for additional data from the object; and
      *  'toUnit' the unit object for the toUnitCode passed in; returned
      *     in case it's needed for additional data from the object.
@@ -53298,7 +50165,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         returnObj['status'] = 'error';
         returnObj['msg'].push('No "from" value, or an invalid "from" value, ' + 'was specified.');
       }
-
       if (toUnitCode) {
         toUnitCode = toUnitCode.trim();
       }
@@ -53542,7 +50408,7 @@ UcumLhcUtils.getInstance = function () {
 //UcumLhcUtils.getInstance();
 
 
-},{"./config.js":166,"./prefix.js":168,"./ucumInternalUtils.js":172,"./ucumJsonDefs.js":173,"./unit.js":176,"./unitString.js":177,"./unitTables.js":178,"fs":86}],175:[function(require,module,exports){
+},{"./config.js":134,"./prefix.js":136,"./ucumInternalUtils.js":140,"./ucumJsonDefs.js":141,"./unit.js":144,"./unitString.js":145,"./unitTables.js":146,"fs":86}],143:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53561,7 +50427,7 @@ var UnitTables = exports.UnitTables = require("./unitTables.js").UnitTables;
 var UcumFileValidator = exports.UcumFileValidator = require("./ucumFileValidator.js").UcumFileValidator;
 
 
-},{"./config.js":166,"./ucumFileValidator.js":170,"./ucumLhcUtils.js":174,"./unitTables.js":178}],176:[function(require,module,exports){
+},{"./config.js":134,"./ucumFileValidator.js":138,"./ucumLhcUtils.js":142,"./unitTables.js":146}],144:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -54365,7 +51231,7 @@ var Unit = exports.Unit = function () {
 }(); // end Unit class
 
 
-},{"./dimension.js":167,"./ucumFunctions.js":171,"is-integer":99}],177:[function(require,module,exports){
+},{"./dimension.js":135,"./ucumFunctions.js":139,"is-integer":99}],145:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -54525,14 +51391,13 @@ var UnitString = exports.UnitString = function () {
      *  requested for a string that cannot be resolved to a valid unit;
      *  true indicates suggestions are wanted; false indicates they are not,
      *  and is the default if the parameter is not specified;
-     * @returns a hash containing:
-     *   'unit' the unit object (or null if there were problems creating the
-     *     unit);
-     *   'origString' the possibly updated unit string passed in;
-     *   'retMsg' an array of any user messages (informational, error or warning)
+     * @returns an array containing:
+     *   the unit object (or null if there were problems creating the unit);
+     *   the possibly updated unit string passed in;
+     *   an array of any user messages (informational, error or warning)
      *     generated (or an empty array); and
-     *   'suggestions' an array of hash objects (1 or more).  Each hash contains
-     *     three elements:
+     *   a suggestions array of hash objects (1 or more).  Each hash contains
+     *   three elements:
      *     'msg' which is a message indicating what unit expression the
      *       suggestions are for;
      *     'invalidUnit' which is the unit expression the suggestions are
@@ -54540,7 +51405,7 @@ var UnitString = exports.UnitString = function () {
      *     'units' which is an array of data for each suggested unit found.
      *        Each array will contain the unit code, the unit name and the
      *        unit guidance (if any).
-     *   The return hash will not contain a suggestions array if a valid unit
+     *   The return array will not contain a suggestions array if a valid unit
      *   was found or if suggestions were not requested.
      * @throws an error if nothing was specified.
      */
@@ -54597,6 +51462,10 @@ var UnitString = exports.UnitString = function () {
           throw new Error('Blank spaces are not allowed in unit expressions.');
         } // end if blanks were found in the string
 
+        // assign the array returned to retObj.  It will contain 2 elements:
+        //  the unit returned in position 0; and the origString (possibly
+        //  modified in position 1.  The origString in position 1 will not
+        //  be changed by subsequent processing.
         retObj = this._parseTheString(uStr, origString);
         var finalUnit = retObj[0];
 
@@ -55006,6 +51875,8 @@ var UnitString = exports.UnitString = function () {
           } else {
             uArray.push({ op: theOp, un: uArray1[n] });
           }
+        } else {
+          uArray.push({ op: theOp, un: uArray1[n] });
         }
       }
       return [uArray, origString, endProcessing];
@@ -55374,6 +52245,7 @@ var UnitString = exports.UnitString = function () {
               var pfxCode = null;
               var pfxObj = null;
               var pfxVal = null;
+              var pfxExp = null;
 
               // Look first for an exponent.  If we got one, separate it out and
               // try to get the unit again
@@ -55394,6 +52266,7 @@ var UnitString = exports.UnitString = function () {
                 // if we got a prefix, get its info and remove it from the unit code
                 if (pfxObj) {
                   pfxVal = pfxObj.getValue();
+                  pfxExp = pfxObj.getExp();
                   var pCodeLen = pfxCode.length;
                   uCode = uCode.substr(pCodeLen);
 
@@ -55814,7 +52687,7 @@ UnitString.getInstance();
 */
 
 
-},{"./config.js":166,"./prefixTables.js":169,"./ucumInternalUtils.js":172,"./unit.js":176,"./unitTables.js":178}],178:[function(require,module,exports){
+},{"./config.js":134,"./prefixTables.js":137,"./ucumInternalUtils.js":140,"./unit.js":144,"./unitTables.js":146}],146:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -56592,5 +53465,5 @@ UnitTables.getInstance = function () {
 UnitTables.getInstance();
 
 
-},{"./config.js":166,"./ucumJsonDefs.js":173,"fs":86}]},{},[175])(175)
+},{"./config.js":134,"./ucumJsonDefs.js":141,"fs":86}]},{},[143])(143)
 });

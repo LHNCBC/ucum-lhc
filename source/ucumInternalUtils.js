@@ -22,22 +22,16 @@ var UnitTables = require('./unitTables.js').UnitTables ;
 
 /**
  * This function tests a string to see if it contains only numbers (digits,
- * a period, leading - or +).  Using isNaN and Number.isNaN is too
- * frustrating, given the limitations of both - isNaN and
- * Number.isNaN both return false, i.e., the value is a number,
- * for booleans, nulls, empty strings and strings that only contain
- * spaces.
+ * a period, leading - or +).  This code was taken from a stackoverflow
+ * solution:
+ * https://stackoverflow.com/questions/175739/is-there-a-built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number/42356340#42356340
  *
  * @params theString
  * @returns true if the string contains only numbers; false otherwise
  */
 export function isNumericString(theString) {
-  let isNumStr = false ;
-  if (theString && typeof theString === 'string') {
-    let ret = theString.match(/^[-|+]?[0-9\.]*$/);
-    isNumStr = (ret !== null);
-  }
-  return isNumStr ;
+  let num = "" + theString; //coerce num to be a string
+  return !isNaN(num) && !isNaN(parseFloat(num));
 } // end isNumericString
 
 
