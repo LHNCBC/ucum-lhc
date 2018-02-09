@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.1.1] - 2018 - 01-25
+## [2.1.1] - 2018-01-25
 - updated link at the top of the demo page to refer back to the
 overview page - and the link at the top of the overview page to
 refer back to itself.

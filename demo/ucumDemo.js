@@ -421,8 +421,9 @@ export class UcumDemo {
     // If there's a message to be displayed, do it now
     if (retMsg != '') {
       if (uStr !== escVal && uStr !== '') {
-        retMsg = retMsg.replace(new RegExp(
-          uStr.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"), escVal);
+        retMsg = this._multipleReplace(retMsg, uStr, escVal);
+        // retMsg = retMsg.replace(new RegExp(
+        //   uStr.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"), escVal);
       }
       resFld.innerHTML = retMsg;
     }
@@ -661,14 +662,16 @@ export class UcumDemo {
 
     if (resultMsg !== '') {
       if (fromName !== escFromName && fromName !== '') {
-        resultMsg = resultMsg.replace(new RegExp(
-          fromName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
-          escFromName);
+        resultMsg = this._multipleReplace(resultMsg, fromName, escFromName);
+        // resultMsg = resultMsg.replace(new RegExp(
+        //   fromName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
+        //   escFromName);
       }
       if (toName !== escToName && toName !== '') {
-        resultMsg = resultMsg.replace(new RegExp(
-          toName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
-          escToName);
+        resultMsg = this._multipleReplace(resultMsg, toName, escToName);
+        // resultMsg = resultMsg.replace(new RegExp(
+        //   toName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
+        //   escToName);
       }
       resultString.innerHTML = resultMsg;
     }
@@ -741,9 +744,10 @@ export class UcumDemo {
     if (resultMsg.length > 0) {
       resultMsg = resultMsg.join('<BR>');
       if (fromName !== escFromName && fromName !== '') {
-        resultMsg = resultMsg.replace(new RegExp(
-          fromName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
-          escFromName);
+        resultMsg = this._multipleReplace(resultMsg, fromName, escFromName);
+        // resultMsg = resultMsg.replace(new RegExp(
+        //   fromName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
+        //   escFromName);
       }
       resultString.innerHTML = resultMsg ;
     }
@@ -944,6 +948,25 @@ export class UcumDemo {
     }
     return suggString ;
   } // end suggSetOutput
+
+
+  /**
+   * This replaces multiple occurrences of a string within a string.
+   * This was created at Paul Lynch's request.
+   *
+   * @param targetString the string containing the value to be replaced
+   * @param toReplace the value to be replaced
+   * @param replaceWith the value to replace toReplace
+   * @returns {string} the string containing the replaced values
+   * @private
+   */
+  _multipleReplace(targetString, toReplace, replaceWith) {
+
+    return targetString.replace(new RegExp(
+      toReplace.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
+      replaceWith);
+
+  } // end _multipleReplace
 
 } // end class UcumDemo
 
