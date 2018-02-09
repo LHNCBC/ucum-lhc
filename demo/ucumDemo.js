@@ -6,7 +6,7 @@
  */
 
 var fs = require('browserify-fs');
-var sanitizeHtml = require('sanitize-html');
+var escapeHtml = require('escape-html');
 
 var Ucum = ucumPkg.Ucum;
 var UcumDemoConfig = require('./demoConfig').UcumDemoConfig;
@@ -327,97 +327,104 @@ export class UcumDemo {
    *  string to be validated
    * @param returnElementID the ID of the web page element to receive the
    *  return validation message
-   * @param reportValid parameter used to indicate how to report a valid string.
-   *  'display' indicates that a valid string message should be displayed in the
-   *    page element specified by the returnElementID.
-   *  'from' indicates that instead of a message, the convFromUnit flag should
-   *    be set to true if the string is valid; false if it is not.
-   *  'to' indicates that instead of a message, the convToUnit flag should be
-   *    set to true if the string is valid; false if it is not.
-   *  If the string is invalid the message is always displayed in the page
-   *  specified by the returnElementID.
+   * @param reportResult parameter used to indicate how to report valid/invalid
+   *  string messages:
+   *  'displayOnly' indicates that messages should be displayed only, in the page
+   *    element specified by the returnElementID.  No flag conversion flag
+   *    settings are needed.  (This would be set from the Validator tab).
+   *  'from' indicates that in addition to a message, the convFromUnit flag
+   *    should be set to true if the string is valid; false if it is not.
+   *  'to' indicates that in addition to a message, the convToUnit flag
+   *    should be set to true if the string is valid; false if it is not.
    * @returns nothing directly; return is the validation message as noted above
    */
-  reportUnitStringValidity(elementID, returnElementID, reportValid) {
+  reportUnitStringValidity(elementID, returnElementID, reportResult) {
 
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
-    
-    let uStr = sanitizeHtml(document.getElementById(elementID).value);
-    let valFld = document.getElementById(returnElementID);
-    valFld.innerHTML = '';
 
     let retMsg = '';
     let parseResp = {};
 
-    if (uStr === "") {
-      if(reportValid === 'display') {
-        retMsg = "Please specify a unit string to be validated.";
-        valFld.setAttribute("class", "invalid");
-      }
-      else {
-        this.setConvertValues(reportValid, false, true);
-      }
+    let valFld = document.getElementById(elementID);
+    valFld.removeAttribute("class");
+    let uStr = valFld.value;
+    let escVal = escapeHtml(valFld.value);
+    let resFld = document.getElementById(returnElementID);
+    resFld.innerHTML = '';
+
+    // if the reportResult parameter passed in is invalid, set a message
+    // and don't continue
+    if (reportResult !== 'displayOnly' && reportResult !== 'from' &&
+      reportResult !== 'to') {
+      console.log(`Invalid reportResult parameter supplied - ${reportResult}`);
+      retMsg = [`Sorry - an error occurred while trying to validate ${escVal}`];
+      valFld.setAttribute("class", "invalid");
     }
+    // If nothing was specified make sure the convert button is disabled and
+    // ignore the rest of the processing.
+    else if (uStr === '') {
+      document.getElementById("doConversionButton").disabled = true ;
+    }
+    // Else continue processing
     else {
       try {
         parseResp = this.utils_.validateUnitString(uStr, true);
         if (parseResp['status'] === 'valid') {
-          if (reportValid === 'display') {
-            retMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
-            valFld.removeAttribute("class");
-          }
-          else if (reportValid === 'from' || reportValid === 'to') {
-            this.setConvertValues(reportValid, true);
+          if (reportResult !== 'displayOnly') {
+            this.setConvertValues(reportResult, true);
           }
           else {
-            console.log(`Invalid reportValid parameter supplied - ${reportValid}`);
-            retMsg = [`Sorry - an error occurred while trying to validate ${uStr}`];
+            valFld.removeAttribute("class");
+          }
+          retMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
+        }
+        // Else the string is not valid - may be an error or just invalid
+        else {
+          if (reportResult != 'displayOnly') {
+            this.setConvertValues(reportResult, false);
+          }
+          else {
             valFld.setAttribute("class", "invalid");
           }
-        }
-        // If the status is invalid and we have suggestions, put the suggestion
-        // output in the return message.   If we don't have suggestions there
-        // should be an explanation in the parse response's 'msg' element, and
-        // will be transferred to the returned message below.
-        else {
-          this.setConvertValues(reportValid, false) ;
-          valFld.setAttribute("class", "invalid")
+          // If the status is invalid and we have suggestions, put the suggestion
+          // output in the return message.   If we don't have suggestions there
+          // should be an explanation in the parse response's 'msg' element, and
+          // will be transferred to the returned message below.
           if (parseResp['status'] === 'invalid') {
             if (parseResp['suggestions'])
               retMsg = this._suggSetOutput(parseResp['suggestions']);
           }
           else { // assume status is 'error'
             console.log(retMsg.concat(parseResp['msg']));
-            if (reportValid === 'display') {
-              retMsg = [`Sorry - an error occurred while trying to validate ${uStr}`];
-            }
-            else {
-              this.setConvertValues(reportValid, false);
-            }
-          }
-        }
-      }
+            retMsg = `Sorry - an error occurred while trying to validate ${escVal}`;
+          } // end if the status returned was not 'invalid'
+        } // end if the string is not valid
+      } // end try
       catch (err) {
         console.log(err.message);
-        if (reportValid === 'display') {
-          retMsg = [`Sorry - an error occurred while trying to validate ${uStr}`];
-          valFld.setAttribute("class", "invalid");
+        retMsg = `Sorry - an error occurred while trying to validate ${escVal}`;
+        valFld.setAttribute("class", "invalid");
+        if (reportResult !== 'displayOnly') {
+          this.setConvertValues(reportResult, false);
         }
-        else {
-          this.setConvertValues(reportValid, false);
+      } // end catch
+      if (parseResp['msg']) {
+        if (parseResp['status'] !== 'valid') {
+          if (retMsg != '')
+            retMsg += '<BR>';
+          retMsg += parseResp['msg'].join('<BR>');
         }
+      } // end if there's a message from the parse request
+    } // end if a value was specified
+
+    // If there's a message to be displayed, do it now
+    if (retMsg != '') {
+      if (uStr !== escVal && uStr !== '') {
+        retMsg = this._multipleReplace(retMsg, uStr, escVal);
       }
+      resFld.innerHTML = retMsg;
     }
-    if (parseResp['msg']) {
-      if (reportValid === 'display' || parseResp['status'] !== 'valid') {
-        if (retMsg != '')
-          retMsg += '<BR>';
-        retMsg += parseResp['msg'].join('<BR>');
-      }
-    }
-    if (retMsg != '')
-      valFld.innerHTML = retMsg;
   } // end reportUnitStringValidity
 
 
@@ -518,22 +525,27 @@ export class UcumDemo {
    *
    */
   checkFromVal(numField) {
-    let fromVal = document.getElementById(numField).value ;
+
+    let fromFld = document.getElementById(numField);
+    let fromVal = escapeHtml(fromFld.value);
     let resultString = document.getElementById("resultString");
-    if (fromVal !== '') {
-      let parsedNum = parseFloat(fromVal);
-      if (isNaN(parsedNum)) {
+    resultString.innerHTML = '';
+
+    // If the value is blank, just make sure the convert button is
+    // disabled and do no further processing
+    if (fromVal === '') {
+      document.getElementById("doConversionButton").disabled = true ;
+    }
+    else {
+      let parsedNum = "" + fromVal;
+      if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
         resultString.innerHTML = `${fromVal} is not a valid number.`;
         this.setConvertValues('fromNum', false);
       }
       else {
         this.setConvertValues('fromNum', true);
       }
-    }
-    else {
-      resultString.innerHTML = '';
-      this.setConvertValues('fromNum', false, true);
-    }
+    } // end if a value was specified
   } // end checkFromVal
 
 
@@ -552,8 +564,9 @@ export class UcumDemo {
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
+    let resultMsg = '';
     let prec = document.getElementById("precision");
-    let decDigits = parseInt(prec.value);
+    let decDigits = parseInt(escapeHtml(prec.value));
     if (isNaN(decDigits)) {
       decDigits = Ucum.decDigits_;
       prec.value = decDigits;
@@ -561,7 +574,8 @@ export class UcumDemo {
 
     let entryErrMsg = [];
 
-    let fromName = sanitizeHtml(document.getElementById(fromField).value) ;
+    let fromName = document.getElementById(fromField).value ;
+    let escFromName = escapeHtml(fromName);
     if (fromName === '' || fromName === null) {
       entryErrMsg.push('Please specify a code for the units you want to convert.');
     }
@@ -570,11 +584,12 @@ export class UcumDemo {
       if (hypIdx > 0)
         fromName = fromName.substr(0, hypIdx);
     }
-    let fromVal = parseFloat(document.getElementById(numField).value);
+    let fromVal = parseFloat(escapeHtml(document.getElementById(numField).value));
     if (isNaN(fromVal)) {
       entryErrMsg.push('Please specify the number of units to be converted.');
     }
-    let toName = sanitizeHtml(document.getElementById(toField).value);
+    let toName = document.getElementById(toField).value;
+    let escToName = escapeHtml(toName);
     if (toName === '' || toName === null) {
       entryErrMsg.push('Please specify a code that you want the units to be converted to.');
     }
@@ -591,7 +606,7 @@ export class UcumDemo {
     // the response in the form field.  Otherwise fill that field with the
     // entry message(s).
     if (entryErrMsg.length > 0) {
-      resultString.innerHTML = entryErrMsg.join('<BR>');
+      resultMsg = entryErrMsg.join('<BR>');
     }
     else {
       let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
@@ -609,19 +624,19 @@ export class UcumDemo {
         // Set the return message.   Use the UCUM code from the "from" and "to"
         // unit objects returned.  Although the user will PROBABLY enter a
         // valid unit code from the web page, they don't have to.
-        resultString.innerHTML = `${fromVal.toString()} ` +
+        resultMsg = `${fromVal.toString()} ` +
             `${resultObj['fromUnit'].getProperty('csCode_')} = ` +
             `${toVal.toString()} ` +
             `${resultObj['toUnit'].getProperty('csCode_')}`;
         if (resultObj['msg'].length > 0) {
           for (let r = 0; r < resultObj['msg'].length; r++)
-          resultString.innerHTML += '<br>' + resultObj['msg'][r] ;
+          resultMsg += '<br>' + resultObj['msg'][r] ;
         }
       }
       // Else if an error was signalled, transfer the error message to
       // the result field
       else if (resultObj['status'] === 'error') {
-        resultString.innerHTML = 'Sorry - an error occurred while trying to ' +
+        resultMsg = 'Sorry - an error occurred while trying to ' +
           'perform the conversion.';
       }
       // Else 1 or more invalid unit expressions were found (status = 'failed')
@@ -629,20 +644,29 @@ export class UcumDemo {
         // if suggestions were found, output any included messages followed
         // by the suggestions to the result field
         if (resultObj['suggestions']) {
-          let suggString = '';
           if (resultObj['msg'])
-            suggString = resultObj['msg'].join('<BR>') + '<BR>';
+            resultMsg += resultObj['msg'].join('<BR>') + '<BR>';
           if (resultObj['suggestions']['from'])
-            suggString += this._suggSetOutput(resultObj['suggestions']['from']);
+            resultMsg += this._suggSetOutput(resultObj['suggestions']['from']);
           if (resultObj['suggestions']['to'])
-            suggString += this._suggSetOutput(resultObj['suggestions']['to']);          resultString.innerHTML = suggString ;
+            resultMsg += this._suggSetOutput(resultObj['suggestions']['to']);          resultString.innerHTML = suggString ;
         }
         // if suggestions were not found, output whatever message(s) were
         // returned that would indicate the problem
         else
-          resultString.innerHTML = resultObj['msg'].join('<BR>');
+          resultMsg = resultObj['msg'].join('<BR>');
       } // end if conversion did/didn't succeed
     } // end if there were/weren't entry errors
+
+    if (resultMsg !== '') {
+      if (fromName !== escFromName && fromName !== '') {
+        resultMsg = this._multipleReplace(resultMsg, fromName, escFromName);
+      }
+      if (toName !== escToName && toName !== '') {
+        resultMsg = this._multipleReplace(resultMsg, toName, escToName);
+      }
+      resultString.innerHTML = resultMsg;
+    }
   } // end convertUnit
 
 
@@ -672,7 +696,8 @@ export class UcumDemo {
     let resultString = document.getElementById(resultField);
     resultString.innerHTML = '';
 
-    let fromName = sanitizeHtml(document.getElementById(fromField).value);
+    let fromName = document.getElementById(fromField).value;
+    let escFromName = escapeHtml(fromName);
     if (fromName === '' || fromName === null) {
       resultMsg.push('Please specify a code for the units you want to convert.');
     }
@@ -709,7 +734,11 @@ export class UcumDemo {
       }
     }
     if (resultMsg.length > 0) {
-      resultString.innerHTML = resultMsg.join('<BR>') ;
+      resultMsg = resultMsg.join('<BR>');
+      if (fromName !== escFromName && fromName !== '') {
+        resultMsg = this._multipleReplace(resultMsg, fromName, escFromName);
+      }
+      resultString.innerHTML = resultMsg ;
     }
   } // end getCommensurables
 
@@ -779,7 +808,7 @@ export class UcumDemo {
    *  It also disables the column name input field.
    */
   columnSpecified() {
-    let colName = sanitizeHtml(document.getElementById('colName').value);
+    let colName = document.getElementById('colName');
     this.utils_.useHTMLInMessages(false);
     this.utils_.useBraceMsgForEachString(false);
 
@@ -908,6 +937,25 @@ export class UcumDemo {
     }
     return suggString ;
   } // end suggSetOutput
+
+
+  /**
+   * This replaces multiple occurrences of a string within a string.
+   * This was created at Paul Lynch's request.
+   *
+   * @param targetString the string containing the value to be replaced
+   * @param toReplace the value to be replaced
+   * @param replaceWith the value to replace toReplace
+   * @returns {string} the string containing the replaced values
+   * @private
+   */
+  _multipleReplace(targetString, toReplace, replaceWith) {
+
+    return targetString.replace(new RegExp(
+      toReplace.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
+      replaceWith);
+
+  } // end _multipleReplace
 
 } // end class UcumDemo
 

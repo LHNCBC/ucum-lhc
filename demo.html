@@ -16,7 +16,7 @@
       </a>
       <div id="siteNameBox">
         <a href="index.html"><span id=siteName>Units of Measure (UCUM) Validator and Converter</span><br>
-          <span id=tagline>A demonstration site for the LHC UCUM service</span></a>
+          <span id=tagline>A demonstration site for the ucum-lhc library.</span></a>
       </div>
     </div>
     <!-- end page header -->
@@ -100,7 +100,7 @@
                  onchange=
                  "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString',
-                                                                   'display')">&nbsp; &nbsp;
+                                                                   'displayOnly')">&nbsp; &nbsp;
           Press tab or return to validate the expression</p>
           <p class="small-print">If you are not finding a unit that you think should be there, check the
           advanced search options to see if you should add a category (or categories)
@@ -203,6 +203,14 @@
         Software Library.</li>
         <li>The code is available from the
           <a href="https://github.com/lhncbc/ucum-lhc">GitHub code repository</a>.</li>
+        <li>The LHC UCUM code uses unit definitions from the
+          <a href="http://unitsofmeasure.org">Unified Code
+            for Units Of Measure</a>
+          <a href="http://unitsofmeasure.org/ucum-essence.xml">ucum-essence.xml</a> file,
+          <!--#include file="ucumEssenceVersion.txt" --> which has been
+          extended with commonly used combinations of UCUM units found in
+          <a href="https://loinc.org">LOINC</a>, and LOINC properties have
+          been added to UCUM records.</li>
         </ul>
       </div> <!-- end otherstuff div -->
     </div> <!-- end validation div -->
