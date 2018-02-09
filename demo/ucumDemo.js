@@ -422,8 +422,6 @@ export class UcumDemo {
     if (retMsg != '') {
       if (uStr !== escVal && uStr !== '') {
         retMsg = this._multipleReplace(retMsg, uStr, escVal);
-        // retMsg = retMsg.replace(new RegExp(
-        //   uStr.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"), escVal);
       }
       resFld.innerHTML = retMsg;
     }
@@ -663,15 +661,9 @@ export class UcumDemo {
     if (resultMsg !== '') {
       if (fromName !== escFromName && fromName !== '') {
         resultMsg = this._multipleReplace(resultMsg, fromName, escFromName);
-        // resultMsg = resultMsg.replace(new RegExp(
-        //   fromName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
-        //   escFromName);
       }
       if (toName !== escToName && toName !== '') {
         resultMsg = this._multipleReplace(resultMsg, toName, escToName);
-        // resultMsg = resultMsg.replace(new RegExp(
-        //   toName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
-        //   escToName);
       }
       resultString.innerHTML = resultMsg;
     }
@@ -745,9 +737,6 @@ export class UcumDemo {
       resultMsg = resultMsg.join('<BR>');
       if (fromName !== escFromName && fromName !== '') {
         resultMsg = this._multipleReplace(resultMsg, fromName, escFromName);
-        // resultMsg = resultMsg.replace(new RegExp(
-        //   fromName.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"),
-        //   escFromName);
       }
       resultString.innerHTML = resultMsg ;
     }
