@@ -137,14 +137,13 @@ export class UnitString {
    *  requested for a string that cannot be resolved to a valid unit;
    *  true indicates suggestions are wanted; false indicates they are not,
    *  and is the default if the parameter is not specified;
-   * @returns a hash containing:
-   *   'unit' the unit object (or null if there were problems creating the
-   *     unit);
-   *   'origString' the possibly updated unit string passed in;
-   *   'retMsg' an array of any user messages (informational, error or warning)
+   * @returns an array containing:
+   *   the unit object (or null if there were problems creating the unit);
+   *   the possibly updated unit string passed in;
+   *   an array of any user messages (informational, error or warning)
    *     generated (or an empty array); and
-   *   'suggestions' an array of hash objects (1 or more).  Each hash contains
-   *     three elements:
+   *   a suggestions array of hash objects (1 or more).  Each hash contains
+   *   three elements:
    *     'msg' which is a message indicating what unit expression the
    *       suggestions are for;
    *     'invalidUnit' which is the unit expression the suggestions are
@@ -152,7 +151,7 @@ export class UnitString {
    *     'units' which is an array of data for each suggested unit found.
    *        Each array will contain the unit code, the unit name and the
    *        unit guidance (if any).
-   *   The return hash will not contain a suggestions array if a valid unit
+   *   The return array will not contain a suggestions array if a valid unit
    *   was found or if suggestions were not requested.
    * @throws an error if nothing was specified.
    */
@@ -209,6 +208,10 @@ export class UnitString {
         throw (new Error('Blank spaces are not allowed in unit expressions.'));
       } // end if blanks were found in the string
 
+      // assign the array returned to retObj.  It will contain 2 elements:
+      //  the unit returned in position 0; and the origString (possibly
+      //  modified in position 1.  The origString in position 1 will not
+      //  be changed by subsequent processing.
       retObj = this._parseTheString(uStr, origString);
       let finalUnit = retObj[0];
 
@@ -644,6 +647,9 @@ export class UnitString {
           uArray.push({op: theOp, un: uArray1[n]});
         }
       }
+      else {
+        uArray.push({op: theOp, un: uArray1[n]});
+      }
     }
     return [uArray, origString, endProcessing];
   } // end _makeUnitsArray
@@ -1023,6 +1029,7 @@ export class UnitString {
         let pfxCode = null;
         let pfxObj = null;
         let pfxVal = null;
+        let pfxExp = null;
 
         // Look first for an exponent.  If we got one, separate it out and
         // try to get the unit again
@@ -1044,6 +1051,7 @@ export class UnitString {
           // if we got a prefix, get its info and remove it from the unit code
           if (pfxObj) {
             pfxVal = pfxObj.getValue();
+            pfxExp = pfxObj.getExp();
             let pCodeLen = pfxCode.length;
             uCode = uCode.substr(pCodeLen);
 

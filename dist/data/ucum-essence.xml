@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ascii"?>
-<root xmlns="http://unitsofmeasure.org/ucum-essence" version="2.0.1"
-      revision="$Revision: 439 $"
-      revision-date="$Date: 2015-11-13 15:13:19 -0500 (Fri, 13 Nov 2015) $">
+<root xmlns="http://unitsofmeasure.org/ucum-essence" version="2.1"
+      revision="$Revision: 442 $"
+      revision-date="$Date: 2017-11-21 19:04:52 -0500 (Tue, 21 Nov 2017) $">
    <prefix Code="Y" CODE="YA">
       <name>yotta</name>
       <printSymbol>Y</printSymbol>
@@ -281,7 +281,7 @@
    <unit Code="Wb" CODE="WB" isMetric="yes" class="si">
       <name>weber</name>
       <printSymbol>Wb</printSymbol>
-      <property>magentic flux</property>
+      <property>magnetic flux</property>
       <value Unit="V.s" UNIT="V.S" value="1">1</value>
    </unit>
    <unit Code="Cel" CODE="CEL" isMetric="yes" isSpecial="yes" class="si">
@@ -334,6 +334,11 @@
       <property>dose equivalent</property>
       <value Unit="J/kg" UNIT="J/KG" value="1">1</value>
    </unit>
+
+<!-- order of definition for "deg" and "gon" has been
+     switched, so that "gon", which is based on "deg"
+     can be created.  Original xml defined "gon" before "deg" 
+-->
    <unit Code="deg" CODE="DEG" isMetric="no" class="iso1000">
       <name>degree</name>
       <printSymbol>&#176;</printSymbol>
@@ -341,13 +346,13 @@
       <value Unit="[pi].rad/360" UNIT="[PI].RAD/360" value="2">2</value>
    </unit>
    <unit Code="gon" CODE="GON" isMetric="no" class="iso1000">
-    <name>gon</name>
-    <name>grade</name>
-    <printSymbol>&#9633;<sup>g</sup>
-    </printSymbol>
-    <property>plane angle</property>
-    <value Unit="deg" UNIT="DEG" value="0.9">0.9</value>
-  </unit>
+      <name>gon</name>
+      <name>grade</name>
+      <printSymbol>&#9633;<sup>g</sup>
+      </printSymbol>
+      <property>plane angle</property>
+      <value Unit="deg" UNIT="DEG" value="0.9">0.9</value>
+   </unit>
    <unit Code="'" CODE="'" isMetric="no" class="iso1000">
       <name>minute</name>
       <printSymbol>'</printSymbol>
@@ -477,6 +482,11 @@
       <value Unit="g" UNIT="G" value="1.6605402e-24">1.6605402 &#215; 10<sup>-24</sup>
       </value>
    </unit>
+
+<!-- definition for unit "eV" moved from here to follow the definition
+    of [e].  eV is defined by [e], and so cannot be created until
+    [e] is created.
+-->
    <unit Code="AU" CODE="ASU" isMetric="no" class="iso1000">
       <name>astronomic unit</name>
       <printSymbol>AU</printSymbol>
@@ -548,12 +558,16 @@
       <value Unit="C" UNIT="C" value="1.60217733e-19">1.60217733 &#215; 10<sup>-19</sup>
       </value>
    </unit>
+
+<!-- eV definition moved to this location, following [e], from location that
+    preceded [e].  See note above.
+-->
    <unit Code="eV" CODE="EV" isMetric="yes" class="iso1000">
-    <name>electronvolt</name>
-    <printSymbol>eV</printSymbol>
-    <property>energy</property>
-    <value Unit="[e].V" UNIT="[E].V" value="1">1</value>
-  </unit>
+      <name>electronvolt</name>
+      <printSymbol>eV</printSymbol>
+      <property>energy</property>
+      <value Unit="[e].V" UNIT="[E].V" value="1">1</value>
+   </unit>
    <unit Code="[m_e]" CODE="[M_E]" isMetric="yes" class="const">
       <name>electron mass</name>
       <printSymbol>
@@ -596,18 +610,20 @@
       <property>acceleration</property>
       <value Unit="m/s2" UNIT="M/S2" value="980665e-5">9.80665</value>
    </unit>
+<!-- added definition of Torr
+-->
    <unit Code="Torr" CODE="Torr" isMetric="no" class="const">
       <name>Torr</name>
       <printSymbol>Torr</printSymbol>
       <property>pressure</property>
       <value Unit="Pa" UNIT="PAL" value="133.322">133.322</value>
    </unit>
-  <unit Code="atm" CODE="ATM" isMetric="no" class="const">
-    <name>standard atmosphere</name>
-    <printSymbol>atm</printSymbol>
-    <property>pressure</property>
-    <value Unit="Pa" UNIT="PAL" value="101325">101325</value>
-  </unit>
+   <unit Code="atm" CODE="ATM" isMetric="no" class="const">
+      <name>standard atmosphere</name>
+      <printSymbol>atm</printSymbol>
+      <property>pressure</property>
+      <value Unit="Pa" UNIT="PAL" value="101325">101325</value>
+   </unit>
    <unit Code="[ly]" CODE="[LY]" isMetric="yes" class="const">
       <name>light-year</name>
       <printSymbol>l.y.</printSymbol>
@@ -620,6 +636,11 @@
       <property>force</property>
       <value Unit="g.[g]" UNIT="G.[G]" value="1">1</value>
    </unit>
+
+<!-- [lbf_av] definition moved from here to follow definition of 
+    [lb_av].  Unit creation fails if unit for [lb_av] has not
+    been created yet.
+-->
    <unit Code="Ky" CODE="KY" isMetric="yes" class="cgs">
       <name>Kayser</name>
       <printSymbol>K</printSymbol>
@@ -1148,12 +1169,17 @@
       <property>mass</property>
       <value Unit="[gr]" UNIT="[GR]" value="7000">7000</value>
    </unit>
+
+<!-- [lbf_av] definition moved here to follow [lb_av] definition because
+    [lbf_av] is dfined by [lb_av].  See note where it was
+    previously defined.
+-->
    <unit Code="[lbf_av]" CODE="[LBF_AV]" isMetric="no" class="const">
-    <name>pound force</name>
-    <printSymbol>lbf</printSymbol>
-    <property>force</property>
-    <value Unit="[lb_av].[g]" UNIT="[LB_AV].[G]" value="1">1</value>
-  </unit>
+      <name>pound force</name>
+      <printSymbol>lbf</printSymbol>
+      <property>force</property>
+      <value Unit="[lb_av].[g]" UNIT="[LB_AV].[G]" value="1">1</value>
+   </unit>
    <unit Code="[oz_av]" CODE="[OZ_AV]" isMetric="no" class="avoirdupois">
       <name>ounce</name>
       <printSymbol>oz</printSymbol>
@@ -1476,7 +1502,7 @@
       <printSymbol>PD</printSymbol>
       <property>refraction of a prism</property>
       <value Unit="100tan(1 rad)" UNIT="100TAN(1 RAD)">
-         <function name="tanTimes100" value="1" Unit="deg"/>
+         <function name="tanTimes100" value="1" Unit="rad"/>
       </value>
    </unit>
    <unit Code="%[slope]" CODE="%[SLOPE]" isMetric="no" isSpecial="yes" class="clinical">
