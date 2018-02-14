@@ -133,3 +133,20 @@ describe('Test Unit convertFrom/convertTo methods', function() {
 
 }); // end Test Unit convertFrom method
 
+describe('Test removal of guidance data for constructed units', function() {
+  it('should return a new unit with a blank guidance value when two units ' +
+    'are multiplied', function(){
+    var avUnit = uTabs.getUnitByCode('[lb_av]');
+    var troyUnit = uTabs.getUnitByCode('[lb_tr]');
+    var result = troyUnit.multiplyThese(avUnit) ;
+    assert.equal(result.guidance_, '');
+  });
+
+  it('should return a new unit with a blank guidance value when one unit ' +
+    'is divided by another', function(){
+    var avUnit = uTabs.getUnitByCode('[lb_av]');
+    var troyUnit = uTabs.getUnitByCode('[lb_tr]');
+    var result = troyUnit.divide(avUnit) ;
+    assert.equal(result.guidance_, '');
+  });
+}) ; // end Test removal of guidance data for constructed units
