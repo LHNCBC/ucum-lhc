@@ -128,7 +128,7 @@ it("should return a message for invalid unit strings", function() {
   it("should return a valid conversion value and units for -1 Celsius to Fahrenheit", function() {
     var resp3 = utils.convertUnitTo('Cel', -1, '[degF]');
     assert.equal(resp3.status, 'succeeded', resp3.status);
-    assert.equal(resp3.toVal, 30.199999999999932, resp3.toVal);
+    assert.equal(Math.round(resp3.toVal*100), 3020, resp3.toVal);
     assert.equal(resp3.fromUnit.name_, 'degree Celsius', JSON.stringify(resp3.fromUnit));
     assert.equal(resp3.toUnit.name_, 'degrees Fahrenheit', JSON.stringify(resp3.toUnit));
   });
