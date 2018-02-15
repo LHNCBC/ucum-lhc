@@ -117,6 +117,23 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp3.toUnit.name_, 'metric carat', JSON.stringify(resp3.toUnit));
   });
 
+  it("should return a valid conversion value and units for 0 Fahrenheit to Celsius", function() {
+    var resp3 = utils.convertUnitTo('[degF]', 0, 'Cel');
+    assert.equal(resp3.status, 'succeeded', resp3.status);
+    assert.equal(Math.round(resp3.toVal*100), -1778, resp3.toVal);
+    assert.equal(resp3.fromUnit.name_, 'degrees Fahrenheit', JSON.stringify(resp3.fromUnit));
+    assert.equal(resp3.toUnit.name_, 'degree Celsius', JSON.stringify(resp3.toUnit));
+  });
+
+  it("should return a valid conversion value and units for -1 Celsius to Fahrenheit", function() {
+    var resp3 = utils.convertUnitTo('Cel', -1, '[degF]');
+    assert.equal(resp3.status, 'succeeded', resp3.status);
+    assert.equal(Math.round(resp3.toVal*100), 3020, resp3.toVal);
+    assert.equal(resp3.fromUnit.name_, 'degree Celsius', JSON.stringify(resp3.fromUnit));
+    assert.equal(resp3.toUnit.name_, 'degrees Fahrenheit', JSON.stringify(resp3.toUnit));
+  });
+
+
   it("should return an error for an attempt to translate g to /g", function() {
     var resp4 = utils.convertUnitTo('g', 847, '/g');
     assert.equal(resp4.status, 'failed', resp4.status);
