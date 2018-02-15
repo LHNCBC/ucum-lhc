@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.1.2] - 2018-02-16
+## [2.1.3] - 2018-02-16
+- added disclaimer concerning conversion results to demo page convert 
+tab and to README.md page
+
+## [2.1.2] - 2018-02-15
 - completed bug fix for zero and negative number of units for conversions.
 
 ## [2.1.1] - 2018-01-25
