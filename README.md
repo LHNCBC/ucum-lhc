@@ -121,6 +121,9 @@ This method converts a number of one type of unit to the equivalent number of
 another type of unit.  Note that the number returned is not trimmed or
 rounded to any particular precision or significant digits.
 
+Disclaimer:  Conversion results should be verified independently before
+using them in actual clinical settings.
+
 * _@param_ fromUnitCode the unit code/expression/string of the unit to be converted
 * _@param_ fromVal the number of "from" units to be converted to "to" units
 * _@param_ toUnitCode the unit code/expression/string of the unit that the from 

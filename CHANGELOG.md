@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.3] - 2018-02-16
+- added disclaimer concerning conversion results to demo page convert 
+tab and to README.md page
+
+## [2.1.2] - 2018-02-15
+- completed bug fix for zero and negative number of units for conversions.
+
 ## [2.1.1] - 2018-01-25
 - updated link at the top of the demo page to refer back to the
 overview page - and the link at the top of the overview page to
@@ -12,7 +19,7 @@ refer back to itself.
 units are validated.  Prefixes on their own are not validated.
 - updated the ucumDefs.json with version 2.1 (November 21, 2017) of the
 ucum-essence.xml file from unitsofmeasure.org
-- fixed bug where a zero or negative number of units was considered an error.
+- started fixes on a bug where a zero or negative number of units was considered an error.
 
 
 ## [2.1.0] - 2017-12-21
