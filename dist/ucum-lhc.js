@@ -29133,7 +29133,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         returnObj['status'] = 'error';
         returnObj['msg'].push('No "from" unit expression specified.');
       }
-      if (!fromVal || typeof fromVal !== 'number' && !intUtils_.isNumericString(fromVal)) {
+      if (fromVal === null || isNaN(fromVal) || typeof fromVal !== 'number' && !intUtils_.isNumericString(fromVal)) {
         returnObj['status'] = 'error';
         returnObj['msg'].push('No "from" value, or an invalid "from" value, ' + 'was specified.');
       }
