@@ -3,14 +3,14 @@ This is the LHC implementation of validation and conversion services based on
 the [Unified Code for Units of Measure](http://unitsofmeasure.org) (UCUM) code
 system created by the Regenstrief Institute, Inc.  
 
-See our [overview page](https://lhncbc.github.io/ucum-lhc) for
+See our [overview page](https://ucum.nlm.nih.gov/ucum-lhc) for
 general information.
 
 This is a work in progress so more capabilities will probably be introduced.
 
 ## Check out the Demo page
 
-We have a [demo page](https://lhncbc.github.io/ucum-lhc/demo.html) that 
+We have a [demo page](https://ucum.nlm.nih.gov/ucum-lhc/demo.html) that 
 shows various capabilities.  That includes the validation and conversion
 functions described below.  You might want to try that out first.
 
@@ -26,14 +26,13 @@ Currently we have code to serve multiple purposes.  The core code supports
 the validation and conversion of UCUM unit expressions.  Other code is 
 concerned with importing and exporting the UCUM data, and in supporting the
 demo page (noted above).  If you are looking to include the ucum-lhc core code 
-in your application, download the code with the [bower](https://bower.io) package
-manager.
+in your application, download the code as an [npm](https://www.npmjs.com) package.
 
 ### Using the code in the ucum-lhc package
       
-Use the [Bower](http://bower.io) package manager to install the code:
+Use the [npm](https://www.npmjs.com) package manager to install the code:
 
-    bower install ucum-lhc
+    npm install ucum-lhc --save
 
 This will install the dist/ucum-lhc.js module package, which includes the
 source code you need for the validation and conversion functions as well as the 
@@ -98,7 +97,8 @@ unit names and synonyms.
 
 For example, to validate a unit string of m2/g4:
 
-     var utils = ucumPkg.UcumLhcUtils.getInstance();
+     var ucum-lhc = require(ucum-lhc);
+     var utils = ucum-lhc.UcumLhcUtils.getInstance();
      var returnObj = utils.validateUnitString('m2/g4');
      if (returnObj['status'] === 'valid')
        /* the string is valid; returnObj['ucumCode'] will contain the valid 
@@ -112,7 +112,7 @@ For example, to validate a unit string of m2/g4:
        /* returnOb['msg'] will have a message describing the problem */
        
 For information on unit string formatting, look at the _Ucum Unit Expression 
-Validation_ section on the [demo page](https://lhncbc.github.io/ucum-lhc/demo.html).  
+Validation_ section on the [demo page](https://ucum.nlm.nih.gov/ucum-lhc/demo.html).  
 There is a button labeled "Show entry hints".  That will give you a short description 
 of unit strings, and includes a link to the 
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
@@ -180,7 +180,8 @@ using them in actual clinical settings.
 
 For example, to convert 27 U.S. fathoms to U.S. inches
  
-    var utils = ucumPkg.UcumLhcUtils.getInstance();
+    var ucum-lhc = require(ucum-lhc);
+    var utils = ucum-lhc.UcumLhcUtils.getInstance();
     var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]');
     if (returnObj['status'] === 'succeeded')
       /* the conversion was successful.
@@ -206,10 +207,8 @@ For example, to convert 27 U.S. fathoms to U.S. inches
        */
       
 If you want to know what unit types a particular unit can be converted to, the 
-_UCUM Unit Conversions_ section of the [demo page](https://lhncbc.github.io/ucum-lhc/demo.html) 
-will show you a list of commensurable units when you enter the "from" unit code.  
-(Valid UCUM unit codes are shown in the _UCUM Unit Expression Validation_ section).  
-That list will be displayed in the "converted to" list.  
+checkSynonyms function will provide a list of commensurable units for a specified
+unit expression.
 
 **checkSynonyms(theSyn)**
 
@@ -238,7 +237,8 @@ of possible pound units.
     * {"code":"\[psi\]","name":"pound per square inch","guidance":null}
 
      
-    var utils = ucumPkg.UcumLhcUtils.getInstance();
+    var ucum-lhc = require(ucum-lhc);
+    var utils = ucum-lhc.UcumLhcUtils.getInstance();
     var returnObj = utils.checkSynonyms('pound');
     if (returnObj['status'] === 'succeeded')
       /* one or more units was found.  returnObj['msg'] will be null and the
