@@ -1091,8 +1091,9 @@ export class UnitString {
         }
         else {
           // Otherwise we found a unit object.  Clone it and then apply the
-          // prefix and exponent, if any, to it.
+          // prefix and exponent, if any, to it.  And remove the guidance.
           retUnit = origUnit.clone();
+          retUnit.guidance_ = '';
           let theDim = retUnit.getProperty('dim_');
           let theMag = retUnit.getProperty('magnitude_');
           let theName = retUnit.getProperty('name_');

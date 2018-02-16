@@ -52312,8 +52312,9 @@ var UnitString = exports.UnitString = function () {
                 }
               } else {
                 // Otherwise we found a unit object.  Clone it and then apply the
-                // prefix and exponent, if any, to it.
+                // prefix and exponent, if any, to it.  And remove the guidance.
                 retUnit = origUnit.clone();
+                retUnit.guidance_ = '';
                 var theDim = retUnit.getProperty('dim_');
                 var theMag = retUnit.getProperty('magnitude_');
                 var theName = retUnit.getProperty('name_');
