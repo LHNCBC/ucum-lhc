@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.1.3] - 2018-02-16
+## [2.1.4] - 2018-02-16
+- removes guidance text for constructed units, e.g., units that are created
+on the fly, as they are specified for validation or conversion.   For example,
+m\[H2O\]/cm is constructed from m\[H2O\] (meter of water column) divided by
+cm (centimeter).  No guidance data is provided for this constructed unit.
+
+## [2.1.3] - 2018-02-15
 - added disclaimer concerning conversion results to demo page convert 
 tab and to README.md page
 

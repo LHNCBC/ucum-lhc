@@ -51002,7 +51002,11 @@ var Unit = exports.Unit = function () {
           this.name_ = this.mulString(this.name_, unit2.name_);
           this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
           if (this.ciCode_ && unit2.ciCode_) this.ciCode_ = this.mulString(this.ciCode_, unit2.ciCode_);else if (unit2.ciCode_) this.ciCode_ = unit2.ciCode_;
-          if (this.guidance_ && unit2.guidance_) this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);else if (unit2.guidance_) this.guidance_ = unit2.guidance_;
+          // if (this.guidance_ && unit2.guidance_)
+          //   this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);
+          // else if (unit2.guidance_)
+          //   this.guidance_ = unit2.guidance_ ;
+          this.guidance_ = '';
           this.magnitude_ *= unit2.magnitude_;
           if (this.printSymbol_ && unit2.printSymbol_) this.printSymbol_ = this.mulString(this.printSymbol_, unit2.printSymbol_);else if (unit2.printSymbol_) this.printSymbol_ = unit2.printSymbol_;
 
@@ -51047,7 +51051,11 @@ var Unit = exports.Unit = function () {
 
       if (this.ciCode_ && unit2.ciCode_) this.ciCode_ = this.divString(this.ciCode_, unit2.ciCode_);else if (unit2.ciCode_) this.ciCode_ = unit2.invertString(unit2.ciCode_);
 
-      if (this.guidance_ && unit2.guidance_) this.guidance_ = this.divString(this.guidance_, unit2.guidance_);else if (unit2.guidance_) this.guidance_ = unit2.guidance_;
+      // if (this.guidance_ && unit2.guidance_)
+      //   this.guidance_ = this.divString(this.guidance_, unit2.guidance_);
+      // else if (unit2.guidance_)
+      //   this.guidance_ = unit2.guidance_ ;
+      this.guidance_ = '';
 
       this.magnitude_ /= unit2.magnitude_;
 
@@ -52304,8 +52312,9 @@ var UnitString = exports.UnitString = function () {
                 }
               } else {
                 // Otherwise we found a unit object.  Clone it and then apply the
-                // prefix and exponent, if any, to it.
+                // prefix and exponent, if any, to it.  And remove the guidance.
                 retUnit = origUnit.clone();
+                retUnit.guidance_ = '';
                 var theDim = retUnit.getProperty('dim_');
                 var theMag = retUnit.getProperty('magnitude_');
                 var theName = retUnit.getProperty('name_');
