@@ -381,12 +381,22 @@ describe('Test parseString method', function() {
     });
   }) ;
 
-/*  NOT Handled yet.  Leaving this in for the next branch
-      describe('test for unit string {creatine}mol{blahblah}', function() {
-        "use strict";
+  describe('test for a constructed unit m2/g', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('m5/g2', 'validate');
+    var retUnit = resp[0];
+    it("should return a unit with no guidance", function() {
+      assert.equal(retUnit['guidance_'], '');
+    });
+  }) ;
 
-      }) ;
-      */
+
+  /*  NOT Handled yet.  Leaving this in for the next branch
+        describe('test for unit string {creatine}mol{blahblah}', function() {
+          "use strict";
+
+        }) ;
+        */
 
 }); // end test ParseString method
 
@@ -502,6 +512,9 @@ describe('Test makeUnit method', function() {
     it("should return a unit with a dimension vector = [-21,42,-21,-0,-0,-0]", function () {
       assert.equal('-21,-42,21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
     });
+    it("should return a unit with blank guidance text", function() {
+      assert.equal(retUnit['guidance_'], '');
+    })
   });
 
 }); // end test makeUnit method

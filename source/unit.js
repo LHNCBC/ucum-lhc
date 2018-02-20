@@ -573,10 +573,11 @@ export class Unit {
           this.ciCode_ = this.mulString(this.ciCode_, unit2.ciCode_) ;
         else if (unit2.ciCode_)
           this.ciCode_ = unit2.ciCode_;
-        if (this.guidance_ && unit2.guidance_)
-          this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);
-        else if (unit2.guidance_)
-          this.guidance_ = unit2.guidance_ ;
+        // if (this.guidance_ && unit2.guidance_)
+        //   this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);
+        // else if (unit2.guidance_)
+        //   this.guidance_ = unit2.guidance_ ;
+        this.guidance_ = '';
         this.magnitude_ *= unit2.magnitude_;
         if (this.printSymbol_ && unit2.printSymbol_)
           this.printSymbol_ = this.mulString(this.printSymbol_, unit2.printSymbol_);
@@ -633,10 +634,11 @@ export class Unit {
     else if (unit2.ciCode_)
       this.ciCode_ = unit2.invertString(unit2.ciCode_) ;
 
-    if (this.guidance_ && unit2.guidance_)
-      this.guidance_ = this.divString(this.guidance_, unit2.guidance_);
-    else if (unit2.guidance_)
-      this.guidance_ = unit2.guidance_ ;
+    // if (this.guidance_ && unit2.guidance_)
+    //   this.guidance_ = this.divString(this.guidance_, unit2.guidance_);
+    // else if (unit2.guidance_)
+    //   this.guidance_ = unit2.guidance_ ;
+    this.guidance_ = '';
 
     this.magnitude_ /= unit2.magnitude_;
 
