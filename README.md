@@ -23,26 +23,53 @@ The code uses Node.js I/O functions and compatible packages, and browserify-fs
 to replace the I/O functions with code that runs in a browser.
 
 Currently we have code to serve multiple purposes.  The core code supports
-the validation and conversion of UCUM unit expressions.  Other code is 
+the validation and conversion of UCUM unit expressions as well as a function
+to search for commensurable units for a specified unit expression.  Other code is 
 concerned with importing and exporting the UCUM data, and in supporting the
 demo page (noted above).  If you are looking to include the ucum-lhc core code 
 in your application, download the code as an [npm](https://www.npmjs.com) package.
 
-### Using the code in the ucum-lhc package
+### Using the code in the ucum-lhc npm package
       
-Use the [npm](https://www.npmjs.com) package manager to install the code:
+#### Server side
+
+You can use the [npm](https://www.npmjs.com) package manager 
+to install the ucum-lhc npm package.  (npm is 
+[automatically installed](https://www.npmjs.com/get-npm) with Node.js.)
 
     npm install ucum-lhc --save
 
 This will install the dist/ucum-lhc.js module package, which includes the
-source code you need for the validation and conversion functions as well as the 
-ucum code definitions file.  We assume that your main motivation for including 
-the ucum-lhc code is to have the validation and conversion capabilities for 
-units of measure on your system.  Those functions are available from the 
-_ucumPkg.UcumLhcUtils_ class.  In your browser code, or elsewhere if no
-brower is involved, you'll need to specify the ucum-lhc.min.js file, e.g.,
-<script src="path-to-the-file/ucum-lhc.min.js"></script>.
+source code you need for the validation, conversion and commensurable units
+functions as well as the ucum code definitions file.  We assume that your main 
+motivation for including the ucum-lhc code is to have those capabilities for 
+units of measure on your system.  To access those functions, require the package
+and create a UcumLhcUtils object:
 
+     var ucum = require('ucum-lhc');
+     var utils = ucum.UcumLhcUtils.getInstance();
+     
+     or
+     
+     var utils = (require('ucum-lhc').UcumLhcUtils.getInstance();
+
+#### Client side
+
+You can clone or download the UCUM LHC code from the 
+[GitHub site](https://github.com/lhncbc/ucum-lhc).  You will then need to
+include the ucum-lhc.min.js module in your browser code:
+
+      <script src="path-to-the-file/ucum-lhc.min.js"></script>
+
+The validation, conversion and commensurable units functions are available from 
+the _ucumPkg.UcumLhcUtils_ class.  In your javascript code access those functions 
+via the ucumPkg object.  For example, 
+
+        var Ucum = ucumPkg.Ucum;
+        var utils = ucumPkg.UcumLhcUtils,getInstance();
+        
+The ucumDemo.js file in the demo directory of the GitHub code you downloaded
+is an example of using the code on the client side.
 
 Here are the function descriptions:
 
@@ -95,10 +122,9 @@ unit names and synonyms.
         If no suggestions were requested and found, this property is not
         returned.
 
-For example, to validate a unit string of m2/g4:
+For example, to validate a unit string of m2/g4 (assuming you have created a
+utils object as described above):
 
-     var ucum-lhc = require(ucum-lhc);
-     var utils = ucum-lhc.UcumLhcUtils.getInstance();
      var returnObj = utils.validateUnitString('m2/g4');
      if (returnObj['status'] === 'valid')
        /* the string is valid; returnObj['ucumCode'] will contain the valid 
@@ -178,10 +204,9 @@ using them in actual clinical settings.
    * 'toUnit' the unit object for the toUnitCode passed in; returned
       in case it's needed for additional data from the object.
 
-For example, to convert 27 U.S. fathoms to U.S. inches
+For example, to convert 27 U.S. fathoms to U.S. inches (assuming you have 
+created a utils object as described above): 
  
-    var ucum-lhc = require(ucum-lhc);
-    var utils = ucum-lhc.UcumLhcUtils.getInstance();
     var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]');
     if (returnObj['status'] === 'succeeded')
       /* the conversion was successful.
@@ -236,9 +261,8 @@ of possible pound units.
     * {"code":"\[lb_ap\]","name":"pound - apothecary","guidance":null}
     * {"code":"\[psi\]","name":"pound per square inch","guidance":null}
 
-     
-    var ucum-lhc = require(ucum-lhc);
-    var utils = ucum-lhc.UcumLhcUtils.getInstance();
+(assuming you have created a utils object as described above):
+
     var returnObj = utils.checkSynonyms('pound');
     if (returnObj['status'] === 'succeeded')
       /* one or more units was found.  returnObj['msg'] will be null and the
