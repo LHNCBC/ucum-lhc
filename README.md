@@ -44,7 +44,8 @@ source code you need for the validation, conversion and commensurable units
 functions as well as the ucum code definitions file.  We assume that your main 
 motivation for including the ucum-lhc code is to have those capabilities for 
 units of measure on your system.  To access capabilities, require the package
-and create a UcumLhcUtils object that contains those functions:
+and create a UcumLhcUtils object that contains those functions (as described
+below):
 
      var ucum = require('ucum-lhc');
      var utils = ucum.UcumLhcUtils.getInstance();
@@ -62,6 +63,8 @@ the _ucumPkg.UcumLhcUtils_ class.  In your javascript code access those function
 via the ucumPkg object.  For example, 
 
         var utils = ucumPkg.UcumLhcUtils.getInstance();
+        
+#### Function descriptions
         
 Here are the function descriptions:
 
