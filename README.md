@@ -39,20 +39,16 @@ to install the ucum-lhc npm package.  (npm is
 
     npm install ucum-lhc --save
 
-This will install the dist/ucum-lhc.js module package, which includes the
+This will install the dist/ucum-lhc.min.js module file, which includes the
 source code you need for the validation, conversion and commensurable units
 functions as well as the ucum code definitions file.  We assume that your main 
 motivation for including the ucum-lhc code is to have those capabilities for 
-units of measure on your system.  To access those functions, require the package
-and create a UcumLhcUtils object:
+units of measure on your system.  To access capabilities, require the package
+and create a UcumLhcUtils object that contains those functions:
 
      var ucum = require('ucum-lhc');
      var utils = ucum.UcumLhcUtils.getInstance();
-     
-     or
-     
-     var utils = (require('ucum-lhc').UcumLhcUtils.getInstance();
-
+  
 #### Client side
 
 You can clone or download the UCUM LHC code from the 
@@ -65,12 +61,8 @@ The validation, conversion and commensurable units functions are available from
 the _ucumPkg.UcumLhcUtils_ class.  In your javascript code access those functions 
 via the ucumPkg object.  For example, 
 
-        var Ucum = ucumPkg.Ucum;
-        var utils = ucumPkg.UcumLhcUtils,getInstance();
+        var utils = ucumPkg.UcumLhcUtils.getInstance();
         
-The ucumDemo.js file in the demo directory of the GitHub code you downloaded
-is an example of using the code on the client side.
-
 Here are the function descriptions:
 
 **validateUnitString(uStr, suggest)**
