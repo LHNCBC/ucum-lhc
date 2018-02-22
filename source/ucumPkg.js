@@ -8,4 +8,4 @@
 export var Ucum = require("./config.js").Ucum;
 export var UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
 export var UnitTables = require("./unitTables.js").UnitTables;
-export var UcumFileValidator = require("./ucumFileValidator.js").UcumFileValidator;
+//export var UcumFileValidator = require("./ucumFileValidator.js").UcumFileValidator;

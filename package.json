@@ -1,8 +1,9 @@
 {
-  "name": "ucum",
-  "version": "2.1.4",
+  "name": "ucum-lhc",
+  "version": "2.1.5",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "dist/ucum-lhc.js",
+  "homepage" : "https://lhncbc.github.io/ucum-lhc/",
   "directories": {
     "test": "test"
   },
@@ -53,8 +54,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@git-scm.nlm.nih.gov:7999/lfor/ucum.git"
+    "url": "https://github.com/lhncbc/ucum-lhc"
   },
   "author": "Lee Mericle",
+  "contributors" : "Paul Lynch" ,
   "license": "SEE LICENSE IN LICENSE.md"
 }

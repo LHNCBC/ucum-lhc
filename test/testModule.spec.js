@@ -1,14 +1,14 @@
 /**
- * Mocha tests for the built module available as a bower task.  It tests the
- * unit expression validation and conversion functions at the top level only.
+ * Mocha tests for the built module available as a bower & npm task.  It tests
+ * the unit expression validation and conversion functions at the top level only.
  *
  * Run from the command line with 'mocha testmodule.spec.js' or 'grunt test'
  */
 
 var assert = require('assert');
-var Utils = require("../source-es5/ucumLhcUtils.js").UcumLhcUtils;
+var ucum = require("../.");
+var utils = ucum.UcumLhcUtils.getInstance();
 
-var utils = Utils.getInstance();
 
 describe('Validate_m2/g4', function() {
   describe('Validation Return Object', function() {
@@ -115,3 +115,28 @@ describe('Convert fathoms to acrs', function() {
     })
   });
 });
+
+describe('Test checkSynonyms', function(){
+  describe('Get synonyms for month', function() {
+    var resp = utils.checkSynonyms('month');
+    it("should return multiple synonyms and at least mo", function() {
+      assert.equal(resp.status, 'succeeded');
+      assert(resp.units.length > 0);
+      var retUnits = resp.units;
+      var foundMonth = false ;
+      for (var i = 0; i < retUnits.length && !foundMonth; i++){
+        foundMonth = retUnits[i].code === 'mo';
+      }
+      assert(foundMonth);
+    });
+  });
+
+  describe('Request synonyms for XmU72L', function() {
+    var resp = utils.checkSynonyms('XmU72L');
+    it("should return no synonyms", function() {
+      assert.equal(resp.status, 'failed');
+      assert(!resp.units);
+    });
+  });
+});
+

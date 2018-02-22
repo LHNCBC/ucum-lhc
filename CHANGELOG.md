@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.5] - 2018-02-21
+- shifts module tests to use distribution package
+- moves ucumFileValidator to demo directory
+- updates README
+
 ## [2.1.4] - 2018-02-16
 - removes guidance text for constructed units, e.g., units that are created
 on the fly, as they are specified for validation or conversion.   For example,
