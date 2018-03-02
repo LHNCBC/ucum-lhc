@@ -29,7 +29,7 @@ concerned with importing and exporting the UCUM data, and in supporting the
 demo page (noted above).  If you are looking to include the ucum-lhc core code 
 in your application, download the code as an [npm](https://www.npmjs.com) package.
 
-### Using the code in the ucum-lhc npm package
+### Using the code in the @lhncbc/ucum-lhc npm package
       
 #### Server side
 
@@ -37,7 +37,7 @@ You can use the [npm](https://www.npmjs.com) package manager
 to install the ucum-lhc npm package.  (npm is 
 [automatically installed](https://www.npmjs.com/get-npm) with Node.js.)
 
-    npm install ucum-lhc --save
+    npm install @lhncbc/ucum-lhc --save
 
 This will install the dist/ucum-lhc.min.js module file, which includes the
 source code you need for the validation, conversion and commensurable units
@@ -47,7 +47,7 @@ units of measure on your system.  To access capabilities, require the package
 and create a UcumLhcUtils object that contains those functions (as described
 below):
 
-     var ucum = require('ucum-lhc');
+     var ucum = require('@lhncbc/ucum-lhc');
      var utils = ucum.UcumLhcUtils.getInstance();
   
 #### Client side

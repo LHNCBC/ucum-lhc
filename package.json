@@ -1,5 +1,5 @@
 {
-  "name": "ucum-lhc",
+  "name": "@lhncbc/ucum-lhc",
   "version": "2.1.5",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "dist/ucum-lhc.js",
