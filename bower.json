@@ -1,15 +1,24 @@
 {
   "name": "ucum-lhc",
   "description": "Implements Unified Code for Units of Measure functions as javascript library",
-  "version": "2.1.5",
+  "version": "2.1.7",
   "main": "dist/ucum-lhc.js",
-  "license": "LICENSE.md",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lhncbc/ucum-lhc"
+  },
+  "authors": ["Lee Mericle", "Paul Lynch"],
   "ignore": [
     "config",
     "coverage",
     "cshrc.ucum",
     "datastuff",
-    "demo",
+    "demo/",
+    "demo-dist/",
+    "demo-es5/",
+    "demo-test/",
+    "demo.html",
     "dist/es5",
     "dist/assets",
     "dist/stylesheets",
