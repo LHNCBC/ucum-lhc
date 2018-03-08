@@ -1,6 +1,6 @@
 {
-  "name": "ucum",
-  "version": "2.1.1",
+  "name": "@lhncbc/ucum-lhc",
+  "version": "2.1.5",
   "dependencies": {
     "abbrev": {
       "version": "1.0.7",
