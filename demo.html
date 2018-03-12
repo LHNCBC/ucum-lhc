@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="canonical" href="https://ucum.nlm.nih.gov/ucum-lhc/demo.html" />
-    <title>LHC UCUM Demo</title>
+    <link href="https://ucum.nlm.nih.gov/ucum-lhc/demo.html" />
+    <title>UCUM-LHC Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/10.1.1/autocomplete-lhc_jQueryUI.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -11,16 +11,23 @@
   <body id="demobody" onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
     <!-- page header -->
     <div id="header">
-      <a href="http://lhncbc.nlm.nih.gov" title="Home" rel="home" id="logo">
-        <img src="demo-dist/assets/images/lhncbc.jpg" alt="Home" />
+      <a href="http://lhncbc.nlm.nih.gov" id="logo"
+         title="Lister Hill National Center for Biomedical Communications">
+        <img src="demo-dist/assets/images/lhncbc.jpg"
+             alt="Lister Hill National Center for Biomedical Communications" />
       </a>
       <div id="siteNameBox">
-        <a href="index.html"><span id=siteName>Units of Measure (UCUM) Validator and Converter</span><br>
-          <span id=tagline>A demonstration site for the ucum-lhc library.</span></a>
+        <a href="index.html"><span id=siteName>UCUM-LHC</span><br>
+          <span id=tagline>A Unified Code for Units of Measure Software Library
+            from the National Library of Medicine</span></a>
       </div>
     </div>
+    <div>
+      <a href="https://ucum.nlm.nih.gov">UCUM Resources</a>&nbsp; &nbsp;
+      <a href="https://ucum.nlm.nih.gov/ucum-lhc/index.html">UCUM-LHC Overview</a>
+    </div>
     <!-- end page header -->
-    <h1>LHC UCUM Validator and Converter</h1>
+    <h1>The UCUM-LHC Validator and Converter</h1>
 
     <ul class="tab nav nav-tabs">
       <li class="active"><a id="validation-link" href="#validation" class="tablinks"
@@ -202,13 +209,13 @@
         <!-- <a id="downlink" href="" style="'display:none'"></a> -->
       </div><!-- filevalidation div -->
       <div id="otherstuff" class="section">
-        <h3>About the LHC UCUM Library</h3>
+        <h3>About the UCUM-LHC Library</h3>
         <ul>
-        <li>Here is a <a href="index.html">description</a> of the LHC UCUM
+        <li>Here is a <a href="index.html">description</a> of the UCUM-LHC
         Software Library.</li>
         <li>The code is available from the
           <a href="https://github.com/lhncbc/ucum-lhc">GitHub code repository</a>.</li>
-        <li>The LHC UCUM code uses unit definitions from the
+        <li>The UCUM-LHC code uses unit definitions from the
           <a href="http://unitsofmeasure.org">Unified Code
             for Units Of Measure</a>
           <a href="http://unitsofmeasure.org/ucum-essence.xml">ucum-essence.xml</a> file,
@@ -229,16 +236,18 @@
       <li><a title="NLM viewers and players" href="http://www.nlm.nih.gov/plugins.html">Viewers & Players</a></li>
       <li><a title="NIH Freedom of Information Act office"  href="http://www.nih.gov/icd/od/foia/index.htm"
           >Freedom of Information Act</a></li>
-      <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
-          src="demo-dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
+      <li class="last-item"><a title="Contact Us" href="https://lhncbc.nlm.nih.gov/contact-us">
+          Contact Us</a></li>
     </ul>
     <ul class="horz-list">
       <li><a title="U.S. National Library of Medicine" href="http://www.nlm.nih.gov/"
           >U.S. National Library of Medicine</a></li>
       <li><a title="U.S. National Institutes of Health" href="http://www.nih.gov/"
           >U.S. National Institutes of Health</a></li>
-      <li class="last-item"><a title="U.S. Department of Health and Human Services"  href="http://www.hhs.gov/"
+      <li><a title="U.S. Department of Health and Human Services"  href="http://www.hhs.gov/"
           >U.S. Department of Health and Human Services</a></li>
+      <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
+              src="demo-dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
     </ul>
   </div><!-- fine-print -->
   <!-- end page footer -->
