@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.8] - 2018-03-14
+- updates to register bower package
+
+## [2.1.7] - 2018-03-12
+- cosmetic updates to overview and demo pages related to banner, titles
+
 ## [2.1.6] - 2018-03-07
 - created npm package
 

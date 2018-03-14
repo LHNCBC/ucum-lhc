@@ -57,7 +57,6 @@
     "type": "git",
     "url": "https://github.com/lhncbc/ucum-lhc"
   },
-  "author": "Lee Mericle",
-  "contributors": "Paul Lynch",
+  "author": "Paul Lynch",
   "license": "SEE LICENSE IN LICENSE.md"
 }
