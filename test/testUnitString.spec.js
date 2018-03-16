@@ -102,7 +102,7 @@ describe('Test parseString method', function() {
       // multiply the mgUnit by 3
       mgUnit = mgUnit.multiplyThis(3);
       // divide it by [den]
-      mgUnit.divide(denUnit);
+      mgUnit = mgUnit.divide(denUnit);
       assert(mgUnit.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
       it("should return the origString with a substitution", function() {
@@ -130,7 +130,7 @@ describe('Test parseString method', function() {
       // multiply the denUnit by 3
       denUnit = denUnit.multiplyThis(3);
       // divide the milligram unit it by [den]
-      mgUnit.divide(denUnit);
+      mgUnit = mgUnit.divide(denUnit);
       assert(mgUnit.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
       it("should return the origString with a substitution", function() {

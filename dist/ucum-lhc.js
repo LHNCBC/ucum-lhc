@@ -29935,10 +29935,10 @@ var Unit = exports.Unit = function () {
 
       if (this.cnv_ != null) this.cnvPfx_ *= s;else this.magnitude_ *= s;
       var mulVal = s.toString();
-      this.name_ = this.mulString(mulVal, this.name_);
-      this.csCode_ = this.mulString(mulVal, this.csCode_);
-      this.ciCode_ = this.mulString(mulVal, this.ciCode_);
-      this.printSymbol_ = this.mulString(mulVal, this.printSymbol_);
+      this.name_ = '[' + mulVal + ']*[' + this.name_ + ']';
+      this.csCode_ = mulVal + '.' + this.csCode_;
+      this.ciCode_ = mulVal + '.' + this.ciCode_;
+      this.printSymbol_ = mulVal + '.' + this.printSymbol_;
 
       return this;
     } // end multiplyThis
@@ -29950,7 +29950,7 @@ var Unit = exports.Unit = function () {
      * else an exception is thrown. This special case treatment allows
      * us to scale non-ratio units.
      *
-     * This function modifies this unit
+     * This function does NOT modify this unit
      * @param unit2 the unit to be multiplied with this one
      * @return this unit after it is multiplied
      * @throws an error if one of the units is not on a ratio-scale
@@ -29961,41 +29961,45 @@ var Unit = exports.Unit = function () {
     key: "multiplyThese",
     value: function multiplyThese(unit2) {
 
-      if (this.cnv_ != null) {
-        if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) this.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + this.name_ + " " + 'failed.');
-      } else {
-        if (unit2.cnv_ != null) {
-          if (this.cnv_ == null && (!this.dim_ || this.dim_.isZero())) {
-            var cp = this.magnitude_;
-            assign(unit2);
-            this.cnvPfx_ *= cp;
-          } else throw new Error("Attempt to multiply non-ratio unit " + unit2.name_);
-        } else {
-          this.name_ = this.mulString(this.name_, unit2.name_);
-          this.csCode_ = this.mulString(this.csCode_, unit2.csCode_);
-          if (this.ciCode_ && unit2.ciCode_) this.ciCode_ = this.mulString(this.ciCode_, unit2.ciCode_);else if (unit2.ciCode_) this.ciCode_ = unit2.ciCode_;
-          // if (this.guidance_ && unit2.guidance_)
-          //   this.guidance_ = this.mulString(this.guidance_, unit2.guidance_);
-          // else if (unit2.guidance_)
-          //   this.guidance_ = unit2.guidance_ ;
-          this.guidance_ = '';
-          this.magnitude_ *= unit2.magnitude_;
-          if (this.printSymbol_ && unit2.printSymbol_) this.printSymbol_ = this.mulString(this.printSymbol_, unit2.printSymbol_);else if (unit2.printSymbol_) this.printSymbol_ = unit2.printSymbol_;
+      var retUnit = this.clone();
 
-          // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
-          // is a dimension in unit2.dim_; else just transfer it to this dimension
-          if (!this.dim_ || this.dim_ && !this.dim_.dimVec_) {
-            if (unit2.dim_ && unit2.dim_ instanceof Dimension) this.dim_ = unit2.dim_.clone();else this.dim_ = unit2.dim_;
-          }
+      if (retUnit.cnv_ != null) {
+        if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + retUnit.name_ + " " + 'failed.');
+      } // end if this unit has a conversion function
 
-          // Else this.dim_ is there.  If there is a dimension for unit2,
-          // add it to this one.
-          else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
-              this.dim_.add(unit2.dim_);
-            }
-        }
-      }
-      return this;
+      else {
+          if (unit2.cnv_ != null) {
+            if (retUnit.cnv_ == null && (!retUnit.dim_ || retUnit.dim_.isZero())) {
+              var cp = retUnit.magnitude_;
+              retUnit.assign(unit2);
+              retUnit.cnvPfx_ *= cp;
+            } else throw new Error("Attempt to multiply non-ratio unit " + unit2.name_);
+          } // end if unit2 has a conversion function
+
+          else {
+              retUnit.magnitude_ *= unit2.magnitude_;
+              // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
+              // is a dimension in unit2.dim_; else just transfer it to this dimension
+              if (!retUnit.dim_ || retUnit.dim_ && !retUnit.dim_.dimVec_) {
+                if (unit2.dim_ && unit2.dim_ instanceof Dimension) retUnit.dim_ = unit2.dim_.clone();else retUnit.dim_ = unit2.dim_;
+              }
+              // Else this.dim_ is there.  If there is a dimension for unit2,
+              // add it to this one.
+              else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
+                  retUnit.dim_.add(unit2.dim_);
+                }
+            } // end if unit2 does not have a conversion function
+        } // end if this unit does not have a conversion function
+
+      // Concatenate the unit info (name, code, etc) for all cases
+      // where the multiplication was performed (an error wasn't thrown)
+      retUnit.name_ = '[' + retUnit.name_ + ']*[' + unit2.name_ + ']';
+      retUnit.csCode_ = retUnit.csCode_ + '.' + unit2.csCode_;
+      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this.ciCode_ + '.' + unit2.ciCode_;else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
+      retUnit.guidance_ = '';
+      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = retUnit.printSymbol_ + '.' + unit2.printSymbol_;else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
+
+      return retUnit;
     } // end multiplyThese
 
 
@@ -30004,7 +30008,7 @@ var Unit = exports.Unit = function () {
      * scale an exception is raised. Mutating to a ratio scale unit
      * is not possible for a unit, only for a measurement.
      *
-     * This unit is modified by this function.
+     * This unit is NOT modified by this function.
      * @param unit2 the unit by which to divide this one
      * @return this unit after it is divided by unit2
      * @throws an error if either of the units is not on a ratio scale.
@@ -30014,40 +30018,38 @@ var Unit = exports.Unit = function () {
     key: "divide",
     value: function divide(unit2) {
 
-      if (this.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + this.name_);
+      var retUnit = this.clone();
+
+      if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
       if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
 
-      if (this.name_ && unit2.name_) this.name_ = this.divString(this.name_, unit2.name_);else if (unit2.name_) this.name_ = unit2.invertString(unit2.name_);
+      if (retUnit.name_ && unit2.name_) retUnit.name_ = '[' + retUnit.name_ + ']/[' + unit2.name_ + ']';else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
 
-      this.csCode_ = this.divString(this.csCode_, unit2.csCode_);
+      retUnit.csCode_ = retUnit.csCode_ + '/' + unit2.csCode_;
 
-      if (this.ciCode_ && unit2.ciCode_) this.ciCode_ = this.divString(this.ciCode_, unit2.ciCode_);else if (unit2.ciCode_) this.ciCode_ = unit2.invertString(unit2.ciCode_);
+      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = retUnit.ciCode_ + '/' + unit2.ciCode_;else if (unit2.ciCode_) retUnit.ciCode_ = unit2.invertString(unit2.ciCode_);
 
-      // if (this.guidance_ && unit2.guidance_)
-      //   this.guidance_ = this.divString(this.guidance_, unit2.guidance_);
-      // else if (unit2.guidance_)
-      //   this.guidance_ = unit2.guidance_ ;
       this.guidance_ = '';
 
-      this.magnitude_ /= unit2.magnitude_;
+      retUnit.magnitude_ /= unit2.magnitude_;
 
-      if (this.printSymbol_ && unit2.printSymbol_) this.printSymbol_ = this.divString(this.printSymbol_, unit2.printSymbol_);else if (unit2.printSymbol_) this.printSymbol_ = unit2.printSymbol_;
+      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = retUnit.printSymbol_ + '/' + unit2.printSymbol_;else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
 
       // Continue if unit2 has a dimension object.
       // If this object has a dimension object, subtract unit2's dim_ object from
       // this one. The sub method will take care of cases where the dimVec_ arrays
       // are missing on one or both dim_ objects.
       if (unit2.dim_) {
-        if (this.dim_) {
-          if (this.dim_.isNull()) this.dim_.assignZero();
-          this.dim_ = this.dim_.sub(unit2.dim_);
+        if (retUnit.dim_) {
+          if (retUnit.dim_.isNull()) retUnit.dim_.assignZero();
+          retUnit.dim_ = retUnit.dim_.sub(unit2.dim_);
         } // end if this.dim_ exists
 
         // Else if this dim_ object is missing, clone unit2's dim_ object
         // and give the inverted clone to this unit.
-        else this.dim_ = unit2.dim_.clone().minus();
+        else retUnit.dim_ = unit2.dim_.clone().minus();
       } // end if unit2 has a dimension object
-      return this;
+      return retUnit;
     } // end divide
 
 
@@ -30173,37 +30175,6 @@ var Unit = exports.Unit = function () {
       return this;
     } // end power
 
-
-    /**
-     * Creates a unit string that indicates multiplication of the two
-     * units referenced by the codes passed in.
-     *
-     * @params s1 string representing the first unit
-     * @params s2 string representing the second unit
-     * @returns a string representing the two units multiplied
-     */
-
-  }, {
-    key: "mulString",
-    value: function mulString(s1, s2) {
-      return s1 + "." + s2;
-    }
-
-    /**
-     * Creates a unit string that indicates division of the first unit by
-     * the second unit, as referenced by the codes passed in.
-     *
-     * @params s1 string representing the first unit
-     * @params s2 string representing the second unit
-     * @returns a string representing the division of the first unit by the
-     * second unit
-     */
-
-  }, {
-    key: "divString",
-    value: function divString(s1, s2) {
-      return s1 + '/' + s2;
-    } // end divString
 
   }]);
 
