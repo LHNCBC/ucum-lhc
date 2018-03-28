@@ -1200,6 +1200,7 @@ export class UnitString {
     // HOWEVER, it could also be a case where someone used braces instead
     // of brackets, e.g., {degF} instead of [degF].  Check for that before
     // we assume it should be a 1.
+    let msgLen = this.retMsg_.length;
     if (!befAnnoText && !aftAnnoText) {
       let tryBrackets = '[' + annoText.substring(1, annoText.length - 1) + ']';
       let mkUnitRet = this._makeUnit(tryBrackets, origString);
@@ -1215,6 +1216,10 @@ export class UnitString {
       }
       // Otherwise assume that this should be interpreted as a 1
       else {
+        // remove error message generated for trybrackets
+        if (this.retMsg_.length > msgLen) {
+          let discard = this.retMsg_.pop();
+        }
         uCode = 1;
         if (this.bracesMsg_) {
           let dup = false;

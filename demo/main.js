@@ -9,5 +9,6 @@
 
 export var UcumDemoConfig = require("./demoConfig.js").UcumDemoConfig;
 export var UcumDemo = require("./ucumDemo.js").UcumDemo;
+export var UcumFileValidator = require("./ucumFileValidator.js").UcumFileValidator;
 var demo = UcumDemo.getInstance();
 
