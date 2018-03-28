@@ -4,8 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.1.8] - 2018-03-14
+
+## [2.1.9] - 2018-04-02
 - updates to register bower package
+
+## [2.1.8] - 2018-03-28
+- fixes to csv file validator
 
 ## [2.1.7] - 2018-03-12
 - cosmetic updates to overview and demo pages related to banner, titles
