@@ -13,8 +13,8 @@ var transform = require('stream-transform');
 var stringify = require('csv-stringify');
 var str = require('string-to-stream') ;
 
-var UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
-var Ucum = require('./config.js').Ucum;
+var UcumLhcUtils = ucumPkg.UcumLhcUtils;
+var Ucum = ucumPkg.Ucum;
 
 
 export class UcumFileValidator {
