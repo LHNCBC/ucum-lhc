@@ -9,10 +9,10 @@ var fs = require('browserify-fs');
 var escapeHtml = require('escape-html');
 
 var Ucum = ucumPkg.Ucum;
-var UcumDemoConfig = require('./demoConfig').UcumDemoConfig;
+var UcumDemoConfig = require('./demoConfig.js').UcumDemoConfig;
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;
 var UnitTables = ucumPkg.UnitTables;
-var UcumFileValidator = ucumPkg.UcumFileValidator;
+var UcumFileValidator = require('./ucumFileValidator.js').UcumFileValidator;
 
 
 export class UcumDemo {
@@ -650,7 +650,7 @@ export class UcumDemo {
           if (resultObj['suggestions']['from'])
             resultMsg += this._suggSetOutput(resultObj['suggestions']['from']);
           if (resultObj['suggestions']['to'])
-            resultMsg += this._suggSetOutput(resultObj['suggestions']['to']);          resultString.innerHTML = suggString ;
+            resultMsg += this._suggSetOutput(resultObj['suggestions']['to']);
         }
         // if suggestions were not found, output whatever message(s) were
         // returned that would indicate the problem
@@ -809,7 +809,7 @@ export class UcumDemo {
    *  It also disables the column name input field.
    */
   columnSpecified() {
-    let colName = document.getElementById('colName');
+    let colName = document.getElementById('colName').value;
     this.utils_.useHTMLInMessages(false);
     this.utils_.useBraceMsgForEachString(false);
 
