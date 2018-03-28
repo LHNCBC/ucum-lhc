@@ -6,9 +6,8 @@
  */
 
 var assert = require('assert');
-var ucum = require("../.");
+var ucum = require("../dist/ucum-lhc");
 var utils = ucum.UcumLhcUtils.getInstance();
-
 
 describe('Validate_m2/g4', function() {
   describe('Validation Return Object', function() {

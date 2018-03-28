@@ -47,7 +47,7 @@ units of measure on your system.  To access capabilities, require the package
 and create a UcumLhcUtils object that contains those functions (as described
 below):
 
-     var ucum = require('@lhncbc/ucum-lhc');
+     var ucum = require('path-to-the-file/dist/ucum-lhc');
      var utils = ucum.UcumLhcUtils.getInstance();
   
 #### Client side
@@ -56,7 +56,7 @@ You can clone or download the UCUM LHC code from the
 [GitHub site](https://github.com/lhncbc/ucum-lhc).  You will then need to
 include the ucum-lhc.min.js module in your browser code:
 
-      <script src="path-to-the-file/ucum-lhc.min.js"></script>
+      <script src="path-to-the-file/dist/ucum-lhc.min.js"></script>
 
 The validation, conversion and commensurable units functions are available from 
 the _ucumPkg.UcumLhcUtils_ class.  In your javascript code access those functions 
