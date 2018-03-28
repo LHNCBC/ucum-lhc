@@ -1218,7 +1218,7 @@ export class UnitString {
       else {
         // remove error message generated for trybrackets
         if (this.retMsg_.length > msgLen) {
-          let discard = this.retMsg_.pop();
+          this.retMsg_.pop();
         }
         uCode = 1;
         if (this.bracesMsg_) {

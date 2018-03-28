@@ -31408,7 +31408,7 @@ var UnitString = exports.UnitString = function () {
         else {
             // remove error message generated for trybrackets
             if (this.retMsg_.length > msgLen) {
-              var discard = this.retMsg_.pop();
+              this.retMsg_.pop();
             }
             uCode = 1;
             if (this.bracesMsg_) {
