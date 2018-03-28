@@ -29396,7 +29396,6 @@ Object.defineProperty(exports, "__esModule", {
 var Ucum = exports.Ucum = require("./config.js").Ucum;
 var UcumLhcUtils = exports.UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
 var UnitTables = exports.UnitTables = require("./unitTables.js").UnitTables;
-//export var UcumFileValidator = require("./ucumFileValidator.js").UcumFileValidator;
 
 
 },{"./config.js":6,"./ucumLhcUtils.js":13,"./unitTables.js":17}],15:[function(require,module,exports){
@@ -31364,6 +31363,7 @@ var UnitString = exports.UnitString = function () {
       // HOWEVER, it could also be a case where someone used braces instead
       // of brackets, e.g., {degF} instead of [degF].  Check for that before
       // we assume it should be a 1.
+      var msgLen = this.retMsg_.length;
       if (!befAnnoText && !aftAnnoText) {
         var tryBrackets = '[' + annoText.substring(1, annoText.length - 1) + ']';
         var mkUnitRet = this._makeUnit(tryBrackets, origString);
@@ -31377,6 +31377,10 @@ var UnitString = exports.UnitString = function () {
         }
         // Otherwise assume that this should be interpreted as a 1
         else {
+            // remove error message generated for trybrackets
+            if (this.retMsg_.length > msgLen) {
+              this.retMsg_.pop();
+            }
             uCode = 1;
             if (this.bracesMsg_) {
               var dup = false;
