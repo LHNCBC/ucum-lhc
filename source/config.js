@@ -1,4 +1,7 @@
-/* 
+/*
+ * The license for the UCUM LHC code (demo and library code) is located at
+ * https://github.com/lhncbc/ucum-lhc/blob/master/LICENSE.md
+ *
  * This defines the namespace for the UCUM classes and provides
  * a place for the definition of global variables and constants.
  *
