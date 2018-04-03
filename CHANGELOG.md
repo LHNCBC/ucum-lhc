@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.1.9] - 2018-04-02
-- updates to third party licenses file
+## [2.1.9] - 2018-04-03
+- updates to third party and UCUM LHC license information
 
 ## [2.1.8] - 2018-03-28
 - fixes to csv file validator
