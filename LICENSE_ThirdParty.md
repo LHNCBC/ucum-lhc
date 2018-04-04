@@ -1,73 +1,8 @@
 # Third Party Packages
 
-The following third party packages are used by the LHC UCUM code:
+The following third party packages are used by the LHC UCUM demo code.  No 
+additional licenses are needed for the UCUM LHC library (ucum-lhc.js).
  
- 
-#### Used by the UCUM-LHC library code (which is used by the demo code)
-
- 
-  * **is-integer** at [https://www.npmjs.com/package/is-integer](https://www.npmjs.com/package/is-integer),
-    [link to license](https://github.com/parshap/js-is-integer/blob/master/LICENSE.md)
-    
----
-    
-  * **jsonfile** at [https://www.npmjs.com/package/jsonfile](https://www.npmjs.com/package/jsonfile),
-    [license](https://github.com/jprichardson/node-jsonfile/blob/master/LICENSE):
-    <br><br>
-    (The MIT License)
-    <br><br>
-    Copyright (c) 2012-2015, JP Richardson <jprichardson@gmail.com>
-    <br><br>
-    Permission is hereby granted, free of charge, to any person obtaining a copy 
-    of this software and associated documentation files (the 'Software'), to deal 
-    in the Software without restriction, including without limitation the rights 
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-    copies of the Software, and to permit persons to whom the Software is 
-    furnished to do so, subject to the following conditions:
-    <br><br>
-    The above copyright notice and this permission notice shall be included in 
-    all copies or substantial portions of the Software.
-    <br><br>
-    THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
-    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-    THE SOFTWARE.
-    
----
-     
-  * **xmldoc** at [https://www.npmjs.com/package/xmldoc](https://www.npmjs.com/package/xmldoc),
-    [license](https://github.com/nfarina/xmldoc/blob/master/LICENSE):
-    <br><br>   
-    Copyright 2012 Nick Farina.
-    All rights reserved.
-    
-    Permission is hereby granted, free of charge, to any person
-    obtaining a copy of this software and associated documentation
-    files (the "Software"), to deal in the Software without
-    restriction, including without limitation the rights to use,
-    copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the
-    Software is furnished to do so, subject to the following
-    conditions:
-    
-    The above copyright notice and this permission notice shall be
-    included in all copies or substantial portions of the Software.
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-    HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-    OTHER DEALINGS IN THE SOFTWARE.
-   
----    
-
-#### Used only by the UCUM-LHC demo code
 
   * **Bootstrap** at [https://getbootstrap.com](https://getbootstrap.com),
     [LICENSE](https://github.com/twbs/bootstrap/blob/v4-dev/LICENSE):
