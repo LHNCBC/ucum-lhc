@@ -1,7 +1,7 @@
 # Third Party Packages
 
 The following third party packages are used by the LHC UCUM demo code.  No 
-additional licenses are needed for the UCUM LHC library (ucum-lhc.js).
+third-party licenses are needed for the UCUM LHC library (ucum-lhc.js).
  
 
   * **Bootstrap** at [https://getbootstrap.com](https://getbootstrap.com),
