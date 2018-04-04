@@ -1,4 +1,4 @@
-/* 
+/*
  * This defines the namespace for the UCUM classes and provides
  * a place for the definition of global variables and constants.
  *
