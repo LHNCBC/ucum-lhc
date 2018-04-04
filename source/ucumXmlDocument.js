@@ -436,12 +436,19 @@ export class UcumXmlDocument {
    */
   writeJsonFile() {
 
+    let licenseText = "The following data (prefixes and units) was generated " +
+                      "by the UCUM LHC code from the UCUM data and selected " +
+                      "LOINC combinations of UCUM units.  The license for " +
+                      "the UCUM LHC code (demo and library code as well as " +
+                      "the combined units) is located at " +
+                      "https://github.com/lhncbc/ucum-lhc/blob/LICENSE.md." ;
     let pfxTabs = PrefixTables.getInstance() ;
     let pfxArray = pfxTabs.allPrefixesByCode();
     let uTabs = UnitTables.getInstance();
     let uArray = uTabs.allUnitsByDef();
 
-    let defsHash = { 'prefixes' : pfxArray,
+    let defsHash = { 'license' : licenseText,
+                     'prefixes' : pfxArray,
                      'units' : uArray};
     let dt = new Date();
     jsonfile.writeFileSync('../dist/data/ucumDefs' + dt.valueOf() + '.json',
