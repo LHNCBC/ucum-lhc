@@ -29,9 +29,7 @@ concerned with importing and exporting the UCUM data, and in supporting the
 demo page (noted above).  If you are looking to include the ucum-lhc core code 
 in your application, download the code as an [npm](https://www.npmjs.com) package.
 
-### Using the code in the @lhncbc/ucum-lhc npm package
-      
-#### Server side
+#### Getting the code as an npm package
 
 You can use the [npm](https://www.npmjs.com) package manager 
 to install the ucum-lhc npm package.  (npm is 
@@ -39,30 +37,51 @@ to install the ucum-lhc npm package.  (npm is
 
     npm install @lhncbc/ucum-lhc --save
 
-This will install the dist/ucum-lhc.min.js module file, which includes the
-source code you need for the validation, conversion and commensurable units
+This will install the @lhncbc/ucum-lhc directory in your node_modules diretory. 
+The dist subdirectory will contain ucum-lhc.js and ucum-lhc.min.js (minimized
+version of ucum-lhc.js) and a data subdirectory that includes a separate json 
+file of the ucum data (which is also included in ucum-lhc.js and 
+ucum-lhc.min.js).
+
+#### Getting the code as a bower package
+
+You can use the [bower](https://bower.io) package manager to install the
+ucum-lhc bower package.   (If you do not have bower installed on your machine
+you can install it using npm.  See https://bower.io).  Install the ucum-lhc
+package using the bower install command
+
+    bower install ucum-lhc
+    
+This will install the ucum-lhc directory in your bower_components directory.
+The dist subdirectory will contain ucum-lhc.js and ucum-lhc.min.js (minimized
+version of ucum-lhc.js) and a data subdirectory that includes a separate json 
+file of the ucum data (which is also included in ucum-lhc.js and 
+ucum-lhc.min.js).
+
+### Using the code 
+      
+#### Server side
+
+The ucum-lhc.min.js file (which is the minimized version of the ucum-lhc.js file
+)includes the source code you need for the validation, conversion and commensurable units
 functions as well as the ucum code definitions file.  We assume that your main 
 motivation for including the ucum-lhc code is to have those capabilities for 
 units of measure on your system.  To access capabilities, require the package
 and create a UcumLhcUtils object that contains those functions (as described
-below):
+below).  Starting in the @lhncbc/ucum-lhc directory:
 
-     var ucum = require('path-to-the-file/dist/ucum-lhc');
-     var utils = ucum.UcumLhcUtils.getInstance();
+    var ucum = require(./dist/ucum-lhc");
+    var utils = ucum.UcumLhcUtils.getInstance();
   
 #### Client side
 
-You can clone or download the UCUM LHC code from the 
-[GitHub site](https://github.com/lhncbc/ucum-lhc).  You will then need to
-include the ucum-lhc.min.js module in your browser code:
-
-      <script src="path-to-the-file/dist/ucum-lhc.min.js"></script>
+    <script src="./dist/ucum-lhc.min.js"></script>
 
 The validation, conversion and commensurable units functions are available from 
-the _ucumPkg.UcumLhcUtils_ class.  In your javascript code access those functions 
-via the ucumPkg object.  For example, 
+the _ucumPkg.UcumLhcUtils_ class.  In your client side javascript code access 
+those functions via the ucumPkg object.  For example, 
 
-        var utils = ucumPkg.UcumLhcUtils.getInstance();
+    var parseResp = ucumPkg.UcumLhcUtils.getInstance().validateUnitString(uStr, true);
         
 #### Function descriptions
         
