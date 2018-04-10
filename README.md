@@ -68,7 +68,8 @@ functions as well as the ucum code definitions file.  We assume that your main
 motivation for including the ucum-lhc code is to have those capabilities for 
 units of measure on your system.  To access capabilities, require the package
 and create a UcumLhcUtils object that contains those functions (as described
-below).  Starting in the @lhncbc/ucum-lhc directory:
+below).  Starting in the installed directory (../node_modules/@lhncbc/ucum-lhc 
+for an npm install; ../bower_components/ucum-lhc for a bower install):
 
     var ucum = require(./dist/ucum-lhc");
     var utils = ucum.UcumLhcUtils.getInstance();
