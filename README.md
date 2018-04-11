@@ -39,9 +39,7 @@ to install the ucum-lhc npm package.  (npm is
 
 This will install the @lhncbc/ucum-lhc directory in your node_modules diretory. 
 The dist subdirectory will contain ucum-lhc.js and ucum-lhc.min.js (minimized
-version of ucum-lhc.js) and a data subdirectory that includes a separate json 
-file of the ucum data (which is also included in ucum-lhc.js and 
-ucum-lhc.min.js).
+version of ucum-lhc.js).
 
 #### Getting the code as a bower package
 
@@ -54,9 +52,7 @@ package using the bower install command
     
 This will install the ucum-lhc directory in your bower_components directory.
 The dist subdirectory will contain ucum-lhc.js and ucum-lhc.min.js (minimized
-version of ucum-lhc.js) and a data subdirectory that includes a separate json 
-file of the ucum data (which is also included in ucum-lhc.js and 
-ucum-lhc.min.js).
+version of ucum-lhc.js).
 
 ### Using the code 
       
@@ -68,13 +64,17 @@ functions as well as the ucum code definitions file.  We assume that your main
 motivation for including the ucum-lhc code is to have those capabilities for 
 units of measure on your system.  To access capabilities, require the package
 and create a UcumLhcUtils object that contains those functions (as described
-below).  Starting in the installed directory (../node_modules/@lhncbc/ucum-lhc 
-for an npm install; ../bower_components/ucum-lhc for a bower install):
+below).  Starting in the npm installed directory (./node_modules/@lhncbc/ucum-lhc): 
+
 
     var ucum = require(./dist/ucum-lhc");
     var utils = ucum.UcumLhcUtils.getInstance();
   
 #### Client side
+
+Include the ucum-lhc.min.js package in your html file.  Starting in the 
+installed directory (./node_modules/@lhncbc/ucum-lhc for an npm package; 
+./bower_components/ucum_lhc for a bower package) specify it as:
 
     <script src="./dist/ucum-lhc.min.js"></script>
 
