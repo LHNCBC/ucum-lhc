@@ -25,6 +25,12 @@ export var Ucum = {
   dimLen_: 7,
 
   /**
+   *  The characters used as valid operators in a UCUM unit express,
+   *  where '.' is for multiplication and '/' is for division.
+   */
+  validOps_: ['.', '/'],
+
+  /**
    *  The number of decimal digits to be displayed for a unit amount
    */
   decDigits_ : 2,

@@ -151,5 +151,5 @@ describe('Test construction of name data for constructed units', function() {
     var constructedName = '[' + troyUnit2.name_ + ']/[' + avUnit2.name_ + ']';
     assert.equal(result.name_, constructedName);
   });
-}) ; // end Test removal of guidance data for constructed units
+}) ; // end Test construction of name data for constructed units
 

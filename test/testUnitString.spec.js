@@ -88,6 +88,51 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('Test for unit string with double operators', function() {
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var origString = 'mg/.K';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return the origString unchanged", function() {
+      assert.equal(retOrig, origString);
+    });
+    it("should return a message about the double operator", function() {
+      assert.equal(1, respMsg.length);
+      assert.equal("mg/.K is not a valid UCUM code. A unit code is missing " +
+                   "between ->/<- and ->.<- in ->/.<- .",
+                   respMsg[0]);
+    });
+  }) ;
+
+  describe('Test for unit string starting with .', function() {
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var origString = '.3.m';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return the origString unchanged", function() {
+      assert.equal(retOrig, origString);
+    });
+    it("should return a message about the multiplication operator", function() {
+      assert.equal(1, respMsg.length);
+      assert.equal(".3.m is not a valid UCUM code. The multiplication " +
+        "operator at the beginning of the expression is not valid. A " +
+        "multiplication operator must appear only between two codes.",
+        respMsg[0]);
+    });
+  }) ;
+
   describe('Test for unit string 3mg/[den]', function() {
     var uString = UnitString.getInstance();
     var mgUnit = uTabs.getUnitByCode('mg').clone();
