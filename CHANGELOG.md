@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.10] - 2018-04-12
+- updates to register bower package
+
 ## [2.1.9] - 2018-04-03
 - updates to third party and UCUM LHC license information
 

@@ -29323,15 +29323,20 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       } else {
         var dimVec = null;
         var fromDim = fromUnit.getProperty('dim_');
-        try {
-          dimVec = fromDim.getProperty('dimVec_');
-        } catch (err) {
-          if (err.message === "Dimension does not have requested property(dimVec_)") dimVec = null;
-        }
-        if (dimVec) {
-          var utab = UnitTables.getInstance();
-          commUnits = utab.getUnitsByDimension(dimVec);
-        }
+        if (!fromDim) {
+          retMsg.push('No commensurable units were found for ' + fromName);
+        } else {
+          try {
+            dimVec = fromDim.getProperty('dimVec_');
+          } catch (err) {
+            retMsg.push(err.message);
+            if (err.message === "Dimension does not have requested property(dimVec_)") dimVec = null;
+          }
+          if (dimVec) {
+            var utab = UnitTables.getInstance();
+            commUnits = utab.getUnitsByDimension(dimVec);
+          }
+        } // end if the from unit has a dimension vector
       } // end if we found a "from" unit
       return [commUnits, retMsg];
     } // end commensurablesList
