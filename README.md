@@ -56,17 +56,17 @@ version of ucum-lhc.js).
 
 ### Using the code 
 
-The ucum-lhc.min.js file (which is the minimized version of the ucum-lhc.js file
-)includes the source code you need for the validation, conversion and commensurable units
-functions as well as the ucum code definitions file.  We assume that your main 
-motivation for including the ucum-lhc code is to have those capabilities for 
-units of measure on your system.  
+The ucum-lhc.min.js file (which is the minimized version of the ucum-lhc.js 
+file) includes the source code you need for the validation, conversion and 
+commensurable units functions as well as the ucum code definitions file.  We 
+assume that your main motivation for including the ucum-lhc code is to have 
+those capabilities for units of measure on your system.  
 
 #### Server side
-To access those capabilities from your server side code, require the package
+To access those capabilities from your server side code, require the npm package
 and create a UcumLhcUtils object that contains those functions.
 
-    var ucum = require(./dist/ucum-lhc");
+    var ucum = require('@lhncbc/ucum-lhc');
     var utils = ucum.UcumLhcUtils.getInstance();
   
 #### Client side
