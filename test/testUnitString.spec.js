@@ -428,10 +428,25 @@ describe('Test parseString method', function() {
 
   describe('test for a constructed unit m2/g', function() {
     var uString = UnitString.getInstance();
-    var resp = uString.parseString('m5/g2', 'validate');
+    var resp = uString.parseString('m2/g', 'validate');
     var retUnit = resp[0];
     it("should return a unit with no guidance", function() {
       assert.equal(retUnit['guidance_'], '');
+    });
+    it ("should return a unit with a name of [square meter]/[gram]", function() {
+      assert.equal(retUnit['name_'], '[square meter]/[gram]');
+    });
+  }) ;
+
+  describe('test for a constructed unit m2.g', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('m2.g', 'validate');
+    var retUnit = resp[0];
+    it("should return a unit with no guidance", function() {
+      assert.equal(retUnit['guidance_'], '');
+    });
+    it ("should return a unit with a name of [square meter]*[gram]", function() {
+      assert.equal(retUnit['name_'], '[square meter]*[gram]');
     });
   }) ;
 
@@ -481,10 +496,10 @@ describe('Test makeUnit method', function() {
     it("should return a unit with a csCode_ of m[H2O]-21", function () {
       assert.equal('m[H2O]-21', retUnit['csCode_']);
     });
-    it("should a unit with a ciCode_ of M[H2O]-21", function () {
+    it("should return a unit with a ciCode_ of M[H2O]-21", function () {
       assert.equal('M[H2O]-21', retUnit['ciCode_']);
     });
-    it("should a unit with a name_ of meter of water column<sup>-21</sup>", function () {
+    it("should return a unit with a name_ of meter of water column<sup>-21</sup>", function () {
       assert.equal('meter of water column<sup>-21</sup>', retUnit['name_']);
     });
     it("should return a unit with a class_ of clinical", function () {
@@ -510,10 +525,10 @@ describe('Test makeUnit method', function() {
     it("should return a unit with a csCode_ of m[H2O]21", function () {
       assert.equal('m[H2O]21', retUnit['csCode_']);
     });
-    it("should a unit with a ciCode_ of M[H2O]21", function () {
+    it("should return a unit with a ciCode_ of M[H2O]21", function () {
       assert.equal('M[H2O]21', retUnit['ciCode_']);
     });
-    it("should a unit with a name_ of meter of water column<sup>21</sup>", function () {
+    it("should return a unit with a name_ of meter of water column<sup>21</sup>", function () {
       assert.equal('meter of water column<sup>21</sup>', retUnit['name_']);
     });
     it("should return a unit with a class_ of clinical", function () {

@@ -638,7 +638,7 @@ export class Unit {
     else if (unit2.ciCode_)
       retUnit.ciCode_ = unit2.invertString(unit2.ciCode_) ;
 
-    this.guidance_ = '';
+    retUnit.guidance_ = '';
 
     retUnit.magnitude_ /= unit2.magnitude_;
 
