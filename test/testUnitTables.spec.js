@@ -44,3 +44,31 @@ describe('Test getUnitBySynonym method', function() {
   });
 
 });  // end of getUnitBySynonym tests
+
+describe('Test getUnitByCode method', function() {
+
+  describe('Test request with no code specified ', function() {
+
+    var retObj = uTabs.getUnitByCode();
+    it("should return a null unit", function() {
+      assert.equal(null, retObj);
+    });
+  });
+
+  describe('Test request a valid code specified', function () {
+
+    var retObj = uTabs.getUnitByCode('m');
+    it("should show that a unit is returned and with the correct name", function() {
+      assert.notEqual(null, retObj);
+      assert.equal('meter', retObj['name_']);
+    });
+  });
+
+  describe('Test request an invalid code specified', function () {
+
+    var retObj = uTabs.getUnitByCode('CEL');
+    it("should show that no unit is returned", function() {
+      assert.equal(null, retObj);
+    });
+  });
+});  // end of getUnitByCode tests

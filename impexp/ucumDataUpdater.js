@@ -88,7 +88,12 @@ export class UcumDataUpdater {
       // or the synonyms can get messed up.
       record['synonyms'] = record['synonyms'].replace(/\s+/g, " ")
       if (existUnit) {
-        upd.updateUnit(existUnit, record);
+        if (existUnit[Ucum.csvCols_[Ucum.inputKey_]] === record[Ucum.inputKey_])
+         upd.updateUnit(existUnit, record);
+        else
+          console.log('Unit update error.  Trying to update existing record ' +
+                      `${existUnit[Ucum.csvCols_[Ucum.inputKey_]]} with new ` +
+                      `record ${record[Ucum.inputKey_]}`);
       }
       else {
         upd.addNewUnit(record);
@@ -139,8 +144,6 @@ export class UcumDataUpdater {
    * @param inputRec the row from the input file for the unit
    */
   addNewUnit(inputRec) {
-
-    //let key = inputRec[Ucum.inputKey_] ;
 
     var us = UnitString.getInstance();
     var parseResp = us.parseString(inputRec[Ucum.inputKey_]);

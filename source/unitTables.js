@@ -54,26 +54,6 @@ export class UnitTables {
     this.unitCodes_ = {};
 
     /**
-     * Tracks units by code using an uppercase version, e.g., MG instead of
-     * mg.  Searched if the code is not found in the unitCodes_ table.
-     *
-     * @type hash - key is the uppercase version of code;
-     *              value is the reference to the Unit object.  Codes must
-     *              be unique.
-     */
-    this.unitUcCodes_ = {};
-
-    /**
-     * Tracks units by code using an lowercase version, e.g., [ph] instead of
-     * [pH].  Searched if the code is not found in the unitCodes_ table.
-     *
-     * @type hash - key is the lowercase version of code;
-     *              value is the reference to the Unit object.  Codes must
-     *              be unique.
-     */
-    this.unitLcCodes_ = {};
-
-    /**
      * Keeps track of the order in which units are defined.  The order is
      * important because unit definitions build on previous definitions.
      *
@@ -208,21 +188,16 @@ export class UnitTables {
     let uCode = theUnit['csCode_'];
     if (uCode) {
 
-      let upCode = uCode.toUpperCase();
-      let downCode = uCode.toLowerCase();
-
       if (this.unitCodes_[uCode])
         throw(new Error(`UnitTables.addUnitCode called, already contains entry for ` +
               `unit with code = ${uCode}`));
       else {
         this.unitCodes_[uCode] = theUnit;
-        this.unitUcCodes_[upCode] = theUnit;
-        this.unitLcCodes_[downCode] = theUnit;
         this.codeOrder_.push(uCode);
       }
     }
     else
-      throw(new Error('UnitAtomsTable.addUnitCode called for unit that has ' +
+      throw(new Error('UnitTables.addUnitCode called for unit that has ' +
                       'no code.')) ;
 
   } // end addUnitCode
@@ -359,9 +334,9 @@ export class UnitTables {
 
 
   /**
-   *  Returns a unit object based on the unit's code.  Tries first on
-   *  the code as passed in and then, if the unit is not found, on a
-   *  lower case version of the code and then an upper case version.
+   *  Returns a unit object based on the unit's code.  Tries to find the unit
+   *  based on the uCode passed in.  This does not try an upper or lower case
+   *  version of the code, or look in any other table.
    *
    *  @param uCode the code of the unit to be returned
    *  @returns the unit object or null if it is not found
@@ -370,13 +345,7 @@ export class UnitTables {
     let retUnit = null ;
     if (uCode) {
       retUnit = this.unitCodes_[uCode];
-      if (!retUnit) {
-        retUnit = this.unitLcCodes_[uCode.toLowerCase()];
-        if (!retUnit) {
-          retUnit = this.unitUcCodes_[uCode.toUpperCase()];
-        } // if not found in unitLcCodes_
-      } // if not found in unitCodes_
-    } // if we got a unit code
+    }
     return retUnit ;
   }
 
