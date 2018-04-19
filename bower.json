@@ -1,27 +1,26 @@
 {
   "name": "ucum-lhc",
   "description": "Implements Unified Code for Units of Measure functions as javascript library",
-  "version": "2.1.11",
+  "version": "2.1.12",
   "main": "dist/ucum-lhc.js",
-  "license": "LICENSE.md",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lhncbc/ucum-lhc"
+  },
   "ignore": [
-    "config",
-    "coverage",
-    "cshrc.ucum",
-    "datastuff",
-    "demo",
-    "dist/es5",
-    "dist/assets",
-    "dist/stylesheets",
+    "demo-dist/",
+    "demo/",
+    "dist/data",
+    "impexp/",
+    "source/",
+    "test/",
     "Gruntfile.js",
+    "cshrc.ucum",
+    "data",
+    "demo.html",
     "index.html",
-    "javaSource",
-    "libs",
-    "nbproject",
-    "npm-shrinkwrap.json",
-    "package.json",
-    "source",
-    "stuff",
-    "stylesheets"
+    "npm-shrinkwrap",
+    "package.json"
   ]
 }
