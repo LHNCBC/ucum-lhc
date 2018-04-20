@@ -334,9 +334,8 @@ export class UnitTables {
 
 
   /**
-   *  Returns a unit object based on the unit's code.  Tries to find the unit
-   *  based on the uCode passed in.  This does not try an upper or lower case
-   *  version of the code, or look in any other table.
+   *  Returns a unit object with a case-sensitive code matching the
+   *  uCode parameter, or null if no unit is found with that code.
    *
    *  @param uCode the code of the unit to be returned
    *  @returns the unit object or null if it is not found
