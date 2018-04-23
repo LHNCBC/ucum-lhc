@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.13] - 2018-04-26
+- added list selection listener to unit expression field on validation
+tab of the demo page; fixed autofill problem on Edge browser.
+
 ## [2.1.10] - 2018-04-12
 - updates to register bower package
 
