@@ -55,7 +55,7 @@ describe('Test getUnitByCode method', function() {
     });
   });
 
-  describe('Test request a valid code specified', function () {
+  describe('Test request with a valid code specified', function () {
 
     var retObj = uTabs.getUnitByCode('m');
     it("should show that a unit is returned and with the correct name", function() {
@@ -64,7 +64,7 @@ describe('Test getUnitByCode method', function() {
     });
   });
 
-  describe('Test request an invalid code specified', function () {
+  describe('Test request with an invalid code specified', function () {
 
     var retObj = uTabs.getUnitByCode('CEL');
     it("should show that no unit is returned", function() {

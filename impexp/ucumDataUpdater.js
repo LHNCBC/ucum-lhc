@@ -132,7 +132,7 @@ export class UcumDataUpdater {
    */
   updateUnit(existingUnit, inputRec) {
     for (var colName in Ucum.csvCols_) {
-      if (colName != Ucum.inputKey_) {
+      if (colName != Ucum.inputKey_ && colName !== 'source') {
         existingUnit[Ucum.csvCols_[colName]] = inputRec[colName];
       }
     }
