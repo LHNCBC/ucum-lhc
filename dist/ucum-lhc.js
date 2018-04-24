@@ -30534,7 +30534,8 @@ var UnitString = exports.UnitString = function () {
           origString = mkUArray[1];
           // Create a unit object out of each un element
           var uLen = uArray.length;
-          for (var u1 = 0; u1 < uLen && !endProcessing; u1++) {
+          for (var u1 = 0; u1 < uLen; u1++) {
+            //for (let u1 = 0; u1 < uLen && !endProcessing; u1++) {
             var curCode = uArray[u1]['un'];
 
             // Determine the type of the "un" attribute of the current array element
@@ -30552,13 +30553,15 @@ var UnitString = exports.UnitString = function () {
                 var parenUnit = this._getParensUnit(curCode, origString);
                 // if we couldn't process the string, set the end flag and bypass
                 // further processing.
-                endProcessing = parenUnit[1];
+                if (!endProcessing) endProcessing = parenUnit[1];
 
                 // If we're good, put the unit in the uArray and replace the
                 // curCode, which contains the parentheses placeholders, etc.,
                 // with the unit's code - including any substitutions.
                 if (!endProcessing) {
                   uArray[u1]['un'] = parenUnit[0];
+                } else {
+                  uArray[u1]['un'] = 1;
                 }
               } // end if the curCode contains a parenthesized unit
 
@@ -30566,7 +30569,10 @@ var UnitString = exports.UnitString = function () {
               // _makeUnit to create a unit for it.
               else {
                   var uRet = this._makeUnit(curCode, origString);
-                  if (uRet[0] === null) endProcessing = true;else {
+                  if (uRet[0] === null) {
+                    endProcessing = true;
+                    uArray[u1]['un'] = 1;
+                  } else {
                     uArray[u1]['un'] = uRet[0];
                     origString = uRet[1];
                   }

@@ -381,6 +381,40 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('test for unit string culture/meqs with suggestions', function() {
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var origString = 'culture/meqs';
+    var resp = uString.parseString('culture/meqs', 'validate', true);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    var respSugg = resp[3];
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return 0 messages", function() {
+      assert.equal(respMsg.length, 0);
+    });
+    it("should return suggestions for both strings", function() {
+      assert.equal(respSugg.length, 2);
+      assert.equal(respSugg[0]['invalidUnit'], 'culture');
+      assert.equal(respSugg[0]['msg'], 'culture is not a valid UCUM code.  ' +
+        'We found possible units that might be what was meant:');
+      assert.equal(respSugg[0]['units'].length, 2);
+      assert.deepEqual(respSugg[0]['units'][0],
+        ["[CCID_50]","50% cell culture infectious dose",null]);
+      assert.deepEqual(respSugg[0]['units'][1],
+        ["[TCID_50]","50% tissue culture infectious dose",null]);
+      assert.equal(respSugg[1]['invalidUnit'], 'meqs');
+      assert.equal(respSugg[1]['msg'], 'meqs is not a valid UCUM code.  ' +
+        'We found possible units that might be what was meant:');
+      assert.equal(respSugg[1]['units'].length, 1);
+      assert.deepEqual(respSugg[1]['units'][0],
+        ["meq","milliequivalent","equivalence equals moles per valence"]);
+    });
+  }) ;
+
   describe('test for a constructed unit m2/g', function() {
     var uString = UnitString.getInstance();
     var resp = uString.parseString('m5/g2', 'validate');
