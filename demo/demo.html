@@ -136,39 +136,7 @@
                                                              'Hide', 'Show')"
                 type="button">Show entry hints</button></p>
         <div id="hints" style="display: none">
-          <h4 class="small-print" style="text-align: left">Unit Expression creation hints</h4>
-<p class="small-print">See the <a href="http://unitsofmeasure.org/ucum.html">
-    UCUM Specification</a> for full descriptions of grammar and syntax rules.
-<ul class="small-print">
-    <li>A <a href="http://unitsofmeasure.org/ucum.html#section-Prefixes">UCUM
-        defined prefix</a> can be applied to metric units, e.g. kg for
-        kilo gram (where k is the prefix and g is the base unit).</li>
-    <li>Simple units may be <a href="http://unitsofmeasure.org/ucum.html#para-9">
-        raised to a power</a> by appending an integer number to the end of the
-        unit term.  Negative exponents must be preceded by a minus sign ('-').
-        Positive exponents may be preceded by a plus sign ('+') although the
-        sign may be omitted.</li>
-    <li>All units can be combined in an <a href="http://unitsofmeasure.org/ucum.html#para-7">
-        algebraic term</a> using the operators for multiplication (period '.')
-        and division (solidus '/').</li>
-    <li>No blanks are allowed within the unit expression.</li>
-    <li>Multiple terms in an expression must be separated by an arithmetic
-        operator - either the multiplication operator (.) or the division
-        operator (/).</li>
-    <li>The multiplication operator (.) must be explicity specified; it is never
-        assumed.</li>
-    <li>While the multiplication operator (.) must appear between two unit terms,
-        the division operator (/) may appear at the beginning of the expression,
-        indicating inversion of the following term.  However, the division
-        operator normally appears between two terms.</li>
-    <li>Terms are evaluated from left to right, with multiplication and
-        division having the same precedence.</li>
-    <li><a href="http://unitsofmeasure.org/ucum.html#para-10">Parentheses</a>
-        may be used to override normal left-to-right evaluation
-        of an expreession.  For example kg/m.s2 divides kg by m and multiplies
-        the result by s2.   kg/(m.s2) divides kg by the result of multiplying
-        m by s2.</li>
-</ul>
+          <!--#include file="UcumExpressionHints.html" -->
         </div><!-- hints div -->
       </div><!-- singleString div -->
       <div id="filevalidation" class="section">
@@ -222,7 +190,7 @@
           <a href="http://unitsofmeasure.org">Unified Code
             for Units Of Measure</a>
           <a href="http://unitsofmeasure.org/ucum-essence.xml">ucum-essence.xml</a> file,
-          version 2.1, revision 442, dated 2017-11-21 19:04:52 -0500 (Tue, 21 Nov 2017), with
+          <!--#include file="UcumEssenceVersion.html" -->, with
           <a href="demo/UcumEssenceModifications.html">minor content changes.</a></li>
         <li>The ucum-essence.xml file has also been extended with commonly used
           combinations of UCUM units found in <a href="https://loinc.org">LOINC</a>,
