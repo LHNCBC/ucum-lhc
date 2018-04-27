@@ -25,7 +25,7 @@ export var Ucum = {
   dimLen_: 7,
 
   /**
-   *  The characters used as valid operators in a UCUM unit express,
+   *  The characters used as valid operators in a UCUM unit expression,
    *  where '.' is for multiplication and '/' is for division.
    */
   validOps_: ['.', '/'],

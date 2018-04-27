@@ -27692,7 +27692,7 @@ var Ucum = exports.Ucum = {
   dimLen_: 7,
 
   /**
-   *  The characters used as valid operators in a UCUM unit express,
+   *  The characters used as valid operators in a UCUM unit expression,
    *  where '.' is for multiplication and '/' is for division.
    */
   validOps_: ['.', '/'],
@@ -27961,7 +27961,7 @@ var Dimension = exports.Dimension = function () {
      * dimension object's vector.  This object's vector is changed.
      * If either dimension vector is null, no changes are made to this object.
      *
-     * @param dim2 the dimension whose vector is to be subtraced from this one
+     * @param dim2 the dimension whose vector is to be subtracted from this one
      * @return this object
      * @throws an exception if dim2 is not a Dimension object
      **/
@@ -30052,29 +30052,27 @@ var Unit = exports.Unit = function () {
         if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + retUnit.name_ + " " + 'failed.');
       } // end if this unit has a conversion function
 
-      else {
-          if (unit2.cnv_ != null) {
-            if (retUnit.cnv_ == null && (!retUnit.dim_ || retUnit.dim_.isZero())) {
-              var cp = retUnit.magnitude_;
-              retUnit.assign(unit2);
-              retUnit.cnvPfx_ *= cp;
-            } else throw new Error("Attempt to multiply non-ratio unit " + unit2.name_);
-          } // end if unit2 has a conversion function
+      else if (unit2.cnv_ != null) {
+          if (retUnit.cnv_ == null && (!retUnit.dim_ || retUnit.dim_.isZero())) {
+            var cp = retUnit.magnitude_;
+            retUnit.assign(unit2);
+            retUnit.cnvPfx_ *= cp;
+          } else throw new Error("Attempt to multiply non-ratio unit " + unit2.name_);
+        } // end if unit2 has a conversion function
 
-          else {
-              retUnit.magnitude_ *= unit2.magnitude_;
-              // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
-              // is a dimension in unit2.dim_; else just transfer it to this dimension
-              if (!retUnit.dim_ || retUnit.dim_ && !retUnit.dim_.dimVec_) {
-                if (unit2.dim_ && unit2.dim_ instanceof Dimension) retUnit.dim_ = unit2.dim_.clone();else retUnit.dim_ = unit2.dim_;
+        else {
+            retUnit.magnitude_ *= unit2.magnitude_;
+            // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
+            // is a dimension in unit2.dim_; else just transfer it to this dimension
+            if (!retUnit.dim_ || retUnit.dim_ && !retUnit.dim_.dimVec_) {
+              if (unit2.dim_ && unit2.dim_ instanceof Dimension) retUnit.dim_ = unit2.dim_.clone();else retUnit.dim_ = unit2.dim_;
+            }
+            // Else this.dim_ is there.  If there is a dimension for unit2,
+            // add it to this one.
+            else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
+                retUnit.dim_.add(unit2.dim_);
               }
-              // Else this.dim_ is there.  If there is a dimension for unit2,
-              // add it to this one.
-              else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
-                  retUnit.dim_.add(unit2.dim_);
-                }
-            } // end if unit2 does not have a conversion function
-        } // end if this unit does not have a conversion function
+          } // end if unit2 does not have a conversion function
 
       // Concatenate the unit info (name, code, etc) for all cases
       // where the multiplication was performed (an error wasn't thrown)
@@ -30118,7 +30116,7 @@ var Unit = exports.Unit = function () {
 
       retUnit.magnitude_ /= unit2.magnitude_;
 
-      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = retUnit.printSymbol_ + '/' + unit2.printSymbol_;else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
+      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = retUnit.printSymbol_ + '/' + unit2.printSymbol_;else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_);
 
       // Continue if unit2 has a dimension object.
       // If this object has a dimension object, subtract unit2's dim_ object from
