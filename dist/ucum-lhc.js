@@ -30032,8 +30032,7 @@ var Unit = exports.Unit = function () {
     /**
      * Multiplies this unit with another unit. If one of the
      * units is a non-ratio unit the other must be dimensionless or
-     * else an exception is thrown. This special case treatment allows
-     * us to scale non-ratio units.
+     * else an exception is thrown. 
      *
      * This function does NOT modify this unit
      * @param unit2 the unit to be multiplied with this one
@@ -30065,7 +30064,7 @@ var Unit = exports.Unit = function () {
             // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
             // is a dimension in unit2.dim_; else just transfer it to this dimension
             if (!retUnit.dim_ || retUnit.dim_ && !retUnit.dim_.dimVec_) {
-              if (unit2.dim_ && unit2.dim_ instanceof Dimension) retUnit.dim_ = unit2.dim_.clone();else retUnit.dim_ = unit2.dim_;
+              if (unit2.dim_) retUnit.dim_ = unit2.dim_.clone();else retUnit.dim_ = unit2.dim_;
             }
             // Else this.dim_ is there.  If there is a dimension for unit2,
             // add it to this one.
@@ -31623,7 +31622,7 @@ var UnitString = exports.UnitString = function () {
                   if (u2 === 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
                     uString = '';
                   }
-                  var theName = isDiv ? uString + thisOp + '[' + nextUnit.getProperty('name_') + ']' : uString + '*[' + nextUnit.getProperty('name_') + ']';
+                  var theName = uString + (isDiv ? thisOp : "*") + '[' + nextUnit.getProperty('name_') + ']';
 
                   var theCode = uString + thisOp + nextUnit.getProperty('csCode_');
                   var ciCode = uString + thisOp + nextUnit.getProperty('ciCode_');
@@ -31648,7 +31647,7 @@ var UnitString = exports.UnitString = function () {
                 if (typeof finalUnit !== 'number') {
                   var fMag = finalUnit.getProperty('magnitude_');
                   isDiv ? fMag /= nextUnit : fMag *= nextUnit;
-                  var _theName = isDiv ? '[' + finalUnit.getProperty('name_') + ']' + thisOp + nextUnit.toString() : '[' + finalUnit.getProperty('name_') + ']*' + nextUnit.toString();
+                  var _theName = '[' + finalUnit.getProperty('name_') + ']' + (isDiv ? thisOp : "*") + nextUnit.toString();
                   var _theCode = finalUnit.getProperty('csCode_') + thisOp + nextUnit.toString();
                   finalUnit.assignVals({ 'csCode_': _theCode,
                     'name_': _theName,
