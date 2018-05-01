@@ -179,7 +179,7 @@ export class Dimension {
    * dimension object's vector.  This object's vector is changed.
    * If either dimension vector is null, no changes are made to this object.
    *
-   * @param dim2 the dimension whose vector is to be subtraced from this one
+   * @param dim2 the dimension whose vector is to be subtracted from this one
    * @return this object
    * @throws an exception if dim2 is not a Dimension object
    **/

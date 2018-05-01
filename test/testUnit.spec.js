@@ -133,20 +133,23 @@ describe('Test Unit convertFrom/convertTo methods', function() {
 
 }); // end Test Unit convertFrom method
 
-describe('Test removal of guidance data for constructed units', function() {
-  it('should return a new unit with a blank guidance value when two units ' +
+describe('Test construction of name data for constructed units', function() {
+  it('should return a new unit with names in square brackets when two units ' +
     'are multiplied', function(){
-    var avUnit = uTabs.getUnitByCode('[lb_av]');
-    var troyUnit = uTabs.getUnitByCode('[lb_tr]');
-    var result = troyUnit.multiplyThese(avUnit) ;
-    assert.equal(result.guidance_, '');
+    var avUnit1 = uTabs.getUnitByCode('[lb_av]');
+    var troyUnit1 = uTabs.getUnitByCode('[lb_tr]');
+    var result = troyUnit1.multiplyThese(avUnit1) ;
+    var constructedName = '[' + troyUnit1.name_ + ']*[' + avUnit1.name_ + ']';
+    assert.equal(result.name_, constructedName);
   });
 
-  it('should return a new unit with a blank guidance value when one unit ' +
+  it('should return a new unit with names in square brackets when one unit ' +
     'is divided by another', function(){
-    var avUnit = uTabs.getUnitByCode('[lb_av]');
-    var troyUnit = uTabs.getUnitByCode('[lb_tr]');
-    var result = troyUnit.divide(avUnit) ;
-    assert.equal(result.guidance_, '');
+    var avUnit2 = uTabs.getUnitByCode('[lb_av]');
+    var troyUnit2 = uTabs.getUnitByCode('[lb_tr]');
+    var result = troyUnit2.divide(avUnit2) ;
+    var constructedName = '[' + troyUnit2.name_ + ']/[' + avUnit2.name_ + ']';
+    assert.equal(result.name_, constructedName);
   });
-}) ; // end Test removal of guidance data for constructed units
+}) ; // end Test construction of name data for constructed units
+
