@@ -1398,10 +1398,8 @@ export class UnitString {
               if (u2 === 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
                 uString = '';
               }
-              let theName = (isDiv ? uString + thisOp + '[' +
-                                     nextUnit.getProperty('name_') + ']'
-                                   : uString + '*[' +
-                                     nextUnit.getProperty('name_') + ']');
+              let theName = uString + (isDiv ? thisOp:"*") + '[' +
+                                       nextUnit.getProperty('name_') + ']' ;
 
               let theCode = uString + thisOp + nextUnit.getProperty('csCode_');
               let ciCode = uString + thisOp + nextUnit.getProperty('ciCode_');
@@ -1428,10 +1426,8 @@ export class UnitString {
               let fMag = finalUnit.getProperty('magnitude_');
               isDiv ? fMag /= nextUnit :
                   fMag *= nextUnit;
-              let theName = (isDiv ? '[' + finalUnit.getProperty('name_') + ']' +
-                                     thisOp + nextUnit.toString()
-                                   : '[' + finalUnit.getProperty('name_') +
-                                     ']*' + nextUnit.toString()) ;
+              let theName = '[' + finalUnit.getProperty('name_') + ']' +
+                             (isDiv ? thisOp:"*") + nextUnit.toString() ;
               let theCode = finalUnit.getProperty('csCode_') + thisOp +
                   nextUnit.toString();
               finalUnit.assignVals({'csCode_' : theCode ,

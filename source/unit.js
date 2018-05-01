@@ -538,8 +538,7 @@ export class Unit {
   /**
    * Multiplies this unit with another unit. If one of the
    * units is a non-ratio unit the other must be dimensionless or
-   * else an exception is thrown. This special case treatment allows
-   * us to scale non-ratio units.
+   * else an exception is thrown. 
    *
    * This function does NOT modify this unit
    * @param unit2 the unit to be multiplied with this one
@@ -574,7 +573,7 @@ export class Unit {
       // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
       // is a dimension in unit2.dim_; else just transfer it to this dimension
       if (!retUnit.dim_ || (retUnit.dim_ && !retUnit.dim_.dimVec_)) {
-        if (unit2.dim_ && unit2.dim_ instanceof Dimension)
+        if (unit2.dim_)
           retUnit.dim_ = unit2.dim_.clone();
         else
           retUnit.dim_ = unit2.dim_;
