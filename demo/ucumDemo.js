@@ -165,7 +165,7 @@ export class UcumDemo {
     // displayed when the form is reloaded.   This should not be necessary,
     // because the input field is defined with an attribute of
     // autocomplete="off".   But, Edge doesn't seem to feel like paying
-    // attention to that.  So this is a workaround.  BAH!q
+    // attention to that.  So this is a workaround.  BAH!
     let valFld = document.getElementById("valString");
     valFld.innerHTML = "";
     valFld.setAttribute("autocomplete", "false");
