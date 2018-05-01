@@ -216,19 +216,21 @@ export class UnitString {
       let finalUnit = retObj[0];
 
       // Do a final check to make sure that finalUnit is a unit and not
-      // just a number.  Something like "1/{HCP}" will return a "unit" of 1
+      // just a number.  Something like "8/{HCP}" will return a "unit" of 8
       // - which is not a unit.
-      if (intUtils_.isNumericString(finalUnit) && finalUnit !== 1) {
-        let newUnit = new Unit({'csCode_': origString});
-        if (newUnit) {
-          newUnit['magnitude_'] = finalUnit;
+      if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
+        if (origString !== '1' && (finalUnit === 1 || finalUnit === '1')) {
+          finalUnit = new Unit({'csCode_': origString});
+          finalUnit['magnitude_'] = 1;
         }
         else {
-          throw (new Error('error processing numerical unit'));
+          this.retMsg_.push(`The number ${finalUnit} is not a valid unit code.`);
+          finalUnit = null ;
         }
-        retObj[0] = newUnit;
+        retObj[0] = finalUnit;
       } // end final check
     } // end if no annotation errors were found
+
     retObj[2] = this.retMsg_;
     if (this.suggestions_ && this.suggestions_.length > 0)
       retObj[3] = this.suggestions_ ;
@@ -354,9 +356,9 @@ export class UnitString {
         endProcessing = true;
       }
     }
-    if (!endProcessing)
+    if (!endProcessing) {
       finalUnit = this._performUnitArithmetic(uArray, origString);
-
+    }
     return [finalUnit, origString];
   } // end _parseTheString
 
@@ -995,7 +997,7 @@ export class UnitString {
           origString = origString.replace(uCode, addBrackets);
           this.retMsg_.push(`${uCode} is not a valid unit expression, but ` +
             `${addBrackets} is.\n` + this.vcMsgStart_ +
-            addBrackets + this.vcMsgEnd_);
+            `${addBrackets} (${retUnit.name_})${this.vcMsgEnd_}`);
         } // end if we found the unit after adding brackets
       } // end trying to add brackets
 
@@ -1195,6 +1197,17 @@ export class UnitString {
     let befAnnoText = annoRet[1];
     let aftAnnoText = annoRet[2];
 
+    // Add the warning about annotations - just once.
+
+    if (this.bracesMsg_) {
+      let dup = false;
+      for (let r = 0; !dup && r < this.retMsg_.length; r++) {
+        dup = (this.retMsg_[r] === this.bracesMsg_);
+      }
+      if (!dup)
+        this.retMsg_.push(this.bracesMsg_);
+    }
+
     // If there's no text before or after the annotation, it's probably
     // something that should be interpreted as a 1, e.g., {KCT'U}.
     // HOWEVER, it could also be a case where someone used braces instead
@@ -1212,7 +1225,7 @@ export class UnitString {
         origString = origString.replace(annoText, tryBrackets);
         this.retMsg_.push(`${annoText} is not a valid unit expression, but ` +
           `${tryBrackets} is.\n` + this.vcMsgStart_ +
-          tryBrackets + this.vcMsgEnd_);
+          `${tryBrackets} (${retUnit.name_})${this.vcMsgEnd_}`);
       }
       // Otherwise assume that this should be interpreted as a 1
       else {
@@ -1221,14 +1234,6 @@ export class UnitString {
           this.retMsg_.pop();
         }
         uCode = 1;
-        if (this.bracesMsg_) {
-          let dup = false;
-          for (let r = 0; !dup && r < this.retMsg_.length; r++) {
-            dup = (this.retMsg_[r] === this.bracesMsg_);
-          }
-          if (!dup)
-            this.retMsg_.push(this.bracesMsg_);
-        }
         retUnit = 1;
       }
     } // end if it's only an annotation
@@ -1324,6 +1329,9 @@ export class UnitString {
   _performUnitArithmetic(uArray, origString) {
 
     let finalUnit = uArray[0]['un'];
+    if (intUtils_.isNumericString(finalUnit)) {
+      finalUnit = Number(finalUnit) ;
+    }
     let uLen = uArray.length ;
     let endProcessing = false ;
     // Perform the arithmetic for the units, starting with the first 2 units.

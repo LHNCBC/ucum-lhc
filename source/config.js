@@ -67,8 +67,8 @@ export var Ucum = {
    * Message that is displayed when annotations are included in a unit
    * string, to let the user know how they are interpreted.
    */
-  bracesMsg_ : 'Annotations (text in curley braces {}) have no influence ' +
-               'on the processing of a unit string.',
+  bracesMsg_ : 'FYI - annotations (text in curley braces {}) are interpreted ' +
+               'as "multiplied by 1" for validation and conversion purposes.',
 
   /**
    * Hash that matches unit column names to names used in the csv file

@@ -218,7 +218,8 @@ describe('Test parseString method', function() {
     it("should return a message about the correct code", function() {
       assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
       assert.equal('{degF} is not a valid unit expression, but [degF] is.\n' +
-        'Did you mean [degF]?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+        'Did you mean [degF] (degrees Fahrenheit)?', respMsg[0],
+        `respMsg = ${JSON.stringify(respMsg)}`);
     });
   }) ;
 
@@ -241,7 +242,7 @@ describe('Test parseString method', function() {
     it("should return a message about the correct code", function() {
       assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
       assert.equal('in_i is not a valid unit expression, but [in_i] is.\n' +
-        'Did you mean [in_i]?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+        'Did you mean [in_i] (inch)?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
     });
   }) ;
 

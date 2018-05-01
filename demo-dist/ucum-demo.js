@@ -470,7 +470,7 @@ var UcumDemo = exports.UcumDemo = function () {
                 } else {
                   valFld.removeAttribute("class");
                 }
-                retMsg = parseResp['ucumCode'] + ' is a valid unit expression.';
+                retMsg = parseResp['ucumCode'] + ' (' + parseResp['unit'].name + ') is ' + 'a valid unit expression.';
               }
               // Else the string is not valid - may be an error or just invalid
               else {
@@ -710,7 +710,7 @@ var UcumDemo = exports.UcumDemo = function () {
           // Set the return message.   Use the UCUM code from the "from" and "to"
           // unit objects returned.  Although the user will PROBABLY enter a
           // valid unit code from the web page, they don't have to.
-          resultMsg = fromVal.toString() + ' ' + (resultObj['fromUnit'].getProperty('csCode_') + ' = ') + (toVal.toString() + ' ') + ('' + resultObj['toUnit'].getProperty('csCode_'));
+          resultMsg = fromVal.toString() + ' ' + (resultObj['fromUnit'].getProperty('csCode_') + ' ') + ('(' + resultObj['fromUnit'].getProperty('name_') + ') = ') + (toVal.toString() + ' ') + ('' + resultObj['toUnit'].getProperty('csCode_')) + ('(' + resultObj['toUnit'].getProperty('name_') + ')');
           if (resultObj['msg'].length > 0) {
             for (var r = 0; r < resultObj['msg'].length; r++) {
               resultMsg += '<br>' + resultObj['msg'][r];

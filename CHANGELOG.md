@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.3] - 2018-05
+- modifications to ensure that plain numbers, e.g., 7, are not reported as 
+valid unit expressions.   Also added unit name to demo output messages, where
+available, to make sure user knows what unit is being reported as valid.
+
 ## [2.1.11] - 2018-04-23
 - fix for overwritten units during data update process
 

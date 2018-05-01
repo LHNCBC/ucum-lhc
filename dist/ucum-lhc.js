@@ -27734,7 +27734,7 @@ var Ucum = exports.Ucum = {
    * Message that is displayed when annotations are included in a unit
    * string, to let the user know how they are interpreted.
    */
-  bracesMsg_: 'Annotations (text in curley braces {}) have no influence ' + 'on the processing of a unit string.',
+  bracesMsg_: 'FYI - annotations (text in curley braces {}) are interpreted ' + 'as "multiplied by 1" for validation and conversion purposes.',
 
   /**
    * Hash that matches unit column names to names used in the csv file
@@ -30529,18 +30529,20 @@ var UnitString = exports.UnitString = function () {
         var finalUnit = retObj[0];
 
         // Do a final check to make sure that finalUnit is a unit and not
-        // just a number.  Something like "1/{HCP}" will return a "unit" of 1
+        // just a number.  Something like "8/{HCP}" will return a "unit" of 8
         // - which is not a unit.
-        if (intUtils_.isNumericString(finalUnit) && finalUnit !== 1) {
-          var newUnit = new Unit({ 'csCode_': origString });
-          if (newUnit) {
-            newUnit['magnitude_'] = finalUnit;
+        if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
+          if (origString !== '1' && (finalUnit === 1 || finalUnit === '1')) {
+            finalUnit = new Unit({ 'csCode_': origString });
+            finalUnit['magnitude_'] = 1;
           } else {
-            throw new Error('error processing numerical unit');
+            this.retMsg_.push('The number ' + finalUnit + ' is not a valid unit code.');
+            finalUnit = null;
           }
-          retObj[0] = newUnit;
+          retObj[0] = finalUnit;
         } // end final check
       } // end if no annotation errors were found
+
       retObj[2] = this.retMsg_;
       if (this.suggestions_ && this.suggestions_.length > 0) retObj[3] = this.suggestions_;
       return retObj;
@@ -30659,8 +30661,9 @@ var UnitString = exports.UnitString = function () {
           endProcessing = true;
         }
       }
-      if (!endProcessing) finalUnit = this._performUnitArithmetic(uArray, origString);
-
+      if (!endProcessing) {
+        finalUnit = this._performUnitArithmetic(uArray, origString);
+      }
       return [finalUnit, origString];
     } // end _parseTheString
 
@@ -31273,7 +31276,7 @@ var UnitString = exports.UnitString = function () {
               if (retUnit) {
                 retUnit = retUnit.clone();
                 origString = origString.replace(uCode, addBrackets);
-                this.retMsg_.push(uCode + ' is not a valid unit expression, but ' + (addBrackets + ' is.\n') + this.vcMsgStart_ + addBrackets + this.vcMsgEnd_);
+                this.retMsg_.push(uCode + ' is not a valid unit expression, but ' + (addBrackets + ' is.\n') + this.vcMsgStart_ + (addBrackets + ' (' + retUnit.name_ + ')' + this.vcMsgEnd_));
               } // end if we found the unit after adding brackets
             } // end trying to add brackets
 
@@ -31467,6 +31470,16 @@ var UnitString = exports.UnitString = function () {
       var befAnnoText = annoRet[1];
       var aftAnnoText = annoRet[2];
 
+      // Add the warning about annotations - just once.
+
+      if (this.bracesMsg_) {
+        var dup = false;
+        for (var r = 0; !dup && r < this.retMsg_.length; r++) {
+          dup = this.retMsg_[r] === this.bracesMsg_;
+        }
+        if (!dup) this.retMsg_.push(this.bracesMsg_);
+      }
+
       // If there's no text before or after the annotation, it's probably
       // something that should be interpreted as a 1, e.g., {KCT'U}.
       // HOWEVER, it could also be a case where someone used braces instead
@@ -31482,7 +31495,7 @@ var UnitString = exports.UnitString = function () {
         if (mkUnitRet[0]) {
           retUnit = mkUnitRet[0];
           origString = origString.replace(annoText, tryBrackets);
-          this.retMsg_.push(annoText + ' is not a valid unit expression, but ' + (tryBrackets + ' is.\n') + this.vcMsgStart_ + tryBrackets + this.vcMsgEnd_);
+          this.retMsg_.push(annoText + ' is not a valid unit expression, but ' + (tryBrackets + ' is.\n') + this.vcMsgStart_ + (tryBrackets + ' (' + retUnit.name_ + ')' + this.vcMsgEnd_));
         }
         // Otherwise assume that this should be interpreted as a 1
         else {
@@ -31491,13 +31504,6 @@ var UnitString = exports.UnitString = function () {
               this.retMsg_.pop();
             }
             uCode = 1;
-            if (this.bracesMsg_) {
-              var dup = false;
-              for (var r = 0; !dup && r < this.retMsg_.length; r++) {
-                dup = this.retMsg_[r] === this.bracesMsg_;
-              }
-              if (!dup) this.retMsg_.push(this.bracesMsg_);
-            }
             retUnit = 1;
           }
       } // end if it's only an annotation
@@ -31586,6 +31592,9 @@ var UnitString = exports.UnitString = function () {
     value: function _performUnitArithmetic(uArray, origString) {
 
       var finalUnit = uArray[0]['un'];
+      if (intUtils_.isNumericString(finalUnit)) {
+        finalUnit = Number(finalUnit);
+      }
       var uLen = uArray.length;
       var endProcessing = false;
       // Perform the arithmetic for the units, starting with the first 2 units.
