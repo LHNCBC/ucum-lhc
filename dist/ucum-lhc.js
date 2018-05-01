@@ -30052,7 +30052,7 @@ var Unit = exports.Unit = function () {
       } // end if this unit has a conversion function
 
       else if (unit2.cnv_ != null) {
-          if (retUnit.cnv_ == null && (!retUnit.dim_ || retUnit.dim_.isZero())) {
+          if (!retUnit.dim_ || retUnit.dim_.isZero()) {
             var cp = retUnit.magnitude_;
             retUnit.assign(unit2);
             retUnit.cnvPfx_ *= cp;
@@ -30077,7 +30077,7 @@ var Unit = exports.Unit = function () {
       // where the multiplication was performed (an error wasn't thrown)
       retUnit.name_ = '[' + retUnit.name_ + ']*[' + unit2.name_ + ']';
       retUnit.csCode_ = retUnit.csCode_ + '.' + unit2.csCode_;
-      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this.ciCode_ + '.' + unit2.ciCode_;else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
+      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = retUnit.ciCode_ + '.' + unit2.ciCode_;else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
       retUnit.guidance_ = '';
       if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = retUnit.printSymbol_ + '.' + unit2.printSymbol_;else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
 
