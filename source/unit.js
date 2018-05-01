@@ -559,7 +559,7 @@ export class Unit {
     } // end if this unit has a conversion function
 
     else if (unit2.cnv_ != null) {
-      if (retUnit.cnv_ == null && (!retUnit.dim_ || retUnit.dim_.isZero())) {
+      if (!retUnit.dim_ || retUnit.dim_.isZero()) {
         let cp = retUnit.magnitude_;
         retUnit.assign(unit2);
         retUnit.cnvPfx_ *= cp;
@@ -590,7 +590,7 @@ export class Unit {
     retUnit.name_ = '[' + retUnit.name_ + ']*[' + unit2.name_ + ']';
     retUnit.csCode_ = retUnit.csCode_ + '.' + unit2.csCode_;
     if (retUnit.ciCode_ && unit2.ciCode_)
-      retUnit.ciCode_ = this.ciCode_ + '.' + unit2.ciCode_;
+      retUnit.ciCode_ = retUnit.ciCode_ + '.' + unit2.ciCode_;
     else if (unit2.ciCode_)
       retUnit.ciCode_ = unit2.ciCode_;
     retUnit.guidance_ = '';
