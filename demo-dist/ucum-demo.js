@@ -128,6 +128,11 @@ var UcumDemo = exports.UcumDemo = function () {
     this.urlValDispFlds_ = UcumDemoConfig.defCols_;
     urlOpts = this.buildUrlAndOpts('validate');
     this.valAuto_ = new Def.Autocompleter.Search('valString', urlOpts[0], urlOpts[1]);
+    Def.Autocompleter.Event.observeListSelections('valString', function (demoInstance) {
+      return function () {
+        demoInstance.reportUnitStringValidity('valString', 'validationString', 'displayOnly');
+      };
+    }(this));
 
     // Set up the default category and display column defaults for the
     // converter tab and call buildUrlAndOpts to build them
@@ -246,6 +251,15 @@ var UcumDemo = exports.UcumDemo = function () {
       this.buildTabSettings('advancedSearchCnv', 'cnv');
       var prec = document.getElementById("precision");
       prec.value = Ucum.decDigits_;
+
+      // Clear the validator tab input field to avoid having a previous value
+      // displayed when the form is reloaded.   This should not be necessary,
+      // because the input field is defined with an attribute of
+      // autocomplete="off".   But, Edge doesn't seem to feel like paying
+      // attention to that.  So this is a workaround.  BAH!
+      var valFld = document.getElementById("valString");
+      valFld.innerHTML = "";
+      valFld.setAttribute("autocomplete", "false");
     }
 
     /**
@@ -543,7 +557,7 @@ var UcumDemo = exports.UcumDemo = function () {
       toField.value = null;
       toField.removeAttribute("class");
 
-      document.getElementById('resultString').innerHTML = null;
+      document.getElementById('resultString').innerHTML = '';
       document.getElementById("doConversionButton").disabled = true;
     }
 
