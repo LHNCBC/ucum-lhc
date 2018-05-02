@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - added information related to version number of the ucum-essence.xml
 file used as well as changes made to it
 
+## [2.2.0] - 2018-05-02
+- added list selection listener to unit expression field on validation
+tab of the demo page; fixed autofill problem on Edge browser.
+
+## [2.1.12] - 2018-04-26
+- changed unit name (not code) creation for constructed units to enclose
+  the name in square brackets and use an asterisk (*) for multiplication
+  instead of a period.
+  
+## [2.1.11] - 2018-04-23
+- fix for overwritten units during data update process
+
 ## [2.1.10] - 2018-04-12
 - updates to register bower package
 
