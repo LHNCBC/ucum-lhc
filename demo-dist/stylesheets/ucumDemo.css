@@ -243,7 +243,3 @@ button[disabled] {
 tr[data-fieldval] {
   vertical-align: top;
 }
-
-#valString {
-  margin-right: 3em;
-}
