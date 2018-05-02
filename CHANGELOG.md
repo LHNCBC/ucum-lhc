@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.3.0] - 2018-05-?
 - reformatted display of suggestions lists for the demo site to use a bulleted
-list of suggestions rather than a plain text list.
+list of suggestions rather than a plain text list.  Also fixed a bug that 
+prevented suggestion lists from being created for more than one unit.
 
 ## [2.2.0] - 2018-05-02
 - added list selection listener to unit expression field on validation
