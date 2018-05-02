@@ -88,6 +88,51 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('Test for unit string with double operators', function() {
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var origString = 'mg/.K';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return the origString unchanged", function() {
+      assert.equal(retOrig, origString);
+    });
+    it("should return a message about the double operator", function() {
+      assert.equal(1, respMsg.length);
+      assert.equal("mg/.K is not a valid UCUM code. A unit code is missing " +
+                   "between ->/<- and ->.<- in ->/.<- .",
+                   respMsg[0]);
+    });
+  }) ;
+
+  describe('Test for unit string starting with .', function() {
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var origString = '.3.m';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return the origString unchanged", function() {
+      assert.equal(retOrig, origString);
+    });
+    it("should return a message about the multiplication operator", function() {
+      assert.equal(1, respMsg.length);
+      assert.equal(".3.m is not a valid UCUM code. The multiplication " +
+        "operator at the beginning of the expression is not valid. A " +
+        "multiplication operator must appear only between two codes.",
+        respMsg[0]);
+    });
+  }) ;
+
   describe('Test for unit string 3mg/[den]', function() {
     var uString = UnitString.getInstance();
     var mgUnit = uTabs.getUnitByCode('mg').clone();
@@ -102,7 +147,7 @@ describe('Test parseString method', function() {
       // multiply the mgUnit by 3
       mgUnit = mgUnit.multiplyThis(3);
       // divide it by [den]
-      mgUnit.divide(denUnit);
+      mgUnit = mgUnit.divide(denUnit);
       assert(mgUnit.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
       it("should return the origString with a substitution", function() {
@@ -130,7 +175,7 @@ describe('Test parseString method', function() {
       // multiply the denUnit by 3
       denUnit = denUnit.multiplyThis(3);
       // divide the milligram unit it by [den]
-      mgUnit.divide(denUnit);
+      mgUnit = mgUnit.divide(denUnit);
       assert(mgUnit.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
       it("should return the origString with a substitution", function() {
@@ -417,10 +462,25 @@ describe('Test parseString method', function() {
 
   describe('test for a constructed unit m2/g', function() {
     var uString = UnitString.getInstance();
-    var resp = uString.parseString('m5/g2', 'validate');
+    var resp = uString.parseString('m2/g', 'validate');
     var retUnit = resp[0];
     it("should return a unit with no guidance", function() {
       assert.equal(retUnit['guidance_'], '');
+    });
+    it ("should return a unit with a name of [square meter]/[gram]", function() {
+      assert.equal(retUnit['name_'], '[square meter]/[gram]');
+    });
+  }) ;
+
+  describe('test for a constructed unit m2.g', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('m2.g', 'validate');
+    var retUnit = resp[0];
+    it("should return a unit with no guidance", function() {
+      assert.equal(retUnit['guidance_'], '');
+    });
+    it ("should return a unit with a name of [square meter]*[gram]", function() {
+      assert.equal(retUnit['name_'], '[square meter]*[gram]');
     });
   }) ;
 
@@ -470,10 +530,10 @@ describe('Test makeUnit method', function() {
     it("should return a unit with a csCode_ of m[H2O]-21", function () {
       assert.equal('m[H2O]-21', retUnit['csCode_']);
     });
-    it("should a unit with a ciCode_ of M[H2O]-21", function () {
+    it("should return a unit with a ciCode_ of M[H2O]-21", function () {
       assert.equal('M[H2O]-21', retUnit['ciCode_']);
     });
-    it("should a unit with a name_ of meter of water column<sup>-21</sup>", function () {
+    it("should return a unit with a name_ of meter of water column<sup>-21</sup>", function () {
       assert.equal('meter of water column<sup>-21</sup>', retUnit['name_']);
     });
     it("should return a unit with a class_ of clinical", function () {
@@ -499,10 +559,10 @@ describe('Test makeUnit method', function() {
     it("should return a unit with a csCode_ of m[H2O]21", function () {
       assert.equal('m[H2O]21', retUnit['csCode_']);
     });
-    it("should a unit with a ciCode_ of M[H2O]21", function () {
+    it("should return a unit with a ciCode_ of M[H2O]21", function () {
       assert.equal('M[H2O]21', retUnit['ciCode_']);
     });
-    it("should a unit with a name_ of meter of water column<sup>21</sup>", function () {
+    it("should return a unit with a name_ of meter of water column<sup>21</sup>", function () {
       assert.equal('meter of water column<sup>21</sup>', retUnit['name_']);
     });
     it("should return a unit with a class_ of clinical", function () {

@@ -45,7 +45,7 @@
         <h3>Convert values from one UCUM unit to another</h3>
         <p>Enter or select a valid UCUM code for the unit you want to convert:
           <input type="text" id="convertFrom" placeholder="begin typing ..."
-          onchange=
+          autocomplete="off" onchange=
           "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertFrom',
           'resultString', 'from')">&nbsp;
 
@@ -79,7 +79,8 @@
         <div id="convertToDivs">
           <div id="convertLeft">
             <p>Enter or select the unit that you want to convert to:
-              <input type="text" id="convertTo"
+              <input type="text" id="convertTo" placeholder="begin typing ..."
+                     autocomplete="off"
                      onchange=
                              "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertTo',
           'resultString', 'to')">
@@ -109,11 +110,11 @@
         <h3>Validate unit expressions one at a time</h3>
         <p>Enter or select a unit expression to be validated:
           <input type="text" id="valString" placeholder="begin typing ..."
-                 onchange=
+                 autocomplete="off" onchange=
                  "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
                                                                    'validationString',
                                                                    'displayOnly')">&nbsp; &nbsp;
-          Press tab or return to validate the expression</p>
+          Select a value or press tab or return to validate the expression</p>
           <p class="small-print">If you are not finding a unit that you think should be there, check the
           advanced search options to see if you should add a category (or categories)
           to the search.

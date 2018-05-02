@@ -583,15 +583,25 @@ export class UnitString {
 
     let uArray1 = uStr.match(/([./]|[^./]+)/g);
     let endProcessing = false ;
+    let uArray = [];
     let startNumCheck = /(^[0-9]+)(\[?[a-zA-Z\_0-9a-zA-Z\_]+\]?$)/ ;
 
-    // If the first element in the array is a division operator (/), the
+    // If the first element in the array is the division operator (/), the
     // string started with '/'.  Add a first element containing 1 to the
     // array, which will cause the correct computation to be performed (inversion).
     if (uArray1[0] === "/") {
       uArray1.unshift("1");
     }
-    else {
+    // If the first element in the array is the multiplication operator (.)
+    // return an error.
+    else if (uArray1[0] === '.') {
+      this.retMsg_.push(`${origString} is not a valid UCUM code. ` +
+          `The multiplication operator at the beginning of the expression is ` +
+          `not valid. A multiplication operator must appear only between ` +
+          `two codes.`);
+      endProcessing = true ;
+    }
+    if (!endProcessing) {
       // Check to see if there is a number preceding a unit code, e.g., 2mg
       // If so, update the first element to remove the number (2mg -> mg) and
       // add two elements to the beginning of the array - the number and the
@@ -608,56 +618,70 @@ export class UnitString {
           uArray1.unshift(numRes[1], '.');
         }
       } // end if the first element is not a number (only)
-    }
-    // Create an array of unit/operator objects.  The unit is, for now, the
-    // string containing the unit code (e.g., Hz for hertz) including
-    // a possible prefix and exponent.   The operator is the operator to be
-    // applied to that unit and the one preceding it.  So, a.b would give
-    // us two objects.  The first will have a unit of a, and a blank operator
-    // (because it's the first unit).  The second would have a unit of b
-    // and the multiplication operator (.).
-    let u1 = uArray1.length;
-    let uArray = [{op: "", un: uArray1[0]}];
-    for (let n = 1; n < u1; n++) {
-      let theOp = uArray1[n++];
 
-      // Check to see if a number precedes a unit code.
-      // If so, send the element to _processParens, inserting the multiplication
-      // operator where it belongs.  Treating it as parenthetical keeps it from
-      // being interpreted incorrectly because of operator parentheses.  For
-      // example, if the whole string is mg/2kJ we don't want to rewrite it as
-      // mg/2.kJ - because mg/2 would be performed, followed by .kJ.  Instead,
-      // handling 2kJ as a parenthesized unit will make sure mg is divided by
-      // 2.kJ.
-      if (!intUtils_.isNumericString(uArray1[n])) {
-        let numRes2 = uArray1[n].match(startNumCheck);
-        if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' &&
-          numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
-          let parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
-          let parensResp = this._processParens(parensStr, parensStr);
-          // if a "stop processing" flag was returned, set the n index to end
-          // the loop and set the endProcessing flag
-          if (parensResp[2]) {
-            n = u1;
-            endProcessing = true;
-          }
-          // Otherwise let the user know about the problem and what we did
-          else {
-            parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
-            this.retMsg_.push(`${numRes2[0]} is not a valid UCUM code.\n` +
-              this.vcMsgStart_ + `${numRes2[1]}.${numRes2[2]}` + this.vcMsgEnd_);
-            origString = origString.replace(uArray1[n], parensResp[1]);
-            uArray.push({op: theOp, un: parensResp[0]});
-          }
+      // Create an array of unit/operator objects.  The unit is, for now, the
+      // string containing the unit code (e.g., Hz for hertz) including
+      // a possible prefix and exponent.   The operator is the operator to be
+      // applied to that unit and the one preceding it.  So, a.b would give
+      // us two objects.  The first will have a unit of a, and a blank operator
+      // (because it's the first unit).  The second would have a unit of b
+      // and the multiplication operator (.).
+      let u1 = uArray1.length;
+      uArray = [{op: "", un: uArray1[0]}];
+      for (let n = 1; n < u1; n++) {
+
+        // check to make sure that we don't have two operators together, e.g.,
+        // mg./K.  If so, let the user know the problem.
+        let theOp = uArray1[n++];
+        if (Ucum.validOps_.includes(uArray1[n])) {
+          this.retMsg_.push(`${origString} is not a valid UCUM code. ` +
+            `A unit code is missing between${this.openEmph_}` +
+            `${theOp}${this.closeEmph_}and${this.openEmph_}` +
+            `${uArray1[n]}${this.closeEmph_}in${this.openEmph_}` +
+            `${theOp}${uArray1[n]}${this.closeEmph_}.`);
+          n = u1;
+          endProcessing = true;
         }
         else {
-          uArray.push({op: theOp, un: uArray1[n]});
-        }
-      }
-      else {
-        uArray.push({op: theOp, un: uArray1[n]});
-      }
-    }
+          // Check to see if a number precedes a unit code.
+          // If so, send the element to _processParens, inserting the multiplication
+          // operator where it belongs.  Treating it as parenthetical keeps it from
+          // being interpreted incorrectly because of operator parentheses.  For
+          // example, if the whole string is mg/2kJ we don't want to rewrite it as
+          // mg/2.kJ - because mg/2 would be performed, followed by .kJ.  Instead,
+          // handling 2kJ as a parenthesized unit will make sure mg is divided by
+          // 2.kJ.
+          if (!intUtils_.isNumericString(uArray1[n])) {
+            let numRes2 = uArray1[n].match(startNumCheck);
+            if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' &&
+              numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
+              let parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
+              let parensResp = this._processParens(parensStr, parensStr);
+              // if a "stop processing" flag was returned, set the n index to end
+              // the loop and set the endProcessing flag
+              if (parensResp[2]) {
+                n = u1;
+                endProcessing = true;
+              }
+              // Otherwise let the user know about the problem and what we did
+              else {
+                parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
+                this.retMsg_.push(`${numRes2[0]} is not a valid UCUM code.\n` +
+                  this.vcMsgStart_ + `${numRes2[1]}.${numRes2[2]}` + this.vcMsgEnd_);
+                origString = origString.replace(uArray1[n], parensResp[1]);
+                uArray.push({op: theOp, un: parensResp[0]});
+              }
+            }
+            else {
+              uArray.push({op: theOp, un: uArray1[n]});
+            }
+          }
+          else {
+            uArray.push({op: theOp, un: uArray1[n]});
+          }
+        } // end if there isn't a missing operator or unit code
+      } // end do for each element in uArray1
+    } // end if the string did not begin with a '.' with no following digit
     return [uArray, origString, endProcessing];
   } // end _makeUnitsArray
 
@@ -1381,7 +1405,8 @@ export class UnitString {
               if (u2 === 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
                 uString = '';
               }
-              let theName = uString + thisOp + nextUnit.getProperty('name_');
+              let theName = uString + (isDiv ? thisOp:"*") + '[' +
+                                       nextUnit.getProperty('name_') + ']' ;
 
               let theCode = uString + thisOp + nextUnit.getProperty('csCode_');
               let ciCode = uString + thisOp + nextUnit.getProperty('ciCode_');
@@ -1408,8 +1433,8 @@ export class UnitString {
               let fMag = finalUnit.getProperty('magnitude_');
               isDiv ? fMag /= nextUnit :
                   fMag *= nextUnit;
-              let theName = finalUnit.getProperty('name_') + thisOp +
-                  nextUnit.toString();
+              let theName = '[' + finalUnit.getProperty('name_') + ']' +
+                             (isDiv ? thisOp:"*") + nextUnit.toString() ;
               let theCode = finalUnit.getProperty('csCode_') + thisOp +
                   nextUnit.toString();
               finalUnit.assignVals({'csCode_' : theCode ,
