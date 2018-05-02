@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+## [2.3.3] - 2018-05-??
+- fixed appearance demo page validator tab so that when the page is
+widened in the browser the text all anchors on the left.  One portion 
+of the text was anchored to the right, which made a widened version look
+wrong.  Also added some browser testing.
 
 ## [2.2.0] - 2018-05-02
 - added list selection listener to unit expression field on validation
