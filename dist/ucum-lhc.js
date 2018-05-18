@@ -30608,8 +30608,6 @@ var UnitString = exports.UnitString = function () {
                 // with the unit's code - including any substitutions.
                 if (!endProcessing) {
                   uArray[u1]['un'] = parenUnit[0];
-                } else {
-                  uArray[u1]['un'] = 1;
                 }
               } // end if the curCode contains a parenthesized unit
 
@@ -30617,9 +30615,9 @@ var UnitString = exports.UnitString = function () {
               // _makeUnit to create a unit for it.
               else {
                   var uRet = this._makeUnit(curCode, origString);
+                  // If we didn't get a unit, set the endProcessing flag.
                   if (uRet[0] === null) {
                     endProcessing = true;
-                    uArray[u1]['un'] = 1;
                   } else {
                     uArray[u1]['un'] = uRet[0];
                     origString = uRet[1];

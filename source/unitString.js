@@ -325,18 +325,15 @@ export class UnitString {
               if (!endProcessing) {
                 uArray[u1]['un'] = parenUnit[0];
               }
-              else {
-                uArray[u1]['un'] = 1;
-              }
             } // end if the curCode contains a parenthesized unit
 
             // Else it's not a parenthetical unit and not a number. Call
             // _makeUnit to create a unit for it.
             else {
               let uRet = this._makeUnit(curCode, origString);
+              // If we didn't get a unit, set the endProcessing flag.
               if (uRet[0] === null) {
                 endProcessing = true;
-                uArray[u1]['un'] = 1;
               }
               else {
                 uArray[u1]['un'] = uRet[0];
