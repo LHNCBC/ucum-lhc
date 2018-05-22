@@ -295,7 +295,8 @@ export class UnitString {
         origString = mkUArray[1];
         // Create a unit object out of each un element
         let uLen = uArray.length;
-        for (let u1 = 0; u1 < uLen && !endProcessing; u1++) {
+        for (let u1 = 0; u1 < uLen; u1++) {
+          //for (let u1 = 0; u1 < uLen && !endProcessing; u1++) {
           let curCode = uArray[u1]['un'];
 
           // Determine the type of the "un" attribute of the current array element
@@ -315,7 +316,8 @@ export class UnitString {
               let parenUnit = this._getParensUnit(curCode, origString);
               // if we couldn't process the string, set the end flag and bypass
               // further processing.
-              endProcessing = parenUnit[1];
+              if (!endProcessing)
+                endProcessing = parenUnit[1];
 
               // If we're good, put the unit in the uArray and replace the
               // curCode, which contains the parentheses placeholders, etc.,
@@ -329,8 +331,10 @@ export class UnitString {
             // _makeUnit to create a unit for it.
             else {
               let uRet = this._makeUnit(curCode, origString);
-              if (uRet[0] === null)
+              // If we didn't get a unit, set the endProcessing flag.
+              if (uRet[0] === null) {
                 endProcessing = true;
+              }
               else {
                 uArray[u1]['un'] = uRet[0];
                 origString = uRet[1];
