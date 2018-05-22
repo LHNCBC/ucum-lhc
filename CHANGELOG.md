@@ -4,10 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.3.2] - 2018-05
+## [2.3.1] - 2018-05-?
+### Fixed
 - modifications to ensure that plain numbers, e.g., 7, are not reported as 
-valid unit expressions.   Also added unit name to demo output messages, where
-available, to make sure user knows what unit is being reported as valid.
+valid unit expressions.   
+
+### Changed
+- added unit name to demo output messages, where available, to make sure user 
+knows what unit is being reported as valid.
 
 ## [2.2.0] - 2018-05-02
 - added list selection listener to unit expression field on validation
