@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-05-23
+### Added
+- added information related to version number of the ucum-essence.xml
+file used as well as changes made to it
+
 ## [2.2.1] - 2018-05-22
 ### Changed
 - reformatted display of suggestions lists for the demo site to use a bulleted
@@ -110,12 +115,10 @@ and print symbol values when creating a unit from multiple units.
 - Updated treatment of prefixes for special units that use conversion 
 functions to record prefix values in the separate conversion prefix field.
 
-
 ## [1.1.1] - 2017-07-13
 ### Changed
 - Data file has been updated with enhanced synonyms and is also now written 
 in a a readable JSON format.
-
 
 ## [1.1.0] - 2017-07-06
 ### Changed
@@ -126,23 +129,19 @@ return one list single-unit strings at a time.
 changed to just use the same autocompleter as used for the "convert from" field. 
 The list will now include units that cannot be converted.
 
-
 ## [1.0.2] - 2017-06-23
 ### Fixed
 - Allowed conversion of units with no dimensions
 - added testing for the Unit.convertFrom and Unit.convertTo functions
 
-
 ## [1.0.1] - 2017-05-30
 ### Added
 - This change log.
-
 ### Changed
 - Streamlined divString function in Unit.js
 - Moved parenthesized unit string processing to separate function
 in UnitString.js (processParens).
 - Added testing for the processParens function in testUnitString.spec.js
-
 ### Fixed
 - Updated UcumFileValidator.js with previously changed function name 
 (validUnitString -> validateUnitString in UcumLhcUtils.js).
