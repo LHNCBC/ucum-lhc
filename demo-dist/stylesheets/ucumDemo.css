@@ -147,7 +147,7 @@ button {
   margin-top: 10px;
 }
 
-#hints {
+.limitWidth {
   max-width: 800px;
   margin: 10px;
 }
