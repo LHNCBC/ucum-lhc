@@ -949,10 +949,11 @@ export class UcumDemo {
 
     let suggString = '';
     for (let s = 0; s < suggSet.length; s++) {
-      suggString += suggSet[s]['msg'] + '<BR>';
+      suggString += suggSet[s]['msg'] + '<ul>';
       for (let u = 0; u < suggSet[s]['units'].length; u++) {
-        suggString += suggSet[s]['units'][u].join(', ') + '<BR>';
+        suggString += '<li>' + suggSet[s]['units'][u].join(', ') + '</li>';
       } // end do for each unit
+      suggString += '</ul>';
     }
     return suggString ;
   } // end suggSetOutput
