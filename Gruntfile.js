@@ -146,7 +146,17 @@ module.exports = function(grunt) {
       },
       files: ['bower_components/*'],
       tasks: ['wiredep']
+    } ,
+
+    // ssi to include html files in demo.html
+    ssi: {
+      options: {
+        input: './demo/',
+        output: './',
+        matcher: 'demo.html'
+      },
     }
+
   });
 
   // load and register the tasks
@@ -157,11 +167,21 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-wiredep');
   grunt.loadNpmTasks('grunt-mocha-test') ;
 
+  grunt.registerTask('ssi', 'Flatten SSI includes in your HTML files.', function() {
+
+    var ssi = require( 'ssi' );
+    var opts = this.options();
+    var files = new ssi( opts.input, opts.output, opts.matcher) ;
+    files.compile();
+
+  });
+
   grunt.registerTask("build:dist", ["clean:dist",
                                     "babel:dist",
                                     "browserify:dist",
                                     "uglify:dist"]);
   grunt.registerTask("build:demo", ["clean:demo",
+                                    "ssi",
                                     "babel:demo",
                                     "browserify:demo",
                                     "cssmin",
