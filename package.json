@@ -1,6 +1,6 @@
 {
   "name": "@lhncbc/ucum-lhc",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "dist/ucum-lhc.js",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
@@ -42,6 +42,7 @@
     "mocha": "https://registry.npmjs.org/mocha/-/mocha-2.5.3.tgz",
     "nsp": "^2.8.1",
     "path": "^0.12.7",
+    "protractor": "^5.3.1",
     "serve-index": "^1.8.0",
     "serve-static": "^1.12.2",
     "ssi": "^0.3.0",
@@ -49,6 +50,7 @@
     "stream-transform": "^0.1.1",
     "string-to-stream": "^1.1.0",
     "time-grunt": "^1.4.0",
+    "webdriver-manager": "^12.0.6",
     "xmldoc": "^0.4.0"
   },
   "scripts": {
