@@ -645,7 +645,7 @@ export class UcumDemo {
             `${resultObj['fromUnit'].getProperty('csCode_')} ` +
             `(${resultObj['fromUnit'].getProperty('name_')}) = ` +
             `${toVal.toString()} ` +
-            `${resultObj['toUnit'].getProperty('csCode_')}` +
+            `${resultObj['toUnit'].getProperty('csCode_')} ` +
             `(${resultObj['toUnit'].getProperty('name_')})`;
         if (resultObj['msg'].length > 0) {
           for (let r = 0; r < resultObj['msg'].length; r++)

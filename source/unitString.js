@@ -1227,14 +1227,8 @@ export class UnitString {
 
     // Add the warning about annotations - just once.
 
-    if (this.bracesMsg_) {
-      let dup = false;
-      for (let r = 0; !dup && r < this.retMsg_.length; r++) {
-        dup = (this.retMsg_[r] === this.bracesMsg_);
-      }
-      if (!dup)
-        this.retMsg_.push(this.bracesMsg_);
-    }
+    if ((this.bracesMsg_) && (!this.retMsg_.includes(this.bracesMsg_)))
+      this.retMsg_.push(this.bracesMsg_);
 
     // If there's no text before or after the annotation, it's probably
     // something that should be interpreted as a 1, e.g., {KCT'U}.
