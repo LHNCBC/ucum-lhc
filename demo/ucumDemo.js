@@ -393,8 +393,11 @@ export class UcumDemo {
           else {
             valFld.removeAttribute("class");
           }
-          retMsg = `${parseResp['ucumCode']} (${parseResp['unit'].name}) is ` +
-                   `a valid unit expression.`;
+          retMsg = `${parseResp['ucumCode']} `;
+          if (parseResp['unit'].name) {
+            retMsg += `(${parseResp['unit'].name}) `
+          }
+          retMsg += `is a valid unit expression.`;
         }
         // Else the string is not valid - may be an error or just invalid
         else {

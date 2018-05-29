@@ -27740,7 +27740,7 @@ var Ucum = exports.Ucum = {
    * Message that is displayed when annotations are included in a unit
    * string, to let the user know how they are interpreted.
    */
-  bracesMsg_: 'FYI - annotations (text in curley braces {}) are interpreted ' + 'as "multiplied by 1" for validation and conversion purposes.',
+  bracesMsg_: 'FYI - annotations (text in curly braces {}) are ignored, ' + 'except that an annotation without a leading symbole implies ' + 'the default unit 1 (the unity).',
 
   /**
    * Hash that matches unit column names to names used in the csv file
@@ -31467,13 +31467,7 @@ var UnitString = exports.UnitString = function () {
 
       // Add the warning about annotations - just once.
 
-      if (this.bracesMsg_) {
-        var dup = false;
-        for (var r = 0; !dup && r < this.retMsg_.length; r++) {
-          dup = this.retMsg_[r] === this.bracesMsg_;
-        }
-        if (!dup) this.retMsg_.push(this.bracesMsg_);
-      }
+      if (this.bracesMsg_ && !this.retMsg_.includes(this.bracesMsg_)) this.retMsg_.push(this.bracesMsg_);
 
       // If there's no text before or after the annotation, it's probably
       // something that should be interpreted as a 1, e.g., {KCT'U}.
