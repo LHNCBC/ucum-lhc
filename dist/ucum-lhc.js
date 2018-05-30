@@ -27740,7 +27740,7 @@ var Ucum = exports.Ucum = {
    * Message that is displayed when annotations are included in a unit
    * string, to let the user know how they are interpreted.
    */
-  bracesMsg_: 'FYI - annotations (text in curly braces {}) are ignored, ' + 'except that an annotation without a leading symbole implies ' + 'the default unit 1 (the unity).',
+  bracesMsg_: 'FYI - annotations (text in curly braces {}) are ignored, ' + 'except that an annotation without a leading symbol implies ' + 'the default unit 1 (the unity).',
 
   /**
    * Hash that matches unit column names to names used in the csv file

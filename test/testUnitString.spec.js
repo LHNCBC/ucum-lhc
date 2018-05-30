@@ -88,6 +88,22 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('Test for unit string 5 (number only)', function() {
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var origString = '5';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a null unit", function() {
+      assert(!retUnit);
+    });
+    it("should return a message indicating that 5 is not a valid unit", function() {
+      assert.equal(`The number ${origString} is not a valid unit code.`, respMsg[0]);
+    });
+  }) ;
+
   describe('Test for unit string with double operators', function() {
     var uString = UnitString.getInstance();
     var retMsg = [];
