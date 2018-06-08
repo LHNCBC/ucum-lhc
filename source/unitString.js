@@ -121,7 +121,10 @@ export class UnitString {
    *  true indicates suggestions are wanted; false indicates they are not,
    *  and is the default if the parameter is not specified;
    * @returns an array containing:
-   *   the unit object (or null if there were problems creating the unit);
+   *   the unit object or null if a unit could not be created.  In cases where
+   *     a fix was found for a problem string, .e.g., 2.mg for 2mg, a unit will
+   *     be returned but an error message will also be returned, describing
+   *     the substitution;
    *   the possibly updated unit string passed in;
    *   an array of any user messages (informational, error or warning)
    *     generated (or an empty array); and
