@@ -96,11 +96,30 @@ describe('Test parseString method', function() {
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
-    it("should return a null unit", function() {
-      assert(!retUnit);
+    it("should return a unit with the digit as the csCode", function() {
+      assert.equal(retUnit['csCode_'], '5');
     });
-    it("should return a message indicating that 5 is not a valid unit", function() {
-      assert.equal(`The number ${origString} is not a valid unit code.`, respMsg[0]);
+    it("should not return any messages", function() {
+      assert.deepEqual([], respMsg, `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('Test for numeric string with an error 6(58)/9', function() {
+    var uString = UnitString.getInstance();
+    var origString = '6(58)/9';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for 6.(58)/9", function() {
+      assert.notEqual(retUnit, null);
+      assert.equal(retUnit['csCode_'], '6.58/9');
+      assert.equal(retUnit['name_'], '[[6]*[58]]/9');
+    });
+    it("should return 1 message", function() {
+      assert.equal(respMsg.length, 1);
+      assert.equal(respMsg[0],
+        '6(58) is not a valid UCUM code.  Did you mean 6.(58)?');
     });
   }) ;
 
@@ -348,7 +367,7 @@ describe('Test parseString method', function() {
     it("should return 1 message", function() {
       assert.equal(respMsg.length, 1);
       assert.equal(respMsg[0],
-                '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
+        '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
     });
     it("should return 2 suggestions", function() {
       assert.equal(respSugg[0]['units'].length, 2);

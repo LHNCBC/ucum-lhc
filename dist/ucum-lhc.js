@@ -30352,22 +30352,6 @@ var UnitString = exports.UnitString = function () {
 
     // suggestions for unit strings that for which no unit was found
     this.suggestions = [];
-
-    // Make this a singleton.  See UnitTables constructor for details.
-    /*
-    let holdThis = UnitString.prototype;
-    UnitString = function () {
-      throw (new Error('UnitString is a Singleton. ' +
-        'Use UnitString.getInstance() instead.'));
-    };
-    if (exports)
-      exports.UnitString = UnitString;
-    UnitString.prototype = holdThis;
-     let self = this;
-    UnitString.getInstance = function () {
-      return self
-    };
-    */
   } // end constructor
 
 
@@ -30506,13 +30490,16 @@ var UnitString = exports.UnitString = function () {
         // just a number.  Something like "8/{HCP}" will return a "unit" of 8
         // - which is not a unit.
         if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
-          if (origString !== '1' && (finalUnit === 1 || finalUnit === '1')) {
-            finalUnit = new Unit({ 'csCode_': origString });
-            finalUnit['magnitude_'] = 1;
-          } else {
-            this.retMsg_.push('The number ' + finalUnit + ' is not a valid unit code.');
-            finalUnit = null;
-          }
+          //      if (origString !== '1' && (finalUnit === 1 || finalUnit === '1')) {
+          finalUnit = new Unit({ 'csCode_': origString,
+            'magnitude_': finalUnit,
+            'name_': origString });
+
+          //      }
+          //      else {
+          //        this.retMsg_.push(`The number ${finalUnit} is not a valid unit code.`);
+          //        finalUnit = null ;
+          //      }
           retObj[0] = finalUnit;
         } // end final check
       } // end if no annotation errors were found
@@ -30875,10 +30862,20 @@ var UnitString = exports.UnitString = function () {
         if (!intUtils_.isNumericString(uArray1[0])) {
           var numRes = uArray1[0].match(startNumCheck);
           if (numRes && numRes.length === 3 && numRes[1] !== '' && numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
-            this.retMsg_.push(uArray1[0] + ' is not a valid UCUM code.  ' + this.vcMsgStart_ + (numRes[1] + '.' + numRes[2]) + this.vcMsgEnd_);
-            origString = origString.replace(uArray1[0], numRes[1] + '.' + numRes[2]);
-            uArray1[0] = numRes[2];
-            uArray1.unshift(numRes[1], '.');
+            var dispVal = numRes[2];
+
+            if (!endProcessing && numRes[2].includes(this.parensFlag_)) {
+              var parensback = this._getParensUnit(numRes[2], origString);
+              numRes[2] = parensback[0]['csCode_'];
+              dispVal = '(' + numRes[2] + ')';
+              endProcessing = parensback[1];
+            }
+            if (!endProcessing) {
+              this.retMsg_.push('' + numRes[1] + dispVal + ' is not a valid UCUM code.' + ('  ' + this.vcMsgStart_ + numRes[1] + '.' + dispVal + this.vcMsgEnd_));
+              origString = origString.replace('' + numRes[1] + dispVal, numRes[1] + '.' + dispVal);
+              uArray1[0] = numRes[2];
+              uArray1.unshift(numRes[1], '.');
+            }
           }
         } // end if the first element is not a number (only)
 
@@ -30889,52 +30886,54 @@ var UnitString = exports.UnitString = function () {
         // us two objects.  The first will have a unit of a, and a blank operator
         // (because it's the first unit).  The second would have a unit of b
         // and the multiplication operator (.).
-        var u1 = uArray1.length;
-        uArray = [{ op: "", un: uArray1[0] }];
-        for (var n = 1; n < u1; n++) {
+        if (!endProcessing) {
+          var u1 = uArray1.length;
+          uArray = [{ op: "", un: uArray1[0] }];
+          for (var n = 1; n < u1; n++) {
 
-          // check to make sure that we don't have two operators together, e.g.,
-          // mg./K.  If so, let the user know the problem.
-          var theOp = uArray1[n++];
-          if (Ucum.validOps_.includes(uArray1[n])) {
-            this.retMsg_.push(origString + ' is not a valid UCUM code. ' + ('A unit code is missing between' + this.openEmph_) + ('' + theOp + this.closeEmph_ + 'and' + this.openEmph_) + ('' + uArray1[n] + this.closeEmph_ + 'in' + this.openEmph_) + ('' + theOp + uArray1[n] + this.closeEmph_ + '.'));
-            n = u1;
-            endProcessing = true;
-          } else {
-            // Check to see if a number precedes a unit code.
-            // If so, send the element to _processParens, inserting the multiplication
-            // operator where it belongs.  Treating it as parenthetical keeps it from
-            // being interpreted incorrectly because of operator parentheses.  For
-            // example, if the whole string is mg/2kJ we don't want to rewrite it as
-            // mg/2.kJ - because mg/2 would be performed, followed by .kJ.  Instead,
-            // handling 2kJ as a parenthesized unit will make sure mg is divided by
-            // 2.kJ.
-            if (!intUtils_.isNumericString(uArray1[n])) {
-              var numRes2 = uArray1[n].match(startNumCheck);
-              if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' && numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
-                var parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
-                var parensResp = this._processParens(parensStr, parensStr);
-                // if a "stop processing" flag was returned, set the n index to end
-                // the loop and set the endProcessing flag
-                if (parensResp[2]) {
-                  n = u1;
-                  endProcessing = true;
-                }
-                // Otherwise let the user know about the problem and what we did
-                else {
-                    parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
-                    this.retMsg_.push(numRes2[0] + ' is not a valid UCUM code.\n' + this.vcMsgStart_ + (numRes2[1] + '.' + numRes2[2]) + this.vcMsgEnd_);
-                    origString = origString.replace(uArray1[n], parensResp[1]);
-                    uArray.push({ op: theOp, un: parensResp[0] });
+            // check to make sure that we don't have two operators together, e.g.,
+            // mg./K.  If so, let the user know the problem.
+            var theOp = uArray1[n++];
+            if (Ucum.validOps_.includes(uArray1[n])) {
+              this.retMsg_.push(origString + ' is not a valid UCUM code. ' + ('A unit code is missing between' + this.openEmph_) + ('' + theOp + this.closeEmph_ + 'and' + this.openEmph_) + ('' + uArray1[n] + this.closeEmph_ + 'in' + this.openEmph_) + ('' + theOp + uArray1[n] + this.closeEmph_ + '.'));
+              n = u1;
+              endProcessing = true;
+            } else {
+              // Check to see if a number precedes a unit code.
+              // If so, send the element to _processParens, inserting the multiplication
+              // operator where it belongs.  Treating it as parenthetical keeps it from
+              // being interpreted incorrectly because of operator parentheses.  For
+              // example, if the whole string is mg/2kJ we don't want to rewrite it as
+              // mg/2.kJ - because mg/2 would be performed, followed by .kJ.  Instead,
+              // handling 2kJ as a parenthesized unit will make sure mg is divided by
+              // 2.kJ.
+              if (!intUtils_.isNumericString(uArray1[n])) {
+                var numRes2 = uArray1[n].match(startNumCheck);
+                if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' && numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
+                  var parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
+                  var parensResp = this._processParens(parensStr, parensStr);
+                  // if a "stop processing" flag was returned, set the n index to end
+                  // the loop and set the endProcessing flag
+                  if (parensResp[2]) {
+                    n = u1;
+                    endProcessing = true;
                   }
+                  // Otherwise let the user know about the problem and what we did
+                  else {
+                      parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
+                      this.retMsg_.push(numRes2[0] + ' is not a valid UCUM code.\n' + this.vcMsgStart_ + (numRes2[1] + '.' + numRes2[2]) + this.vcMsgEnd_);
+                      origString = origString.replace(uArray1[n], parensResp[1]);
+                      uArray.push({ op: theOp, un: parensResp[0] });
+                    }
+                } else {
+                  uArray.push({ op: theOp, un: uArray1[n] });
+                }
               } else {
                 uArray.push({ op: theOp, un: uArray1[n] });
               }
-            } else {
-              uArray.push({ op: theOp, un: uArray1[n] });
-            }
-          } // end if there isn't a missing operator or unit code
-        } // end do for each element in uArray1
+            } // end if there isn't a missing operator or unit code
+          } // end do for each element in uArray1
+        } // end if a processing error didn't occur in getParensUnit
       } // end if the string did not begin with a '.' with no following digit
       return [uArray, origString, endProcessing];
     } // end _makeUnitsArray
@@ -31093,7 +31092,20 @@ var UnitString = exports.UnitString = function () {
                 } // end if text following the parentheses not an exponent
           } // end if text following the parentheses is not an annotation
       } // end if there is text following the parentheses
-      retUnit.csCode_ = pStr;
+      if (!endProcessing) {
+        if (!retUnit) {
+          retUnit = new Unit({
+            'csCode_': pStr,
+            'magnitude_': 1,
+            'name_': pStr });
+        } else if (intUtils_.isNumericString(retUnit)) {
+          retUnit = new Unit({ 'csCode_': retUnit,
+            'magnitude_': retUnit,
+            'name_': retUnit });
+        } else {
+          retUnit.csCode_ = pStr;
+        }
+      }
       return [retUnit, endProcessing];
     } // end _getParensUnit
 
@@ -31662,7 +31674,11 @@ var UnitString = exports.UnitString = function () {
                 }
                 // both are numbers
                 else {
-                    isDiv ? finalUnit /= nextUnit : finalUnit *= nextUnit;
+                    var numUnit = new Unit({
+                      csCode_: '' + finalUnit + thisOp + nextUnit,
+                      name_: isDiv ? '[' + finalUnit + ']/[' + nextUnit + ']' : '[' + finalUnit + ']*[' + nextUnit + ']',
+                      magnitude_: isDiv ? finalUnit /= nextUnit : finalUnit *= nextUnit });
+                    finalUnit = numUnit;
                   }
               } // end if nextUnit is a number
           } catch (err) {

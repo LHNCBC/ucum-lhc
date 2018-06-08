@@ -468,6 +468,7 @@ var UcumDemo = exports.UcumDemo = function () {
         console.log('Invalid reportResult parameter supplied - ' + reportResult);
         retMsg = ['Sorry - an error occurred while trying to validate ' + escVal];
         valFld.setAttribute("class", "invalid");
+        resFld.setAttribute("class", "invalid");
       }
       // If nothing was specified make sure the convert button is disabled and
       // ignore the rest of the processing.
@@ -483,12 +484,17 @@ var UcumDemo = exports.UcumDemo = function () {
                   this.setConvertValues(reportResult, true);
                 } else {
                   valFld.removeAttribute("class");
+                  resFld.removeAttribute("class");
                 }
-                retMsg = parseResp['ucumCode'] + ' ';
+                var valMsg = parseResp['ucumCode'] + ' ';
                 if (parseResp['unit'].name) {
-                  retMsg += '(' + parseResp['unit'].name + ') ';
+                  valMsg += '(' + parseResp['unit'].name + ') ';
                 }
-                retMsg += 'is a valid unit expression.';
+                valMsg += 'is a valid unit expression.';
+                if (parseResp['msg'].length > 0) {
+                  retMsg = parseResp['msg'].join('<BR>') + '<BR>';
+                }
+                retMsg += valMsg;
               }
               // Else the string is not valid - may be an error or just invalid
               else {
@@ -496,6 +502,7 @@ var UcumDemo = exports.UcumDemo = function () {
                     this.setConvertValues(reportResult, false);
                   } else {
                     valFld.setAttribute("class", "invalid");
+                    resFld.setAttribute("class", "invalid");
                   }
                   // If the status is invalid and we have suggestions, put the suggestion
                   // output in the return message.   If we don't have suggestions there
