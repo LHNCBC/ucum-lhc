@@ -376,6 +376,7 @@ export class UcumDemo {
       console.log(`Invalid reportResult parameter supplied - ${reportResult}`);
       retMsg = [`Sorry - an error occurred while trying to validate ${escVal}`];
       valFld.setAttribute("class", "invalid");
+      resFld.setAttribute("class", "invalid");
     }
     // If nothing was specified make sure the convert button is disabled and
     // ignore the rest of the processing.
@@ -392,8 +393,17 @@ export class UcumDemo {
           }
           else {
             valFld.removeAttribute("class");
+            resFld.removeAttribute("class")
           }
-          retMsg = `${parseResp['ucumCode']} is a valid unit expression.`;
+          let valMsg = `${parseResp['ucumCode']} `;
+          if (parseResp['unit'].name) {
+            valMsg += `(${parseResp['unit'].name}) `;
+          }
+          valMsg += 'is a valid unit expression.';
+          if (parseResp['msg'].length > 0) {
+            retMsg = parseResp['msg'].join('<BR>') + '<BR>';
+          }
+          retMsg += valMsg ;
         }
         // Else the string is not valid - may be an error or just invalid
         else {
@@ -402,6 +412,7 @@ export class UcumDemo {
           }
           else {
             valFld.setAttribute("class", "invalid");
+            resFld.setAttribute("class", "invalid");
           }
           // If the status is invalid and we have suggestions, put the suggestion
           // output in the return message.   If we don't have suggestions there
@@ -641,9 +652,11 @@ export class UcumDemo {
         // unit objects returned.  Although the user will PROBABLY enter a
         // valid unit code from the web page, they don't have to.
         resultMsg = `${fromVal.toString()} ` +
-            `${resultObj['fromUnit'].getProperty('csCode_')} = ` +
+            `${resultObj['fromUnit'].getProperty('csCode_')} ` +
+            `(${resultObj['fromUnit'].getProperty('name_')}) = ` +
             `${toVal.toString()} ` +
-            `${resultObj['toUnit'].getProperty('csCode_')}`;
+            `${resultObj['toUnit'].getProperty('csCode_')} ` +
+            `(${resultObj['toUnit'].getProperty('name_')})`;
         if (resultObj['msg'].length > 0) {
           for (let r = 0; r < resultObj['msg'].length; r++)
           resultMsg += '<br>' + resultObj['msg'][r] ;

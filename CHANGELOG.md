@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.1] - 2018-05-25
+### Fixed
+- modifications to ensure that plain numbers, e.g., 7, are not reported as 
+valid unit expressions.   
+### Added
+- added unit name to demo output messages, where available, to make sure user 
+knows what unit is being reported as valid.
+
 ## [2.3.0] - 2018-05-23
 ### Added
 - added information related to version number of the ucum-essence.xml

@@ -468,6 +468,7 @@ var UcumDemo = exports.UcumDemo = function () {
         console.log('Invalid reportResult parameter supplied - ' + reportResult);
         retMsg = ['Sorry - an error occurred while trying to validate ' + escVal];
         valFld.setAttribute("class", "invalid");
+        resFld.setAttribute("class", "invalid");
       }
       // If nothing was specified make sure the convert button is disabled and
       // ignore the rest of the processing.
@@ -483,8 +484,17 @@ var UcumDemo = exports.UcumDemo = function () {
                   this.setConvertValues(reportResult, true);
                 } else {
                   valFld.removeAttribute("class");
+                  resFld.removeAttribute("class");
                 }
-                retMsg = parseResp['ucumCode'] + ' is a valid unit expression.';
+                var valMsg = parseResp['ucumCode'] + ' ';
+                if (parseResp['unit'].name) {
+                  valMsg += '(' + parseResp['unit'].name + ') ';
+                }
+                valMsg += 'is a valid unit expression.';
+                if (parseResp['msg'].length > 0) {
+                  retMsg = parseResp['msg'].join('<BR>') + '<BR>';
+                }
+                retMsg += valMsg;
               }
               // Else the string is not valid - may be an error or just invalid
               else {
@@ -492,6 +502,7 @@ var UcumDemo = exports.UcumDemo = function () {
                     this.setConvertValues(reportResult, false);
                   } else {
                     valFld.setAttribute("class", "invalid");
+                    resFld.setAttribute("class", "invalid");
                   }
                   // If the status is invalid and we have suggestions, put the suggestion
                   // output in the return message.   If we don't have suggestions there
@@ -724,7 +735,7 @@ var UcumDemo = exports.UcumDemo = function () {
           // Set the return message.   Use the UCUM code from the "from" and "to"
           // unit objects returned.  Although the user will PROBABLY enter a
           // valid unit code from the web page, they don't have to.
-          resultMsg = fromVal.toString() + ' ' + (resultObj['fromUnit'].getProperty('csCode_') + ' = ') + (toVal.toString() + ' ') + ('' + resultObj['toUnit'].getProperty('csCode_'));
+          resultMsg = fromVal.toString() + ' ' + (resultObj['fromUnit'].getProperty('csCode_') + ' ') + ('(' + resultObj['fromUnit'].getProperty('name_') + ') = ') + (toVal.toString() + ' ') + (resultObj['toUnit'].getProperty('csCode_') + ' ') + ('(' + resultObj['toUnit'].getProperty('name_') + ')');
           if (resultObj['msg'].length > 0) {
             for (var r = 0; r < resultObj['msg'].length; r++) {
               resultMsg += '<br>' + resultObj['msg'][r];

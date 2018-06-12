@@ -76,9 +76,12 @@ export class UcumTestUtils {
           whoCalled = `parseString called on LOINC unit ${curUnit.csCode_} ` +
               `for string = ${curUnit.csUnitString_}`;
           parseResp = uString.parseString(curUnit.csCode_);
-          whoReturned = `parseString returned ${parseResp[0].csCode_} ` +
+
+          if (parseResp[0]) {
+            whoReturned = `parseString returned ${parseResp[0].csCode_} ` +
               `for string = ${parseResp[0].csUnitString_}`;
-          parsedUnit = parseResp[0];
+            parsedUnit = parseResp[0];
+          }
         } // end if this is a LOINC unit
         if (!skipped) {
           if (parsedUnit === null) {
