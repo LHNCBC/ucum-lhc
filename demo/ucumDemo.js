@@ -399,7 +399,7 @@ export class UcumDemo {
           if (parseResp['unit'].name) {
             valMsg += `(${parseResp['unit'].name}) `;
           }
-          valMsg += `is a valid unit expression.`;
+          valMsg += 'is a valid unit expression.';
           if (parseResp['msg'].length > 0) {
             retMsg = parseResp['msg'].join('<BR>') + '<BR>';
           }
