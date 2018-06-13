@@ -147,6 +147,53 @@ button {
   margin-top: 10px;
 }
 
+.flex-container {
+    display: flex;
+    justify-content: center;
+}
+.outer-container {
+    flex-direction: row;
+}
+
+.inner-container {
+    flex-direction: column;
+}
+
+/*
+#convQuestions {
+  line-height: 3;
+}
+
+input {
+  line-height: 2.5px;
+}
+*/
+
+#advSearchOpts {
+  display: inline-block;
+  text-decoration: underline;
+}
+.errMsg {
+  color: red;
+  line-height: 1px;
+  display: none;
+  margin: 15px;
+}
+
+.errMsg2 {
+  color: red;
+  line-height: 1px;
+  display: block;
+  margin: 15px;
+}
+
+.errMsg3 {
+  color: red;
+  line-height: 1px;
+  display: inline-block;
+  margin: 15px;
+}
+
 #hints {
   max-width: 800px;
   margin: 10px;
@@ -161,6 +208,23 @@ button {
   margin: 25px;
   padding: 15px 25px;
   width: auto;
+}
+
+.inner-section {
+    border: 3px solid #ddd;
+    border-radius: 25px;
+    margin: 30px;
+    padding: 15px 30px;
+    width: auto;
+}
+
+.input-field {
+    font-size: 20px;
+  line-height: 30px;
+}
+
+#precision-line{
+  text-align: center;
 }
 .small-print {
   font-size: 12px;
@@ -214,18 +278,6 @@ ul.tab li a {
   border-radius: 25px;
   padding: 20px;
   margin: 20px;
-}
-#convertToDivs {
-  width: 100% ;
-  display: flex;
-  justify-content: flex-start;
-}
-#convertLeft {
-  margin-right: 15px;
-}
-
-#convertRight {
-  width: 280px;
 }
 
 #convertNum {

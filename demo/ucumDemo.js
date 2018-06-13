@@ -52,7 +52,7 @@ export class UcumDemo {
       (function(demoInstance) {
         return function () {
           demoInstance.reportUnitStringValidity('convertFrom',
-            'resultString', 'from');
+            'convertToNum', 'from');
         }
       })(this));
 
@@ -62,7 +62,7 @@ export class UcumDemo {
       (function(demoInstance) {
         return function () {
           demoInstance.reportUnitStringValidity('convertTo',
-            'resultString', 'to');
+            'convertToNum', 'to');
         }
       })(this));
 
@@ -169,6 +169,9 @@ export class UcumDemo {
     let valFld = document.getElementById("valString");
     valFld.innerHTML = "";
     valFld.setAttribute("autocomplete", "false");
+
+    let valTab = document.getElementById('validation');
+    valTab.style.display = 'block';
   }
 
 
@@ -248,7 +251,7 @@ export class UcumDemo {
       theBox.addEventListener("click", function() {
         demoPkg.UcumDemo.getInstance().updateSetting(theBox.id, boxSuffix);});
       settingsDiv.appendChild(theBox);
-      let aSpan = document.createElement('span')
+      let aSpan = document.createElement('span');
       let theText = document.createTextNode(theVal);
       theText.className = 'checkboxText' ;
       settingsDiv.appendChild(theText) ;
@@ -379,9 +382,9 @@ export class UcumDemo {
     }
     // If nothing was specified make sure the convert button is disabled and
     // ignore the rest of the processing.
-    else if (uStr === '') {
-      document.getElementById("doConversionButton").disabled = true ;
-    }
+    // else if (uStr === '') {
+    //   document.getElementById("doConversionButton").disabled = true ;
+    // }
     // Else continue processing
     else {
       try {
@@ -466,8 +469,8 @@ export class UcumDemo {
     toField.value = null;
     toField.removeAttribute("class");
 
-    document.getElementById('resultString').innerHTML = '' ;
-    document.getElementById("doConversionButton").disabled = true;
+    //document.getElementById('resultString').innerHTML = '' ;
+    //document.getElementById("doConversionButton").disabled = true;
   }
 
 
@@ -497,7 +500,7 @@ export class UcumDemo {
     if (clear === undefined) {
       clear = false ;
     }
-    let msgField = document.getElementById('resultString')
+    let msgField = document.getElementById('convertToNum');
     let targetField = null ;
     if (whichSetting === 'from') {
       this.convFromUnit_ = value;
@@ -521,14 +524,14 @@ export class UcumDemo {
       targetField.removeAttribute("class");
       msgField.removeAttribute("class");
     }
-
+  /*
     let convertButton = document.getElementById("doConversionButton");
     if (this.convFromUnit_ === true && this.convToUnit_ === true &&
         this.convFromVal_ === true)
       convertButton.disabled = false ;
     else
       convertButton.disabled = true ;
-
+  */
   } // end setConvertValues
 
 
@@ -544,15 +547,15 @@ export class UcumDemo {
 
     let fromFld = document.getElementById(numField);
     let fromVal = escapeHtml(fromFld.value);
-    let resultString = document.getElementById("resultString");
+    let resultString = document.getElementById("convertToNum");
     resultString.innerHTML = '';
 
     // If the value is blank, just make sure the convert button is
     // disabled and do no further processing
-    if (fromVal === '') {
-      document.getElementById("doConversionButton").disabled = true ;
-    }
-    else {
+    // if (fromVal === '') {
+    //   document.getElementById("doConversionButton").disabled = true ;
+    // }
+    // else {
       let parsedNum = "" + fromVal;
       if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
         resultString.innerHTML = `${fromVal} is not a valid number.`;
@@ -561,7 +564,7 @@ export class UcumDemo {
       else {
         this.setConvertValues('fromNum', true);
       }
-    } // end if a value was specified
+    //} // end if a value was specified
   } // end checkFromVal
 
 

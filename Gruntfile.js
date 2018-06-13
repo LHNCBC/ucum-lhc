@@ -153,7 +153,7 @@ module.exports = function(grunt) {
       options: {
         input: './demo/',
         output: './',
-        matcher: 'demo.html'
+        matcher: 'demo*.html'
       },
     }
 

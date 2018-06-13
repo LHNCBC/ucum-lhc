@@ -52,58 +52,63 @@
       <h2>UCUM Unit Conversions</h2>
       <div id="convSection" class="section">
         <h3>Convert values from one UCUM unit to another</h3>
-        <p>Enter or select a valid UCUM code for the unit you want to convert:
+        <p id="convQuestions">Enter or select a valid UCUM code for the unit you want to convert:
           <input type="text" id="convertFrom" placeholder="begin typing ..."
           onchange=
           "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertFrom',
-          'resultString', 'from')">&nbsp;
+          'resultString', 'from')"> <sup>1</sup>&nbsp;
+<p class="errMsg" style="display:none">Error message for first unit; red border for input box</p>
+          <br>Enter the number of units to be converted:
+        <input type="text" id="convertNum"
+               onchange=
+                       "demoPkg.UcumDemo.getInstance().checkFromVal('convertNum')">
+        &nbsp; &nbsp;
+        Result rounded to <input type="number" min="0" max="20" id="precision"> decimal digits.
+<p class="errMsg" style="display:none">Error message for number input; red border for input box</p>
 
+       <br><br>Enter or select the unit that you want to convert to:
+              <input type="text" id="convertTo"
+                     onchange=
+                             "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertTo',
+          'resultString', 'to')"> <sup>2</sup>
+          <p class="errMsg" style="display:none">Error message for second unit; red border for input box</p>
+
+        </p>
+
+          <button id="doConversionButton"
+                  onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
+                                                             'convertNum',
+                                                             'convertTo', true)"
+                  type="button">Convert</button>
+        <span id="resultString">5 first units = 6 second units</span>
              <!---  Not using this list -- for now
           onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
                                                                   'convertTo',
                                                                   'resultString')">
           -->
           &nbsp;&nbsp;
-          UCUM codes are <b>case-sensitive</b></p>
-        <p class="small-print">If you are not finding a unit that you think should be there, check the
-          advanced search options to see if you should add a category (or categories)
-          to the search.
+
+          <br><br><sup>1</sup> UCUM codes are <b>case-sensitive</b>
+          <br><sup>2</sup> You can enter other commensurate units that are not on this list.
+        <p>If you are not finding a unit that you think should be there, check the
+          <span id="advSearchOpts" onclick="
+                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchCnv',
+                                                             'toggleAdvancedSearchCnvB',
+                                                             'Hide', 'Show')">advanced search
+            options</span> to see if you should add a category (or categories) to the search.
         </p>
+        <!--
         <button id="toggleAdvancedSearchCnvB"
                 onclick="
                 demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchCnv',
                                                              'toggleAdvancedSearchCnvB',
                                                              'Hide', 'Show')"
-                type="button">Show advanced search options</button>
+                type="button">Show advanced search options</button> -->
+
         <div id="advancedSearchCnv" style="display: none">
           <!-- this section is built in the demo code when the page is loaded -->
         </div> <!-- advancedSearchCnv division -->
-        <br><br><p>Enter the numeric value you want to convert:
-        <input type="text" id="convertNum"
-               onchange=
-                       "demoPkg.UcumDemo.getInstance().checkFromVal('convertNum')">
-        &nbsp; &nbsp;
-        Result rounded to <input type="number" min="0" max="20" id="precision"> decimal digits.
-      </p><br>
-        <div id="convertToDivs">
-          <div id="convertLeft">
-            <p>Enter or select the unit that you want to convert to:
-              <input type="text" id="convertTo"
-                     onchange=
-                             "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertTo',
-          'resultString', 'to')">
-          </div>
-          <div id="convertRight">
-            You can enter other commensurate units that are not on this list.
-          </div>
-        </div>
-        <div style="clear: left">&nbsp;&nbsp;  <button id="doConversionButton"
-                                       onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
-                                                             'convertNum',
-                                                             'convertTo', true)"
-                                       type="button">Convert</button>
-        </div>
-        <p id="resultString">&nbsp;&nbsp;</p>
+
         <p class="small-print">Disclaimer:  &nbsp;Conversion results are for
           demonstration purposes only.  Before relying on the unit conversions
           produced by this tool it is your obligation to perform your own tests
@@ -111,7 +116,7 @@
         </p>
       </div> <!-- end convSection div -->
     </div> <!-- end conversion div -->
-
+    </div>
     <div id="validation" class="tabcontent tab-pane fade in active">
       <h2>UCUM Unit Expression Validation</h2>
       <div id="singleString" class="section">

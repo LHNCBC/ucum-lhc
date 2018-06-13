@@ -145,14 +145,14 @@ var UcumDemo = exports.UcumDemo = function () {
     this.fromAuto_ = new Def.Autocompleter.Search('convertFrom', urlOpts[0], urlOpts[1]);
     Def.Autocompleter.Event.observeListSelections('convertFrom', function (demoInstance) {
       return function () {
-        demoInstance.reportUnitStringValidity('convertFrom', 'resultString', 'from');
+        demoInstance.reportUnitStringValidity('convertFrom', 'convertToNum', 'from');
       };
     }(this));
 
     this.toAuto_ = new Def.Autocompleter.Search('convertTo', urlOpts[0], urlOpts[1]);
     Def.Autocompleter.Event.observeListSelections('convertTo', function (demoInstance) {
       return function () {
-        demoInstance.reportUnitStringValidity('convertTo', 'resultString', 'to');
+        demoInstance.reportUnitStringValidity('convertTo', 'convertToNum', 'to');
       };
     }(this));
 
@@ -260,6 +260,9 @@ var UcumDemo = exports.UcumDemo = function () {
       var valFld = document.getElementById("valString");
       valFld.innerHTML = "";
       valFld.setAttribute("autocomplete", "false");
+
+      var valTab = document.getElementById('validation');
+      valTab.style.display = 'block';
     }
 
     /**
@@ -471,56 +474,56 @@ var UcumDemo = exports.UcumDemo = function () {
       }
       // If nothing was specified make sure the convert button is disabled and
       // ignore the rest of the processing.
-      else if (uStr === '') {
-          document.getElementById("doConversionButton").disabled = true;
-        }
-        // Else continue processing
-        else {
-            try {
-              parseResp = this.utils_.validateUnitString(uStr, true);
-              if (parseResp['status'] === 'valid') {
-                if (reportResult !== 'displayOnly') {
-                  this.setConvertValues(reportResult, true);
-                } else {
-                  valFld.removeAttribute("class");
-                }
-                retMsg = parseResp['ucumCode'] + ' is a valid unit expression.';
-              }
-              // Else the string is not valid - may be an error or just invalid
-              else {
-                  if (reportResult != 'displayOnly') {
-                    this.setConvertValues(reportResult, false);
-                  } else {
-                    valFld.setAttribute("class", "invalid");
-                  }
-                  // If the status is invalid and we have suggestions, put the suggestion
-                  // output in the return message.   If we don't have suggestions there
-                  // should be an explanation in the parse response's 'msg' element, and
-                  // will be transferred to the returned message below.
-                  if (parseResp['status'] === 'invalid') {
-                    if (parseResp['suggestions']) retMsg = this._suggSetOutput(parseResp['suggestions']);
-                  } else {
-                    // assume status is 'error'
-                    console.log(retMsg.concat(parseResp['msg']));
-                    retMsg = 'Sorry - an error occurred while trying to validate ' + escVal;
-                  } // end if the status returned was not 'invalid'
-                } // end if the string is not valid
-            } // end try
-            catch (err) {
-              console.log(err.message);
-              retMsg = 'Sorry - an error occurred while trying to validate ' + escVal;
-              valFld.setAttribute("class", "invalid");
+      // else if (uStr === '') {
+      //   document.getElementById("doConversionButton").disabled = true ;
+      // }
+      // Else continue processing
+      else {
+          try {
+            parseResp = this.utils_.validateUnitString(uStr, true);
+            if (parseResp['status'] === 'valid') {
               if (reportResult !== 'displayOnly') {
-                this.setConvertValues(reportResult, false);
+                this.setConvertValues(reportResult, true);
+              } else {
+                valFld.removeAttribute("class");
               }
-            } // end catch
-            if (parseResp['msg']) {
-              if (parseResp['status'] !== 'valid') {
-                if (retMsg != '') retMsg += '<BR>';
-                retMsg += parseResp['msg'].join('<BR>');
-              }
-            } // end if there's a message from the parse request
-          } // end if a value was specified
+              retMsg = parseResp['ucumCode'] + ' is a valid unit expression.';
+            }
+            // Else the string is not valid - may be an error or just invalid
+            else {
+                if (reportResult != 'displayOnly') {
+                  this.setConvertValues(reportResult, false);
+                } else {
+                  valFld.setAttribute("class", "invalid");
+                }
+                // If the status is invalid and we have suggestions, put the suggestion
+                // output in the return message.   If we don't have suggestions there
+                // should be an explanation in the parse response's 'msg' element, and
+                // will be transferred to the returned message below.
+                if (parseResp['status'] === 'invalid') {
+                  if (parseResp['suggestions']) retMsg = this._suggSetOutput(parseResp['suggestions']);
+                } else {
+                  // assume status is 'error'
+                  console.log(retMsg.concat(parseResp['msg']));
+                  retMsg = 'Sorry - an error occurred while trying to validate ' + escVal;
+                } // end if the status returned was not 'invalid'
+              } // end if the string is not valid
+          } // end try
+          catch (err) {
+            console.log(err.message);
+            retMsg = 'Sorry - an error occurred while trying to validate ' + escVal;
+            valFld.setAttribute("class", "invalid");
+            if (reportResult !== 'displayOnly') {
+              this.setConvertValues(reportResult, false);
+            }
+          } // end catch
+          if (parseResp['msg']) {
+            if (parseResp['status'] !== 'valid') {
+              if (retMsg != '') retMsg += '<BR>';
+              retMsg += parseResp['msg'].join('<BR>');
+            }
+          } // end if there's a message from the parse request
+        } // end if a value was specified
 
       // If there's a message to be displayed, do it now
       if (retMsg != '') {
@@ -557,8 +560,8 @@ var UcumDemo = exports.UcumDemo = function () {
       toField.value = null;
       toField.removeAttribute("class");
 
-      document.getElementById('resultString').innerHTML = '';
-      document.getElementById("doConversionButton").disabled = true;
+      //document.getElementById('resultString').innerHTML = '' ;
+      //document.getElementById("doConversionButton").disabled = true;
     }
 
     /**
@@ -590,7 +593,7 @@ var UcumDemo = exports.UcumDemo = function () {
       if (clear === undefined) {
         clear = false;
       }
-      var msgField = document.getElementById('resultString');
+      var msgField = document.getElementById('convertToNum');
       var targetField = null;
       if (whichSetting === 'from') {
         this.convFromUnit_ = value;
@@ -612,9 +615,14 @@ var UcumDemo = exports.UcumDemo = function () {
         targetField.removeAttribute("class");
         msgField.removeAttribute("class");
       }
-
-      var convertButton = document.getElementById("doConversionButton");
-      if (this.convFromUnit_ === true && this.convToUnit_ === true && this.convFromVal_ === true) convertButton.disabled = false;else convertButton.disabled = true;
+      /*
+        let convertButton = document.getElementById("doConversionButton");
+        if (this.convFromUnit_ === true && this.convToUnit_ === true &&
+            this.convFromVal_ === true)
+          convertButton.disabled = false ;
+        else
+          convertButton.disabled = true ;
+      */
     } // end setConvertValues
 
 
@@ -633,22 +641,23 @@ var UcumDemo = exports.UcumDemo = function () {
 
       var fromFld = document.getElementById(numField);
       var fromVal = escapeHtml(fromFld.value);
-      var resultString = document.getElementById("resultString");
+      var resultString = document.getElementById("convertToNum");
       resultString.innerHTML = '';
 
       // If the value is blank, just make sure the convert button is
       // disabled and do no further processing
-      if (fromVal === '') {
-        document.getElementById("doConversionButton").disabled = true;
+      // if (fromVal === '') {
+      //   document.getElementById("doConversionButton").disabled = true ;
+      // }
+      // else {
+      var parsedNum = "" + fromVal;
+      if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
+        resultString.innerHTML = fromVal + ' is not a valid number.';
+        this.setConvertValues('fromNum', false);
       } else {
-        var parsedNum = "" + fromVal;
-        if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
-          resultString.innerHTML = fromVal + ' is not a valid number.';
-          this.setConvertValues('fromNum', false);
-        } else {
-          this.setConvertValues('fromNum', true);
-        }
-      } // end if a value was specified
+        this.setConvertValues('fromNum', true);
+      }
+      //} // end if a value was specified
     } // end checkFromVal
 
 
