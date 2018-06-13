@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
 ## [2.4.0] - 2018-06-??
 ## Changed
 - changed validator tab on Demo page to move messages closer to the 
@@ -17,6 +18,14 @@ move messages closer to the appropriate field
 widened in the browser the text all anchors on the left.  One portion 
 of the text was anchored to the right, which made a widened version look
 wrong. 
+
+## [2.3.1] - 2018-06-13
+### Fixed
+- modifications to ensure that plain numbers, e.g., 7, are not reported as 
+valid unit expressions.   
+### Added
+- added unit name to demo output messages, where available, to make sure user 
+knows what unit is being reported as valid.
 
 ## [2.3.0] - 2018-05-23
 ### Added
