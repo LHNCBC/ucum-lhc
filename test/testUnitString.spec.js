@@ -88,6 +88,41 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('Test for unit string 5 (number only)', function() {
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var origString = '5';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit with the digit as the csCode", function() {
+      assert.equal(retUnit['csCode_'], '5');
+    });
+    it("should not return any messages", function() {
+      assert.deepEqual([], respMsg, `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('Test for numeric string with an error 6(58)/9', function() {
+    var uString = UnitString.getInstance();
+    var origString = '6(58)/9';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for 6.(58)/9", function() {
+      assert.notEqual(retUnit, null);
+      assert.equal(retUnit['csCode_'], '6.58/9');
+      assert.equal(retUnit['name_'], '[[6]*[58]]/9');
+    });
+    it("should return 1 message", function() {
+      assert.equal(respMsg.length, 1);
+      assert.equal(respMsg[0],
+        '6(58) is not a valid UCUM code.  Did you mean 6.(58)?');
+    });
+  }) ;
+
   describe('Test for unit string with double operators', function() {
     var uString = UnitString.getInstance();
     var retMsg = [];
@@ -263,7 +298,8 @@ describe('Test parseString method', function() {
     it("should return a message about the correct code", function() {
       assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
       assert.equal('{degF} is not a valid unit expression, but [degF] is.\n' +
-        'Did you mean [degF]?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+        'Did you mean [degF] (degrees Fahrenheit)?', respMsg[0],
+        `respMsg = ${JSON.stringify(respMsg)}`);
     });
   }) ;
 
@@ -286,7 +322,7 @@ describe('Test parseString method', function() {
     it("should return a message about the correct code", function() {
       assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
       assert.equal('in_i is not a valid unit expression, but [in_i] is.\n' +
-        'Did you mean [in_i]?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+        'Did you mean [in_i] (inch)?', respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
     });
   }) ;
 
@@ -331,7 +367,7 @@ describe('Test parseString method', function() {
     it("should return 1 message", function() {
       assert.equal(respMsg.length, 1);
       assert.equal(respMsg[0],
-                '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
+        '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
     });
     it("should return 2 suggestions", function() {
       assert.equal(respSugg[0]['units'].length, 2);
@@ -423,6 +459,40 @@ describe('Test parseString method', function() {
     });
     it("should return not return any suggestions", function() {
       assert(!resp[3]);
+    });
+  }) ;
+
+  describe('test for unit string culture/meqs with suggestions', function() {
+    var uString = UnitString.getInstance();
+    var retMsg = [];
+    var origString = 'culture/meqs';
+    var resp = uString.parseString('culture/meqs', 'validate', true);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    var respSugg = resp[3];
+    it("should not return a unit", function() {
+      assert.equal(retUnit, null);
+    });
+    it("should return 0 messages", function() {
+      assert.equal(respMsg.length, 0);
+    });
+    it("should return suggestions for both strings", function() {
+      assert.equal(respSugg.length, 2);
+      assert.equal(respSugg[0]['invalidUnit'], 'culture');
+      assert.equal(respSugg[0]['msg'], 'culture is not a valid UCUM code.  ' +
+        'We found possible units that might be what was meant:');
+      assert.equal(respSugg[0]['units'].length, 2);
+      assert.deepEqual(respSugg[0]['units'][0],
+        ["[CCID_50]","50% cell culture infectious dose",null]);
+      assert.deepEqual(respSugg[0]['units'][1],
+        ["[TCID_50]","50% tissue culture infectious dose",null]);
+      assert.equal(respSugg[1]['invalidUnit'], 'meqs');
+      assert.equal(respSugg[1]['msg'], 'meqs is not a valid UCUM code.  ' +
+        'We found possible units that might be what was meant:');
+      assert.equal(respSugg[1]['units'].length, 1);
+      assert.deepEqual(respSugg[1]['units'][0],
+        ["meq","milliequivalent","equivalence equals moles per valence"]);
     });
   }) ;
 
