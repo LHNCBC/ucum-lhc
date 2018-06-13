@@ -20,8 +20,8 @@
   <body id="demobody" onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
     <!-- page header -->
     <div id="header">
+      <a href="http://lhncbc.nlm.nih.gov" id="logo"
          title="Lister Hill National Center for Biomedical Communications">
-        <a href="http://lhncbc.nlm.nih.gov" id="logo"
         <img src="demo-dist/assets/images/lhncbc.jpg"
              alt="Lister Hill National Center for Biomedical Communications" />
       </a>
@@ -87,18 +87,16 @@
       </p><br>
         <div id="convertToDivs">
           <div id="convertLeft">
-            Enter or select the unit that you want to convert to:
+            <p>Enter or select the unit that you want to convert to:
               <input type="text" id="convertTo" placeholder="begin typing ..."
-                     autocomplete="off"
                      onchange=
                              "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertTo',
           'resultString', 'to')">
           </div>
-          <div id = 'convertRight'>
+          <div id="convertRight">
             You can enter other commensurate units that are not on this list.
           </div>
         </div>
-
         <div style="clear: left">&nbsp;&nbsp;  <button id="doConversionButton"
                                        onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
                                                              'convertNum',
