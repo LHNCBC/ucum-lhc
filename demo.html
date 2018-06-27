@@ -109,6 +109,32 @@
           <!-- this section is built in the demo code when the page is loaded -->
         </div> <!-- advancedSearchCnv division -->
 
+        <br><br><p>Enter the numeric value you want to convert:
+        <input type="text" id="convertNum"
+               onchange=
+                       "demoPkg.UcumDemo.getInstance().checkFromVal('convertNum')">
+        &nbsp; &nbsp;
+        Result rounded to <input type="number" min="0" max="20" id="precision"> decimal digits.
+      </p><br>
+        <div id="convertToDivs">
+          <div id="convertLeft">
+            <p>Enter or select the unit that you want to convert to:
+              <input type="text" id="convertTo" placeholder="begin typing ..."
+                     onchange=
+                             "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertTo',
+          'resultString', 'to')">
+          </div>
+          <div id="convertRight">
+            You can enter other commensurate units that are not on this list.
+          </div>
+        </div>
+        <div style="clear: left">&nbsp;&nbsp;  <button id="doConversionButton"
+                                       onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
+                                                             'convertNum',
+                                                             'convertTo', true)"
+                                       type="button">Convert</button>
+        </div>
+        <p id="resultString">&nbsp;&nbsp;</p>
         <p class="small-print">Disclaimer:  &nbsp;Conversion results are for
           demonstration purposes only.  Before relying on the unit conversions
           produced by this tool it is your obligation to perform your own tests
