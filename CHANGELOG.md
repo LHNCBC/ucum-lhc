@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.2] - 2018-06-??
+### Fixed
+- fixed appearance of the demo page converter tab so that when the page is
+widened in the browser the text all anchors on the left.  One portion 
+of the text was anchored to the right, which made a widened version look
+wrong. 
+
 ## [2.3.1] - 2018-05-25
 ### Fixed
 - modifications to ensure that plain numbers, e.g., 7, are not reported as 
@@ -24,6 +31,7 @@ list of suggestions rather than a plain text list.
 ## Fixed  
 - fixed a bug that prevented suggestion lists from being created for more than 
 one unit.
+>>>>>>> master
 
 ## [2.2.0] - 2018-05-02
 ### Changed
@@ -31,6 +39,10 @@ one unit.
 tab of the demo page 
 ### Fixed
 - fixed autofill problem on Edge browser.
+
+## [2.3.4] - 2018-05-?
+- fixed positioning of text on converter tab of the demo page so that
+it is consistent in how it lines up when the page is widened.   
 
 ## [2.1.12] - 2018-04-26
 ### Changed
