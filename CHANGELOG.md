@@ -4,18 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<<<<<<< HEAD
-
-## [2.4.0] - 2018-06-??
-## Changed
-- changed validator tab on Demo page to move messages closer to the 
-unit expression input field
-- changed converter tab on Demo page to consolidate input fields and
-move messages closer to the appropriate field
-
 ## [2.4.0] - 2018-07
-### Changed 
-- Converter tab of the demo page redesigned to simplify entry. 
+## Changed
+- redesigned validator tab on Demo page to move messages closer to the 
+unit expression input field
+- redesigned converter tab on Demo page to resemble an equation for the
+conversion
 
 ## [2.3.2] - 2018-06-27
 ### Fixed
@@ -43,10 +37,6 @@ list of suggestions rather than a plain text list.
 ## Fixed  
 - fixed a bug that prevented suggestion lists from being created for more than 
 one unit.
-<<<<<<< HEAD
-=======
->>>>>>> master
->>>>>>> master
 
 ## [2.2.0] - 2018-05-02
 ### Changed

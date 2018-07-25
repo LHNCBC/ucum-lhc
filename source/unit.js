@@ -365,8 +365,8 @@ export class Unit {
   convertFrom(num, fromUnit) {
     let newNum = 0.0 ;
 
-    // reject request if the dimensions are not equal
-    if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
+    // reject request if both units have dimension vectors that are not equal
+    if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_)))  {
       throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
                       `to ${this.csCode_}.`));
     }

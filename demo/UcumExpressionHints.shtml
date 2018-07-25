@@ -1,4 +1,5 @@
-<h4 class="small-print" style="text-align: left">Unit Expression creation hints</h4>
+<br>
+<h4 style="text-align: left">Unit Expression Syntax Rules</h4>
 <p class="small-print">See the <a href="http://unitsofmeasure.org/ucum.html">
     UCUM Specification</a> for full descriptions of grammar and syntax rules.
 <ul class="small-print">

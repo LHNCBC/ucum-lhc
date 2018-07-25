@@ -63,7 +63,22 @@ var UcumDemoConfig = exports.UcumDemoConfig = {
   baseSearchOpts_: { 'nonMatchSuggestions': false,
     'tableFormat': true,
     'valueCols': [0],
-    'tokens': ['/', '.'] }
+    'tokens': ['/', '.'] },
+
+  /**
+   *  The default number of decimal digits to be displayed for a unit amount
+   */
+  decDigits_: 2,
+
+  /**
+   *  The maximum number of decimal digits to be displayed for a unit amount.
+   */
+  maxDecDigits_: 20,
+
+  /**
+   *  The default precision to be used
+   */
+  defaultPrecision_: 15
 };
 
 
@@ -127,10 +142,13 @@ var UcumDemo = exports.UcumDemo = function () {
     this.urlValCats_ = UcumDemoConfig.defCategories_;
     this.urlValDispFlds_ = UcumDemoConfig.defCols_;
     urlOpts = this.buildUrlAndOpts('validate');
+
+    // Set up the search autocompleter for the unit expression field
+    // on the validator tab
     this.valAuto_ = new Def.Autocompleter.Search('valString', urlOpts[0], urlOpts[1]);
     Def.Autocompleter.Event.observeListSelections('valString', function (demoInstance) {
       return function () {
-        demoInstance.reportUnitStringValidity('valString', 'validationString', 'displayOnly');
+        demoInstance.reportUnitStringValidity('valString', 'Validator', 'validationString');
       };
     }(this));
 
@@ -140,27 +158,33 @@ var UcumDemo = exports.UcumDemo = function () {
     this.urlConvDispFlds_ = UcumDemoConfig.defCols_;
     var urlOpts = this.buildUrlAndOpts('convert');
 
-    // Set up the search autocompleters for the "from" unit code input field
-    // on the Converter tab section
+    // Set up the search autocompleters for the "from" and "to" unit code input
+    // fields on the Converter tab section
     this.fromAuto_ = new Def.Autocompleter.Search('convertFrom', urlOpts[0], urlOpts[1]);
     Def.Autocompleter.Event.observeListSelections('convertFrom', function (demoInstance) {
       return function () {
-        demoInstance.reportUnitStringValidity('convertFrom', 'convertToNum', 'from');
+        demoInstance.reportUnitStringValidity('convertFrom', 'Converter', 'convMsg');
       };
     }(this));
 
     this.toAuto_ = new Def.Autocompleter.Search('convertTo', urlOpts[0], urlOpts[1]);
     Def.Autocompleter.Event.observeListSelections('convertTo', function (demoInstance) {
       return function () {
-        demoInstance.reportUnitStringValidity('convertTo', 'convertToNum', 'to');
+        demoInstance.reportUnitStringValidity('convertTo', 'Converter', 'convMsg');
       };
     }(this));
 
-    // Flags indicating validity of the "from" and "to" unit fields and
-    // the from number field on the conversion tab.
-    this.convFromUnit_ = false;
-    this.convToUnit_ = false;
-    this.convFromVal_ = false;
+    // Flags indicating validity of the "from" and "to" unit and number fields
+    // on the conversion tab.
+    this.convFrom_ = false;
+    this.convFromNum_ = true;
+    this.convTo_ = false;
+    this.convToNum_ = true;
+
+    // Remember which numeric value was last reported as the conversion result
+    // and what field it was reported in
+    this.lastResultFld_ = null;
+    this.lastResult_ = 0;
 
     // Set up the prefetch autocompleter for the "to" conversion field.  It will
     // be populated with commensurable units in based on what the user enters
@@ -250,7 +274,7 @@ var UcumDemo = exports.UcumDemo = function () {
       this.buildTabSettings('advancedSearchVal', 'val');
       this.buildTabSettings('advancedSearchCnv', 'cnv');
       var prec = document.getElementById("precision");
-      prec.value = Ucum.decDigits_;
+      prec.value = UcumDemoConfig.defaultPrecision_;
 
       // Clear the validator tab input field to avoid having a previous value
       // displayed when the form is reloaded.   This should not be necessary,
@@ -260,9 +284,6 @@ var UcumDemo = exports.UcumDemo = function () {
       var valFld = document.getElementById("valString");
       valFld.innerHTML = "";
       valFld.setAttribute("autocomplete", "false");
-
-      var valTab = document.getElementById('validation');
-      valTab.style.display = 'block';
     }
 
     /**
@@ -297,6 +318,8 @@ var UcumDemo = exports.UcumDemo = function () {
       // build display fields section
       var dispPara = document.createElement("P");
       dispPara.className = 'topMargin20';
+      var lineBreak = document.createElement('BR');
+      dispPara.appendChild(lineBreak);
       var dispLine = document.createTextNode("Select unit fields to display:");
       dispPara.appendChild(dispLine);
       settingsDiv.appendChild(dispPara);
@@ -343,17 +366,78 @@ var UcumDemo = exports.UcumDemo = function () {
         theBox.addEventListener("click", function () {
           demoPkg.UcumDemo.getInstance().updateSetting(theBox.id, boxSuffix);
         });
-        settingsDiv.appendChild(theBox);
-        var aSpan = document.createElement('span');
+        var theSpan = document.createElement('label');
+        theSpan.setAttribute("style", "display: inline-block");
+        theSpan.appendChild(theBox);
+
         var theText = document.createTextNode(theVal);
         theText.className = 'checkboxText';
-        settingsDiv.appendChild(theText);
+        theSpan.appendChild(theText);
+        settingsDiv.appendChild(theSpan);
       };
 
       for (var i = 0; i < namesLen; i++) {
         _loop(i);
       }
     } // end buildCheckBoxes
+
+
+    /**
+     * This method is run when the Converter tab is displayed, to reset the
+     * variables that track the validity of the three inputs ("from" unit code,
+     * "from" value, and "to" unit code) that must be correct to attempt a
+     * conversion.
+     */
+
+  }, {
+    key: 'showConvertTab',
+    value: function showConvertTab() {
+      this.convFrom_ = false;
+      var fromField = document.getElementById('convertFrom');
+      fromField.value = null;
+      fromField.classList.remove("invalid");
+
+      var fromNameField = document.getElementById('convertFromName');
+      fromNameField.innerHTML = '';
+
+      this.convFromNum_ = true;
+      var fromNumField = document.getElementById('convertFromNum');
+      fromNumField.value = 1;
+      fromNumField.classList.remove("invalid");
+
+      this.convTo_ = false;
+      var toField = document.getElementById('convertTo');
+      toField.value = null;
+      toField.classList.remove("invalid");
+
+      var toNameField = document.getElementById('convertToName');
+      toNameField.innerHTML = '';
+
+      this.convToNum_ = true;
+      var toNumField = document.getElementById('convertToNum');
+      toNumField.value = 1;
+      toNumField.classList.remove("invalid");
+    } // end showConvertTab
+
+
+    /**
+     * This method is run when the Validator tab is displayed, to reset the
+     * ucum expression input field and the message field.  Otherwise they
+     * retain their values when switching to the Converter tab and back.
+     */
+
+  }, {
+    key: 'showValidateTab',
+    value: function showValidateTab() {
+
+      var codeField = document.getElementById('valString');
+      codeField.value = null;
+      codeField.classList.remove("invalid");
+
+      var msgField = document.getElementById('validationString');
+      msgField.innerHTML = '';
+      msgField.classList.remove("invalid");
+    } // end showConvertTab
 
 
     /**
@@ -434,146 +518,160 @@ var UcumDemo = exports.UcumDemo = function () {
      *
      * @param elementID the ID of the web page element that contains the
      *  string to be validated
-     * @param returnElementID the ID of the web page element to receive the
-     *  return validation message
-     * @param reportResult parameter used to indicate how to report valid/invalid
-     *  string messages:
-     *  'displayOnly' indicates that messages should be displayed only, in the page
-     *    element specified by the returnElementID.  No flag conversion flag
-     *    settings are needed.  (This would be set from the Validator tab).
-     *  'from' indicates that in addition to a message, the convFromUnit flag
-     *    should be set to true if the string is valid; false if it is not.
-     *  'to' indicates that in addition to a message, the convToUnit flag
-     *    should be set to true if the string is valid; false if it is not.
-     * @returns nothing directly; return is the validation message as noted above
+     * @param tabName the name of the tab ('Converter' or 'Validator') that
+     *  contains the input field
+     * @param msgElementID the ID of the web page element to received messages
+     *  (success and error).
+     * @returns nothing directly; return is the success/error message
      */
 
   }, {
     key: 'reportUnitStringValidity',
-    value: function reportUnitStringValidity(elementID, returnElementID, reportResult) {
+    value: function reportUnitStringValidity(elementID, tabName, msgElementID) {
 
       this.utils_.useHTMLInMessages(true);
       this.utils_.useBraceMsgForEachString(true);
 
+      var valConv = tabName === 'Validator' ? 'validate' : 'convert';
+
       var retMsg = '';
+      var valMsg = '';
       var parseResp = {};
-
-      var valFld = document.getElementById(elementID);
-      valFld.removeAttribute("class");
-      var uStr = valFld.value;
-      var escVal = escapeHtml(valFld.value);
-      var resFld = document.getElementById(returnElementID);
-      resFld.innerHTML = '';
-
-      // if the reportResult parameter passed in is invalid, set a message
-      // and don't continue
-      if (reportResult !== 'displayOnly' && reportResult !== 'from' && reportResult !== 'to') {
-        console.log('Invalid reportResult parameter supplied - ' + reportResult);
-        retMsg = ['Sorry - an error occurred while trying to validate ' + escVal];
-        valFld.setAttribute("class", "invalid");
-        resFld.setAttribute("class", "invalid");
+      var suggsField = null;
+      if (tabName === 'Converter') {
+        suggsField = document.getElementById("convSuggestions");
+        suggsField.innerHTML = '';
+        suggsField.style.display = 'none';
       }
-      // If nothing was specified make sure the convert button is disabled and
-      // ignore the rest of the processing.
-      // else if (uStr === '') {
-      //   document.getElementById("doConversionButton").disabled = true ;
-      // }
-      // Else continue processing
+
+      var resFld = document.getElementById(msgElementID);
+      resFld.innerHTML = '';
+      var valFld = document.getElementById(elementID);
+      var valMsgFld = document.getElementById(elementID + 'Name');
+      if (valMsgFld) {
+        valMsgFld.innerHTML = '';
+        valMsgFld.style.height = 'auto';
+      }
+      var uStr = valFld.value;
+
+      // If the field was blanked out and we're on the converter tab, call
+      // setConvertValues to set the validity flag for that field to false but not
+      // designate it as an error (no error message, no red border around the field)
+      if (uStr === '') {
+        if (tabName === 'Converter') this.setConvertValues(elementID, false, true);
+      }
+      // Otherwise create a safe (to redisplay) copy of the field and
+      // try to validate it
       else {
+          var escVal = escapeHtml(valFld.value);
+          var theStatus = '';
           try {
-            parseResp = this.utils_.validateUnitString(uStr, true);
-            if (parseResp['status'] === 'valid') {
-              if (reportResult !== 'displayOnly') {
-                this.setConvertValues(reportResult, true);
-              } else {
-                valFld.removeAttribute("class");
-                resFld.removeAttribute("class");
+            parseResp = this.utils_.validateUnitString(uStr, true, valConv);
+            theStatus = parseResp['status'];
+            var theUnit = parseResp['unit'];
+            // If we got a unit back and the status isn't 'error', we found a
+            // unit (whether or not it matches the original string).
+            if (theStatus !== 'error' && theUnit) {
+              if (tabName === 'Converter') {
+                this.setConvertValues(elementID, true);
               }
-              var valMsg = parseResp['ucumCode'] + ' ';
-              if (parseResp['unit'].name) {
-                valMsg += '(' + parseResp['unit'].name + ') ';
+              // If the status returned was 'invalid' it means we had to do a
+              // substitution to get a unit.  Set the class on the output
+              // strings to invalid
+              if (theStatus === 'invalid') {
+                valFld.classList.add("invalid");
+                resFld.classList.add("invalid");
+                resFld.classList.remove("valid");
               }
-              valMsg += 'is a valid unit expression.';
-              if (parseResp['msg'].length > 0) {
-                retMsg = parseResp['msg'].join('<BR>') + '<BR>';
-              }
-              retMsg += valMsg;
-            }
-            // Else the string is not valid - may be an error or just invalid
+              // Otherwise the status is valid.  If we're on the validator tab
+              // set the appropriate classes for the output fields.  This has
+              // already been done for the converter tab fields, in setConvertValues
+              else {
+                  if (tabName === 'Validator') {
+                    valFld.classList.remove('invalid');
+                    resFld.classList.remove('invalid');
+                    resFld.classList.add('valid');
+                  }
+                  // Assemble the valid value message.  If there is a unit name,
+                  // just use that.  If there's no name, say that the code is valid.
+                  valMsg = parseResp['ucumCode'] + ' ';
+                  if (theUnit.name) {
+                    valMsg += '(' + theUnit.name + ') ';
+                  }
+                  if (tabName === 'Validator') {
+                    valMsg += ' is a valid unit expression.';
+                  }
+                  if (tabName === 'Validator') {
+                    if (parseResp['msg'].length > 0) parseResp['msg'].unshift(valMsg);else parseResp['msg'] = valMsg;
+                  }
+                } // end if the status is 'valid'
+            } // end if we have a unit and the status is not 'error'
+            // Else the status returned is 'error' OR no unit was returned
+            // (status could still be invalid)
             else {
-                if (reportResult != 'displayOnly') {
-                  this.setConvertValues(reportResult, false);
+                if (tabName === 'Converter') {
+                  this.setConvertValues(elementID, false);
                 } else {
-                  valFld.setAttribute("class", "invalid");
-                  resFld.setAttribute("class", "invalid");
+                  valFld.classList.add("invalid");
+                  resFld.classList.add("invalid");
+                  resFld.classList.remove("valid");
                 }
                 // If the status is invalid and we have suggestions, put the suggestion
-                // output in the return message.   If we don't have suggestions there
-                // should be an explanation in the parse response's 'msg' element, and
-                // will be transferred to the returned message below.
-                if (parseResp['status'] === 'invalid') {
-                  if (parseResp['suggestions']) retMsg = this._suggSetOutput(parseResp['suggestions']);
-                } else {
-                  // assume status is 'error'
+                // output in the return message.   This include a starting line
+                // stating that the unit expression was invalid but we have
+                // suggestions.  If we don't have suggestions there
+                // should be an "invalid" message in the parse response's 'msg'
+                // element which will be transferred to the retMsg below.
+                if (parseResp['suggestions']) {
+                  if (tabName === 'Validator') {
+                    retMsg = this._suggSetOutput(parseResp['suggestions']);
+                  } else {
+                    suggsField.innerHTML = this._suggSetOutput(parseResp['suggestions']);
+                    suggsField.style.display = 'block';
+                  }
+                }
+
+                if (theStatus === 'error') {
                   console.log(retMsg.concat(parseResp['msg']));
                   retMsg = 'Sorry - an error occurred while trying to validate ' + escVal;
-                } // end if the status returned was not 'invalid'
-              } // end if the string is not valid
+                }
+              } // end if parsing returned an error status
           } // end try
           catch (err) {
             console.log(err.message);
             retMsg = 'Sorry - an error occurred while trying to validate ' + escVal;
-            valFld.setAttribute("class", "invalid");
-            if (reportResult !== 'displayOnly') {
-              this.setConvertValues(reportResult, false);
+            valFld.classList.add("invalid");
+            resFld.classList.add("invalid");
+            if (tabName === 'Converter') {
+              this.setConvertValues(elementID, false);
             }
           } // end catch
-          if (parseResp['msg']) {
-            if (parseResp['status'] !== 'valid') {
-              if (retMsg != '') retMsg += '<BR>';
-              retMsg += parseResp['msg'].join('<BR>');
-            }
-          } // end if there's a message from the parse request
-        } // end if a value was specified
 
-      // If there's a message to be displayed, do it now
-      if (retMsg != '') {
-        if (uStr !== escVal && uStr !== '') {
-          retMsg = this._multipleReplace(retMsg, uStr, escVal);
-        }
-        resFld.innerHTML = retMsg;
-      }
+          if (parseResp['msg']) {
+            if (retMsg != '') {
+              retMsg += '<BR>';
+            }
+            retMsg += parseResp['msg'];
+          } // end if there's a message from the parse request
+
+          // If there's a message to be displayed, do it now
+          if (retMsg !== '') {
+            if (uStr !== escVal && uStr !== '') {
+              retMsg = this._multipleReplace(retMsg, uStr, escVal);
+            }
+            resFld.innerHTML = retMsg;
+          }
+          // If there's a "valid code" message to be displayed, do that now
+          if (valMsg !== '') {
+            if (uStr !== escVal && uStr !== '') {
+              valMsg = this._multipleReplace(valMsg, uStr, escVal);
+            }
+            valMsgFld.innerHTML = valMsg;
+          } // end if there's a "valid code" message to display
+        } // end if a value was specified
+      this._sizeNameDivs();
     } // end reportUnitStringValidity
 
-
-    /**
-     * This method is run when the Converter tab is displayed, to reset the
-     * variables that track the validity of the three inputs ("from" unit code,
-     * "from" value, and "to" unit code) that must be correct to attempt a
-     * conversion.
-     */
-
-  }, {
-    key: 'showConvertTab',
-    value: function showConvertTab() {
-      this.convFromUnit_ = false;
-      var fromField = document.getElementById('convertFrom');
-      fromField.value = null;
-      fromField.removeAttribute("class");
-
-      this.convFromVal_ = false;
-      var numField = document.getElementById('convertNum');
-      numField.value = null;
-      numField.removeAttribute("class");
-
-      this.convToUnit_ = false;
-      var toField = document.getElementById('convertTo');
-      toField.value = null;
-      toField.removeAttribute("class");
-
-      //document.getElementById('resultString').innerHTML = '' ;
-      //document.getElementById("doConversionButton").disabled = true;
-    }
 
     /**
      * This method sets the appropriate validity variable and display attributes
@@ -581,14 +679,10 @@ var UcumDemo = exports.UcumDemo = function () {
      * must be correct to allow the user to request conversion.
      *
      * This also checks to see if all three are correct and if they are, it
-     * makes the convert button visible. If they are not the convert button
-     * is hidden (or remains hidden).
+     * invokes the convertUnit function.
      *
-     * @param whichSetting indicates which input was checked:
-     *   "from" means the "from" unit code field was checked;
-     *   "to" means the "to" unit code fields was checked; and
-     *   "fromNum" means the number of units field was checked.
-     * @param value true indicates that the value is valid; false means it's not.
+     * @param elementID ID of the field that caused this to be called.
+     * @param valid true indicates that the value is valid; false means it's not.
      * @param clear an optional boolean that signals a request to remove
      *   highlighting (currently a red border) of the form element being updated.
      *   This should be passed as true when the user clears the contents of a
@@ -599,46 +693,52 @@ var UcumDemo = exports.UcumDemo = function () {
 
   }, {
     key: 'setConvertValues',
-    value: function setConvertValues(whichSetting, value, clear) {
+    value: function setConvertValues(elementID, valid, clear) {
 
       if (clear === undefined) {
         clear = false;
       }
-      var msgField = document.getElementById('convertToNum');
-      var targetField = null;
-      if (whichSetting === 'from') {
-        this.convFromUnit_ = value;
-        targetField = document.getElementById('convertFrom');
-      } else if (whichSetting === 'to') {
-        this.convToUnit_ = value;
-        targetField = document.getElementById('convertTo');
+      var msgField = document.getElementById('convMsg');
+      var sourceField = document.getElementById(elementID);
+      var resultSide = null;
+      if (elementID === 'convertFrom') {
+        this.convFrom_ = valid;
+        resultSide = 'to';
+      } else if (elementID === 'convertTo') {
+        this.convTo_ = valid;
+        resultSide = 'to';
+      } else if (elementID === 'convertFromNum') {
+        this.convFromNum_ = valid;
+        resultSide = 'to';
       } else {
-        // assume from value
-        this.convFromVal_ = value;
-        targetField = document.getElementById('convertNum');
+        // assume convertToNum
+        this.convToNum_ = valid;
+        resultSide = 'from';
       }
 
       // set or remove the indicator (currently a red border) on the invalid field
-      if (value === false && !clear) {
-        targetField.setAttribute("class", "invalid");
-        msgField.setAttribute("class", "invalid");
+      if (valid === false && !clear) {
+        sourceField.classList.add("invalid");
+        msgField.classList.add("invalid");
       } else {
-        targetField.removeAttribute("class");
-        msgField.removeAttribute("class");
+        sourceField.classList.remove("invalid");
+        msgField.classList.remove("invalid");
       }
-      /*
-        let convertButton = document.getElementById("doConversionButton");
-        if (this.convFromUnit_ === true && this.convToUnit_ === true &&
-            this.convFromVal_ === true)
-          convertButton.disabled = false ;
-        else
-          convertButton.disabled = true ;
-      */
+
+      // if both code fields are valid, and the number field that is not
+      // being calculated is valid, perform the conversion
+      if (this.convFrom_ === true && this.convTo_ === true) {
+        if (resultSide === 'from' && this.convToNum_) {
+          this.convertUnit('convertTo', 'convertToNum', 'convertFrom', 'convertFromNum');
+        } else if (resultSide === 'to' && this.convFromNum_) {
+          this.convertUnit('convertFrom', 'convertFromNum', 'convertTo', 'convertToNum');
+        }
+      }
     } // end setConvertValues
 
 
     /**
-     * This method checks the number of units value to make sure it's a valid
+     * This method checks a number of units value to make sure it's a valid
      * number.  It calls setConvertValues to set the validity state flag for
      * the number of units field as appropriate.
      *
@@ -647,29 +747,77 @@ var UcumDemo = exports.UcumDemo = function () {
      */
 
   }, {
-    key: 'checkFromVal',
-    value: function checkFromVal(numField) {
+    key: 'checkNumVal',
+    value: function checkNumVal(numField) {
 
-      var fromFld = document.getElementById(numField);
-      var fromVal = escapeHtml(fromFld.value);
-      var resultString = document.getElementById("convertToNum");
+      var checkFld = document.getElementById(numField);
+      var checkVal = escapeHtml(checkFld.value);
+      var resFld = numField === 'convertFromNum' ? document.getElementById('convertToNum') : document.getElementById('convertFromNum');
+      var resultString = document.getElementById('convMsg');
       resultString.innerHTML = '';
 
-      // If the value is blank, just make sure the convert button is
-      // disabled and do no further processing
-      // if (fromVal === '') {
-      //   document.getElementById("doConversionButton").disabled = true ;
-      // }
-      // else {
-      var parsedNum = "" + fromVal;
-      if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
-        resultString.innerHTML = fromVal + ' is not a valid number.';
-        this.setConvertValues('fromNum', false);
-      } else {
-        this.setConvertValues('fromNum', true);
+      if (checkVal !== '') {
+        var parsedNum = "" + checkVal;
+        if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
+          resultString.innerHTML = checkVal + ' is not a valid number.';
+          this.setConvertValues(numField, false);
+        } else {
+          this.setConvertValues(numField, true);
+        }
+      } // end if a value was specified
+
+      // If the value is blank, call setConvertValues to set the validity
+      // indicator to false and remove any red highlighting that might be there.
+      // Do this for values in both number fields, and blank out the result field
+      if (checkVal === '') {
+        this.setConvertValues('convertFromNum', false, true);
+        this.setConvertValues('convertToNum', false, true);
+        resFld.value = '';
       }
-      //} // end if a value was specified
-    } // end checkFromVal
+    } // end checkNumVal
+
+
+    /**
+     * This checks the value specified for number of decimal digits on the
+     * Converter tab.  If the number is invalid it issues a message and resets
+     * the value to the default.
+     *
+     * If the number is valid it resets both the
+     * convert "from" and convert "to" numbers to the appropriate value, using
+     * the stored values for those fields.  It does not reset a value for a
+     * field that is blank.
+     *
+     * @param numField the name of the number of units field
+     *
+     */
+
+  }, {
+    key: 'updatePrecision',
+    value: function updatePrecision(msgFieldName) {
+
+      var msgField = document.getElementById(msgFieldName);
+      msgField.innerHTML = '';
+      var prec = document.getElementById("precision");
+      var precDigits = parseInt(escapeHtml(prec.value));
+      if (isNaN(precDigits) || precDigits < 0) {
+        msgField.innerHTML = 'Decimal digits must be specified as a number ' + ('between 0 and ' + UcumDemoConfig.maxDecDigits_ + '.  ') + 'It has been reset to the default value.';
+        msgField.classList.add("invalid");
+        precDigits = UcumDemoConfig.defaultPrecision_;
+        prec.value = precDigits;
+      } else if (precDigits > UcumDemoConfig.maxDecDigits_) {
+        msgField.innerHTML = prec.value + ' is not a valid value for decimal ' + 'digits.  It has been reset to the maximum number of digits allowed.';
+        msgField.classList.add("invalid");
+        precDigits = UcumDemoConfig.maxDecDigits_;
+        prec.value = precDigits;
+      }
+      // Update the result field
+      var numField = document.getElementById(this.lastResultFld_);
+      var numVal = parseFloat(escapeHtml(numField.value));
+      if (numVal !== '') {
+        numVal = parseFloat(this.lastResult_).toFixed(precDigits);
+        numField.value = numVal;
+      }
+    } // end updatePrecision
 
 
     /**
@@ -677,15 +825,16 @@ var UcumDemo = exports.UcumDemo = function () {
      *
      * @param fromField the ID of the field containing the name of the unit to
      *  be converted
-     * @param numField the ID of the field containing the number of "from" units
+     * @param fromNumField the ID of the field containing the number of "from" units
      *  to be converted to "to" units
      * @param toField the ID of the field containing the name of the unit that
      *  the from field is to be converted to
+     * @param toNumField the ID of the field to receive the number of "to" units
      */
 
   }, {
     key: 'convertUnit',
-    value: function convertUnit(fromField, numField, toField) {
+    value: function convertUnit(fromField, fromNumField, toField, toNumField) {
 
       this.utils_.useHTMLInMessages(true);
       this.utils_.useBraceMsgForEachString(true);
@@ -697,79 +846,84 @@ var UcumDemo = exports.UcumDemo = function () {
         decDigits = Ucum.decDigits_;
         prec.value = decDigits;
       }
-
-      var entryErrMsg = [];
+      // Start out with the precision chooser line hidden
+      var precLine = document.getElementById('precision-line');
+      precLine.style.visibility = "hidden";
 
       var fromName = document.getElementById(fromField).value;
       var escFromName = escapeHtml(fromName);
-      if (fromName === '' || fromName === null) {
-        entryErrMsg.push('Please specify a code for the units you want to convert.');
-      } else {
-        var hypIdx = fromName.indexOf(Ucum.codeSep_);
-        if (hypIdx > 0) fromName = fromName.substr(0, hypIdx);
-      }
-      var fromVal = parseFloat(escapeHtml(document.getElementById(numField).value));
-      if (isNaN(fromVal)) {
-        entryErrMsg.push('Please specify the number of units to be converted.');
-      }
+      var fromVal = parseFloat(escapeHtml(document.getElementById(fromNumField).value));
       var toName = document.getElementById(toField).value;
       var escToName = escapeHtml(toName);
-      if (toName === '' || toName === null) {
-        entryErrMsg.push('Please specify a code that you want the units to be converted to.');
-      } else {
-        var codePos = toName.indexOf(Ucum.codeSep_);
-        if (codePos > 0) toName = toName.substr(0, codePos);
-      }
-      // Get the field to hold the response
-      var resultString = document.getElementById("resultString");
-      resultString.innerHTML = '';
 
-      // if we don't have any entry messages, call the conversion code and put
-      // the response in the form field.  Otherwise fill that field with the
-      // entry message(s).
-      if (entryErrMsg.length > 0) {
-        resultMsg = entryErrMsg.join('<BR>');
-      } else {
-        var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, true);
-        if (resultObj['status'] === 'succeeded') {
-          var toVal = resultObj['toVal'];
-          // convert the value to a fixed value with the specified number of
-          // decimal digits.  Remove trailing zeroes
-          //toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
-          // ----- OR ----
-          // convert the value to a fixed value with the specified number of
-          // decimal digits.  Do not remove trailing zeroes
-          toVal = toVal.toFixed(decDigits);
+      // clear the "to" number field, which is to get the result
+      var toNumFld = document.getElementById(toNumField);
+      //toNumFld.value = '';
 
-          // Set the return message.   Use the UCUM code from the "from" and "to"
-          // unit objects returned.  Although the user will PROBABLY enter a
-          // valid unit code from the web page, they don't have to.
-          resultMsg = fromVal.toString() + ' ' + (resultObj['fromUnit'].getProperty('csCode_') + ' ') + ('(' + resultObj['fromUnit'].getProperty('name_') + ') = ') + (toVal.toString() + ' ') + (resultObj['toUnit'].getProperty('csCode_') + ' ') + ('(' + resultObj['toUnit'].getProperty('name_') + ')');
-          if (resultObj['msg'].length > 0) {
-            for (var r = 0; r < resultObj['msg'].length; r++) {
-              resultMsg += '<br>' + resultObj['msg'][r];
-            }
+      // Get the field to hold an error message and the one to hold suggestions
+      var msgField = document.getElementById("convMsg");
+      msgField.innerHTML = '';
+      var suggsField = document.getElementById("convSuggestions");
+      suggsField.innerHTML = '';
+      suggsField.style.display = 'none';
+
+      var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, true);
+      if (resultObj['status'] === 'succeeded') {
+        var toVal = resultObj['toVal'];
+
+        // Store the name of the result field and the full number received so
+        // that we have it if a larger number of digits is subsequently requested.
+        this.lastResultFld_ = toNumField;
+        this.lastResult_ = toVal;
+
+        // convert the value to a fixed value with the specified number of
+        // decimal digits.  Remove trailing zeroes
+        //toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
+        // ----- OR ----
+        // convert the value to a fixed value with the specified number of
+        // decimal digits.  Do not remove trailing zeroes
+        // toVal = toVal.toFixed(decDigits);
+        // ----- OR ----
+        // convert the value to a value with 16 significant digits.  Use
+        // 16 to avoid floating point rounding errors
+        // if before/after parseFloat are not equal, show precision chooser
+        // otherwise don't.   Only modify last result value
+        var precVal = parseFloat(toVal.toPrecision(UcumDemoConfig.defaultPrecision_));
+        toNumFld.value = precVal;
+
+        // The precision chooser is on hold.  Don't display.
+        //if (precVal !== toVal) {
+        //  precLine.style.visibility = "visible";
+        //}
+
+        // If a message was returned, write that to the message area.  For a
+        // successful conversion this might be a message about a substitution,
+        // e.g., "2m is not a valid UCUM code.  We assumed you meant 2.m"
+
+        if (resultObj['msg'].length > 0) {
+          for (var r = 0; r < resultObj['msg'].length; r++) {
+            resultMsg += '<br>' + resultObj['msg'][r];
           }
         }
-        // Else if an error was signalled, transfer the error message to
-        // the result field
-        else if (resultObj['status'] === 'error') {
-            resultMsg = 'Sorry - an error occurred while trying to ' + 'perform the conversion.';
-          }
-          // Else 1 or more invalid unit expressions were found (status = 'failed')
-          else {
-              // if suggestions were found, output any included messages followed
-              // by the suggestions to the result field
-              if (resultObj['suggestions']) {
-                if (resultObj['msg']) resultMsg += resultObj['msg'].join('<BR>') + '<BR>';
-                if (resultObj['suggestions']['from']) resultMsg += this._suggSetOutput(resultObj['suggestions']['from']);
-                if (resultObj['suggestions']['to']) resultMsg += this._suggSetOutput(resultObj['suggestions']['to']);
-              }
-              // if suggestions were not found, output whatever message(s) were
-              // returned that would indicate the problem
-              else resultMsg = resultObj['msg'].join('<BR>');
-            } // end if conversion did/didn't succeed
-      } // end if there were/weren't entry errors
+      }
+      // Else if an error was signalled, transfer the error message to
+      // the result field
+      else if (resultObj['status'] === 'error') {
+          resultMsg = 'Sorry - an error occurred while trying to ' + 'perform the conversion.';
+        }
+
+        // Else 1 or more invalid unit expressions were found (status = 'failed')
+        else {
+            if (resultObj['msg']) {
+              resultMsg = resultObj['msg'].join('<BR>');
+            }
+            // if suggestions were found, output the suggestions to the suggestions
+            // field
+            if (resultObj['suggestions']) {
+              suggsField.innerHTML = this._suggSetOutput(resultObj['suggestions']);
+              suggsField.style.display = 'block';
+            }
+          } // end if conversion did/didn't succeed
 
       if (resultMsg !== '') {
         if (fromName !== escFromName && fromName !== '') {
@@ -778,7 +932,7 @@ var UcumDemo = exports.UcumDemo = function () {
         if (toName !== escToName && toName !== '') {
           resultMsg = this._multipleReplace(resultMsg, toName, escToName);
         }
-        resultString.innerHTML = resultMsg;
+        msgField.innerHTML = resultMsg;
       }
     } // end convertUnit
 
@@ -1080,6 +1234,39 @@ var UcumDemo = exports.UcumDemo = function () {
       return targetString.replace(new RegExp(toReplace.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), "g"), replaceWith);
     } // end _multipleReplace
 
+    /**
+     * This replaces multiple occurrences of a string within a string.
+     * This was created at Paul Lynch's request.
+     *
+     * @param targetString the string containing the value to be replaced
+     * @param toReplace the value to be replaced
+     * @param replaceWith the value to replace toReplace
+     * @returns {string} the string containing the replaced values
+     * @private
+     */
+
+  }, {
+    key: '_sizeNameDivs',
+    value: function _sizeNameDivs() {
+
+      var left = document.getElementById("convertFromName");
+      var leftHeight = left.offsetHeight;
+
+      var right = document.getElementById("convertToName");
+      var rightHeight = right.offsetHeight;
+
+      if (right.innerHTML === '' && left.innerHTML === '') {
+        right.style.height = '0px';
+        left.style.height = '0px';
+      } else {
+        if (leftHeight > rightHeight) {
+          right.style.height = leftHeight + 'px';
+        } else if (rightHeight > leftHeight) {
+          left.style.height = rightHeight + 'px';
+        }
+      }
+    } // end _sizeNameDivs
+
   }]);
 
   return UcumDemo;
@@ -1108,7 +1295,7 @@ UcumDemo.getInstance = function () {
 UcumDemo.getInstance();
 
 
-},{"./demoConfig.js":1,"./ucumFileValidator.js":4,"browserify-fs":7,"escape-html":94}],4:[function(require,module,exports){
+},{"./demoConfig.js":1,"./ucumFileValidator.js":4,"browserify-fs":7,"escape-html":99}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1312,7 +1499,7 @@ UcumFileValidator.getInstance = function () {
 UcumFileValidator.getInstance();
 
 
-},{"browserify-fs":7,"csv-parse":91,"csv-stringify":92,"stream":117,"stream-transform":118,"string-to-stream":119}],5:[function(require,module,exports){
+},{"browserify-fs":7,"csv-parse":96,"csv-stringify":97,"stream":126,"stream-transform":127,"string-to-stream":128}],5:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -1439,7 +1626,7 @@ var fs = require('level-filesystem');
 
 var db = levelup('level-filesystem', {db:leveljs});
 module.exports = fs(db);
-},{"level-filesystem":9,"level-js":51,"levelup":69}],8:[function(require,module,exports){
+},{"level-filesystem":9,"level-js":55,"levelup":73}],8:[function(require,module,exports){
 var errno = require('errno');
 
 Object.keys(errno.code).forEach(function(code) {
@@ -2054,7 +2241,7 @@ module.exports = function(db, opts) {
 };
 
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"./errno":8,"./paths":48,"./watchers":50,"_process":105,"buffer":95,"fwd-stream":13,"level-blobs":22,"level-peek":30,"level-sublevel":33,"octal":45,"once":102}],10:[function(require,module,exports){
+},{"./errno":8,"./paths":52,"./watchers":54,"_process":110,"buffer":101,"fwd-stream":13,"level-blobs":24,"level-peek":34,"level-sublevel":37,"octal":49,"once":108}],10:[function(require,module,exports){
 var prr = require('prr')
 
 function init (type, message, cause) {
@@ -2652,7 +2839,7 @@ exports.duplex = function(opts, initWritable, initReadable) {
 	return dupl;
 };
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":105,"buffer":95,"readable-stream/duplex":14,"readable-stream/readable":20,"readable-stream/writable":21}],14:[function(require,module,exports){
+},{"_process":110,"buffer":101,"readable-stream/duplex":14,"readable-stream/readable":22,"readable-stream/writable":23}],14:[function(require,module,exports){
 module.exports = require("./lib/_stream_duplex.js")
 
 },{"./lib/_stream_duplex.js":15}],15:[function(require,module,exports){
@@ -2748,7 +2935,7 @@ function forEach (xs, f) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_readable":17,"./_stream_writable":19,"_process":105,"core-util-is":90,"inherits":99}],16:[function(require,module,exports){
+},{"./_stream_readable":17,"./_stream_writable":19,"_process":110,"core-util-is":20,"inherits":105}],16:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2796,7 +2983,7 @@ PassThrough.prototype._transform = function(chunk, encoding, cb) {
   cb(null, chunk);
 };
 
-},{"./_stream_transform":18,"core-util-is":90,"inherits":99}],17:[function(require,module,exports){
+},{"./_stream_transform":18,"core-util-is":20,"inherits":105}],17:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -3782,7 +3969,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"_process":105,"buffer":95,"core-util-is":90,"events":96,"inherits":99,"isarray":101,"stream":117,"string_decoder/":128}],18:[function(require,module,exports){
+},{"_process":110,"buffer":101,"core-util-is":20,"events":102,"inherits":105,"isarray":107,"stream":126,"string_decoder/":21}],18:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3994,7 +4181,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"./_stream_duplex":15,"core-util-is":90,"inherits":99}],19:[function(require,module,exports){
+},{"./_stream_duplex":15,"core-util-is":20,"inherits":105}],19:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -4384,7 +4571,341 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":15,"_process":105,"buffer":95,"core-util-is":90,"inherits":99,"stream":117}],20:[function(require,module,exports){
+},{"./_stream_duplex":15,"_process":110,"buffer":101,"core-util-is":20,"inherits":105,"stream":126}],20:[function(require,module,exports){
+(function (Buffer){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+
+function isArray(arg) {
+  if (Array.isArray) {
+    return Array.isArray(arg);
+  }
+  return objectToString(arg) === '[object Array]';
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = Buffer.isBuffer;
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+}).call(this,{"isBuffer":require("../../../../../../../../../../is-buffer/index.js")})
+},{"../../../../../../../../../../is-buffer/index.js":106}],21:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var Buffer = require('buffer').Buffer;
+
+var isBufferEncoding = Buffer.isEncoding
+  || function(encoding) {
+       switch (encoding && encoding.toLowerCase()) {
+         case 'hex': case 'utf8': case 'utf-8': case 'ascii': case 'binary': case 'base64': case 'ucs2': case 'ucs-2': case 'utf16le': case 'utf-16le': case 'raw': return true;
+         default: return false;
+       }
+     }
+
+
+function assertEncoding(encoding) {
+  if (encoding && !isBufferEncoding(encoding)) {
+    throw new Error('Unknown encoding: ' + encoding);
+  }
+}
+
+// StringDecoder provides an interface for efficiently splitting a series of
+// buffers into a series of JS strings without breaking apart multi-byte
+// characters. CESU-8 is handled as part of the UTF-8 encoding.
+//
+// @TODO Handling all encodings inside a single object makes it very difficult
+// to reason about this code, so it should be split up in the future.
+// @TODO There should be a utf8-strict encoding that rejects invalid UTF-8 code
+// points as used by CESU-8.
+var StringDecoder = exports.StringDecoder = function(encoding) {
+  this.encoding = (encoding || 'utf8').toLowerCase().replace(/[-_]/, '');
+  assertEncoding(encoding);
+  switch (this.encoding) {
+    case 'utf8':
+      // CESU-8 represents each of Surrogate Pair by 3-bytes
+      this.surrogateSize = 3;
+      break;
+    case 'ucs2':
+    case 'utf16le':
+      // UTF-16 represents each of Surrogate Pair by 2-bytes
+      this.surrogateSize = 2;
+      this.detectIncompleteChar = utf16DetectIncompleteChar;
+      break;
+    case 'base64':
+      // Base-64 stores 3 bytes in 4 chars, and pads the remainder.
+      this.surrogateSize = 3;
+      this.detectIncompleteChar = base64DetectIncompleteChar;
+      break;
+    default:
+      this.write = passThroughWrite;
+      return;
+  }
+
+  // Enough space to store all bytes of a single character. UTF-8 needs 4
+  // bytes, but CESU-8 may require up to 6 (3 bytes per surrogate).
+  this.charBuffer = new Buffer(6);
+  // Number of bytes received for the current incomplete multi-byte character.
+  this.charReceived = 0;
+  // Number of bytes expected for the current incomplete multi-byte character.
+  this.charLength = 0;
+};
+
+
+// write decodes the given buffer and returns it as JS string that is
+// guaranteed to not contain any partial multi-byte characters. Any partial
+// character found at the end of the buffer is buffered up, and will be
+// returned when calling write again with the remaining bytes.
+//
+// Note: Converting a Buffer containing an orphan surrogate to a String
+// currently works, but converting a String to a Buffer (via `new Buffer`, or
+// Buffer#write) will replace incomplete surrogates with the unicode
+// replacement character. See https://codereview.chromium.org/121173009/ .
+StringDecoder.prototype.write = function(buffer) {
+  var charStr = '';
+  // if our last write ended with an incomplete multibyte character
+  while (this.charLength) {
+    // determine how many remaining bytes this buffer has to offer for this char
+    var available = (buffer.length >= this.charLength - this.charReceived) ?
+        this.charLength - this.charReceived :
+        buffer.length;
+
+    // add the new bytes to the char buffer
+    buffer.copy(this.charBuffer, this.charReceived, 0, available);
+    this.charReceived += available;
+
+    if (this.charReceived < this.charLength) {
+      // still not enough chars in this buffer? wait for more ...
+      return '';
+    }
+
+    // remove bytes belonging to the current character from the buffer
+    buffer = buffer.slice(available, buffer.length);
+
+    // get the character that was split
+    charStr = this.charBuffer.slice(0, this.charLength).toString(this.encoding);
+
+    // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
+    var charCode = charStr.charCodeAt(charStr.length - 1);
+    if (charCode >= 0xD800 && charCode <= 0xDBFF) {
+      this.charLength += this.surrogateSize;
+      charStr = '';
+      continue;
+    }
+    this.charReceived = this.charLength = 0;
+
+    // if there are no more bytes in this buffer, just emit our char
+    if (buffer.length === 0) {
+      return charStr;
+    }
+    break;
+  }
+
+  // determine and set charLength / charReceived
+  this.detectIncompleteChar(buffer);
+
+  var end = buffer.length;
+  if (this.charLength) {
+    // buffer the incomplete character bytes we got
+    buffer.copy(this.charBuffer, 0, buffer.length - this.charReceived, end);
+    end -= this.charReceived;
+  }
+
+  charStr += buffer.toString(this.encoding, 0, end);
+
+  var end = charStr.length - 1;
+  var charCode = charStr.charCodeAt(end);
+  // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
+  if (charCode >= 0xD800 && charCode <= 0xDBFF) {
+    var size = this.surrogateSize;
+    this.charLength += size;
+    this.charReceived += size;
+    this.charBuffer.copy(this.charBuffer, size, 0, size);
+    buffer.copy(this.charBuffer, 0, 0, size);
+    return charStr.substring(0, end);
+  }
+
+  // or just emit the charStr
+  return charStr;
+};
+
+// detectIncompleteChar determines if there is an incomplete UTF-8 character at
+// the end of the given buffer. If so, it sets this.charLength to the byte
+// length that character, and sets this.charReceived to the number of bytes
+// that are available for this character.
+StringDecoder.prototype.detectIncompleteChar = function(buffer) {
+  // determine how many bytes we have to check at the end of this buffer
+  var i = (buffer.length >= 3) ? 3 : buffer.length;
+
+  // Figure out if one of the last i bytes of our buffer announces an
+  // incomplete char.
+  for (; i > 0; i--) {
+    var c = buffer[buffer.length - i];
+
+    // See http://en.wikipedia.org/wiki/UTF-8#Description
+
+    // 110XXXXX
+    if (i == 1 && c >> 5 == 0x06) {
+      this.charLength = 2;
+      break;
+    }
+
+    // 1110XXXX
+    if (i <= 2 && c >> 4 == 0x0E) {
+      this.charLength = 3;
+      break;
+    }
+
+    // 11110XXX
+    if (i <= 3 && c >> 3 == 0x1E) {
+      this.charLength = 4;
+      break;
+    }
+  }
+  this.charReceived = i;
+};
+
+StringDecoder.prototype.end = function(buffer) {
+  var res = '';
+  if (buffer && buffer.length)
+    res = this.write(buffer);
+
+  if (this.charReceived) {
+    var cr = this.charReceived;
+    var buf = this.charBuffer;
+    var enc = this.encoding;
+    res += buf.slice(0, cr).toString(enc);
+  }
+
+  return res;
+};
+
+function passThroughWrite(buffer) {
+  return buffer.toString(this.encoding);
+}
+
+function utf16DetectIncompleteChar(buffer) {
+  this.charReceived = buffer.length % 2;
+  this.charLength = this.charReceived ? 2 : 0;
+}
+
+function base64DetectIncompleteChar(buffer) {
+  this.charReceived = buffer.length % 3;
+  this.charLength = this.charReceived ? 3 : 0;
+}
+
+},{"buffer":101}],22:[function(require,module,exports){
 (function (process){
 var Stream = require('stream'); // hack to fix a circular dependency issue when used with browserify
 exports = module.exports = require('./lib/_stream_readable.js');
@@ -4399,10 +4920,10 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable') {
 }
 
 }).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":15,"./lib/_stream_passthrough.js":16,"./lib/_stream_readable.js":17,"./lib/_stream_transform.js":18,"./lib/_stream_writable.js":19,"_process":105,"stream":117}],21:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":15,"./lib/_stream_passthrough.js":16,"./lib/_stream_readable.js":17,"./lib/_stream_transform.js":18,"./lib/_stream_writable.js":19,"_process":110,"stream":126}],23:[function(require,module,exports){
 module.exports = require("./lib/_stream_writable.js")
 
-},{"./lib/_stream_writable.js":19}],22:[function(require,module,exports){
+},{"./lib/_stream_writable.js":19}],24:[function(require,module,exports){
 (function (process,Buffer){
 var Writable = require('readable-stream/writable');
 var Readable = require('readable-stream/readable');
@@ -4797,11 +5318,11 @@ module.exports = function(db, opts) {
 	return blobs;
 };
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":105,"buffer":95,"level-peek":30,"once":102,"readable-stream/readable":28,"readable-stream/writable":29,"util":132}],23:[function(require,module,exports){
+},{"_process":110,"buffer":101,"level-peek":34,"once":108,"readable-stream/readable":32,"readable-stream/writable":33,"util":144}],25:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"./_stream_readable":25,"./_stream_writable":27,"_process":105,"core-util-is":90,"dup":15,"inherits":99}],24:[function(require,module,exports){
+},{"./_stream_readable":27,"./_stream_writable":29,"_process":110,"core-util-is":30,"dup":15,"inherits":105}],26:[function(require,module,exports){
 arguments[4][16][0].apply(exports,arguments)
-},{"./_stream_transform":26,"core-util-is":90,"dup":16,"inherits":99}],25:[function(require,module,exports){
+},{"./_stream_transform":28,"core-util-is":30,"dup":16,"inherits":105}],27:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5756,7 +6277,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":23,"_process":105,"buffer":95,"core-util-is":90,"events":96,"inherits":99,"isarray":101,"stream":117,"string_decoder/":128,"util":6}],26:[function(require,module,exports){
+},{"./_stream_duplex":25,"_process":110,"buffer":101,"core-util-is":30,"events":102,"inherits":105,"isarray":107,"stream":126,"string_decoder/":31,"util":6}],28:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5967,7 +6488,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"./_stream_duplex":23,"core-util-is":90,"inherits":99}],27:[function(require,module,exports){
+},{"./_stream_duplex":25,"core-util-is":30,"inherits":105}],29:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -6448,7 +6969,11 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":23,"_process":105,"buffer":95,"core-util-is":90,"inherits":99,"stream":117}],28:[function(require,module,exports){
+},{"./_stream_duplex":25,"_process":110,"buffer":101,"core-util-is":30,"inherits":105,"stream":126}],30:[function(require,module,exports){
+arguments[4][20][0].apply(exports,arguments)
+},{"../../../../../../../../../../is-buffer/index.js":106,"dup":20}],31:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"buffer":101,"dup":21}],32:[function(require,module,exports){
 (function (process){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = require('stream');
@@ -6462,9 +6987,9 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable') {
 }
 
 }).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":23,"./lib/_stream_passthrough.js":24,"./lib/_stream_readable.js":25,"./lib/_stream_transform.js":26,"./lib/_stream_writable.js":27,"_process":105,"stream":117}],29:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"./lib/_stream_writable.js":27,"dup":21}],30:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":25,"./lib/_stream_passthrough.js":26,"./lib/_stream_readable.js":27,"./lib/_stream_transform.js":28,"./lib/_stream_writable.js":29,"_process":110,"stream":126}],33:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"./lib/_stream_writable.js":29,"dup":23}],34:[function(require,module,exports){
 var fixRange = require('level-fix-range')
 //get the first/last record in a range
 
@@ -6541,7 +7066,7 @@ function last (db, opts, cb) {
 }
 
 
-},{"level-fix-range":31}],31:[function(require,module,exports){
+},{"level-fix-range":35}],35:[function(require,module,exports){
 
 module.exports = 
 function fixRange(opts) {
@@ -6561,7 +7086,7 @@ function fixRange(opts) {
 }
 
 
-},{}],32:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 function addOperation (type, key, value, options) {
   var operation = {
     type: type,
@@ -6601,7 +7126,7 @@ B.write = function (cb) {
 
 module.exports = Batch
 
-},{}],33:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function (process){
 var EventEmitter = require('events').EventEmitter
 var next         = process.nextTick
@@ -6695,7 +7220,7 @@ module.exports   = function (_db, options) {
 
 
 }).call(this,require('_process'))
-},{"./batch":32,"./sub":44,"_process":105,"events":96,"level-fix-range":34,"level-hooks":36}],34:[function(require,module,exports){
+},{"./batch":36,"./sub":48,"_process":110,"events":102,"level-fix-range":38,"level-hooks":40}],38:[function(require,module,exports){
 var clone = require('clone')
 
 module.exports = 
@@ -6721,7 +7246,7 @@ function fixRange(opts) {
   return opts
 }
 
-},{"clone":35}],35:[function(require,module,exports){
+},{"clone":39}],39:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -6869,7 +7394,7 @@ clone.clonePrototype = function(parent) {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":95}],36:[function(require,module,exports){
+},{"buffer":101}],40:[function(require,module,exports){
 var ranges = require('string-range')
 
 module.exports = function (db) {
@@ -7039,7 +7564,7 @@ module.exports = function (db) {
   }
 }
 
-},{"string-range":37}],37:[function(require,module,exports){
+},{"string-range":41}],41:[function(require,module,exports){
 
 //force to a valid range
 var range = exports.range = function (obj) {
@@ -7113,7 +7638,7 @@ var satifies = exports.satisfies = function (key, range) {
 
 
 
-},{}],38:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 module.exports = hasKeys
 
 function hasKeys(source) {
@@ -7122,7 +7647,7 @@ function hasKeys(source) {
         typeof source === "function")
 }
 
-},{}],39:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 var Keys = require("object-keys")
 var hasKeys = require("./has-keys")
 
@@ -7149,11 +7674,11 @@ function extend() {
     return target
 }
 
-},{"./has-keys":38,"object-keys":40}],40:[function(require,module,exports){
+},{"./has-keys":42,"object-keys":44}],44:[function(require,module,exports){
 module.exports = Object.keys || require('./shim');
 
 
-},{"./shim":43}],41:[function(require,module,exports){
+},{"./shim":47}],45:[function(require,module,exports){
 
 var hasOwn = Object.prototype.hasOwnProperty;
 var toString = Object.prototype.toString;
@@ -7177,7 +7702,7 @@ module.exports = function forEach (obj, fn, ctx) {
 };
 
 
-},{}],42:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 
 /**!
  * is
@@ -7881,7 +8406,7 @@ is.string = function (value) {
 };
 
 
-},{}],43:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 (function () {
 	"use strict";
 
@@ -7927,7 +8452,7 @@ is.string = function (value) {
 }());
 
 
-},{"foreach":41,"is":42}],44:[function(require,module,exports){
+},{"foreach":45,"is":46}],48:[function(require,module,exports){
 var EventEmitter = require('events').EventEmitter
 var inherits     = require('util').inherits
 var ranges       = require('string-range')
@@ -8206,14 +8731,14 @@ SDB.post = function (range, hook) {
 var exports = module.exports = SubDB
 
 
-},{"./batch":32,"events":96,"level-fix-range":34,"string-range":37,"util":132,"xtend":39}],45:[function(require,module,exports){
+},{"./batch":36,"events":102,"level-fix-range":38,"string-range":41,"util":144,"xtend":43}],49:[function(require,module,exports){
 module.exports = function (num, base) {
   return parseInt(num.toString(), base || 8)
 }
 
-},{}],46:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"dup":38}],47:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
+arguments[4][42][0].apply(exports,arguments)
+},{"dup":42}],51:[function(require,module,exports){
 var hasKeys = require("./has-keys")
 
 module.exports = extend
@@ -8238,7 +8763,7 @@ function extend() {
     return target
 }
 
-},{"./has-keys":46}],48:[function(require,module,exports){
+},{"./has-keys":50}],52:[function(require,module,exports){
 (function (process){
 var path = require('path');
 var once = require('once');
@@ -8358,7 +8883,7 @@ module.exports = function(db) {
 };
 
 }).call(this,require('_process'))
-},{"./errno":8,"./stat":49,"_process":105,"concat-stream":89,"octal":45,"once":102,"path":103,"xtend":47}],49:[function(require,module,exports){
+},{"./errno":8,"./stat":53,"_process":110,"concat-stream":95,"octal":49,"once":108,"path":109,"xtend":51}],53:[function(require,module,exports){
 var toDate = function(date) {
 	if (!date) return new Date();
 	if (typeof date === 'string') return new Date(date);
@@ -8410,7 +8935,7 @@ Stat.prototype.isSocket = function() {
 module.exports = function(opts) {
 	return new Stat(opts);
 };
-},{}],50:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 var events = require('events');
 
 module.exports = function() {
@@ -8463,7 +8988,7 @@ module.exports = function() {
 
 	return that;
 };
-},{"events":96}],51:[function(require,module,exports){
+},{"events":102}],55:[function(require,module,exports){
 (function (Buffer){
 module.exports = Level
 
@@ -8641,7 +9166,7 @@ var checkKeyValue = Level.prototype._checkKeyValue = function (obj, type) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"./iterator":52,"abstract-leveldown":55,"buffer":95,"idb-wrapper":57,"isbuffer":58,"typedarray-to-buffer":60,"util":132,"xtend":62}],52:[function(require,module,exports){
+},{"./iterator":56,"abstract-leveldown":59,"buffer":101,"idb-wrapper":61,"isbuffer":62,"typedarray-to-buffer":64,"util":144,"xtend":66}],56:[function(require,module,exports){
 var util = require('util')
 var AbstractIterator  = require('abstract-leveldown').AbstractIterator
 var ltgt = require('ltgt')
@@ -8715,7 +9240,7 @@ Iterator.prototype._next = function (callback) {
   this.callback = callback
 }
 
-},{"abstract-leveldown":55,"ltgt":59,"util":132}],53:[function(require,module,exports){
+},{"abstract-leveldown":59,"ltgt":63,"util":144}],57:[function(require,module,exports){
 (function (process){
 /* Copyright (c) 2013 Rod Vagg, MIT License */
 
@@ -8799,7 +9324,7 @@ AbstractChainedBatch.prototype.write = function (options, callback) {
 
 module.exports = AbstractChainedBatch
 }).call(this,require('_process'))
-},{"_process":105}],54:[function(require,module,exports){
+},{"_process":110}],58:[function(require,module,exports){
 (function (process){
 /* Copyright (c) 2013 Rod Vagg, MIT License */
 
@@ -8852,7 +9377,7 @@ AbstractIterator.prototype.end = function (callback) {
 module.exports = AbstractIterator
 
 }).call(this,require('_process'))
-},{"_process":105}],55:[function(require,module,exports){
+},{"_process":110}],59:[function(require,module,exports){
 (function (Buffer,process){
 /* Copyright (c) 2013 Rod Vagg, MIT License */
 
@@ -9112,7 +9637,7 @@ module.exports.AbstractIterator     = AbstractIterator
 module.exports.AbstractChainedBatch = AbstractChainedBatch
 
 }).call(this,{"isBuffer":require("../../../../../is-buffer/index.js")},require('_process'))
-},{"../../../../../is-buffer/index.js":100,"./abstract-chained-batch":53,"./abstract-iterator":54,"_process":105,"xtend":56}],56:[function(require,module,exports){
+},{"../../../../../is-buffer/index.js":106,"./abstract-chained-batch":57,"./abstract-iterator":58,"_process":110,"xtend":60}],60:[function(require,module,exports){
 module.exports = extend
 
 function extend() {
@@ -9131,7 +9656,7 @@ function extend() {
     return target
 }
 
-},{}],57:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 /*global window:false, self:false, define:false, module:false */
 
 /**
@@ -10524,7 +11049,7 @@ function extend() {
 
 }, this);
 
-},{}],58:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 var Buffer = require('buffer').Buffer;
 
 module.exports = isBuffer;
@@ -10534,7 +11059,7 @@ function isBuffer (o) {
     || /\[object (.+Array|Array.+)\]/.test(Object.prototype.toString.call(o));
 }
 
-},{"buffer":95}],59:[function(require,module,exports){
+},{"buffer":101}],63:[function(require,module,exports){
 (function (Buffer){
 
 exports.compare = function (a, b) {
@@ -10684,7 +11209,7 @@ exports.filter = function (range, compare) {
 }
 
 }).call(this,{"isBuffer":require("../../../../../is-buffer/index.js")})
-},{"../../../../../is-buffer/index.js":100}],60:[function(require,module,exports){
+},{"../../../../../is-buffer/index.js":106}],64:[function(require,module,exports){
 (function (Buffer){
 /**
  * Convert a typed array to a Buffer without a copy
@@ -10707,11 +11232,11 @@ module.exports = function (arr) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":95}],61:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"dup":38}],62:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"./has-keys":61,"dup":39,"object-keys":64}],63:[function(require,module,exports){
+},{"buffer":101}],65:[function(require,module,exports){
+arguments[4][42][0].apply(exports,arguments)
+},{"dup":42}],66:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"./has-keys":65,"dup":43,"object-keys":68}],67:[function(require,module,exports){
 var hasOwn = Object.prototype.hasOwnProperty;
 var toString = Object.prototype.toString;
 
@@ -10753,9 +11278,9 @@ module.exports = function forEach(obj, fn) {
 };
 
 
-},{}],64:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"./shim":66,"dup":40}],65:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"./shim":70,"dup":44}],69:[function(require,module,exports){
 var toString = Object.prototype.toString;
 
 module.exports = function isArguments(value) {
@@ -10773,7 +11298,7 @@ module.exports = function isArguments(value) {
 };
 
 
-},{}],66:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 (function () {
 	"use strict";
 
@@ -10837,7 +11362,7 @@ module.exports = function isArguments(value) {
 }());
 
 
-},{"./foreach":63,"./isArguments":65}],67:[function(require,module,exports){
+},{"./foreach":67,"./isArguments":69}],71:[function(require,module,exports){
 /* Copyright (c) 2012-2014 LevelUP contributors
  * See list at <https://github.com/rvagg/node-levelup#contributing>
  * MIT License
@@ -10917,7 +11442,7 @@ Batch.prototype.write = function (callback) {
 
 module.exports = Batch
 
-},{"./errors":68,"./util":71}],68:[function(require,module,exports){
+},{"./errors":72,"./util":75}],72:[function(require,module,exports){
 /* Copyright (c) 2012-2014 LevelUP contributors
  * See list at <https://github.com/rvagg/node-levelup#contributing>
  * MIT License
@@ -10941,7 +11466,7 @@ module.exports = {
   , EncodingError       : createError('EncodingError', LevelUPError)
 }
 
-},{"errno":79}],69:[function(require,module,exports){
+},{"errno":83}],73:[function(require,module,exports){
 (function (process){
 /* Copyright (c) 2012-2014 LevelUP contributors
  * See list at <https://github.com/rvagg/node-levelup#contributing>
@@ -11380,7 +11905,7 @@ module.exports.destroy = utilStatic('destroy')
 module.exports.repair  = utilStatic('repair')
 
 }).call(this,require('_process'))
-},{"./batch":67,"./errors":68,"./read-stream":70,"./util":71,"./write-stream":72,"_process":105,"deferred-leveldown":74,"events":96,"prr":80,"util":132,"xtend":87}],70:[function(require,module,exports){
+},{"./batch":71,"./errors":72,"./read-stream":74,"./util":75,"./write-stream":76,"_process":110,"deferred-leveldown":78,"events":102,"prr":84,"util":144,"xtend":93}],74:[function(require,module,exports){
 /* Copyright (c) 2012-2014 LevelUP contributors
  * See list at <https://github.com/rvagg/node-levelup#contributing>
  * MIT License <https://github.com/rvagg/node-levelup/blob/master/LICENSE.md>
@@ -11508,7 +12033,7 @@ ReadStream.prototype.toString = function () {
 
 module.exports = ReadStream
 
-},{"./errors":68,"./util":71,"readable-stream":86,"util":132,"xtend":87}],71:[function(require,module,exports){
+},{"./errors":72,"./util":75,"readable-stream":92,"util":144,"xtend":93}],75:[function(require,module,exports){
 (function (process,Buffer){
 /* Copyright (c) 2012-2014 LevelUP contributors
  * See list at <https://github.com/rvagg/node-levelup#contributing>
@@ -11694,7 +12219,7 @@ module.exports = {
 }
 
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"../package.json":88,"./errors":68,"_process":105,"buffer":95,"leveldown":6,"leveldown/package":6,"semver":6,"xtend":87}],72:[function(require,module,exports){
+},{"../package.json":94,"./errors":72,"_process":110,"buffer":101,"leveldown":6,"leveldown/package":6,"semver":6,"xtend":93}],76:[function(require,module,exports){
 (function (process,global){
 /* Copyright (c) 2012-2014 LevelUP contributors
  * See list at <https://github.com/rvagg/node-levelup#contributing>
@@ -11876,7 +12401,7 @@ WriteStream.prototype.toString = function () {
 module.exports = WriteStream
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./util":71,"_process":105,"bl":73,"stream":117,"util":132,"xtend":87}],73:[function(require,module,exports){
+},{"./util":75,"_process":110,"bl":77,"stream":126,"util":144,"xtend":93}],77:[function(require,module,exports){
 (function (Buffer){
 var DuplexStream = require('readable-stream').Duplex
   , util         = require('util')
@@ -12093,7 +12618,7 @@ BufferList.prototype.destroy = function () {
 module.exports = BufferList
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":95,"readable-stream":86,"util":132}],74:[function(require,module,exports){
+},{"buffer":101,"readable-stream":92,"util":144}],78:[function(require,module,exports){
 (function (Buffer,process){
 var util              = require('util')
   , AbstractLevelDOWN = require('abstract-leveldown').AbstractLevelDOWN
@@ -12144,11 +12669,11 @@ DeferredLevelDOWN.prototype._iterator = function () {
 module.exports = DeferredLevelDOWN
 
 }).call(this,{"isBuffer":require("../../../../../is-buffer/index.js")},require('_process'))
-},{"../../../../../is-buffer/index.js":100,"_process":105,"abstract-leveldown":77,"util":132}],75:[function(require,module,exports){
-arguments[4][53][0].apply(exports,arguments)
-},{"_process":105,"dup":53}],76:[function(require,module,exports){
-arguments[4][54][0].apply(exports,arguments)
-},{"_process":105,"dup":54}],77:[function(require,module,exports){
+},{"../../../../../is-buffer/index.js":106,"_process":110,"abstract-leveldown":81,"util":144}],79:[function(require,module,exports){
+arguments[4][57][0].apply(exports,arguments)
+},{"_process":110,"dup":57}],80:[function(require,module,exports){
+arguments[4][58][0].apply(exports,arguments)
+},{"_process":110,"dup":58}],81:[function(require,module,exports){
 (function (Buffer,process){
 /* Copyright (c) 2013 Rod Vagg, MIT License */
 
@@ -12408,31 +12933,177 @@ module.exports.AbstractIterator     = AbstractIterator
 module.exports.AbstractChainedBatch = AbstractChainedBatch
 
 }).call(this,{"isBuffer":require("../../../../../../../is-buffer/index.js")},require('_process'))
-},{"../../../../../../../is-buffer/index.js":100,"./abstract-chained-batch":75,"./abstract-iterator":76,"_process":105,"xtend":87}],78:[function(require,module,exports){
+},{"../../../../../../../is-buffer/index.js":106,"./abstract-chained-batch":79,"./abstract-iterator":80,"_process":110,"xtend":93}],82:[function(require,module,exports){
 arguments[4][10][0].apply(exports,arguments)
-},{"dup":10,"prr":80}],79:[function(require,module,exports){
+},{"dup":10,"prr":84}],83:[function(require,module,exports){
 arguments[4][11][0].apply(exports,arguments)
-},{"./custom":78,"dup":11}],80:[function(require,module,exports){
+},{"./custom":82,"dup":11}],84:[function(require,module,exports){
 arguments[4][12][0].apply(exports,arguments)
-},{"dup":12}],81:[function(require,module,exports){
+},{"dup":12}],85:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"./_stream_readable":83,"./_stream_writable":85,"_process":105,"core-util-is":90,"dup":15,"inherits":99}],82:[function(require,module,exports){
+},{"./_stream_readable":87,"./_stream_writable":89,"_process":110,"core-util-is":90,"dup":15,"inherits":105}],86:[function(require,module,exports){
 arguments[4][16][0].apply(exports,arguments)
-},{"./_stream_transform":84,"core-util-is":90,"dup":16,"inherits":99}],83:[function(require,module,exports){
+},{"./_stream_transform":88,"core-util-is":90,"dup":16,"inherits":105}],87:[function(require,module,exports){
 arguments[4][17][0].apply(exports,arguments)
-},{"_process":105,"buffer":95,"core-util-is":90,"dup":17,"events":96,"inherits":99,"isarray":101,"stream":117,"string_decoder/":128}],84:[function(require,module,exports){
+},{"_process":110,"buffer":101,"core-util-is":90,"dup":17,"events":102,"inherits":105,"isarray":107,"stream":126,"string_decoder/":91}],88:[function(require,module,exports){
 arguments[4][18][0].apply(exports,arguments)
-},{"./_stream_duplex":81,"core-util-is":90,"dup":18,"inherits":99}],85:[function(require,module,exports){
+},{"./_stream_duplex":85,"core-util-is":90,"dup":18,"inherits":105}],89:[function(require,module,exports){
 arguments[4][19][0].apply(exports,arguments)
-},{"./_stream_duplex":81,"_process":105,"buffer":95,"core-util-is":90,"dup":19,"inherits":99,"stream":117}],86:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":81,"./lib/_stream_passthrough.js":82,"./lib/_stream_readable.js":83,"./lib/_stream_transform.js":84,"./lib/_stream_writable.js":85,"_process":105,"dup":20,"stream":117}],87:[function(require,module,exports){
-arguments[4][56][0].apply(exports,arguments)
-},{"dup":56}],88:[function(require,module,exports){
+},{"./_stream_duplex":85,"_process":110,"buffer":101,"core-util-is":90,"dup":19,"inherits":105,"stream":126}],90:[function(require,module,exports){
+(function (Buffer){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+
+function isArray(arg) {
+  if (Array.isArray) {
+    return Array.isArray(arg);
+  }
+  return objectToString(arg) === '[object Array]';
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = Buffer.isBuffer;
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+}).call(this,{"isBuffer":require("../../../../../../../../is-buffer/index.js")})
+},{"../../../../../../../../is-buffer/index.js":106}],91:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"buffer":101,"dup":21}],92:[function(require,module,exports){
+arguments[4][22][0].apply(exports,arguments)
+},{"./lib/_stream_duplex.js":85,"./lib/_stream_passthrough.js":86,"./lib/_stream_readable.js":87,"./lib/_stream_transform.js":88,"./lib/_stream_writable.js":89,"_process":110,"dup":22,"stream":126}],93:[function(require,module,exports){
+arguments[4][60][0].apply(exports,arguments)
+},{"dup":60}],94:[function(require,module,exports){
 module.exports={
-  "name": "levelup",
-  "description": "Fast & simple storage - a Node.js-style LevelDB wrapper",
-  "version": "0.18.6",
+  "_development": true,
+  "_from": "https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz",
+  "_id": "levelup@0.18.6",
+  "_inBundle": false,
+  "_integrity": "sha512-uB0auyRqIVXx+hrpIUtol4VAPhLRcnxcOsd2i2m6rbFIDarO5dnrupLOStYYpEcu8ZT087Z9HEuYw1wjr6RL6Q==",
+  "_location": "/browserify-fs/levelup",
+  "_phantomChildren": {
+    "core-util-is": "1.0.2",
+    "inherits": "2.0.1",
+    "isarray": "0.0.1",
+    "string_decoder": "0.10.31"
+  },
+  "_requested": {
+    "type": "remote",
+    "raw": "levelup@https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz",
+    "name": "levelup",
+    "escapedName": "levelup",
+    "rawSpec": "https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz",
+    "saveSpec": "https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz",
+    "fetchSpec": "https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz"
+  },
+  "_requiredBy": [
+    "/browserify-fs"
+  ],
+  "_resolved": "https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz",
+  "_spec": "levelup@https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz",
+  "_where": "/home/lmericle/ucum",
+  "browser": {
+    "leveldown": false,
+    "leveldown/package": false,
+    "semver": false
+  },
+  "bugs": {
+    "url": "https://github.com/rvagg/node-levelup/issues"
+  },
+  "bundleDependencies": false,
   "contributors": [
     {
       "name": "Rod Vagg",
@@ -12500,9 +13171,34 @@ module.exports={
       "url": "https://github.com/substack"
     }
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rvagg/node-levelup.git"
+  "dependencies": {
+    "bl": "~0.8.1",
+    "deferred-leveldown": "~0.2.0",
+    "errno": "~0.1.1",
+    "prr": "~0.0.0",
+    "readable-stream": "~1.0.26",
+    "semver": "~2.3.1",
+    "xtend": "~3.0.0"
+  },
+  "deprecated": false,
+  "description": "Fast & simple storage - a Node.js-style LevelDB wrapper",
+  "devDependencies": {
+    "async": "*",
+    "boganipsum": "*",
+    "bustermove": "*",
+    "delayed": "*",
+    "du": "*",
+    "fstream": "*",
+    "leveldown": "~0.10.0",
+    "memdown": "*",
+    "mkfiletree": "*",
+    "msgpack-js": "*",
+    "readfiletree": "*",
+    "referee": "*",
+    "rimraf": "*",
+    "slow-stream": ">=0.0.4",
+    "tap": "*",
+    "tar": "*"
   },
   "homepage": "https://github.com/rvagg/node-levelup",
   "keywords": [
@@ -12514,57 +13210,22 @@ module.exports={
     "storage",
     "json"
   ],
+  "license": "MIT",
   "main": "lib/levelup.js",
-  "dependencies": {
-    "bl": "~0.8.1",
-    "deferred-leveldown": "~0.2.0",
-    "errno": "~0.1.1",
-    "prr": "~0.0.0",
-    "readable-stream": "~1.0.26",
-    "semver": "~2.3.1",
-    "xtend": "~3.0.0"
-  },
-  "devDependencies": {
-    "leveldown": "~0.10.0",
-    "bustermove": "*",
-    "tap": "*",
-    "referee": "*",
-    "rimraf": "*",
-    "async": "*",
-    "fstream": "*",
-    "tar": "*",
-    "mkfiletree": "*",
-    "readfiletree": "*",
-    "slow-stream": ">=0.0.4",
-    "delayed": "*",
-    "boganipsum": "*",
-    "du": "*",
-    "memdown": "*",
-    "msgpack-js": "*"
-  },
-  "browser": {
-    "leveldown": false,
-    "leveldown/package": false,
-    "semver": false
+  "name": "levelup",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rvagg/node-levelup.git"
   },
   "scripts": {
-    "test": "tap test/*-test.js --stderr",
+    "alltests": "npm test && npm run-script functionaltests",
     "functionaltests": "node ./test/functional/fstream-test.js && node ./test/functional/binary-data-test.js && node ./test/functional/compat-test.js",
-    "alltests": "npm test && npm run-script functionaltests"
+    "test": "tap test/*-test.js --stderr"
   },
-  "license": "MIT",
-  "readme": "LevelUP\n=======\n\n![LevelDB Logo](https://0.gravatar.com/avatar/a498b122aecb7678490a38bb593cc12d)\n\n**Fast & simple storage - a Node.js-style LevelDB wrapper**\n\n[![Build Status](https://secure.travis-ci.org/rvagg/node-levelup.png)](http://travis-ci.org/rvagg/node-levelup)\n\n[![NPM](https://nodei.co/npm/levelup.png?stars&downloads)](https://nodei.co/npm/levelup/) [![NPM](https://nodei.co/npm-dl/levelup.png)](https://nodei.co/npm/levelup/)\n\n\n  * <a href=\"#intro\">Introduction</a>\n  * <a href=\"#leveldown\">Relationship to LevelDOWN</a>\n  * <a href=\"#platforms\">Tested &amp; supported platforms</a>\n  * <a href=\"#basic\">Basic usage</a>\n  * <a href=\"#api\">API</a>\n  * <a href=\"#events\">Events</a>\n  * <a href=\"#json\">JSON data</a>\n  * <a href=\"#custom_encodings\">Custom encodings</a>\n  * <a href=\"#extending\">Extending LevelUP</a>\n  * <a href=\"#multiproc\">Multi-process access</a>\n  * <a href=\"#support\">Getting support</a>\n  * <a href=\"#contributing\">Contributing</a>\n  * <a href=\"#licence\">Licence &amp; copyright</a>\n\n<a name=\"intro\"></a>\nIntroduction\n------------\n\n**[LevelDB](http://code.google.com/p/leveldb/)** is a simple key/value data store built by Google, inspired by BigTable. It's used in Google Chrome and many other products. LevelDB supports arbitrary byte arrays as both keys and values, singular *get*, *put* and *delete* operations, *batched put and delete*, bi-directional iterators and simple compression using the very fast [Snappy](http://code.google.com/p/snappy/) algorithm.\n\n**LevelUP** aims to expose the features of LevelDB in a **Node.js-friendly way**. All standard `Buffer` encoding types are supported, as is a special JSON encoding. LevelDB's iterators are exposed as a Node.js-style **readable stream** a matching **writeable stream** converts writes to *batch* operations.\n\nLevelDB stores entries **sorted lexicographically by keys**. This makes LevelUP's <a href=\"#createReadStream\"><code>ReadStream</code></a> interface a very powerful query mechanism.\n\n**LevelUP** is an **OPEN Open Source Project**, see the <a href=\"#contributing\">Contributing</a> section to find out what this means.\n\n<a name=\"leveldown\"></a>\nRelationship to LevelDOWN\n-------------------------\n\nLevelUP is designed to be backed by **[LevelDOWN](https://github.com/rvagg/node-leveldown/)** which provides a pure C++ binding to LevelDB and can be used as a stand-alone package if required.\n\n**As of version 0.9, LevelUP no longer requires LevelDOWN as a dependency so you must `npm install leveldown` when you install LevelUP.**\n\nLevelDOWN is now optional because LevelUP can be used with alternative backends, such as **[level.js](https://github.com/maxogden/level.js)** in the browser or [MemDOWN](https://github.com/rvagg/node-memdown) for a pure in-memory store.\n\nLevelUP will look for LevelDOWN and throw an error if it can't find it in its Node `require()` path. It will also tell you if the installed version of LevelDOWN is incompatible.\n\n**The [level](https://github.com/level/level) package is available as an alternative installation mechanism.** Install it instead to automatically get both LevelUP & LevelDOWN. It exposes LevelUP on its export (i.e. you can `var leveldb = require('level')`).\n\n\n<a name=\"platforms\"></a>\nTested & supported platforms\n----------------------------\n\n  * **Linux**: including ARM platforms such as Raspberry Pi *and Kindle!*\n  * **Mac OS**\n  * **Solaris**: including Joyent's SmartOS & Nodejitsu\n  * **Windows**: Node 0.10 and above only. See installation instructions for *node-gyp's* dependencies [here](https://github.com/TooTallNate/node-gyp#installation), you'll need these (free) components from Microsoft to compile and run any native Node add-on in Windows.\n\n<a name=\"basic\"></a>\nBasic usage\n-----------\n\nFirst you need to install LevelUP!\n\n```sh\n$ npm install levelup leveldown\n```\n\nOr\n\n```sh\n$ npm install level\n```\n\n*(this second option requires you to use LevelUP by calling `var levelup = require('level')`)*\n\n\nAll operations are asynchronous although they don't necessarily require a callback if you don't need to know when the operation was performed.\n\n```js\nvar levelup = require('levelup')\n\n// 1) Create our database, supply location and options.\n//    This will create or open the underlying LevelDB store.\nvar db = levelup('./mydb')\n\n// 2) put a key & value\ndb.put('name', 'LevelUP', function (err) {\n  if (err) return console.log('Ooops!', err) // some kind of I/O error\n\n  // 3) fetch by key\n  db.get('name', function (err, value) {\n    if (err) return console.log('Ooops!', err) // likely the key was not found\n\n    // ta da!\n    console.log('name=' + value)\n  })\n})\n```\n\n<a name=\"api\"></a>\n## API\n\n  * <a href=\"#ctor\"><code><b>levelup()</b></code></a>\n  * <a href=\"#open\"><code>db.<b>open()</b></code></a>\n  * <a href=\"#close\"><code>db.<b>close()</b></code></a>\n  * <a href=\"#put\"><code>db.<b>put()</b></code></a>\n  * <a href=\"#get\"><code>db.<b>get()</b></code></a>\n  * <a href=\"#del\"><code>db.<b>del()</b></code></a>\n  * <a href=\"#batch\"><code>db.<b>batch()</b></code> *(array form)*</a>\n  * <a href=\"#batch_chained\"><code>db.<b>batch()</b></code> *(chained form)*</a>\n  * <a href=\"#isOpen\"><code>db.<b>isOpen()</b></code></a>\n  * <a href=\"#isClosed\"><code>db.<b>isClosed()</b></code></a>\n  * <a href=\"#createReadStream\"><code>db.<b>createReadStream()</b></code></a>\n  * <a href=\"#createKeyStream\"><code>db.<b>createKeyStream()</b></code></a>\n  * <a href=\"#createValueStream\"><code>db.<b>createValueStream()</b></code></a>\n  * <a href=\"#createWriteStream\"><code>db.<b>createWriteStream()</b></code></a>\n\n### Special operations exposed by LevelDOWN\n\n  * <a href=\"#approximateSize\"><code>db.db.<b>approximateSize()</b></code></a>\n  * <a href=\"#getProperty\"><code>db.db.<b>getProperty()</b></code></a>\n  * <a href=\"#destroy\"><code><b>leveldown.destroy()</b></code></a>\n  * <a href=\"#repair\"><code><b>leveldown.repair()</b></code></a>\n\n\n--------------------------------------------------------\n<a name=\"ctor\"></a>\n### levelup(location[, options[, callback]])\n### levelup(options[, callback ])\n### levelup(db[, callback ])\n<code>levelup()</code> is the main entry point for creating a new LevelUP instance and opening the underlying store with LevelDB.\n\nThis function returns a new instance of LevelUP and will also initiate an <a href=\"#open\"><code>open()</code></a> operation. Opening the database is an asynchronous operation which will trigger your callback if you provide one. The callback should take the form: `function (err, db) {}` where the `db` is the LevelUP instance. If you don't provide a callback, any read & write operations are simply queued internally until the database is fully opened.\n\nThis leads to two alternative ways of managing a new LevelUP instance:\n\n```js\nlevelup(location, options, function (err, db) {\n  if (err) throw err\n  db.get('foo', function (err, value) {\n    if (err) return console.log('foo does not exist')\n    console.log('got foo =', value)\n  })\n})\n\n// vs the equivalent:\n\nvar db = levelup(location, options) // will throw if an error occurs\ndb.get('foo', function (err, value) {\n  if (err) return console.log('foo does not exist')\n  console.log('got foo =', value)\n})\n```\n\nThe `location` argument is available as a read-only property on the returned LevelUP instance.\n\nThe `levelup(options, callback)` form (with optional `callback`) is only available where you provide a valid `'db'` property on the options object (see below). Only for back-ends that don't require a `location` argument, such as [MemDOWN](https://github.com/rvagg/memdown).\n\nFor example:\n\n```js\nvar levelup = require('levelup')\nvar memdown = require('memdown')\nvar db = levelup({ db: memdown })\n```\n\nThe `levelup(db, callback)` form (with optional `callback`) is only available where `db` is a factory function, as would be provided as a `'db'` property on an `options` object (see below). Only for back-ends that don't require a `location` argument, such as [MemDOWN](https://github.com/rvagg/memdown).\n\nFor example:\n\n```js\nvar levelup = require('levelup')\nvar memdown = require('memdown')\nvar db = levelup(memdown)\n```\n\n#### `options`\n\n`levelup()` takes an optional options object as its second argument; the following properties are accepted:\n\n* `'createIfMissing'` *(boolean, default: `true`)*: If `true`, will initialise an empty database at the specified location if one doesn't already exist. If `false` and a database doesn't exist you will receive an error in your `open()` callback and your database won't open.\n\n* `'errorIfExists'` *(boolean, default: `false`)*: If `true`, you will receive an error in your `open()` callback if the database exists at the specified location.\n\n* `'compression'` *(boolean, default: `true`)*: If `true`, all *compressible* data will be run through the Snappy compression algorithm before being stored. Snappy is very fast and shouldn't gain much speed by disabling so leave this on unless you have good reason to turn it off.\n\n* `'cacheSize'` *(number, default: `8 * 1024 * 1024`)*: The size (in bytes) of the in-memory [LRU](http://en.wikipedia.org/wiki/Cache_algorithms#Least_Recently_Used) cache with frequently used uncompressed block contents. \n\n* `'keyEncoding'` and `'valueEncoding'` *(string, default: `'utf8'`)*: The encoding of the keys and values passed through Node.js' `Buffer` implementation (see [Buffer#toString()](http://nodejs.org/docs/latest/api/buffer.html#buffer_buf_tostring_encoding_start_end)).\n  <p><code>'utf8'</code> is the default encoding for both keys and values so you can simply pass in strings and expect strings from your <code>get()</code> operations. You can also pass <code>Buffer</code> objects as keys and/or values and conversion will be performed.</p>\n  <p>Supported encodings are: hex, utf8, ascii, binary, base64, ucs2, utf16le.</p>\n  <p><code>'json'</code> encoding is also supported, see below.</p>\n\n* `'db'` *(object, default: LevelDOWN)*: LevelUP is backed by [LevelDOWN](https://github.com/rvagg/node-leveldown/) to provide an interface to LevelDB. You can completely replace the use of LevelDOWN by providing a \"factory\" function that will return a LevelDOWN API compatible object given a `location` argument. For further information, see [MemDOWN](https://github.com/rvagg/node-memdown/), a fully LevelDOWN API compatible replacement that uses a memory store rather than LevelDB. Also see [Abstract LevelDOWN](http://github.com/rvagg/node-abstract-leveldown), a partial implementation of the LevelDOWN API that can be used as a base prototype for a LevelDOWN substitute.\n\nAdditionally, each of the main interface methods accept an optional options object that can be used to override `'keyEncoding'` and `'valueEncoding'`.\n\n--------------------------------------------------------\n<a name=\"open\"></a>\n### db.open([callback])\n<code>open()</code> opens the underlying LevelDB store. In general **you should never need to call this method directly** as it's automatically called by <a href=\"#ctor\"><code>levelup()</code></a>.\n\nHowever, it is possible to *reopen* a database after it has been closed with <a href=\"#close\"><code>close()</code></a>, although this is not generally advised.\n\n--------------------------------------------------------\n<a name=\"close\"></a>\n### db.close([callback])\n<code>close()</code> closes the underlying LevelDB store. The callback will receive any error encountered during closing as the first argument.\n\nYou should always clean up your LevelUP instance by calling `close()` when you no longer need it to free up resources. A LevelDB store cannot be opened by multiple instances of LevelDB/LevelUP simultaneously.\n\n--------------------------------------------------------\n<a name=\"put\"></a>\n### db.put(key, value[, options][, callback])\n<code>put()</code> is the primary method for inserting data into the store. Both the `key` and `value` can be arbitrary data objects.\n\nThe callback argument is optional but if you don't provide one and an error occurs then expect the error to be thrown.\n\n#### `options`\n\nEncoding of the `key` and `value` objects will adhere to `'keyEncoding'` and `'valueEncoding'` options provided to <a href=\"#ctor\"><code>levelup()</code></a>, although you can provide alternative encoding settings in the options for `put()` (it's recommended that you stay consistent in your encoding of keys and values in a single store).\n\nIf you provide a `'sync'` value of `true` in your `options` object, LevelDB will perform a synchronous write of the data; although the operation will be asynchronous as far as Node is concerned. Normally, LevelDB passes the data to the operating system for writing and returns immediately, however a synchronous write will use `fsync()` or equivalent so your callback won't be triggered until the data is actually on disk. Synchronous filesystem writes are **significantly** slower than asynchronous writes but if you want to be absolutely sure that the data is flushed then you can use `'sync': true`.\n\n--------------------------------------------------------\n<a name=\"get\"></a>\n### db.get(key[, options][, callback])\n<code>get()</code> is the primary method for fetching data from the store. The `key` can be an arbitrary data object. If it doesn't exist in the store then the callback will receive an error as its first argument. A not-found err object will be of type `'NotFoundError'` so you can `err.type == 'NotFoundError'` or you can perform a truthy test on the property `err.notFound`.\n\n```js\ndb.get('foo', function (err, value) {\n  if (err) {\n    if (err.notFound) {\n      // handle a 'NotFoundError' here\n      return\n    }\n    // I/O or other error, pass it up the callback chain\n    return callback(err)\n  }\n\n  // .. handle `value` here\n})\n```\n\n#### `options`\n\nEncoding of the `key` object will adhere to the `'keyEncoding'` option provided to <a href=\"#ctor\"><code>levelup()</code></a>, although you can provide alternative encoding settings in the options for `get()` (it's recommended that you stay consistent in your encoding of keys and values in a single store).\n\nLevelDB will by default fill the in-memory LRU Cache with data from a call to get. Disabling this is done by setting `fillCache` to `false`. \n\n--------------------------------------------------------\n<a name=\"del\"></a>\n### db.del(key[, options][, callback])\n<code>del()</code> is the primary method for removing data from the store.\n\n#### `options`\n\nEncoding of the `key` object will adhere to the `'keyEncoding'` option provided to <a href=\"#ctor\"><code>levelup()</code></a>, although you can provide alternative encoding settings in the options for `del()` (it's recommended that you stay consistent in your encoding of keys and values in a single store).\n\nA `'sync'` option can also be passed, see <a href=\"#put\"><code>put()</code></a> for details on how this works.\n\n--------------------------------------------------------\n<a name=\"batch\"></a>\n### db.batch(array[, options][, callback]) *(array form)*\n<code>batch()</code> can be used for very fast bulk-write operations (both *put* and *delete*). The `array` argument should contain a list of operations to be executed sequentially, although as a whole they are performed as an atomic operation inside LevelDB. Each operation is contained in an object having the following properties: `type`, `key`, `value`, where the *type* is either `'put'` or `'del'`. In the case of `'del'` the `'value'` property is ignored. Any entries with a `'key'` of `null` or `undefined` will cause an error to be returned on the `callback` and any `'type': 'put'` entry with a `'value'` of `null` or `undefined` will return an error.\n\n```js\nvar ops = [\n    { type: 'del', key: 'father' }\n  , { type: 'put', key: 'name', value: 'Yuri Irsenovich Kim' }\n  , { type: 'put', key: 'dob', value: '16 February 1941' }\n  , { type: 'put', key: 'spouse', value: 'Kim Young-sook' }\n  , { type: 'put', key: 'occupation', value: 'Clown' }\n]\n\ndb.batch(ops, function (err) {\n  if (err) return console.log('Ooops!', err)\n  console.log('Great success dear leader!')\n})\n```\n\n#### `options`\n\nSee <a href=\"#put\"><code>put()</code></a> for a discussion on the `options` object. You can overwrite default `'keyEncoding'` and `'valueEncoding'` and also specify the use of `sync` filesystem operations.\n\nIn addition to encoding options for the whole batch you can also overwrite the encoding per operation, like:\n\n```js\nvar ops = [{\n    type          : 'put'\n  , key           : new Buffer([1, 2, 3])\n  , value         : { some: 'json' }\n  , keyEncoding   : 'binary'\n  , valueEncoding : 'json'\n}]\n```\n\n--------------------------------------------------------\n<a name=\"batch_chained\"></a>\n### db.batch() *(chained form)*\n<code>batch()</code>, when called with no arguments will return a `Batch` object which can be used to build, and eventually commit, an atomic LevelDB batch operation. Depending on how it's used, it is possible to obtain greater performance when using the chained form of `batch()` over the array form.\n\n```js\ndb.batch()\n  .del('father')\n  .put('name', 'Yuri Irsenovich Kim')\n  .put('dob', '16 February 1941')\n  .put('spouse', 'Kim Young-sook')\n  .put('occupation', 'Clown')\n  .write(function () { console.log('Done!') })\n```\n\n<b><code>batch.put(key, value[, options])</code></b>\n\nQueue a *put* operation on the current batch, not committed until a `write()` is called on the batch.\n\nThe optional `options` argument can be used to override the default `'keyEncoding'` and/or `'valueEncoding'`.\n\nThis method may `throw` a `WriteError` if there is a problem with your put (such as the `value` being `null` or `undefined`).\n\n<b><code>batch.del(key[, options])</code></b>\n\nQueue a *del* operation on the current batch, not committed until a `write()` is called on the batch.\n\nThe optional `options` argument can be used to override the default `'keyEncoding'`.\n\nThis method may `throw` a `WriteError` if there is a problem with your delete.\n\n<b><code>batch.clear()</code></b>\n\nClear all queued operations on the current batch, any previous operations will be discarded.\n\n<b><code>batch.write([callback])</code></b>\n\nCommit the queued operations for this batch. All operations not *cleared* will be written to the database atomically, that is, they will either all succeed or fail with no partial commits. The optional `callback` will be called when the operation has completed with an *error* argument if an error has occurred; if no `callback` is supplied and an error occurs then this method will `throw` a `WriteError`.\n\n\n--------------------------------------------------------\n<a name=\"isOpen\"></a>\n### db.isOpen()\n\nA LevelUP object can be in one of the following states:\n\n  * *\"new\"*     - newly created, not opened or closed\n  * *\"opening\"* - waiting for the database to be opened\n  * *\"open\"*    - successfully opened the database, available for use\n  * *\"closing\"* - waiting for the database to be closed\n  * *\"closed\"*  - database has been successfully closed, should not be used\n\n`isOpen()` will return `true` only when the state is \"open\".\n\n--------------------------------------------------------\n<a name=\"isClosed\"></a>\n### db.isClosed()\n\n*See <a href=\"#put\"><code>isOpen()</code></a>*\n\n`isClosed()` will return `true` only when the state is \"closing\" *or* \"closed\", it can be useful for determining if read and write operations are permissible.\n\n--------------------------------------------------------\n<a name=\"createReadStream\"></a>\n### db.createReadStream([options])\n\nYou can obtain a **ReadStream** of the full database by calling the `createReadStream()` method. The resulting stream is a complete Node.js-style [Readable Stream](http://nodejs.org/docs/latest/api/stream.html#stream_readable_stream) where `'data'` events emit objects with `'key'` and `'value'` pairs. You can also use the `start`, `end` and `limit` options to control the range of keys that are streamed.\n\n```js\ndb.createReadStream()\n  .on('data', function (data) {\n    console.log(data.key, '=', data.value)\n  })\n  .on('error', function (err) {\n    console.log('Oh my!', err)\n  })\n  .on('close', function () {\n    console.log('Stream closed')\n  })\n  .on('end', function () {\n    console.log('Stream closed')\n  })\n```\n\nThe standard `pause()`, `resume()` and `destroy()` methods are implemented on the ReadStream, as is `pipe()` (see below). `'data'`, '`error'`, `'end'` and `'close'` events are emitted.\n\nAdditionally, you can supply an options object as the first parameter to `createReadStream()` with the following options:\n\n* `'start'`: the key you wish to start the read at. By default it will start at the beginning of the store. Note that the *start* doesn't have to be an actual key that exists, LevelDB will simply find the *next* key, greater than the key you provide.\n\n* `'end'`: the key you wish to end the read on. By default it will continue until the end of the store. Again, the *end* doesn't have to be an actual key as an (inclusive) `<=`-type operation is performed to detect the end. You can also use the `destroy()` method instead of supplying an `'end'` parameter to achieve the same effect.\n\n* `'reverse'` *(boolean, default: `false`)*: a boolean, set to true if you want the stream to go in reverse order. Beware that due to the way LevelDB works, a reverse seek will be slower than a forward seek.\n\n* `'keys'` *(boolean, default: `true`)*: whether the `'data'` event should contain keys. If set to `true` and `'values'` set to `false` then `'data'` events will simply be keys, rather than objects with a `'key'` property. Used internally by the `createKeyStream()` method.\n\n* `'values'` *(boolean, default: `true`)*: whether the `'data'` event should contain values. If set to `true` and `'keys'` set to `false` then `'data'` events will simply be values, rather than objects with a `'value'` property. Used internally by the `createValueStream()` method.\n\n* `'limit'` *(number, default: `-1`)*: limit the number of results collected by this stream. This number represents a *maximum* number of results and may not be reached if you get to the end of the store or your `'end'` value first. A value of `-1` means there is no limit.\n\n* `'fillCache'` *(boolean, default: `false`)*: wheather LevelDB's LRU-cache should be filled with data read.\n\n* `'keyEncoding'` / `'valueEncoding'` *(string)*: the encoding applied to each read piece of data.\n\n--------------------------------------------------------\n<a name=\"createKeyStream\"></a>\n### db.createKeyStream([options])\n\nA **KeyStream** is a **ReadStream** where the `'data'` events are simply the keys from the database so it can be used like a traditional stream rather than an object stream.\n\nYou can obtain a KeyStream either by calling the `createKeyStream()` method on a LevelUP object or by passing passing an options object to `createReadStream()` with `keys` set to `true` and `values` set to `false`.\n\n```js\ndb.createKeyStream()\n  .on('data', function (data) {\n    console.log('key=', data)\n  })\n\n// same as:\ndb.createReadStream({ keys: true, values: false })\n  .on('data', function (data) {\n    console.log('key=', data)\n  })\n```\n\n--------------------------------------------------------\n<a name=\"createValueStream\"></a>\n### db.createValueStream([options])\n\nA **ValueStream** is a **ReadStream** where the `'data'` events are simply the values from the database so it can be used like a traditional stream rather than an object stream.\n\nYou can obtain a ValueStream either by calling the `createValueStream()` method on a LevelUP object or by passing passing an options object to `createReadStream()` with `values` set to `true` and `keys` set to `false`.\n\n```js\ndb.createValueStream()\n  .on('data', function (data) {\n    console.log('value=', data)\n  })\n\n// same as:\ndb.createReadStream({ keys: false, values: true })\n  .on('data', function (data) {\n    console.log('value=', data)\n  })\n```\n\n--------------------------------------------------------\n<a name=\"createWriteStream\"></a>\n### db.createWriteStream([options])\n\nA **WriteStream** can be obtained by calling the `createWriteStream()` method. The resulting stream is a complete Node.js-style [Writable Stream](http://nodejs.org/docs/latest/api/stream.html#stream_writable_stream) which accepts objects with `'key'` and `'value'` pairs on its `write()` method.\n\nThe WriteStream will buffer writes and submit them as a `batch()` operations where writes occur *within the same tick*.\n\n```js\nvar ws = db.createWriteStream()\n\nws.on('error', function (err) {\n  console.log('Oh my!', err)\n})\nws.on('close', function () {\n  console.log('Stream closed')\n})\n\nws.write({ key: 'name', value: 'Yuri Irsenovich Kim' })\nws.write({ key: 'dob', value: '16 February 1941' })\nws.write({ key: 'spouse', value: 'Kim Young-sook' })\nws.write({ key: 'occupation', value: 'Clown' })\nws.end()\n```\n\nThe standard `write()`, `end()`, `destroy()` and `destroySoon()` methods are implemented on the WriteStream. `'drain'`, `'error'`, `'close'` and `'pipe'` events are emitted.\n\nYou can specify encodings both for the whole stream and individual entries:\n\nTo set the encoding for the whole stream, provide an options object as the first parameter to `createWriteStream()` with `'keyEncoding'` and/or `'valueEncoding'`.\n\nTo set the encoding for an individual entry:\n\n```js\nwriteStream.write({\n    key           : new Buffer([1, 2, 3])\n  , value         : { some: 'json' }\n  , keyEncoding   : 'binary'\n  , valueEncoding : 'json'\n})\n```\n\n#### write({ type: 'put' })\n\nIf individual `write()` operations are performed with a `'type'` property of `'del'`, they will be passed on as `'del'` operations to the batch.\n\n```js\nvar ws = db.createWriteStream()\n\nws.on('error', function (err) {\n  console.log('Oh my!', err)\n})\nws.on('close', function () {\n  console.log('Stream closed')\n})\n\nws.write({ type: 'del', key: 'name' })\nws.write({ type: 'del', key: 'dob' })\nws.write({ type: 'put', key: 'spouse' })\nws.write({ type: 'del', key: 'occupation' })\nws.end()\n```\n\n#### db.createWriteStream({ type: 'del' })\n\nIf the *WriteStream* is created with a `'type'` option of `'del'`, all `write()` operations will be interpreted as `'del'`, unless explicitly specified as `'put'`.\n\n```js\nvar ws = db.createWriteStream({ type: 'del' })\n\nws.on('error', function (err) {\n  console.log('Oh my!', err)\n})\nws.on('close', function () {\n  console.log('Stream closed')\n})\n\nws.write({ key: 'name' })\nws.write({ key: 'dob' })\n// but it can be overridden\nws.write({ type: 'put', key: 'spouse', value: 'Ri Sol-ju' })\nws.write({ key: 'occupation' })\nws.end()\n```\n\n#### Pipes and Node Stream compatibility\n\nA ReadStream can be piped directly to a WriteStream, allowing for easy copying of an entire database. A simple `copy()` operation is included in LevelUP that performs exactly this on two open databases:\n\n```js\nfunction copy (srcdb, dstdb, callback) {\n  srcdb.createReadStream().pipe(dstdb.createWriteStream()).on('close', callback)\n}\n```\n\nThe ReadStream is also [fstream](https://github.com/isaacs/fstream)-compatible which means you should be able to pipe to and from fstreams. So you can serialize and deserialize an entire database to a directory where keys are filenames and values are their contents, or even into a *tar* file using [node-tar](https://github.com/isaacs/node-tar). See the [fstream functional test](https://github.com/rvagg/node-levelup/blob/master/test/functional/fstream-test.js) for an example. *(Note: I'm not really sure there's a great use-case for this but it's a fun example and it helps to harden the stream implementations.)*\n\nKeyStreams and ValueStreams can be treated like standard streams of raw data. If `'keyEncoding'` or `'valueEncoding'` is set to `'binary'` the `'data'` events will simply be standard Node `Buffer` objects straight out of the data store.\n\n\n--------------------------------------------------------\n<a name='approximateSize'></a>\n### db.db.approximateSize(start, end, callback)\n<code>approximateSize()</code> can used to get the approximate number of bytes of file system space used by the range `[start..end)`. The result may not include recently written data.\n\n```js\nvar db = require('level')('./huge.db')\n\ndb.db.approximateSize('a', 'c', function (err, size) {\n  if (err) return console.error('Ooops!', err)\n  console.log('Approximate size of range is %d', size)\n})\n```\n\n**Note:** `approximateSize()` is available via [LevelDOWN](https://github.com/rvagg/node-leveldown/), which by default is accessible as the `db` property of your LevelUP instance. This is a specific LevelDB operation and is not likely to be available where you replace LevelDOWN with an alternative back-end via the `'db'` option.\n\n\n--------------------------------------------------------\n<a name='getProperty'></a>\n### db.db.getProperty(property)\n<code>getProperty</code> can be used to get internal details from LevelDB. When issued with a valid property string, a readable string will be returned (this method is synchronous).\n\nCurrently, the only valid properties are:\n\n* <b><code>'leveldb.num-files-at-levelN'</code></b>: returns the number of files at level *N*, where N is an integer representing a valid level (e.g. \"0\").\n\n* <b><code>'leveldb.stats'</code></b>: returns a multi-line string describing statistics about LevelDB's internal operation.\n\n* <b><code>'leveldb.sstables'</code></b>: returns a multi-line string describing all of the *sstables* that make up contents of the current database.\n\n\n```js\nvar db = require('level')('./huge.db')\nconsole.log(db.db.getProperty('leveldb.num-files-at-level3'))\n// → '243'\n```\n\n**Note:** `getProperty()` is available via [LevelDOWN](https://github.com/rvagg/node-leveldown/), which by default is accessible as the `db` property of your LevelUP instance. This is a specific LevelDB operation and is not likely to be available where you replace LevelDOWN with an alternative back-end via the `'db'` option.\n\n\n--------------------------------------------------------\n<a name=\"destroy\"></a>\n### leveldown.destroy(location, callback)\n<code>destroy()</code> is used to completely remove an existing LevelDB database directory. You can use this function in place of a full directory *rm* if you want to be sure to only remove LevelDB-related files. If the directory only contains LevelDB files, the directory itself will be removed as well. If there are additional, non-LevelDB files in the directory, those files, and the directory, will be left alone.\n\nThe callback will be called when the destroy operation is complete, with a possible `error` argument.\n\n**Note:** `destroy()` is available via [LevelDOWN](https://github.com/rvagg/node-leveldown/) which you will have to install seperately, e.g.:\n\n```js\nrequire('leveldown').destroy('./huge.db', function (err) { console.log('done!') })\n```\n\n--------------------------------------------------------\n<a name=\"repair\"></a>\n### leveldown.repair(location, callback)\n<code>repair()</code> can be used to attempt a restoration of a damaged LevelDB store. From the LevelDB documentation:\n\n> If a DB cannot be opened, you may attempt to call this method to resurrect as much of the contents of the database as possible. Some data may be lost, so be careful when calling this function on a database that contains important information.\n\nYou will find information on the *repair* operation in the *LOG* file inside the store directory. \n\nA `repair()` can also be used to perform a compaction of the LevelDB log into table files.\n\nThe callback will be called when the repair operation is complete, with a possible `error` argument.\n\n**Note:** `repair()` is available via [LevelDOWN](https://github.com/rvagg/node-leveldown/) which you will have to install seperately, e.g.:\n\n```js\nrequire('leveldown').repair('./huge.db', function (err) { console.log('done!') })\n```\n\n--------------------------------------------------------\n\n<a name=\"events\"></a>\nEvents\n------\n\nLevelUP emits events when the callbacks to the corresponding methods are called.\n\n* `db.emit('put', key, value)` emitted when a new value is `'put'`\n* `db.emit('del', key)` emitted when a value is deleted\n* `db.emit('batch', ary)` emitted when a batch operation has executed\n* `db.emit('ready')` emitted when the database has opened (`'open'` is synonym)\n* `db.emit('closed')` emitted when the database has closed\n* `db.emit('opening')` emitted when the database is opening\n* `db.emit('closing')` emitted when the database is closing\n\nIf you do not pass a callback to an async function, and there is an error, LevelUP will `emit('error', err)` instead.\n\n<a name=\"json\"></a>\nJSON data\n---------\n\nYou specify `'json'` encoding for both keys and/or values, you can then supply JavaScript objects to LevelUP and receive them from all fetch operations, including ReadStreams. LevelUP will automatically *stringify* your objects and store them as *utf8* and parse the strings back into objects before passing them back to you.\n\n<a name=\"custom_encodings\"></a>\nCustom encodings\n----------------\n\nA custom encoding may be provided by passing in an object as an value for `keyEncoding` or `valueEncoding` (wherever accepted), it must have the following properties:\n\n```js\n{\n    encode : function (val) { ... }\n  , decode : function (val) { ... }\n  , buffer : boolean // encode returns a buffer-like and decode accepts a buffer\n  , type   : String  // name of this encoding type.\n}\n```\n\n*\"buffer-like\"* means either a `Buffer` if running in Node, or a Uint8Array if in a browser. Use [bops](https://github.com/chrisdickinson/bops) to get portable binary operations.\n\n<a name=\"extending\"></a>\nExtending LevelUP\n-----------------\n\nA list of <a href=\"https://github.com/rvagg/node-levelup/wiki/Modules\"><b>Node.js LevelDB modules and projects</b></a> can be found in the wiki.\n\nWhen attempting to extend the functionality of LevelUP, it is recommended that you consider using [level-hooks](https://github.com/dominictarr/level-hooks) and/or [level-sublevel](https://github.com/dominictarr/level-sublevel). **level-sublevel** is particularly helpful for keeping additional, extension-specific, data in a LevelDB store. It allows you to partition a LevelUP instance into multiple sub-instances that each correspond to discrete namespaced key ranges.\n\n<a name=\"multiproc\"></a>\nMulti-process access\n--------------------\n\nLevelDB is thread-safe but is **not** suitable for accessing with multiple processes. You should only ever have a LevelDB database open from a single Node.js process. Node.js clusters are made up of multiple processes so a LevelUP instance cannot be shared between them either.\n\nSee the <a href=\"https://github.com/rvagg/node-levelup/wiki/Modules\"><b>wiki</b></a> for some LevelUP extensions, including [multilevel](https://github.com/juliangruber/multilevel), that may help if you require a single data store to be shared across processes.\n\n<a name=\"support\"></a>\nGetting support\n---------------\n\nThere are multiple ways you can find help in using LevelDB in Node.js:\n\n * **IRC:** you'll find an active group of LevelUP users in the **##leveldb** channel on Freenode, including most of the contributors to this project.\n * **Mailing list:** there is an active [Node.js LevelDB](https://groups.google.com/forum/#!forum/node-levelup) Google Group.\n * **GitHub:** you're welcome to open an issue here on this GitHub repository if you have a question.\n\n<a name=\"contributing\"></a>\nContributing\n------------\n\nLevelUP is an **OPEN Open Source Project**. This means that:\n\n> Individuals making significant and valuable contributions are given commit-access to the project to contribute as they see fit. This project is more like an open wiki than a standard guarded open source project.\n\nSee the [CONTRIBUTING.md](https://github.com/rvagg/node-levelup/blob/master/CONTRIBUTING.md) file for more details.\n\n### Contributors\n\nLevelUP is only possible due to the excellent work of the following contributors:\n\n<table><tbody>\n<tr><th align=\"left\">Rod Vagg</th><td><a href=\"https://github.com/rvagg\">GitHub/rvagg</a></td><td><a href=\"http://twitter.com/rvagg\">Twitter/@rvagg</a></td></tr>\n<tr><th align=\"left\">John Chesley</th><td><a href=\"https://github.com/chesles/\">GitHub/chesles</a></td><td><a href=\"http://twitter.com/chesles\">Twitter/@chesles</a></td></tr>\n<tr><th align=\"left\">Jake Verbaten</th><td><a href=\"https://github.com/raynos\">GitHub/raynos</a></td><td><a href=\"http://twitter.com/raynos2\">Twitter/@raynos2</a></td></tr>\n<tr><th align=\"left\">Dominic Tarr</th><td><a href=\"https://github.com/dominictarr\">GitHub/dominictarr</a></td><td><a href=\"http://twitter.com/dominictarr\">Twitter/@dominictarr</a></td></tr>\n<tr><th align=\"left\">Max Ogden</th><td><a href=\"https://github.com/maxogden\">GitHub/maxogden</a></td><td><a href=\"http://twitter.com/maxogden\">Twitter/@maxogden</a></td></tr>\n<tr><th align=\"left\">Lars-Magnus Skog</th><td><a href=\"https://github.com/ralphtheninja\">GitHub/ralphtheninja</a></td><td><a href=\"http://twitter.com/ralphtheninja\">Twitter/@ralphtheninja</a></td></tr>\n<tr><th align=\"left\">David Björklund</th><td><a href=\"https://github.com/kesla\">GitHub/kesla</a></td><td><a href=\"http://twitter.com/david_bjorklund\">Twitter/@david_bjorklund</a></td></tr>\n<tr><th align=\"left\">Julian Gruber</th><td><a href=\"https://github.com/juliangruber\">GitHub/juliangruber</a></td><td><a href=\"http://twitter.com/juliangruber\">Twitter/@juliangruber</a></td></tr>\n<tr><th align=\"left\">Paolo Fragomeni</th><td><a href=\"https://github.com/hij1nx\">GitHub/hij1nx</a></td><td><a href=\"http://twitter.com/hij1nx\">Twitter/@hij1nx</a></td></tr>\n<tr><th align=\"left\">Anton Whalley</th><td><a href=\"https://github.com/No9\">GitHub/No9</a></td><td><a href=\"https://twitter.com/antonwhalley\">Twitter/@antonwhalley</a></td></tr>\n<tr><th align=\"left\">Matteo Collina</th><td><a href=\"https://github.com/mcollina\">GitHub/mcollina</a></td><td><a href=\"https://twitter.com/matteocollina\">Twitter/@matteocollina</a></td></tr>\n<tr><th align=\"left\">Pedro Teixeira</th><td><a href=\"https://github.com/pgte\">GitHub/pgte</a></td><td><a href=\"https://twitter.com/pgte\">Twitter/@pgte</a></td></tr>\n<tr><th align=\"left\">James Halliday</th><td><a href=\"https://github.com/substack\">GitHub/substack</a></td><td><a href=\"https://twitter.com/substack\">Twitter/@substack</a></td></tr>\n</tbody></table>\n\n### Windows\n\nA large portion of the Windows support comes from code by [Krzysztof Kowalczyk](http://blog.kowalczyk.info/) [@kjk](https://twitter.com/kjk), see his Windows LevelDB port [here](http://code.google.com/r/kkowalczyk-leveldb/). If you're using LevelUP on Windows, you should give him your thanks!\n\n\n<a name=\"license\"></a>\nLicense &amp; copyright\n-------------------\n\nCopyright (c) 2012-2014 LevelUP contributors (listed above).\n\nLevelUP is licensed under the MIT license. All rights not explicitly granted in the MIT license are reserved. See the included LICENSE.md file for more details.\n\n=======\n*LevelUP builds on the excellent work of the LevelDB and Snappy teams from Google and additional contributors. LevelDB and Snappy are both issued under the [New BSD Licence](http://opensource.org/licenses/BSD-3-Clause).*\n",
-  "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/rvagg/node-levelup/issues"
-  },
-  "_id": "levelup@0.18.6",
-  "_shasum": "e6a01cb089616c8ecc0291c2a9bd3f0c44e3e5eb",
-  "_resolved": "https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz",
-  "_from": "https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz"
+  "version": "0.18.6"
 }
 
-},{}],89:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 (function (Buffer){
 var Writable = require('readable-stream').Writable
 var inherits = require('inherits')
@@ -12704,118 +13365,7 @@ function u8Concat (parts) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":95,"inherits":99,"readable-stream":114,"typedarray":129}],90:[function(require,module,exports){
-(function (Buffer){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// NOTE: These type checking functions intentionally don't use `instanceof`
-// because it is fragile and can be easily faked with `Object.create()`.
-
-function isArray(arg) {
-  if (Array.isArray) {
-    return Array.isArray(arg);
-  }
-  return objectToString(arg) === '[object Array]';
-}
-exports.isArray = isArray;
-
-function isBoolean(arg) {
-  return typeof arg === 'boolean';
-}
-exports.isBoolean = isBoolean;
-
-function isNull(arg) {
-  return arg === null;
-}
-exports.isNull = isNull;
-
-function isNullOrUndefined(arg) {
-  return arg == null;
-}
-exports.isNullOrUndefined = isNullOrUndefined;
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-exports.isNumber = isNumber;
-
-function isString(arg) {
-  return typeof arg === 'string';
-}
-exports.isString = isString;
-
-function isSymbol(arg) {
-  return typeof arg === 'symbol';
-}
-exports.isSymbol = isSymbol;
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-exports.isUndefined = isUndefined;
-
-function isRegExp(re) {
-  return objectToString(re) === '[object RegExp]';
-}
-exports.isRegExp = isRegExp;
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-exports.isObject = isObject;
-
-function isDate(d) {
-  return objectToString(d) === '[object Date]';
-}
-exports.isDate = isDate;
-
-function isError(e) {
-  return (objectToString(e) === '[object Error]' || e instanceof Error);
-}
-exports.isError = isError;
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-exports.isFunction = isFunction;
-
-function isPrimitive(arg) {
-  return arg === null ||
-         typeof arg === 'boolean' ||
-         typeof arg === 'number' ||
-         typeof arg === 'string' ||
-         typeof arg === 'symbol' ||  // ES6 symbol
-         typeof arg === 'undefined';
-}
-exports.isPrimitive = isPrimitive;
-
-exports.isBuffer = Buffer.isBuffer;
-
-function objectToString(o) {
-  return Object.prototype.toString.call(o);
-}
-
-}).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":100}],91:[function(require,module,exports){
+},{"buffer":101,"inherits":105,"readable-stream":123,"typedarray":141}],96:[function(require,module,exports){
 (function (process,Buffer){
 // Generated by CoffeeScript 1.10.0
 var Parser, StringDecoder, stream, util;
@@ -13291,7 +13841,7 @@ Parser.prototype.__write = function(chars, end, callback) {
 };
 
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":105,"buffer":95,"stream":117,"string_decoder":128,"util":132}],92:[function(require,module,exports){
+},{"_process":110,"buffer":101,"stream":126,"string_decoder":100,"util":144}],97:[function(require,module,exports){
 (function (process){
 // Generated by CoffeeScript 1.10.0
 var Stringifier, get, stream, util;
@@ -13604,7 +14154,7 @@ Stringifier.prototype.stringify = function(line) {
 };
 
 }).call(this,require('_process'))
-},{"_process":105,"lodash.get":93,"stream":117,"util":132}],93:[function(require,module,exports){
+},{"_process":110,"lodash.get":98,"stream":126,"util":144}],98:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -14539,7 +15089,7 @@ function get(object, path, defaultValue) {
 module.exports = get;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],94:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 /*!
  * escape-html
  * Copyright(c) 2012-2013 TJ Holowaychuk
@@ -14619,7 +15169,9 @@ function escapeHtml(string) {
     : html;
 }
 
-},{}],95:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"buffer":101,"dup":21}],101:[function(require,module,exports){
 (function (global){
 /*!
  * The buffer module from node.js, for the browser.
@@ -16412,7 +16964,7 @@ function isnan (val) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":5,"ieee754":98,"isarray":97}],96:[function(require,module,exports){
+},{"base64-js":5,"ieee754":104,"isarray":103}],102:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -16716,14 +17268,14 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],97:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],98:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -16809,7 +17361,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],99:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -16834,7 +17386,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],100:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 /**
  * Determine if an object is Buffer
  *
@@ -16853,19 +17405,27 @@ module.exports = function (obj) {
     ))
 }
 
-},{}],101:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],102:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 var wrappy = require('wrappy')
 module.exports = wrappy(once)
+module.exports.strict = wrappy(onceStrict)
 
 once.proto = once(function () {
   Object.defineProperty(Function.prototype, 'once', {
     value: function () {
       return once(this)
+    },
+    configurable: true
+  })
+
+  Object.defineProperty(Function.prototype, 'onceStrict', {
+    value: function () {
+      return onceStrict(this)
     },
     configurable: true
   })
@@ -16881,7 +17441,20 @@ function once (fn) {
   return f
 }
 
-},{"wrappy":133}],103:[function(require,module,exports){
+function onceStrict (fn) {
+  var f = function () {
+    if (f.called)
+      throw new Error(f.onceError)
+    f.called = true
+    return f.value = fn.apply(this, arguments)
+  }
+  var name = fn.name || 'Function wrapped with `once`'
+  f.onceError = name + " shouldn't be called more than once"
+  f.called = false
+  return f
+}
+
+},{"wrappy":145}],109:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -17109,31 +17682,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":105}],104:[function(require,module,exports){
-(function (process){
-'use strict';
-
-if (!process.version ||
-    process.version.indexOf('v0.') === 0 ||
-    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
-  module.exports = nextTick;
-} else {
-  module.exports = process.nextTick;
-}
-
-function nextTick(fn) {
-  var args = new Array(arguments.length - 1);
-  var i = 0;
-  while (i < args.length) {
-    args[i++] = arguments[i];
-  }
-  process.nextTick(function afterTick() {
-    fn.apply(null, args);
-  });
-}
-
-}).call(this,require('_process'))
-},{"_process":105}],105:[function(require,module,exports){
+},{"_process":110}],110:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -17226,9 +17775,9 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],106:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 arguments[4][14][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":107,"dup":14}],107:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":112,"dup":14}],112:[function(require,module,exports){
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -17304,7 +17853,7 @@ function forEach(xs, f) {
     f(xs[i], i);
   }
 }
-},{"./_stream_readable":109,"./_stream_writable":111,"core-util-is":90,"inherits":99,"process-nextick-args":104}],108:[function(require,module,exports){
+},{"./_stream_readable":114,"./_stream_writable":116,"core-util-is":117,"inherits":105,"process-nextick-args":119}],113:[function(require,module,exports){
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -17331,7 +17880,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":110,"core-util-is":90,"inherits":99}],109:[function(require,module,exports){
+},{"./_stream_transform":115,"core-util-is":117,"inherits":105}],114:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -18214,7 +18763,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":107,"_process":105,"buffer":95,"core-util-is":90,"events":96,"inherits":99,"isarray":112,"process-nextick-args":104,"string_decoder/":128,"util":6}],110:[function(require,module,exports){
+},{"./_stream_duplex":112,"_process":110,"buffer":101,"core-util-is":117,"events":102,"inherits":105,"isarray":118,"process-nextick-args":119,"string_decoder/":120,"util":6}],115:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -18395,7 +18944,7 @@ function done(stream, er) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":107,"core-util-is":90,"inherits":99}],111:[function(require,module,exports){
+},{"./_stream_duplex":112,"core-util-is":117,"inherits":105}],116:[function(require,module,exports){
 (function (process){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
@@ -18914,12 +19463,243 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":107,"_process":105,"buffer":95,"core-util-is":90,"events":96,"inherits":99,"process-nextick-args":104,"util-deprecate":130}],112:[function(require,module,exports){
-arguments[4][97][0].apply(exports,arguments)
-},{"dup":97}],113:[function(require,module,exports){
+},{"./_stream_duplex":112,"_process":110,"buffer":101,"core-util-is":117,"events":102,"inherits":105,"process-nextick-args":119,"util-deprecate":121}],117:[function(require,module,exports){
+(function (Buffer){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+
+function isArray(arg) {
+  if (Array.isArray) {
+    return Array.isArray(arg);
+  }
+  return objectToString(arg) === '[object Array]';
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = Buffer.isBuffer;
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+}).call(this,{"isBuffer":require("../../../../is-buffer/index.js")})
+},{"../../../../is-buffer/index.js":106}],118:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"dup":103}],119:[function(require,module,exports){
+(function (process){
+'use strict';
+
+if (!process.version ||
+    process.version.indexOf('v0.') === 0 ||
+    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
+  module.exports = nextTick;
+} else {
+  module.exports = process.nextTick;
+}
+
+function nextTick(fn, arg1, arg2, arg3) {
+  if (typeof fn !== 'function') {
+    throw new TypeError('"callback" argument must be a function');
+  }
+  var len = arguments.length;
+  var args, i;
+  switch (len) {
+  case 0:
+  case 1:
+    return process.nextTick(fn);
+  case 2:
+    return process.nextTick(function afterTickOne() {
+      fn.call(null, arg1);
+    });
+  case 3:
+    return process.nextTick(function afterTickTwo() {
+      fn.call(null, arg1, arg2);
+    });
+  case 4:
+    return process.nextTick(function afterTickThree() {
+      fn.call(null, arg1, arg2, arg3);
+    });
+  default:
+    args = new Array(len - 1);
+    i = 0;
+    while (i < args.length) {
+      args[i++] = arguments[i];
+    }
+    return process.nextTick(function afterTick() {
+      fn.apply(null, args);
+    });
+  }
+}
+
+}).call(this,require('_process'))
+},{"_process":110}],120:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"buffer":101,"dup":21}],121:[function(require,module,exports){
+(function (global){
+
+/**
+ * Module exports.
+ */
+
+module.exports = deprecate;
+
+/**
+ * Mark that a method should not be used.
+ * Returns a modified function which warns once by default.
+ *
+ * If `localStorage.noDeprecation = true` is set, then it is a no-op.
+ *
+ * If `localStorage.throwDeprecation = true` is set, then deprecated functions
+ * will throw an Error when invoked.
+ *
+ * If `localStorage.traceDeprecation = true` is set, then deprecated functions
+ * will invoke `console.trace()` instead of `console.error()`.
+ *
+ * @param {Function} fn - the function to deprecate
+ * @param {String} msg - the string to print to the console when `fn` is invoked
+ * @returns {Function} a new "deprecated" version of `fn`
+ * @api public
+ */
+
+function deprecate (fn, msg) {
+  if (config('noDeprecation')) {
+    return fn;
+  }
+
+  var warned = false;
+  function deprecated() {
+    if (!warned) {
+      if (config('throwDeprecation')) {
+        throw new Error(msg);
+      } else if (config('traceDeprecation')) {
+        console.trace(msg);
+      } else {
+        console.warn(msg);
+      }
+      warned = true;
+    }
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+}
+
+/**
+ * Checks `localStorage` for boolean values for the given `name`.
+ *
+ * @param {String} name
+ * @returns {Boolean}
+ * @api private
+ */
+
+function config (name) {
+  // accessing global.localStorage can trigger a DOMException in sandboxed iframes
+  try {
+    if (!global.localStorage) return false;
+  } catch (_) {
+    return false;
+  }
+  var val = global.localStorage[name];
+  if (null == val) return false;
+  return String(val).toLowerCase() === 'true';
+}
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],122:[function(require,module,exports){
 module.exports = require("./lib/_stream_passthrough.js")
 
-},{"./lib/_stream_passthrough.js":108}],114:[function(require,module,exports){
+},{"./lib/_stream_passthrough.js":113}],123:[function(require,module,exports){
 var Stream = (function (){
   try {
     return require('st' + 'ream'); // hack to fix a circular dependency issue when used with browserify
@@ -18933,12 +19713,12 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":107,"./lib/_stream_passthrough.js":108,"./lib/_stream_readable.js":109,"./lib/_stream_transform.js":110,"./lib/_stream_writable.js":111}],115:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":112,"./lib/_stream_passthrough.js":113,"./lib/_stream_readable.js":114,"./lib/_stream_transform.js":115,"./lib/_stream_writable.js":116}],124:[function(require,module,exports){
 module.exports = require("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":110}],116:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"./lib/_stream_writable.js":111,"dup":21}],117:[function(require,module,exports){
+},{"./lib/_stream_transform.js":115}],125:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"./lib/_stream_writable.js":116,"dup":23}],126:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -19067,7 +19847,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":96,"inherits":99,"readable-stream/duplex.js":106,"readable-stream/passthrough.js":113,"readable-stream/readable.js":114,"readable-stream/transform.js":115,"readable-stream/writable.js":116}],118:[function(require,module,exports){
+},{"events":102,"inherits":105,"readable-stream/duplex.js":111,"readable-stream/passthrough.js":122,"readable-stream/readable.js":123,"readable-stream/transform.js":124,"readable-stream/writable.js":125}],127:[function(require,module,exports){
 (function (process){
 // Generated by CoffeeScript 1.9.2
 var Transformer, stream, util,
@@ -19231,7 +20011,7 @@ Transformer.prototype._done = function(err, chunks, cb) {
 };
 
 }).call(this,require('_process'))
-},{"_process":105,"stream":117,"util":132}],119:[function(require,module,exports){
+},{"_process":110,"stream":126,"util":144}],128:[function(require,module,exports){
 (function (process,Buffer){
 module.exports = StringStream
 
@@ -19258,11 +20038,11 @@ StringStream.prototype._read = function () {
 }
 
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":105,"buffer":95,"inherits":99,"readable-stream":127}],120:[function(require,module,exports){
-arguments[4][107][0].apply(exports,arguments)
-},{"./_stream_readable":122,"./_stream_writable":124,"core-util-is":90,"dup":107,"inherits":99,"process-nextick-args":104}],121:[function(require,module,exports){
-arguments[4][108][0].apply(exports,arguments)
-},{"./_stream_transform":123,"core-util-is":90,"dup":108,"inherits":99}],122:[function(require,module,exports){
+},{"_process":110,"buffer":101,"inherits":105,"readable-stream":140}],129:[function(require,module,exports){
+arguments[4][112][0].apply(exports,arguments)
+},{"./_stream_readable":131,"./_stream_writable":133,"core-util-is":135,"dup":112,"inherits":105,"process-nextick-args":137}],130:[function(require,module,exports){
+arguments[4][113][0].apply(exports,arguments)
+},{"./_stream_transform":132,"core-util-is":135,"dup":113,"inherits":105}],131:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -20158,7 +20938,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":120,"_process":105,"buffer":95,"buffer-shims":125,"core-util-is":90,"events":96,"inherits":99,"isarray":126,"process-nextick-args":104,"string_decoder/":128,"util":6}],123:[function(require,module,exports){
+},{"./_stream_duplex":129,"_process":110,"buffer":101,"buffer-shims":134,"core-util-is":135,"events":102,"inherits":105,"isarray":136,"process-nextick-args":137,"string_decoder/":138,"util":6}],132:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -20339,7 +21119,7 @@ function done(stream, er) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":120,"core-util-is":90,"inherits":99}],124:[function(require,module,exports){
+},{"./_stream_duplex":129,"core-util-is":135,"inherits":105}],133:[function(require,module,exports){
 (function (process){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
@@ -20868,7 +21648,7 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":120,"_process":105,"buffer":95,"buffer-shims":125,"core-util-is":90,"events":96,"inherits":99,"process-nextick-args":104,"util-deprecate":130}],125:[function(require,module,exports){
+},{"./_stream_duplex":129,"_process":110,"buffer":101,"buffer-shims":134,"core-util-is":135,"events":102,"inherits":105,"process-nextick-args":137,"util-deprecate":139}],134:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -20980,29 +21760,8 @@ exports.allocUnsafeSlow = function allocUnsafeSlow(size) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"buffer":95}],126:[function(require,module,exports){
-arguments[4][97][0].apply(exports,arguments)
-},{"dup":97}],127:[function(require,module,exports){
-(function (process){
-var Stream = (function (){
-  try {
-    return require('st' + 'ream'); // hack to fix a circular dependency issue when used with browserify
-  } catch(_){}
-}());
-exports = module.exports = require('./lib/_stream_readable.js');
-exports.Stream = Stream || exports;
-exports.Readable = exports;
-exports.Writable = require('./lib/_stream_writable.js');
-exports.Duplex = require('./lib/_stream_duplex.js');
-exports.Transform = require('./lib/_stream_transform.js');
-exports.PassThrough = require('./lib/_stream_passthrough.js');
-
-if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
-  module.exports = Stream;
-}
-
-}).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":120,"./lib/_stream_passthrough.js":121,"./lib/_stream_readable.js":122,"./lib/_stream_transform.js":123,"./lib/_stream_writable.js":124,"_process":105}],128:[function(require,module,exports){
+},{"buffer":101}],135:[function(require,module,exports){
+(function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -21024,208 +21783,145 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var Buffer = require('buffer').Buffer;
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
 
-var isBufferEncoding = Buffer.isEncoding
-  || function(encoding) {
-       switch (encoding && encoding.toLowerCase()) {
-         case 'hex': case 'utf8': case 'utf-8': case 'ascii': case 'binary': case 'base64': case 'ucs2': case 'ucs-2': case 'utf16le': case 'utf-16le': case 'raw': return true;
-         default: return false;
-       }
-     }
-
-
-function assertEncoding(encoding) {
-  if (encoding && !isBufferEncoding(encoding)) {
-    throw new Error('Unknown encoding: ' + encoding);
+function isArray(arg) {
+  if (Array.isArray) {
+    return Array.isArray(arg);
   }
+  return objectToString(arg) === '[object Array]';
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = Buffer.isBuffer;
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
 }
 
-// StringDecoder provides an interface for efficiently splitting a series of
-// buffers into a series of JS strings without breaking apart multi-byte
-// characters. CESU-8 is handled as part of the UTF-8 encoding.
-//
-// @TODO Handling all encodings inside a single object makes it very difficult
-// to reason about this code, so it should be split up in the future.
-// @TODO There should be a utf8-strict encoding that rejects invalid UTF-8 code
-// points as used by CESU-8.
-var StringDecoder = exports.StringDecoder = function(encoding) {
-  this.encoding = (encoding || 'utf8').toLowerCase().replace(/[-_]/, '');
-  assertEncoding(encoding);
-  switch (this.encoding) {
-    case 'utf8':
-      // CESU-8 represents each of Surrogate Pair by 3-bytes
-      this.surrogateSize = 3;
-      break;
-    case 'ucs2':
-    case 'utf16le':
-      // UTF-16 represents each of Surrogate Pair by 2-bytes
-      this.surrogateSize = 2;
-      this.detectIncompleteChar = utf16DetectIncompleteChar;
-      break;
-    case 'base64':
-      // Base-64 stores 3 bytes in 4 chars, and pads the remainder.
-      this.surrogateSize = 3;
-      this.detectIncompleteChar = base64DetectIncompleteChar;
-      break;
-    default:
-      this.write = passThroughWrite;
-      return;
-  }
+}).call(this,{"isBuffer":require("../../../../../../is-buffer/index.js")})
+},{"../../../../../../is-buffer/index.js":106}],136:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"dup":103}],137:[function(require,module,exports){
+(function (process){
+'use strict';
 
-  // Enough space to store all bytes of a single character. UTF-8 needs 4
-  // bytes, but CESU-8 may require up to 6 (3 bytes per surrogate).
-  this.charBuffer = new Buffer(6);
-  // Number of bytes received for the current incomplete multi-byte character.
-  this.charReceived = 0;
-  // Number of bytes expected for the current incomplete multi-byte character.
-  this.charLength = 0;
-};
-
-
-// write decodes the given buffer and returns it as JS string that is
-// guaranteed to not contain any partial multi-byte characters. Any partial
-// character found at the end of the buffer is buffered up, and will be
-// returned when calling write again with the remaining bytes.
-//
-// Note: Converting a Buffer containing an orphan surrogate to a String
-// currently works, but converting a String to a Buffer (via `new Buffer`, or
-// Buffer#write) will replace incomplete surrogates with the unicode
-// replacement character. See https://codereview.chromium.org/121173009/ .
-StringDecoder.prototype.write = function(buffer) {
-  var charStr = '';
-  // if our last write ended with an incomplete multibyte character
-  while (this.charLength) {
-    // determine how many remaining bytes this buffer has to offer for this char
-    var available = (buffer.length >= this.charLength - this.charReceived) ?
-        this.charLength - this.charReceived :
-        buffer.length;
-
-    // add the new bytes to the char buffer
-    buffer.copy(this.charBuffer, this.charReceived, 0, available);
-    this.charReceived += available;
-
-    if (this.charReceived < this.charLength) {
-      // still not enough chars in this buffer? wait for more ...
-      return '';
-    }
-
-    // remove bytes belonging to the current character from the buffer
-    buffer = buffer.slice(available, buffer.length);
-
-    // get the character that was split
-    charStr = this.charBuffer.slice(0, this.charLength).toString(this.encoding);
-
-    // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
-    var charCode = charStr.charCodeAt(charStr.length - 1);
-    if (charCode >= 0xD800 && charCode <= 0xDBFF) {
-      this.charLength += this.surrogateSize;
-      charStr = '';
-      continue;
-    }
-    this.charReceived = this.charLength = 0;
-
-    // if there are no more bytes in this buffer, just emit our char
-    if (buffer.length === 0) {
-      return charStr;
-    }
-    break;
-  }
-
-  // determine and set charLength / charReceived
-  this.detectIncompleteChar(buffer);
-
-  var end = buffer.length;
-  if (this.charLength) {
-    // buffer the incomplete character bytes we got
-    buffer.copy(this.charBuffer, 0, buffer.length - this.charReceived, end);
-    end -= this.charReceived;
-  }
-
-  charStr += buffer.toString(this.encoding, 0, end);
-
-  var end = charStr.length - 1;
-  var charCode = charStr.charCodeAt(end);
-  // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
-  if (charCode >= 0xD800 && charCode <= 0xDBFF) {
-    var size = this.surrogateSize;
-    this.charLength += size;
-    this.charReceived += size;
-    this.charBuffer.copy(this.charBuffer, size, 0, size);
-    buffer.copy(this.charBuffer, 0, 0, size);
-    return charStr.substring(0, end);
-  }
-
-  // or just emit the charStr
-  return charStr;
-};
-
-// detectIncompleteChar determines if there is an incomplete UTF-8 character at
-// the end of the given buffer. If so, it sets this.charLength to the byte
-// length that character, and sets this.charReceived to the number of bytes
-// that are available for this character.
-StringDecoder.prototype.detectIncompleteChar = function(buffer) {
-  // determine how many bytes we have to check at the end of this buffer
-  var i = (buffer.length >= 3) ? 3 : buffer.length;
-
-  // Figure out if one of the last i bytes of our buffer announces an
-  // incomplete char.
-  for (; i > 0; i--) {
-    var c = buffer[buffer.length - i];
-
-    // See http://en.wikipedia.org/wiki/UTF-8#Description
-
-    // 110XXXXX
-    if (i == 1 && c >> 5 == 0x06) {
-      this.charLength = 2;
-      break;
-    }
-
-    // 1110XXXX
-    if (i <= 2 && c >> 4 == 0x0E) {
-      this.charLength = 3;
-      break;
-    }
-
-    // 11110XXX
-    if (i <= 3 && c >> 3 == 0x1E) {
-      this.charLength = 4;
-      break;
-    }
-  }
-  this.charReceived = i;
-};
-
-StringDecoder.prototype.end = function(buffer) {
-  var res = '';
-  if (buffer && buffer.length)
-    res = this.write(buffer);
-
-  if (this.charReceived) {
-    var cr = this.charReceived;
-    var buf = this.charBuffer;
-    var enc = this.encoding;
-    res += buf.slice(0, cr).toString(enc);
-  }
-
-  return res;
-};
-
-function passThroughWrite(buffer) {
-  return buffer.toString(this.encoding);
+if (!process.version ||
+    process.version.indexOf('v0.') === 0 ||
+    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
+  module.exports = nextTick;
+} else {
+  module.exports = process.nextTick;
 }
 
-function utf16DetectIncompleteChar(buffer) {
-  this.charReceived = buffer.length % 2;
-  this.charLength = this.charReceived ? 2 : 0;
+function nextTick(fn) {
+  var args = new Array(arguments.length - 1);
+  var i = 0;
+  while (i < args.length) {
+    args[i++] = arguments[i];
+  }
+  process.nextTick(function afterTick() {
+    fn.apply(null, args);
+  });
 }
 
-function base64DetectIncompleteChar(buffer) {
-  this.charReceived = buffer.length % 3;
-  this.charLength = this.charReceived ? 3 : 0;
+}).call(this,require('_process'))
+},{"_process":110}],138:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"buffer":101,"dup":21}],139:[function(require,module,exports){
+arguments[4][121][0].apply(exports,arguments)
+},{"dup":121}],140:[function(require,module,exports){
+(function (process){
+var Stream = (function (){
+  try {
+    return require('st' + 'ream'); // hack to fix a circular dependency issue when used with browserify
+  } catch(_){}
+}());
+exports = module.exports = require('./lib/_stream_readable.js');
+exports.Stream = Stream || exports;
+exports.Readable = exports;
+exports.Writable = require('./lib/_stream_writable.js');
+exports.Duplex = require('./lib/_stream_duplex.js');
+exports.Transform = require('./lib/_stream_transform.js');
+exports.PassThrough = require('./lib/_stream_passthrough.js');
+
+if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
+  module.exports = Stream;
 }
 
-},{"buffer":95}],129:[function(require,module,exports){
+}).call(this,require('_process'))
+},{"./lib/_stream_duplex.js":129,"./lib/_stream_passthrough.js":130,"./lib/_stream_readable.js":131,"./lib/_stream_transform.js":132,"./lib/_stream_writable.js":133,"_process":110}],141:[function(require,module,exports){
 var undefined = (void 0); // Paranoia
 
 // Beyond this value, index getters/setters (i.e. array[0], array[1]) are so slow to
@@ -21857,85 +22553,16 @@ function packF32(v) { return packIEEE754(v, 8, 23); }
 
 }());
 
-},{}],130:[function(require,module,exports){
-(function (global){
-
-/**
- * Module exports.
- */
-
-module.exports = deprecate;
-
-/**
- * Mark that a method should not be used.
- * Returns a modified function which warns once by default.
- *
- * If `localStorage.noDeprecation = true` is set, then it is a no-op.
- *
- * If `localStorage.throwDeprecation = true` is set, then deprecated functions
- * will throw an Error when invoked.
- *
- * If `localStorage.traceDeprecation = true` is set, then deprecated functions
- * will invoke `console.trace()` instead of `console.error()`.
- *
- * @param {Function} fn - the function to deprecate
- * @param {String} msg - the string to print to the console when `fn` is invoked
- * @returns {Function} a new "deprecated" version of `fn`
- * @api public
- */
-
-function deprecate (fn, msg) {
-  if (config('noDeprecation')) {
-    return fn;
-  }
-
-  var warned = false;
-  function deprecated() {
-    if (!warned) {
-      if (config('throwDeprecation')) {
-        throw new Error(msg);
-      } else if (config('traceDeprecation')) {
-        console.trace(msg);
-      } else {
-        console.warn(msg);
-      }
-      warned = true;
-    }
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-}
-
-/**
- * Checks `localStorage` for boolean values for the given `name`.
- *
- * @param {String} name
- * @returns {Boolean}
- * @api private
- */
-
-function config (name) {
-  // accessing global.localStorage can trigger a DOMException in sandboxed iframes
-  try {
-    if (!global.localStorage) return false;
-  } catch (_) {
-    return false;
-  }
-  var val = global.localStorage[name];
-  if (null == val) return false;
-  return String(val).toLowerCase() === 'true';
-}
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],131:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
+arguments[4][105][0].apply(exports,arguments)
+},{"dup":105}],143:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],132:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -22525,7 +23152,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":131,"_process":105,"inherits":99}],133:[function(require,module,exports){
+},{"./support/isBuffer":143,"_process":110,"inherits":142}],145:[function(require,module,exports){
 // Returns a wrapper function that returns a wrapped callback
 // The wrapper function should do some stuff, and return a
 // presumably different callback function.

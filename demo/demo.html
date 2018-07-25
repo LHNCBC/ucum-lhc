@@ -13,11 +13,12 @@
     <link rel="canonical" href="https://ucum.nlm.nih.gov/ucum-lhc/demo.html" />
     <title>UCUM-LHC Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/10.1.1/autocomplete-lhc_jQueryUI.min.css" />
+    <link rel="stylesheet" href="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/16.0.1/autocomplete-lhc_jQueryUI.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="demo-dist/ucumDemo.min.css" rel="stylesheet"/>
   </head>
-  <body id="demobody" onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
+  <body id="demobody"
+        onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
     <!-- page header -->
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" id="logo"
@@ -30,246 +31,269 @@
           <span id=tagline>A Unified Code for Units of Measure Software Library
             from the National Library of Medicine</span></a>
       </div>
-    </div>
+    </div> <!-- end page header -->
+    <!-- links to other ucum pages -->
     <div>
       <a href="https://ucum.nlm.nih.gov">UCUM Resources</a>&nbsp; &nbsp;
       <a href="index.html">UCUM-LHC Overview</a>
     </div>
-    <!-- end page header -->
+    <!-- end links to other ucum pages -->
     <h1>The UCUM-LHC Validator and Converter</h1>
 
+    <!-- navigator/converter tabs -->
     <ul class="tab nav nav-tabs">
       <li class="active"><a id="validation-link" href="#validation" class="tablinks"
-                            data-toggle="tab">
-             Validator</a></li>
-      <li><a id="conversion-link" href="#conversion" class="tablinks"
              data-toggle="tab"
+             onclick="demoPkg.UcumDemo.getInstance().showValidateTab()">
+             Validator</a></li>
+
+      <li><a id="conversion-link" href="#conversion"
+             class="tablinks" data-toggle="tab"
              onclick="demoPkg.UcumDemo.getInstance().showConvertTab()">
              Converter</a></li>
     </ul>
+
+    <!-- Converter tab -->
     <div class="tab-content">
-    <div id="conversion" class="tabcontent tab-pane fade">
-      <h2>UCUM Unit Conversions</h2>
-      <div id="convSection" class="section">
-        <h3>Convert values from one UCUM unit to another</h3>
-        <p id="convQuestions">Enter or select a valid UCUM code for the unit you want to convert:
-          <input type="text" id="convertFrom" placeholder="begin typing ..."
-          onchange=
-          "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertFrom',
-          'resultString', 'from')"> <sup>1</sup>&nbsp;
-<p class="errMsg" style="display:none">Error message for first unit; red border for input box</p>
-          <br>Enter the number of units to be converted:
-        <input type="text" id="convertNum"
-               onchange=
-                       "demoPkg.UcumDemo.getInstance().checkFromVal('convertNum')">
-        &nbsp; &nbsp;
-        Result rounded to <input type="number" min="0" max="20" id="precision"> decimal digits.
-<p class="errMsg" style="display:none">Error message for number input; red border for input box</p>
+      <div id="conversion" class="tabcontent tab-pane fade">
+        <h2>UCUM Unit Conversions</h2>
+        <div id="convSection" class="section">
 
-       <br><br>Enter or select the unit that you want to convert to:
-              <input type="text" id="convertTo"
-                     onchange=
-                             "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertTo',
-          'resultString', 'to')"> <sup>2</sup>
-          <p class="errMsg" style="display:none">Error message for second unit; red border for input box</p>
+          <p id="convMsg" class="errMsg"> </p>
+          <p id="convSuggestions"> </p>
+          <div class="inner-section">
+            <div class="flex-container outer-container">
+              <div class="flex-container inner-container"><!-- left side -->
+                <div>
+                  <input type="text" id="convertFromNum"
+                    class="input-field input-number"
+                    onchange=
+                    "demoPkg.UcumDemo.getInstance().checkNumVal('convertFromNum')">
+                </div>
+                <!-- input field to receive UCUM expression.  Callback to handle
+                     user's input is defined with the definition of the
+                     autocompleter for this field, in the demo.js constructor -->
+                  <div>
+                  <span class="input-field">
+                    <input type="text" id="convertFrom" class="input-field"
+                      placeholder="Enter UCUM code ...">
+                  </span>
+                  <div id="convertFromName" class="unit-name" wrap="soft"></div>
+                </div>
+                <span id="advSearchOpts" type="button" class="standalone-button"
+                      onclick="demoPkg.UcumDemo.getInstance().toggleDisplay(
+                              'advancedSearchCnv','toggleAdvancedSearchCnvB',
+                              'Hide', 'Show')">advanced options</span>
 
-        </p>
+              </div> <!-- left inner container -->
+              <div class="flex-container middle-column">
+                <div>=</div>
+              </div>
+              <div class="flex-container inner-container"><!-- right side -->
+                <div>
+                  <input type="text" id="convertToNum"
+                    class="input-field input-number"
+                    onchange=
+                    "demoPkg.UcumDemo.getInstance().checkNumVal('convertToNum')">
+                </div>
+                <!-- input field to receive UCUM expression.  Callback to handle
+                     user's input is defined with the definition of the
+                     autocompleter for this field, in the demo.js constructor -->
+                <div>
+                  <span class="input-field">
+                    <input type="text" id="convertTo" class="input-field"
+                      placeholder="Enter UCUM code ...">
+                  </span>
+                  <div id="convertToName" class="unit-name" wrap="soft"></div>
+                </div>
+                <div id="precision-line">
+                  <input type="number" min="0" max="20" id="precision"
+                         onchange="demoPkg.UcumDemo.getInstance().updatePrecision('convMsg')">
+                      decimal digits.
+                </div>
+              </div><!-- right inner container -->
 
-          <button id="doConversionButton"
-                  onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
-                                                             'convertNum',
-                                                             'convertTo', true)"
-                  type="button">Convert</button>
-        <span id="resultString">5 first units = 6 second units</span>
-             <!---  Not using this list -- for now
+            </div> <!-- outer-container -->
+            <div id="advancedSearchCnv" style="display: none">
+              <!-- this section is built in the demo code when the page is loaded -->
+            </div> <!-- advancedSearchCnv division -->
+          </div><!-- inner-section -->
+          <!---  Not using this list -- for now
           onblur="demoPkg.UcumDemo.getInstance().getCommensurables('convertFrom',
-                                                                  'convertTo',
-                                                                  'resultString')">
+                                                                   'convertTo',
+                                                                   'resultString')">
           -->
-          &nbsp;&nbsp;
-
-          <br><br><sup>1</sup> UCUM codes are <b>case-sensitive</b>
-          <br><sup>2</sup> You can enter other commensurate units that are not on this list.
-        <p>If you are not finding a unit that you think should be there, check the
-          <span id="advSearchOpts" onclick="
-                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchCnv',
-                                                             'toggleAdvancedSearchCnvB',
-                                                             'Hide', 'Show')">advanced search
-            options</span> to see if you should add a category (or categories) to the search.
-        </p>
-        <!--
-        <button id="toggleAdvancedSearchCnvB"
-                onclick="
-                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchCnv',
-                                                             'toggleAdvancedSearchCnvB',
-                                                             'Hide', 'Show')"
-                type="button">Show advanced search options</button> -->
-
-        <div id="advancedSearchCnv" style="display: none">
-          <!-- this section is built in the demo code when the page is loaded -->
-        </div> <!-- advancedSearchCnv division -->
-
-        <br><br><p>Enter the numeric value you want to convert:
-        <input type="text" id="convertNum"
-               onchange=
-                       "demoPkg.UcumDemo.getInstance().checkFromVal('convertNum')">
-        &nbsp; &nbsp;
-        Result rounded to <input type="number" min="0" max="20" id="precision"> decimal digits.
-      </p><br>
-        <div id="convertToDivs">
-          <div id="convertLeft">
-            <p>Enter or select the unit that you want to convert to:
-              <input type="text" id="convertTo" placeholder="begin typing ..."
-                     onchange=
-                             "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('convertTo',
-          'resultString', 'to')">
-          </div>
-          <div id="convertRight">
-            You can enter other commensurate units that are not on this list.
-          </div>
-        </div>
-        <div style="clear: left">&nbsp;&nbsp;  <button id="doConversionButton"
-                                       onclick="demoPkg.UcumDemo.getInstance().convertUnit('convertFrom',
-                                                             'convertNum',
-                                                             'convertTo', true)"
-                                       type="button">Convert</button>
-        </div>
-        <p id="resultString">&nbsp;&nbsp;</p>
-        <p class="small-print">Disclaimer:  &nbsp;Conversion results are for
-          demonstration purposes only.  Before relying on the unit conversions
-          produced by this tool it is your obligation to perform your own tests
-          to verify that the results are sufficiently accurate for your purposes.
-        </p>
-      </div> <!-- end convSection div -->
-    </div> <!-- end conversion div -->
-    </div>
-    <div id="validation" class="tabcontent tab-pane fade in active">
-      <h2>UCUM Unit Expression Validation</h2>
-      <div id="singleString" class="section">
-        <h3>Validate unit expressions one at a time</h3>
-        <p>Enter or select a unit expression to be validated:
-          <input type="text" id="valString" placeholder="begin typing ..."
-                 onchange=
-                 "demoPkg.UcumDemo.getInstance().reportUnitStringValidity('valString',
-                                                                   'validationString',
-                                                                   'displayOnly')">&nbsp; &nbsp;
-          </p>
-          <p class="small-print">If you are not finding a unit that you think should be there, check the
-          advanced search options to see if you should add a category (or categories)
-          to the search.
-          </p><button id="toggleAdvancedSearchValB"
-                  onclick="
-                demoPkg.UcumDemo.getInstance().toggleDisplay('advancedSearchVal',
-                                                             'toggleAdvancedSearchValB',
-                                                             'Hide', 'Show')"
-                  type="button">Show advanced search options</button>
-        <div id="advancedSearchVal" style="display: none">
-          <!-- this section is built in the demo code when the page is loaded -->
-        </div> <!-- advancedSearchVal division -->
-        <br>&nbsp;&nbsp;
-        <p id="validationString">&nbsp;&nbsp;</p>
-        <p id="validList"></p>
-        <p><button id="toggleHints"
-                onclick="
-                demoPkg.UcumDemo.getInstance().toggleDisplay('hints',
-                                                             'toggleHints',
-                                                             'Hide', 'Show')"
-                type="button">Show entry hints</button></p>
-        <div id="hints" class="limitWidth" style="display: none">
+          <ul>
+            <li> UCUM codes are <b>case-sensitive</b>.</li>
+            <li> You can enter other commensurate units that are not on the
+                UCUM Code lists.</li>
+            <li><span id="toggleCnvHints" type="button"
+                      onclick="
+                demoPkg.UcumDemo.getInstance().toggleDisplay('cnvHints',
+                                                             'toggleCnvHints',
+                                                             'Hide', 'Show')">
+            syntax rules</span>.
+            </li>
+          </ul>
+          <div id="cnvHints" class="limitWidth" style="display: none">
             <!--#include file="UcumExpressionHints.shtml" -->
-        </div><!-- hints div -->
-      </div><!-- singleString div -->
-      <div id="filevalidation" class="section">
-        <div id="fileValidationTest" class="limitWidth">
-        <h3>Validate all unit expressions in a CSV file</h3>
-        <p>We can validate unit expressions in a <b>c</b>omma <b>s</b>eparated
-          <b>v</b>alues file on your system.<ul>
-        <li>Use the browse button below to select the file.</li>
-        <li>You will then be asked for the name of the column that contains
-          the expressions to be validated.  (Your file must include column
-          headers).
+          </div><!-- hints div -->
+          <p class="small-print">Disclaimer:  &nbsp;Conversion results are for
+            demonstration purposes only.  Before relying on the unit conversions
+            produced by this tool it is your obligation to perform your own tests
+            to verify that the results are sufficiently accurate for your purposes.
+          </p>
+        </div> <!-- end convSection div -->
+      </div> <!-- end Converter tab -->
+
+      <!-- Validator tab -->
+      <div id="validation" class="tabcontent tab-pane fade in active">
+        <h2>UCUM Unit Expression Validation</h2>
+        <div id="singleString" class="section">
+          <h3>Validate unit expressions one at a time</h3>
+            <!-- input field to receive UCUM expression.  Callback to handle
+                 user's input is defined with the definition of the
+                 autocompleter for this field, in the demo.js constructor -->
+            <div class="flex-container" id="valStringDiv">
+              <div>
+                <input type="text" id="valString" placeholder="Enter UCUM expression ...">&nbsp; &nbsp;
+              </div>
+              <div id="validationString">&nbsp;&nbsp;</div>
+            </div> <!-- valStringDiv -->
+          <div id="valButtonLinks">
+          <span id="advValSearchOpts" type="button" class="standalone-button"
+                tabindex="0"
+                  onclick="demoPkg.UcumDemo.getInstance().toggleDisplay(
+                                'advancedSearchVal','toggleAdvancedSearchValB',
+                                'Hide', 'Show')">advanced options</span>
+          <span id="toggleValHints" type="button" class="standalone-button"
+                tabindex="0"
+                  onclick="
+                  demoPkg.UcumDemo.getInstance().toggleDisplay('valHints',
+                                                               'toggleValHints',
+                                                               'Hide', 'Show')">
+                  syntax rules</span>.
+          </div>
+          <div id="advancedSearchVal" style="display: none">
+            <!-- this section is built in the demo code when the page is loaded -->
+          </div> <!-- advancedSearchCnv division -->
+
+          <div id="valHints" class="limitWidth" style="display: none">
+            <!--#include file="UcumExpressionHints.shtml" -->
+          </div><!-- hints div -->
+        </div><!-- singleString div -->
+        <div id="filevalidation" class="section">
+          <h3>Validate all unit expressions in a CSV file</h3>
+          <p>We can validate unit expressions in a <b>c</b>omma <b>s</b>eparated
+            <b>v</b>alues file on your system.
+          <ul>
+            <li>Use the browse button below to select the file.</li>
+            <li>You will then be asked for the name of the column that contains
+              the expressions to be validated.  (Your file must include column
+              headers).
+            </li>
+            <li>A copy of your file will be created that includes three
+              additional columns at the end, confirming what expression was
+              validated, the validation results, and any relevant notes.
+            </li>
+            <li>You will be asked where you want the file saved.  You may
+              change the name of the output file at that time.
+            </li>
+            <li>Note that this will only validate <b>unit</b> expressions.
+              Although prefixes used with a unit code, e.g., "kL" (kiloliter),
+              are recognized as prefixes ("k" for kilo) modifying a unit code
+              ("L" for liter), a prefix submitted by itself, e.g., "E" (exa)
+              will result in an "invalid unit code" return.
+            </li>
+          </ul>
+          <input type="file" id="inputfile"
+              onchange="demoPkg.UcumDemo.getInstance().fileSelected()">
+          <div id="colNameDiv" style="display:none">
+            Name of the column that contains the expressions to be validated
+            <input type="text" id="colName">&nbsp; &nbsp;
+            <button id="startValidation"
+              onclick="demoPkg.UcumDemo.getInstance().columnSpecified()"
+              type="button">Validate File</button>
+            <button id="cancelValidation"
+              onclick="demoPkg.UcumDemo.getInstance().resetFileInput()"
+              type="button">Cancel</button>
+          </div><!-- colNameDiv -->
+          <!-- <a id="downlink" href="" style="'display:none'"></a> -->
+        </div><!-- filevalidation div -->
+        <div id="aboutSection" class="section">
+          <h3>About the UCUM-LHC Library</h3>
+          <ul>
+            <li>Here is a <a href="index.html">description</a> of the UCUM-LHC
+              Software Library.
+            </li>
+            <li>The code is available from the
+              <a href="https://github.com/lhncbc/ucum-lhc">GitHub code repository</a>.
+            </li>
+            <li>The UCUM-LHC code uses unit definitions from the
+              <a href="http://unitsofmeasure.org">Unified Code for Units Of
+              Measure</a>
+              <a href="http://unitsofmeasure.org/ucum-essence.xml">ucum-essence.xml</a>
+              file, <!--#include file="UcumEssenceVersion.shtml" -->, with
+              <a href="demo/UcumEssenceModifications.html">minor content changes.</a>
+            </li>
+            <li>The ucum-essence.xml file has also been extended with commonly used
+              combinations of UCUM units found in <a href="https://loinc.org">LOINC</a>,
+              and LOINC properties have been added to UCUM records.
+            </li>
+          </ul>
+        </div> <!-- end aboutSection div -->
+      </div> <!-- end validator tab -->
+    </div> <!-- end tab-content div -->
+
+    <!-- page footer -->
+    <div id="fine-print">
+      <ul class="horz-list">
+        <li><a title="NLM copyright information"
+               href="http://www.nlm.nih.gov/copyright.html">Copyright</a>
         </li>
-        <li>A copy of your file will be created that includes three
-          additional columns at the end, confirming what expression was
-          validated, the validation results, and any relevant notes.
+        <li><a title="NLM privacy policy"
+               href="http://www.nlm.nih.gov/privacy.html">Privacy</a>
         </li>
-        <li>You will be asked where you want the file saved.  You may
-          change the name of the output file at that time.
+        <li><a title="NLM accessibility"
+               href="http://www.nlm.nih.gov/accessibility.html">
+                    Accessibility</a>
         </li>
-        <li>Note that this will only validate <b>unit</b> expressions.
-          Although prefixes used with a unit code, e.g., "kL" (kiloliter),
-          are recognized as prefixes ("k" for kilo) modifying a unit code
-          ("L" for liter), a prefix submitted by itself, e.g., "E" (exa)
-          will result in an "invalid unit code" return.
+        <li><a title="NLM viewers and players"
+               href="http://www.nlm.nih.gov/plugins.html">Viewers & Players</a>
+        </li>
+        <li><a title="NIH Freedom of Information Act office"
+               href="http://www.nih.gov/icd/od/foia/index.htm">
+                    Freedom of Information Act</a>
+        </li>
+        <li class="last-item"><a title="Contact Us"
+                                 href="https://lhncbc.nlm.nih.gov/contact-us">
+          Contact Us</a>
         </li>
       </ul>
+      <ul class="horz-list">
+        <li><a title="U.S. National Library of Medicine"
+               href="http://www.nlm.nih.gov/">U.S. National Library of
+                    Medicine</a>
+        </li>
+        <li><a title="U.S. National Institutes of Health"
+               href="http://www.nih.gov/">U.S. National Institutes of Health</a>
+        </li>
+        <li><a title="U.S. Department of Health and Human Services"
+               href="http://www.hhs.gov/">U.S. Department of Health and Human
+                    Services</a>
+        </li>
+        <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
+              src="demo-dist/assets/images/USAgov.gif" alt="USA.gov"
+              id="usagov"></a>
+        </li>
+      </ul>
+    </div><!-- fine-print -->
+    <!-- end page footer -->
 
-        <input type="file" id="inputfile"
-               onchange="demoPkg.UcumDemo.getInstance().fileSelected()">
-        <div id="colNameDiv" style="display:none">
-          Name of the column that contains the expressions to be validated
-          <input type="text" id="colName">&nbsp; &nbsp;
-          <button id="startValidation"
-                  onclick="
-                demoPkg.UcumDemo.getInstance().columnSpecified()"
-                  type="button">Validate File</button>
-          <button id="cancelValidation"
-                  onclick="
-                demoPkg.UcumDemo.getInstance().resetFileInput()"
-                  type="button">Cancel</button>
-        </div><!-- colNameDiv -->
-        <!-- <a id="downlink" href="" style="'display:none'"></a> -->
-        </div>
-      </div><!-- filevalidation div -->
-      <div id="otherstuff" class="section">
-        <h3>About the UCUM-LHC Library</h3>
-        <ul class="limitWidth">
-        <li>Here is a <a href="index.html">description</a> of the UCUM-LHC
-        Software Library.</li>
-        <li>The code is available from the
-          <a href="https://github.com/lhncbc/ucum-lhc">GitHub code repository</a>.</li>
-        <li>The UCUM-LHC code uses unit definitions from the
-          <a href="http://unitsofmeasure.org">Unified Code
-            for Units Of Measure</a>
-          <a href="http://unitsofmeasure.org/ucum-essence.xml">ucum-essence.xml</a> file,
-          <!--#include file="UcumEssenceVersion.shtml" -->, with
-          <a href="demo/UcumEssenceModifications.html">minor content changes.</a></li>
-        <li>The ucum-essence.xml file has also been extended with commonly used
-          combinations of UCUM units found in <a href="https://loinc.org">LOINC</a>,
-          and LOINC properties have been added to UCUM records.</li>
-        </ul>
-      </div> <!-- end otherstuff div -->
-    </div> <!-- end validation div -->
-</div> <!-- end tab-content div -->
-  <!-- page footer -->
-  <div id="fine-print">
-    <ul class="horz-list">
-      <li><a title="NLM copyright information"  href="http://www.nlm.nih.gov/copyright.html">Copyright</a></li>
-      <li><a title="NLM privacy policy" href="http://www.nlm.nih.gov/privacy.html">Privacy</a></li>
-      <li><a title="NLM accessibility" href="http://www.nlm.nih.gov/accessibility.html" >Accessibility</a></li>
-      <li><a title="NLM viewers and players" href="http://www.nlm.nih.gov/plugins.html">Viewers & Players</a></li>
-      <li><a title="NIH Freedom of Information Act office"  href="http://www.nih.gov/icd/od/foia/index.htm"
-          >Freedom of Information Act</a></li>
-      <li class="last-item"><a title="Contact Us" href="https://lhncbc.nlm.nih.gov/contact-us">
-          Contact Us</a></li>
-    </ul>
-    <ul class="horz-list">
-      <li><a title="U.S. National Library of Medicine" href="http://www.nlm.nih.gov/"
-          >U.S. National Library of Medicine</a></li>
-      <li><a title="U.S. National Institutes of Health" href="http://www.nih.gov/"
-          >U.S. National Institutes of Health</a></li>
-      <li><a title="U.S. Department of Health and Human Services"  href="http://www.hhs.gov/"
-          >U.S. Department of Health and Human Services</a></li>
-      <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
-              src="demo-dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
-    </ul>
-  </div><!-- fine-print -->
-  <!-- end page footer -->
-
-    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/10.1.1/autocomplete-lhc_jQuery.min.js"></script>
-    <script src="dist/ucum-lhc.min.js"></script>
-    <script src="demo-dist/ucum-demo.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://lforms-service.nlm.nih.gov/autocomplete-lhc-versions/16.0.1/autocomplete-lhc_jQuery.min.js"></script>
+    <script src="dist/ucum-lhc.js"></script>
+    <script src="demo-dist/ucum-demo.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
 </html>
