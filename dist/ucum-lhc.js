@@ -475,7 +475,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "Num",
       "category_": "Clinical",
-      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000. The unit testing conversion all works. ",
+      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
@@ -502,7 +502,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "Num",
       "category_": "Clinical",
-      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000. The unit testing conversion all works. ",
+      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
@@ -583,7 +583,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "MCnc; MCnt",
       "category_": "Clinical",
-      "guidance_": "[ppth] is often used in solution concentrations as 1 g/L or 1 g/kg. \n\nCan be ambigous and would be better if the metric units was used directly. ",
+      "guidance_": "[ppth] is often used in solution concentrations as 1 g/L or 1 g/kg.\n\nCan be ambigous and would be better if the metric units was used directly. ",
       "csUnitString_": "10*-3",
       "ciUnitString_": "10*-3",
       "baseFactorStr_": "1",
@@ -610,7 +610,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "MCnt; MCnc; SFr",
       "category_": "Clinical",
-      "guidance_": "[ppm] is often used in solution concentrations as 1 mg/L  or 1 mg/kg. Also used to express mole fractions as 1 mmol/mol.\n\n[ppm] is also used in nuclear magnetic resonance (NMR) to represent chemical shift - the difference of a measured frequency in parts per million from the reference frequency. \n\nCan be ambigous and would be better if the metric units was used directly. ",
+      "guidance_": "[ppm] is often used in solution concentrations as 1 mg/L  or 1 mg/kg. Also used to express mole fractions as 1 mmol/mol.\n\n[ppm] is also used in nuclear magnetic resonance (NMR) to represent chemical shift - the difference of a measured frequency in parts per million from the reference frequency.\n\nCan be ambigous and would be better if the metric units was used directly. ",
       "csUnitString_": "10*-6",
       "ciUnitString_": "10*-6",
       "baseFactorStr_": "1",
@@ -12189,7 +12189,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL",
+      "printSymbol_": "/mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -12374,7 +12374,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL",
+      "printSymbol_": "/mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -12818,7 +12818,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL",
+      "printSymbol_": "/mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -23460,7 +23460,7 @@ module.exports={
     },
     {
       "isBase_": false,
-      "name_": "nanomole of 1/2 cystine per milligram of protein",
+      "name_": "nanomole per milligram of protein",
       "csCode_": "nmol/mg{prot}",
       "ciCode_": "NMOL/MG",
       "property_": "amount of substance",
@@ -23484,9 +23484,9 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
-      "synonyms_": "nanomoles; half cystine; nmol per 1/2 cys per mg prot",
+      "synonyms_": "nanomoles; nmol/mg prot; nmol per mg prot",
       "source_": "LOINC",
-      "loincProperty_": "SCnt",
+      "loincProperty_": "Ratio; CCnt",
       "category_": "Clinical",
       "guidance_": "",
       "csUnitString_": "10*23",
@@ -27772,7 +27772,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -29125,15 +29125,17 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
       if (!theUnit) {
         retObj = { 'status': !resp['origString'] || resp['origString'] === null ? 'error' : 'invalid',
           'ucumCode': null };
-      } else if (resp['origString'] !== uStr) {
-        retObj = { 'status': 'invalid' };
-      } else {
-        retObj = { 'status': 'valid',
-          'ucumCode': resp['origString'],
-          'unit': { 'code': theUnit.csCode_,
-            'name': theUnit.name_,
-            'guidance': theUnit.guidance_ } };
       }
+      // else if (resp['origString'] !== uStr) {
+      //   retObj = {'status' : 'invalid'}
+      // }
+      else {
+          retObj = { 'status': resp['origString'] === uStr ? 'valid' : 'invalid',
+            'ucumCode': resp['origString'],
+            'unit': { 'code': theUnit.csCode_,
+              'name': theUnit.name_,
+              'guidance': theUnit.guidance_ } };
+        }
       if (resp['suggestions']) {
         retObj['suggestions'] = resp['suggestions'];
       }
@@ -29526,7 +29528,7 @@ var Unit = exports.Unit = function () {
    *
    */
   function Unit() {
-    var attrs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var attrs = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
     _classCallCheck(this, Unit);
 
@@ -29861,10 +29863,20 @@ var Unit = exports.Unit = function () {
     value: function convertFrom(num, fromUnit) {
       var newNum = 0.0;
 
-      // reject request if the dimensions are not equal
+      // reject request if both units have dimensions that are not equal
       if (fromUnit.dim_ && this.dim_ && !fromUnit.dim_.equals(this.dim_)) {
         throw new Error("Sorry.  " + fromUnit.csCode_ + " cannot be converted " + ("to " + this.csCode_ + "."));
       }
+      // reject request if there is a "from" dimension but no "to" dimension
+      if (fromUnit.dim_ && (!this.dim_ || this.dim_.isNull())) {
+        throw new Error("Sorry.  " + fromUnit.csCode_ + " cannot be converted " + ("to " + this.csCode_ + "."));
+      }
+
+      // reject request if there is a "to" dimension but no "from" dimension
+      if (this.dim_ && (!fromUnit.dim_ || fromUnit.dim_.isNull())) {
+        throw new Error("Sorry.  " + fromUnit.csCode_ + " cannot be converted " + ("to " + this.csCode_ + "."));
+      }
+
       var fromCnv = fromUnit.cnv_;
       var fromMag = fromUnit.magnitude_;
 
@@ -30053,25 +30065,27 @@ var Unit = exports.Unit = function () {
 
       else if (unit2.cnv_ != null) {
           if (!retUnit.dim_ || retUnit.dim_.isZero()) {
-            var cp = retUnit.magnitude_;
-            retUnit.assign(unit2);
-            retUnit.cnvPfx_ *= cp;
+            //retUnit.assign(unit2);
+            retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
+            retUnit.cnv_ = unit2.cnv_;
           } else throw new Error("Attempt to multiply non-ratio unit " + unit2.name_);
         } // end if unit2 has a conversion function
 
+        // else neither unit has a conversion function
         else {
             retUnit.magnitude_ *= unit2.magnitude_;
-            // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
-            // is a dimension in unit2.dim_; else just transfer it to this dimension
-            if (!retUnit.dim_ || retUnit.dim_ && !retUnit.dim_.dimVec_) {
-              if (unit2.dim_) retUnit.dim_ = unit2.dim_.clone();else retUnit.dim_ = unit2.dim_;
-            }
-            // Else this.dim_ is there.  If there is a dimension for unit2,
-            // add it to this one.
-            else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
-                retUnit.dim_.add(unit2.dim_);
-              }
           } // end if unit2 does not have a conversion function
+
+      // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
+      // is a dimension in unit2.dim_; else just transfer it to this dimension
+      if (!retUnit.dim_ || retUnit.dim_ && !retUnit.dim_.dimVec_) {
+        if (unit2.dim_) retUnit.dim_ = unit2.dim_.clone();else retUnit.dim_ = unit2.dim_;
+      }
+      // Else this.dim_ is there.  If there is a dimension for unit2,
+      // add it to this one.
+      else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
+          retUnit.dim_.add(unit2.dim_);
+        }
 
       // Concatenate the unit info (name, code, etc) for all cases
       // where the multiplication was performed (an error wasn't thrown)
@@ -30491,18 +30505,12 @@ var UnitString = exports.UnitString = function () {
 
         // Do a final check to make sure that finalUnit is a unit and not
         // just a number.  Something like "8/{HCP}" will return a "unit" of 8
-        // - which is not a unit.
+        // - which is not a unit.  Hm - evidently it is.  So just create a unit
+        // object for it.
         if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
-          //      if (origString !== '1' && (finalUnit === 1 || finalUnit === '1')) {
           finalUnit = new Unit({ 'csCode_': origString,
             'magnitude_': finalUnit,
             'name_': origString });
-
-          //      }
-          //      else {
-          //        this.retMsg_.push(`The number ${finalUnit} is not a valid unit code.`);
-          //        finalUnit = null ;
-          //      }
           retObj[0] = finalUnit;
         } // end final check
       } // end if no annotation errors were found
@@ -30913,8 +30921,41 @@ var UnitString = exports.UnitString = function () {
               if (!intUtils_.isNumericString(uArray1[n])) {
                 var numRes2 = uArray1[n].match(startNumCheck);
                 if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' && numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
-                  var parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
-                  var parensResp = this._processParens(parensStr, parensStr);
+                  var invalidString = numRes2[0];
+                  if (!endProcessing && numRes2[2].includes(this.parensFlag_)) {
+                    var _parensback = this._getParensUnit(numRes2[2], origString);
+                    numRes2[2] = _parensback[0]['csCode_'];
+                    invalidString = '(' + numRes2[2] + ')';
+                    endProcessing = _parensback[1];
+                    if (!endProcessing) {
+                      this.retMsg_.push('' + numRes2[1] + invalidString + ' is not a ' + ('valid UCUM code.  ' + this.vcMsgStart_ + numRes2[1] + '.' + invalidString) + ('' + this.vcMsgEnd_));
+                      origString = origString.replace('' + numRes2[1] + invalidString, '(' + numRes2[1] + '.' + invalidString + ')');
+                      uArray.push({ op: theOp, un: numRes2[1] });
+                      uArray.push({ op: '.', un: numRes2[2] });
+                    }
+                  } // end if the string represents a parenthesized unit
+                  else {
+                      var parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
+                      var parensResp = this._processParens(parensStr, origString);
+                      // if a "stop processing" flag was returned, set the n index to end
+                      // the loop and set the endProcessing flag
+                      if (parensResp[2]) {
+                        n = u1;
+                        endProcessing = true;
+                      } else {
+                        // this.retMsg_.push(`${numRes2[1]}${invalidString} is not a ` +
+                        //   `valid UCUM code.  ${this.vcMsgStart_}${numRes2[1]}.${invalidString}` +
+                        //   `${this.vcMsgEnd_}`);
+                        this.retMsg_.push(numRes2[0] + ' is not a ' + ('valid UCUM code.  ' + this.vcMsgStart_ + numRes2[1] + '.' + numRes2[2]) + ('' + this.vcMsgEnd_));
+                        origString = origString.replace(numRes2[0], '(' + numRes2[1] + '.' + numRes2[2] + ')');
+                        uArray.push({ op: theOp, un: parensResp[0] });
+                        //uArray.push({op: '.', un: parensResp[0]});
+                      } // end if no error on the processParens call
+                    } // end if the string does not represent a parenthesized uni
+                  /*
+                  let parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
+                  origString = origString.replace(invalidString, `.${parensStr}`);
+                  let parensResp = this._processParens(parensStr, origString);
                   // if a "stop processing" flag was returned, set the n index to end
                   // the loop and set the endProcessing flag
                   if (parensResp[2]) {
@@ -30923,14 +30964,33 @@ var UnitString = exports.UnitString = function () {
                   }
                   // Otherwise let the user know about the problem and what we did
                   else {
-                      parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
-                      this.retMsg_.push(numRes2[0] + ' is not a valid UCUM code.\n' + this.vcMsgStart_ + (numRes2[1] + '.' + numRes2[2]) + this.vcMsgEnd_);
-                      origString = origString.replace(uArray1[n], parensResp[1]);
-                      uArray.push({ op: theOp, un: parensResp[0] });
+                    //parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
+                    if (numRes2[2].includes(this.parensFlag_)) {
+                      let embeddedUnitRet = this._getParensUnit(numRes2[2]);
+                      if (embeddedUnitRet[1] == true) {
+                        endProcessing = true;
+                      }
+                      else {
+                        let theCode = embeddedUnitRet[0].csCode_;
+                        numRes2[2] = theCode.substr(theCode.indexOf('.') + 1);
+                        let parenMatch = new RegExp('(' + this.parensFlag_ +
+                          ')([0-9]+)(' + this.parensFlag_ + ')');
+                        let parenPhrase = invalidString.match(parenMatch);
+                        numRes2[2] = `(${numRes2[2]})`;
+                        invalidString = invalidString.replace(parenPhrase[0],
+                                        numRes2[2]);
+                      }
                     }
-                } else {
-                  uArray.push({ op: theOp, un: uArray1[n] });
-                }
+                    this.retMsg_.push(`${invalidString} is not a valid UCUM code.\n` +
+                      this.vcMsgStart_ + `${numRes2[1]}.${numRes2[2]}` + this.vcMsgEnd_);
+                    origString = origString.replace(uArray1[n], parensResp[1]);
+                     uArray.push({op: theOp, un: parensResp[0]});
+                    */
+                  //} // end if endProcessing has not been set
+                } // end if the string is a number followed by a string
+                else {
+                    uArray.push({ op: theOp, un: uArray1[n] });
+                  }
               } else {
                 uArray.push({ op: theOp, un: uArray1[n] });
               }
@@ -30989,7 +31049,7 @@ var UnitString = exports.UnitString = function () {
       var psIdx = pStr.indexOf(this.parensFlag_);
       var befText = null;
       if (psIdx > 0) {
-        var _befText = pStr.substr(0, psIdx - 1);
+        befText = pStr.substr(0, psIdx - 1);
       }
       var peIdx = pStr.lastIndexOf(this.parensFlag_);
       var aftText = null;

@@ -365,11 +365,23 @@ export class Unit {
   convertFrom(num, fromUnit) {
     let newNum = 0.0 ;
 
-    // reject request if the dimensions are not equal
+    // reject request if both units have dimensions that are not equal
     if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
       throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
                       `to ${this.csCode_}.`));
     }
+    // reject request if there is a "from" dimension but no "to" dimension
+    if (fromUnit.dim_ && (!this.dim_ || this.dim_.isNull())) {
+      throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
+        `to ${this.csCode_}.`));
+    }
+
+    // reject request if there is a "to" dimension but no "from" dimension
+    if (this.dim_ && (!fromUnit.dim_ || fromUnit.dim_.isNull())) {
+      throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
+        `to ${this.csCode_}.`));
+    }
+
     let fromCnv = fromUnit.cnv_ ;
     let fromMag = fromUnit.magnitude_ ;
 
@@ -560,30 +572,32 @@ export class Unit {
 
     else if (unit2.cnv_ != null) {
       if (!retUnit.dim_ || retUnit.dim_.isZero()) {
-        let cp = retUnit.magnitude_;
-        retUnit.assign(unit2);
-        retUnit.cnvPfx_ *= cp;
+        //retUnit.assign(unit2);
+        retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
+        retUnit.cnv_ = unit2.cnv_ ;
       }
       else
         throw (new Error(`Attempt to multiply non-ratio unit ${unit2.name_}`));
     } // end if unit2 has a conversion function
 
+    // else neither unit has a conversion function
     else {
       retUnit.magnitude_ *= unit2.magnitude_;
-      // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
-      // is a dimension in unit2.dim_; else just transfer it to this dimension
-      if (!retUnit.dim_ || (retUnit.dim_ && !retUnit.dim_.dimVec_)) {
-        if (unit2.dim_)
-          retUnit.dim_ = unit2.dim_.clone();
-        else
-          retUnit.dim_ = unit2.dim_;
-      }
-      // Else this.dim_ is there.  If there is a dimension for unit2,
-      // add it to this one.
-      else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
-        retUnit.dim_.add(unit2.dim_);
-      }
     } // end if unit2 does not have a conversion function
+
+    // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
+    // is a dimension in unit2.dim_; else just transfer it to this dimension
+    if (!retUnit.dim_ || (retUnit.dim_ && !retUnit.dim_.dimVec_)) {
+      if (unit2.dim_)
+        retUnit.dim_ = unit2.dim_.clone();
+      else
+        retUnit.dim_ = unit2.dim_;
+    }
+    // Else this.dim_ is there.  If there is a dimension for unit2,
+    // add it to this one.
+    else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
+      retUnit.dim_.add(unit2.dim_);
+    }
 
     // Concatenate the unit info (name, code, etc) for all cases
     // where the multiplication was performed (an error wasn't thrown)

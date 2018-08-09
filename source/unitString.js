@@ -203,18 +203,12 @@ export class UnitString {
 
       // Do a final check to make sure that finalUnit is a unit and not
       // just a number.  Something like "8/{HCP}" will return a "unit" of 8
-      // - which is not a unit.
+      // - which is not a unit.  Hm - evidently it is.  So just create a unit
+      // object for it.
       if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
-  //      if (origString !== '1' && (finalUnit === 1 || finalUnit === '1')) {
-          finalUnit = new Unit({'csCode_': origString,
+        finalUnit = new Unit({'csCode_': origString,
           'magnitude_' : finalUnit,
           'name_' : origString});
-
-  //      }
-  //      else {
-  //        this.retMsg_.push(`The number ${finalUnit} is not a valid unit code.`);
-  //        finalUnit = null ;
-  //      }
         retObj[0] = finalUnit;
       } // end final check
     } // end if no annotation errors were found
@@ -654,23 +648,40 @@ export class UnitString {
               let numRes2 = uArray1[n].match(startNumCheck);
               if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' &&
                 numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
-                let parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
-                let parensResp = this._processParens(parensStr, parensStr);
-                // if a "stop processing" flag was returned, set the n index to end
-                // the loop and set the endProcessing flag
-                if (parensResp[2]) {
-                  n = u1;
-                  endProcessing = true;
-                }
-                // Otherwise let the user know about the problem and what we did
+                let invalidString = numRes2[0];
+                if (!endProcessing && numRes2[2].includes(this.parensFlag_)) {
+                  let parensback = this._getParensUnit(numRes2[2], origString);
+                  numRes2[2] = parensback[0]['csCode_'];
+                  invalidString = `(${numRes2[2]})`;
+                  endProcessing = parensback[1];
+                  if (!endProcessing) {
+                    this.retMsg_.push(`${numRes2[1]}${invalidString} is not a ` +
+                      `valid UCUM code.  ${this.vcMsgStart_}${numRes2[1]}.${invalidString}` +
+                      `${this.vcMsgEnd_}`);
+                    origString = origString.replace(`${numRes2[1]}${invalidString}`,
+                      `(${numRes2[1]}.${invalidString})`);
+                    uArray.push({op: theOp, un: numRes2[1]});
+                    uArray.push({op: '.', un: numRes2[2]});
+                  }
+                } // end if the string represents a parenthesized unit
                 else {
-                  parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
-                  this.retMsg_.push(`${numRes2[0]} is not a valid UCUM code.\n` +
-                    this.vcMsgStart_ + `${numRes2[1]}.${numRes2[2]}` + this.vcMsgEnd_);
-                  origString = origString.replace(uArray1[n], parensResp[1]);
-                  uArray.push({op: theOp, un: parensResp[0]});
-                }
-              }
+                  let parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
+                  let parensResp = this._processParens(parensStr, origString);
+                  // if a "stop processing" flag was returned, set the n index to end
+                  // the loop and set the endProcessing flag
+                  if (parensResp[2]) {
+                    n = u1;
+                    endProcessing = true;
+                  }
+                  else {
+                    this.retMsg_.push(`${numRes2[0]} is not a ` +
+                      `valid UCUM code.  ${this.vcMsgStart_}${numRes2[1]}.${numRes2[2]}` +
+                      `${this.vcMsgEnd_}`);
+                    origString = origString.replace(numRes2[0], parensStr);
+                    uArray.push({op: theOp, un: parensResp[0]});
+                  } // end if no error on the processParens call
+                } // end if the string does not represent a parenthesized uni
+              } // end if the string is a number followed by a string
               else {
                 uArray.push({op: theOp, un: uArray1[n]});
               }
@@ -730,7 +741,7 @@ export class UnitString {
     let psIdx = pStr.indexOf(this.parensFlag_);
     let befText = null;
     if (psIdx > 0) {
-      let befText = pStr.substr(0, psIdx - 1);
+      befText = pStr.substr(0, psIdx - 1);
     }
     let peIdx = pStr.lastIndexOf(this.parensFlag_);
     let aftText = null;

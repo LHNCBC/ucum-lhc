@@ -123,6 +123,33 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('Test for unit string 7.2(mmol/L)', function() {
+    var uString = UnitString.getInstance();
+    var unitObj = uTabs.getUnitByCode('mmol/L')
+    var retMsg = [];
+    var origString = '7.2(mmol/L)';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for 7.(2.(mmol/L)", function() {
+      // multiply the mgUnit by 2 and then 7
+      unitObj.multiplyThis(2);
+      unitObj.multiplyThis(7);
+      assert(unitObj.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nunitObj = ${JSON.stringify(unitObj)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('7.(2.(mmol/L))', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the missing multiplier", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('2(mmol/L) is not a valid UCUM code.  Did you mean 2.(mmol/L)?',
+        respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+
   describe('Test for unit string with double operators', function() {
     var uString = UnitString.getInstance();
     var retMsg = [];
@@ -214,7 +241,7 @@ describe('Test parseString method', function() {
       assert(mgUnit.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
       it("should return the origString with a substitution", function() {
-        assert.equal('mg/3.[den]', retOrig, `retOrig = ${retOrig}`);
+        assert.equal('mg/(3.[den])', retOrig, `retOrig = ${retOrig}`);
       });
       it("should return a message about the missing multiplier", function() {
         assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
@@ -244,7 +271,7 @@ describe('Test parseString method', function() {
       assert(mgUnit.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
       it("should return the origString with a substitution", function() {
-        assert.equal('3.mg/3.[den]', retOrig, `retOrig = ${retOrig}`);
+        assert.equal('3.mg/(3.[den])', retOrig, `retOrig = ${retOrig}`);
       });
       it("should return a message about each missing multiplier", function() {
         assert.equal(2, respMsg.length, `respMsg.length = ${respMsg.length}`);
@@ -362,12 +389,12 @@ describe('Test parseString method', function() {
       assert.equal(retUnit, null);
     });
     it("should return the origString updated", function() {
-      assert.equal(retOrig, "culture/2.mg");
+      assert.equal(retOrig, "culture/(2.mg)");
     });
     it("should return 1 message", function() {
       assert.equal(respMsg.length, 1);
       assert.equal(respMsg[0],
-        '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
+        '2mg is not a valid UCUM code.  Did you mean 2.mg?');
     });
     it("should return 2 suggestions", function() {
       assert.equal(respSugg[0]['units'].length, 2);
@@ -393,12 +420,12 @@ describe('Test parseString method', function() {
       assert.equal(retUnit, null);
     });
     it("should return the origString updated", function() {
-      assert.equal(retOrig, "culture/2.mg");
+      assert.equal(retOrig, "culture/(2.mg)");
     });
     it("should return 2 messages", function() {
       assert.equal(respMsg.length, 2);
       assert.equal(respMsg[0],
-        '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
+        '2mg is not a valid UCUM code.  Did you mean 2.mg?');
       assert.equal(respMsg[1], "culture is not a valid UCUM code.");
     });
     it("should not return any suggestions", function() {
