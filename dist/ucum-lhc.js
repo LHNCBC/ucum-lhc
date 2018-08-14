@@ -30035,10 +30035,10 @@ var Unit = exports.Unit = function () {
       var retUnit = this.clone();
       if (retUnit.cnv_ != null) retUnit.cnvPfx_ *= s;else retUnit.magnitude_ *= s;
       var mulVal = s.toString();
-      retUnit.name_ = this._conCatStrs(mulVal, '*', this.name_, '[', ']');
-      retUnit.csCode_ = this._conCatStrs(mulVal, '.', this.csCode_, '(', ')');
-      retUnit.ciCode_ = this._conCatStrs(mulVal, '.', this.ciCode_, '(', ')');
-      retUnit.printSymbol_ = this._conCatStrs(mulVal, '.', this.printSymbol_, '(', ')');
+      retUnit.name_ = this._concatStrs(mulVal, '*', this.name_, '[', ']');
+      retUnit.csCode_ = this._concatStrs(mulVal, '.', this.csCode_, '(', ')');
+      retUnit.ciCode_ = this._concatStrs(mulVal, '.', this.ciCode_, '(', ')');
+      retUnit.printSymbol_ = this._concatStrs(mulVal, '.', this.printSymbol_, '(', ')');
 
       return retUnit;
     } // end multiplyThis
@@ -30092,11 +30092,11 @@ var Unit = exports.Unit = function () {
 
       // Concatenate the unit info (name, code, etc) for all cases
       // where the multiplication was performed (an error wasn't thrown)
-      retUnit.name_ = this._conCatStrs(retUnit.name_, '*', unit2.name_, '[', ']');
-      retUnit.csCode_ = this._conCatStrs(retUnit.csCode_, '.', unit2.csCode_, '(', ')');
-      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._conCatStrs(retUnit.ciCode_, '.', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
+      retUnit.name_ = this._concatStrs(retUnit.name_, '*', unit2.name_, '[', ']');
+      retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '.', unit2.csCode_, '(', ')');
+      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '.', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
       retUnit.guidance_ = '';
-      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._conCatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
+      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
 
       return retUnit;
     } // end multiplyThese
@@ -30122,17 +30122,17 @@ var Unit = exports.Unit = function () {
       if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
       if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
 
-      if (retUnit.name_ && unit2.name_) retUnit.name_ = this._conCatStrs(retUnit.name_, '/', unit2.name_, '[', ']');else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
+      if (retUnit.name_ && unit2.name_) retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
 
-      retUnit.csCode_ = this._conCatStrs(retUnit.csCode_, '/', unit2.csCode_, '(', ')');
+      retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '/', unit2.csCode_, '(', ')');
 
-      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._conCatStrs(retUnit.ciCode_, '/', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.invertString(unit2.ciCode_);
+      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '/', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.invertString(unit2.ciCode_);
 
       retUnit.guidance_ = '';
 
       retUnit.magnitude_ /= unit2.magnitude_;
 
-      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._conCatStrs(retUnit.printSymbol_, '/', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_);
+      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '/', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_);
 
       // Continue if unit2 has a dimension object.
       // If this object has a dimension object, subtract unit2's dim_ object from
@@ -30220,8 +30220,8 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "_conCatStrs",
-    value: function _conCatStrs(str1, operator, str2, startChar, endChar) {
+    key: "_concatStrs",
+    value: function _concatStrs(str1, operator, str2, startChar, endChar) {
 
       return this._buildOneString(str1, startChar, endChar) + operator + this._buildOneString(str2, startChar, endChar);
     }
