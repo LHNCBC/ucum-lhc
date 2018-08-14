@@ -540,7 +540,6 @@ export class Unit {
     else
       retUnit.magnitude_ *= s;
     let mulVal = s.toString();
-console.log('calling concat for ' + mulVal + '.' + this.csCode_);
     retUnit.name_ = this._conCatStrs(mulVal, '*', this.name_, '[', ']');
     retUnit.csCode_ = this._conCatStrs(mulVal, '.', this.csCode_, '(', ')');
     retUnit.ciCode_ = this._conCatStrs(mulVal, '.', this.ciCode_, '(', ')');
@@ -606,17 +605,12 @@ console.log('calling concat for ' + mulVal + '.' + this.csCode_);
 
     // Concatenate the unit info (name, code, etc) for all cases
     // where the multiplication was performed (an error wasn't thrown)
-    //retUnit.name_ = '[' + retUnit.name_ + ']*[' + unit2.name_ + ']';
-    //retUnit.csCode_ = retUnit.csCode_ + '.(' + unit2.csCode_ + ')'
-
-  console.log('calling concat for ' + retUnit.csCode_ + '.' + unit2.csCode_);
-
     retUnit.name_ = this._conCatStrs(retUnit.name_, '*', unit2.name_, '[', ']');
     retUnit.csCode_ = this._conCatStrs(retUnit.csCode_, '.', unit2.csCode_,
       '(', ')');
     if (retUnit.ciCode_ && unit2.ciCode_)
       retUnit.ciCode_ = this._conCatStrs(retUnit.ciCode_, '.', unit2.ciCode_,
-        ')', ')');
+        '(', ')');
     else if (unit2.ciCode_)
       retUnit.ciCode_ = unit2.ciCode_;
     retUnit.guidance_ = '';
@@ -740,8 +734,20 @@ console.log('calling concat for ' + mulVal + '.' + this.csCode_);
 
   } // end invertString
 
+  
   /**
+   * This function handles concatenation of two strings and an operator.
+   * It's called to build unit data, e.g., unit name, unit code, etc., from
+   * two different units, joined by the specified operator.
    *
+   * @param str1 the first string to appear in the result
+   * @param operator the operator ('*', '.' or '/') to appear between the strings
+   * @param str2 the second string to appear in the result
+   * @param startChar the starting character to be used, when needed, to
+   *  enclose a string
+   * @param endChar the ending character to be used, when needed, to enclose
+   *  a string
+   * @returns the built string
    */
   _conCatStrs(str1, operator, str2, startChar, endChar) {
 
@@ -749,6 +755,21 @@ console.log('calling concat for ' + mulVal + '.' + this.csCode_);
       operator + this._buildOneString(str2, startChar, endChar) ;
   }
 
+
+  /**
+   * This function handles creation of one string to be included in a
+   * concatenated string.   Basically it checks to see if the string
+   * needs to be enclosed either in parentheses or square brackets.
+   *
+   * The string is enclosed if it is not a number, does not start with
+   * a parenthesis or square bracket, and includes a period, and asterisk,
+   * a slash or a blank space.
+   *
+   * @param str the string
+   * @param startChar starting enclosing character
+   * @param endChar ending enclosing character
+   * @returns the string
+   */
   _buildOneString(str, startChar, endChar) {
     let ret = '' ;
     if (intUtils_.isNumericString(str)) {
@@ -768,6 +789,7 @@ console.log('calling concat for ' + mulVal + '.' + this.csCode_);
     }
     return ret ;
   }
+
 
   /**
    * Raises the unit to a power.  For example

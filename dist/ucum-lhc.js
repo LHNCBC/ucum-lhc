@@ -30035,7 +30035,6 @@ var Unit = exports.Unit = function () {
       var retUnit = this.clone();
       if (retUnit.cnv_ != null) retUnit.cnvPfx_ *= s;else retUnit.magnitude_ *= s;
       var mulVal = s.toString();
-      console.log('calling concat for ' + mulVal + '.' + this.csCode_);
       retUnit.name_ = this._conCatStrs(mulVal, '*', this.name_, '[', ']');
       retUnit.csCode_ = this._conCatStrs(mulVal, '.', this.csCode_, '(', ')');
       retUnit.ciCode_ = this._conCatStrs(mulVal, '.', this.ciCode_, '(', ')');
@@ -30093,14 +30092,9 @@ var Unit = exports.Unit = function () {
 
       // Concatenate the unit info (name, code, etc) for all cases
       // where the multiplication was performed (an error wasn't thrown)
-      //retUnit.name_ = '[' + retUnit.name_ + ']*[' + unit2.name_ + ']';
-      //retUnit.csCode_ = retUnit.csCode_ + '.(' + unit2.csCode_ + ')'
-
-      console.log('calling concat for ' + retUnit.csCode_ + '.' + unit2.csCode_);
-
       retUnit.name_ = this._conCatStrs(retUnit.name_, '*', unit2.name_, '[', ']');
       retUnit.csCode_ = this._conCatStrs(retUnit.csCode_, '.', unit2.csCode_, '(', ')');
-      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._conCatStrs(retUnit.ciCode_, '.', unit2.ciCode_, ')', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
+      if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._conCatStrs(retUnit.ciCode_, '.', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
       retUnit.guidance_ = '';
       if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._conCatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
 
@@ -30209,8 +30203,20 @@ var Unit = exports.Unit = function () {
       return theString;
     } // end invertString
 
+
     /**
+     * This function handles concatenation of two strings and an operator.
+     * It's called to build unit data, e.g., unit name, unit code, etc., from
+     * two different units, joined by the specified operator.
      *
+     * @param str1 the first string to appear in the result
+     * @param operator the operator ('*', '.' or '/') to appear between the strings
+     * @param str2 the second string to appear in the result
+     * @param startChar the starting character to be used, when needed, to
+     *  enclose a string
+     * @param endChar the ending character to be used, when needed, to enclose
+     *  a string
+     * @returns the built string
      */
 
   }, {
@@ -30219,6 +30225,22 @@ var Unit = exports.Unit = function () {
 
       return this._buildOneString(str1, startChar, endChar) + operator + this._buildOneString(str2, startChar, endChar);
     }
+
+    /**
+     * This function handles creation of one string to be included in a
+     * concatenated string.   Basically it checks to see if the string
+     * needs to be enclosed either in parentheses or square brackets.
+     *
+     * The string is enclosed if it is not a number, does not start with
+     * a parenthesis or square bracket, and includes a period, and asterisk,
+     * a slash or a blank space.
+     *
+     * @param str the string
+     * @param startChar starting enclosing character
+     * @param endChar ending enclosing character
+     * @returns the string
+     */
+
   }, {
     key: "_buildOneString",
     value: function _buildOneString(str, startChar, endChar) {
