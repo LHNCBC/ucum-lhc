@@ -658,10 +658,15 @@ export class UnitString {
                     this.retMsg_.push(`${numRes2[1]}${invalidString} is not a ` +
                       `valid UCUM code.  ${this.vcMsgStart_}${numRes2[1]}.${invalidString}` +
                       `${this.vcMsgEnd_}`);
+                    let parensString = `(${numRes2[1]}.${invalidString})`;
                     origString = origString.replace(`${numRes2[1]}${invalidString}`,
-                      `(${numRes2[1]}.${invalidString})`);
-                    uArray.push({op: theOp, un: numRes2[1]});
-                    uArray.push({op: '.', un: numRes2[2]});
+                      parensString);
+                    let nextParens = this._processParens(parensString, origString);
+                    endProcessing = nextParens[2];
+                    if (!endProcessing) {
+                      uArray.push({op: theOp, un: nextParens[0]});
+                    }
+                    //uArray.push({op: '.', un: numRes2[2]});
                   }
                 } // end if the string represents a parenthesized unit
                 else {
@@ -680,7 +685,7 @@ export class UnitString {
                     origString = origString.replace(numRes2[0], parensStr);
                     uArray.push({op: theOp, un: parensResp[0]});
                   } // end if no error on the processParens call
-                } // end if the string does not represent a parenthesized uni
+                } // end if the string does not represent a parenthesized unit
               } // end if the string is a number followed by a string
               else {
                 uArray.push({op: theOp, un: uArray1[n]});
@@ -1379,7 +1384,9 @@ export class UnitString {
 
     let finalUnit = uArray[0]['un'];
     if (intUtils_.isNumericString(finalUnit)) {
-      finalUnit = Number(finalUnit) ;
+      finalUnit = new Unit({'csCode_' : finalUnit,
+        'magnitude_' : Number(finalUnit),
+        'name_' : finalUnit}) ;
     }
     let uLen = uArray.length ;
     let endProcessing = false ;
@@ -1388,7 +1395,9 @@ export class UnitString {
     for (let u2 = 1; (u2 < uLen) && !endProcessing; u2++) {
       let nextUnit = uArray[u2]['un'];
       if (intUtils_.isNumericString(nextUnit)) {
-        nextUnit = Number(nextUnit) ;
+        nextUnit = new Unit({'csCode_' : nextUnit ,
+          'magnitude_' : Number(nextUnit),
+          'name_': nextUnit});
       }
       if (nextUnit === null ||
           ((typeof nextUnit !== 'number') && (!nextUnit.getProperty))) {
@@ -1408,76 +1417,10 @@ export class UnitString {
           let thisOp = uArray[u2]['op'];
           let isDiv = thisOp === '/';
 
-          // Perform the operation based on the type(s) of the operands
-
-          // A.  nextUnit is a unit object:
-          if (typeof nextUnit !== 'number') {
-
-            // both are unit objects
-            if (typeof finalUnit !== 'number') {
-              isDiv ? finalUnit = finalUnit.divide(nextUnit) :
+          // Perform the operation.  Both the finalUnit and nextUnit
+          // are unit objects.
+          isDiv ? finalUnit = finalUnit.divide(nextUnit) :
                   finalUnit = finalUnit.multiplyThese(nextUnit);
-            }
-            // finalUnit is a number; nextUnit is a unit object
-            else {
-              let nMag = nextUnit.getProperty('magnitude_');
-              isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
-              let uString = finalUnit.toString();
-              // if the original string was something like /xyz, the string was
-              // processed as if it was 1/xyz, to make sure the unit arithmetic
-              // is performed correctly.   Remove it from the string used to
-              // create the name, as it is no longer needed.  Note that this
-              // does not happen if the string is something like 7/xyz.
-              if (u2 === 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
-                uString = '';
-              }
-              let theName = uString + (isDiv ? thisOp:"*") + '[' +
-                                       nextUnit.getProperty('name_') + ']' ;
-
-              let theCode = uString + thisOp + nextUnit.getProperty('csCode_');
-              let ciCode = uString + thisOp + nextUnit.getProperty('ciCode_');
-              let printSym = uString + thisOp +
-                             nextUnit.getProperty('printSymbol_');
-              let theDim = nextUnit.getProperty('dim_');
-              if (isDiv && theDim) {
-                theDim = theDim.minus();
-              }
-              finalUnit = nextUnit;
-              finalUnit.assignVals({'csCode_' : theCode,
-                'ciCode_' : ciCode,
-                'name_' : theName,
-                'printSymbol_' : printSym,
-                'dim_' : theDim,
-                'magnitude_' : nMag});
-            }
-          } // end if nextUnit is not a number
-
-          // B.  nextUnit is a number
-          else {
-            // nextUnit is a number; finalUnit is a unit object
-            if (typeof finalUnit !== 'number') {
-              let fMag = finalUnit.getProperty('magnitude_');
-              isDiv ? fMag /= nextUnit :
-                  fMag *= nextUnit;
-              let theName = '[' + finalUnit.getProperty('name_') + ']' +
-                             (isDiv ? thisOp:"*") + nextUnit.toString() ;
-              let theCode = finalUnit.getProperty('csCode_') + thisOp +
-                  nextUnit.toString();
-              finalUnit.assignVals({'csCode_' : theCode ,
-                'name_': theName,
-                'magnitude_': fMag});
-            }
-            // both are numbers
-            else {
-              let numUnit = new Unit({
-                csCode_ : `${finalUnit}${thisOp}${nextUnit}`,
-                name_ : isDiv ? `[${finalUnit}]/[${nextUnit}]` :
-                  `[${finalUnit}]*[${nextUnit}]`,
-                magnitude_ : isDiv ? finalUnit /= nextUnit :
-                  finalUnit *= nextUnit});
-              finalUnit = numUnit ;
-            }
-          } // end if nextUnit is a number
         }
         catch (err) {
           this.retMsg_.unshift(err.message) ;

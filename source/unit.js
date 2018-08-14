@@ -12,6 +12,8 @@ var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
 
+import * as intUtils_ from "./ucumInternalUtils.js";
+
 export class Unit {
 
   /**
@@ -79,7 +81,7 @@ export class Unit {
      * The Dimension object of the unit
      */
     if (attrs['dim_'] === undefined || attrs['dim_'] === null) {
-      this.dim_ = null;
+      this.dim_ = new Dimension();
     }
     // When the unit data stored in json format is reloaded, the dimension data
     // is recognized as a a hash, not as a Dimension object.
@@ -93,7 +95,7 @@ export class Unit {
       this.dim_ = new Dimension(attrs['dim_']) ;
     }
     else {
-      this.dim_ = null;
+      this.dim_ = new Dimension();
     }
     /*
      * The print symbol of the unit, e.g., m
@@ -525,24 +527,27 @@ export class Unit {
    * Multiplies this unit with a scalar. Special meaning for
    * special units so that (0.1*B) is 1 dB.
    *
-   * This function modifies this unit.
+   * This function DOES NOT modify this unit.
    *
    * @param s the value by which this unit is to be multiplied
-   * @return this unit after multiplication
-   */
+   * @return a copy this unit multiplied by s
+   * */
   multiplyThis(s) {
 
-    if(this.cnv_ != null)
-      this.cnvPfx_ *= s;
+    let retUnit = this.clone() ;
+    if (retUnit.cnv_ != null)
+      retUnit.cnvPfx_ *= s;
     else
-      this.magnitude_ *= s;
+      retUnit.magnitude_ *= s;
     let mulVal = s.toString();
-    this.name_ = '[' + mulVal + ']*[' + this.name_ + ']';
-    this.csCode_ = mulVal + '.' + this.csCode_;
-    this.ciCode_ = mulVal + '.' + this.ciCode_ ;
-    this.printSymbol_ = mulVal + '.' + this.printSymbol_;
+console.log('calling concat for ' + mulVal + '.' + this.csCode_);
+    retUnit.name_ = this._conCatStrs(mulVal, '*', this.name_, '[', ']');
+    retUnit.csCode_ = this._conCatStrs(mulVal, '.', this.csCode_, '(', ')');
+    retUnit.ciCode_ = this._conCatStrs(mulVal, '.', this.ciCode_, '(', ')');
+    retUnit.printSymbol_ = this._conCatStrs(mulVal, '.', this.printSymbol_,
+        '(', ')');
 
-    return this;
+    return retUnit;
 
   } // end multiplyThis
 
@@ -601,15 +606,23 @@ export class Unit {
 
     // Concatenate the unit info (name, code, etc) for all cases
     // where the multiplication was performed (an error wasn't thrown)
-    retUnit.name_ = '[' + retUnit.name_ + ']*[' + unit2.name_ + ']';
-    retUnit.csCode_ = retUnit.csCode_ + '.' + unit2.csCode_;
+    //retUnit.name_ = '[' + retUnit.name_ + ']*[' + unit2.name_ + ']';
+    //retUnit.csCode_ = retUnit.csCode_ + '.(' + unit2.csCode_ + ')'
+
+  console.log('calling concat for ' + retUnit.csCode_ + '.' + unit2.csCode_);
+
+    retUnit.name_ = this._conCatStrs(retUnit.name_, '*', unit2.name_, '[', ']');
+    retUnit.csCode_ = this._conCatStrs(retUnit.csCode_, '.', unit2.csCode_,
+      '(', ')');
     if (retUnit.ciCode_ && unit2.ciCode_)
-      retUnit.ciCode_ = retUnit.ciCode_ + '.' + unit2.ciCode_;
+      retUnit.ciCode_ = this._conCatStrs(retUnit.ciCode_, '.', unit2.ciCode_,
+        ')', ')');
     else if (unit2.ciCode_)
       retUnit.ciCode_ = unit2.ciCode_;
     retUnit.guidance_ = '';
     if (retUnit.printSymbol_ && unit2.printSymbol_)
-      retUnit.printSymbol_ = retUnit.printSymbol_ + '.' + unit2.printSymbol_;
+      retUnit.printSymbol_ = this._conCatStrs(retUnit.printSymbol_, '.',
+        unit2.printSymbol_, '(', ')');
     else if (unit2.printSymbol_)
       retUnit.printSymbol_ = unit2.printSymbol_;
 
@@ -638,14 +651,16 @@ export class Unit {
       throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
 
     if (retUnit.name_ && unit2.name_)
-      retUnit.name_ = '[' + retUnit.name_ + ']/[' + unit2.name_ + ']';
+      retUnit.name_ = this._conCatStrs(retUnit.name_, '/', unit2.name_, '[', ']');
     else if (unit2.name_)
       retUnit.name_ = unit2.invertString(unit2.name_);
 
-    retUnit.csCode_ = retUnit.csCode_ + '/' + unit2.csCode_;
+    retUnit.csCode_ = this._conCatStrs(retUnit.csCode_, '/', unit2.csCode_,
+      '(', ')');
 
     if (retUnit.ciCode_ && unit2.ciCode_)
-      retUnit.ciCode_ = retUnit.ciCode_ + '/' + unit2.ciCode_;
+      retUnit.ciCode_ = this._conCatStrs(retUnit.ciCode_, '/', unit2.ciCode_,
+      '(', ')');
     else if (unit2.ciCode_)
       retUnit.ciCode_ = unit2.invertString(unit2.ciCode_) ;
 
@@ -654,7 +669,8 @@ export class Unit {
     retUnit.magnitude_ /= unit2.magnitude_;
 
     if (retUnit.printSymbol_ && unit2.printSymbol_)
-      retUnit.printSymbol_ = retUnit.printSymbol_ + '/' + unit2.printSymbol_;
+      retUnit.printSymbol_ = this._conCatStrs(retUnit.printSymbol_, '/',
+        unit2.printSymbol_, '(', ')');
     else if (unit2.printSymbol_)
       retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_);
 
@@ -678,7 +694,7 @@ export class Unit {
 
   } // end divide
 
-  
+
   /**
    * Invert this unit with respect to multiplication. If this unit is not
    * on a ratio scale an exception is thrown. Mutating to a ratio scale unit
@@ -724,6 +740,34 @@ export class Unit {
 
   } // end invertString
 
+  /**
+   *
+   */
+  _conCatStrs(str1, operator, str2, startChar, endChar) {
+
+    return this._buildOneString(str1, startChar, endChar) +
+      operator + this._buildOneString(str2, startChar, endChar) ;
+  }
+
+  _buildOneString(str, startChar, endChar) {
+    let ret = '' ;
+    if (intUtils_.isNumericString(str)) {
+      ret = str;
+    }
+    else {
+      if (str.charAt(0) === '(' || str.charAt(0) === '[') {
+        ret = str;
+      }
+      else if (str.includes('.') || str.includes('/') ||
+               str.includes('*') || str.includes(' ')) {
+        ret = startChar + str + endChar ;
+      }
+      else {
+        ret = str ;
+      }
+    }
+    return ret ;
+  }
 
   /**
    * Raises the unit to a power.  For example

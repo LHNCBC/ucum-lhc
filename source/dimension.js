@@ -42,7 +42,7 @@ export class Dimension {
       'Dimension constructor'));
     }
     if (dimSetting === undefined || dimSetting === null) {
-      this.dimVec_ = null ;
+      this.assignZero() ;
     }
     else if (dimSetting instanceof Array) {
       if (dimSetting.length !== UC.Ucum.dimLen_) {
@@ -51,7 +51,7 @@ export class Dimension {
       }
       this.dimVec_ = [];
       for (let d = 0; d < UC.Ucum.dimLen_; d++)
-        this.dimVec_[d] = dimSetting[d];
+        this.dimVec_.push(dimSetting[d]);
     }
 
     // In es6 this should be Number.isInteger(dimSetting).  But Babel
@@ -62,7 +62,6 @@ export class Dimension {
         throw(new Error('Parameter error, invalid element number specified for ' +
         'Dimension constructor'));
       }
-      this.dimVec_ = new Array(UC.Ucum.dimLen_);
       this.assignZero() ;
       this.dimVec_[dimSetting] = 1;
     }
@@ -300,11 +299,11 @@ export class Dimension {
    * @return this object (not sure why)
    */
   assignZero() {
-    if (this.dimVec_ === null)
+    if (this.dimVec_ === null || this.dimVec_ === undefined)
       this.dimVec_ = [];
 
     for (let i = 0; i < UC.Ucum.dimLen_; i++) {
-      this.dimVec_[i] = 0;
+      this.dimVec_.push(0);
     }
     return this;
   }

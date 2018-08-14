@@ -139,7 +139,7 @@ describe('Test construction of name data for constructed units', function() {
     var avUnit1 = uTabs.getUnitByCode('[lb_av]');
     var troyUnit1 = uTabs.getUnitByCode('[lb_tr]');
     var result = troyUnit1.multiplyThese(avUnit1) ;
-    var constructedName = '[' + troyUnit1.name_ + ']*[' + avUnit1.name_ + ']';
+    var constructedName = '[' + troyUnit1.name_ + ']*' + avUnit1.name_ ;
     assert.equal(result.name_, constructedName);
   });
 
@@ -148,7 +148,7 @@ describe('Test construction of name data for constructed units', function() {
     var avUnit2 = uTabs.getUnitByCode('[lb_av]');
     var troyUnit2 = uTabs.getUnitByCode('[lb_tr]');
     var result = troyUnit2.divide(avUnit2) ;
-    var constructedName = '[' + troyUnit2.name_ + ']/[' + avUnit2.name_ + ']';
+    var constructedName = '[' + troyUnit2.name_ + ']/' + avUnit2.name_ ;
     assert.equal(result.name_, constructedName);
   });
 }) ; // end Test construction of name data for constructed units
