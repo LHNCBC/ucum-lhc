@@ -74,8 +74,8 @@ describe('Test parseString method', function() {
     var respMsg = resp[2] ;
     it("should return a unit matching the milligram unit multiplied by 2", function() {
       // multiply the mgUnit by 2
-      mgUnit.multiplyThis(2);
-      assert(mgUnit.equals(retUnit),
+      let mg2Unit = mgUnit.multiplyThis(2);
+      assert(mg2Unit.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\ngUnit = ${JSON.stringify(mgUnit)}`);
     });
     it("should return the origString with a substitution", function() {
@@ -114,7 +114,7 @@ describe('Test parseString method', function() {
     it("should return a unit for 6.(58)/9", function() {
       assert.notEqual(retUnit, null);
       assert.equal(retUnit['csCode_'], '6.58/9');
-      assert.equal(retUnit['name_'], '[[6]*[58]]/9');
+      assert.equal(retUnit['name_'], '[6*58]/9');
     });
     it("should return 1 message", function() {
       assert.equal(respMsg.length, 1);
@@ -122,6 +122,61 @@ describe('Test parseString method', function() {
         '6(58) is not a valid UCUM code.  Did you mean 6.(58)?');
     });
   }) ;
+
+  describe('Test for unit string 32.4(ug/g).mg', function() {
+    var uString = UnitString.getInstance();
+    var mgUnit = uTabs.getUnitByCode('mg');
+    var ugUnit = uTabs.getUnitByCode('ug/g');
+    var retMsg = [];
+    var origString = '32.4(ug/g).mg';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for 32.(4(ug/g)).mg", function() {
+      // multiply the ugUnit by 4 and then 32 then by the mgUnit
+      let unitObj = ugUnit.multiplyThis(4);
+      unitObj = unitObj.multiplyThis(32);
+      unitObj = unitObj.multiplyThese(mgUnit);
+      assert(unitObj.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nunitObj = ${JSON.stringify(unitObj)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('32.(4.(ug/g)).mg', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the missing multiplier", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('4(ug/g) is not a valid UCUM code.  Did you mean 4.(ug/g)?',
+        respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
+  describe('Test for unit string 78.2(mmol/L)', function() {
+    var uString = UnitString.getInstance();
+    var mmolLObj = uTabs.getUnitByCode('mmol/L')
+    var retMsg = [];
+    var origString = '78.2(mmol/L)';
+    var resp = uString.parseString(origString, 'validate');
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    var respMsg = resp[2] ;
+    it("should return a unit for 78.(2.(mmol/L)", function() {
+      // multiply the mgUnit by 2 and then 7
+      let unitObj = mmolLObj.multiplyThis(2);
+      unitObj = unitObj.multiplyThis(78);
+      assert(unitObj.equals(retUnit),
+        `retUnit = ${JSON.stringify(retUnit)}\nunitObj = ${JSON.stringify(unitObj)}`);
+    });
+    it("should return the origString with a substitution", function() {
+      assert.equal('78.(2.(mmol/L))', retOrig, `retOrig = ${retOrig}`);
+    });
+    it("should return a message about the missing multiplier", function() {
+      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
+      assert.equal('2(mmol/L) is not a valid UCUM code.  Did you mean 2.(mmol/L)?',
+        respMsg[0], `respMsg = ${JSON.stringify(respMsg)}`);
+    });
+  }) ;
+
 
   describe('Test for unit string with double operators', function() {
     var uString = UnitString.getInstance();
@@ -180,10 +235,10 @@ describe('Test parseString method', function() {
     var respMsg = resp[2] ;
     it("should return a unit for the expression", function() {
       // multiply the mgUnit by 3
-      mgUnit = mgUnit.multiplyThis(3);
+      let retObj = mgUnit.multiplyThis(3);
       // divide it by [den]
-      mgUnit = mgUnit.divide(denUnit);
-      assert(mgUnit.equals(retUnit),
+      retObj = retObj.divide(denUnit);
+      assert(retObj.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
       it("should return the origString with a substitution", function() {
         assert.equal('3.mg/[den]', retOrig, `retOrig = ${retOrig}`);
@@ -214,7 +269,7 @@ describe('Test parseString method', function() {
       assert(mgUnit.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
       it("should return the origString with a substitution", function() {
-        assert.equal('mg/3.[den]', retOrig, `retOrig = ${retOrig}`);
+        assert.equal('mg/(3.[den])', retOrig, `retOrig = ${retOrig}`);
       });
       it("should return a message about the missing multiplier", function() {
         assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
@@ -244,7 +299,7 @@ describe('Test parseString method', function() {
       assert(mgUnit.equals(retUnit),
         `retUnit = ${JSON.stringify(retUnit)}\nmgUnit = ${JSON.stringify(mgUnit)}`);
       it("should return the origString with a substitution", function() {
-        assert.equal('3.mg/3.[den]', retOrig, `retOrig = ${retOrig}`);
+        assert.equal('3.mg/(3.[den])', retOrig, `retOrig = ${retOrig}`);
       });
       it("should return a message about each missing multiplier", function() {
         assert.equal(2, respMsg.length, `respMsg.length = ${respMsg.length}`);
@@ -362,12 +417,12 @@ describe('Test parseString method', function() {
       assert.equal(retUnit, null);
     });
     it("should return the origString updated", function() {
-      assert.equal(retOrig, "culture/2.mg");
+      assert.equal(retOrig, "culture/(2.mg)");
     });
     it("should return 1 message", function() {
       assert.equal(respMsg.length, 1);
       assert.equal(respMsg[0],
-        '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
+        '2mg is not a valid UCUM code.  Did you mean 2.mg?');
     });
     it("should return 2 suggestions", function() {
       assert.equal(respSugg[0]['units'].length, 2);
@@ -393,12 +448,12 @@ describe('Test parseString method', function() {
       assert.equal(retUnit, null);
     });
     it("should return the origString updated", function() {
-      assert.equal(retOrig, "culture/2.mg");
+      assert.equal(retOrig, "culture/(2.mg)");
     });
     it("should return 2 messages", function() {
       assert.equal(respMsg.length, 2);
       assert.equal(respMsg[0],
-        '2mg is not a valid UCUM code.\nDid you mean 2.mg?');
+        '2mg is not a valid UCUM code.  Did you mean 2.mg?');
       assert.equal(respMsg[1], "culture is not a valid UCUM code.");
     });
     it("should not return any suggestions", function() {
@@ -504,7 +559,7 @@ describe('Test parseString method', function() {
       assert.equal(retUnit['guidance_'], '');
     });
     it ("should return a unit with a name of [square meter]/[gram]", function() {
-      assert.equal(retUnit['name_'], '[square meter]/[gram]');
+      assert.equal(retUnit['name_'], '[square meter]/gram');
     });
   }) ;
 
@@ -516,7 +571,7 @@ describe('Test parseString method', function() {
       assert.equal(retUnit['guidance_'], '');
     });
     it ("should return a unit with a name of [square meter]*[gram]", function() {
-      assert.equal(retUnit['name_'], '[square meter]*[gram]');
+      assert.equal(retUnit['name_'], '[square meter]*gram');
     });
   }) ;
 

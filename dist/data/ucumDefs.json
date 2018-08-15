@@ -474,7 +474,7 @@
       "source_": "UCUM",
       "loincProperty_": "Num",
       "category_": "Clinical",
-      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000. The unit testing conversion all works. ",
+      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
@@ -501,7 +501,7 @@
       "source_": "UCUM",
       "loincProperty_": "Num",
       "category_": "Clinical",
-      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000. The unit testing conversion all works. ",
+      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
@@ -582,7 +582,7 @@
       "source_": "UCUM",
       "loincProperty_": "MCnc; MCnt",
       "category_": "Clinical",
-      "guidance_": "[ppth] is often used in solution concentrations as 1 g/L or 1 g/kg. \n\nCan be ambigous and would be better if the metric units was used directly. ",
+      "guidance_": "[ppth] is often used in solution concentrations as 1 g/L or 1 g/kg.\n\nCan be ambigous and would be better if the metric units was used directly. ",
       "csUnitString_": "10*-3",
       "ciUnitString_": "10*-3",
       "baseFactorStr_": "1",
@@ -609,7 +609,7 @@
       "source_": "UCUM",
       "loincProperty_": "MCnt; MCnc; SFr",
       "category_": "Clinical",
-      "guidance_": "[ppm] is often used in solution concentrations as 1 mg/L  or 1 mg/kg. Also used to express mole fractions as 1 mmol/mol.\n\n[ppm] is also used in nuclear magnetic resonance (NMR) to represent chemical shift - the difference of a measured frequency in parts per million from the reference frequency. \n\nCan be ambigous and would be better if the metric units was used directly. ",
+      "guidance_": "[ppm] is often used in solution concentrations as 1 mg/L  or 1 mg/kg. Also used to express mole fractions as 1 mmol/mol.\n\n[ppm] is also used in nuclear magnetic resonance (NMR) to represent chemical shift - the difference of a measured frequency in parts per million from the reference frequency.\n\nCan be ambigous and would be better if the metric units was used directly. ",
       "csUnitString_": "10*-6",
       "ciUnitString_": "10*-6",
       "baseFactorStr_": "1",
@@ -12188,7 +12188,7 @@
           0
         ]
       },
-      "printSymbol_": "mL",
+      "printSymbol_": "/mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -12373,7 +12373,7 @@
           0
         ]
       },
-      "printSymbol_": "mL",
+      "printSymbol_": "/mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -12817,7 +12817,7 @@
           0
         ]
       },
-      "printSymbol_": "mL",
+      "printSymbol_": "/mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -23459,7 +23459,7 @@
     },
     {
       "isBase_": false,
-      "name_": "nanomole of 1/2 cystine per milligram of protein",
+      "name_": "nanomole per milligram of protein",
       "csCode_": "nmol/mg{prot}",
       "ciCode_": "NMOL/MG",
       "property_": "amount of substance",
@@ -23483,9 +23483,9 @@
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
-      "synonyms_": "nanomoles; half cystine; nmol per 1/2 cys per mg prot",
+      "synonyms_": "nanomoles; nmol/mg prot; nmol per mg prot",
       "source_": "LOINC",
-      "loincProperty_": "SCnt",
+      "loincProperty_": "Ratio; CCnt",
       "category_": "Clinical",
       "guidance_": "",
       "csUnitString_": "10*23",

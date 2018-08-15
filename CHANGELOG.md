@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.3.2] - 2018-06-??
+## [2.3.3] - 2018-08-15
+### Fixed
+- Updated conversion code to properly handle conversion of unitless 
+measurements, such as moles.
+- Updated code to make text for combined units, e.g., 2.(mmol/L), more
+explicit in regards to evaluation order. 
+
+## [2.3.2] - 2018-06-27
 ### Fixed
 - fixed appearance of the demo page converter tab so that when the page is
 widened in the browser the text all anchors on the left.  One portion 
