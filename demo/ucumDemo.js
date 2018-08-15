@@ -388,6 +388,26 @@ export class UcumDemo {
     else {
       try {
         parseResp = this.utils_.validateUnitString(uStr, true);
+
+        // If we got back a message, load that into retMsg first.  Any that
+        // we add here should follow what was returned.
+        if (parseResp['msg']) {
+          retMsg += parseResp['msg'].join('<BR>');
+        } // end if there's a message from the parse request
+
+        // If we got a unit back, tell the user what is valid - even if it's
+        // not what they submitted (i.e., even if the status is invalid).
+        if (parseResp['unit']) {
+          let valMsg = `${parseResp['ucumCode']} `;
+          if (parseResp['unit'].name) {
+            valMsg += `(${parseResp['unit'].name}) `;
+          }
+          valMsg += 'is a valid unit expression.';
+          if (retMsg !== '') {
+            retMsg += '<BR>';
+          }
+          retMsg += valMsg ;
+        }
         if (parseResp['status'] === 'valid') {
           if (reportResult !== 'displayOnly') {
             this.setConvertValues(reportResult, true);
@@ -396,15 +416,6 @@ export class UcumDemo {
             valFld.removeAttribute("class");
             resFld.removeAttribute("class")
           }
-          let valMsg = `${parseResp['ucumCode']} `;
-          if (parseResp['unit'].name) {
-            valMsg += `(${parseResp['unit'].name}) `;
-          }
-          valMsg += 'is a valid unit expression.';
-          if (parseResp['msg'].length > 0) {
-            retMsg = parseResp['msg'].join('<BR>') + '<BR>';
-          }
-          retMsg += valMsg ;
         }
         // Else the string is not valid - may be an error or just invalid
         else {
@@ -420,10 +431,15 @@ export class UcumDemo {
           // should be an explanation in the parse response's 'msg' element, and
           // will be transferred to the returned message below.
           if (parseResp['status'] === 'invalid') {
-            if (parseResp['suggestions'])
-              retMsg = this._suggSetOutput(parseResp['suggestions']);
-          }
-          else { // assume status is 'error'
+            if (parseResp['suggestions']) {
+              if (retMsg !== '') {
+                retMsg += '<BR>';
+              }
+              retMsg += this._suggSetOutput(parseResp['suggestions']);
+            } // end if suggestions were returned
+          } // end if the status returned was "invalid"
+
+          else { // status is 'error'
             console.log(retMsg.concat(parseResp['msg']));
             retMsg = `Sorry - an error occurred while trying to validate ${escVal}`;
           } // end if the status returned was not 'invalid'
@@ -437,13 +453,13 @@ export class UcumDemo {
           this.setConvertValues(reportResult, false);
         }
       } // end catch
-      if (parseResp['msg']) {
-        if (parseResp['status'] !== 'valid') {
-          if (retMsg != '')
-            retMsg += '<BR>';
-          retMsg += parseResp['msg'].join('<BR>');
-        }
-      } // end if there's a message from the parse request
+      // if (parseResp['msg']) {
+      //   if (parseResp['status'] !== 'valid') {
+      //     if (retMsg != '')
+      //       retMsg += '<BR>';
+      //     retMsg += parseResp['msg'].join('<BR>');
+      //   }
+      // } // end if there's a message from the parse request
     } // end if a value was specified
 
     // If there's a message to be displayed, do it now

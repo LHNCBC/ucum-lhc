@@ -146,11 +146,8 @@ export class UcumLhcUtils {
                            'error' : 'invalid',
                 'ucumCode': null};
     }
-    else if (resp['origString'] !== uStr) {
-      retObj = {'status' : 'invalid'}
-    }
     else {
-      retObj = {'status': 'valid',
+      retObj = {'status': resp['origString'] === uStr ? 'valid': 'invalid',
                 'ucumCode': resp['origString'],
                 'unit': {'code': theUnit.csCode_,
                          'name': theUnit.name_,

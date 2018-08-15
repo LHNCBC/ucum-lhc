@@ -12,6 +12,8 @@ var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
 
+import * as intUtils_ from "./ucumInternalUtils.js";
+
 export class Unit {
 
   /**
@@ -79,7 +81,7 @@ export class Unit {
      * The Dimension object of the unit
      */
     if (attrs['dim_'] === undefined || attrs['dim_'] === null) {
-      this.dim_ = null;
+      this.dim_ = new Dimension();
     }
     // When the unit data stored in json format is reloaded, the dimension data
     // is recognized as a a hash, not as a Dimension object.
@@ -93,7 +95,7 @@ export class Unit {
       this.dim_ = new Dimension(attrs['dim_']) ;
     }
     else {
-      this.dim_ = null;
+      this.dim_ = new Dimension();
     }
     /*
      * The print symbol of the unit, e.g., m
@@ -365,11 +367,23 @@ export class Unit {
   convertFrom(num, fromUnit) {
     let newNum = 0.0 ;
 
-    // reject request if the dimensions are not equal
+    // reject request if both units have dimensions that are not equal
     if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
       throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
                       `to ${this.csCode_}.`));
     }
+    // reject request if there is a "from" dimension but no "to" dimension
+    if (fromUnit.dim_ && (!this.dim_ || this.dim_.isNull())) {
+      throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
+        `to ${this.csCode_}.`));
+    }
+
+    // reject request if there is a "to" dimension but no "from" dimension
+    if (this.dim_ && (!fromUnit.dim_ || fromUnit.dim_.isNull())) {
+      throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
+        `to ${this.csCode_}.`));
+    }
+
     let fromCnv = fromUnit.cnv_ ;
     let fromMag = fromUnit.magnitude_ ;
 
@@ -513,24 +527,26 @@ export class Unit {
    * Multiplies this unit with a scalar. Special meaning for
    * special units so that (0.1*B) is 1 dB.
    *
-   * This function modifies this unit.
+   * This function DOES NOT modify this unit.
    *
    * @param s the value by which this unit is to be multiplied
-   * @return this unit after multiplication
-   */
+   * @return a copy this unit multiplied by s
+   * */
   multiplyThis(s) {
 
-    if(this.cnv_ != null)
-      this.cnvPfx_ *= s;
+    let retUnit = this.clone() ;
+    if (retUnit.cnv_ != null)
+      retUnit.cnvPfx_ *= s;
     else
-      this.magnitude_ *= s;
+      retUnit.magnitude_ *= s;
     let mulVal = s.toString();
-    this.name_ = '[' + mulVal + ']*[' + this.name_ + ']';
-    this.csCode_ = mulVal + '.' + this.csCode_;
-    this.ciCode_ = mulVal + '.' + this.ciCode_ ;
-    this.printSymbol_ = mulVal + '.' + this.printSymbol_;
+    retUnit.name_ = this._concatStrs(mulVal, '*', this.name_, '[', ']');
+    retUnit.csCode_ = this._concatStrs(mulVal, '.', this.csCode_, '(', ')');
+    retUnit.ciCode_ = this._concatStrs(mulVal, '.', this.ciCode_, '(', ')');
+    retUnit.printSymbol_ = this._concatStrs(mulVal, '.', this.printSymbol_,
+        '(', ')');
 
-    return this;
+    return retUnit;
 
   } // end multiplyThis
 
@@ -560,42 +576,47 @@ export class Unit {
 
     else if (unit2.cnv_ != null) {
       if (!retUnit.dim_ || retUnit.dim_.isZero()) {
-        let cp = retUnit.magnitude_;
-        retUnit.assign(unit2);
-        retUnit.cnvPfx_ *= cp;
+        //retUnit.assign(unit2);
+        retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
+        retUnit.cnv_ = unit2.cnv_ ;
       }
       else
         throw (new Error(`Attempt to multiply non-ratio unit ${unit2.name_}`));
     } // end if unit2 has a conversion function
 
+    // else neither unit has a conversion function
     else {
       retUnit.magnitude_ *= unit2.magnitude_;
-      // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
-      // is a dimension in unit2.dim_; else just transfer it to this dimension
-      if (!retUnit.dim_ || (retUnit.dim_ && !retUnit.dim_.dimVec_)) {
-        if (unit2.dim_)
-          retUnit.dim_ = unit2.dim_.clone();
-        else
-          retUnit.dim_ = unit2.dim_;
-      }
-      // Else this.dim_ is there.  If there is a dimension for unit2,
-      // add it to this one.
-      else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
-        retUnit.dim_.add(unit2.dim_);
-      }
     } // end if unit2 does not have a conversion function
+
+    // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
+    // is a dimension in unit2.dim_; else just transfer it to this dimension
+    if (!retUnit.dim_ || (retUnit.dim_ && !retUnit.dim_.dimVec_)) {
+      if (unit2.dim_)
+        retUnit.dim_ = unit2.dim_.clone();
+      else
+        retUnit.dim_ = unit2.dim_;
+    }
+    // Else this.dim_ is there.  If there is a dimension for unit2,
+    // add it to this one.
+    else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
+      retUnit.dim_.add(unit2.dim_);
+    }
 
     // Concatenate the unit info (name, code, etc) for all cases
     // where the multiplication was performed (an error wasn't thrown)
-    retUnit.name_ = '[' + retUnit.name_ + ']*[' + unit2.name_ + ']';
-    retUnit.csCode_ = retUnit.csCode_ + '.' + unit2.csCode_;
+    retUnit.name_ = this._concatStrs(retUnit.name_, '*', unit2.name_, '[', ']');
+    retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '.', unit2.csCode_,
+      '(', ')');
     if (retUnit.ciCode_ && unit2.ciCode_)
-      retUnit.ciCode_ = retUnit.ciCode_ + '.' + unit2.ciCode_;
+      retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '.', unit2.ciCode_,
+        '(', ')');
     else if (unit2.ciCode_)
       retUnit.ciCode_ = unit2.ciCode_;
     retUnit.guidance_ = '';
     if (retUnit.printSymbol_ && unit2.printSymbol_)
-      retUnit.printSymbol_ = retUnit.printSymbol_ + '.' + unit2.printSymbol_;
+      retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.',
+        unit2.printSymbol_, '(', ')');
     else if (unit2.printSymbol_)
       retUnit.printSymbol_ = unit2.printSymbol_;
 
@@ -624,14 +645,16 @@ export class Unit {
       throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
 
     if (retUnit.name_ && unit2.name_)
-      retUnit.name_ = '[' + retUnit.name_ + ']/[' + unit2.name_ + ']';
+      retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');
     else if (unit2.name_)
       retUnit.name_ = unit2.invertString(unit2.name_);
 
-    retUnit.csCode_ = retUnit.csCode_ + '/' + unit2.csCode_;
+    retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '/', unit2.csCode_,
+      '(', ')');
 
     if (retUnit.ciCode_ && unit2.ciCode_)
-      retUnit.ciCode_ = retUnit.ciCode_ + '/' + unit2.ciCode_;
+      retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '/', unit2.ciCode_,
+      '(', ')');
     else if (unit2.ciCode_)
       retUnit.ciCode_ = unit2.invertString(unit2.ciCode_) ;
 
@@ -640,7 +663,8 @@ export class Unit {
     retUnit.magnitude_ /= unit2.magnitude_;
 
     if (retUnit.printSymbol_ && unit2.printSymbol_)
-      retUnit.printSymbol_ = retUnit.printSymbol_ + '/' + unit2.printSymbol_;
+      retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '/',
+        unit2.printSymbol_, '(', ')');
     else if (unit2.printSymbol_)
       retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_);
 
@@ -664,7 +688,7 @@ export class Unit {
 
   } // end divide
 
-  
+
   /**
    * Invert this unit with respect to multiplication. If this unit is not
    * on a ratio scale an exception is thrown. Mutating to a ratio scale unit
@@ -709,6 +733,62 @@ export class Unit {
     return theString;
 
   } // end invertString
+
+
+  /**
+   * This function handles concatenation of two strings and an operator.
+   * It's called to build unit data, e.g., unit name, unit code, etc., from
+   * two different units, joined by the specified operator.
+   *
+   * @param str1 the first string to appear in the result
+   * @param operator the operator ('*', '.' or '/') to appear between the strings
+   * @param str2 the second string to appear in the result
+   * @param startChar the starting character to be used, when needed, to
+   *  enclose a string
+   * @param endChar the ending character to be used, when needed, to enclose
+   *  a string
+   * @returns the built string
+   */
+  _concatStrs(str1, operator, str2, startChar, endChar) {
+
+    return this._buildOneString(str1, startChar, endChar) +
+      operator + this._buildOneString(str2, startChar, endChar) ;
+  }
+
+
+  /**
+   * This function handles creation of one string to be included in a
+   * concatenated string.   Basically it checks to see if the string
+   * needs to be enclosed either in parentheses or square brackets.
+   *
+   * The string is enclosed if it is not a number, does not start with
+   * a parenthesis or square bracket, and includes a period, and asterisk,
+   * a slash or a blank space.
+   *
+   * @param str the string
+   * @param startChar starting enclosing character
+   * @param endChar ending enclosing character
+   * @returns the string
+   */
+  _buildOneString(str, startChar, endChar) {
+    let ret = '' ;
+    if (intUtils_.isNumericString(str)) {
+      ret = str;
+    }
+    else {
+      if (str.charAt(0) === '(' || str.charAt(0) === '[') {
+        ret = str;
+      }
+      else if (str.includes('.') || str.includes('/') ||
+               str.includes('*') || str.includes(' ')) {
+        ret = startChar + str + endChar ;
+      }
+      else {
+        ret = str ;
+      }
+    }
+    return ret ;
+  }
 
 
   /**
