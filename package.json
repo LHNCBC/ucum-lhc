@@ -24,11 +24,12 @@
     "csv": "^1.1.0",
     "csv-parse": "^1.1.7",
     "csv-stringify": "^1.0.4",
-    "escape-html": "https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz",
-    "grunt": "https://registry.npmjs.org/grunt/-/grunt-0.4.5.tgz",
+    "escape-html": "^1.0.3",
+    "growl": "^1.10.5",
+    "grunt": "^0.4.5",
     "grunt-babel": "^6.0.0",
     "grunt-browserify": "^5.0.0",
-    "grunt-cli": "https://registry.npmjs.org/grunt-cli/-/grunt-cli-1.2.0.tgz",
+    "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-cssmin": "^1.0.2",
     "grunt-contrib-uglify": "^2.0.0",
@@ -40,10 +41,11 @@
     "is-integer": "^1.0.6",
     "jit-grunt": "^0.10.0",
     "jsonfile": "^2.2.3",
-    "mocha": "https://registry.npmjs.org/mocha/-/mocha-2.5.3.tgz",
+    "mocha": "^2.5.3",
     "nsp": "^2.8.1",
     "path": "^0.12.7",
     "protractor": "^5.3.1",
+    "semver": "^5.5.0",
     "serve-index": "^1.8.0",
     "serve-static": "^1.12.2",
     "ssi": "^0.3.0",
@@ -61,5 +63,6 @@
     "type": "git",
     "url": "https://github.com/lhncbc/ucum-lhc"
   },
-  "license": "SEE LICENSE IN LICENSE.md"
+  "license": "SEE LICENSE IN LICENSE.md",
+  "dependencies": {}
 }

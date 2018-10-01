@@ -197,18 +197,12 @@ export class UnitString {
 
       // Do a final check to make sure that finalUnit is a unit and not
       // just a number.  Something like "8/{HCP}" will return a "unit" of 8
-      // - which is not a unit.
+      // - which is not a unit.  Hm - evidently it is.  So just create a unit
+      // object for it.
       if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
-  //      if (origString !== '1' && (finalUnit === 1 || finalUnit === '1')) {
-          finalUnit = new Unit({'csCode_': origString,
+        finalUnit = new Unit({'csCode_': origString,
           'magnitude_' : finalUnit,
           'name_' : origString});
-
-  //      }
-  //      else {
-  //        this.retMsg_.push(`The number ${finalUnit} is not a valid unit code.`);
-  //        finalUnit = null ;
-  //      }
         retObj[0] = finalUnit;
       } // end final check
     } // end if no annotation errors were found
@@ -648,23 +642,45 @@ export class UnitString {
               let numRes2 = uArray1[n].match(startNumCheck);
               if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' &&
                 numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
-                let parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
-                let parensResp = this._processParens(parensStr, parensStr);
-                // if a "stop processing" flag was returned, set the n index to end
-                // the loop and set the endProcessing flag
-                if (parensResp[2]) {
-                  n = u1;
-                  endProcessing = true;
-                }
-                // Otherwise let the user know about the problem and what we did
+                let invalidString = numRes2[0];
+                if (!endProcessing && numRes2[2].includes(this.parensFlag_)) {
+                  let parensback = this._getParensUnit(numRes2[2], origString);
+                  numRes2[2] = parensback[0]['csCode_'];
+                  invalidString = `(${numRes2[2]})`;
+                  endProcessing = parensback[1];
+                  if (!endProcessing) {
+                    this.retMsg_.push(`${numRes2[1]}${invalidString} is not a ` +
+                      `valid UCUM code.  ${this.vcMsgStart_}${numRes2[1]}.${invalidString}` +
+                      `${this.vcMsgEnd_}`);
+                    let parensString = `(${numRes2[1]}.${invalidString})`;
+                    origString = origString.replace(`${numRes2[1]}${invalidString}`,
+                      parensString);
+                    let nextParens = this._processParens(parensString, origString);
+                    endProcessing = nextParens[2];
+                    if (!endProcessing) {
+                      uArray.push({op: theOp, un: nextParens[0]});
+                    }
+                    //uArray.push({op: '.', un: numRes2[2]});
+                  }
+                } // end if the string represents a parenthesized unit
                 else {
-                  parensResp[1] = parensResp[1].substring(1, parensResp[1].length - 1);
-                  this.retMsg_.push(`${numRes2[0]} is not a valid UCUM code.\n` +
-                    this.vcMsgStart_ + `${numRes2[1]}.${numRes2[2]}` + this.vcMsgEnd_);
-                  origString = origString.replace(uArray1[n], parensResp[1]);
-                  uArray.push({op: theOp, un: parensResp[0]});
-                }
-              }
+                  let parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
+                  let parensResp = this._processParens(parensStr, origString);
+                  // if a "stop processing" flag was returned, set the n index to end
+                  // the loop and set the endProcessing flag
+                  if (parensResp[2]) {
+                    n = u1;
+                    endProcessing = true;
+                  }
+                  else {
+                    this.retMsg_.push(`${numRes2[0]} is not a ` +
+                      `valid UCUM code.  ${this.vcMsgStart_}${numRes2[1]}.${numRes2[2]}` +
+                      `${this.vcMsgEnd_}`);
+                    origString = origString.replace(numRes2[0], parensStr);
+                    uArray.push({op: theOp, un: parensResp[0]});
+                  } // end if no error on the processParens call
+                } // end if the string does not represent a parenthesized unit
+              } // end if the string is a number followed by a string
               else {
                 uArray.push({op: theOp, un: uArray1[n]});
               }
@@ -724,7 +740,7 @@ export class UnitString {
     let psIdx = pStr.indexOf(this.parensFlag_);
     let befText = null;
     if (psIdx > 0) {
-      let befText = pStr.substr(0, psIdx - 1);
+      befText = pStr.substr(0, psIdx - 1);
     }
     let peIdx = pStr.lastIndexOf(this.parensFlag_);
     let aftText = null;
@@ -1362,7 +1378,9 @@ export class UnitString {
 
     let finalUnit = uArray[0]['un'];
     if (intUtils_.isNumericString(finalUnit)) {
-      finalUnit = Number(finalUnit) ;
+      finalUnit = new Unit({'csCode_' : finalUnit,
+        'magnitude_' : Number(finalUnit),
+        'name_' : finalUnit}) ;
     }
     let uLen = uArray.length ;
     let endProcessing = false ;
@@ -1371,7 +1389,9 @@ export class UnitString {
     for (let u2 = 1; (u2 < uLen) && !endProcessing; u2++) {
       let nextUnit = uArray[u2]['un'];
       if (intUtils_.isNumericString(nextUnit)) {
-        nextUnit = Number(nextUnit) ;
+        nextUnit = new Unit({'csCode_' : nextUnit ,
+          'magnitude_' : Number(nextUnit),
+          'name_': nextUnit});
       }
       if (nextUnit === null ||
           ((typeof nextUnit !== 'number') && (!nextUnit.getProperty))) {
@@ -1391,76 +1411,10 @@ export class UnitString {
           let thisOp = uArray[u2]['op'];
           let isDiv = thisOp === '/';
 
-          // Perform the operation based on the type(s) of the operands
-
-          // A.  nextUnit is a unit object:
-          if (typeof nextUnit !== 'number') {
-
-            // both are unit objects
-            if (typeof finalUnit !== 'number') {
-              isDiv ? finalUnit = finalUnit.divide(nextUnit) :
+          // Perform the operation.  Both the finalUnit and nextUnit
+          // are unit objects.
+          isDiv ? finalUnit = finalUnit.divide(nextUnit) :
                   finalUnit = finalUnit.multiplyThese(nextUnit);
-            }
-            // finalUnit is a number; nextUnit is a unit object
-            else {
-              let nMag = nextUnit.getProperty('magnitude_');
-              isDiv ? nMag = finalUnit / nMag : nMag *= finalUnit;
-              let uString = finalUnit.toString();
-              // if the original string was something like /xyz, the string was
-              // processed as if it was 1/xyz, to make sure the unit arithmetic
-              // is performed correctly.   Remove it from the string used to
-              // create the name, as it is no longer needed.  Note that this
-              // does not happen if the string is something like 7/xyz.
-              if (u2 === 1 && isDiv && finalUnit === 1 && origString[0] === '/') {
-                uString = '';
-              }
-              let theName = uString + (isDiv ? thisOp:"*") + '[' +
-                                       nextUnit.getProperty('name_') + ']' ;
-
-              let theCode = uString + thisOp + nextUnit.getProperty('csCode_');
-              let ciCode = uString + thisOp + nextUnit.getProperty('ciCode_');
-              let printSym = uString + thisOp +
-                             nextUnit.getProperty('printSymbol_');
-              let theDim = nextUnit.getProperty('dim_');
-              if (isDiv && theDim) {
-                theDim = theDim.minus();
-              }
-              finalUnit = nextUnit;
-              finalUnit.assignVals({'csCode_' : theCode,
-                'ciCode_' : ciCode,
-                'name_' : theName,
-                'printSymbol_' : printSym,
-                'dim_' : theDim,
-                'magnitude_' : nMag});
-            }
-          } // end if nextUnit is not a number
-
-          // B.  nextUnit is a number
-          else {
-            // nextUnit is a number; finalUnit is a unit object
-            if (typeof finalUnit !== 'number') {
-              let fMag = finalUnit.getProperty('magnitude_');
-              isDiv ? fMag /= nextUnit :
-                  fMag *= nextUnit;
-              let theName = '[' + finalUnit.getProperty('name_') + ']' +
-                             (isDiv ? thisOp:"*") + nextUnit.toString() ;
-              let theCode = finalUnit.getProperty('csCode_') + thisOp +
-                  nextUnit.toString();
-              finalUnit.assignVals({'csCode_' : theCode ,
-                'name_': theName,
-                'magnitude_': fMag});
-            }
-            // both are numbers
-            else {
-              let numUnit = new Unit({
-                csCode_ : `${finalUnit}${thisOp}${nextUnit}`,
-                name_ : isDiv ? `[${finalUnit}]/[${nextUnit}]` :
-                  `[${finalUnit}]*[${nextUnit}]`,
-                magnitude_ : isDiv ? finalUnit /= nextUnit :
-                  finalUnit *= nextUnit});
-              finalUnit = numUnit ;
-            }
-          } // end if nextUnit is a number
         }
         catch (err) {
           this.retMsg_.unshift(err.message) ;

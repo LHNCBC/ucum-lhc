@@ -141,17 +141,12 @@ export class UcumLhcUtils {
                 'ucumCode': null};
     }
     else {
-      if (resp['origString'] !== uStr) {
-        retObj = {'status' : 'invalid'} ;
-      }
-      else {
-        retObj = {'status': 'valid'};
-      }
-      retObj['ucumCode'] = resp['origString'];
-      retObj['unit'] = {'code': theUnit.csCode_,
-                        'name': theUnit.name_,
-                        'guidance': theUnit.guidance_ };
-    } // end if a unit was returned
+      retObj = {'status': resp['origString'] === uStr ? 'valid': 'invalid',
+                'ucumCode': resp['origString'],
+                'unit': {'code': theUnit.csCode_,
+                         'name': theUnit.name_,
+                         'guidance': theUnit.guidance_ }};
+    }
     if (resp['suggestions']) {
       retObj['suggestions'] = resp['suggestions'];
     }

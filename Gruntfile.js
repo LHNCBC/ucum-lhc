@@ -135,7 +135,7 @@ module.exports = function(grunt) {
     // using nsp for security checking
     nsp: {
       package: grunt.file.readJSON('./package.json') ,
-      shrinkwrap: grunt.file.readJSON('./npm-shrinkwrap.json')
+      packagelock: grunt.file.readJSON('./package-lock.json')
     } ,
 
     // watch application files to see if they need to be re-browserified,
