@@ -478,22 +478,20 @@ export class UcumDemo {
               valFld.classList.remove('invalid');
               resFld.classList.remove('invalid');
               resFld.classList.add('valid');
-            }
-            // Assemble the valid value message.  If there is a unit name,
-            // just use that.  If there's no name, say that the code is valid.
-            valMsg = `${parseResp['ucumCode']} `;
-            if (theUnit.name) {
-              valMsg += `(${theUnit.name}) `;
-            }
-            if (tabName === 'Validator') {
+
+              // Assemble the valid value message, which is only output on the
+              // validator tab.  If there is a unit name, use that.  If
+              // there's no name, just say that the code is valid.
+              valMsg = `${parseResp['ucumCode']} `;
+              if (theUnit.name) {
+                valMsg += `(${theUnit.name}) `;
+              }
               valMsg += ' is a valid unit expression.';
-            }
-            if (tabName === 'Validator') {
               if (parseResp['msg'].length > 0)
                 parseResp['msg'].unshift(valMsg);
               else
                 parseResp['msg'] = valMsg;
-            }
+            } // end if this is for the validator tab
           }  // end if the status is 'valid'
         } // end if we have a unit and the status is not 'error'
         // Else the status returned is 'error' OR no unit was returned
@@ -1125,14 +1123,12 @@ export class UcumDemo {
 
   } // end _multipleReplace
 
+
   /**
-   * This replaces multiple occurrences of a string within a string.
-   * This was created at Paul Lynch's request.
+   * This makes sure that the unit name areas on the unit
+   * conversion tab (under the unit code input fields) are
+   * the same heights).
    *
-   * @param targetString the string containing the value to be replaced
-   * @param toReplace the value to be replaced
-   * @param replaceWith the value to replace toReplace
-   * @returns {string} the string containing the replaced values
    * @private
    */
   _sizeNameDivs() {
