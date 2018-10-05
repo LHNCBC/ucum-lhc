@@ -132,11 +132,6 @@ module.exports = function(grunt) {
       src: ['./test-es5/*.spec.js']
     },
 
-    // using nsp for security checking
-    nsp: {
-      package: grunt.file.readJSON('./package.json') ,
-      packagelock: grunt.file.readJSON('./package-lock.json')
-    } ,
 
     // watch application files to see if they need to be re-browserified,
     // and bower components to see if they change
