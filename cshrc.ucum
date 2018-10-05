@@ -1,5 +1,5 @@
 # Use the globally installed node and its modules
-set LFORMS_NODE=node-v8.11.3-npm-5.7.1
+set LFORMS_NODE=node-v8.12.0-linux-x64
 # Set path
 set path = (/depot/packages/${LFORMS_NODE}/bin /bin /usr/local/bin /usr/bin /usr/sbin /sbin /etc)
 

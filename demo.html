@@ -39,10 +39,13 @@
     <h1>The UCUM-LHC Validator and Converter</h1>
 
     <ul class="tab nav nav-tabs">
-      <li class="active"><a id="validation-link" href="#validation" class="tablinks"
-                            data-toggle="tab">
+      <li id="validation-link-li" class="active">
+          <a id="validation-link" href="#validation" class="tablinks"
+             data-toggle="tab"
+             onclick="demoPkg.UcumDemo.getInstance().showValidateTab()">
              Validator</a></li>
-      <li><a id="conversion-link" href="#conversion" class="tablinks"
+      <li id="conversion-link-li">
+          <a id="conversion-link" href="#conversion" class="tablinks"
              data-toggle="tab"
              onclick="demoPkg.UcumDemo.getInstance().showConvertTab()">
              Converter</a></li>

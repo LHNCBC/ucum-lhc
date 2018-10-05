@@ -28,13 +28,16 @@ export class UcumDemo {
     this.urlValCats_ = UcumDemoConfig.defCategories_ ;
     this.urlValDispFlds_ = UcumDemoConfig.defCols_ ;
     urlOpts = this.buildUrlAndOpts('validate');
+
+    // Set up the search autocompleter for the unit expression field
+    // on the validator tab
     this.valAuto_ = new Def.Autocompleter.Search('valString',
       urlOpts[0], urlOpts[1]);
     Def.Autocompleter.Event.observeListSelections('valString',
       (function(demoInstance) {
         return function () {
           demoInstance.reportUnitStringValidity('valString',
-            'validationString', 'displayOnly');
+            'Validator', 'validationString');
         }
       })(this));
 
@@ -44,15 +47,15 @@ export class UcumDemo {
     this.urlConvDispFlds_ = UcumDemoConfig.defCols_ ;
     let urlOpts = this.buildUrlAndOpts('convert');
 
-    // Set up the search autocompleters for the "from" unit code input field
-    // on the Converter tab section
+    // Set up the search autocompleters for the "from" and "to" unit code input
+    // fields on the Converter tab section
     this.fromAuto_ = new Def.Autocompleter.Search('convertFrom',
                      urlOpts[0], urlOpts[1]);
     Def.Autocompleter.Event.observeListSelections('convertFrom',
       (function(demoInstance) {
         return function () {
           demoInstance.reportUnitStringValidity('convertFrom',
-            'resultString', 'from');
+            'Converter', 'convMsg');
         }
       })(this));
 
@@ -62,15 +65,21 @@ export class UcumDemo {
       (function(demoInstance) {
         return function () {
           demoInstance.reportUnitStringValidity('convertTo',
-            'resultString', 'to');
+            'Converter', 'convMsg');
         }
       })(this));
 
-    // Flags indicating validity of the "from" and "to" unit fields and
-    // the from number field on the conversion tab.
-    this.convFromUnit_ = false ;
-    this.convToUnit_ = false ;
-    this.convFromVal_ = false ;
+    // Flags indicating validity of the "from" and "to" unit and number fields
+    // on the conversion tab.
+    this.convFrom_ = false ;
+    this.convFromNum_ = true ;
+    this.convTo_ = false ;
+    this.convToNum_ = true ;
+
+    // Remember which numeric value was last reported as the conversion result
+    // and what field it was reported in
+    this.lastResultFld_ = null ;
+    this.lastResult_ = 0;
 
     // Set up the prefetch autocompleter for the "to" conversion field.  It will
     // be populated with commensurable units in based on what the user enters
@@ -159,7 +168,7 @@ export class UcumDemo {
     this.buildTabSettings('advancedSearchVal', 'val') ;
     this.buildTabSettings('advancedSearchCnv', 'cnv') ;
     let prec = document.getElementById("precision");
-    prec.value = Ucum.decDigits_ ;
+    prec.value = UcumDemoConfig.defaultPrecision_ ;
 
     // Clear the validator tab input field to avoid having a previous value
     // displayed when the form is reloaded.   This should not be necessary,
@@ -169,7 +178,23 @@ export class UcumDemo {
     let valFld = document.getElementById("valString");
     valFld.innerHTML = "";
     valFld.setAttribute("autocomplete", "false");
-  }
+
+    // Check to see if the URL specified that the converter tab be
+    // displayed first.
+    if (window.location.hash === '#converter') {
+      let convTabLi = document.getElementById("conversion-link-li");
+      let valTabLi = document.getElementById("validation-link-li");
+      let convDiv = document.getElementById("conversion");
+      let valDiv = document.getElementById("validation");
+      convTabLi.classList.add('active');
+      convDiv.classList.add('in');
+      convDiv.classList.add('active');
+      valTabLi.classList.remove('active');
+      valDiv.classList.remove('in');
+      valDiv.classList.remove('active');
+      this.showConvertTab();
+    }
+  } // end buildAdvancedSettings
 
 
   /**
@@ -203,6 +228,8 @@ export class UcumDemo {
     // build display fields section
     let dispPara = document.createElement("P");
     dispPara.className = 'topMargin20' ;
+    let lineBreak = document.createElement('BR');
+    dispPara.appendChild(lineBreak);
     let dispLine = document.createTextNode("Select unit fields to display:");
     dispPara.appendChild(dispLine);
     settingsDiv.appendChild(dispPara);
@@ -211,7 +238,6 @@ export class UcumDemo {
                          'displayField', boxSuffix);
     this.buildCheckBoxes(settingsDiv, UcumDemoConfig.displayFlds_, false,
                          'displayField', boxSuffix);
-
   } // buildTabSettings
 
 
@@ -247,13 +273,69 @@ export class UcumDemo {
       theBox.setAttribute("style", "margin-left: 10px; margin-right: 3px;");
       theBox.addEventListener("click", function() {
         demoPkg.UcumDemo.getInstance().updateSetting(theBox.id, boxSuffix);});
-      settingsDiv.appendChild(theBox);
-      let aSpan = document.createElement('span')
+      let theSpan = document.createElement('label');
+      theSpan.setAttribute("style", "display: inline-block");
+      theSpan.appendChild(theBox);
+
       let theText = document.createTextNode(theVal);
       theText.className = 'checkboxText' ;
-      settingsDiv.appendChild(theText) ;
+      theSpan.appendChild(theText) ;
+      settingsDiv.appendChild(theSpan);
     }
   }  // end buildCheckBoxes
+
+
+  /**
+   * This method is run when the Converter tab is displayed, to reset the
+   * variables that track the validity of the three inputs ("from" unit code,
+   * "from" value, and "to" unit code) that must be correct to attempt a
+   * conversion.
+   */
+  showConvertTab(){
+    this.convFrom_ = false ;
+    let fromField = document.getElementById('convertFrom');
+    fromField.value = null;
+    fromField.classList.remove("invalid");
+
+    let fromNameField = document.getElementById('convertFromName');
+    fromNameField.innerHTML = '';
+
+    this.convFromNum_ = true ;
+    let fromNumField = document.getElementById('convertFromNum');
+    fromNumField.value = 1;
+    fromNumField.classList.remove("invalid");
+
+    this.convTo_ = false ;
+    let toField = document.getElementById('convertTo');
+    toField.value = null;
+    toField.classList.remove("invalid");
+
+    let toNameField = document.getElementById('convertToName');
+    toNameField.innerHTML = '';
+
+    this.convToNum_ = true;
+    let toNumField = document.getElementById('convertToNum');
+    toNumField.value = 1;
+    toNumField.classList.remove("invalid");
+  } // end showConvertTab
+
+
+  /**
+   * This method is run when the Validator tab is displayed, to reset the
+   * ucum expression input field and the message field.  Otherwise they
+   * retain their values when switching to the Converter tab and back.
+   */
+  showValidateTab(){
+
+    let codeField = document.getElementById('valString');
+    codeField.value = null;
+    codeField.classList.remove("invalid");
+
+    let msgField = document.getElementById('validationString');
+    msgField.innerHTML = '';
+    msgField.classList.remove("invalid");
+
+  } // end showConvertTab
 
 
   /**
@@ -341,161 +423,161 @@ export class UcumDemo {
    *
    * @param elementID the ID of the web page element that contains the
    *  string to be validated
-   * @param returnElementID the ID of the web page element to receive the
-   *  return validation message
-   * @param reportResult parameter used to indicate how to report valid/invalid
-   *  string messages:
-   *  'displayOnly' indicates that messages should be displayed only, in the page
-   *    element specified by the returnElementID.  No flag conversion flag
-   *    settings are needed.  (This would be set from the Validator tab).
-   *  'from' indicates that in addition to a message, the convFromUnit flag
-   *    should be set to true if the string is valid; false if it is not.
-   *  'to' indicates that in addition to a message, the convToUnit flag
-   *    should be set to true if the string is valid; false if it is not.
-   * @returns nothing directly; return is the validation message as noted above
+   * @param tabName the name of the tab ('Converter' or 'Validator') that
+   *  contains the input field
+   * @param msgElementID the ID of the web page element to received messages
+   *  (success and error).
+   * @returns nothing directly; return is the success/error message
    */
-  reportUnitStringValidity(elementID, returnElementID, reportResult) {
+  reportUnitStringValidity(elementID, tabName, msgElementID) {
 
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
 
+    let valConv = tabName === 'Validator' ? 'validate' : 'convert' ;
+
     let retMsg = '';
+    let valMsg = '';
     let parseResp = {};
+    let suggsField = null ;
+    if (tabName === 'Converter') {
+      suggsField = document.getElementById("convSuggestions");
+      suggsField.innerHTML = '';
+      suggsField.style.display = 'none';
+    }
 
-    let valFld = document.getElementById(elementID);
-    valFld.removeAttribute("class");
-    let uStr = valFld.value;
-    let escVal = escapeHtml(valFld.value);
-    let resFld = document.getElementById(returnElementID);
+    let resFld = document.getElementById(msgElementID);
     resFld.innerHTML = '';
+    let valFld = document.getElementById(elementID);
+    let valMsgFld = document.getElementById(elementID + 'Name') ;
+    if (valMsgFld) {
+      valMsgFld.innerHTML = '';
+      valMsgFld.style.height = 'auto';
+    }
+    let uStr = valFld.value;
 
-    // if the reportResult parameter passed in is invalid, set a message
-    // and don't continue
-    if (reportResult !== 'displayOnly' && reportResult !== 'from' &&
-      reportResult !== 'to') {
-      console.log(`Invalid reportResult parameter supplied - ${reportResult}`);
-      retMsg = [`Sorry - an error occurred while trying to validate ${escVal}`];
-      valFld.setAttribute("class", "invalid");
-      resFld.setAttribute("class", "invalid");
+    // If the field was blanked out and we're on the converter tab, call
+    // setConvertValues to set the validity flag for that field to false but not
+    // designate it as an error (no error message, no red border around the field)
+    if (uStr === '') {
+      if (tabName === 'Converter')
+        this.setConvertValues(elementID, false, true);
     }
-    // If nothing was specified make sure the convert button is disabled and
-    // ignore the rest of the processing.
-    else if (uStr === '') {
-      document.getElementById("doConversionButton").disabled = true ;
-    }
-    // Else continue processing
+    // Otherwise create a safe (to redisplay) copy of the field and
+    // try to validate it
     else {
+      let escVal = escapeHtml(valFld.value);
+      let theStatus = '';
       try {
-        parseResp = this.utils_.validateUnitString(uStr, true);
-
-        // If we got back a message, load that into retMsg first.  Any that
-        // we add here should follow what was returned.
-        if (parseResp['msg']) {
-          retMsg += parseResp['msg'].join('<BR>');
-        } // end if there's a message from the parse request
-
-        // If we got a unit back, tell the user what is valid - even if it's
-        // not what they submitted (i.e., even if the status is invalid).
-        if (parseResp['unit']) {
-          let valMsg = `${parseResp['ucumCode']} `;
-          if (parseResp['unit'].name) {
-            valMsg += `(${parseResp['unit'].name}) `;
+        parseResp = this.utils_.validateUnitString(uStr, true, valConv);
+        theStatus = parseResp['status'];
+        let theUnit = parseResp['unit'];
+        // If we got a unit back and the status isn't 'error', we found a
+        // unit (whether or not it matches the original string).
+        if (theStatus !== 'error' && theUnit) {
+          if (tabName === 'Converter') {
+            this.setConvertValues(elementID, true);
           }
-          valMsg += 'is a valid unit expression.';
-          if (retMsg !== '') {
-            retMsg += '<BR>';
+          // If the status returned was 'invalid' it means we had to do a
+          // substitution to get a unit.  Set the class on the output
+          // strings to invalid
+          if (theStatus === 'invalid') {
+            valFld.classList.add("invalid");
+            resFld.classList.add("invalid");
+            resFld.classList.remove("valid");
           }
-          retMsg += valMsg ;
-        }
-        if (parseResp['status'] === 'valid') {
-          if (reportResult !== 'displayOnly') {
-            this.setConvertValues(reportResult, true);
-          }
+          // Otherwise the status is valid.  If we're on the validator tab
+          // set the appropriate classes for the output fields.  This has
+          // already been done for the converter tab fields, in setConvertValues
           else {
-            valFld.removeAttribute("class");
-            resFld.removeAttribute("class")
-          }
-        }
-        // Else the string is not valid - may be an error or just invalid
+            if (tabName === 'Validator') {
+              valFld.classList.remove('invalid');
+              resFld.classList.remove('invalid');
+              resFld.classList.add('valid');
+
+              // Assemble the valid value message, which is only output on the
+              // validator tab.  If there is a unit name, use that.  If
+              // there's no name, just say that the code is valid.
+              valMsg = `${parseResp['ucumCode']} `;
+              if (theUnit.name) {
+                valMsg += `(${theUnit.name}) `;
+              }
+              valMsg += ' is a valid unit expression.';
+              if (parseResp['msg'].length > 0)
+                parseResp['msg'].unshift(valMsg);
+              else
+                parseResp['msg'] = valMsg;
+            } // end if this is for the validator tab
+          }  // end if the status is 'valid'
+        } // end if we have a unit and the status is not 'error'
+        // Else the status returned is 'error' OR no unit was returned
+        // (status could still be invalid)
         else {
-          if (reportResult != 'displayOnly') {
-            this.setConvertValues(reportResult, false);
+          if (tabName === 'Converter') {
+            this.setConvertValues(elementID, false);
           }
           else {
-            valFld.setAttribute("class", "invalid");
-            resFld.setAttribute("class", "invalid");
+            valFld.classList.add("invalid");
+            resFld.classList.add("invalid");
+            resFld.classList.remove("valid");
           }
           // If the status is invalid and we have suggestions, put the suggestion
-          // output in the return message.   If we don't have suggestions there
-          // should be an explanation in the parse response's 'msg' element, and
-          // will be transferred to the returned message below.
-          if (parseResp['status'] === 'invalid') {
-            if (parseResp['suggestions']) {
-              if (retMsg !== '') {
-                retMsg += '<BR>';
-              }
-              retMsg += this._suggSetOutput(parseResp['suggestions']);
-            } // end if suggestions were returned
-          } // end if the status returned was "invalid"
+          // output in the return message.   This include a starting line
+          // stating that the unit expression was invalid but we have
+          // suggestions.  If we don't have suggestions there
+          // should be an "invalid" message in the parse response's 'msg'
+          // element which will be transferred to the retMsg below.
+          if (parseResp['suggestions']) {
+            if (tabName === 'Validator') {
+              retMsg = this._suggSetOutput(parseResp['suggestions']);
+            }
+            else {
+              suggsField.innerHTML = this._suggSetOutput(parseResp['suggestions']);
+              suggsField.style.display = 'block';
+            }
+          }
 
-          else { // status is 'error'
+          if (theStatus === 'error') {
             console.log(retMsg.concat(parseResp['msg']));
             retMsg = `Sorry - an error occurred while trying to validate ${escVal}`;
-          } // end if the status returned was not 'invalid'
-        } // end if the string is not valid
+          }
+        } // end if parsing returned an error status
       } // end try
       catch (err) {
         console.log(err.message);
         retMsg = `Sorry - an error occurred while trying to validate ${escVal}`;
-        valFld.setAttribute("class", "invalid");
-        if (reportResult !== 'displayOnly') {
-          this.setConvertValues(reportResult, false);
+        valFld.classList.add("invalid");
+        resFld.classList.add("invalid");
+        if (tabName === 'Converter') {
+          this.setConvertValues(elementID, false);
         }
       } // end catch
-      // if (parseResp['msg']) {
-      //   if (parseResp['status'] !== 'valid') {
-      //     if (retMsg != '')
-      //       retMsg += '<BR>';
-      //     retMsg += parseResp['msg'].join('<BR>');
-      //   }
-      // } // end if there's a message from the parse request
-    } // end if a value was specified
 
-    // If there's a message to be displayed, do it now
-    if (retMsg != '') {
-      if (uStr !== escVal && uStr !== '') {
-        retMsg = this._multipleReplace(retMsg, uStr, escVal);
+      if (parseResp['msg']) {
+        if (retMsg != '') {
+          retMsg += '<BR>';
+        }
+        retMsg += parseResp['msg'] ;
+      } // end if there's a message from the parse request
+
+      // If there's a message to be displayed, do it now
+      if (retMsg !== '') {
+        if (uStr !== escVal && uStr !== '') {
+          retMsg = this._multipleReplace(retMsg, uStr, escVal);
+        }
+        resFld.innerHTML = retMsg;
       }
-      resFld.innerHTML = retMsg;
-    }
+      // If there's a "valid code" message to be displayed, do that now
+      if (valMsg !== '') {
+        if (uStr !== escVal && uStr !== '') {
+          valMsg = this._multipleReplace(valMsg, uStr, escVal);
+        }
+        valMsgFld.innerHTML = valMsg;
+      } // end if there's a "valid code" message to display
+
+    } // end if a value was specified
+    this._sizeNameDivs();
   } // end reportUnitStringValidity
-
-
-  /**
-   * This method is run when the Converter tab is displayed, to reset the
-   * variables that track the validity of the three inputs ("from" unit code,
-   * "from" value, and "to" unit code) that must be correct to attempt a
-   * conversion.
-   */
-  showConvertTab(){
-    this.convFromUnit_ = false ;
-    let fromField = document.getElementById('convertFrom');
-    fromField.value = null;
-    fromField.removeAttribute("class");
-
-    this.convFromVal_ = false ;
-    let numField = document.getElementById('convertNum');
-    numField.value = null;
-    numField.removeAttribute("class");
-
-    this.convToUnit_ = false ;
-    let toField = document.getElementById('convertTo');
-    toField.value = null;
-    toField.removeAttribute("class");
-
-    document.getElementById('resultString').innerHTML = '' ;
-    document.getElementById("doConversionButton").disabled = true;
-  }
 
 
   /**
@@ -504,14 +586,10 @@ export class UcumDemo {
    * must be correct to allow the user to request conversion.
    *
    * This also checks to see if all three are correct and if they are, it
-   * makes the convert button visible. If they are not the convert button
-   * is hidden (or remains hidden).
+   * invokes the convertUnit function.
    *
-   * @param whichSetting indicates which input was checked:
-   *   "from" means the "from" unit code field was checked;
-   *   "to" means the "to" unit code fields was checked; and
-   *   "fromNum" means the number of units field was checked.
-   * @param value true indicates that the value is valid; false means it's not.
+   * @param elementID ID of the field that caused this to be called.
+   * @param valid true indicates that the value is valid; false means it's not.
    * @param clear an optional boolean that signals a request to remove
    *   highlighting (currently a red border) of the form element being updated.
    *   This should be passed as true when the user clears the contents of a
@@ -519,77 +597,143 @@ export class UcumDemo {
    *   is required.  Default value is false.
    *
    */
-  setConvertValues(whichSetting, value, clear) {
+  setConvertValues(elementID, valid, clear) {
 
     if (clear === undefined) {
       clear = false ;
     }
-    let msgField = document.getElementById('resultString')
-    let targetField = null ;
-    if (whichSetting === 'from') {
-      this.convFromUnit_ = value;
-      targetField = document.getElementById('convertFrom');
+    let msgField = document.getElementById('convMsg');
+    let sourceField = document.getElementById(elementID) ;
+    let resultSide = null ;
+    if (elementID === 'convertFrom') {
+      this.convFrom_ = valid;
+      resultSide = 'to';
     }
-    else if (whichSetting === 'to') {
-      this.convToUnit_ = value;
-      targetField = document.getElementById('convertTo');
+    else if (elementID === 'convertTo') {
+      this.convTo_ = valid;
+      resultSide = 'to';
     }
-    else { // assume from value
-      this.convFromVal_ = value;
-      targetField = document.getElementById('convertNum');
+    else if (elementID === 'convertFromNum') {
+      this.convFromNum_ = valid ;
+      resultSide = 'to';
+    }
+    else { // assume convertToNum
+      this.convToNum_ = valid;
+      resultSide = 'from';
     }
 
     // set or remove the indicator (currently a red border) on the invalid field
-    if (value === false && !clear) {
-      targetField.setAttribute("class", "invalid");
-      msgField.setAttribute("class", "invalid");
+    if (valid === false && !clear) {
+      sourceField.classList.add("invalid");
+      msgField.classList.add("invalid");
     }
     else {
-      targetField.removeAttribute("class");
-      msgField.removeAttribute("class");
+      sourceField.classList.remove("invalid");
+      msgField.classList.remove("invalid");
     }
 
-    let convertButton = document.getElementById("doConversionButton");
-    if (this.convFromUnit_ === true && this.convToUnit_ === true &&
-        this.convFromVal_ === true)
-      convertButton.disabled = false ;
-    else
-      convertButton.disabled = true ;
-
+    // if both code fields are valid, and the number field that is not
+    // being calculated is valid, perform the conversion
+    if (this.convFrom_ === true && this.convTo_ === true) {
+      if (resultSide === 'from' && this.convToNum_) {
+        this.convertUnit('convertTo',
+                         'convertToNum',
+                         'convertFrom',
+                         'convertFromNum');
+      }
+      else if (resultSide === 'to' && this.convFromNum_) {
+        this.convertUnit('convertFrom',
+                         'convertFromNum',
+                         'convertTo',
+                         'convertToNum');
+      }
+    }
   } // end setConvertValues
 
 
   /**
-   * This method checks the number of units value to make sure it's a valid
+   * This method checks a number of units value to make sure it's a valid
    * number.  It calls setConvertValues to set the validity state flag for
    * the number of units field as appropriate.
    *
    * @param numField the name of the number of units field
    *
    */
-  checkFromVal(numField) {
+  checkNumVal(numField) {
 
-    let fromFld = document.getElementById(numField);
-    let fromVal = escapeHtml(fromFld.value);
-    let resultString = document.getElementById("resultString");
+    let checkFld = document.getElementById(numField);
+    let checkVal = escapeHtml(checkFld.value);
+    let resFld = numField === 'convertFromNum' ?
+                 document.getElementById('convertToNum') :
+                 document.getElementById('convertFromNum') ;
+    let resultString = document.getElementById('convMsg');
     resultString.innerHTML = '';
 
-    // If the value is blank, just make sure the convert button is
-    // disabled and do no further processing
-    if (fromVal === '') {
-      document.getElementById("doConversionButton").disabled = true ;
-    }
-    else {
-      let parsedNum = "" + fromVal;
+    if (checkVal !== '') {
+      let parsedNum = "" + checkVal;
       if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
-        resultString.innerHTML = `${fromVal} is not a valid number.`;
-        this.setConvertValues('fromNum', false);
+        resultString.innerHTML = `${checkVal} is not a valid number.`;
+        this.setConvertValues(numField, false);
       }
       else {
-        this.setConvertValues('fromNum', true);
+        this.setConvertValues(numField, true);
       }
     } // end if a value was specified
-  } // end checkFromVal
+
+    // If the value is blank, call setConvertValues to set the validity
+    // indicator to false and remove any red highlighting that might be there.
+    // Do this for values in both number fields, and blank out the result field
+    if (checkVal === '') {
+      this.setConvertValues('convertFromNum', false, true);
+      this.setConvertValues('convertToNum', false, true);
+      resFld.value = '';
+    }
+  } // end checkNumVal
+
+
+  /**
+   * This checks the value specified for number of decimal digits on the
+   * Converter tab.  If the number is invalid it issues a message and resets
+   * the value to the default.
+   *
+   * If the number is valid it resets both the
+   * convert "from" and convert "to" numbers to the appropriate value, using
+   * the stored values for those fields.  It does not reset a value for a
+   * field that is blank.
+   *
+   * @param numField the name of the number of units field
+   *
+   */
+  updatePrecision(msgFieldName) {
+
+    let msgField = document.getElementById(msgFieldName);
+    msgField.innerHTML = '';
+    let prec = document.getElementById("precision");
+    let precDigits = parseInt(escapeHtml(prec.value));
+    if (isNaN(precDigits) || (precDigits < 0)) {
+      msgField.innerHTML = `Decimal digits must be specified as a number `+
+                           `between 0 and ${UcumDemoConfig.maxDecDigits_}.  ` +
+                           `It has been reset to the default value.`;
+      msgField.classList.add("invalid");
+      precDigits = UcumDemoConfig.defaultPrecision_;
+      prec.value = precDigits;
+    }
+    else if (precDigits > UcumDemoConfig.maxDecDigits_) {
+      msgField.innerHTML = `${prec.value} is not a valid value for decimal `+
+        `digits.  It has been reset to the maximum number of digits allowed.`;
+      msgField.classList.add("invalid");
+      precDigits = UcumDemoConfig.maxDecDigits_;
+      prec.value = precDigits;
+    }
+    // Update the result field
+    let numField = document.getElementById(this.lastResultFld_);
+    let numVal = parseFloat(escapeHtml(numField.value));
+    if (numVal !== '') {
+      numVal = parseFloat(this.lastResult_).toFixed(precDigits);
+      numField.value = numVal;
+    }
+
+  } // end updatePrecision
 
 
   /**
@@ -597,12 +741,13 @@ export class UcumDemo {
    *
    * @param fromField the ID of the field containing the name of the unit to
    *  be converted
-   * @param numField the ID of the field containing the number of "from" units
+   * @param fromNumField the ID of the field containing the number of "from" units
    *  to be converted to "to" units
    * @param toField the ID of the field containing the name of the unit that
    *  the from field is to be converted to
+   * @param toNumField the ID of the field to receive the number of "to" units
    */
-  convertUnit(fromField, numField, toField) {
+  convertUnit(fromField, fromNumField, toField, toNumField) {
 
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
@@ -614,94 +759,85 @@ export class UcumDemo {
       decDigits = Ucum.decDigits_;
       prec.value = decDigits;
     }
-
-    let entryErrMsg = [];
+    // Start out with the precision chooser line hidden
+    let precLine = document.getElementById('precision-line');
+    precLine.style.visibility = "hidden";
 
     let fromName = document.getElementById(fromField).value ;
     let escFromName = escapeHtml(fromName);
-    if (fromName === '' || fromName === null) {
-      entryErrMsg.push('Please specify a code for the units you want to convert.');
-    }
-    else {
-      let hypIdx = fromName.indexOf(Ucum.codeSep_);
-      if (hypIdx > 0)
-        fromName = fromName.substr(0, hypIdx);
-    }
-    let fromVal = parseFloat(escapeHtml(document.getElementById(numField).value));
-    if (isNaN(fromVal)) {
-      entryErrMsg.push('Please specify the number of units to be converted.');
-    }
+    let fromVal = parseFloat(escapeHtml(document.getElementById(fromNumField).value));
     let toName = document.getElementById(toField).value;
     let escToName = escapeHtml(toName);
-    if (toName === '' || toName === null) {
-      entryErrMsg.push('Please specify a code that you want the units to be converted to.');
-    }
-    else {
-      let codePos = toName.indexOf(Ucum.codeSep_);
-      if (codePos > 0)
-        toName = toName.substr(0, codePos);
-    }
-    // Get the field to hold the response
-    let resultString = document.getElementById("resultString");
-    resultString.innerHTML = '';
 
-    // if we don't have any entry messages, call the conversion code and put
-    // the response in the form field.  Otherwise fill that field with the
-    // entry message(s).
-    if (entryErrMsg.length > 0) {
-      resultMsg = entryErrMsg.join('<BR>');
-    }
-    else {
-      let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
+    // clear the "to" number field, which is to get the result
+    let toNumFld = document.getElementById(toNumField);
+    //toNumFld.value = '';
+
+    // Get the field to hold an error message and the one to hold suggestions
+    let msgField = document.getElementById("convMsg");
+    msgField.innerHTML = '';
+    let suggsField = document.getElementById("convSuggestions");
+    suggsField.innerHTML = '';
+    suggsField.style.display = 'none';
+
+    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
                                                 true);
-      if (resultObj['status'] === 'succeeded') {
-        let toVal = resultObj['toVal'];
-        // convert the value to a fixed value with the specified number of
-        // decimal digits.  Remove trailing zeroes
-        //toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
-        // ----- OR ----
-        // convert the value to a fixed value with the specified number of
-        // decimal digits.  Do not remove trailing zeroes
-        toVal = toVal.toFixed(decDigits);
+    if (resultObj['status'] === 'succeeded') {
+      let toVal = resultObj['toVal'];
 
-        // Set the return message.   Use the UCUM code from the "from" and "to"
-        // unit objects returned.  Although the user will PROBABLY enter a
-        // valid unit code from the web page, they don't have to.
-        resultMsg = `${fromVal.toString()} ` +
-            `${resultObj['fromUnit'].getProperty('csCode_')} ` +
-            `(${resultObj['fromUnit'].getProperty('name_')}) = ` +
-            `${toVal.toString()} ` +
-            `${resultObj['toUnit'].getProperty('csCode_')} ` +
-            `(${resultObj['toUnit'].getProperty('name_')})`;
-        if (resultObj['msg'].length > 0) {
-          for (let r = 0; r < resultObj['msg'].length; r++)
+      // Store the name of the result field and the full number received so
+      // that we have it if a larger number of digits is subsequently requested.
+      this.lastResultFld_ = toNumField ;
+      this.lastResult_ = toVal;
+
+      // convert the value to a fixed value with the specified number of
+      // decimal digits.  Remove trailing zeroes
+      //toVal = toVal.toFixed(decDigits).replace(/\.?0+$/, "");
+      // ----- OR ----
+      // convert the value to a fixed value with the specified number of
+      // decimal digits.  Do not remove trailing zeroes
+      // toVal = toVal.toFixed(decDigits);
+      // ----- OR ----
+      // convert the value to a value with 16 significant digits.  Use
+      // 16 to avoid floating point rounding errors
+      // if before/after parseFloat are not equal, show precision chooser
+      // otherwise don't.   Only modify last result value
+      let precVal = parseFloat(toVal.toPrecision(UcumDemoConfig.defaultPrecision_)) ;
+      toNumFld.value = precVal;
+
+      // The precision chooser is on hold.  Don't display.
+      //if (precVal !== toVal) {
+      //  precLine.style.visibility = "visible";
+      //}
+
+      // If a message was returned, write that to the message area.  For a
+      // successful conversion this might be a message about a substitution,
+      // e.g., "2m is not a valid UCUM code.  We assumed you meant 2.m"
+
+      if (resultObj['msg'].length > 0) {
+        for (let r = 0; r < resultObj['msg'].length; r++)
           resultMsg += '<br>' + resultObj['msg'][r] ;
-        }
       }
-      // Else if an error was signalled, transfer the error message to
-      // the result field
-      else if (resultObj['status'] === 'error') {
-        resultMsg = 'Sorry - an error occurred while trying to ' +
-          'perform the conversion.';
+    }
+    // Else if an error was signalled, transfer the error message to
+    // the result field
+    else if (resultObj['status'] === 'error') {
+      resultMsg = 'Sorry - an error occurred while trying to ' +
+        'perform the conversion.';
+    }
+
+    // Else 1 or more invalid unit expressions were found (status = 'failed')
+    else {
+      if (resultObj['msg']) {
+        resultMsg = resultObj['msg'].join('<BR>');
       }
-      // Else 1 or more invalid unit expressions were found (status = 'failed')
-      else {
-        // if suggestions were found, output any included messages followed
-        // by the suggestions to the result field
-        if (resultObj['suggestions']) {
-          if (resultObj['msg'])
-            resultMsg += resultObj['msg'].join('<BR>') + '<BR>';
-          if (resultObj['suggestions']['from'])
-            resultMsg += this._suggSetOutput(resultObj['suggestions']['from']);
-          if (resultObj['suggestions']['to'])
-            resultMsg += this._suggSetOutput(resultObj['suggestions']['to']);
-        }
-        // if suggestions were not found, output whatever message(s) were
-        // returned that would indicate the problem
-        else
-          resultMsg = resultObj['msg'].join('<BR>');
-      } // end if conversion did/didn't succeed
-    } // end if there were/weren't entry errors
+      // if suggestions were found, output the suggestions to the suggestions
+      // field
+      if (resultObj['suggestions']) {
+        suggsField.innerHTML = this._suggSetOutput(resultObj['suggestions']);
+        suggsField.style.display = 'block';
+      }
+    } // end if conversion did/didn't succeed
 
     if (resultMsg !== '') {
       if (fromName !== escFromName && fromName !== '') {
@@ -710,7 +846,7 @@ export class UcumDemo {
       if (toName !== escToName && toName !== '') {
         resultMsg = this._multipleReplace(resultMsg, toName, escToName);
       }
-      resultString.innerHTML = resultMsg;
+      msgField.innerHTML = resultMsg;
     }
   } // end convertUnit
 
@@ -1002,6 +1138,36 @@ export class UcumDemo {
       replaceWith);
 
   } // end _multipleReplace
+
+
+  /**
+   * This makes sure that the unit name areas on the unit
+   * conversion tab (under the unit code input fields) are
+   * the same heights).
+   *
+   * @private
+   */
+  _sizeNameDivs() {
+
+    let left = document.getElementById("convertFromName");
+    let leftHeight = left.offsetHeight;
+
+    let right = document.getElementById("convertToName");
+    let rightHeight = right.offsetHeight;
+
+    if (right.innerHTML === '' && left.innerHTML === '') {
+      right.style.height = '0px';
+      left.style.height = '0px';
+    }
+    else {
+      if (leftHeight > rightHeight) {
+        right.style.height = leftHeight + 'px' ;
+      }
+      else if (rightHeight > leftHeight) {
+        left.style.height = rightHeight + 'px';
+      }
+    }
+  } // end _sizeNameDivs
 
 } // end class UcumDemo
 
