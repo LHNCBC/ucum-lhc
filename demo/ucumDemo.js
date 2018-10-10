@@ -699,7 +699,7 @@ export class UcumDemo {
     let msgField = document.getElementById(msgFieldName);
     msgField.innerHTML = '';
     let prec = document.getElementById("precision");
-    let precDigits = parseInt(escapeHtml(prec.value));
+    let precDigits = parseInt(prec.value);
     if (isNaN(precDigits) || (precDigits < 0)) {
       msgField.innerHTML = `Decimal digits must be specified as a number `+
                            `between 0 and ${UcumDemoConfig.maxDecDigits_}.  ` +
@@ -718,7 +718,8 @@ export class UcumDemo {
     }
     // Update the result field
     let numField = document.getElementById(this.lastResultFld_);
-    let numVal = parseFloat(escapeHtml(numField.value));
+    let numVal = escapeHtml(numField.value);
+    numVal = parseFloat(numVal);
     if (numVal !== '') {
       numVal = parseFloat(this.lastResult_).toFixed(precDigits);
       numField.value = numVal;
@@ -825,9 +826,18 @@ export class UcumDemo {
       // if suggestions were found, output the suggestions to the suggestions
       // field
       if (resultObj['suggestions']) {
-        suggsField.innerHTML = this._suggSetOutput(resultObj['suggestions']);
+        let suggsSetString = this._suggSetOutput(resultObj['suggestions']);
+        if (fromName !== escFromName && fromName !== '') {
+          suggsSetString = this._multipleReplace(suggsSetString,
+                                                 fromName, escFromName);
+        }
+        if (toName !== escToName && toName !== '') {
+          suggsSetString = this._multipleReplace(suggsSetString,
+                                                 toName, escToName);
+        }
+        suggsField.innerHTML = suggsSetString;
         suggsField.style.display = 'block';
-      }
+      } // end if there were suggestions
     } // end if conversion did/didn't succeed
 
     if (resultMsg !== '') {
