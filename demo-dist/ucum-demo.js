@@ -821,9 +821,9 @@ var UcumDemo = exports.UcumDemo = function () {
       }
       // Update the result field
       var numField = document.getElementById(this.lastResultFld_);
-      var numVal = parseFloat(numField.value);5;
+      var numVal = parseFloat(numField.value);
       if (numVal !== NaN) {
-        numVal = parseFloat(this.lastResult_).toFixed(precDigits);
+        numVal = this.lastResult_.toFixed(precDigits);
         numField.value = numVal;
       }
     } // end updatePrecision
