@@ -821,9 +821,8 @@ var UcumDemo = exports.UcumDemo = function () {
       }
       // Update the result field
       var numField = document.getElementById(this.lastResultFld_);
-      var numVal = escapeHtml(numField.value);
-      numVal = parseFloat(numVal);
-      if (numVal !== '') {
+      var numVal = parseFloat(numField.value);5;
+      if (numVal !== NaN) {
         numVal = parseFloat(this.lastResult_).toFixed(precDigits);
         numField.value = numVal;
       }
