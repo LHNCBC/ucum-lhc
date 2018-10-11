@@ -4,7 +4,6 @@ module.exports = function(grunt) {
   require('jit-grunt')(grunt, {
     clean: 'grunt-contrib-clean',
     cssmin: 'grunt-contrib-cssmin',
-    nsp: 'grunt-nsp',
     uglify: 'grunt-contrib-uglify',
     mochaTest: 'grunt-mocha-test'
     //protractor: 'grunt-protractor-runner'
@@ -208,8 +207,7 @@ module.exports = function(grunt) {
                                "build:demo",
                                "build:test"]);
   grunt.registerTask("test", ['build',
-                              'mochaTest',
-                              'nsp']);
+                              'mochaTest']);
   //grunt.registerTask("justProtractor", ['protractor']);
 
 };
