@@ -4,9 +4,9 @@ module.exports = function(grunt) {
   require('jit-grunt')(grunt, {
     clean: 'grunt-contrib-clean',
     cssmin: 'grunt-contrib-cssmin',
-    nsp: 'grunt-nsp',
     uglify: 'grunt-contrib-uglify',
     mochaTest: 'grunt-mocha-test'
+    //protractor: 'grunt-protractor-runner'
   });
 
   // Time how long tasks take.  Just for fun
@@ -131,11 +131,6 @@ module.exports = function(grunt) {
       src: ['./test-es5/*.spec.js']
     },
 
-    // using nsp for security checking
-    nsp: {
-      package: grunt.file.readJSON('./package.json') ,
-      packagelock: grunt.file.readJSON('./package-lock.json')
-    } ,
 
     // watch application files to see if they need to be re-browserified,
     // and bower components to see if they change
@@ -153,11 +148,28 @@ module.exports = function(grunt) {
       options: {
         input: './demo/',
         output: './',
-        matcher: 'demo.html'
+        matcher: 'demo*.html'
       },
     }
 
-  });
+    /* hold on protractor for now.
+    // grunt protractor runner task
+    protractor: {
+      options: {
+        configFile: "demo-test/ucumDemo-conf.js",
+        keepAlive: true,
+        noColor: false,
+        args: {}
+      } ,
+      all: {
+        options: {
+          browser: 'chrome'
+        }
+      }
+    } // end protractor task
+    */
+
+  });  // end grunt.initConfig
 
   // load and register the tasks
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -166,6 +178,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks('grunt-wiredep');
   grunt.loadNpmTasks('grunt-mocha-test') ;
+
+  // hold on protractor for now
+  //grunt.loadNpmTasks('grunt-protractor-runner');
 
   grunt.registerTask('ssi', 'Flatten SSI includes in your HTML files.', function() {
 
@@ -192,7 +207,7 @@ module.exports = function(grunt) {
                                "build:demo",
                                "build:test"]);
   grunt.registerTask("test", ['build',
-                              'mochaTest',
-                              'nsp']);
+                              'mochaTest']);
+  //grunt.registerTask("justProtractor", ['protractor']);
 
 };

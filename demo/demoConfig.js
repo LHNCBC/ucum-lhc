@@ -58,7 +58,22 @@ export var UcumDemoConfig = {
   baseSearchOpts_ : {'nonMatchSuggestions': false,
                      'tableFormat': true,
                      'valueCols': [0],
-                     'tokens': ['/', '.']}
+                     'tokens': ['/', '.']},
+
+  /**
+   *  The default number of decimal digits to be displayed for a unit amount
+   */
+  decDigits_ : 2,
+
+  /**
+   *  The maximum number of decimal digits to be displayed for a unit amount.
+   */
+  maxDecDigits_ : 20,
+
+  /**
+   *  The default precision to be used
+   */
+  defaultPrecision_ : 15
 } ;
 
 
