@@ -88,13 +88,11 @@
 
 
 body {
+  font-size: 14px;
   font-family: "sans-serif" ;
   margin: 0px 20px 20px 20px ;
   color: #1E4193 ;
-}
-
-#demobody {
-  font-size: 14px;
+  min-width: 815px;
 }
 
 h1 {
@@ -139,29 +137,114 @@ button {
   font-size: 14px ;
 }
 
-#validationString {
-  margin-top: 0px;
+#toggleCnvHints {
+  text-decoration: underline;
+}
+
+.standalone-button {
+  text-decoration: underline;
+  width: 160px;
+  padding: 5px;
+  margin: 3px;
 }
 
 #resultString{
   margin-top: 10px;
 }
 
-.limitWidth {
-  max-width: 800px;
-  margin: 10px;
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
 }
+
+.outer-container {
+  flex-direction: row;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.inner-container {
+    flex-direction: column;
+}
+
+.middle-column {
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 30px;
+  font-size: 24px;
+}
+
+#convMsg {
+  color: red;
+  line-height: 20px;
+  margin: 15px;
+  text-align: center;
+  font-size: 16px;
+}
+
+#convSuggestions {
+  color: red;
+  display: none;
+}
+
 #inputfile {
   font-size: 14px ;
   color: #1E4193 ;
 }
+
 .section {
   border: 3px solid #ddd;
   border-radius: 25px;
   margin: 25px;
   padding: 15px 25px;
   width: auto;
+  min-width: 750px;
 }
+
+#convSection {
+  border: 3px solid transparent !important;
+}
+
+.inner-section {
+  border: 3px solid #ddd;
+  border-radius: 25px;
+  margin: 30px;
+  padding: 15px 30px;
+  width: auto;
+}
+
+.input-field {
+    font-size: 15px;
+    line-height: 30px;
+    width: 15em;
+    box-sizing: border-box;
+}
+
+.input-number {
+  width: 15em;
+  padding-right: 14px;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.unit-name {
+  border-color: transparent;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  resize: none;
+  overflow: auto;
+  background-color: transparent;
+  max-height: 126px;
+  max-width: 244px;
+}
+
+#precision-line{
+  text-align: center;
+  padding-top: 8px;
+  visibility: hidden;
+}
+
 .small-print {
   font-size: 12px;
 }
@@ -182,6 +265,29 @@ input.invalid {
 
 #resultString.invalid, #validationString.invalid {
   color: red ;
+}
+
+#valString {
+  /*margin-left: 50px; */
+  /*text-align: center ; */
+  width: 200px !important ;
+  margin-bottom: 10px;
+}
+
+#validationString.valid {
+  font-weight: bold;
+}
+
+#valStringDiv {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 50px;
+
+}
+
+#valButtonLinks {
+  margin-top: 25px;
 }
 
 /* Override the standard autocompleter settings for an input
@@ -211,25 +317,10 @@ ul.tab li a {
 
 #advancedSearchCnv, #advancedSearchVal {
   border: 3px dotted #ddd;
+  /* border: 3px dotted transparent; */
   border-radius: 25px;
   padding: 20px;
   margin: 20px;
-}
-#convertToDivs {
-  width: 100% ;
-  display: flex;
-  justify-content: flex-start;
-}
-#convertLeft {
-  margin-right: 15px;
-}
-
-#convertRight {
-  width: 280px;
-}
-
-#convertNum {
-  width: 10em;
 }
 
 button[disabled] {
@@ -238,9 +329,6 @@ button[disabled] {
 
 #precision {
   width: 3em;
-}
-.topMargin20 {
-  margin-top: 20px;
 }
 
 /* align the content of search list table cells to the top of the cell */

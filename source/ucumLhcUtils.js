@@ -37,19 +37,6 @@ export class UcumLhcUtils {
       // of the LHC Utilities
       this.uStrParser_ = UnitString.getInstance();
 
-      // Make this a singleton.  See UnitTables constructor for details.
- /*     let holdThis = UcumLhcUtils.prototype;
-      UcumLhcUtils = function () {
-        throw (new Error('UcumLhcUtils is a Singleton. ' +
-        'Use UcumLhcUtils.getInstance() instead.'));
-      };
-      if (exports)
-        exports.UcumLhcUtils = UcumLhcUtils;
-      UcumLhcUtils.prototype = holdThis;
-
-    let self = this ;
-    UcumLhcUtils.getInstance = function(){return self} ;*/
-
   } // end constructor
 
 
@@ -104,6 +91,10 @@ export class UcumLhcUtils {
    *  requested for a string that cannot be resolved to a valid unit;
    *  true indicates suggestions are wanted; false indicates they are not,
    *  and is the default if the parameter is not specified;
+   * @param valConv a string indicating if this validation request was initiated
+   *  by a validation task ('validate') or a conversion task ('convert'),
+   *  used only for the demo code, and the default is 'Validator' if the
+   *  parameter is not specified;
    * @returns an object with five properties:
    *  'status' will be 'valid' (the uStr is a valid UCUM code), 'invalid'
    *     (the uStr is not a valid UCUM code, and substitutions or
@@ -133,12 +124,15 @@ export class UcumLhcUtils {
    *     If no suggestions were requested and found, this property is not
    *     returned.
    */
-  validateUnitString(uStr, suggest) {
+  validateUnitString(uStr, suggest, valConv) {
 
     if (suggest === undefined)
       suggest = false ;
 
-    let resp = this.getSpecifiedUnit(uStr, 'validate', suggest);
+    if (valConv === undefined)
+      valConv = 'validate' ;
+
+    let resp = this.getSpecifiedUnit(uStr, valConv, suggest);
     let theUnit = resp['unit'];
     let retObj = {};
     if (!theUnit) {
@@ -485,15 +479,15 @@ export class UcumLhcUtils {
  *  singleton UcumLhcUtils object.  This is based on the UnitTables singleton
  *  implementation; see more detail in the UnitTables constructor description.
  *
- *  @return the singleton UcumLhcUtils object.
+ *  NO LONGER TRUE - not implemented as a singleton.  This method retained to
+ *  avoid problems with calls to it that exist throughout the code.
+ *
+ *  @return the (formerly singleton) UcumLhcUtils object.
  */
 UcumLhcUtils.getInstance = function(){
   return new UcumLhcUtils();
-}
+} ;
 
-// Perform the first request for the utils object, to get the
-// getInstance method set.
-//UcumLhcUtils.getInstance();
 
 
 

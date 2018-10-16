@@ -30,10 +30,6 @@ export var Ucum = {
    */
   validOps_: ['.', '/'],
 
-  /**
-   *  The number of decimal digits to be displayed for a unit amount
-   */
-  decDigits_ : 2,
 
   /**
    * The string used to separate a unit code and unit name when they
@@ -41,7 +37,14 @@ export var Ucum = {
    */
   codeSep_ : ': ',
 
-  /**
+  // Message text variations for validation methods and conversion methods
+  valMsgStart_ : 'Did you mean ',
+  valMsgEnd_ : '?' ,
+  cnvMsgStart_ : 'We assumed you meant ',
+  cnvMsgEnd_ : '.',
+
+
+/**
    * Default opening string used to emphasize portions of error messages.
    * Used when NOT displaying messages on a web site, i.e., for output
    * from the library methods or to a file.

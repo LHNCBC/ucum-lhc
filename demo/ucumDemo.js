@@ -494,20 +494,36 @@ export class UcumDemo {
               valFld.classList.remove('invalid');
               resFld.classList.remove('invalid');
               resFld.classList.add('valid');
+            }
+            // Assemble the valid value message.  If there is a unit name,
+            // use that.  If there's no name, just say that the code is valid.
+            valMsg = `${parseResp['ucumCode']} `;
+            if (theUnit.name) {
+              valMsg += `(${theUnit.name}) `;
+            }
+            valMsg += ' is a valid unit expression.';
+            // If there might be something that needs to be escaped in
+            // the message, do it now.
+            if (uStr !== escVal && uStr !== '') {
+              valMsg = this._multipleReplace(valMsg, uStr, escVal);
+            }
+            // For the validator tab, make sure the valid unit message
+            // is the first one that is displayed.  It may be followed
+            // by a message about substitions, but it should be first.
+            if (tabName === 'Validator') {
 
-              // Assemble the valid value message, which is only output on the
-              // validator tab.  If there is a unit name, use that.  If
-              // there's no name, just say that the code is valid.
-              valMsg = `${parseResp['ucumCode']} `;
-              if (theUnit.name) {
-                valMsg += `(${theUnit.name}) `;
-              }
-              valMsg += ' is a valid unit expression.';
               if (parseResp['msg'].length > 0)
                 parseResp['msg'].unshift(valMsg);
               else
                 parseResp['msg'] = valMsg;
             } // end if this is for the validator tab
+            // For for the converter tab, the valid unit message goes under
+            // the field of the unit code last specified.  Call _sizeNameDivs
+            // to make sure the height of the message areas match.
+            else {
+              valMsgFld.innerHTML = valMsg;
+              this._sizeNameDivs();
+            }
           }  // end if the status is 'valid'
         } // end if we have a unit and the status is not 'error'
         // Else the status returned is 'error' OR no unit was returned
@@ -557,7 +573,7 @@ export class UcumDemo {
         if (retMsg != '') {
           retMsg += '<BR>';
         }
-        retMsg += parseResp['msg'] ;
+        retMsg += parseResp['msg'];
       } // end if there's a message from the parse request
 
       // If there's a message to be displayed, do it now
@@ -567,16 +583,7 @@ export class UcumDemo {
         }
         resFld.innerHTML = retMsg;
       }
-      // If there's a "valid code" message to be displayed, do that now
-      if (valMsg !== '') {
-        if (uStr !== escVal && uStr !== '') {
-          valMsg = this._multipleReplace(valMsg, uStr, escVal);
-        }
-        valMsgFld.innerHTML = valMsg;
-      } // end if there's a "valid code" message to display
-
     } // end if a value was specified
-    this._sizeNameDivs();
   } // end reportUnitStringValidity
 
 
@@ -709,7 +716,7 @@ export class UcumDemo {
     let msgField = document.getElementById(msgFieldName);
     msgField.innerHTML = '';
     let prec = document.getElementById("precision");
-    let precDigits = parseInt(escapeHtml(prec.value));
+    let precDigits = parseInt(prec.value);
     if (isNaN(precDigits) || (precDigits < 0)) {
       msgField.innerHTML = `Decimal digits must be specified as a number `+
                            `between 0 and ${UcumDemoConfig.maxDecDigits_}.  ` +
@@ -719,17 +726,18 @@ export class UcumDemo {
       prec.value = precDigits;
     }
     else if (precDigits > UcumDemoConfig.maxDecDigits_) {
-      msgField.innerHTML = `${prec.value} is not a valid value for decimal `+
-        `digits.  It has been reset to the maximum number of digits allowed.`;
+      msgField.innerHTML = `${escapeHtml(prec.value)} is not a valid value for `
+        `decimal digits.  It has been reset to the maximum number of digits ` +
+        `allowed.`;
       msgField.classList.add("invalid");
       precDigits = UcumDemoConfig.maxDecDigits_;
       prec.value = precDigits;
     }
     // Update the result field
     let numField = document.getElementById(this.lastResultFld_);
-    let numVal = parseFloat(escapeHtml(numField.value));
-    if (numVal !== '') {
-      numVal = parseFloat(this.lastResult_).toFixed(precDigits);
+    let numVal = parseFloat(numField.value);
+    if (numVal !== NaN) {
+      numVal = this.lastResult_.toFixed(precDigits);
       numField.value = numVal;
     }
 
@@ -834,9 +842,18 @@ export class UcumDemo {
       // if suggestions were found, output the suggestions to the suggestions
       // field
       if (resultObj['suggestions']) {
-        suggsField.innerHTML = this._suggSetOutput(resultObj['suggestions']);
+        let suggsSetString = this._suggSetOutput(resultObj['suggestions']);
+        if (fromName !== escFromName && fromName !== '') {
+          suggsSetString = this._multipleReplace(suggsSetString,
+                                                 fromName, escFromName);
+        }
+        if (toName !== escToName && toName !== '') {
+          suggsSetString = this._multipleReplace(suggsSetString,
+                                                 toName, escToName);
+        }
+        suggsField.innerHTML = suggsSetString;
         suggsField.style.display = 'block';
-      }
+      } // end if there were suggestions
     } // end if conversion did/didn't succeed
 
     if (resultMsg !== '') {
