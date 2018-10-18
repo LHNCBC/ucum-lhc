@@ -81,6 +81,12 @@ export class UcumDemo {
     this.lastResultFld_ = null ;
     this.lastResult_ = 0;
 
+    // Flag used to block execution of the location change event handler when
+    // location is changed in the url as the result of the user clicking on
+    // one of the tabs (validator or converter tabs) by the checkTabsSwitch
+    // function.
+    this.blockLocationChangeHandler = false ;
+
     // Set up the prefetch autocompleter for the "to" conversion field.  It will
     // be populated with commensurable units in based on what the user enters
     // in the "from" field.  Changed to search autocompleter per Clem
@@ -182,17 +188,8 @@ export class UcumDemo {
     // Check to see if the URL specified that the converter tab be
     // displayed first.
     if (window.location.hash === '#converter') {
-      let convTabLi = document.getElementById("conversion-link-li");
-      let valTabLi = document.getElementById("validation-link-li");
-      let convDiv = document.getElementById("conversion");
-      let valDiv = document.getElementById("validation");
-      convTabLi.classList.add('active');
-      convDiv.classList.add('in');
-      convDiv.classList.add('active');
-      valTabLi.classList.remove('active');
-      valDiv.classList.remove('in');
-      valDiv.classList.remove('active');
-      this.showConvertTab();
+      let convertTab = document.getElementById("conversion-link");
+      convertTab.click();
     }
   } // end buildAdvancedSettings
 
@@ -286,6 +283,29 @@ export class UcumDemo {
 
 
   /**
+   * This method checks the location value of the current URL to see if it
+   * matched the current tab being displayed (or the one about to be
+   * displayed).  This is here to make sure that when the user clicks on
+   * the Validator or Converter tab, the "#converter" portion of the
+   * url, if specified, is removed if the user clicked on the validator tab.
+   *
+   * This is called on the body onhashchange event.
+   */
+  checkTabSwitch() {
+    if (this.blockLocationChangeHandler === false) {
+      if (window.location.hash === '#converter') {
+        let convertTab = document.getElementById("conversion-link");
+        convertTab.click();
+      }
+      else {
+        let validateTab = document.getElementById("validation-link");
+        validateTab.click();
+      }
+    }
+  } // end checkTabSwitch
+
+
+  /**
    * This method is run when the Converter tab is displayed, to reset the
    * variables that track the validity of the three inputs ("from" unit code,
    * "from" value, and "to" unit code) that must be correct to attempt a
@@ -317,6 +337,13 @@ export class UcumDemo {
     let toNumField = document.getElementById('convertToNum');
     toNumField.value = 1;
     toNumField.classList.remove("invalid");
+
+    if (window.location.hash !== '#converter' &&
+        window.location.hash !== '') {
+      this.blockLocationChangeHandler = true;
+      window.location.hash = '';
+      this.blockLocationChangeHandler = false ;
+    }
   } // end showConvertTab
 
 
@@ -335,7 +362,12 @@ export class UcumDemo {
     msgField.innerHTML = '';
     msgField.classList.remove("invalid");
 
-  } // end showConvertTab
+    if (window.location.hash === '#converter') {
+      this.blockLocationChangeHandler = true;
+      window.location.hash = '';
+      this.blockLocationChangeHandler = false ;
+    }
+  } // end showValidateTab
 
 
   /**

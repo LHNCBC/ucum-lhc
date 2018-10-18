@@ -5,8 +5,8 @@ module.exports = function(grunt) {
     clean: 'grunt-contrib-clean',
     cssmin: 'grunt-contrib-cssmin',
     uglify: 'grunt-contrib-uglify',
-    mochaTest: 'grunt-mocha-test'
-    //protractor: 'grunt-protractor-runner'
+    mochaTest: 'grunt-mocha-test',
+    protractor: 'grunt-protractor-runner'
   });
 
   // Time how long tasks take.  Just for fun
@@ -149,25 +149,23 @@ module.exports = function(grunt) {
         input: './demo/',
         output: './',
         matcher: 'demo*.html'
-      },
-    }
+      }
+    },
 
-    /* hold on protractor for now.
     // grunt protractor runner task
     protractor: {
       options: {
         configFile: "demo-test/ucumDemo-conf.js",
-        keepAlive: true,
+        keepAlive: false,
         noColor: false,
         args: {}
       } ,
       all: {
         options: {
-          browser: 'chrome'
+          browser: 'firefox'
         }
       }
     } // end protractor task
-    */
 
   });  // end grunt.initConfig
 
@@ -178,9 +176,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks('grunt-wiredep');
   grunt.loadNpmTasks('grunt-mocha-test') ;
-
-  // hold on protractor for now
-  //grunt.loadNpmTasks('grunt-protractor-runner');
+  grunt.loadNpmTasks('grunt-protractor-runner');
 
   grunt.registerTask('ssi', 'Flatten SSI includes in your HTML files.', function() {
 
@@ -208,6 +204,9 @@ module.exports = function(grunt) {
                                "build:test"]);
   grunt.registerTask("test", ['build',
                               'mochaTest']);
-  //grunt.registerTask("justProtractor", ['protractor']);
+  // note that the webdriver manager must be running before the
+  // protractor tests will run.  use webdriver-manager start & to
+  // start the manager and the selenium server
+  grunt.registerTask("runProtractor", ['protractor']);
 
 };

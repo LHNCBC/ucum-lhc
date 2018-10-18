@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="demo-dist/ucumDemo.min.css" rel="stylesheet"/>
   </head>
-  <body id="demobody"
+  <body id="demobody" onhashchange="demoPkg.UcumDemo.getInstance().checkTabSwitch();"
         onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
+
     <!-- page header -->
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" id="logo"
@@ -42,12 +43,12 @@
 
     <!-- navigator/converter tabs -->
     <ul class="tab nav nav-tabs">
-      <li id="validation-link-li" class="active">
+      <li class="active">
           <a id="validation-link" href="#validation" class="tablinks"
              data-toggle="tab"
              onclick="demoPkg.UcumDemo.getInstance().showValidateTab()">
              Validator</a></li>
-      <li id="conversion-link-li">
+      <li>
           <a id="conversion-link" href="#conversion" class="tablinks"
              data-toggle="tab"
              onclick="demoPkg.UcumDemo.getInstance().showConvertTab()">
