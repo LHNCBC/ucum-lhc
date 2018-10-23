@@ -1,7 +1,5 @@
 /**
- * Mocha tests for the Unit class.  Starting out with just testing the power
- * method.  More tests to be added later.
- *
+ * Mocha tests for the Unit class.
  * Run from the command line with 'mocha testunit.js' or 'grunt test'
  */
 
@@ -93,13 +91,6 @@ describe('Test Unit convertFrom/convertTo methods', function() {
       var res3 = kmolD1.convertFrom(1, molD10);
       assert.equal(res3, 10000, `result returned was ${res3}`);
     }) ;
-    it('should return 2000 for 2 kmol/[CFU] to mol', function(){
-      var mol = uTabs.getUnitByCode('mol');
-      var respObj = uString.parseString('kmol/[CFU]');
-      var kmolCFU = respObj[0];
-      var res4 = kmolCFU.convertTo(2, mol);
-       assert.equal(res4, 2000, `result returned was ${res4}`);
-    });
   }); // end test conversion for units with no vectors, no functions
 
   describe('Test conversion for units with no vectors but with functions', function(){
@@ -153,3 +144,50 @@ describe('Test construction of name data for constructed units', function() {
   });
 }) ; // end Test construction of name data for constructed units
 
+describe('Test unit scalar multiplication functions', function() {
+  it('should return an updated magnitude for a 2 * [lb_av]', function(){
+    var avUnit = uTabs.getUnitByCode('[lb_av]');
+    var retUnit = avUnit.multiplyThis(2);
+    assert.equal('2*pound', retUnit.name_);
+    assert.equal('2.[lb_av]', retUnit.csCode_);
+    assert.equal(2 * avUnit.magnitude_, retUnit.magnitude_);
+  });
+
+  it('should an updated cnvPfx_ for a 2 * Cel', function(){
+    var celUnit = uTabs.getUnitByCode('Cel');
+    var retUnit = celUnit.multiplyThis(2);
+    assert.equal('2*[degree Celsius]', retUnit.name_);
+    assert.equal('2.Cel', retUnit.csCode_);
+    assert.equal(2 * celUnit.cnvPfx_, retUnit.cnvPfx_);
+  });
+}) ; // end Test unit scalar multiplication functions
+
+describe('Test attempts to multiply/divide arbitrary units', function() {
+  it('should throw and error on attempt to multiply mol by cfu', function(){
+    var molUnit = uTabs.getUnitByCode('mol');
+    var cfuUnit = uTabs.getUnitByCode('[CFU]');
+    var errMsg = null;
+    try {
+      var retUnit = molUnit.multiplyThese(cfuUnit);
+    }
+    catch(err) {
+      errMsg = err.message;
+    }
+    assert.equal('Attempt to multiply by arbitrary unit colony forming units',
+      errMsg);
+  });
+
+  it('should throw and error on attempt to divide cfu by mol', function(){
+    var molUnit = uTabs.getUnitByCode('mol');
+    var cfuUnit = uTabs.getUnitByCode('[CFU]');
+    var errMsg = null;
+    try {
+      var retUnit = cfuUnit.divide(molUnit);
+    }
+    catch(err) {
+      errMsg = err.message;
+    }
+    assert.equal('Attempt to divide arbitrary unit colony forming units',
+      errMsg);
+  });
+}) ; // end Test attempts to multiply/divide arbitrary units

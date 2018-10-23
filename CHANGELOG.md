@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.2] - 2018-10-25
+## Changed
+- blocked division and multiplication operations on arbitrary units
+
 ## [2.4.0] - 2018-10-10
 ## Changed
 - redesigned validator tab on Demo page to move messages closer to the 

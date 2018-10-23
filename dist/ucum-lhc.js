@@ -30041,7 +30041,9 @@ var Unit = exports.Unit = function () {
     /**
      * Multiplies this unit with another unit. If one of the
      * units is a non-ratio unit the other must be dimensionless or
-     * else an exception is thrown. 
+     * else an exception is thrown.
+     *
+     * If either unit is an arbitrary unit an exception is raised.
      *
      * This function does NOT modify this unit
      * @param unit2 the unit to be multiplied with this one
@@ -30055,6 +30057,9 @@ var Unit = exports.Unit = function () {
     value: function multiplyThese(unit2) {
 
       var retUnit = this.clone();
+
+      if (retUnit.isArbitrary_) throw new Error("Attempt to multiply arbitrary unit " + retUnit.name_);
+      if (unit2.isArbitrary_) throw new Error("Attempt to multiply by arbitrary unit " + unit2.name_);
 
       if (retUnit.cnv_ != null) {
         if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + retUnit.name_ + " " + 'failed.');
@@ -30101,6 +30106,8 @@ var Unit = exports.Unit = function () {
      * scale an exception is raised. Mutating to a ratio scale unit
      * is not possible for a unit, only for a measurement.
      *
+     * If either unit is an arbitrary unit an exception is raised.
+     *
      * This unit is NOT modified by this function.
      * @param unit2 the unit by which to divide this one
      * @return this unit after it is divided by unit2
@@ -30112,6 +30119,9 @@ var Unit = exports.Unit = function () {
     value: function divide(unit2) {
 
       var retUnit = this.clone();
+
+      if (retUnit.isArbitrary_) throw new Error("Attempt to divide arbitrary unit " + retUnit.name_);
+      if (unit2.isArbitrary_) throw new Error("Attempt to divide by arbitrary unit " + unit2.name_);
 
       if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
       if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
