@@ -302,6 +302,9 @@ export class UcumDemo {
         validateTab.click();
       }
     }
+    else
+      this.blockLocationChangeHandler = false ;
+    
   } // end checkTabSwitch
 
 
@@ -342,7 +345,6 @@ export class UcumDemo {
         window.location.hash !== '') {
       this.blockLocationChangeHandler = true;
       window.location.hash = '';
-      this.blockLocationChangeHandler = false ;
     }
   } // end showConvertTab
 

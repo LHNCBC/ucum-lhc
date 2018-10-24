@@ -421,7 +421,7 @@ var UcumDemo = exports.UcumDemo = function () {
           var validateTab = document.getElementById("validation-link");
           validateTab.click();
         }
-      }
+      } else this.blockLocationChangeHandler = false;
     } // end checkTabSwitch
 
 
@@ -464,7 +464,6 @@ var UcumDemo = exports.UcumDemo = function () {
       if (window.location.hash !== '#converter' && window.location.hash !== '') {
         this.blockLocationChangeHandler = true;
         window.location.hash = '';
-        this.blockLocationChangeHandler = false;
       }
     } // end showConvertTab
 
