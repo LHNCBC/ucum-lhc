@@ -27698,21 +27698,22 @@ var Ucum = exports.Ucum = {
   validOps_: ['.', '/'],
 
   /**
-   *  The number of decimal digits to be displayed for a unit amount
-   */
-  decDigits_: 2,
-
-  /**
    * The string used to separate a unit code and unit name when they
    * are displayed together
    */
   codeSep_: ': ',
 
+  // Message text variations for validation methods and conversion methods
+  valMsgStart_: 'Did you mean ',
+  valMsgEnd_: '?',
+  cnvMsgStart_: 'We assumed you meant ',
+  cnvMsgEnd_: '.',
+
   /**
-   * Default opening string used to emphasize portions of error messages.
-   * Used when NOT displaying messages on a web site, i.e., for output
-   * from the library methods or to a file.
-   */
+     * Default opening string used to emphasize portions of error messages.
+     * Used when NOT displaying messages on a web site, i.e., for output
+     * from the library methods or to a file.
+     */
   openEmph_: ' ->',
 
   /**
@@ -29013,18 +29014,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     // Get the UnitString parser that will be used with this instance
     // of the LHC Utilities
     this.uStrParser_ = UnitString.getInstance();
-
-    // Make this a singleton.  See UnitTables constructor for details.
-    /*     let holdThis = UcumLhcUtils.prototype;
-         UcumLhcUtils = function () {
-           throw (new Error('UcumLhcUtils is a Singleton. ' +
-           'Use UcumLhcUtils.getInstance() instead.'));
-         };
-         if (exports)
-           exports.UcumLhcUtils = UcumLhcUtils;
-         UcumLhcUtils.prototype = holdThis;
-        let self = this ;
-       UcumLhcUtils.getInstance = function(){return self} ;*/
   } // end constructor
 
 
@@ -29082,6 +29071,10 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      *  requested for a string that cannot be resolved to a valid unit;
      *  true indicates suggestions are wanted; false indicates they are not,
      *  and is the default if the parameter is not specified;
+     * @param valConv a string indicating if this validation request was initiated
+     *  by a validation task ('validate') or a conversion task ('convert'),
+     *  used only for the demo code, and the default is 'Validator' if the
+     *  parameter is not specified;
      * @returns an object with five properties:
      *  'status' will be 'valid' (the uStr is a valid UCUM code), 'invalid'
      *     (the uStr is not a valid UCUM code, and substitutions or
@@ -29114,11 +29107,13 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
   }, {
     key: 'validateUnitString',
-    value: function validateUnitString(uStr, suggest) {
+    value: function validateUnitString(uStr, suggest, valConv) {
 
       if (suggest === undefined) suggest = false;
 
-      var resp = this.getSpecifiedUnit(uStr, 'validate', suggest);
+      if (valConv === undefined) valConv = 'validate';
+
+      var resp = this.getSpecifiedUnit(uStr, valConv, suggest);
       var theUnit = resp['unit'];
       var retObj = {};
       if (!theUnit) {
@@ -29450,17 +29445,16 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
  *  singleton UcumLhcUtils object.  This is based on the UnitTables singleton
  *  implementation; see more detail in the UnitTables constructor description.
  *
- *  @return the singleton UcumLhcUtils object.
+ *  NO LONGER TRUE - not implemented as a singleton.  This method retained to
+ *  avoid problems with calls to it that exist throughout the code.
+ *
+ *  @return the (formerly singleton) UcumLhcUtils object.
  */
 
 
 UcumLhcUtils.getInstance = function () {
   return new UcumLhcUtils();
 };
-
-// Perform the first request for the utils object, to get the
-// getInstance method set.
-//UcumLhcUtils.getInstance();
 
 
 },{"./config.js":6,"./prefix.js":8,"./ucumInternalUtils.js":11,"./ucumJsonDefs.js":12,"./unit.js":15,"./unitString.js":16,"./unitTables.js":17,"fs":2}],14:[function(require,module,exports){
@@ -30399,12 +30393,6 @@ var UnitString = exports.UnitString = function () {
     this.braceFlag_ = "braces_placeholder"; // in lieu of Nebuchadnezzar
     this.bFlagLen_ = this.braceFlag_.length;
 
-    // Message text variations for validation methods and conversion methods
-    this.valMsgStart_ = "Did you mean ";
-    this.valMsgEnd_ = "?";
-    this.cnvMsgStart_ = "We assumed you meant ";
-    this.cnvMsgEnd_ = ".";
-
     // Initialize the message start/end strings, which will be set when
     // parseString is called.
     this.vcMsgStart_ = null;
@@ -30513,11 +30501,11 @@ var UnitString = exports.UnitString = function () {
       }
 
       if (valConv === 'validate') {
-        this.vcMsgStart_ = this.valMsgStart_;
-        this.vcMsgEnd_ = this.valMsgEnd_;
+        this.vcMsgStart_ = Ucum.valMsgStart_;
+        this.vcMsgEnd_ = Ucum.valMsgEnd_;
       } else {
-        this.vcMsgStart_ = this.cnvMsgStart_;
-        this.vcMsgEnd_ = this.cnvMsgEnd_;
+        this.vcMsgStart_ = Ucum.cnvMsgStart_;
+        this.vcMsgEnd_ = Ucum.cnvMsgEnd_;
       }
 
       if (suggest === undefined || suggest === false) {

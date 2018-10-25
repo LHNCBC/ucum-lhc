@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.1] - 2018-10-25
+### Added
+- Added capability to open directly to converter page using url
+https://ucum.nlm.nih.gov/ucum-lhc/demo.html#converter
+
+## [2.4.0] - 2018-10-10
+## Changed
+- redesigned validator tab on Demo page to move messages closer to the 
+unit expression input field
+- redesigned converter tab on Demo page to resemble an equation for the
+conversion
+
 ## [2.3.4] - 2018-08-15
 ### Fixed
 - Updated npm packages growl and semver to avoid critical security
@@ -23,10 +35,9 @@ widened in the browser the text all anchors on the left.  One portion
 of the text was anchored to the right, which made a widened version look
 wrong. 
 
-## [2.3.1] - 2018-05-25
+## [2.3.1] - 2018-06-13
 ### Fixed
-- modifications to ensure that plain numbers, e.g., 7, are not reported as 
-valid unit expressions.   
+- modifications to ensure that plain numbers, e.g., 7, are reported correctly. 
 ### Added
 - added unit name to demo output messages, where available, to make sure user 
 knows what unit is being reported as valid.
@@ -43,7 +54,6 @@ list of suggestions rather than a plain text list.
 ## Fixed  
 - fixed a bug that prevented suggestion lists from being created for more than 
 one unit.
->>>>>>> master
 
 ## [2.2.0] - 2018-05-02
 ### Changed

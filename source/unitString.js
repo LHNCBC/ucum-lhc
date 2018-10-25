@@ -40,12 +40,6 @@ export class UnitString {
     this.braceFlag_ = "braces_placeholder"; // in lieu of Nebuchadnezzar
     this.bFlagLen_ = this.braceFlag_.length;
 
-    // Message text variations for validation methods and conversion methods
-    this.valMsgStart_ = "Did you mean ";
-    this.valMsgEnd_ = "?";
-    this.cnvMsgStart_ = "We assumed you meant ";
-    this.cnvMsgEnd_ = ".";
-
     // Initialize the message start/end strings, which will be set when
     // parseString is called.
     this.vcMsgStart_ = null;
@@ -150,12 +144,12 @@ export class UnitString {
     }
 
     if (valConv === 'validate') {
-      this.vcMsgStart_ = this.valMsgStart_;
-      this.vcMsgEnd_ = this.valMsgEnd_;
+      this.vcMsgStart_ = Ucum.valMsgStart_;
+      this.vcMsgEnd_ = Ucum.valMsgEnd_;
     }
     else {
-      this.vcMsgStart_ = this.cnvMsgStart_;
-      this.vcMsgEnd_ = this.cnvMsgEnd_;
+      this.vcMsgStart_ = Ucum.cnvMsgStart_;
+      this.vcMsgEnd_ = Ucum.cnvMsgEnd_;
     }
 
     if (suggest === undefined || suggest === false) {
