@@ -620,7 +620,16 @@ export class UnitString {
           // check to make sure that we don't have two operators together, e.g.,
           // mg./K.  If so, let the user know the problem.
           let theOp = uArray1[n++];
-          if (Ucum.validOps_.includes(uArray1[n])) {
+          // oh wait - check to make sure something is even there, that the
+          // user didn't end the expression with an operator.
+          if (!uArray1[n]) {
+            this.retMsg_.push(`${origString} is not a valid UCUM code. ` +
+              `It is terminated with the operator ${this.openEmph_}` +
+              `${theOp}${this.closeEmph_}.`);
+            n = u1;
+            endProcessing = true;
+          }
+          else if (Ucum.validOps_.includes(uArray1[n])) {
             this.retMsg_.push(`${origString} is not a valid UCUM code. ` +
               `A unit code is missing between${this.openEmph_}` +
               `${theOp}${this.closeEmph_}and${this.openEmph_}` +
