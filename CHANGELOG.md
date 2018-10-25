@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.1] - 2018-10-19
+### Added
+- Added capability to open directly to converter page using url
+https://ucum.nlm.nih.gov/ucum-lhc/demo.html#converter
+
 ## [2.4.0] - 2018-10-10
 ## Changed
 - redesigned validator tab on Demo page to move messages closer to the 
