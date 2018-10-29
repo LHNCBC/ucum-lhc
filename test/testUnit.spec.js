@@ -163,7 +163,7 @@ describe('Test unit scalar multiplication functions', function() {
 }) ; // end Test unit scalar multiplication functions
 
 describe('Test attempts to multiply/divide arbitrary units', function() {
-  it('should throw and error on attempt to multiply mol by cfu', function(){
+  it('should throw an error on attempt to multiply mol by cfu', function(){
     var molUnit = uTabs.getUnitByCode('mol');
     var cfuUnit = uTabs.getUnitByCode('[CFU]');
     var errMsg = null;
@@ -177,7 +177,7 @@ describe('Test attempts to multiply/divide arbitrary units', function() {
       errMsg);
   });
 
-  it('should throw and error on attempt to divide cfu by mol', function(){
+  it('should throw an error on attempt to divide cfu by mol', function(){
     var molUnit = uTabs.getUnitByCode('mol');
     var cfuUnit = uTabs.getUnitByCode('[CFU]');
     var errMsg = null;
