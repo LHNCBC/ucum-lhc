@@ -191,3 +191,33 @@ describe('Test attempts to multiply/divide arbitrary units', function() {
       errMsg);
   });
 }) ; // end Test attempts to multiply/divide arbitrary units
+
+describe('Test attempts to convert arbitrary units', function() {
+  it('should throw an error on attempt to convert 5 iu to cfu', function(){
+    var iuUnit = uTabs.getUnitByCode('[IU]');
+    var cfuUnit = uTabs.getUnitByCode('[CFU]');
+    var errMsg = null;
+    try {
+      var retUnit = cfuUnit.convertFrom(5, iuUnit);
+    }
+    catch(err) {
+      errMsg = err.message;
+    }
+    assert.equal('Attempt to convert arbitrary unit colony forming units',
+      errMsg);
+  });
+
+  it('should throw an error on attempt to convert 6 iu to 10*3', function(){
+    var iuUnit = uTabs.getUnitByCode('[IU]');
+    var tenUnit = uTabs.getUnitByCode('10*3');
+    var errMsg = null;
+    try {
+      var retUnit = tenUnit.convertFrom(6, iuUnit);
+    }
+    catch(err) {
+      errMsg = err.message;
+    }
+    assert.equal('Attempt to convert to arbitrary unit international unit - arbitrary',
+      errMsg);
+  });
+}) ; // end Test attempts to multiply/divide arbitrary units

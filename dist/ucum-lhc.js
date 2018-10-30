@@ -29846,6 +29846,8 @@ var Unit = exports.Unit = function () {
      * return a value of 50.   But in this case you'll get back something like
      * 49.99999999999994.
      *
+     * If either unit is an arbitrary unit an exception is raised.
+     *
      * @param num the magnitude for the unit to be translated (e.g. 15 for 15 mL)
      * @param fromUnit the unit to be translated to one of this type (e.g. a mL unit)
      *
@@ -29858,6 +29860,9 @@ var Unit = exports.Unit = function () {
     key: "convertFrom",
     value: function convertFrom(num, fromUnit) {
       var newNum = 0.0;
+
+      if (this.isArbitrary_) throw new Error("Attempt to convert arbitrary unit " + this.name_);
+      if (fromUnit.isArbitrary_) throw new Error("Attempt to convert to arbitrary unit " + fromUnit.name_);
 
       // reject request if both units have dimensions that are not equal
       if (fromUnit.dim_ && this.dim_ && !fromUnit.dim_.equals(this.dim_)) {
