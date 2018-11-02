@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.4.2] - 2018-10-29
+## [2.4.2] - 2018-11-05
 ## Fixed
-- blocked division and multiplication operations on arbitrary units
+- blocked division and multiplication operations as well as conversion
+operations on arbitrary units
 
 ## [2.4.1] - 2018-10-25
 ### Added
