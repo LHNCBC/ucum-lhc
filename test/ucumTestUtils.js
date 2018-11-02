@@ -75,8 +75,7 @@ export class UcumTestUtils {
         else {
           if (curUnit.csUnitString_ && curUnit.csUnitString_ !== '1' &&
             curUnit.csUnitString_ !== 1 && !curUnit.isArbitrary_ &&
-            curUnit.class_ !== 'dimless' && curUnit.csCode_ !== 'mol' &&
-            curUnit.csCode_ !== '[car_Au]') {
+            curUnit.class_ !== 'dimless') {
             whoCalled = `parseString called on LOINC unit ${curUnit.csCode_} ` +
               `for string = ${curUnit.csUnitString_}`;
             parseResp = uString.parseString(curUnit.csCode_);
