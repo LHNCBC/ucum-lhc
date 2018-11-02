@@ -73,15 +73,22 @@ export class UcumTestUtils {
 
         // submit a LOINC unit's unit code for parsing
         else {
-          whoCalled = `parseString called on LOINC unit ${curUnit.csCode_} ` +
+          if (curUnit.csUnitString_ && curUnit.csUnitString_ !== '1' &&
+            curUnit.csUnitString_ !== 1 && !curUnit.isArbitrary_ &&
+            curUnit.class_ !== 'dimless') {
+            whoCalled = `parseString called on LOINC unit ${curUnit.csCode_} ` +
               `for string = ${curUnit.csUnitString_}`;
-          parseResp = uString.parseString(curUnit.csCode_);
+            parseResp = uString.parseString(curUnit.csCode_);
 
-          if (parseResp[0]) {
-            whoReturned = `parseString returned ${parseResp[0].csCode_} ` +
-              `for string = ${parseResp[0].csUnitString_}`;
-            parsedUnit = parseResp[0];
-          }
+            if (parseResp[0]) {
+              whoReturned = `parseString returned ${parseResp[0].csCode_} ` +
+                `for string = ${parseResp[0].csUnitString_}`;
+              parsedUnit = parseResp[0];
+            }
+          } // end if the unit is one that gets a dimension vector
+          else {
+            skipped = true;
+          } // end if the unit is one that doesn't get a dimension vector
         } // end if this is a LOINC unit
         if (!skipped) {
           if (parsedUnit === null) {
