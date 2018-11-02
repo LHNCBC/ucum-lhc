@@ -190,6 +190,12 @@ var UcumDemo = exports.UcumDemo = function () {
     this.lastResultFld_ = null;
     this.lastResult_ = 0;
 
+    // Flag used to block execution of the location change event handler when
+    // location is changed in the url as the result of the user clicking on
+    // one of the tabs (validator or converter tabs) by the checkTabsSwitch
+    // function.
+    this.blockLocationChangeHandler = false;
+
     // Set up the prefetch autocompleter for the "to" conversion field.  It will
     // be populated with commensurable units in based on what the user enters
     // in the "from" field.  Changed to search autocompleter per Clem
@@ -288,7 +294,15 @@ var UcumDemo = exports.UcumDemo = function () {
       var valFld = document.getElementById("valString");
       valFld.innerHTML = "";
       valFld.setAttribute("autocomplete", "false");
-    }
+
+      // Check to see if the URL specified that the converter tab be
+      // displayed first.
+      if (window.location.hash === '#converter') {
+        var convertTab = document.getElementById("conversion-link");
+        convertTab.click();
+      }
+    } // end buildAdvancedSettings
+
 
     /**
      * This method builds the "Advanced Settings" section for one tab of the
@@ -387,6 +401,31 @@ var UcumDemo = exports.UcumDemo = function () {
 
 
     /**
+     * This method checks the location value of the current URL to see if it
+     * matched the current tab being displayed (or the one about to be
+     * displayed).  This is here to make sure that when the user clicks on
+     * the Validator or Converter tab, the "#converter" portion of the
+     * url, if specified, is removed if the user clicked on the validator tab.
+     *
+     * This is called on the body onhashchange event.
+     */
+
+  }, {
+    key: 'checkTabSwitch',
+    value: function checkTabSwitch() {
+      if (this.blockLocationChangeHandler === false) {
+        if (window.location.hash === '#converter') {
+          var convertTab = document.getElementById("conversion-link");
+          convertTab.click();
+        } else {
+          var validateTab = document.getElementById("validation-link");
+          validateTab.click();
+        }
+      } else this.blockLocationChangeHandler = false;
+    } // end checkTabSwitch
+
+
+    /**
      * This method is run when the Converter tab is displayed, to reset the
      * variables that track the validity of the three inputs ("from" unit code,
      * "from" value, and "to" unit code) that must be correct to attempt a
@@ -421,6 +460,11 @@ var UcumDemo = exports.UcumDemo = function () {
       var toNumField = document.getElementById('convertToNum');
       toNumField.value = 1;
       toNumField.classList.remove("invalid");
+
+      if (window.location.hash !== '#converter' && window.location.hash !== '') {
+        this.blockLocationChangeHandler = true;
+        window.location.hash = '';
+      }
     } // end showConvertTab
 
 
@@ -441,7 +485,13 @@ var UcumDemo = exports.UcumDemo = function () {
       var msgField = document.getElementById('validationString');
       msgField.innerHTML = '';
       msgField.classList.remove("invalid");
-    } // end showConvertTab
+
+      if (window.location.hash === '#converter') {
+        this.blockLocationChangeHandler = true;
+        window.location.hash = '';
+        this.blockLocationChangeHandler = false;
+      }
+    } // end showValidateTab
 
 
     /**
@@ -612,8 +662,9 @@ var UcumDemo = exports.UcumDemo = function () {
                   // is the first one that is displayed.  It may be followed
                   // by a message about substitions, but it should be first.
                   if (tabName === 'Validator') {
+
                     if (parseResp['msg'].length > 0) parseResp['msg'].unshift(valMsg);else parseResp['msg'] = valMsg;
-                  }
+                  } // end if this is for the validator tab
                   // For for the converter tab, the valid unit message goes under
                   // the field of the unit code last specified.  Call _sizeNameDivs
                   // to make sure the height of the message areas match.
