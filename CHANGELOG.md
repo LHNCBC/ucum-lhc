@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.3] - 2018-11-06
+## Fixed
+- fixed bug where validation of a unit string terminated with an operator
+returned an incorrect response.  It correctly flagged the string as an
+invalid unit expression but included a coding error message that should
+not have been included.
+
 ## [2.4.2] - 2018-11-05
 ## Fixed
 - blocked division and multiplication operations as well as conversion
