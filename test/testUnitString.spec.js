@@ -575,6 +575,36 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('test unit expression ending with /', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('m2/', 'validate');
+    var respMsg = resp[2] ;
+    it("should return an error message", function() {
+      assert.equal(respMsg, 'm2/ is not a valid UCUM code. ' +
+        'It is terminated with the operator  ->/<- .');
+    });
+  }) ;
+
+  describe('test unit expression ending with .', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('m.', 'validate');
+    var respMsg = resp[2] ;
+    it("should return an error message", function() {
+      assert.equal(respMsg, 'm. is not a valid UCUM code. ' +
+        'It is terminated with the operator  ->.<- .');
+    });
+  }) ;
+
+  describe('test unit expression missing a unit between 2 operators', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('m2/.', 'validate');
+    var respMsg = resp[2] ;
+    it("should return an error message", function() {
+      assert.equal(respMsg, 'm2/. is not a valid UCUM code. ' +
+        'A unit code is missing between ->/<- and ->.<- in ->/.<- .');
+    });
+  }) ;
+
 
   /*  NOT Handled yet.  Leaving this in for the next branch
         describe('test for unit string {creatine}mol{blahblah}', function() {
