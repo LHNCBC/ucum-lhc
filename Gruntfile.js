@@ -1,3 +1,4 @@
+var path = require('path');
 module.exports = function(grunt) {
 
   // Load grunt tasks automatically as needed ("jit")
@@ -21,6 +22,12 @@ module.exports = function(grunt) {
         files: [{
           cwd: '.',
           src: ['source-es5/*', 'dist/*', '!dist/data']
+        }]
+      } ,
+      browser: {
+        files: [{
+          cwd: '.',
+          src: ['source-es5/*', 'browser-dist/*']
         }]
       } ,
       demo: {
@@ -53,6 +60,15 @@ module.exports = function(grunt) {
           dest: './source-es5'
         }]
       },
+      browser: {
+        files: [{
+          expand: true,
+          cwd: '.',
+          flatten: true,
+          src: ['./source/*.js'],
+          dest: './source-es5'
+        }]
+      },
       demo: {
         files: [{
           expand: true,
@@ -75,13 +91,13 @@ module.exports = function(grunt) {
 
     // use browserify to prepare the files for client-side use
     browserify: {
-      dist: {
+      browser: {
         options: {
           browserifyOptions: {
             standalone: "ucumPkg"
           }
         },
-        files: [{dest: "./dist/ucum-lhc.js",
+        files: [{dest: "./browser-dist/ucum-lhc.js",
                  src: ["./source-es5/ucumPkg.js"]}
         ]
       },
@@ -97,6 +113,19 @@ module.exports = function(grunt) {
         ]
       }
     },
+
+    webpack: {
+      myConfig: {
+        entry: './source-es5/ucumPkg.js',
+        output: {
+          path: path.resolve(__dirname, 'dist'),
+          filename: 'ucum-lhc.js',
+          libraryTarget: 'commonjs',
+        } ,
+        node: { fs: 'empty'},
+        mode: 'none',
+      } ,
+    } ,
 
     // use css min to minify the css files
     cssmin: {
@@ -114,6 +143,11 @@ module.exports = function(grunt) {
       dist: {
         files: {
           './dist/ucum-lhc.min.js' : [ './dist/ucum-lhc.js']
+        }
+      },
+      browser: {
+        files: {
+          './browser-dist/ucum-lhc.min.js' : [ './browser-dist/ucum-lhc.js']
         }
       },
       demo: {
@@ -165,14 +199,15 @@ module.exports = function(grunt) {
           browser: 'firefox'
         }
       }
-    } // end protractor task
+    }  // end protractor task
 
-  });  // end grunt.initConfig
+   });  // end grunt.initConfig
 
   // load and register the tasks
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-browserify");
+  grunt.loadNpmTasks("grunt-webpack");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks('grunt-wiredep');
   grunt.loadNpmTasks('grunt-mocha-test') ;
@@ -189,8 +224,12 @@ module.exports = function(grunt) {
 
   grunt.registerTask("build:dist", ["clean:dist",
                                     "babel:dist",
-                                    "browserify:dist",
+                                    "webpack",
                                     "uglify:dist"]);
+  grunt.registerTask("build:browser", ["clean:browser",
+                                       "babel:browser",
+                                       "browserify:browser",
+                                       "uglify:browser"]);
   grunt.registerTask("build:demo", ["clean:demo",
                                     "ssi",
                                     "babel:demo",
@@ -200,6 +239,7 @@ module.exports = function(grunt) {
   grunt.registerTask("build:test", ["clean:test",
                                     "babel:test"]);
   grunt.registerTask("build", ["build:dist",
+                               "build:browser",
                                "build:demo",
                                "build:test"]);
   grunt.registerTask("test", ['build',
