@@ -31817,7 +31817,7 @@ var UnitString = exports.UnitString = function () {
      * of the string is a valid unit code.  If so, great.  If not, the string
      * will go on to more extensive parsing.
      *
-     * @params uString the imot string being tested
+     * @params uString the unit string being tested
      * @returns a unit object found for the string, if any.  It will be the unit
      *  found for the string following the prefix, with the name, code, value,
      *  etc., updated based on the prefix, i.e., for a uString of kmol, the
@@ -31830,25 +31830,24 @@ var UnitString = exports.UnitString = function () {
 
       var retUnit = null;
       var getUnit = this.utabs_.getUnitByCode(uString);
-      var tryPref = null;
-      if (!getUnit) {
-        tryPref = this.pfxTabs_.getPrefixByCode(uString[0]);
+      if (getUnit) retUnit = getUnit.clone();else {
+        var tryPref = this.pfxTabs_.getPrefixByCode(uString[0]);
         if (!tryPref) {
           tryPref = this.pfxTabs_.getPrefixByCode(uString.substr(0, 2));
         }
         if (tryPref) {
           var newStr = uString.substr(tryPref.code_.length);
-          getUnit = this.utabs_.getUnitByCode(newStr);
+          var _getUnit = this.utabs_.getUnitByCode(newStr);
+          if (_getUnit) {
+            retUnit = _getUnit.clone();
+            retUnit.csCode_ = tryPref.code_ + retUnit.csCode_;
+            retUnit.name_ = tryPref.name_ + retUnit.name_;
+            retUnit.isBase_ = false;
+            retUnit.ciCode_ = tryPref.ciCode_ + retUnit.ciCode_;
+            if (retUnit.cnv_) retUnit.cnvPfx_ = tryPref.value_;else retUnit.magnitude_ = tryPref.value_ * retUnit.magnitude_;
+            retUnit.printSymbol_ = tryPref.printSymbol_ + retUnit.printSymbol_;
+          }
         }
-      }
-      if (getUnit && tryPref) {
-        retUnit = getUnit.clone();
-        retUnit.csCode_ = tryPref.code_ + retUnit.csCode_;
-        retUnit.name_ = tryPref.name_ + retUnit.name_;
-        retUnit.isBase_ = false;
-        retUnit.ciCode_ = tryPref.ciCode_ + retUnit.ciCode_;
-        if (retUnit.cnv_) retUnit.cnvPfx_ = tryPref.value_;else retUnit.magnitude_ = tryPref.value_ * retUnit.magnitude_;
-        retUnit.printSymbol_ = tryPref.printSymbol_ + retUnit.printSymbol_;
       }
       return retUnit;
     } // end _tryStrippedString
