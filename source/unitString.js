@@ -188,25 +188,46 @@ export class UnitString {
         throw (new Error('Blank spaces are not allowed in unit expressions.'));
       } // end if blanks were found in the string
 
-      // assign the array returned to retObj.  It will contain 2 elements:
-      //  the unit returned in position 0; and the origString (possibly
-      //  modified in position 1.  The origString in position 1 will not
-      //  be changed by subsequent processing.
-      retObj = this._parseTheString(uStr, origString);
-      let finalUnit = retObj[0];
+      // Presumably the getUnitByCode function was called before parseString was
+      // called, using the full string as a unit code, and that hasn't worked.
+      // Now that annotations have been removed and before any other parseing
+      // is done, call _tryStrippedString to try getting the unit using the
+      // string without any annotations and removing what might be a prefix
+      // (one or two characters).  For example, the unit B[10.nv] is defined in
+      // ucum-essence.xml as a unit, and thus is found in the unit tables.
+      // But when the prefix of d is attached to it, it isn't found, and by
+      // the time the unit tables are searched, it's been split up into pieces -
+      // dB[10 and nV] based on the operator . and the two pieces are not valid
+      // units.  sigh.
 
-      // Do a final check to make sure that finalUnit is a unit and not
-      // just a number.  Something like "8/{HCP}" will return a "unit" of 8
-      // - which is not a unit.  Hm - evidently it is.  So just create a unit
-      // object for it.
-      if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
-        finalUnit = new Unit({'csCode_': origString,
-          'magnitude_' : finalUnit,
-          'name_' : origString});
-        retObj[0] = finalUnit;
-      } // end final check
-    } // end if no annotation errors were found
+      let finalUnit = this._tryStrippedString(uStr);
+      if (finalUnit) {
+        retObj = [finalUnit, origString, []] ;
+      }
+      // If that didn't work, try the full-fledged parsing work
+      else {
 
+        // assign the array returned to retObj.  It will contain 2 elements:
+        //  the unit returned in position 0; and the origString (possibly
+        //  modified in position 1.  The origString in position 1 will not
+        //  be changed by subsequent processing.
+        retObj = this._parseTheString(uStr, origString);
+        finalUnit = retObj[0];
+
+        // Do a final check to make sure that finalUnit is a unit and not
+        // just a number.  Something like "8/{HCP}" will return a "unit" of 8
+        // - which is not a unit.  Hm - evidently it is.  So just create a unit
+        // object for it.
+        if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
+          finalUnit = new Unit({
+            'csCode_': origString,
+            'magnitude_': finalUnit,
+            'name_': origString
+          });
+          retObj[0] = finalUnit;
+        } // end final check
+      } // end if no annotation errors were found
+    }
     retObj[2] = this.retMsg_;
     if (this.suggestions_ && this.suggestions_.length > 0)
       retObj[3] = this.suggestions_ ;
@@ -1476,6 +1497,61 @@ export class UnitString {
     }
     return ret ;
   } // end _isCodeWithExponent
+
+
+  /**
+   * This tests a string to see if it is a unit expression that simply starts
+   * with a prefix.  Although we also do prefix parsing in the makeUnit parsing,
+   * that's after we've decomposed a string based on operators.  There are some
+   * stray strings defined in the spec that flunk this parsing because the
+   * strings contain operators.
+   *
+   * For example, the UCUM code B[10.nV] is valid for the bel 10 nanovolt unit.
+   * That is found without a problem because it's in the unit table - which is
+   * searched first.  But put a prefix in front of it, say "d", and it's not
+   * found in the unit table.  If dB[10.nV] is decomposed based on the
+   * multiplication operator (.) then we start looking for two units - dB[10 and
+   * nV] - and the string fails.
+   *
+   * So here we check for a prefix and if one is found, check to see if the rest
+   * of the string is a valid unit code.  If so, great.  If not, the string
+   * will go on to more extensive parsing.
+   *
+   * @params uString the imot string being tested
+   * @returns a unit object found for the string, if any.  It will be the unit
+   *  found for the string following the prefix, with the name, code, value,
+   *  etc., updated based on the prefix, i.e., for a uString of kmol, the
+   *  mol unit will be returned with a csCode_ of kmol, a name_ of kilomole, etc.
+   */
+  _tryStrippedString(uString) {
+
+    let retUnit = null ;
+    let getUnit = this.utabs_.getUnitByCode(uString) ;
+    let tryPref = null ;
+    if (!getUnit) {
+      tryPref = this.pfxTabs_.getPrefixByCode(uString[0]);
+      if (!tryPref) {
+        tryPref = this.pfxTabs_.getPrefixByCode(uString.substr(0, 2));
+      }
+      if (tryPref) {
+        let newStr = uString.substr(tryPref.code_.length);
+        getUnit = this.utabs_.getUnitByCode(newStr);
+      }
+    }
+    if (getUnit && tryPref) {
+      retUnit = getUnit.clone();
+      retUnit.csCode_ = tryPref.code_ + retUnit.csCode_ ;
+      retUnit.name_ = tryPref.name_ + retUnit.name_;
+      retUnit.isBase_ = false ;
+      retUnit.ciCode_ = tryPref.ciCode_ + retUnit.ciCode_ ;
+      if (retUnit.cnv_)
+        retUnit.cnvPfx_ = tryPref.value_;
+      else
+        retUnit.magnitude_ = tryPref.value_ * retUnit.magnitude_ ;
+      retUnit.printSymbol_ = tryPref.printSymbol_ + retUnit.printSymbol_ ;
+    }
+    return retUnit ;
+  } // end _tryStrippedString
 
 } // end class UnitString
 

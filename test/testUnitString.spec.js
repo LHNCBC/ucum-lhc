@@ -605,6 +605,19 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('test dB[10.nV] to make sure tryStrippedString finds it', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('dB[10.nV]', 'validate');
+    var respUnit = resp[0] ;
+    it("should return a decibel 10 nanovolt unit", function() {
+      assert.equal(respUnit.csCode_, 'dB[10.nV]');
+      assert.equal(respUnit.name_, "decibel 10 nanovolt");
+      assert.equal(respUnit.isBase_, false);
+      assert.equal(respUnit.ciCode_, 'DB[10.NV]');
+      assert.equal(respUnit.cnvPfx_, 0.1 );
+    });
+  });
+
 
   /*  NOT Handled yet.  Leaving this in for the next branch
         describe('test for unit string {creatine}mol{blahblah}', function() {
