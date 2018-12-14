@@ -1103,11 +1103,16 @@ export class UnitString {
         // Well, first see if it's one of the special units.  If so,
         // replace the placeholder text with the actual unit string, keeping
         // whatever text (probably a prefix) goes with the unit string.
-        let sUnit = null ;
+        let sUnit = null;
         for (sUnit in Ucum.specUnits_) {
           if (uCode.includes(Ucum.specUnits_[sUnit]))
             uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
         }
+        retUnit = this.utabs_.getUnitByCode(uCode);
+        if (retUnit)
+          retUnit = retUnit.clone();
+      }
+      if (!retUnit) {
 
         let origCode = uCode;
         let origUnit = null;

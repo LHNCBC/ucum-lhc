@@ -628,6 +628,16 @@ describe('Test parseString method', function() {
     });
   });
 
+  describe('test unit expression B[10.nV]/m',  function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('dB[10.nV]/m', 'validate');
+    var respMsg = resp[2];
+    it("should return an error message", function () {
+      assert.equal(respMsg,
+        'Attempt to divide non-ratio unit decibel 10 nanovolt');
+    });
+  });
+
   describe('test unit expression d[m/s2/Hz^(1/2)]',  function() {
     var uString = UnitString.getInstance();
     var resp = uString.parseString('d[m/s2/Hz^(1/2)]', 'validate');

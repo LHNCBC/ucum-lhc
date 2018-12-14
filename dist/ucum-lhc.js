@@ -31432,6 +31432,10 @@ var UnitString = exports.UnitString = function () {
               for (sUnit in Ucum.specUnits_) {
                 if (uCode.includes(Ucum.specUnits_[sUnit])) uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
               }
+              retUnit = this.utabs_.getUnitByCode(uCode);
+              if (retUnit) retUnit = retUnit.clone();
+            }
+            if (!retUnit) {
 
               var origCode = uCode;
               var origUnit = null;
