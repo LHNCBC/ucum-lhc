@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.4] - 2018-12-13
+## Fixed
+- fixed bug where validation of a unit string that contains an operator, such
+as B[10.nV] is a valid string and validates correctly as a single valid UCUM
+code, but did not validate correctly when preceded by a prefix, e.g., dB[10.nV].
+
+
 ## [2.4.3] - 2018-11-06
 ## Fixed
 - fixed bug where validation of a unit string terminated with an operator

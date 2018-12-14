@@ -27760,9 +27760,17 @@ var Ucum = exports.Ucum = {
   /**
    * Name of the column in the csv file that serves as the key
    */
-  inputKey_: 'case-sensitive code'
+  inputKey_: 'case-sensitive code',
 
-  /// ^[0-9]*$
+  /**
+   * Special codes that contain operators within brackets.  The operator
+   * within these codes causes them to parse incorrectly if they are preceded
+   * by a prefix, because the parsing algorithm splits them up on the operator.
+   * So we use this object to identify them and substitute placeholders to
+   * avoid that.
+   */
+  specUnits_: { 'B[10.nV]': 'specialUnitOne',
+    '[m/s2/Hz^(1/2)]': 'specialUnitTwo' }
 };
 
 
@@ -30550,6 +30558,17 @@ var UnitString = exports.UnitString = function () {
         // Flag used to block further processing on an unrecoverable error
         var endProcessing = this.retMsg_.length > 0;
 
+        // First check for one of the "special" units.  If it's one of those, put
+        // in a substitution phrase for it to avoid having it separated on its
+        // embedded operator.  This will only happen, by the way, if it is
+        // preceded by a prefix or followed by an operator and another unit.
+        var sUnit = null;
+        for (sUnit in Ucum.specUnits_) {
+          while (uStr.includes(sUnit)) {
+            uStr = uStr.replace(sUnit, Ucum.specUnits_[sUnit]);
+          }
+        }
+
         // Check for spaces and throw an error if any are found.  The spec
         // explicitly forbids spaces except in annotations, which is why any
         // annotations are extracted before this check is made.
@@ -30569,9 +30588,11 @@ var UnitString = exports.UnitString = function () {
         // - which is not a unit.  Hm - evidently it is.  So just create a unit
         // object for it.
         if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
-          finalUnit = new Unit({ 'csCode_': origString,
+          finalUnit = new Unit({
+            'csCode_': origString,
             'magnitude_': finalUnit,
-            'name_': origString });
+            'name_': origString
+          });
           retObj[0] = finalUnit;
         } // end final check
       } // end if no annotation errors were found
@@ -31402,6 +31423,18 @@ var UnitString = exports.UnitString = function () {
 
             // If we still don't have a unit, try assuming a modifier (prefix and/or
             // exponent) and look for a unit without the modifier
+            if (!retUnit) {
+
+              // Well, first see if it's one of the special units.  If so,
+              // replace the placeholder text with the actual unit string, keeping
+              // whatever text (probably a prefix) goes with the unit string.
+              var sUnit = null;
+              for (sUnit in Ucum.specUnits_) {
+                if (uCode.includes(Ucum.specUnits_[sUnit])) uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
+              }
+              retUnit = this.utabs_.getUnitByCode(uCode);
+              if (retUnit) retUnit = retUnit.clone();
+            }
             if (!retUnit) {
 
               var origCode = uCode;
