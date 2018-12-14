@@ -181,6 +181,16 @@ export class UnitString {
       // Flag used to block further processing on an unrecoverable error
       let endProcessing = this.retMsg_.length > 0;
 
+      // First check for one of the "special" units.  If it's one of those, put
+      // in a substitution phrase for it to avoid having it separated on its
+      // embedded operator.  This will only happen, by the way, if it is
+      // preceded by a prefix or followed by an operator and another unit.
+      let sUnit = null ;
+      for (sUnit in Ucum.specUnits_) {
+        while (uStr.includes(sUnit))
+          uStr = uStr.replace(sUnit, Ucum.specUnits_[sUnit]);
+      }
+
       // Check for spaces and throw an error if any are found.  The spec
       // explicitly forbids spaces except in annotations, which is why any
       // annotations are extracted before this check is made.
@@ -200,9 +210,11 @@ export class UnitString {
       // - which is not a unit.  Hm - evidently it is.  So just create a unit
       // object for it.
       if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
-        finalUnit = new Unit({'csCode_': origString,
-          'magnitude_' : finalUnit,
-          'name_' : origString});
+        finalUnit = new Unit({
+          'csCode_': origString,
+          'magnitude_': finalUnit,
+          'name_': origString
+        });
         retObj[0] = finalUnit;
       } // end final check
     } // end if no annotation errors were found
@@ -1086,6 +1098,20 @@ export class UnitString {
 
       // If we still don't have a unit, try assuming a modifier (prefix and/or
       // exponent) and look for a unit without the modifier
+      if (!retUnit) {
+
+        // Well, first see if it's one of the special units.  If so,
+        // replace the placeholder text with the actual unit string, keeping
+        // whatever text (probably a prefix) goes with the unit string.
+        let sUnit = null;
+        for (sUnit in Ucum.specUnits_) {
+          if (uCode.includes(Ucum.specUnits_[sUnit]))
+            uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
+        }
+        retUnit = this.utabs_.getUnitByCode(uCode);
+        if (retUnit)
+          retUnit = retUnit.clone();
+      }
       if (!retUnit) {
 
         let origCode = uCode;
