@@ -28875,7 +28875,7 @@ var Un = require("./unit.js");
 var Utab = require('./unitTables.js');
 
 // requiring the file will take care of opening it for use
-var jsonDefs_ = require('../dist/data/ucumDefs.json');
+var jsonDefs_ = require('../data/ucumDefs.json');
 
 var UcumJsonDefs = exports.UcumJsonDefs = function () {
 
@@ -28959,7 +28959,7 @@ UcumJsonDefs.getInstance = function () {
 };
 
 
-},{"../dist/data/ucumDefs.json":1,"./prefix.js":8,"./prefixTables.js":9,"./unit.js":15,"./unitTables.js":17}],13:[function(require,module,exports){
+},{"../data/ucumDefs.json":1,"./prefix.js":8,"./prefixTables.js":9,"./unit.js":15,"./unitTables.js":17}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

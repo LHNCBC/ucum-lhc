@@ -1,4 +1,3 @@
-var path = require('path');
 module.exports = function(grunt) {
 
   // Load grunt tasks automatically as needed ("jit")
@@ -18,10 +17,10 @@ module.exports = function(grunt) {
 
     // clean out directories
     clean: {
-      dist: {
+      dist: {   // the non-browser distribution files
         files: [{
           cwd: '.',
-          src: ['source-es5/*', 'dist/*', '!dist/data']
+          src: ['source-es5/*']
         }]
       } ,
       browser: {
@@ -51,7 +50,7 @@ module.exports = function(grunt) {
         sourceMap: true,
         presets: ['es2015']
       },
-      dist: {
+      dist: {   // the non-browser distribution files
         files: [{
           expand: true,
           cwd: '.',
@@ -113,20 +112,6 @@ module.exports = function(grunt) {
         ]
       }
     },
-
-    webpack: {
-      myConfig: {
-        entry: './source-es5/ucumPkg.js',
-        output: {
-          path: path.resolve(__dirname, 'dist'),
-          filename: 'ucum-lhc.js',
-          libraryTarget: 'commonjs',
-        } ,
-        node: { fs: 'empty'},
-        mode: 'none',
-      } ,
-    } ,
-
     // use css min to minify the css files
     cssmin: {
       default: {
@@ -140,11 +125,6 @@ module.exports = function(grunt) {
     // use uglify to minify the javascript files
     uglify: {
       options: { compress: true },
-      dist: {
-        files: {
-          './dist/ucum-lhc.min.js' : [ './dist/ucum-lhc.js']
-        }
-      },
       browser: {
         files: {
           './browser-dist/ucum-lhc.min.js' : [ './browser-dist/ucum-lhc.js']
@@ -207,7 +187,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-browserify");
-  grunt.loadNpmTasks("grunt-webpack");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks('grunt-wiredep');
   grunt.loadNpmTasks('grunt-mocha-test') ;
@@ -223,9 +202,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask("build:dist", ["clean:dist",
-                                    "babel:dist",
-                                    "webpack",
-                                    "uglify:dist"]);
+                                    "babel:dist"]);
   grunt.registerTask("build:browser", ["clean:browser",
                                        "babel:browser",
                                        "browserify:browser",
