@@ -8,10 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Changed
 - The changes made by browserify have been removed from the ucum-lhc package 
 available to node.js users, necessitating the creation of separate distributions. 
-The distributions in the dist directory do not contain any browser related code.
-The distributions in the browser-dist directory include browser related code.  
-The distributions in the demo-dist directory continue to contain code related
-to the UCUM-LHC demo page.
+The distribution of the library code starts at the source-es5/ucumPkg.js file.
+The distribution in the browser-dist directory contains server side code that
+includes browser related code. The distribution in the demo-dist directory 
+continues to contain the code related to the UCUM-LHC demo page.
 
 ## [2.4.4] - 2018-12-13
 ## Fixed

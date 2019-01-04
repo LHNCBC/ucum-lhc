@@ -1,8 +1,8 @@
 /**
- * Mocha tests for the built module available as a bower & npm task.  It tests
+ * Mocha tests for the built module available as an npm package.  It tests
  * the unit expression validation and conversion functions at the top level only.
  *
- * Run from the command line with 'mocha testmodule.spec.js' or 'grunt test'
+ * Run from the command line with 'mocha testModule.spec.js' or 'grunt test'
  */
 
 var assert = require('assert');

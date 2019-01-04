@@ -1,7 +1,7 @@
 /**
- * Mocha tests for the built module available for the library, in the dist
- * directory.  It tests the unit expression validation and conversion functions
- * at the top level of the LHC Utilities only.
+ * Mocha tests for the built module available for the library, in
+ * source-es5/ucumPkg.js.  It tests the unit expression validation and
+ * conversion functions at the top level of the LHC Utilities only.
  *
  * Run from the command line with 'mocha testLibraryModule.spec.js' or 'grunt test'
  */

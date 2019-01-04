@@ -1,8 +1,8 @@
 /**
- * Mocha tests for the built module available for the browser, in the browser-dist
- * directory.  It tests the unit expression validation and conversion functions
- * at the top level of the LHC Utilities only.  These tests are run on the
- * libary module by the testLibraryModule.spec.js file.
+ * Mocha tests for the built module available for the browser, in the
+ * browser-dist directory (browser-dist/ucum-lhc.js).  It tests the unit
+ * expression validation and conversion functions at the top level of the
+ * LHC Utilities only.
  *
  * Run from the command line with 'mocha testBrowerModule.spec.js' or 'grunt test'
  */
