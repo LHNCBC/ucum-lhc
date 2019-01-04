@@ -97,10 +97,17 @@ export var Ucum = {
   /**
    * Name of the column in the csv file that serves as the key
    */
-  inputKey_ : 'case-sensitive code'
+  inputKey_ : 'case-sensitive code' ,
 
-
-  /// ^[0-9]*$
+  /**
+   * Special codes that contain operators within brackets.  The operator
+   * within these codes causes them to parse incorrectly if they are preceded
+   * by a prefix, because the parsing algorithm splits them up on the operator.
+   * So we use this object to identify them and substitute placeholders to
+   * avoid that.
+   */
+   specUnits_ : { 'B[10.nV]' : 'specialUnitOne',
+                  '[m/s2/Hz^(1/2)]' : 'specialUnitTwo'} 
 } ;
 
 

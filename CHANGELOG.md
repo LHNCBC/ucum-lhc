@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.5.0] - 2018-12-06
+## [2.5.0] - 2019-01-07
 ## Changed
 - The changes made by browserify have been removed from the ucum-lhc package 
 available to node.js users, necessitating the creation of separate distributions. 
@@ -13,6 +13,11 @@ The distributions in the browser-dist directory include browser related code.
 The distributions in the demo-dist directory continue to contain code related
 to the UCUM-LHC demo page.
 
+## [2.4.4] - 2018-12-13
+## Fixed
+- fixed bug where validation of a unit string that contains an operator, such
+as B[10.nV] is a valid string and validates correctly as a single valid UCUM
+code, but did not validate correctly when preceded by a prefix, e.g., dB[10.nV].
 
 ## [2.4.3] - 2018-11-06
 ## Fixed

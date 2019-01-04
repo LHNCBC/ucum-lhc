@@ -7,7 +7,7 @@
  */
 
 var assert = require('assert');
-var ucum = require("../dist/ucum-lhc.js");
+var ucum = require("../source-es5/ucumPkg.js");
 var utils = ucum.UcumLhcUtils.getInstance();
 
 describe('Validate_m2/g4', function() {

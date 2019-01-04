@@ -605,13 +605,61 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('test unit expression dB[10.nV]',  function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('dB[10.nV]', 'validate');
+    var respUnit = resp[0];
+    it("should return a decibel 10 nanovolt unit", function () {
+      assert.equal(respUnit.csCode_, 'dB[10.nV]');
+      assert.equal(respUnit.name_, "decibel 10 nanovolt");
+      assert.equal(respUnit.isBase_, false);
+      assert.equal(respUnit.ciCode_, 'DB[10.NV]');
+      assert.equal(respUnit.cnvPfx_, 0.1);
+    });
+  });
 
-  /*  NOT Handled yet.  Leaving this in for the next branch
-        describe('test for unit string {creatine}mol{blahblah}', function() {
-          "use strict";
+  describe('test unit expression dB[10.nV]/m',  function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('dB[10.nV]/m', 'validate');
+    var respMsg = resp[2];
+    it("should return an error message", function () {
+      assert.equal(respMsg,
+        'Attempt to divide non-ratio unit decibel 10 nanovolt');
+    });
+  });
 
-        }) ;
-        */
+  describe('test unit expression B[10.nV]/m',  function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('dB[10.nV]/m', 'validate');
+    var respMsg = resp[2];
+    it("should return an error message", function () {
+      assert.equal(respMsg,
+        'Attempt to divide non-ratio unit decibel 10 nanovolt');
+    });
+  });
+
+  describe('test unit expression d[m/s2/Hz^(1/2)]',  function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('d[m/s2/Hz^(1/2)]', 'validate');
+    var respUnit = resp[0] ;
+    it("should return a decimeter per square seconds per square root of hertz unit", function() {
+      assert.equal(respUnit.csCode_, 'd[m/s2/Hz^(1/2)]');
+      assert.equal(respUnit.name_, "decimeter per square seconds per square root of hertz");
+      assert.equal(respUnit.isBase_, false);
+      assert.equal(respUnit.ciCode_, 'D[M/S2/HZ^(1/2)]');
+      assert.equal(respUnit.cnvPfx_, 0.1 );
+    });
+  });
+
+  describe('test unit expression d[m/s2/Hz^(1/2)].L',  function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('d[m/s2/Hz^(1/2)].L', 'validate');
+    var respMsg = resp[2];
+    it("should return an error message", function () {
+      assert.equal(respMsg, 'Attempt to multiply non-ratio unit ' +
+        'decimeter per square seconds per square root of hertz failed.');
+    });
+  });
 
 }); // end test ParseString method
 
