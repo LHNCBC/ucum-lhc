@@ -16,7 +16,7 @@ var fs = require('fs');
 var xmldoc = require('xmldoc');
 var fs = require('fs');
 
-var essenceFile_ = '../dist/data/ucum-essence.xml';
+var essenceFile_ = '../data/ucum-essence.xml';
 
 /**
  * The full xml document
