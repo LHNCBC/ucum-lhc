@@ -16,9 +16,9 @@
 var assert = require('assert');
 var pkgs = ['../source-es5/ucumPkg.js', '../browser-dist/ucum-lhc.js'];
 
-for (var u=0; u < pkgs.length; u++) {
-  var ucum = require(pkgs[u]);
-  var utils = ucum.UcumLhcUtils.getInstance();
+for (let u=0; u < pkgs.length; u++) {
+  let ucum = require(pkgs[u]);
+  let utils = ucum.UcumLhcUtils.getInstance();
 
   describe('Validate_m2/g4', function () {
     describe('Validation Return Object', function () {
