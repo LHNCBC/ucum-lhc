@@ -12,7 +12,7 @@ var Un = require("./unit.js");
 var Utab = require('./unitTables.js');
 
 // requiring the file will take care of opening it for use
-var jsonDefs_ = require('../dist/data/ucumDefs.json');
+var jsonDefs_ = require('../data/ucumDefs.json');
 
 export class UcumJsonDefs {
 

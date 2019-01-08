@@ -4,22 +4,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.5.0] - 2019-01-07
+### Changed
+- The changes made by browserify have been removed from the ucum-lhc package 
+available to node.js users, necessitating the creation of separate distributions. 
+The distribution of the library code starts at the source-es5/ucumPkg.js file.
+The distribution in the browser-dist directory contains server side code that
+includes browser related code. The distribution in the demo-dist directory 
+continues to contain the code related to the UCUM-LHC demo page.
+
 ## [2.4.4] - 2018-12-13
-## Fixed
+### Fixed
 - fixed bug where validation of a unit string that contains an operator, such
 as B[10.nV] is a valid string and validates correctly as a single valid UCUM
 code, but did not validate correctly when preceded by a prefix, e.g., dB[10.nV].
 
-
 ## [2.4.3] - 2018-11-06
-## Fixed
+### Fixed
 - fixed bug where validation of a unit string terminated with an operator
 returned an incorrect response.  It correctly flagged the string as an
 invalid unit expression but included a coding error message that should
 not have been included.
 
 ## [2.4.2] - 2018-11-05
-## Fixed
+### Fixed
 - blocked division and multiplication operations as well as conversion
 operations on arbitrary units
 
@@ -29,7 +37,7 @@ operations on arbitrary units
 https://ucum.nlm.nih.gov/ucum-lhc/demo.html#converter
 
 ## [2.4.0] - 2018-10-10
-## Changed
+### Changed
 - redesigned validator tab on Demo page to move messages closer to the 
 unit expression input field
 - redesigned converter tab on Demo page to resemble an equation for the
