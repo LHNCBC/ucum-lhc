@@ -11,6 +11,7 @@
 var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
+var UnitTables = require("./unitTables.js").UnitTables;
 
 import * as intUtils_ from "./ucumInternalUtils.js";
 
@@ -511,6 +512,73 @@ export class Unit {
     return num;
 
   } // end mutateCoherent
+
+
+  /**
+   * Converts a unit expressed in mass/grams to a unit expressed in moles.  The
+   * "this" unit is the unit expressed in some form of mass (g, mg, mmg, kg,
+   * whatever) and the target or "to" unit - the molUnit parameter - is a unit
+   * expressed in moles - mol, umol, mmol, etc.  If one is a ratio, e.g., mg/dL,
+   * then both must be a ratio and the basis (denominator) must be the same
+   * (L for mg/dL to mmol/L, etc).  No validation of this is done at this time.
+   *
+   * @param amt the quantity of this units to be converted
+   * @param molUnit the target/to unit for which the converted # is wanted
+   * @param molecularWeight the molecular weight of the substance for which the
+   *  conversion is being made
+   * @return the number of moles the molUnit after conversion from this unit
+   */
+  convertMassToMol(amt, molUnit, molecularWeight) {
+    // The prefix values that have been applied to this unit, which is the mass
+    // (grams) unit, are reflected in the magnitude.  So the number of moles
+    // represented by this unit equals the number of grams -- amount * magnitude
+    // divided by the molecular Weight
+    let molAmt = (this.magnitude_ * amt)/molecularWeight ;
+    // to translate that to the molUnit get the effect of the prefixes applied
+    // to it.  Since the molUnit's basic magnitude, before prefixes are applied,
+    // is avogadro's number, get that and divide it out of the current magnitude.
+    let tabs = UnitTables.getInstance();
+    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
+    let molesFactor = molUnit.magnitude_ / avoNum ;
+    // return the molAmt divided by the molesFactor as the number of moles
+    // for the molUnit
+    return molAmt/molesFactor ;
+  }
+
+  /**
+   * Converts a unit expressed in moles to a unit expressed in mass.  The "this"
+   * unit is the unit expressed in moles (mol, mmol, umol, whatever) and the
+   * target or "to" unit - the massUnit parameter - is a unit expressed
+   * in grams - g, ug, mg, kg, etc.  If one is a ratio, e.g., mmol/dL, then
+   * both must be a ratio and the basis (denominator) must be the same (L for
+   * mmol/dL to mg/L, etc).  No validation of this is done at this time.
+   *
+   * @param amt the quantity of this units to be converted
+   * @param massUnit the target/to unit for which the converted # is wanted
+   * @param molecularWeight the molecular weight of the substance for which the
+   *  conversion is being made
+   * @return the number of grams the massUnit after conversion from this unit
+   */
+  convertMolToMass(amt, massUnit, molecularWeight) {
+    // A simple mole unit has a magnitude of avogadro's number.  Get that
+    // number now (since not everyone agrees on what it is, and what is
+    // being used in this system might change).
+    let tabs = UnitTables.getInstance();
+    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
+    // Determine what prefix values (mg or mg/dL, etc.) have been applied to
+    // this unit by dividing the simple mole unit magnitude out of the
+    // current mole unit magnitude.
+    let molesFactor = this.magnitude_ / avoNum ;
+    // The number of grams (mass) is equal to the number of moles (amt)
+    // times the molecular weight.  We also multiply that by the prefix values
+    // applied to the current unit (molesFactor) to get the grams for this
+    // particular unit.
+    let massAmt = (molesFactor * amt) * molecularWeight ;
+    // Finally, we return the mass amount/grams for this particular unit
+    // divided by any effects of prefixes applied to the "to" unit, which
+    // is assumed to be some form of a gram unit
+    return massAmt / massUnit.magnitude_ ;
+  }
 
 
   /**

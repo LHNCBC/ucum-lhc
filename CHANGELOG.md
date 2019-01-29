@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.6.0] - 2019-01-??
+### Added
+- Added library function to convert mass to moles expression.
+
 ## [2.5.0] - 2019-01-07
 ### Changed
 - The changes made by browserify have been removed from the ucum-lhc package 

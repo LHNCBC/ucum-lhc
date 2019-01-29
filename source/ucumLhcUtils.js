@@ -167,6 +167,10 @@ export class UcumLhcUtils {
    *  requested for a string that cannot be resolved to a valid unit;
    *  true indicates suggestions are wanted; false indicates they are not,
    *  and is the default if the parameter is not specified;
+   * @param molecularWeight the molecular weight of the substance in question
+   *  when a conversion is being requested from mass to moles and vice versa.
+   *  This is required when one of the units represents a value in moles.  It is
+   *  ignored if neither unit includes a measurement in moles.
    * @returns a hash with six elements:
    *  'status' that will be: 'succeeded' if the conversion was successfully
    *     calculated; 'failed' if the conversion could not be made, e.g., if
@@ -210,10 +214,12 @@ export class UcumLhcUtils {
    *  'toUnit' the unit object for the toUnitCode passed in; returned
    *     in case it's needed for additional data from the object.
    */
-  convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest) {
-
+  convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight) {
     if (suggest === undefined)
       suggest = false ;
+
+    if (molecularWeight === undefined)
+      molecularWeight = null ;
 
     let returnObj = {'status' : 'failed',
                      'toVal' : null,
@@ -273,7 +279,20 @@ export class UcumLhcUtils {
 
         if (fromUnit && toUnit) {
           try {
-            returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+            if (molecularWeight) {
+              if (fromUnit.csCode_.includes('mol')){
+                returnObj['toVal'] =
+                  fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight)
+              }
+              else {
+                returnObj['toVal'] =
+                  fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight)
+              }
+            }
+            else {
+              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+
+            }
             returnObj['status'] = 'succeeded';
             returnObj['fromUnit'] = fromUnit;
             returnObj['toUnit'] = toUnit;
