@@ -64,6 +64,5 @@
     "type": "git",
     "url": "https://github.com/lhncbc/ucum-lhc"
   },
-  "license": "SEE LICENSE IN LICENSE.md",
-  "dependencies": {}
+  "license": "SEE LICENSE IN LICENSE.md"
 }
