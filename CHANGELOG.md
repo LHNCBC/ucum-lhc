@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.5.1] - 2019-01-30
+## [2.5.2] - 2019-01-30
 ### Fixed
 - Fixed problem with 2.5.0 where not all files were being included in the 
 source-es5/ucumPkg.js package.
