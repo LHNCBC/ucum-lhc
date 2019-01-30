@@ -9,6 +9,7 @@
   },
   "files": [
     "source-es5/*",
+    "data/ucumDefs.json",
     "test/testModule.spec.js"
   ],
   "dependencies" :
