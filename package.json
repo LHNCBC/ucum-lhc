@@ -8,7 +8,7 @@
     "test": "test"
   },
   "files": [
-    "source-es5/*",
+    "source-es5/*.js",
     "data/ucumDefs.json",
     "test/testModule.spec.js"
   ],
