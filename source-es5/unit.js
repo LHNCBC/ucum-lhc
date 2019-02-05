@@ -528,9 +528,9 @@ var Unit = exports.Unit = function () {
      * Converts a unit expressed in mass/grams to a unit expressed in moles.  The
      * "this" unit is the unit expressed in some form of mass (g, mg, mmg, kg,
      * whatever) and the target or "to" unit - the molUnit parameter - is a unit
-     * expressed in moles - mol, umol, mmol, etc.  If one is a ratio, e.g., mg/dL,
-     * then both must be a ratio and the basis (denominator) must be the same
-     * (L for mg/dL to mmol/L, etc).  No validation of this is done at this time.
+     * expressed in moles - mol, umol, mmol, etc.  The unit expressions surrounding
+     * the moles and mass must be convertible.  No validation of this requirement
+     * is performed.
      *
      * @param amt the quantity of this units to be converted
      * @param molUnit the target/to unit for which the converted # is wanted
@@ -560,8 +560,11 @@ var Unit = exports.Unit = function () {
 
     /**
      * Converts a unit expressed in moles to a unit expressed in mass (grams).
-     * The unit expressions surrounding the moles and mass must be convertible.
-     * No validation of this requirement is performed.
+     * The "this" unit is the unit expressed in some form of moles, e.g., mol,
+     * umol, mmol, etc., and the target or "to" unit is a unit expressed in
+     * some form of mass, e.g., g, mg, mmg, kg, etc.  Any unit expressions
+     * surrounding the moles and mass must be convertible. No validation of this
+     * requirement is performed.
      *
      * @param amt the quantity of this units to be converted
      * @param massUnit the target/to unit for which the converted # is wanted

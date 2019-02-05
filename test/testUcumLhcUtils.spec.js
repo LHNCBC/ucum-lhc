@@ -181,42 +181,14 @@ it("should return a message for invalid unit strings", function() {
   it("should return an error for an attempt to translate mmol/mol to kg", function() {
     var resp4 = utils.convertUnitTo('mmol/mol', 1, 'kg');
     assert.equal(resp4.status, 'failed', resp4.status);
-    assert.equal(resp4.msg[0], 'Sorry.  mmol/mol cannot be converted to kg.', resp4.msg[0]);
+    assert.equal(resp4.msg[0], 'Molecular weight must be supplied for ' +
+      'conversion between mass and moles; none was supplied.', resp4.msg[0]);
     assert.equal(resp4.toVal, null, resp4.toVal);
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
   });
 
-  it("should return an error for an attempt to translate mmol/L to mol", function() {
-    var resp4 = utils.convertUnitTo('mmol/L', 1, 'mol');
-    assert.equal(resp4.status, 'failed', resp4.status);
-    assert.equal(resp4.msg[0], 'Sorry.  mmol/L cannot be converted to mol.', resp4.msg[0]);
-    assert.equal(resp4.toVal, null, resp4.toVal);
-    assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
-    assert.equal(resp4.toUnit, undefined, resp4.toUnit);
-  });
-
-  it("should return an error for an attempt to translate mol to 32.4(ug/g).mg", function() {
-    var resp4 = utils.convertUnitTo('mol', 1, '32.4(ug/g).mg');
-    assert.equal(resp4.status, 'failed', resp4.status);
-    assert.equal(resp4.msg[0], '4(ug/g) is not a valid UCUM code.  We assumed you meant 4.(ug/g).', resp4.msg[0]);
-    assert.equal(resp4.msg[1], 'Sorry.  mol cannot be converted to (32.(4.(ug/g))).mg.', resp4.msg[1]);
-    assert.equal(resp4.toVal, null, resp4.toVal);
-    assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
-    assert.equal(resp4.toUnit, undefined, resp4.toUnit);
-  });
-
-  it("should return an error for an attempt to translate mol to 78.4(mmol/L)/s", function() {
-    var resp4 = utils.convertUnitTo('mol', 1, '78.4(mmol/L)/s');
-    assert.equal(resp4.status, 'failed', resp4.status);
-    assert.equal(resp4.msg[0], '4(mmol/L) is not a valid UCUM code.  We assumed you meant 4.(mmol/L).', resp4.msg[0]);
-    assert.equal(resp4.msg[1], 'Sorry.  mol cannot be converted to (78.(4.(mmol/L)))/s.', resp4.msg[1]);
-    assert.equal(resp4.toVal, null, resp4.toVal);
-    assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
-    assert.equal(resp4.toUnit, undefined, resp4.toUnit);
-  });
-
-  it("should return 96 for a request to convert 5.33 mmol/L to mg/dL weight 180.156", function() {
+   it("should return 96 for a request to convert 5.33 mmol/L to mg/dL weight 180.156", function() {
     var resp5 = utils.convertUnitTo('mmol/L', 5.33, 'mg/dL', false, 180.156);
     assert.equal(resp5.status, 'succeeded', resp5.status);
     assert.equal(resp5.toVal.toPrecision(2), 96, resp5.toVal);
@@ -237,7 +209,7 @@ it("should return a message for invalid unit strings", function() {
   it("should return 300.57 for a request to convert 3.4 mg/dL to umol/L weight 113.1179", function() {
     var resp5 = utils.convertUnitTo('mg/dL', 3.4, 'umol/L', false, 113.1179);
     assert.equal(resp5.status, 'succeeded', resp5.status);
-    assert.equal(resp5.toVal.toPrecision), 300.57, resp5.toVal)
+    assert.equal(resp5.toVal.toPrecision(5), 300.57, resp5.toVal)
   });
 
   it("should return 6.7 for a request to convert 1.67 mmol/L to mg/dL weight 40.078", function() {

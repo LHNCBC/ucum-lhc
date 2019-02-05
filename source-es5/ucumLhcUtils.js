@@ -289,6 +289,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
           if (fromUnit && toUnit) {
             try {
+              if (fromUnit.csCode_.includes('mol') && !molecularWeight || toUnit.csCode_.includes('mol') && !molecularWeight) throw new Error('Molecular weight must be supplied for ' + 'conversion between mass and moles; none was supplied.');
               if (molecularWeight) {
                 if (fromUnit.csCode_.includes('mol')) {
                   returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
