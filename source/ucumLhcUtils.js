@@ -283,19 +283,16 @@ export class UcumLhcUtils {
                 (toUnit.csCode_.includes('mol') && !molecularWeight))
               throw (new Error('Molecular weight must be supplied for ' +
                 'conversion between mass and moles; none was supplied.'));
-            if (molecularWeight) {
-              if (fromUnit.csCode_.includes('mol')){
-                returnObj['toVal'] =
+            if (fromUnit.csCode_.includes('mol')){
+              returnObj['toVal'] =
                   fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight)
-              }
-              else {
-                returnObj['toVal'] =
+            }
+            else if (toUnit.csCode_.includes('mol')) {
+              returnObj['toVal'] =
                   fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight)
-              }
             }
             else {
               returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
-
             }
             returnObj['status'] = 'succeeded';
             returnObj['fromUnit'] = fromUnit;
