@@ -534,8 +534,7 @@ export class Unit {
     // represented by this unit equals the number of grams -- amount * magnitude
     // divided by the molecular Weight
     let molAmt = (this.magnitude_ * amt)/molecularWeight ;
-    // to translate that to the molUnit get the effect of the prefixes applied
-    // to it.  Since the molUnit's basic magnitude, before prefixes are applied,
+    // The molUnit's basic magnitude, before prefixes are applied,
     // is avogadro's number, get that and divide it out of the current magnitude.
     let tabs = UnitTables.getInstance();
     let avoNum = tabs.getUnitByCode('mol').magnitude_ ;

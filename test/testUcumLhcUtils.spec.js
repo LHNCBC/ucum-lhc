@@ -188,8 +188,8 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
   });
 
-   it("should return 96 for a request to convert 5.33 mmol/L to mg/dL weight 180.156", function() {
-    var resp5 = utils.convertUnitTo('mmol/L', 5.33, 'mg/dL', false, 180.156);
+   it("should return 96 for a request to convert 5.33 mmol/L to mg{molybdenum}/dL weight 180.156", function() {
+    var resp5 = utils.convertUnitTo('mmol/L', 5.33, 'mg{molybdenum}/dL', false, 180.156);
     assert.equal(resp5.status, 'succeeded', resp5.status);
     assert.equal(resp5.toVal.toPrecision(2), 96, resp5.toVal);
   })

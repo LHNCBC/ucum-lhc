@@ -29259,10 +29259,15 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
           if (fromUnit && toUnit) {
             try {
-              if (fromUnit.csCode_.includes('mol') && !molecularWeight || toUnit.csCode_.includes('mol') && !molecularWeight) throw new Error('Molecular weight must be supplied for ' + 'conversion between mass and moles; none was supplied.');
-              if (fromUnit.csCode_.includes('mol')) {
+              var rStr = new RegExp('^.?(mol)(?:\{.+\})*');
+              var mCheck = fromUnit.csCode_.match(rStr);
+              var fMol = mCheck;
+              mCheck = toUnit.csCode_.match(rStr);
+              var tMol = mCheck;
+              if (fMol && !molecularWeight || tMol && !molecularWeight) throw new Error('Molecular weight must be supplied for ' + 'conversion between mass and moles; none was supplied.');
+              if (fMol && !tMol) {
                 returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
-              } else if (toUnit.csCode_.includes('mol')) {
+              } else if (tMol && !fMol) {
                 returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
               } else {
                 returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
@@ -30045,8 +30050,7 @@ var Unit = exports.Unit = function () {
       // represented by this unit equals the number of grams -- amount * magnitude
       // divided by the molecular Weight
       var molAmt = this.magnitude_ * amt / molecularWeight;
-      // to translate that to the molUnit get the effect of the prefixes applied
-      // to it.  Since the molUnit's basic magnitude, before prefixes are applied,
+      // The molUnit's basic magnitude, before prefixes are applied,
       // is avogadro's number, get that and divide it out of the current magnitude.
       var tabs = UnitTables.getInstance();
       var avoNum = tabs.getUnitByCode('mol').magnitude_;
