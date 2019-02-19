@@ -222,6 +222,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meters; metres; distance",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -259,6 +260,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "seconds",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -296,6 +298,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "grams; gm",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -333,6 +336,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "radians",
       "source_": "UCUM",
       "loincProperty_": "Angle",
@@ -370,6 +374,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Kelvin; degrees",
       "source_": "UCUM",
       "loincProperty_": "Temp",
@@ -407,6 +412,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "coulombs",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -444,6 +450,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "candelas",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -462,7 +469,17 @@ module.exports={
       "ciCode_": "10*",
       "property_": "number",
       "magnitude_": "10",
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "10",
       "class_": "dimless",
       "isMetric_": false,
@@ -471,6 +488,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^; 10 to the arbitrary powers",
       "source_": "UCUM",
       "loincProperty_": "Num",
@@ -489,7 +507,17 @@ module.exports={
       "ciCode_": "10^",
       "property_": "number",
       "magnitude_": "10",
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "10",
       "class_": "dimless",
       "isMetric_": false,
@@ -498,6 +526,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10*; 10 to the arbitrary power",
       "source_": "UCUM",
       "loincProperty_": "Num",
@@ -516,7 +545,17 @@ module.exports={
       "ciCode_": "[PI]",
       "property_": "number",
       "magnitude_": 3.141592653589793,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "π",
       "class_": "dimless",
       "isMetric_": false,
@@ -525,6 +564,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "π",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -543,7 +583,17 @@ module.exports={
       "ciCode_": "%",
       "property_": "fraction",
       "magnitude_": 0.01,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "%",
       "class_": "dimless",
       "isMetric_": false,
@@ -552,6 +602,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "percents",
       "source_": "UCUM",
       "loincProperty_": "FR; NFR; MFR; CFR; SFR Rto; etc. ",
@@ -570,7 +621,17 @@ module.exports={
       "ciCode_": "[PPTH]",
       "property_": "fraction",
       "magnitude_": 0.001,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "ppth",
       "class_": "dimless",
       "isMetric_": false,
@@ -579,6 +640,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ppth; 10^-3",
       "source_": "UCUM",
       "loincProperty_": "MCnc; MCnt",
@@ -597,7 +659,17 @@ module.exports={
       "ciCode_": "[PPM]",
       "property_": "fraction",
       "magnitude_": 0.000001,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "ppm",
       "class_": "dimless",
       "isMetric_": false,
@@ -606,6 +678,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ppm; 10^-6",
       "source_": "UCUM",
       "loincProperty_": "MCnt; MCnc; SFr",
@@ -624,7 +697,17 @@ module.exports={
       "ciCode_": "[PPB]",
       "property_": "fraction",
       "magnitude_": 1e-9,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "ppb",
       "class_": "dimless",
       "isMetric_": false,
@@ -633,6 +716,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ppb; 10^-9",
       "source_": "UCUM",
       "loincProperty_": "MCnt; MCnc; SFr",
@@ -651,7 +735,17 @@ module.exports={
       "ciCode_": "[PPTR]",
       "property_": "fraction",
       "magnitude_": 1e-12,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "pptr",
       "class_": "dimless",
       "isMetric_": false,
@@ -660,6 +754,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pptr; 10^-12",
       "source_": "UCUM",
       "loincProperty_": "MCnt; MCnc; SFr",
@@ -678,7 +773,17 @@ module.exports={
       "ciCode_": "MOL",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "mol",
       "class_": "si",
       "isMetric_": true,
@@ -687,6 +792,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "moles",
       "source_": "UCUM",
       "loincProperty_": "Sub",
@@ -724,6 +830,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "square radian; rad2; rad^2",
       "source_": "UCUM",
       "loincProperty_": "Angle",
@@ -761,6 +868,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Herz; frequency; frequencies",
       "source_": "UCUM",
       "loincProperty_": "Freq; Num",
@@ -798,6 +906,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Newtons",
       "source_": "UCUM",
       "loincProperty_": "Force",
@@ -835,6 +944,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pascals",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -872,6 +982,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "joules",
       "source_": "UCUM",
       "loincProperty_": "Enrg",
@@ -909,6 +1020,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "watts",
       "source_": "UCUM",
       "loincProperty_": "EngRat",
@@ -946,6 +1058,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Amperes",
       "source_": "UCUM",
       "loincProperty_": "ElpotRat",
@@ -983,6 +1096,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "volts",
       "source_": "UCUM",
       "loincProperty_": "Elpot",
@@ -1020,6 +1134,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "farads; electric capacitance",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1057,6 +1172,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Ω; resistance; ohms",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1094,6 +1210,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Reciprocal ohm; mho; Ω−1; conductance",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1131,6 +1248,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "magnetic flux; webers",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1168,6 +1286,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "°C; degrees",
       "source_": "UCUM",
       "loincProperty_": "Temp",
@@ -1205,6 +1324,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Teslas; magnetic field",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1242,6 +1362,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "henries; inductance",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1279,6 +1400,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "luminous flux; lumens",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1316,6 +1438,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "illuminance; luxes",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1353,6 +1476,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "activity; radiation; becquerels",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1390,6 +1514,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "absorbed doses; ionizing radiation doses; kerma; grays",
       "source_": "UCUM",
       "loincProperty_": "EngCnt",
@@ -1427,6 +1552,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "sieverts; radiation dose quantities; equivalent doses; effective dose; operational dose; committed dose",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -1464,6 +1590,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "°; degree of arc; arc degree; arcdegree; angle",
       "source_": "UCUM",
       "loincProperty_": "Angle",
@@ -1501,6 +1628,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gon (grade); gons",
       "source_": "UCUM",
       "loincProperty_": "Angle",
@@ -1538,6 +1666,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "arcminutes; arcmin; arc minutes; arc mins",
       "source_": "UCUM",
       "loincProperty_": "Angle",
@@ -1575,6 +1704,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "arcseconds; arcsecs",
       "source_": "UCUM",
       "loincProperty_": "Angle",
@@ -1612,6 +1742,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cubic decimeters; decimeters cubed; decimetres; dm3; dm^3; litres; liters, LT ",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -1649,6 +1780,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cubic decimeters; decimeters cubed; decimetres; dm3; dm^3; litres; liters, LT ",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -1686,6 +1818,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "100 m2; 100 m^2; 100 square meter; meters squared; metres",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -1723,6 +1856,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "minutes",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -1760,6 +1894,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "hours; hrs; age",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -1797,6 +1932,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "days; age; dy; 24 hours; 24 hrs",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -1834,6 +1970,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "solar years; a tropical; years",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -1871,6 +2008,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mean Julian yr; a julian; years",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -1908,6 +2046,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mean Gregorian yr; a gregorian; years",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -1945,6 +2084,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "years; a; yr, yrs; annum",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -1982,6 +2122,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "weeks; wks",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -2019,6 +2160,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Moon; synodic month; lunar month; mo-s; mo s; months; moons",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -2056,6 +2198,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mo-julian; mo Julian; months",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -2093,6 +2236,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "months; month-gregorian; mo-gregorian",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -2130,6 +2274,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "months; duration",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -2167,6 +2312,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "tonnes; megagrams; tons",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -2204,6 +2350,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bars",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -2241,6 +2388,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "unified atomic mass units; amu; Dalton; Da",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -2278,6 +2426,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "AU; units",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -2315,6 +2464,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "parsecs",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -2352,6 +2502,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "speed of light",
       "source_": "UCUM",
       "loincProperty_": "Vel",
@@ -2389,6 +2540,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Planck's constant",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -2426,6 +2578,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "k; kB",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -2463,6 +2616,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ε0; Electric Constant; vacuum permittivity; permittivity of free space ",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -2500,6 +2654,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "μ0; vacuum permeability; permeability of free space; magnetic constant",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -2537,6 +2692,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "e; q; electric charges",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -2574,6 +2730,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Electron Volts; electronvolts",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -2611,6 +2768,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "electron rest mass; me",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -2648,6 +2806,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mp; masses",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -2685,6 +2844,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "G; gravitational constant; Newton's constant",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -2722,6 +2882,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "standard gravity; g; ɡ0; ɡn",
       "source_": "UCUM",
       "loincProperty_": "Accel",
@@ -2759,6 +2920,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "torrs",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -2796,6 +2958,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "reference pressure; atmos; std atmosphere",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -2833,6 +2996,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "light years; ly",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -2870,6 +3034,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Newtons; gram forces",
       "source_": "UCUM",
       "loincProperty_": "Force",
@@ -2907,6 +3072,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "wavenumbers; kaysers",
       "source_": "UCUM",
       "loincProperty_": "InvLen",
@@ -2944,6 +3110,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "galileos; Gals",
       "source_": "UCUM",
       "loincProperty_": "Accel",
@@ -2981,6 +3148,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "dynes",
       "source_": "UCUM",
       "loincProperty_": "Force",
@@ -3018,6 +3186,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^-7 Joules, 10-7 Joules; 100 nJ; 100 nanoJoules; 1 dyne cm; 1 g.cm2/s2",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -3055,6 +3224,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "dynamic viscosity; poises",
       "source_": "UCUM",
       "loincProperty_": "Visc",
@@ -3092,6 +3262,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Bi; abamperes; abA",
       "source_": "UCUM",
       "loincProperty_": "ElpotRat",
@@ -3129,6 +3300,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kinematic viscosity",
       "source_": "UCUM",
       "loincProperty_": "Visc",
@@ -3166,6 +3338,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "magnetix flux; Maxwells",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3203,6 +3376,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "magnetic fields; magnetic flux density; induction; B",
       "source_": "UCUM",
       "loincProperty_": "magnetic",
@@ -3240,6 +3414,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "H magnetic B field; Oersteds",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3277,6 +3452,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Gi; magnetomotive force; Gilberts",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3314,6 +3490,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "stilbs",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3351,6 +3528,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "luminance; lamberts",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3388,6 +3566,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "phots",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3425,6 +3604,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "curies",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3462,6 +3642,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "röntgen; Roentgens",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3499,6 +3680,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "doses",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3536,6 +3718,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Roentgen Equivalent in Man; rems; dose equivalents",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -3573,6 +3756,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "inches; in; international inch; body height",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -3610,6 +3794,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ft; fts; foot; international foot; feet; international feet; height",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -3647,6 +3832,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "international yards; yds; distance",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -3684,6 +3870,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "international miles; mi I; statute mile",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -3721,6 +3908,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "international fathoms",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -3758,6 +3946,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "nautical mile; nautical miles; international nautical mile; international nautical miles; nm; n.m.; nmi",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -3795,6 +3984,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kn; kt; international knots",
       "source_": "UCUM",
       "loincProperty_": "Vel",
@@ -3832,6 +4022,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "in2; in^2; inches squared; sq inch; inches squared; international",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -3869,6 +4060,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ft2; ft^2; ft squared; sq ft; feet; international",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -3906,6 +4098,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "yd2; yd^2; sq. yds; yards squared; international",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -3943,6 +4136,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "in3; in^3; in*3; inches^3; inches*3; cu. in; cu in; cubic inches; inches cubed; cin",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -3980,6 +4174,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ft3; ft^3; ft*3; cu. ft; cubic feet; cubed; [ft_i]3; international",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -4017,6 +4212,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cubic yards; cubic yds; cu yards; CYs; yards^3; yd^3; yds^3; yd3; yds3",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -4054,6 +4250,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "BDFT; FBM; BF; board feet; international",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -4091,6 +4288,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "crd I; international cords",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -4128,6 +4326,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "thou, thousandth; mils; international",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4165,6 +4364,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "circular mils; cml I; international",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -4202,6 +4402,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "hands; international",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4239,6 +4440,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US foot; foot US; us ft; ft us; height; visual distance; feet",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4276,6 +4478,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US yards; us yds; distance",
       "source_": "UCUM",
       "loincProperty_": "Len; Nrat",
@@ -4313,6 +4516,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US inches; in us; us in; inch US",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4350,6 +4554,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US rod; US rods; rd US; US rd",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4387,6 +4592,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "surveyor's chain; Surveyor's chain USA; Gunter’s measurement; surveyor’s measurement; Gunter's Chain USA",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4424,6 +4630,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Links for Gunter's Chain USA",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4461,6 +4668,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Ramsden's chain; engineer's chains",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4498,6 +4706,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "links for Ramsden's chain",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4535,6 +4744,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US fathoms; fathom USA; fth us",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4572,6 +4782,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US furlongs; fur us",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4609,6 +4820,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U.S. Survey Miles; US statute miles; survey mi; US mi; distance",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4646,6 +4858,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Acre USA Survey; Acre USA; survey acres",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -4683,6 +4896,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "rod2; rod^2; sq. rod; rods squared",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -4720,6 +4934,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mi2; mi^2; sq mi; miles squared",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -4757,6 +4972,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "sct; sections",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -4794,6 +5010,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "twp; townships",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -4831,6 +5048,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "thou, thousandth; mils",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4868,6 +5086,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "imperial inches; imp in; br in; british inches",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4905,6 +5124,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British Foot; Imperial Foot; feet; imp fts; br fts",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4942,6 +5162,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British rods; br rd",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -4979,6 +5200,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Gunter's Chain British; Gunters Chain British; Surveyor's Chain British",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -5016,6 +5238,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Links for Gunter's Chain British",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -5053,6 +5276,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British fathoms; imperial fathoms; br fth; imp fth",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -5090,6 +5314,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British paces; br pc",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -5127,6 +5352,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British yards; Br yds; distance",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -5164,6 +5390,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "imperial miles; British miles; English statute miles; imp mi, br mi",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -5201,6 +5428,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British nautical miles; Imperial nautical miles; Admiralty miles; n.m. br; imp nm",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -5238,6 +5466,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British knots; kn br; kt",
       "source_": "UCUM",
       "loincProperty_": "Vel",
@@ -5275,6 +5504,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Imperial acres; British; a; ac; ar; acr",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -5312,6 +5542,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US gallons; US liquid gallon; gal us; Queen Anne's wine gallon",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5349,6 +5580,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bbl",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5386,6 +5618,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US quarts; us qts",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5423,6 +5656,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US pints; pint US; liquid pint; pt us; us pt",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5460,6 +5694,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US gills; gil us",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5497,6 +5732,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US fluid ounces; fl ozs; FO; fl. oz.; foz us",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5534,6 +5770,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US fluid drams; fdr us",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5571,6 +5808,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "min US; US min; ♏ US",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5608,6 +5846,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US cord; US cords; crd us; us crd",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5645,6 +5884,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US bushels; US bsh; US bu",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5682,6 +5922,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Corn Gallon British; Dry Gallon US; Gallons Historical; Grain Gallon British; Winchester Corn Gallon; historical winchester gallons; wi gal",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5719,6 +5960,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "US pecks; US pk",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5756,6 +5998,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "dry quarts; dry quart US; US dry quart; dry qt; us dry qt; dqt; dqt us",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5793,6 +6036,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "dry pints; dry pint US; US dry pint; dry pt; dpt; dpt us",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5830,6 +6074,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Tbs; tbsp; tbs us; US tablespoons",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5867,6 +6112,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "tsp; t; US teaspoons",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5904,6 +6150,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cup us; us cups",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5941,6 +6188,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "metric fluid ounces; fozs m; fl ozs m",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -5978,6 +6226,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cup m; metric cups",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6015,6 +6264,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "tsp; t; metric teaspoons",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6052,6 +6302,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "metric tablespoons; Tbs; tbsp; T; tbs m",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6089,6 +6340,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "imperial gallons, UK gallons; British gallons; br gal; imp gal",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6126,6 +6378,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "imperial pecks; British pecks; br pk; imp pk",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6163,6 +6416,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British bushels; imperial; br bsh; br bu; imp",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6200,6 +6454,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British quarts; imperial quarts; br qts",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6237,6 +6492,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British pints; imperial pints; pt br; br pt; imp pt; pt imp",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6274,6 +6530,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "imperial gills; British gills; imp gill, br gill",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6311,6 +6568,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British fluid ounces; Imperial fluid ounces; br fozs; imp fozs; br fl ozs",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6348,6 +6606,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British fluid drams; fdr br",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6385,6 +6644,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "min br; br min; ♏ br",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -6422,6 +6682,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gr; grains",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6459,6 +6720,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "avoirdupois pounds, international pounds; av lbs; pounds",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6496,6 +6758,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "lbfs; US lbf; US pound forces",
       "source_": "UCUM",
       "loincProperty_": "Force",
@@ -6533,6 +6796,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ounces; international ounces; avoirdupois ounces; av ozs",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6570,6 +6834,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Dram; drams avoirdupois; avoidupois dram; international dram",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6607,6 +6872,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "hundredweights; s cwt; scwt; avoirdupois",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6644,6 +6910,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "imperial hundredweights; imp cwt; lcwt; avoirdupois",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6681,6 +6948,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ton; US tons; avoirdupois tons",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6718,6 +6986,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "imperial tons; weight tons; British long tons; long ton avoirdupois",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6755,6 +7024,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British stones; avoirdupois",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6792,6 +7062,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "dwt; denarius weights",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6829,6 +7100,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "troy ounces; tr ozs",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6866,6 +7138,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "troy pounds; tr lbs",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6903,6 +7176,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "scruples; sc ap",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6940,6 +7214,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ʒ; drachm; apothecaries drams; dr ap; dram ap",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -6977,6 +7252,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "apothecary ounces; oz ap; ap ozs; ozs ap",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -7014,6 +7290,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "apothecary pounds; apothecaries pounds; ap lb; lb ap; ap lbs; lbs ap",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -7051,6 +7328,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "metric ounces; m ozs",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -7088,6 +7366,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "British lines; br L; L; l",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7125,6 +7404,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "DTP points; desktop publishing point; pt; pnt",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7162,6 +7442,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "picas",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7199,6 +7480,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pnt pr",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7236,6 +7518,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pca pr; Printer's picas",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7273,6 +7556,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pieds du roi; Paris foot; royal; French; feet",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7310,6 +7594,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "historical French inches; French royal inches",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7347,6 +7632,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Paris lines; lignes",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7384,6 +7670,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Didot point; dd; Didots Point; didots; points",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7421,6 +7708,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Didot's pica; ciceros; picas",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -7458,6 +7746,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "°F; deg F",
       "source_": "UCUM",
       "loincProperty_": "Temp",
@@ -7495,6 +7784,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "°R; °Ra; Rankine",
       "source_": "UCUM",
       "loincProperty_": "Temp",
@@ -7532,6 +7822,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "°Ré, °Re, °r; Réaumur; degree Reaumur; Reaumur",
       "source_": "UCUM",
       "loincProperty_": "Temp",
@@ -7569,6 +7860,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "calorie 15 C; cals 15 C; calories at 15 C",
       "source_": "UCUM",
       "loincProperty_": "Enrg",
@@ -7606,6 +7898,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "calorie 20 C; cal 20 C; calories at 20 C",
       "source_": "UCUM",
       "loincProperty_": "Enrg",
@@ -7643,6 +7936,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mean cals; mean calories",
       "source_": "UCUM",
       "loincProperty_": "Enrg",
@@ -7680,6 +7974,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "calories IT; IT cals; international steam table calories",
       "source_": "UCUM",
       "loincProperty_": "Enrg",
@@ -7717,6 +8012,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "thermochemical calories; th cals",
       "source_": "UCUM",
       "loincProperty_": "Enrg",
@@ -7754,6 +8050,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gram calories; small calories",
       "source_": "UCUM",
       "loincProperty_": "Enrg",
@@ -7791,6 +8088,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "food calories; Cal; kcal",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -7828,6 +8126,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "BTU 39F; BTU 39 F; B.T.U. 39 F; B.Th.U. 39 F; BThU 39 F; British thermal units",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -7865,6 +8164,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "BTU 59 F; BTU 59F; B.T.U. 59 F; B.Th.U. 59 F; BThU 59F; British thermal units",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -7902,6 +8202,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "BTU 60 F; BTU 60F; B.T.U. 60 F; B.Th.U. 60 F; BThU 60 F; British thermal units 60 F",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -7939,6 +8240,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "BTU mean; B.T.U. mean; B.Th.U. mean; BThU mean; British thermal units mean; ",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -7976,6 +8278,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "BTU IT; B.T.U. IT; B.Th.U. IT; BThU IT; British thermal units IT",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -8013,6 +8316,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "BTU Th; B.T.U. Th; B.Th.U. Th; BThU Th; thermochemical British thermal units",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -8050,6 +8354,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "BTU; B.T.U. ; B.Th.U.; BThU; British thermal units",
       "source_": "UCUM",
       "loincProperty_": "Eng",
@@ -8087,6 +8392,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "imperial horsepowers",
       "source_": "UCUM",
       "loincProperty_": "EngRat",
@@ -8124,6 +8430,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "linear mass density; texes",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -8161,6 +8468,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "den; deniers",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -8198,6 +8506,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mH2O; m H2O; meters of water column; metres; pressure",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -8235,6 +8544,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mHg; m Hg; meters of mercury column; metres; pressure",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -8272,6 +8582,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "inches WC; inAq; in H2O; inch of water gauge; iwg; pressure",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -8309,6 +8620,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "inHg; in Hg; pressure; inches",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -8346,6 +8658,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "peripheral vascular resistance units; peripheral resistance unit; peripheral resistance units; PRU",
       "source_": "UCUM",
       "loincProperty_": "FldResist",
@@ -8383,6 +8696,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "hybrid reference units; HRU; mmHg.min/L; vascular resistance",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -8420,6 +8734,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "diopters; diop; dioptre; dpt; refractive power",
       "source_": "UCUM",
       "loincProperty_": "InvLen",
@@ -8457,6 +8772,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "diopters; dioptres; p diops; pdiop; dpt; pdptr; Δ; cm/m; centimeter per meter; centimetre; metre",
       "source_": "UCUM",
       "loincProperty_": "Angle",
@@ -8494,6 +8810,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "% slope; %slope; percents slopes",
       "source_": "UCUM",
       "loincProperty_": "VelFr; ElpotRatFr; VelRtoFr; AccelFr",
@@ -8531,6 +8848,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meshes",
       "source_": "UCUM",
       "loincProperty_": "NLen (lineic number)",
@@ -8568,6 +8886,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Charrières, French scales; French gauges; Fr, Fg, Ga, FR, Ch",
       "source_": "UCUM",
       "loincProperty_": "Len; Circ; Diam",
@@ -8605,6 +8924,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "drop dosing units; metric drops; gtt",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -8623,7 +8943,17 @@ module.exports={
       "ciCode_": "[HNSF'U]",
       "property_": "x-ray attenuation",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "HF",
       "class_": "clinical",
       "isMetric_": false,
@@ -8632,6 +8962,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "HU; units",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -8669,6 +9000,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "metabolic equivalents",
       "source_": "UCUM",
       "loincProperty_": "RelEngRat",
@@ -8687,7 +9019,17 @@ module.exports={
       "ciCode_": "[HP'_X]",
       "property_": "homeopathic potency (retired)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "X",
       "class_": "clinical",
       "isMetric_": false,
@@ -8696,6 +9038,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8714,7 +9057,17 @@ module.exports={
       "ciCode_": "[HP'_C]",
       "property_": "homeopathic potency (retired)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "C",
       "class_": "clinical",
       "isMetric_": false,
@@ -8723,6 +9076,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8741,7 +9095,17 @@ module.exports={
       "ciCode_": "[HP'_M]",
       "property_": "homeopathic potency (retired)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "M",
       "class_": "clinical",
       "isMetric_": false,
@@ -8750,6 +9114,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8768,7 +9133,17 @@ module.exports={
       "ciCode_": "[HP'_Q]",
       "property_": "homeopathic potency (retired)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "Q",
       "class_": "clinical",
       "isMetric_": false,
@@ -8777,6 +9152,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8795,7 +9171,17 @@ module.exports={
       "ciCode_": "[HP_X]",
       "property_": "homeopathic potency (Hahnemann)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "X",
       "class_": "clinical",
       "isMetric_": false,
@@ -8804,6 +9190,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8822,7 +9209,17 @@ module.exports={
       "ciCode_": "[HP_C]",
       "property_": "homeopathic potency (Hahnemann)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "C",
       "class_": "clinical",
       "isMetric_": false,
@@ -8831,6 +9228,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8849,7 +9247,17 @@ module.exports={
       "ciCode_": "[HP_M]",
       "property_": "homeopathic potency (Hahnemann)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "M",
       "class_": "clinical",
       "isMetric_": false,
@@ -8858,6 +9266,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8876,7 +9285,17 @@ module.exports={
       "ciCode_": "[HP_Q]",
       "property_": "homeopathic potency (Hahnemann)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "Q",
       "class_": "clinical",
       "isMetric_": false,
@@ -8885,6 +9304,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8903,7 +9323,17 @@ module.exports={
       "ciCode_": "[KP_X]",
       "property_": "homeopathic potency (Korsakov)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "X",
       "class_": "clinical",
       "isMetric_": false,
@@ -8912,6 +9342,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8930,7 +9361,17 @@ module.exports={
       "ciCode_": "[KP_C]",
       "property_": "homeopathic potency (Korsakov)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "C",
       "class_": "clinical",
       "isMetric_": false,
@@ -8939,6 +9380,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8957,7 +9399,17 @@ module.exports={
       "ciCode_": "[KP_M]",
       "property_": "homeopathic potency (Korsakov)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "M",
       "class_": "clinical",
       "isMetric_": false,
@@ -8966,6 +9418,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -8984,7 +9437,17 @@ module.exports={
       "ciCode_": "[KP_Q]",
       "property_": "homeopathic potency (Korsakov)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "Q",
       "class_": "clinical",
       "isMetric_": false,
@@ -8993,6 +9456,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -9011,7 +9475,17 @@ module.exports={
       "ciCode_": "EQ",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "eq",
       "class_": "chemical",
       "isMetric_": true,
@@ -9020,6 +9494,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "equivalents",
       "source_": "UCUM",
       "loincProperty_": "Sub",
@@ -9038,7 +9513,17 @@ module.exports={
       "ciCode_": "OSM",
       "property_": "amount of substance (dissolved particles)",
       "magnitude_": 6.0221367e+23,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "osm",
       "class_": "chemical",
       "isMetric_": true,
@@ -9047,6 +9532,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "osmoles; osmols",
       "source_": "UCUM",
       "loincProperty_": "Osmol",
@@ -9084,6 +9570,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pH scale",
       "source_": "UCUM",
       "loincProperty_": "LogCnc",
@@ -9121,6 +9608,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gram %; gram%; grams per deciliter; g/dL; gm per dL; gram percents",
       "source_": "UCUM",
       "loincProperty_": "MCnc",
@@ -9158,6 +9646,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Sv; 10^-13 seconds; 100 fs; 100 femtoseconds",
       "source_": "UCUM",
       "loincProperty_": "Time",
@@ -9176,7 +9665,17 @@ module.exports={
       "ciCode_": "[HPF]",
       "property_": "view area in microscope",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "HPF",
       "class_": "chemical",
       "isMetric_": false,
@@ -9185,6 +9684,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "HPF",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -9203,7 +9703,17 @@ module.exports={
       "ciCode_": "[LPF]",
       "property_": "view area in microscope",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "LPF",
       "class_": "chemical",
       "isMetric_": false,
@@ -9212,6 +9722,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "LPF; fields",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -9249,6 +9760,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mol/secs; moles per second; mol*sec-1; mol*s-1; mol.s-1; katals; catalytic activity; enzymatic; enzyme units; activities",
       "source_": "UCUM",
       "loincProperty_": "CAct",
@@ -9286,6 +9798,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "micromoles per minute; umol/min; umol per minute; umol min-1; enzymatic activity; enzyme activity",
       "source_": "UCUM",
       "loincProperty_": "CAct",
@@ -9304,7 +9817,17 @@ module.exports={
       "ciCode_": "[IU]",
       "property_": "arbitrary",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "IU",
       "class_": "chemical",
       "isMetric_": true,
@@ -9313,6 +9836,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "international units; IE; F2",
       "source_": "UCUM",
       "loincProperty_": "Arb",
@@ -9331,7 +9855,17 @@ module.exports={
       "ciCode_": "[IU]",
       "property_": "arbitrary",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "i.U.",
       "class_": "chemical",
       "isMetric_": true,
@@ -9340,6 +9874,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "international units; IE; F2",
       "source_": "UCUM",
       "loincProperty_": "Arb",
@@ -9358,7 +9893,17 @@ module.exports={
       "ciCode_": "[ARB'U]",
       "property_": "arbitrary",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "arb. U",
       "class_": "chemical",
       "isMetric_": false,
@@ -9367,6 +9912,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "arbitary units; arb units; arbU",
       "source_": "UCUM",
       "loincProperty_": "Arb",
@@ -9385,7 +9931,17 @@ module.exports={
       "ciCode_": "[USP'U]",
       "property_": "arbitrary",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "U.S.P.",
       "class_": "chemical",
       "isMetric_": false,
@@ -9394,6 +9950,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "USP U; USP'U",
       "source_": "UCUM",
       "loincProperty_": "Arb",
@@ -9412,7 +9969,17 @@ module.exports={
       "ciCode_": "[GPL'U]",
       "property_": "biologic activity of anticardiolipin IgG",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9421,6 +9988,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "GPL Units; GPL U; IgG anticardiolipin units; IgG Phospholipid",
       "source_": "UCUM",
       "loincProperty_": "ACnc; AMass",
@@ -9439,7 +10007,17 @@ module.exports={
       "ciCode_": "[MPL'U]",
       "property_": "biologic activity of anticardiolipin IgM",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9448,6 +10026,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "MPL units; MPL U; MPL'U; IgM anticardiolipin units; IgM Phospholipid Units ",
       "source_": "UCUM",
       "loincProperty_": "ACnc",
@@ -9466,7 +10045,17 @@ module.exports={
       "ciCode_": "[APL'U]",
       "property_": "biologic activity of anticardiolipin IgA",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9475,6 +10064,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "APL units; APL U; IgA anticardiolipin; IgA Phospholipid; biologic activity of",
       "source_": "UCUM",
       "loincProperty_": "AMass; ACnc",
@@ -9493,7 +10083,17 @@ module.exports={
       "ciCode_": "[BETH'U]",
       "property_": "biologic activity of factor VIII inhibitor",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9502,6 +10102,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "BU",
       "source_": "UCUM",
       "loincProperty_": "ACnc",
@@ -9520,7 +10121,17 @@ module.exports={
       "ciCode_": "[ANTI'XA'U]",
       "property_": "biologic activity of factor Xa inhibitor (heparin)",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9529,6 +10140,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "units",
       "source_": "UCUM",
       "loincProperty_": "ACnc",
@@ -9547,7 +10159,17 @@ module.exports={
       "ciCode_": "[TODD'U]",
       "property_": "biologic activity antistreptolysin O",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9556,6 +10178,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "units",
       "source_": "UCUM",
       "loincProperty_": "InvThres; RtoThres",
@@ -9574,7 +10197,17 @@ module.exports={
       "ciCode_": "[DYE'U]",
       "property_": "biologic activity of amylase",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9583,6 +10216,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "units",
       "source_": "UCUM",
       "loincProperty_": "CCnc",
@@ -9601,7 +10235,17 @@ module.exports={
       "ciCode_": "[SMGY'U]",
       "property_": "biologic activity of amylase",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9610,6 +10254,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "Somogyi units; smgy U",
       "source_": "UCUM",
       "loincProperty_": "CAct",
@@ -9628,7 +10273,17 @@ module.exports={
       "ciCode_": "[BDSK'U]",
       "property_": "biologic activity of phosphatase",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9637,6 +10292,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "",
       "source_": "UCUM",
       "loincProperty_": "ACnc",
@@ -9655,7 +10311,17 @@ module.exports={
       "ciCode_": "[KA'U]",
       "property_": "biologic activity of phosphatase",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9664,6 +10330,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "King-Armstrong Units; King units",
       "source_": "UCUM",
       "loincProperty_": "AMass",
@@ -9682,7 +10349,17 @@ module.exports={
       "ciCode_": "[KNK'U]",
       "property_": "arbitrary biologic activity",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9691,6 +10368,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": null,
       "source_": "UCUM",
       "loincProperty_": null,
@@ -9709,7 +10387,17 @@ module.exports={
       "ciCode_": "[MCLG'U]",
       "property_": "arbitrary biologic activity",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9718,6 +10406,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "galactose index; galactose tolerance test; thymol turbidity test unit; mclg U; units; indexes",
       "source_": "UCUM",
       "loincProperty_": "ACnc",
@@ -9736,7 +10425,17 @@ module.exports={
       "ciCode_": "[TB'U]",
       "property_": "biologic activity of tuberculin",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -9745,6 +10444,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "TU; units",
       "source_": "UCUM",
       "loincProperty_": "Arb",
@@ -9763,7 +10463,17 @@ module.exports={
       "ciCode_": "[CCID_50]",
       "property_": "biologic activity (infectivity) of an infectious agent preparation",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "CCID<sub>50</sub>",
       "class_": "chemical",
       "isMetric_": false,
@@ -9772,6 +10482,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "CCID50; 50% cell culture infective doses",
       "source_": "UCUM",
       "loincProperty_": "NumThres",
@@ -9790,7 +10501,17 @@ module.exports={
       "ciCode_": "[TCID_50]",
       "property_": "biologic activity (infectivity) of an infectious agent preparation",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "TCID<sub>50</sub>",
       "class_": "chemical",
       "isMetric_": false,
@@ -9799,6 +10520,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "TCID50; 50% tissue culture infective dose",
       "source_": "UCUM",
       "loincProperty_": "NumThres",
@@ -9817,7 +10539,17 @@ module.exports={
       "ciCode_": "[EID_50]",
       "property_": "biologic activity (infectivity) of an infectious agent preparation",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "EID<sub>50</sub>",
       "class_": "chemical",
       "isMetric_": false,
@@ -9826,6 +10558,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "EID50; 50% embryo infective doses; EID50 Egg Infective Dosage",
       "source_": "UCUM",
       "loincProperty_": "thresNum",
@@ -9844,7 +10577,17 @@ module.exports={
       "ciCode_": "[PFU]",
       "property_": "amount of an infectious agent",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "PFU",
       "class_": "chemical",
       "isMetric_": false,
@@ -9853,6 +10596,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "PFU",
       "source_": "UCUM",
       "loincProperty_": "ACnc",
@@ -9871,7 +10615,17 @@ module.exports={
       "ciCode_": "[FFU]",
       "property_": "amount of an infectious agent",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "FFU",
       "class_": "chemical",
       "isMetric_": false,
@@ -9880,6 +10634,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "FFU",
       "source_": "UCUM",
       "loincProperty_": "EntNum",
@@ -9898,7 +10653,17 @@ module.exports={
       "ciCode_": "[CFU]",
       "property_": "amount of a proliferating organism",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "CFU",
       "class_": "chemical",
       "isMetric_": false,
@@ -9907,6 +10672,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "CFU",
       "source_": "UCUM",
       "loincProperty_": "Num",
@@ -9925,7 +10691,17 @@ module.exports={
       "ciCode_": "[IR]",
       "property_": "amount of an allergen callibrated through in-vivo testing using the Stallergenes® method.",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "IR",
       "class_": "chemical",
       "isMetric_": false,
@@ -9934,6 +10710,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IR; indexes",
       "source_": "UCUM",
       "loincProperty_": "Acnc",
@@ -9952,7 +10729,17 @@ module.exports={
       "ciCode_": "[BAU]",
       "property_": "amount of an allergen callibrated through in-vivo testing based on the ID50EAL method of (intradermal dilution for 50mm sum of erythema diameters",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "BAU",
       "class_": "chemical",
       "isMetric_": false,
@@ -9961,6 +10748,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "BAU; Bioequivalent Allergy Units; bioequivalent allergen units",
       "source_": "UCUM",
       "loincProperty_": "Arb",
@@ -9979,7 +10767,17 @@ module.exports={
       "ciCode_": "[AU]",
       "property_": "procedure defined amount of an allergen using some reference standard",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "AU",
       "class_": "chemical",
       "isMetric_": false,
@@ -9988,6 +10786,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "allergy units; allergen units; AU",
       "source_": "UCUM",
       "loincProperty_": "Arb",
@@ -10006,7 +10805,17 @@ module.exports={
       "ciCode_": "[AMB'A'1'U]",
       "property_": "procedure defined amount of the major allergen of ragweed.",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "Amb a 1 U",
       "class_": "chemical",
       "isMetric_": false,
@@ -10015,6 +10824,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "Amb a 1 unit; Antigen E; AgE U; allergen units",
       "source_": "UCUM",
       "loincProperty_": "Arb",
@@ -10033,7 +10843,17 @@ module.exports={
       "ciCode_": "[PNU]",
       "property_": "procedure defined amount of a protein substance",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "PNU",
       "class_": "chemical",
       "isMetric_": false,
@@ -10042,6 +10862,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "protein nitrogen units; PNU",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -10060,7 +10881,17 @@ module.exports={
       "ciCode_": "[LF]",
       "property_": "procedure defined amount of an antigen substance",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "Lf",
       "class_": "chemical",
       "isMetric_": false,
@@ -10069,6 +10900,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "Lf doses",
       "source_": "UCUM",
       "loincProperty_": "Arb",
@@ -10087,7 +10919,17 @@ module.exports={
       "ciCode_": "[D'AG'U]",
       "property_": "procedure defined amount of a poliomyelitis d-antigen substance",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -10096,6 +10938,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "DAgU; units",
       "source_": "UCUM",
       "loincProperty_": "Acnc",
@@ -10114,7 +10957,17 @@ module.exports={
       "ciCode_": "[FEU]",
       "property_": "amount of fibrinogen broken down into the measured d-dimers",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -10123,6 +10976,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "FEU",
       "source_": "UCUM",
       "loincProperty_": "MCnc",
@@ -10141,7 +10995,17 @@ module.exports={
       "ciCode_": "[ELU]",
       "property_": "arbitrary ELISA unit",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -10150,6 +11014,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "Enzyme-Linked Immunosorbent Assay Units; ELU; EL. U",
       "source_": "UCUM",
       "loincProperty_": "ACnc",
@@ -10168,7 +11033,17 @@ module.exports={
       "ciCode_": "[EU]",
       "property_": "Ehrlich unit",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": "chemical",
       "isMetric_": false,
@@ -10177,6 +11052,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "EU/dL; mg{urobilinogen}/dL",
       "source_": "UCUM",
       "loincProperty_": "ACnc",
@@ -10195,7 +11071,17 @@ module.exports={
       "ciCode_": "NEP",
       "property_": "level",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "Np",
       "class_": "levels",
       "isMetric_": true,
@@ -10204,6 +11090,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "nepers",
       "source_": "UCUM",
       "loincProperty_": "LogRto",
@@ -10222,7 +11109,17 @@ module.exports={
       "ciCode_": "B",
       "property_": "level",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "B",
       "class_": "levels",
       "isMetric_": true,
@@ -10231,6 +11128,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bels",
       "source_": "UCUM",
       "loincProperty_": "LogRto",
@@ -10268,6 +11166,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bel SPL; B SPL; sound pressure bels",
       "source_": "UCUM",
       "loincProperty_": "LogRto",
@@ -10305,6 +11204,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bel V; B V; volts bels",
       "source_": "UCUM",
       "loincProperty_": "LogRtoElp",
@@ -10342,6 +11242,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bel mV; B mV; millivolt bels; 10^-3V bels; 10*-3V ",
       "source_": "UCUM",
       "loincProperty_": "LogRtoElp",
@@ -10379,6 +11280,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bel uV; B uV; microvolts bels; 10^-6V bel; 10*-6V bel",
       "source_": "UCUM",
       "loincProperty_": "LogRto",
@@ -10416,6 +11318,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bel 10 nV; B 10 nV; 10 nanovolts bels",
       "source_": "UCUM",
       "loincProperty_": "LogRtoElp",
@@ -10453,6 +11356,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bel W; b W; b Watt; Watts bels",
       "source_": "UCUM",
       "loincProperty_": "LogRto",
@@ -10490,6 +11394,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bel kW; B kW; kilowatt bel; kW bel; kW B",
       "source_": "UCUM",
       "loincProperty_": "LogRto",
@@ -10527,6 +11432,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "stère; m3; cubic meter; m^3; meters cubed; metre",
       "source_": "UCUM",
       "loincProperty_": "Vol",
@@ -10564,6 +11470,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Å; Angstroms; Ao; Ångströms",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -10601,6 +11508,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "barns",
       "source_": "UCUM",
       "loincProperty_": "Area",
@@ -10638,6 +11546,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "at; tech atm; tech atmosphere; kgf/cm2; atms; atmospheres",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -10675,6 +11584,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "siemens; ohm reciprocals; Ω^−1; Ω-1 ",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -10712,6 +11622,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "psi; lb/in2; lb per in2",
       "source_": "UCUM",
       "loincProperty_": "Pres",
@@ -10749,6 +11660,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "angles; circles",
       "source_": "UCUM",
       "loincProperty_": "Angle",
@@ -10786,6 +11698,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "speres",
       "source_": "UCUM",
       "loincProperty_": "Angle",
@@ -10823,6 +11736,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "carats; ct; car m",
       "source_": "UCUM",
       "loincProperty_": "Mass",
@@ -10841,7 +11755,17 @@ module.exports={
       "ciCode_": "[CAR_AU]",
       "property_": "mass fraction",
       "magnitude_": 0.041666666666666664,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "ct<sub><r>Au</r></sub>",
       "class_": "misc",
       "isMetric_": false,
@@ -10850,6 +11774,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "karats; k; kt; car au; carats",
       "source_": "UCUM",
       "loincProperty_": "MFr",
@@ -10887,6 +11812,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "",
       "source_": "UCUM",
       "loincProperty_": "Len",
@@ -10924,6 +11850,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "m/s2/(Hz^.5); m/s2/(Hz^(1/2)); m per s2 per Hz^1/2",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -10942,7 +11869,17 @@ module.exports={
       "ciCode_": "BIT_S",
       "property_": "amount of information",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "bit<sub>s</sub>",
       "class_": "infotech",
       "isMetric_": false,
@@ -10951,6 +11888,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bit-s; bit s; bit logarithmic",
       "source_": "UCUM",
       "loincProperty_": "LogA",
@@ -10969,7 +11907,17 @@ module.exports={
       "ciCode_": "BIT",
       "property_": "amount of information",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "bit",
       "class_": "infotech",
       "isMetric_": true,
@@ -10978,6 +11926,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bits",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -10996,7 +11945,17 @@ module.exports={
       "ciCode_": "BY",
       "property_": "amount of information",
       "magnitude_": 8,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "B",
       "class_": "infotech",
       "isMetric_": true,
@@ -11005,6 +11964,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "bytes",
       "source_": "UCUM",
       "loincProperty_": "",
@@ -11042,6 +12002,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Bd; bauds",
       "source_": "UCUM",
       "loincProperty_": "Freq",
@@ -11057,8 +12018,8 @@ module.exports={
       "isBase_": false,
       "name_": "per twelve hour",
       "csCode_": "/(12.h)",
-      "ciCode_": "/12.HR",
-      "property_": "time",
+      "ciCode_": "/HR",
+      "property_": "",
       "magnitude_": 0.000023148148148148147,
       "dim_": {
         "dimVec_": [
@@ -11071,23 +12032,24 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "/12.h",
-      "class_": "iso1000",
+      "printSymbol_": "/h",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "per 12 hours; 12hrs; 12 hrs; /12hrs",
       "source_": "LOINC",
       "loincProperty_": "Rat",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "min",
-      "ciUnitString_": "MIN",
-      "baseFactorStr_": "60",
-      "baseFactor_": "60",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11095,26 +12057,37 @@ module.exports={
       "name_": "per arbitrary unit",
       "csCode_": "/[arb'U]",
       "ciCode_": "/[ARB'U]",
-      "property_": "arbitrary",
+      "property_": "",
       "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "/arb. U",
-      "class_": "chemical",
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "/arb/ U",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
-      "isArbitrary_": true,
+      "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/arbU",
       "source_": "LOINC",
       "loincProperty_": "InvA ",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11122,26 +12095,37 @@ module.exports={
       "name_": "per high power field",
       "csCode_": "/[HPF]",
       "ciCode_": "/[HPF]",
-      "property_": "view area in microscope",
+      "property_": "",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "/HPF",
-      "class_": "chemical",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/HPF; per HPF",
       "source_": "LOINC",
       "loincProperty_": "Naric",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11149,26 +12133,37 @@ module.exports={
       "name_": "per international unit",
       "csCode_": "/[IU]",
       "ciCode_": "/[IU]",
-      "property_": "arbitrary",
+      "property_": "",
       "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "/i.U.",
-      "class_": "chemical",
-      "isMetric_": true,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "/i/U.",
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
-      "isArbitrary_": true,
+      "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "international units; /IU; per IU",
       "source_": "LOINC",
       "loincProperty_": "InvA",
       "category_": "Clinical",
       "guidance_": "International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO)",
-      "csUnitString_": "[iU]",
-      "ciUnitString_": "[IU]",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11176,26 +12171,37 @@ module.exports={
       "name_": "per low power field",
       "csCode_": "/[LPF]",
       "ciCode_": "/[LPF]",
-      "property_": "view area in microscope",
+      "property_": "",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "/LPF",
-      "class_": "chemical",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/LPF; per LPF",
       "source_": "LOINC",
       "loincProperty_": "Naric",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "100",
-      "baseFactor_": "100",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11203,26 +12209,37 @@ module.exports={
       "name_": "per 10 billion  ",
       "csCode_": "/10*10",
       "ciCode_": "/10*10",
-      "property_": "number",
+      "property_": "",
       "magnitude_": 1e-10,
-      "dim_": null,
-      "printSymbol_": "/10<sup>10</sup>",
-      "class_": "dimless",
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "/10<sup>10<.sup>",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/10^10; per 10*10",
       "source_": "LOINC",
       "loincProperty_": "NFr",
       "category_": "Clinical",
       "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11230,26 +12247,37 @@ module.exports={
       "name_": "per trillion ",
       "csCode_": "/10*12",
       "ciCode_": "/10*12",
-      "property_": "number",
+      "property_": "",
       "magnitude_": 1e-12,
-      "dim_": null,
-      "printSymbol_": "/10<sup>12</sup>",
-      "class_": "dimless",
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "/10<sup>12<.sup>",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/10^12; per 10*12",
       "source_": "LOINC",
       "loincProperty_": "NFr",
       "category_": "Clinical",
       "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11257,26 +12285,37 @@ module.exports={
       "name_": "per thousand",
       "csCode_": "/10*3",
       "ciCode_": "/10*3",
-      "property_": "number",
+      "property_": "",
       "magnitude_": 0.001,
-      "dim_": null,
-      "printSymbol_": "/10<sup>3</sup>",
-      "class_": "dimless",
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "/10<sup>3<.sup>",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/10^3; per 10*3",
       "source_": "LOINC",
       "loincProperty_": "NFr",
       "category_": "Clinical",
       "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11284,26 +12323,37 @@ module.exports={
       "name_": "per million",
       "csCode_": "/10*6",
       "ciCode_": "/10*6",
-      "property_": "number",
+      "property_": "",
       "magnitude_": 0.000001,
-      "dim_": null,
-      "printSymbol_": "/10<sup>6</sup>",
-      "class_": "dimless",
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "/10<sup>6<.sup>",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/10^6; per 10*6;",
       "source_": "LOINC",
       "loincProperty_": "NFr",
       "category_": "Clinical",
       "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11311,26 +12361,37 @@ module.exports={
       "name_": "per billion",
       "csCode_": "/10*9",
       "ciCode_": "/10*9",
-      "property_": "number",
+      "property_": "",
       "magnitude_": 1e-9,
-      "dim_": null,
-      "printSymbol_": "/10<sup>9</sup>",
-      "class_": "dimless",
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "/10<sup>9<.sup>",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/10^9; per 10*9",
       "source_": "LOINC",
       "loincProperty_": "NFr",
       "category_": "Clinical",
       "guidance_": "used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11340,7 +12401,17 @@ module.exports={
       "ciCode_": "",
       "property_": "",
       "magnitude_": 0.01,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": null,
       "isMetric_": false,
@@ -11349,6 +12420,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "per hundred; 10^2; 10*2",
       "source_": "LOINC",
       "loincProperty_": "NFr",
@@ -11367,7 +12439,17 @@ module.exports={
       "ciCode_": "",
       "property_": "",
       "magnitude_": 0.01,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": null,
       "isMetric_": false,
@@ -11376,6 +12458,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/100 cells; /100cells; per hundred",
       "source_": "LOINC",
       "loincProperty_": "EntMass; EntNum; NFr",
@@ -11394,7 +12477,17 @@ module.exports={
       "ciCode_": "",
       "property_": "",
       "magnitude_": 0.01,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": null,
       "isMetric_": false,
@@ -11403,6 +12496,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/100 neutrophils; /100neutrophils; per hundred",
       "source_": "LOINC",
       "loincProperty_": "EntMass; EntNum; NFr",
@@ -11421,7 +12515,17 @@ module.exports={
       "ciCode_": "",
       "property_": "",
       "magnitude_": 0.01,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": null,
       "isMetric_": false,
@@ -11430,6 +12534,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/100 spermatozoa; /100spermatozoa; per hundred",
       "source_": "LOINC",
       "loincProperty_": "NFr",
@@ -11448,7 +12553,17 @@ module.exports={
       "ciCode_": "",
       "property_": "",
       "magnitude_": 0.01,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": null,
       "isMetric_": false,
@@ -11457,6 +12572,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/100 WBCs; /100WBCs; per hundred",
       "source_": "LOINC",
       "loincProperty_": "Ratio; NFr",
@@ -11473,7 +12589,7 @@ module.exports={
       "name_": "per year",
       "csCode_": "/a",
       "ciCode_": "/ANN",
-      "property_": "time",
+      "property_": "",
       "magnitude_": 3.168808781402895e-8,
       "dim_": {
         "dimVec_": [
@@ -11487,22 +12603,23 @@ module.exports={
         ]
       },
       "printSymbol_": "/a",
-      "class_": "iso1000",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/Years; /yrs; yearly",
       "source_": "LOINC",
       "loincProperty_": "NRat",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "a_j",
-      "ciUnitString_": "ANN_J",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11510,7 +12627,7 @@ module.exports={
       "name_": "per centimeter of water",
       "csCode_": "/cm[H2O]",
       "ciCode_": "/CM[H2O]",
-      "property_": "pressure",
+      "property_": "",
       "magnitude_": 0.000010197162129779282,
       "dim_": {
         "dimVec_": [
@@ -11523,23 +12640,24 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "/cm HO<sub><r>2</r></sub>",
-      "class_": "clinical",
-      "isMetric_": true,
+      "printSymbol_": "/cm HO<sub><r>2<.r></sub>",
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/cmH2O; /cm H2O; centimeters; centimetres",
       "source_": "LOINC",
       "loincProperty_": "InvPress",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "kPa",
-      "ciUnitString_": "KPAL",
-      "baseFactorStr_": "980665e-5",
-      "baseFactor_": "9.80665",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11547,7 +12665,7 @@ module.exports={
       "name_": "per day",
       "csCode_": "/d",
       "ciCode_": "/D",
-      "property_": "time",
+      "property_": "",
       "magnitude_": 0.000011574074074074073,
       "dim_": {
         "dimVec_": [
@@ -11561,22 +12679,23 @@ module.exports={
         ]
       },
       "printSymbol_": "/d",
-      "class_": "iso1000",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/dy; per day",
       "source_": "LOINC",
       "loincProperty_": "NRat",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "h",
-      "ciUnitString_": "HR",
-      "baseFactorStr_": "24",
-      "baseFactor_": "24",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11584,7 +12703,7 @@ module.exports={
       "name_": "per deciliter",
       "csCode_": "/dL",
       "ciCode_": "/DL",
-      "property_": "volume",
+      "property_": "",
       "magnitude_": 10000,
       "dim_": {
         "dimVec_": [
@@ -11598,30 +12717,31 @@ module.exports={
         ]
       },
       "printSymbol_": "/dL",
-      "class_": "iso1000",
-      "isMetric_": true,
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "per dL; /deciliter; decilitre",
       "source_": "LOINC",
       "loincProperty_": "NCnc",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "l",
+      "csUnitString_": null,
       "ciUnitString_": null,
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
-      "isBase_": true,
+      "isBase_": false,
       "name_": "per gram",
       "csCode_": "/g",
       "ciCode_": "/G",
-      "property_": "mass",
+      "property_": "",
       "magnitude_": 1,
       "dim_": {
         "dimVec_": [
@@ -11637,11 +12757,12 @@ module.exports={
       "printSymbol_": "/g",
       "class_": null,
       "isMetric_": false,
-      "variable_": "M",
+      "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/gm; /gram; per g",
       "source_": "LOINC",
       "loincProperty_": "NCnt",
@@ -11658,7 +12779,7 @@ module.exports={
       "name_": "per hour",
       "csCode_": "/h",
       "ciCode_": "/HR",
-      "property_": "time",
+      "property_": "",
       "magnitude_": 0.0002777777777777778,
       "dim_": {
         "dimVec_": [
@@ -11672,30 +12793,31 @@ module.exports={
         ]
       },
       "printSymbol_": "/h",
-      "class_": "iso1000",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/hr; /hour; per hr",
       "source_": "LOINC",
       "loincProperty_": "NRat",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "min",
-      "ciUnitString_": "MIN",
-      "baseFactorStr_": "60",
-      "baseFactor_": "60",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
-      "isBase_": true,
+      "isBase_": false,
       "name_": "per kilogram",
       "csCode_": "/kg",
       "ciCode_": "/KG",
-      "property_": "mass",
+      "property_": "",
       "magnitude_": 0.001,
       "dim_": {
         "dimVec_": [
@@ -11711,11 +12833,12 @@ module.exports={
       "printSymbol_": "/kg",
       "class_": null,
       "isMetric_": false,
-      "variable_": "M",
+      "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "per kg; per kilogram",
       "source_": "LOINC",
       "loincProperty_": "NCnt",
@@ -11732,7 +12855,7 @@ module.exports={
       "name_": "per liter",
       "csCode_": "/L",
       "ciCode_": "/L",
-      "property_": "volume",
+      "property_": "",
       "magnitude_": 1000,
       "dim_": {
         "dimVec_": [
@@ -11746,30 +12869,31 @@ module.exports={
         ]
       },
       "printSymbol_": "/L",
-      "class_": "iso1000",
-      "isMetric_": true,
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/liter; litre",
       "source_": "LOINC",
       "loincProperty_": "NCnc",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "l",
+      "csUnitString_": null,
       "ciUnitString_": null,
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
-      "isBase_": true,
+      "isBase_": false,
       "name_": "per square meter",
       "csCode_": "/m2",
       "ciCode_": "/M2",
-      "property_": "length",
+      "property_": "",
       "magnitude_": 1,
       "dim_": {
         "dimVec_": [
@@ -11782,14 +12906,15 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "/m<sup>2</sup>",
+      "printSymbol_": "/m<sup>2<.sup>",
       "class_": null,
       "isMetric_": false,
-      "variable_": "L",
+      "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/m^2; /m*2; /sq. m; per square meter; meter squared; metre",
       "source_": "LOINC",
       "loincProperty_": "Naric",
@@ -11802,11 +12927,11 @@ module.exports={
       "defError_": false
     },
     {
-      "isBase_": true,
+      "isBase_": false,
       "name_": "per cubic meter",
       "csCode_": "/m3",
       "ciCode_": "/M3",
-      "property_": "length",
+      "property_": "",
       "magnitude_": 1,
       "dim_": {
         "dimVec_": [
@@ -11819,14 +12944,15 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "/m<sup>3</sup>",
+      "printSymbol_": "/m<sup>3<.sup>",
       "class_": null,
       "isMetric_": false,
-      "variable_": "L",
+      "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/m^3; /m*3; /cu. m; per cubic meter; meter cubed; per m3; metre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -11839,11 +12965,11 @@ module.exports={
       "defError_": false
     },
     {
-      "isBase_": true,
+      "isBase_": false,
       "name_": "per milligram",
       "csCode_": "/mg",
       "ciCode_": "/MG",
-      "property_": "mass",
+      "property_": "",
       "magnitude_": 1000,
       "dim_": {
         "dimVec_": [
@@ -11859,11 +12985,12 @@ module.exports={
       "printSymbol_": "/mg",
       "class_": null,
       "isMetric_": false,
-      "variable_": "M",
+      "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/milligram; per mg",
       "source_": "LOINC",
       "loincProperty_": "NCnt",
@@ -11880,7 +13007,7 @@ module.exports={
       "name_": "per minute",
       "csCode_": "/min",
       "ciCode_": "/MIN",
-      "property_": "time",
+      "property_": "",
       "magnitude_": 0.016666666666666666,
       "dim_": {
         "dimVec_": [
@@ -11894,22 +13021,23 @@ module.exports={
         ]
       },
       "printSymbol_": "/min",
-      "class_": "iso1000",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/minute; per mins; breaths beats per minute",
       "source_": "LOINC",
       "loincProperty_": "NRat",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "s",
-      "ciUnitString_": "S",
-      "baseFactorStr_": "60",
-      "baseFactor_": "60",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -11917,7 +13045,7 @@ module.exports={
       "name_": "per milliliter",
       "csCode_": "/mL",
       "ciCode_": "/ML",
-      "property_": "volume",
+      "property_": "",
       "magnitude_": 1000000,
       "dim_": {
         "dimVec_": [
@@ -11931,30 +13059,31 @@ module.exports={
         ]
       },
       "printSymbol_": "/mL",
-      "class_": "iso1000",
-      "isMetric_": true,
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/milliliter; per mL; millilitre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "l",
+      "csUnitString_": null,
       "ciUnitString_": null,
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
-      "isBase_": true,
+      "isBase_": false,
       "name_": "per millimeter",
       "csCode_": "/mm",
       "ciCode_": "/MM",
-      "property_": "length",
+      "property_": "",
       "magnitude_": 1000,
       "dim_": {
         "dimVec_": [
@@ -11970,11 +13099,12 @@ module.exports={
       "printSymbol_": "/mm",
       "class_": null,
       "isMetric_": false,
-      "variable_": "L",
+      "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/millimeter; per mm; millimetre",
       "source_": "LOINC",
       "loincProperty_": "InvLen",
@@ -11991,7 +13121,7 @@ module.exports={
       "name_": "per month",
       "csCode_": "/mo",
       "ciCode_": "/MO",
-      "property_": "time",
+      "property_": "",
       "magnitude_": 3.802570537683474e-7,
       "dim_": {
         "dimVec_": [
@@ -12005,30 +13135,31 @@ module.exports={
         ]
       },
       "printSymbol_": "/mo",
-      "class_": "iso1000",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/month; per mo; monthly; month",
       "source_": "LOINC",
       "loincProperty_": "NRat",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "mo_j",
-      "ciUnitString_": "MO_J",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
-      "isBase_": true,
+      "isBase_": false,
       "name_": "per second",
       "csCode_": "/s",
       "ciCode_": "/S",
-      "property_": "time",
+      "property_": "",
       "magnitude_": 1,
       "dim_": {
         "dimVec_": [
@@ -12044,11 +13175,12 @@ module.exports={
       "printSymbol_": "/s",
       "class_": null,
       "isMetric_": false,
-      "variable_": "T",
+      "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/second; /sec; per sec; frequency; Hertz; Herz; Hz; becquerels; Bq; s-1; s^-1",
       "source_": "LOINC",
       "loincProperty_": "NRat",
@@ -12065,7 +13197,7 @@ module.exports={
       "name_": "per enzyme unit",
       "csCode_": "/U",
       "ciCode_": "/U",
-      "property_": "catalytic activity",
+      "property_": "",
       "magnitude_": 9.963241120049633e-17,
       "dim_": {
         "dimVec_": [
@@ -12079,22 +13211,23 @@ module.exports={
         ]
       },
       "printSymbol_": "/U",
-      "class_": "chemical",
-      "isMetric_": true,
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/enzyme units; per U",
       "source_": "LOINC",
       "loincProperty_": "InvC; NCat",
       "category_": "Clinical",
       "guidance_": "1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min)",
-      "csUnitString_": "umol/min",
-      "ciUnitString_": "UMOL/MIN",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -12102,7 +13235,7 @@ module.exports={
       "name_": "per microliter",
       "csCode_": "/uL",
       "ciCode_": "/UL",
-      "property_": "volume",
+      "property_": "",
       "magnitude_": 999999999.9999999,
       "dim_": {
         "dimVec_": [
@@ -12116,22 +13249,23 @@ module.exports={
         ]
       },
       "printSymbol_": "/μL",
-      "class_": "iso1000",
-      "isMetric_": true,
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/microliter; microlitre; /mcl; per uL",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "l",
+      "csUnitString_": null,
       "ciUnitString_": null,
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -12139,7 +13273,7 @@ module.exports={
       "name_": "per week",
       "csCode_": "/wk",
       "ciCode_": "/WK",
-      "property_": "time",
+      "property_": "",
       "magnitude_": 0.0000016534391534391535,
       "dim_": {
         "dimVec_": [
@@ -12153,22 +13287,23 @@ module.exports={
         ]
       },
       "printSymbol_": "/wk",
-      "class_": "iso1000",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "/week; per wk; weekly, weeks",
       "source_": "LOINC",
       "loincProperty_": "NRat",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "d",
-      "ciUnitString_": "D",
-      "baseFactorStr_": "7",
-      "baseFactor_": "7",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -12197,6 +13332,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "APL/mL; APL'U/mL; APL U/mL; APL/milliliter; IgA anticardiolipin units per milliliter; IgA Phospholipid Units; millilitre; biologic activity of",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -12226,7 +13362,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "arb. U/mL",
+      "printSymbol_": "(arb. U)/mL",
       "class_": "chemical",
       "isMetric_": false,
       "variable_": null,
@@ -12234,6 +13370,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "arb'U/mL; arbU/mL; arb U/mL; arbitrary units per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -12271,6 +13408,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "CFU per Liter; CFU/L",
       "source_": "LOINC",
       "loincProperty_": "NCnc",
@@ -12308,6 +13446,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "CFU per mL; CFU/mL",
       "source_": "LOINC",
       "loincProperty_": "NCnc",
@@ -12337,7 +13476,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ft<sub>us</sub>/ft<sub>us</sub>",
+      "printSymbol_": "(ft<sub>us</sub>)/(ft<sub>us</sub>)",
       "class_": "us-lengths",
       "isMetric_": false,
       "variable_": null,
@@ -12345,6 +13484,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ft/ft; ft per ft; feet per feet; visual acuity",
       "source_": "",
       "loincProperty_": "LenRto",
@@ -12382,6 +13522,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "GPL U/mL; GPL'U/mL; GPL/mL; GPL U per mL; IgG Phospholipid Units per milliliters; IgG anticardiolipin units; millilitres ",
       "source_": "LOINC",
       "loincProperty_": "ACnc; AMass",
@@ -12397,7 +13538,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per 2 hour",
       "csCode_": "[IU]/(2.h)",
-      "ciCode_": "[IU]/2.HR",
+      "ciCode_": "[IU]/HR",
       "property_": "arbitrary",
       "magnitude_": 0.0001388888888888889,
       "dim_": {
@@ -12411,7 +13552,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./2.h",
+      "printSymbol_": "(i.U.)/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12419,6 +13560,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/2hrs; IU/2 hours; IU per 2 hrs; international units per 2 hours",
       "source_": "LOINC",
       "loincProperty_": "ARat",
@@ -12434,7 +13576,7 @@ module.exports={
       "isBase_": false,
       "name_": "international unit per 24 hour",
       "csCode_": "[IU]/(24.h)",
-      "ciCode_": "[IU]/24.HR",
+      "ciCode_": "[IU]/HR",
       "property_": "arbitrary",
       "magnitude_": 0.000011574074074074073,
       "dim_": {
@@ -12448,7 +13590,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./24.h",
+      "printSymbol_": "(i.U.)/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12456,6 +13598,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/24hr; IU/24 hours; IU per 24 hrs; international units per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "ARat",
@@ -12485,7 +13628,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./d",
+      "printSymbol_": "(i.U.)/d",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12493,6 +13636,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/dy; IU/days; IU per dys; international units per day",
       "source_": "LOINC",
       "loincProperty_": "ARat",
@@ -12522,7 +13666,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./dL",
+      "printSymbol_": "(i.U.)/dL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12530,6 +13674,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/dL; IU per dL; international units per deciliters; decilitres",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -12559,7 +13704,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./g",
+      "printSymbol_": "(i.U.)/g",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12567,6 +13712,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/gm; IU/gram; IU per gm; IU per g; international units per gram",
       "source_": "LOINC",
       "loincProperty_": "ACnt",
@@ -12596,7 +13742,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./h",
+      "printSymbol_": "(i.U.)/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12604,6 +13750,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/hrs; IU per hours; international units per hour",
       "source_": "LOINC",
       "loincProperty_": "ARat",
@@ -12633,7 +13780,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./kg",
+      "printSymbol_": "(i.U.)/kg",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12641,6 +13788,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/kg; IU/kilogram; IU per kg; units",
       "source_": "LOINC",
       "loincProperty_": "ACnt",
@@ -12670,7 +13818,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./kg/d",
+      "printSymbol_": "(i.U.)/kg/d",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12678,6 +13826,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/kg/dy; IU/kg/day; IU/kilogram/day; IU per kg per day; units",
       "source_": "LOINC",
       "loincProperty_": "ACntRat",
@@ -12707,7 +13856,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./L",
+      "printSymbol_": "(i.U.)/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12715,6 +13864,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/L; IU/liter; IU per liter; units; litre",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -12744,7 +13894,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./min",
+      "printSymbol_": "(i.U.)/min",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12752,6 +13902,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/min; IU/minute; IU per minute; international units",
       "source_": "LOINC",
       "loincProperty_": "ARat",
@@ -12781,7 +13932,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "i.U./mL",
+      "printSymbol_": "(i.U.)/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -12789,6 +13940,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "IU/mL; IU per mL; international units per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -12826,6 +13978,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "MPL/mL; MPL U/mL; MPL'U/mL; IgM anticardiolipin units; IgM Phospholipid Units; millilitre ",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -12841,54 +13994,76 @@ module.exports={
       "isBase_": false,
       "name_": "number per high power field",
       "csCode_": "{#}/[HPF]",
-      "ciCode_": "1/[HPF]",
-      "property_": "view area in microscope",
+      "ciCode_": "/[HPF]",
+      "property_": "",
       "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "1/HPF",
-      "class_": "chemical",
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "/HPF",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "#/HPF; # per HPF; number/HPF; numbers per high power field",
       "source_": "LOINC",
       "loincProperty_": "Naric",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
       "isBase_": false,
       "name_": "number per low power field",
       "csCode_": "{#}/[LPF]",
-      "ciCode_": "1/[LPF]",
-      "property_": "view area in microscope",
+      "ciCode_": "/[LPF]",
+      "property_": "",
       "magnitude_": 1,
-      "dim_": null,
-      "printSymbol_": "1/LPF",
-      "class_": "chemical",
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "/LPF",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "#/LPF; # per LPF; number/LPF; numbers per low power field",
       "source_": "LOINC",
       "loincProperty_": "Naric",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "1",
-      "ciUnitString_": "1",
-      "baseFactorStr_": "100",
-      "baseFactor_": "100",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -12898,7 +14073,17 @@ module.exports={
       "ciCode_": "",
       "property_": "",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": null,
       "isMetric_": false,
@@ -12907,6 +14092,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "APS Unit; Phosphatidylserine Antibody IgA Units",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -12925,7 +14111,17 @@ module.exports={
       "ciCode_": "",
       "property_": "",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": null,
       "isMetric_": false,
@@ -12934,6 +14130,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "enzyme immunoassay index",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -12952,7 +14149,17 @@ module.exports={
       "ciCode_": "",
       "property_": "",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": null,
       "isMetric_": false,
@@ -12961,6 +14168,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "KCT",
       "source_": "LOINC",
       "loincProperty_": "Time",
@@ -12979,7 +14187,17 @@ module.exports={
       "ciCode_": "",
       "property_": "",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": null,
       "class_": null,
       "isMetric_": false,
@@ -12988,6 +14206,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Phosphatidylserine Antibody IgM Measurement ",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -13003,7 +14222,7 @@ module.exports={
       "isBase_": false,
       "name_": "trillion per liter",
       "csCode_": "10*12/L",
-      "ciCode_": "10*12/L",
+      "ciCode_": "(10*12)/L",
       "property_": "number",
       "magnitude_": 1000000000000000,
       "dim_": {
@@ -13017,7 +14236,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>12</sup>/L",
+      "printSymbol_": "(10<sup>12</sup>)/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13025,6 +14244,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^12/L; 10*12 per Liter; trillion per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13043,7 +14263,17 @@ module.exports={
       "ciCode_": "10*3",
       "property_": "number",
       "magnitude_": 1000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "10<sup>3</sup>",
       "class_": "dimless",
       "isMetric_": false,
@@ -13052,6 +14282,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^3; thousand",
       "source_": "LOINC",
       "loincProperty_": "Num",
@@ -13067,7 +14298,7 @@ module.exports={
       "isBase_": false,
       "name_": "thousand per liter",
       "csCode_": "10*3/L",
-      "ciCode_": "10*3/L",
+      "ciCode_": "(10*3)/L",
       "property_": "number",
       "magnitude_": 1000000,
       "dim_": {
@@ -13081,7 +14312,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>3</sup>/L",
+      "printSymbol_": "(10<sup>3</sup>)/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13089,6 +14320,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^3/L; 10*3 per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13104,7 +14336,7 @@ module.exports={
       "isBase_": false,
       "name_": "thousand per milliliter",
       "csCode_": "10*3/mL",
-      "ciCode_": "10*3/ML",
+      "ciCode_": "(10*3)/ML",
       "property_": "number",
       "magnitude_": 1000000000,
       "dim_": {
@@ -13118,7 +14350,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>3</sup>/mL",
+      "printSymbol_": "(10<sup>3</sup>)/mL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13126,6 +14358,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^3/mL; 10*3 per mL; thousand per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13141,7 +14374,7 @@ module.exports={
       "isBase_": false,
       "name_": "thousand per microliter",
       "csCode_": "10*3/uL",
-      "ciCode_": "10*3/UL",
+      "ciCode_": "(10*3)/UL",
       "property_": "number",
       "magnitude_": 999999999999.9999,
       "dim_": {
@@ -13155,7 +14388,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>3</sup>/μL",
+      "printSymbol_": "(10<sup>3</sup>)/μL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13163,6 +14396,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^3/uL; 10*3 per uL; thousand per microliter; microlitre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13178,7 +14412,7 @@ module.exports={
       "isBase_": false,
       "name_": "10 thousand per microliter",
       "csCode_": "10*4/uL",
-      "ciCode_": "10*4/UL",
+      "ciCode_": "(10*4)/UL",
       "property_": "number",
       "magnitude_": 10000000000000,
       "dim_": {
@@ -13192,7 +14426,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>4</sup>/μL",
+      "printSymbol_": "(10<sup>4</sup>)/μL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13200,6 +14434,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^4/uL; 10*4 per uL; microlitre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13218,7 +14453,17 @@ module.exports={
       "ciCode_": "10*5",
       "property_": "number",
       "magnitude_": 100000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "10<sup>5</sup>",
       "class_": "dimless",
       "isMetric_": false,
@@ -13227,6 +14472,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "one hundred thousand",
       "source_": "LOINC",
       "loincProperty_": "Num",
@@ -13245,7 +14491,17 @@ module.exports={
       "ciCode_": "10*6",
       "property_": "number",
       "magnitude_": 1000000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "10<sup>6</sup>",
       "class_": "dimless",
       "isMetric_": false,
@@ -13254,6 +14510,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "",
       "source_": "LOINC",
       "loincProperty_": "Num",
@@ -13269,7 +14526,7 @@ module.exports={
       "isBase_": false,
       "name_": "million colony forming unit per liter",
       "csCode_": "10*6.[CFU]/L",
-      "ciCode_": "10*6.[CFU]/L",
+      "ciCode_": "(10*6).[CFU]/L",
       "property_": "number",
       "magnitude_": 1000000000,
       "dim_": {
@@ -13283,7 +14540,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>6</sup>.CFU/L",
+      "printSymbol_": "(10<sup>6</sup>).CFU/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13291,6 +14548,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10*6 CFU/L; 10^6 CFU/L; 10^6CFU; 10^6 CFU per liter; million colony forming units; litre",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -13306,11 +14564,21 @@ module.exports={
       "isBase_": false,
       "name_": "million international unit",
       "csCode_": "10*6.[IU]",
-      "ciCode_": "10*6.[IU]",
+      "ciCode_": "(10*6).[IU]",
       "property_": "number",
       "magnitude_": 1000000,
-      "dim_": null,
-      "printSymbol_": "10<sup>6</sup>.i.U.",
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "printSymbol_": "(10<sup>6</sup>).(i.U.)",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13318,6 +14586,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10*6 IU; 10^6 IU; international units",
       "source_": "LOINC",
       "loincProperty_": "arb",
@@ -13333,7 +14602,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per 24 hour",
       "csCode_": "10*6/(24.h)",
-      "ciCode_": "10*6/24.HR",
+      "ciCode_": "(10*6)/HR",
       "property_": "number",
       "magnitude_": 11.574074074074074,
       "dim_": {
@@ -13347,7 +14616,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>6</sup>/24.h",
+      "printSymbol_": "(10<sup>6</sup>)/h",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13355,6 +14624,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10*6/24hrs; 10^6/24 hrs; 10*6 per 24 hrs; 10^6 per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "NRat",
@@ -13370,7 +14640,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per kilogram",
       "csCode_": "10*6/kg",
-      "ciCode_": "10*6/KG",
+      "ciCode_": "(10*6)/KG",
       "property_": "number",
       "magnitude_": 1000,
       "dim_": {
@@ -13384,7 +14654,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>6</sup>/kg",
+      "printSymbol_": "(10<sup>6</sup>)/kg",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13392,6 +14662,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^6/kg; 10*6 per kg; 10*6 per kilogram; millions",
       "source_": "LOINC",
       "loincProperty_": "NCnt",
@@ -13407,7 +14678,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per liter",
       "csCode_": "10*6/L",
-      "ciCode_": "10*6/L",
+      "ciCode_": "(10*6)/L",
       "property_": "number",
       "magnitude_": 1000000000,
       "dim_": {
@@ -13421,7 +14692,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>6</sup>/L",
+      "printSymbol_": "(10<sup>6</sup>)/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13429,6 +14700,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^6/L; 10*6 per Liter; 10^6 per Liter; litre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13444,7 +14716,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per milliliter",
       "csCode_": "10*6/mL",
-      "ciCode_": "10*6/ML",
+      "ciCode_": "(10*6)/ML",
       "property_": "number",
       "magnitude_": 1000000000000,
       "dim_": {
@@ -13458,7 +14730,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>6</sup>/mL",
+      "printSymbol_": "(10<sup>6</sup>)/mL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13466,6 +14738,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^6/mL; 10*6 per mL; 10*6 per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13481,7 +14754,7 @@ module.exports={
       "isBase_": false,
       "name_": "million per microliter",
       "csCode_": "10*6/uL",
-      "ciCode_": "10*6/UL",
+      "ciCode_": "(10*6)/UL",
       "property_": "number",
       "magnitude_": 1000000000000000,
       "dim_": {
@@ -13495,7 +14768,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>6</sup>/μL",
+      "printSymbol_": "(10<sup>6</sup>)/μL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13503,6 +14776,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^6/uL; 10^6 per uL; 10^6/mcl; 10^6 per mcl; 10^6 per microliter; microlitre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13521,7 +14795,17 @@ module.exports={
       "ciCode_": "10*8",
       "property_": "number",
       "magnitude_": 100000000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "10<sup>8</sup>",
       "class_": "dimless",
       "isMetric_": false,
@@ -13530,6 +14814,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "100 million; one hundred million; 10^8",
       "source_": "LOINC",
       "loincProperty_": "Num",
@@ -13545,7 +14830,7 @@ module.exports={
       "isBase_": false,
       "name_": "billion per liter",
       "csCode_": "10*9/L",
-      "ciCode_": "10*9/L",
+      "ciCode_": "(10*9)/L",
       "property_": "number",
       "magnitude_": 1000000000000,
       "dim_": {
@@ -13559,7 +14844,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>9</sup>/L",
+      "printSymbol_": "(10<sup>9</sup>)/L",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13567,6 +14852,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^9/L; 10*9 per Liter; litre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13582,7 +14868,7 @@ module.exports={
       "isBase_": false,
       "name_": "billion per milliliter",
       "csCode_": "10*9/mL",
-      "ciCode_": "10*9/ML",
+      "ciCode_": "(10*9)/ML",
       "property_": "number",
       "magnitude_": 1000000000000000,
       "dim_": {
@@ -13596,7 +14882,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>9</sup>/mL",
+      "printSymbol_": "(10<sup>9</sup>)/mL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13604,6 +14890,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^9/mL; 10*9 per mL; 10^9 per mL; 10*9 per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13619,7 +14906,7 @@ module.exports={
       "isBase_": false,
       "name_": "billion per microliter",
       "csCode_": "10*9/uL",
-      "ciCode_": "10*9/UL",
+      "ciCode_": "(10*9)/UL",
       "property_": "number",
       "magnitude_": 1000000000000000000,
       "dim_": {
@@ -13633,7 +14920,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10<sup>9</sup>/μL",
+      "printSymbol_": "(10<sup>9</sup>)/μL",
       "class_": "dimless",
       "isMetric_": false,
       "variable_": null,
@@ -13641,6 +14928,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10^9/uL; 10^9 per uL; 10^9/mcl; 10^9 per mcl; 10*9 per uL; 10*9 per mcl; 10*9/mcl; 10^9 per microliter; microlitre",
       "source_": "LOINC",
       "loincProperty_": "NCncn",
@@ -13656,8 +14944,8 @@ module.exports={
       "isBase_": false,
       "name_": "10 liter per minute per square meter",
       "csCode_": "10.L/(min.m2)",
-      "ciCode_": "10.L/MIN.M2",
-      "property_": "volume",
+      "ciCode_": "L/(MIN.M2)",
+      "property_": "",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
         "dimVec_": [
@@ -13670,31 +14958,32 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10.L/min.m<sup>2</sup>",
-      "class_": "iso1000",
-      "isMetric_": true,
+      "printSymbol_": "L/(min.(m<sup>2</sup>))",
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10 liters per minutes per square meter; 10 L per min per m2; m^2; 10 L/(min*m2); 10L/(min*m^2); litres; sq. meter; metre; meters squared",
       "source_": "LOINC",
       "loincProperty_": "ArVRat",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "l",
+      "csUnitString_": null,
       "ciUnitString_": null,
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
       "isBase_": false,
       "name_": "10 liter per minute",
       "csCode_": "10.L/min",
-      "ciCode_": "10.L/MIN",
-      "property_": "volume",
+      "ciCode_": "L/MIN",
+      "property_": "",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
         "dimVec_": [
@@ -13707,31 +14996,32 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10.L/min",
-      "class_": "iso1000",
-      "isMetric_": true,
+      "printSymbol_": "L/min",
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "10 liters per minute; 10 L per min; 10L; 10 L/min; litre",
       "source_": "LOINC",
       "loincProperty_": "VRat",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "l",
+      "csUnitString_": null,
       "ciUnitString_": null,
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
       "isBase_": false,
       "name_": "10 micronewton second per centimeter to the fifth power per square meter",
       "csCode_": "10.uN.s/(cm5.m2)",
-      "ciCode_": "10.UN.S/CM5.M2",
-      "property_": "force",
+      "ciCode_": "(UN.S)/(CM5.M2)",
+      "property_": "",
       "magnitude_": 100000000,
       "dim_": {
         "dimVec_": [
@@ -13744,31 +15034,32 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "10.μN.s/cm<sup>5</sup>.m<sup>2</sup>",
-      "class_": "si",
-      "isMetric_": true,
+      "printSymbol_": "(μN.s)/(cm<sup>5</sup>).(m<sup>2</sup>)",
+      "class_": null,
+      "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "dyne seconds per centimeter5 and square meter; dyn.s/(cm5.m2); dyn.s/cm5/m2; cm^5; m^2",
       "source_": "LOINC",
       "loincProperty_": "",
       "category_": "Clinical",
       "guidance_": "unit to measure systemic vascular resistance per body surface area",
-      "csUnitString_": "kg.m/s2",
-      "ciUnitString_": "KG.M/S2",
-      "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
       "isBase_": false,
       "name_": "24 hour",
       "csCode_": "24.h",
-      "ciCode_": "24.HR",
-      "property_": "time",
+      "ciCode_": "HR",
+      "property_": "",
       "magnitude_": 86400,
       "dim_": {
         "dimVec_": [
@@ -13781,23 +15072,24 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "24.h",
-      "class_": "iso1000",
+      "printSymbol_": "h",
+      "class_": null,
       "isMetric_": false,
       "variable_": null,
       "cnv_": null,
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "24hrs; 24 hrs; 24 hours; days; dy",
       "source_": "LOINC",
       "loincProperty_": "Time",
       "category_": "Clinical",
       "guidance_": "",
-      "csUnitString_": "min",
-      "ciUnitString_": "MIN",
-      "baseFactorStr_": "60",
-      "baseFactor_": "60",
+      "csUnitString_": null,
+      "ciUnitString_": null,
+      "baseFactorStr_": null,
+      "baseFactor_": null,
       "defError_": false
     },
     {
@@ -13826,6 +15118,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "A/m; amp/meter; magnetic field strength; H; B; amperes per meter; metre",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -13863,6 +15156,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "centigrams; cg; cgm",
       "source_": "LOINC",
       "loincProperty_": "Mass",
@@ -13900,6 +15194,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "centiliters; centilitres",
       "source_": "LOINC",
       "loincProperty_": "Vol",
@@ -13937,6 +15232,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "centimeters; centimetres",
       "source_": "LOINC",
       "loincProperty_": "Len",
@@ -13974,6 +15270,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cm H2O; cmH2O; centimetres; pressure",
       "source_": "LOINC",
       "loincProperty_": "Pres",
@@ -13989,7 +15286,7 @@ module.exports={
       "isBase_": false,
       "name_": "centimeter of water per liter per second",
       "csCode_": "cm[H2O]/L/s",
-      "ciCode_": "CM[H2O]/L/S",
+      "ciCode_": "(CM[H2O]/L)/S",
       "property_": "pressure",
       "magnitude_": 98066500,
       "dim_": {
@@ -14003,7 +15300,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "cm HO<sub><r>2</r></sub>/L/s",
+      "printSymbol_": "(cm HO<sub><r>2</r></sub>)/L/s",
       "class_": "clinical",
       "isMetric_": true,
       "variable_": null,
@@ -14011,6 +15308,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cm[H2O]/(L/s); cm[H2O].s/L; cm H2O/L/sec; cmH2O/L/sec; cmH2O/Liter; cmH2O per L per secs; centimeters of water per liters per second; centimetres; litres; cm[H2O]/(L/s)",
       "source_": "LOINC",
       "loincProperty_": "PresRat",
@@ -14026,7 +15324,7 @@ module.exports={
       "isBase_": false,
       "name_": "centimeter of water per second per meter",
       "csCode_": "cm[H2O]/s/m",
-      "ciCode_": "CM[H2O]/S/M",
+      "ciCode_": "(CM[H2O]/S)/M",
       "property_": "pressure",
       "magnitude_": 98066.5,
       "dim_": {
@@ -14040,7 +15338,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "cm HO<sub><r>2</r></sub>/s/m",
+      "printSymbol_": "(cm HO<sub><r>2</r></sub>)/s/m",
       "class_": "clinical",
       "isMetric_": true,
       "variable_": null,
@@ -14048,6 +15346,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cm[H2O]/(s.m); cm H2O/s/m; cmH2O; cmH2O/sec/m; cmH2O per secs per meters; centimeters of water per seconds per meter; centimetres; metre",
       "source_": "LOINC",
       "loincProperty_": "PresRat",
@@ -14085,6 +15384,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "centimeters of mercury; centimetres; cmHg; cm Hg",
       "source_": "LOINC",
       "loincProperty_": "Pres",
@@ -14122,6 +15422,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cm^2; sq cm; centimeters squared; square centimeters; centimetre; area",
       "source_": "LOINC",
       "loincProperty_": "Area",
@@ -14151,7 +15452,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "cm<sup>2</sup>/s",
+      "printSymbol_": "(cm<sup>2</sup>)/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -14159,6 +15460,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cm^2/sec; square centimeters per second; sq cm per sec; cm2; centimeters squared; centimetres",
       "source_": "LOINC",
       "loincProperty_": "AreaRat",
@@ -14196,6 +15498,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "cps; centiposes",
       "source_": "LOINC",
       "loincProperty_": "Visc",
@@ -14233,6 +15536,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "centistokes",
       "source_": "LOINC",
       "loincProperty_": "Visc",
@@ -14270,6 +15574,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "dekalitres; dekaliters per minute; per min",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -14285,7 +15590,7 @@ module.exports={
       "isBase_": false,
       "name_": "dekaliter per minute per square meter",
       "csCode_": "daL/min/m2",
-      "ciCode_": "DAL/MIN/M2",
+      "ciCode_": "(DAL/MIN)/M2",
       "property_": "volume",
       "magnitude_": 0.00016666666666666666,
       "dim_": {
@@ -14299,7 +15604,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "daL/min/m<sup>2</sup>",
+      "printSymbol_": "(daL/min)/(m<sup>2</sup>)",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -14307,6 +15612,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "daL/min/m^2; daL/minute/m2; sq. meter; dekaliters per minutes per square meter; meter squared; dekalitres; metre",
       "source_": "LOINC",
       "loincProperty_": "ArVRat",
@@ -14325,7 +15631,17 @@ module.exports={
       "ciCode_": "DB",
       "property_": "level",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "dB",
       "class_": "levels",
       "isMetric_": true,
@@ -14334,6 +15650,7 @@ module.exports={
       "cnvPfx_": 0.1,
       "isSpecial_": true,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "decibels",
       "source_": "LOINC",
       "loincProperty_": "LogRto",
@@ -14371,6 +15688,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "deg/sec; deg per sec; °/sec; twist rate; angular speed; rotational speed",
       "source_": "LOINC",
       "loincProperty_": "ARat",
@@ -14408,6 +15726,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "decigrams; dgm; 0.1 grams; 1/10 gm",
       "source_": "LOINC",
       "loincProperty_": "Mass",
@@ -14445,6 +15764,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "deciliters; decilitres; 0.1 liters; 1/10 L",
       "source_": "LOINC",
       "loincProperty_": "Vol",
@@ -14482,6 +15802,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "decimeters; decimetres; 0.1 meters; 1/10 m; 10 cm; centimeters",
       "source_": "LOINC",
       "loincProperty_": "Len",
@@ -14511,7 +15832,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "dm<sup>2</sup>/s<sup>2</sup>",
+      "printSymbol_": "(dm<sup>2</sup>)/(s<sup>2</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -14519,6 +15840,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "dm2 per s2; dm^2/s^2; decimeters squared per second squared; sq dm; sq sec",
       "source_": "LOINC",
       "loincProperty_": "EngMass (massic energy)",
@@ -14534,7 +15856,7 @@ module.exports={
       "isBase_": false,
       "name_": "dyne second per centimeter per square meter",
       "csCode_": "dyn.s/(cm.m2)",
-      "ciCode_": "DYN.S/CM.M2",
+      "ciCode_": "(DYN.S)/(CM.M2)",
       "property_": "force",
       "magnitude_": 1,
       "dim_": {
@@ -14548,7 +15870,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "dyn.s/cm.m<sup>2</sup>",
+      "printSymbol_": "(dyn.s)/(cm.(m<sup>2</sup>))",
       "class_": "cgs",
       "isMetric_": true,
       "variable_": null,
@@ -14556,6 +15878,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "(dyn*s)/(cm*m2); (dyn*s)/(cm*m^2); dyn s per cm per m2; m^2; dyne seconds per centimeters per square meter; centimetres; sq. meter; squared",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -14571,7 +15894,7 @@ module.exports={
       "isBase_": false,
       "name_": "dyne second per centimeter",
       "csCode_": "dyn.s/cm",
-      "ciCode_": "DYN.S/CM",
+      "ciCode_": "(DYN.S)/CM",
       "property_": "force",
       "magnitude_": 1,
       "dim_": {
@@ -14585,7 +15908,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "dyn.s/cm",
+      "printSymbol_": "(dyn.s)/cm",
       "class_": "cgs",
       "isMetric_": true,
       "variable_": null,
@@ -14593,6 +15916,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "(dyn*s)/cm; dyn sec per cm; seconds; centimetre; dyne seconds",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -14630,6 +15954,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "eq/liter; eq/litre; eqs; equivalents per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -14667,6 +15992,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "equivalent/milliliter; equivalents per milliliter; eq per mL; millilitre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -14685,7 +16011,17 @@ module.exports={
       "ciCode_": "EQ/MMOL",
       "property_": "amount of substance",
       "magnitude_": 1000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "eq/mmol",
       "class_": "chemical",
       "isMetric_": true,
@@ -14694,6 +16030,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "equivalent/millimole; equivalents per millimole; eq per mmol",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -14712,7 +16049,17 @@ module.exports={
       "ciCode_": "EQ/UMOL",
       "property_": "amount of substance",
       "magnitude_": 1000000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "eq/μmol",
       "class_": "chemical",
       "isMetric_": true,
@@ -14721,6 +16068,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "equivalent/micromole; equivalents per micromole; eq per umol",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -14758,6 +16106,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "fg; fgm; femtograms; weight",
       "source_": "LOINC",
       "loincProperty_": "Mass",
@@ -14795,6 +16144,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "femtolitres; femtoliters",
       "source_": "LOINC",
       "loincProperty_": "Vol; EntVol",
@@ -14832,6 +16182,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "femtometres; femtometers",
       "source_": "LOINC",
       "loincProperty_": "Len",
@@ -14850,7 +16201,17 @@ module.exports={
       "ciCode_": "FMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "fmol",
       "class_": "si",
       "isMetric_": true,
@@ -14859,6 +16220,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "femtomoles",
       "source_": "LOINC",
       "loincProperty_": "EntSub",
@@ -14896,6 +16258,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "femtomoles; fmol/gm; fmol per gm",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -14933,6 +16296,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "femtomoles; fmol per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -14970,6 +16334,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "fmol per mg; femtomoles",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -15007,6 +16372,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "femtomoles; millilitre; fmol per mL; fmol per milliliter",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -15044,6 +16410,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g*m; gxm; meters; metres",
       "source_": "LOINC",
       "loincProperty_": "Enrg",
@@ -15059,7 +16426,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 100 gram",
       "csCode_": "g/(100.g)",
-      "ciCode_": "G/100.G",
+      "ciCode_": "G/G",
       "property_": "mass",
       "magnitude_": 0.01,
       "dim_": {
@@ -15073,7 +16440,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/100.g",
+      "printSymbol_": "g/g",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15081,6 +16448,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g/100 gm; 100gm; grams per 100 grams; gm per 100 gm",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -15096,7 +16464,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 12 hour",
       "csCode_": "g/(12.h)",
-      "ciCode_": "G/12.HR",
+      "ciCode_": "G/HR",
       "property_": "mass",
       "magnitude_": 0.000023148148148148147,
       "dim_": {
@@ -15110,7 +16478,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/12.h",
+      "printSymbol_": "g/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15118,6 +16486,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/12hrs; 12 hrs; gm per 12 hrs; 12hrs; grams per 12 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15133,7 +16502,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 24 hour",
       "csCode_": "g/(24.h)",
-      "ciCode_": "G/24.HR",
+      "ciCode_": "G/HR",
       "property_": "mass",
       "magnitude_": 0.000011574074074074073,
       "dim_": {
@@ -15147,7 +16516,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/24.h",
+      "printSymbol_": "g/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15155,6 +16524,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/24hrs; gm/24 hrs; gm per 24 hrs; 24hrs; grams per 24 hours; gm/dy; gm per dy; grams per day",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15170,7 +16540,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 3 days",
       "csCode_": "g/(3.d)",
-      "ciCode_": "G/3.D",
+      "ciCode_": "G/D",
       "property_": "mass",
       "magnitude_": 0.000003858024691358025,
       "dim_": {
@@ -15184,7 +16554,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/3.d",
+      "printSymbol_": "g/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15192,6 +16562,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/3dy; gm/3 dy; gm per 3 days; grams",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15207,7 +16578,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 4 hour",
       "csCode_": "g/(4.h)",
-      "ciCode_": "G/4.HR",
+      "ciCode_": "G/HR",
       "property_": "mass",
       "magnitude_": 0.00006944444444444444,
       "dim_": {
@@ -15221,7 +16592,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/4.h",
+      "printSymbol_": "g/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15229,6 +16600,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/4hrs; gm/4 hrs; gm per 4 hrs; 4hrs; grams per 4 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15244,7 +16616,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 48 hour",
       "csCode_": "g/(48.h)",
-      "ciCode_": "G/48.HR",
+      "ciCode_": "G/HR",
       "property_": "mass",
       "magnitude_": 0.000005787037037037037,
       "dim_": {
@@ -15258,7 +16630,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/48.h",
+      "printSymbol_": "g/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15266,6 +16638,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/48hrs; gm/48 hrs; gm per 48 hrs; 48hrs; grams per 48 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15281,7 +16654,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 5 hour",
       "csCode_": "g/(5.h)",
-      "ciCode_": "G/5.HR",
+      "ciCode_": "G/HR",
       "property_": "mass",
       "magnitude_": 0.00005555555555555556,
       "dim_": {
@@ -15295,7 +16668,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/5.h",
+      "printSymbol_": "g/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15303,6 +16676,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/5hrs; gm/5 hrs; gm per 5 hrs; 5hrs; grams per 5 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15318,7 +16692,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 6 hour",
       "csCode_": "g/(6.h)",
-      "ciCode_": "G/6.HR",
+      "ciCode_": "G/HR",
       "property_": "mass",
       "magnitude_": 0.000046296296296296294,
       "dim_": {
@@ -15332,7 +16706,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/6.h",
+      "printSymbol_": "g/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15340,6 +16714,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/6hrs; gm/6 hrs; gm per 6 hrs; 6hrs; grams per 6 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15355,7 +16730,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per 72 hour",
       "csCode_": "g/(72.h)",
-      "ciCode_": "G/72.HR",
+      "ciCode_": "G/HR",
       "property_": "mass",
       "magnitude_": 0.000003858024691358025,
       "dim_": {
@@ -15369,7 +16744,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/72.h",
+      "printSymbol_": "g/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15377,6 +16752,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/72hrs; gm/72 hrs; gm per 72 hrs; 72hrs; grams per 72 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15406,7 +16782,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/cm<sup>3</sup>",
+      "printSymbol_": "g/(cm<sup>3</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15414,6 +16790,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g/cm^3; gm per cm3; g per cm^3; grams per centimeter cubed; cu. cm; centimetre; g/mL; gram per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -15451,6 +16828,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/dy; gm per dy; grams per day; gm/24hrs; gm/24 hrs; gm per 24 hrs; 24hrs; grams per 24 hours; serving",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15488,6 +16866,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/dL; gm per dL; grams per deciliter; decilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -15525,6 +16904,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm; grams",
       "source_": "LOINC",
       "loincProperty_": "MRto ",
@@ -15562,6 +16942,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/hr; gm per hr; grams; intake; output",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15577,7 +16958,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per hour per square meter",
       "csCode_": "g/h/m2",
-      "ciCode_": "G/HR/M2",
+      "ciCode_": "(G/HR)/M2",
       "property_": "mass",
       "magnitude_": 0.0002777777777777778,
       "dim_": {
@@ -15591,7 +16972,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/h/m<sup>2</sup>",
+      "printSymbol_": "(g/h)/(m<sup>2</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15599,6 +16980,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm/hr/m2; gm/h/m2; /m^2; sq. m; g per hr per m2; grams per hours per square meter; meter squared; metre",
       "source_": "LOINC",
       "loincProperty_": "ArMRat",
@@ -15636,6 +17018,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g per kg; gram per kilograms",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -15651,7 +17034,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per kilogram per 8 hour ",
       "csCode_": "g/kg/(8.h)",
-      "ciCode_": "G/KG/8.HR",
+      "ciCode_": "(G/KG)/HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-8,
       "dim_": {
@@ -15665,7 +17048,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/kg/8.h",
+      "printSymbol_": "(g/kg)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15673,6 +17056,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g/(8.kg.h); gm/kg/8hrs; 8 hrs; g per kg per 8 hrs; 8hrs; grams per kilograms per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "MCntRat; RelMRat",
@@ -15688,7 +17072,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per kilogram per day",
       "csCode_": "g/kg/d",
-      "ciCode_": "G/KG/D",
+      "ciCode_": "(G/KG)/D",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -15702,7 +17086,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/kg/d",
+      "printSymbol_": "(g/kg)/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15710,6 +17094,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g/(kg.d); gm/kg/dy; gm per kg per dy; grams per kilograms per day",
       "source_": "LOINC",
       "loincProperty_": "RelMRat",
@@ -15725,7 +17110,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per kilogram per hour",
       "csCode_": "g/kg/h",
-      "ciCode_": "G/KG/HR",
+      "ciCode_": "(G/KG)/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777776e-7,
       "dim_": {
@@ -15739,7 +17124,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/kg/h",
+      "printSymbol_": "(g/kg)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15747,6 +17132,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g/(kg.h); g/kg/hr; g per kg per hrs; grams per kilograms per hour",
       "source_": "LOINC",
       "loincProperty_": "MCntRat; RelMRat",
@@ -15762,7 +17148,7 @@ module.exports={
       "isBase_": true,
       "name_": "gram per kilogram per minute",
       "csCode_": "g/kg/min",
-      "ciCode_": "G/KG/MIN",
+      "ciCode_": "(G/KG)/MIN",
       "property_": "mass",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -15776,7 +17162,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/kg/min",
+      "printSymbol_": "(g/kg)/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15784,6 +17170,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g/(kg.min); g/kg/min; g per kg per min; grams per kilograms per minute",
       "source_": "LOINC",
       "loincProperty_": "MCntRat; RelMRat",
@@ -15821,6 +17208,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "gm per liter; g/liter; grams per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -15850,7 +17238,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "g/m<sup>2</sup>",
+      "printSymbol_": "g/(m<sup>2</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -15858,6 +17246,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g/m^2; gram/square meter; g/sq m; g per m2; g per m^2; grams per square meter; meters squared; metre",
       "source_": "LOINC",
       "loincProperty_": "ArMass",
@@ -15895,6 +17284,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g per mg; grams per milligram",
       "source_": "LOINC",
       "loincProperty_": "MCnt; MRto",
@@ -15932,6 +17322,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g per min; grams per minute; gram/minute",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -15969,6 +17360,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "g per mL; grams per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -16006,6 +17398,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "grams per millimole; g per mmol",
       "source_": "LOINC",
       "loincProperty_": "Ratio",
@@ -16043,6 +17436,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "joules per liter; litre; J per L",
       "source_": "LOINC",
       "loincProperty_": "EngCnc",
@@ -16080,6 +17474,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "degree Kelvin/Watt; K per W; thermal ohm; thermal resistance; degrees",
       "source_": "LOINC",
       "loincProperty_": "TempEngRat",
@@ -16109,7 +17504,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ki.U./L",
+      "printSymbol_": "(ki.U.)/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -16117,6 +17512,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "kIU/L; kIU per L; kIU per liter; kilo international units; litre; allergens; allergy units",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -16146,7 +17542,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ki.U./mL",
+      "printSymbol_": "(ki.U.)/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -16154,6 +17550,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "kIU/mL; kIU per mL; kIU per milliliter; kilo international units; millilitre; allergens; allergy units",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -16191,6 +17588,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kat per kg; katals per kilogram; mol/s/kg; moles per seconds per kilogram",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -16228,6 +17626,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kat per L; katals per liter; litre; mol/s/L; moles per seconds per liter",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -16265,6 +17664,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kilogram calories; large calories; food calories; kcals",
       "source_": "LOINC",
       "loincProperty_": "EngRat",
@@ -16280,7 +17680,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilocalorie per 24 hour",
       "csCode_": "kcal/(24.h)",
-      "ciCode_": "KCAL/24.HR",
+      "ciCode_": "KCAL/HR",
       "property_": "energy",
       "magnitude_": 48.425925925925924,
       "dim_": {
@@ -16294,7 +17694,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kcal/24.h",
+      "printSymbol_": "kcal/h",
       "class_": "heat",
       "isMetric_": true,
       "variable_": null,
@@ -16302,6 +17702,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kcal/24hrs; kcal/24 hrs; kcal per 24hrs; kilocalories per 24 hours; kilojoules; kJ/24hr; kJ/(24.h); kJ/dy; kilojoules per days; intake; calories burned; metabolic rate; food calories",
       "source_": "",
       "loincProperty_": "EngRat",
@@ -16339,6 +17740,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kcal/oz; kcal per ozs; large calories per ounces; food calories; servings; international",
       "source_": "LOINC",
       "loincProperty_": "EngCnt",
@@ -16376,6 +17778,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kcal/dy; kcal per day; kilocalories per days; kilojoules; kJ/dy; kilojoules per days; intake; calories burned; metabolic rate; food calories",
       "source_": "LOINC",
       "loincProperty_": "EngRat",
@@ -16413,6 +17816,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kcal/hrs; kcals per hr; intake; kilocalories per hours; kilojoules",
       "source_": "LOINC",
       "loincProperty_": "EngRat",
@@ -16428,7 +17832,7 @@ module.exports={
       "isBase_": false,
       "name_": "kilocalorie per kilogram per 24 hour",
       "csCode_": "kcal/kg/(24.h)",
-      "ciCode_": "KCAL/KG/24.HR",
+      "ciCode_": "(KCAL/KG)/HR",
       "property_": "energy",
       "magnitude_": 0.04842592592592593,
       "dim_": {
@@ -16442,7 +17846,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kcal/kg/24.h",
+      "printSymbol_": "(kcal/kg)/h",
       "class_": "heat",
       "isMetric_": true,
       "variable_": null,
@@ -16450,6 +17854,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kcal/kg/24hrs; 24 hrs; kcal per kg per 24hrs; kilocalories per kilograms per 24 hours; kilojoules",
       "source_": "LOINC",
       "loincProperty_": "EngCntRat",
@@ -16487,6 +17892,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kilograms; kgs",
       "source_": "LOINC",
       "loincProperty_": "Mass",
@@ -16502,7 +17908,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram meter per second",
       "csCode_": "kg.m/s",
-      "ciCode_": "KG.M/S",
+      "ciCode_": "(KG.M)/S",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -16516,7 +17922,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kg.m/s",
+      "printSymbol_": "(kg.m)/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16524,6 +17930,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kg*m/s; kg.m per sec; kg*m per sec; p; momentum",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -16539,7 +17946,7 @@ module.exports={
       "isBase_": true,
       "name_": "kilogram per second per square meter",
       "csCode_": "kg/(s.m2)",
-      "ciCode_": "KG/S.M2",
+      "ciCode_": "KG/(S.M2)",
       "property_": "mass",
       "magnitude_": 1000,
       "dim_": {
@@ -16553,7 +17960,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kg/s.m<sup>2</sup>",
+      "printSymbol_": "kg/(s.(m<sup>2</sup>))",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16561,6 +17968,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kg/(s*m2); kg/(s*m^2); kg per s per m2; per sec; per m^2; kilograms per seconds per square meter; meter squared; metre",
       "source_": "LOINC",
       "loincProperty_": "ArMRat",
@@ -16598,6 +18006,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kg/hr; kg per hr; kilograms per hour",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -16635,6 +18044,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kg per liter; litre; kilograms",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -16664,7 +18074,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kg/m<sup>2</sup>",
+      "printSymbol_": "kg/(m<sup>2</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16672,6 +18082,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kg/m^2; kg/sq. m; kg per m2; per m^2; per sq. m; kilograms; meter squared; metre; BMI",
       "source_": "LOINC",
       "loincProperty_": "Ratio",
@@ -16701,7 +18112,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "kg/m<sup>3</sup>",
+      "printSymbol_": "kg/(m<sup>3</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -16709,6 +18120,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kg/m^3; kg/cu. m; kg per m3; per m^3; per cu. m; kilograms; meters cubed; metre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -16746,6 +18158,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kilogram/minute; kg per min; kilograms per minute",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -16783,6 +18196,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "kilogram/mole; kg per mol; kilograms per mole",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -16820,6 +18234,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kg/sec; kilogram/second; kg per sec; kilograms; second",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -16857,6 +18272,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kiloliters; kilolitres; m3; m^3; meters cubed; metre",
       "source_": "LOINC",
       "loincProperty_": "Vol",
@@ -16894,6 +18310,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kilometers; kilometres; distance",
       "source_": "LOINC",
       "loincProperty_": "Len",
@@ -16931,6 +18348,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kilopascals; pressure",
       "source_": "LOINC",
       "loincProperty_": "Pres; PPresDiff",
@@ -16968,6 +18386,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kiloseconds; ksec",
       "source_": "LOINC",
       "loincProperty_": "Time",
@@ -17005,6 +18424,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "units; mmol/min; millimoles per minute",
       "source_": "LOINC",
       "loincProperty_": "CAct",
@@ -17042,6 +18462,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "units per grams; kU per gm",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -17079,6 +18500,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "units per liter; litre; enzymatic activity; enzyme activity per volume; activities",
       "source_": "LOINC",
       "loincProperty_": "ACnc; CCnc",
@@ -17116,6 +18538,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "kU per mL; units per milliliter; millilitre; enzymatic activity per volume; enzyme activities",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -17131,7 +18554,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per 24 hour",
       "csCode_": "L/(24.h)",
-      "ciCode_": "L/24.HR",
+      "ciCode_": "L/HR",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -17145,7 +18568,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/24.h",
+      "printSymbol_": "L/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17153,6 +18576,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L/24hrs; L/24 hrs; L per 24hrs; liters per 24 hours; day; dy; litres; volume flow rate",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -17168,7 +18592,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per 8 hour",
       "csCode_": "L/(8.h)",
-      "ciCode_": "L/8.HR",
+      "ciCode_": "L/HR",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-8,
       "dim_": {
@@ -17182,7 +18606,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/8.h",
+      "printSymbol_": "L/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17190,6 +18614,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L/8hrs; L/8 hrs; L per 8hrs; liters per 8 hours; litres; volume flow rate; shift",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -17205,7 +18630,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per minute per square meter",
       "csCode_": "L/(min.m2) ",
-      "ciCode_": "L/MIN.M2",
+      "ciCode_": "L/(MIN.M2)",
       "property_": "volume",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -17219,7 +18644,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min.m<sup>2</sup>",
+      "printSymbol_": "L/(min.(m<sup>2</sup>))",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17227,6 +18652,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L/(min.m2); L/min/m^2; L/min/sq. meter; L per min per m2; m^2; liters per minutes per square meter; meter squared; litres; metre ",
       "source_": "LOINC",
       "loincProperty_": "ArVRat",
@@ -17264,6 +18690,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L/dy; L per day; 24hrs; 24 hrs; 24 hours; liters; litres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -17301,6 +18728,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L/hr; L per hr; litres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -17338,6 +18766,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L per kg; litre",
       "source_": "LOINC",
       "loincProperty_": "VCnt",
@@ -17375,6 +18804,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L per L; liter/liter; litre",
       "source_": "LOINC",
       "loincProperty_": "VFr",
@@ -17412,6 +18842,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "liters per minute; litre",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -17427,7 +18858,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per minute per square meter",
       "csCode_": "L/min/m2",
-      "ciCode_": "L/MIN/M2",
+      "ciCode_": "(L/MIN)/M2",
       "property_": "volume",
       "magnitude_": 0.000016666666666666667,
       "dim_": {
@@ -17441,7 +18872,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/min/m<sup>2</sup>",
+      "printSymbol_": "(L/min)/(m<sup>2</sup>)",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17449,6 +18880,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L/(min.m2); L/min/m^2; L/min/sq. meter; L per min per m2; m^2; liters per minutes per square meter; meter squared; litres; metre ",
       "source_": "",
       "loincProperty_": "ArVRat",
@@ -17486,6 +18918,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L per sec; litres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -17501,7 +18934,7 @@ module.exports={
       "isBase_": false,
       "name_": "Liters per second per square second",
       "csCode_": "L/s/s2",
-      "ciCode_": "L/S/S2",
+      "ciCode_": "(L/S)/S2",
       "property_": "volume",
       "magnitude_": 0.001,
       "dim_": {
@@ -17515,7 +18948,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "L/s/s<sup>2</sup>",
+      "printSymbol_": "(L/s)/(s<sup>2</sup>)",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17523,6 +18956,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "L/s/s^2; L/sec/sec2; L/sec/sec^2; L/sec/sq. sec; L per s per s2; L per sec per sec2; s^2; sec^2; liters per seconds per square second; second squared; litres ",
       "source_": "LOINC",
       "loincProperty_": "ArVRat",
@@ -17552,7 +18986,7 @@ module.exports={
           1
         ]
       },
-      "printSymbol_": "lm.m<sup>2</sup>",
+      "printSymbol_": "lm.(m<sup>2</sup>)",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -17560,6 +18994,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "lm*m2; lm*m^2; lumen meters squared; lumen sq. meters; metres",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -17597,6 +19032,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meter/second; m per sec; meters per second; metres; velocity; speed",
       "source_": "LOINC",
       "loincProperty_": "Vel",
@@ -17626,7 +19062,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m/s<sup>2</sup>",
+      "printSymbol_": "m/(s<sup>2</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -17634,6 +19070,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "m/s^2; m/sq. sec; m per s2; per s^2; meters per square second; second squared; sq second; metres; acceleration",
       "source_": "LOINC",
       "loincProperty_": "Accel",
@@ -17663,7 +19100,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mi.U./L",
+      "printSymbol_": "(mi.U.)/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17671,6 +19108,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "mIU/L; m IU/L; mIU per liter; units; litre",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -17700,7 +19138,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mi.U./mL",
+      "printSymbol_": "(mi.U.)/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -17708,6 +19146,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "mIU/mL; m IU/mL; mIU per mL; milli international units per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -17745,6 +19184,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "m^2; sq m; square meters; meters squared; metres",
       "source_": "LOINC",
       "loincProperty_": "Area",
@@ -17774,7 +19214,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m<sup>2</sup>/s",
+      "printSymbol_": "(m<sup>2</sup>)/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -17782,6 +19222,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "m^2/sec; m2 per sec; m^2 per sec; sq m/sec; meters squared/seconds; sq m per sec; meters squared; metres",
       "source_": "LOINC",
       "loincProperty_": "ArRat",
@@ -17811,7 +19252,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "m<sup>3</sup>/s",
+      "printSymbol_": "(m<sup>3</sup>)/s",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -17819,6 +19260,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "m^3/sec; m3 per sec; m^3 per sec; cu m/sec; cubic meters per seconds; meters cubed; metres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -17856,6 +19298,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mamp; milliamperes",
       "source_": "LOINC",
       "loincProperty_": "ElpotRat",
@@ -17893,6 +19336,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "millibars",
       "source_": "LOINC",
       "loincProperty_": "Pres",
@@ -17908,7 +19352,7 @@ module.exports={
       "isBase_": false,
       "name_": "millibar second per liter",
       "csCode_": "mbar.s/L",
-      "ciCode_": "MBAR.S/L",
+      "ciCode_": "(MBAR.S)/L",
       "property_": "pressure",
       "magnitude_": 100000000,
       "dim_": {
@@ -17922,7 +19366,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mbar.s/L",
+      "printSymbol_": "(mbar.s)/L",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17930,6 +19374,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mbar*s/L; mbar.s per L; mbar*s per L; millibar seconds per liter; millibar second per litre",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -17945,7 +19390,7 @@ module.exports={
       "isBase_": false,
       "name_": "millibar per liter per second",
       "csCode_": "mbar/L/s",
-      "ciCode_": "MBAR/L/S",
+      "ciCode_": "(MBAR/L)/S",
       "property_": "pressure",
       "magnitude_": 100000000,
       "dim_": {
@@ -17959,7 +19404,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mbar/L/s",
+      "printSymbol_": "(mbar/L)/s",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -17967,6 +19412,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mbar/(L.s); mbar/L/sec; mbar/liter/second; mbar per L per sec; mbar per liter per second; millibars per liters per seconds; litres",
       "source_": "LOINC",
       "loincProperty_": "PresCncRat",
@@ -17985,7 +19431,17 @@ module.exports={
       "ciCode_": "MEQ",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "meq",
       "class_": "chemical",
       "isMetric_": true,
@@ -17994,6 +19450,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "milliequivalents; meqs",
       "source_": "LOINC",
       "loincProperty_": "Sub",
@@ -18009,7 +19466,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per 2 hour",
       "csCode_": "meq/(2.h)",
-      "ciCode_": "MEQ/2.HR",
+      "ciCode_": "MEQ/HR",
       "property_": "amount of substance",
       "magnitude_": 83640787500000000,
       "dim_": {
@@ -18023,7 +19480,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "meq/2.h",
+      "printSymbol_": "meq/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -18031,6 +19488,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq/2hrs; meq/2 hrs; meq per 2 hrs; milliequivalents per 2 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -18046,7 +19504,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per 24 hour",
       "csCode_": "meq/(24.h)",
-      "ciCode_": "MEQ/24.HR",
+      "ciCode_": "MEQ/HR",
       "property_": "amount of substance",
       "magnitude_": 6970065625000000,
       "dim_": {
@@ -18060,7 +19518,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "meq/24.h",
+      "printSymbol_": "meq/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -18068,6 +19526,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq/24hrs; meq/24 hrs; meq per 24 hrs; milliequivalents per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -18083,7 +19542,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per 8 hour",
       "csCode_": "meq/(8.h)",
-      "ciCode_": "MEQ/8.HR",
+      "ciCode_": "MEQ/HR",
       "property_": "amount of substance",
       "magnitude_": 20910196875000000,
       "dim_": {
@@ -18097,7 +19556,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "meq/8.h",
+      "printSymbol_": "meq/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -18105,6 +19564,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq/8hrs; meq/8 hrs; meq per 8 hrs; milliequivalents per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -18142,6 +19602,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq/dy; meq per day; milliquivalents per days; meq/24hrs; meq/24 hrs; meq per 24 hrs; milliequivalents per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -18179,6 +19640,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq per dL; milliequivalents per deciliter; decilitre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -18216,6 +19678,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mgq/gm; meq per gm; milliequivalents per gram",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -18253,6 +19716,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq/hrs; meq per hrs; milliequivalents per hour",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -18290,6 +19754,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq per kg; milliequivalents per kilogram",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -18305,7 +19770,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliequivalent per kilogram per hour",
       "csCode_": "meq/kg/h",
-      "ciCode_": "MEQ/KG/HR",
+      "ciCode_": "(MEQ/KG)/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -18319,7 +19784,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "meq/kg/h",
+      "printSymbol_": "(meq/kg)/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -18327,6 +19792,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq/(kg.h); meq/kg/hr; meq per kg per hr; milliequivalents per kilograms per hour",
       "source_": "LOINC",
       "loincProperty_": "SCntRat",
@@ -18364,6 +19830,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "milliequivalents per liter; litre; meq per l; acidity",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -18393,7 +19860,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "meq/m<sup>2</sup>",
+      "printSymbol_": "meq/(m<sup>2</sup>)",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -18401,6 +19868,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq/m^2; meq/sq. m; milliequivalents per square meter; meter squared; metre",
       "source_": "LOINC",
       "loincProperty_": "ArSub",
@@ -18438,6 +19906,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq per min; milliequivalents per minute",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -18475,6 +19944,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "meq per mL; milliequivalents per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -18512,6 +19982,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "milligrams",
       "source_": "LOINC",
       "loincProperty_": "Mass",
@@ -18527,7 +19998,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 10 hour",
       "csCode_": "mg/(10.h)",
-      "ciCode_": "MG/10.HR",
+      "ciCode_": "MG/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777777e-8,
       "dim_": {
@@ -18541,7 +20012,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/10.h",
+      "printSymbol_": "mg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18549,6 +20020,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/10hrs; mg/10 hrs; mg per 10 hrs; milligrams per 10 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -18564,7 +20036,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 12 hour",
       "csCode_": "mg/(12.h)",
-      "ciCode_": "MG/12.HR",
+      "ciCode_": "MG/HR",
       "property_": "mass",
       "magnitude_": 2.3148148148148148e-8,
       "dim_": {
@@ -18578,7 +20050,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/12.h",
+      "printSymbol_": "mg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18586,6 +20058,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/12hrs; mg/12 hrs; per 12 hrs; 12hrs; milligrams per 12 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -18601,7 +20074,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 2 hour",
       "csCode_": "mg/(2.h)",
-      "ciCode_": "MG/2.HR",
+      "ciCode_": "MG/HR",
       "property_": "mass",
       "magnitude_": 1.3888888888888888e-7,
       "dim_": {
@@ -18615,7 +20088,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/2.h",
+      "printSymbol_": "mg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18623,6 +20096,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/2hrs; mg/2 hrs; mg per 2 hrs; 2hrs; milligrams per 2 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -18638,7 +20112,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 24 hour",
       "csCode_": "mg/(24.h)",
-      "ciCode_": "MG/24.HR",
+      "ciCode_": "MG/HR",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -18652,7 +20126,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/24.h",
+      "printSymbol_": "mg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18660,6 +20134,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/24hrs; mg/24 hrs; milligrams per 24 hours; mg/kg/dy; mg per kg per day; milligrams per kilograms per days",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -18675,7 +20150,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 6 hour",
       "csCode_": "mg/(6.h)",
-      "ciCode_": "MG/6.HR",
+      "ciCode_": "MG/HR",
       "property_": "mass",
       "magnitude_": 4.6296296296296295e-8,
       "dim_": {
@@ -18689,7 +20164,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/6.h",
+      "printSymbol_": "mg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18697,6 +20172,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/6hrs; mg/6 hrs; mg per 6 hrs; 6hrs; milligrams per 6 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -18712,7 +20188,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 72 hour",
       "csCode_": "mg/(72.h)",
-      "ciCode_": "MG/72.HR",
+      "ciCode_": "MG/HR",
       "property_": "mass",
       "magnitude_": 3.858024691358025e-9,
       "dim_": {
@@ -18726,7 +20202,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/72.h",
+      "printSymbol_": "mg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18734,6 +20210,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/72hrs; mg/72 hrs; 72 hrs; 72hrs; milligrams per 72 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -18749,7 +20226,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per 8 hour",
       "csCode_": "mg/(8.h)",
-      "ciCode_": "MG/8.HR",
+      "ciCode_": "MG/HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-8,
       "dim_": {
@@ -18763,7 +20240,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/8.h",
+      "printSymbol_": "mg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18771,6 +20248,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/8hrs; mg/8 hrs; milligrams per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -18808,6 +20286,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/24hrs; mg/24 hrs; milligrams per 24 hours; mg/dy; mg per day; milligrams",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -18845,6 +20324,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg per dL; milligrams per deciliter; decilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -18882,6 +20362,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg per gm; milligrams per gram",
       "source_": "LOINC",
       "loincProperty_": "MCnt; MRto",
@@ -18919,6 +20400,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/hr; mg per hr; milligrams",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -18956,6 +20438,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg per kg; milligrams per kilograms",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -18971,7 +20454,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per kilogram per 8 hour",
       "csCode_": "mg/kg/(8.h)",
-      "ciCode_": "MG/KG/8.HR",
+      "ciCode_": "(MG/KG)/HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-11,
       "dim_": {
@@ -18985,7 +20468,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/kg/8.h",
+      "printSymbol_": "(mg/kg)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -18993,6 +20476,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/(8.h.kg); mg/kg/8hrs; mg/kg/8 hrs; mg per kg per 8hrs; 8 hrs; milligrams per kilograms per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "RelMRat; MCntRat",
@@ -19008,7 +20492,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per kilogram per day",
       "csCode_": "mg/kg/d",
-      "ciCode_": "MG/KG/D",
+      "ciCode_": "(MG/KG)/D",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -19022,7 +20506,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/kg/d",
+      "printSymbol_": "(mg/kg)/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -19030,6 +20514,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/(kg.d); mg/(kg.24.h)mg/kg/dy; mg per kg per day; milligrams per kilograms per days; mg/kg/(24.h); mg/kg/24hrs; 24 hrs; 24 hours",
       "source_": "LOINC",
       "loincProperty_": "RelMRat ",
@@ -19045,7 +20530,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per kilogram per hour",
       "csCode_": "mg/kg/h",
-      "ciCode_": "MG/KG/HR",
+      "ciCode_": "(MG/KG)/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777777e-10,
       "dim_": {
@@ -19059,7 +20544,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/kg/h",
+      "printSymbol_": "(mg/kg)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -19067,6 +20552,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/(kg.h); mg/kg/hr; mg per kg per hr; milligrams per kilograms per hour",
       "source_": "LOINC",
       "loincProperty_": "RelMRat; MCntRat",
@@ -19082,7 +20568,7 @@ module.exports={
       "isBase_": true,
       "name_": "milligram per kilogram per minute",
       "csCode_": "mg/kg/min",
-      "ciCode_": "MG/KG/MIN",
+      "ciCode_": "(MG/KG)/MIN",
       "property_": "mass",
       "magnitude_": 1.6666666666666667e-8,
       "dim_": {
@@ -19096,7 +20582,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/kg/min",
+      "printSymbol_": "(mg/kg)/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -19104,6 +20590,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/(kg.min); mg per kg per min; milligrams per kilograms per minute",
       "source_": "LOINC",
       "loincProperty_": "RelMRat; MCntRat",
@@ -19141,6 +20628,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg per l; milligrams per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -19170,7 +20658,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/m<sup>2</sup>",
+      "printSymbol_": "mg/(m<sup>2</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -19178,6 +20666,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/m^2; mg/sq. m; mg per m2; mg per m^2; mg per sq. milligrams; meter squared; metre",
       "source_": "LOINC",
       "loincProperty_": "ArMass",
@@ -19207,7 +20696,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mg/m<sup>3</sup>",
+      "printSymbol_": "mg/(m<sup>3</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -19215,6 +20704,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/m^3; mg/cu. m; mg per m3; milligrams per cubic meter; meter cubed; metre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -19252,6 +20742,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg per mg; milligrams; milligram/milligram",
       "source_": "LOINC",
       "loincProperty_": "MRto",
@@ -19289,6 +20780,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg per min; milligrams per minutes; milligram/minute",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -19326,6 +20818,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg per mL; milligrams per milliliters; millilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -19363,6 +20856,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mg per mmol; milligrams per millimole; ",
       "source_": "LOINC",
       "loincProperty_": "Ratio",
@@ -19400,6 +20894,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mg/week; mg per wk; milligrams per weeks; milligram/week",
       "source_": "LOINC",
       "loincProperty_": "Mrat",
@@ -19437,6 +20932,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "milliliters; millilitres",
       "source_": "LOINC",
       "loincProperty_": "Vol",
@@ -19452,7 +20948,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 10 hour",
       "csCode_": "mL/(10.h)",
-      "ciCode_": "ML/10.HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777777e-11,
       "dim_": {
@@ -19466,7 +20962,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/10.h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19474,6 +20970,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/10hrs; ml/10 hrs; mL per 10hrs; 10 hrs; milliliters per 10 hours; millilitres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19489,7 +20986,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 12 hour",
       "csCode_": "mL/(12.h)",
-      "ciCode_": "ML/12.HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 2.3148148148148147e-11,
       "dim_": {
@@ -19503,7 +21000,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/12.h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19511,6 +21008,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/12hrs; ml/12 hrs; mL per 12hrs; 12 hrs; milliliters per 12 hours; millilitres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19526,7 +21024,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 2 hour",
       "csCode_": "mL/(2.h)",
-      "ciCode_": "ML/2.HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 1.3888888888888888e-10,
       "dim_": {
@@ -19540,7 +21038,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/2.h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19548,6 +21046,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/2hrs; ml/2 hrs; mL per 2hrs; 2 hrs; milliliters per 2 hours; millilitres ",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19563,7 +21062,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 24 hour",
       "csCode_": "mL/(24.h)",
-      "ciCode_": "ML/24.HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -19577,7 +21076,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/24.h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19585,6 +21084,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/24hrs; ml/24 hrs; mL per 24hrs; 24 hrs; milliliters per 24 hours; millilitres; ml/dy; /day; ml per dy; days; fluid outputs; fluid inputs; flow rate",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19600,7 +21100,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 4 hour",
       "csCode_": "mL/(4.h)",
-      "ciCode_": "ML/4.HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 6.944444444444444e-11,
       "dim_": {
@@ -19614,7 +21114,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/4.h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19622,6 +21122,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/4hrs; ml/4 hrs; mL per 4hrs; 4 hrs; milliliters per 4 hours; millilitres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19637,7 +21138,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 5 hour",
       "csCode_": "mL/(5.h)",
-      "ciCode_": "ML/5.HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 5.5555555555555553e-11,
       "dim_": {
@@ -19651,7 +21152,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/5.h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19659,6 +21160,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/5hrs; ml/5 hrs; mL per 5hrs; 5 hrs; milliliters per 5 hours; millilitres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19674,7 +21176,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 6 hour",
       "csCode_": "mL/(6.h)",
-      "ciCode_": "ML/6.HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 4.6296296296296294e-11,
       "dim_": {
@@ -19688,7 +21190,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/6.h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19696,6 +21198,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/6hrs; ml/6 hrs; mL per 6hrs; 6 hrs; milliliters per 6 hours; millilitres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19711,7 +21214,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 72 hour",
       "csCode_": "mL/(72.h)",
-      "ciCode_": "ML/72.HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 3.8580246913580245e-12,
       "dim_": {
@@ -19725,7 +21228,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/72.h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19733,6 +21236,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/72hrs; ml/72 hrs; mL per 72hrs; 72 hrs; milliliters per 72 hours; millilitres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19748,7 +21252,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 8 hour",
       "csCode_": "mL/(8.h)",
-      "ciCode_": "ML/8.HR",
+      "ciCode_": "ML/HR",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-11,
       "dim_": {
@@ -19762,7 +21266,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/8.h",
+      "printSymbol_": "mL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19770,6 +21274,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/8hrs; ml/8 hrs; mL per 8hrs; 8 hrs; milliliters per 8 hours; millilitres; shift",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19785,7 +21290,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per 8 hour per kilogram",
       "csCode_": "mL/(8.h)/kg",
-      "ciCode_": "ML/8.HR/KG",
+      "ciCode_": "(ML/HR)/KG",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-14,
       "dim_": {
@@ -19799,7 +21304,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/8.h/kg",
+      "printSymbol_": "(mL/h)/kg",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19807,6 +21312,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL/kg/(8.h); ml/8h/kg; ml/8 h/kg; ml/8hr/kg; ml/8 hr/kgr; mL per 8h per kg; 8 h; 8hr; 8 hr; milliliters per 8 hours per kilogram; millilitres; shift",
       "source_": "LOINC",
       "loincProperty_": "VRatCnt",
@@ -19844,6 +21350,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL/sin; mL/in2; mL/in^2; mL per sin; in2; in^2; sq. in; milliliters per square inch; inch squared",
       "source_": "LOINC",
       "loincProperty_": "ArVol",
@@ -19873,7 +21380,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/cm HO<sub><r>2</r></sub>",
+      "printSymbol_": "mL/(cm HO<sub><r>2</r></sub>)",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -19881,6 +21388,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "milliliters per centimeter of water; millilitre per centimetre of water; millilitres per centimetre of water; mL/cmH2O; mL/cm H2O; mL per cmH2O; mL per cm H2O",
       "source_": "LOINC",
       "loincProperty_": "Compli",
@@ -19918,6 +21426,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/day; ml per day; milliliters per day; 24 hours; 24hrs; millilitre;",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -19955,6 +21464,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL per dL; millilitres; decilitre; milliliters",
       "source_": "LOINC",
       "loincProperty_": "VFr; VFrDiff",
@@ -19992,6 +21502,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL/hr; mL per hr; milliliters per hour; millilitres; fluid intake; fluid output",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -20029,6 +21540,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL per kg; milliliters per kilogram; millilitres",
       "source_": "LOINC",
       "loincProperty_": "VCnt",
@@ -20044,7 +21556,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per 8 hour",
       "csCode_": "mL/kg/(8.h)",
-      "ciCode_": "ML/KG/8.HR",
+      "ciCode_": "(ML/KG)/HR",
       "property_": "volume",
       "magnitude_": 3.472222222222222e-14,
       "dim_": {
@@ -20058,7 +21570,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/kg/8.h",
+      "printSymbol_": "(mL/kg)/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -20066,6 +21578,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL/(8.h.kg); mL/kg/8hrs; mL/kg/8 hrs; mL per kg per 8hrs; 8 hrs; milliliters per kilograms per 8 hours; millilitres; shift",
       "source_": "LOINC",
       "loincProperty_": "VCntRat; RelEngRat",
@@ -20081,7 +21594,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per day",
       "csCode_": "mL/kg/d",
-      "ciCode_": "ML/KG/D",
+      "ciCode_": "(ML/KG)/D",
       "property_": "volume",
       "magnitude_": 1.1574074074074072e-14,
       "dim_": {
@@ -20095,7 +21608,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/kg/d",
+      "printSymbol_": "(mL/kg)/d",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -20103,6 +21616,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL/(kg.d); mL/kg/dy; mL per kg per day; milliliters per kilograms per day; mg/kg/24hrs; 24 hrs; per 24 hours millilitres",
       "source_": "LOINC",
       "loincProperty_": "VCntRat; RelEngRat",
@@ -20118,7 +21632,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per hour",
       "csCode_": "mL/kg/h",
-      "ciCode_": "ML/KG/HR",
+      "ciCode_": "(ML/KG)/HR",
       "property_": "volume",
       "magnitude_": 2.7777777777777774e-13,
       "dim_": {
@@ -20132,7 +21646,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/kg/h",
+      "printSymbol_": "(mL/kg)/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -20140,6 +21654,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL/(kg.h); mL/kg/hr; mL per kg per hr; milliliters per kilograms per hour; millilitres",
       "source_": "LOINC",
       "loincProperty_": "VCntRat; RelEngRat",
@@ -20155,7 +21670,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per kilogram per minute",
       "csCode_": "mL/kg/min",
-      "ciCode_": "ML/KG/MIN",
+      "ciCode_": "(ML/KG)/MIN",
       "property_": "volume",
       "magnitude_": 1.6666666666666664e-11,
       "dim_": {
@@ -20169,7 +21684,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/kg/min",
+      "printSymbol_": "(mL/kg)/min",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -20177,6 +21692,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL/(kg.min); mL/kg/dy; mL per kg per day; milliliters per kilograms per day; millilitres",
       "source_": "LOINC",
       "loincProperty_": "RelEngRat",
@@ -20206,7 +21722,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/m<sup>2</sup>",
+      "printSymbol_": "mL/(m<sup>2</sup>)",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -20214,6 +21730,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL/m^2; mL/sq. meter; mL per m2; m^2; sq. meter; milliliters per square meter; millilitres; meter squared",
       "source_": "LOINC",
       "loincProperty_": "ArVol",
@@ -20251,6 +21768,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL per mbar; milliliters per millibar; millilitres",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -20288,6 +21806,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL per min; milliliters; millilitres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -20303,7 +21822,7 @@ module.exports={
       "isBase_": false,
       "name_": "milliliter per minute per square meter",
       "csCode_": "mL/min/m2",
-      "ciCode_": "ML/MIN/M2",
+      "ciCode_": "(ML/MIN)/M2",
       "property_": "volume",
       "magnitude_": 1.6666666666666667e-8,
       "dim_": {
@@ -20317,7 +21836,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mL/min/m<sup>2</sup>",
+      "printSymbol_": "(mL/min)/(m<sup>2</sup>)",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -20325,6 +21844,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/min/m^2; ml/min/sq. meter; mL per min per m2; m^2; sq. meter; milliliters per minutes per square meter; millilitres; metre; meter squared",
       "source_": "LOINC",
       "loincProperty_": "ArVRat",
@@ -20362,6 +21882,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mL per mm; milliliters per millimeter; millilitres; millimetre",
       "source_": "LOINC",
       "loincProperty_": "Lineic Volume",
@@ -20399,6 +21920,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ml/sec; mL per sec; milliliters per second; millilitres",
       "source_": "LOINC",
       "loincProperty_": "Vel; VelRat; VRat",
@@ -20436,6 +21958,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "millimeters; millimetres; height; length; diameter; thickness; axis; curvature; size",
       "source_": "LOINC",
       "loincProperty_": "Len",
@@ -20473,6 +21996,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mm/hr; mm per hr; millimeters per hour; millimetres",
       "source_": "LOINC",
       "loincProperty_": "Vel",
@@ -20510,6 +22034,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mm per min; millimeters per minute; millimetres",
       "source_": "LOINC",
       "loincProperty_": "Vel",
@@ -20547,6 +22072,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mmH2O; mm H2O; millimeters of water; millimetres",
       "source_": "LOINC",
       "loincProperty_": "Pres",
@@ -20584,6 +22110,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mmHg; mm Hg; millimeters of mercury; millimetres",
       "source_": "LOINC",
       "loincProperty_": "Pres; PPres; Ratio",
@@ -20621,6 +22148,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mm^2; sq. mm.; sq. millimeters; millimeters squared; millimetres",
       "source_": "LOINC",
       "loincProperty_": "Area",
@@ -20639,7 +22167,17 @@ module.exports={
       "ciCode_": "MMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "mmol",
       "class_": "si",
       "isMetric_": true,
@@ -20648,6 +22186,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "millimoles",
       "source_": "LOINC",
       "loincProperty_": "Sub",
@@ -20663,7 +22202,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 12 hour",
       "csCode_": "mmol/(12.h)",
-      "ciCode_": "MMOL/12.HR",
+      "ciCode_": "MMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 13940131250000000,
       "dim_": {
@@ -20677,7 +22216,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/12.h",
+      "printSymbol_": "mmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20685,6 +22224,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/12hrs; mmol/12 hrs; mmol per 12 hrs; 12hrs; millimoles per 12 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -20700,7 +22240,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 2 hour",
       "csCode_": "mmol/(2.h)",
-      "ciCode_": "MMOL/2.HR",
+      "ciCode_": "MMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 83640787500000000,
       "dim_": {
@@ -20714,7 +22254,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/2.h",
+      "printSymbol_": "mmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20722,6 +22262,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/2hrs; mmol/2 hrs; mmol per 2 hrs; 2hrs; millimoles per 2 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -20737,7 +22278,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 24 hour",
       "csCode_": "mmol/(24.h)",
-      "ciCode_": "MMOL/24.HR",
+      "ciCode_": "MMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 6970065625000000,
       "dim_": {
@@ -20751,7 +22292,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/24.h",
+      "printSymbol_": "mmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20759,6 +22300,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/24hrs; mmol/24 hrs; mmol per 24 hrs; 24hrs; millimoles per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -20774,7 +22316,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 5 hour",
       "csCode_": "mmol/(5.h)",
-      "ciCode_": "MMOL/5.HR",
+      "ciCode_": "MMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 33456315000000000,
       "dim_": {
@@ -20788,7 +22330,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/5.h",
+      "printSymbol_": "mmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20796,6 +22338,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/5hrs; mmol/5 hrs; mmol per 5 hrs; 5hrs; millimoles per 5 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -20811,7 +22354,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 6 hour",
       "csCode_": "mmol/(6.h)",
-      "ciCode_": "MMOL/6.HR",
+      "ciCode_": "MMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 27880262500000000,
       "dim_": {
@@ -20825,7 +22368,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/6.h",
+      "printSymbol_": "mmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20833,6 +22376,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/6hrs; mmol/6 hrs; mmol per 6 hrs; 6hrs; millimoles per 6 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -20848,7 +22392,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per 8 hour",
       "csCode_": "mmol/(8.h)",
-      "ciCode_": "MMOL/8.HR",
+      "ciCode_": "MMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 20910196875000000,
       "dim_": {
@@ -20862,7 +22406,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/8.h",
+      "printSymbol_": "mmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -20870,6 +22414,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/8hrs; mmol/8 hrs; mmol per 8 hrs; 8hrs; millimoles per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -20907,6 +22452,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/24hrs; mmol/24 hrs; mmol per 24 hrs; 24hrs; millimoles per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -20944,6 +22490,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol per dL; millimoles; decilitre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -20981,6 +22528,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol per gram; millimoles",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -21018,6 +22566,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/hr; mmol per hr; millimoles per hour",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -21055,6 +22604,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol per kg; millimoles per kilogram",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -21070,7 +22620,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per kilogram per 8 hour",
       "csCode_": "mmol/kg/(8.h)",
-      "ciCode_": "MMOL/KG/8.HR",
+      "ciCode_": "(MMOL/KG)/HR",
       "property_": "amount of substance",
       "magnitude_": 20910196875000,
       "dim_": {
@@ -21084,7 +22634,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/kg/8.h",
+      "printSymbol_": "(mmol/kg)/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21092,6 +22642,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/(8.h.kg); mmol/kg/8hrs; mmol/kg/8 hrs; mmol per kg per 8hrs; 8 hrs; millimoles per kilograms per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -21107,7 +22658,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per kilogram per day",
       "csCode_": "mmol/kg/d",
-      "ciCode_": "MMOL/KG/D",
+      "ciCode_": "(MMOL/KG)/D",
       "property_": "amount of substance",
       "magnitude_": 6970065625000,
       "dim_": {
@@ -21121,7 +22672,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/kg/d",
+      "printSymbol_": "(mmol/kg)/d",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21129,6 +22680,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/kg/dy; mmol/kg/day; mmol per kg per dy; millimoles per kilograms per day",
       "source_": "LOINC",
       "loincProperty_": "RelSRat",
@@ -21144,7 +22696,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per kilogram per hour",
       "csCode_": "mmol/kg/h",
-      "ciCode_": "MMOL/KG/HR",
+      "ciCode_": "(MMOL/KG)/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -21158,7 +22710,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/kg/h",
+      "printSymbol_": "(mmol/kg)/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21166,6 +22718,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/kg/hr; mmol per kg per hr; millimoles per kilograms per hour",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -21181,7 +22734,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per kilogram per minute",
       "csCode_": "mmol/kg/min",
-      "ciCode_": "MMOL/KG/MIN",
+      "ciCode_": "(MMOL/KG)/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -21195,7 +22748,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/kg/min",
+      "printSymbol_": "(mmol/kg)/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21203,6 +22756,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/(kg.min); mmol/kg/min; mmol per kg per min; millimoles per kilograms per minute",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -21240,6 +22794,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol per L; millimoles per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -21269,7 +22824,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/m<sup>2</sup>",
+      "printSymbol_": "mmol/(m<sup>2</sup>)",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21277,6 +22832,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/m^2; mmol/sq. meter; mmol per m2; m^2; sq. meter; millimoles; meter squared; metre",
       "source_": "LOINC",
       "loincProperty_": "ArSub",
@@ -21314,6 +22870,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol per min; millimoles per minute",
       "source_": "LOINC",
       "loincProperty_": "Srat; CAct",
@@ -21332,7 +22889,17 @@ module.exports={
       "ciCode_": "MMOL/MMOL",
       "property_": "amount of substance",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "mmol/mmol",
       "class_": "si",
       "isMetric_": true,
@@ -21341,6 +22908,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol per mmol; millimoles per millimole",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -21359,7 +22927,17 @@ module.exports={
       "ciCode_": "MMOL/MOL",
       "property_": "amount of substance",
       "magnitude_": 0.001,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "mmol/mol",
       "class_": "si",
       "isMetric_": true,
@@ -21368,6 +22946,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol per mol; millimoles per mole",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -21383,7 +22962,7 @@ module.exports={
       "isBase_": false,
       "name_": "millimole per second per liter",
       "csCode_": "mmol/s/L",
-      "ciCode_": "MMOL/S/L",
+      "ciCode_": "(MMOL/S)/L",
       "property_": "amount of substance",
       "magnitude_": 6.0221367e+23,
       "dim_": {
@@ -21397,7 +22976,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mmol/s/L",
+      "printSymbol_": "(mmol/s)/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21405,6 +22984,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mmol/sec/L; mmol per s per L; per sec; millimoles per seconds per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "CCnc ",
@@ -21442,6 +23022,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mol per kg; moles; mols",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -21457,7 +23038,7 @@ module.exports={
       "isBase_": false,
       "name_": "mole per kilogram per second",
       "csCode_": "mol/kg/s",
-      "ciCode_": "MOL/KG/S",
+      "ciCode_": "(MOL/KG)/S",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000000,
       "dim_": {
@@ -21471,7 +23052,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/kg/s",
+      "printSymbol_": "(mol/kg)/s",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21479,6 +23060,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mol/kg/sec; mol per kg per sec; moles per kilograms per second; mols",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -21516,6 +23098,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mol per L; moles per liter; litre; moles; mols",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -21545,7 +23128,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mol/m<sup>3</sup>",
+      "printSymbol_": "mol/(m<sup>3</sup>)",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -21553,6 +23136,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mol/m^3; mol/cu. m; mol per m3; m^3; cu. meter; mols; moles; meters cubed; metre; mole per kiloliter; kilolitre; mol/kL",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -21590,6 +23174,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mol per mL; moles; millilitre; mols",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -21608,7 +23193,17 @@ module.exports={
       "ciCode_": "MOL/MOL",
       "property_": "amount of substance",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "mol/mol",
       "class_": "si",
       "isMetric_": true,
@@ -21617,6 +23212,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mol per mol; moles per mol; mols",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -21654,6 +23250,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "mol per sec; moles per second; mols",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -21672,7 +23269,17 @@ module.exports={
       "ciCode_": "MOSM",
       "property_": "amount of substance (dissolved particles)",
       "magnitude_": 602213670000000000000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "mosm",
       "class_": "chemical",
       "isMetric_": true,
@@ -21681,6 +23288,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "milliosmoles",
       "source_": "LOINC",
       "loincProperty_": "Osmol",
@@ -21718,6 +23326,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mosm per kg; milliosmoles per kilogram",
       "source_": "LOINC",
       "loincProperty_": "Osmol",
@@ -21755,6 +23364,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mosm per liter; litre; milliosmoles",
       "source_": "LOINC",
       "loincProperty_": "Osmol",
@@ -21792,6 +23402,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "millipascals",
       "source_": "LOINC",
       "loincProperty_": "Pres",
@@ -21829,6 +23440,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mPa*s; millipoise; mP; dynamic viscosity",
       "source_": "LOINC",
       "loincProperty_": "Visc",
@@ -21866,6 +23478,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "megaseconds",
       "source_": "LOINC",
       "loincProperty_": "Time",
@@ -21903,6 +23516,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "milliseconds; duration",
       "source_": "LOINC",
       "loincProperty_": "Time",
@@ -21940,6 +23554,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mU per gm; milli enzyme units per gram; enzyme activity; enzymatic activity per mass",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -21977,6 +23592,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mU per liter; litre; milli enzyme units enzymatic activity per volume; enzyme activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -22014,6 +23630,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mU per mg; milli enzyme units per milligram",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -22051,6 +23668,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mU per mL; milli enzyme units per milliliter; millilitre; enzymatic activity per volume; enzyme activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -22066,7 +23684,7 @@ module.exports={
       "isBase_": false,
       "name_": "milli enzyme unit per milliliter per minute",
       "csCode_": "mU/mL/min",
-      "ciCode_": "MU/ML/MIN",
+      "ciCode_": "(MU/ML)/MIN",
       "property_": "catalytic activity",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -22080,7 +23698,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "mU/mL/min",
+      "printSymbol_": "(mU/mL)/min",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -22088,6 +23706,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mU per mL per min; mU per milliliters per minute; millilitres; milli enzyme units; enzymatic activity; enzyme activity",
       "source_": "LOINC",
       "loincProperty_": "CCncRat",
@@ -22125,6 +23744,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "millivolts",
       "source_": "LOINC",
       "loincProperty_": "Elpot",
@@ -22162,6 +23782,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "N*cm; Ncm; N cm; Newton*centimeters; Newton* centimetres; torque; work",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -22199,6 +23820,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "Newton*seconds; N*s; N s; Ns; impulse; imp",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -22236,6 +23858,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "nanograms",
       "source_": "LOINC",
       "loincProperty_": "Mass",
@@ -22251,7 +23874,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per 24 hour",
       "csCode_": "ng/(24.h)",
-      "ciCode_": "NG/24.HR",
+      "ciCode_": "NG/HR",
       "property_": "mass",
       "magnitude_": 1.1574074074074075e-14,
       "dim_": {
@@ -22265,7 +23888,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ng/24.h",
+      "printSymbol_": "ng/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22273,6 +23896,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/24hrs; ng/24 hrs; nanograms per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -22288,7 +23912,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per 8 hour",
       "csCode_": "ng/(8.h)",
-      "ciCode_": "NG/8.HR",
+      "ciCode_": "NG/HR",
       "property_": "mass",
       "magnitude_": 3.4722222222222224e-14,
       "dim_": {
@@ -22302,7 +23926,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ng/8.h",
+      "printSymbol_": "ng/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22310,6 +23934,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/8hrs; ng/8 hrs; nanograms per 8 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -22325,7 +23950,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per million",
       "csCode_": "ng/10*6",
-      "ciCode_": "NG/10*6",
+      "ciCode_": "NG/(10*6)",
       "property_": "mass",
       "magnitude_": 1e-15,
       "dim_": {
@@ -22339,7 +23964,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ng/10<sup>6</sup>",
+      "printSymbol_": "ng/(10<sup>6</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22347,6 +23972,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/10^6; ng per 10*6; 10^6; nanograms",
       "source_": "LOINC",
       "loincProperty_": "MNum",
@@ -22384,6 +24010,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/dy; ng per day; nanograms ",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -22421,6 +24048,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng per dL; nanograms per deciliter; decilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -22458,6 +24086,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/gm; ng per gm; nanograms per gram",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -22495,6 +24124,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/hr; ng per hr; nanograms per hour",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -22532,6 +24162,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng per kg; nanograms per kilogram",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -22547,7 +24178,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per kilogram per 8 hour",
       "csCode_": "ng/kg/(8.h)",
-      "ciCode_": "NG/KG/8.HR",
+      "ciCode_": "(NG/KG)/HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-17,
       "dim_": {
@@ -22561,7 +24192,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ng/kg/8.h",
+      "printSymbol_": "(ng/kg)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22569,6 +24200,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/(8.h.kg); ng/kg/8hrs; ng/kg/8 hrs; ng per kg per 8hrs; 8 hrs; nanograms per kilograms per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "MRtoRat ",
@@ -22584,7 +24216,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per kilogram per hour",
       "csCode_": "ng/kg/h",
-      "ciCode_": "NG/KG/HR",
+      "ciCode_": "(NG/KG)/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777775e-16,
       "dim_": {
@@ -22598,7 +24230,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ng/kg/h",
+      "printSymbol_": "(ng/kg)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22606,6 +24238,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/(kg.h); ng/kg/hr; ng per kg per hr; nanograms per kilograms per hour",
       "source_": "LOINC",
       "loincProperty_": "MRtoRat ",
@@ -22621,7 +24254,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per kilogram per minute",
       "csCode_": "ng/kg/min",
-      "ciCode_": "NG/KG/MIN",
+      "ciCode_": "(NG/KG)/MIN",
       "property_": "mass",
       "magnitude_": 1.6666666666666667e-14,
       "dim_": {
@@ -22635,7 +24268,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ng/kg/min",
+      "printSymbol_": "(ng/kg)/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22643,6 +24276,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/(kg.min); ng per kg per min; nanograms per kilograms per minute",
       "source_": "LOINC",
       "loincProperty_": "MRtoRat ",
@@ -22680,6 +24314,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng per L; nanograms per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -22709,7 +24344,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ng/m<sup>2</sup>",
+      "printSymbol_": "ng/(m<sup>2</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22717,6 +24352,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/m^2; ng/sq. m; ng per m2; m^2; sq. meter; nanograms; meter squared; metre",
       "source_": "LOINC",
       "loincProperty_": "ArMass",
@@ -22754,6 +24390,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng per mg; nanograms",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -22769,7 +24406,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per milligram per hour",
       "csCode_": "ng/mg/h",
-      "ciCode_": "NG/MG/HR",
+      "ciCode_": "(NG/MG)/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777777e-10,
       "dim_": {
@@ -22783,7 +24420,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ng/mg/h",
+      "printSymbol_": "(ng/mg)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22791,6 +24428,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/mg/hr; ng per mg per hr; nanograms per milligrams per hour",
       "source_": "LOINC",
       "loincProperty_": "MRtoRat ",
@@ -22828,6 +24466,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng per min; nanograms",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -22865,6 +24504,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng per mL; nanograms; millilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -22880,7 +24520,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanogram per milliliter per hour",
       "csCode_": "ng/mL/h",
-      "ciCode_": "NG/ML/HR",
+      "ciCode_": "(NG/ML)/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777776e-7,
       "dim_": {
@@ -22894,7 +24534,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "ng/mL/h",
+      "printSymbol_": "(ng/mL)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -22902,6 +24542,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/mL/hr; ng per mL per mL; nanograms per milliliter per hour; nanogram per millilitre per hour; nanograms per millilitre per hour; enzymatic activity per volume; enzyme activity per milliliters",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -22939,6 +24580,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng/sec; ng per sec; nanograms per second",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -22976,6 +24618,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ng per U; nanograms per enzyme unit",
       "source_": "LOINC",
       "loincProperty_": "CMass",
@@ -23013,6 +24656,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "nanokatals",
       "source_": "LOINC",
       "loincProperty_": "CAct",
@@ -23050,6 +24694,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "nanoliters; nanolitres",
       "source_": "LOINC",
       "loincProperty_": "Vol",
@@ -23087,6 +24732,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "nanometers; nanometres",
       "source_": "LOINC",
       "loincProperty_": "Len",
@@ -23102,7 +24748,7 @@ module.exports={
       "isBase_": true,
       "name_": "nanometer per second per liter",
       "csCode_": "nm/s/L",
-      "ciCode_": "NM/S/L",
+      "ciCode_": "(NM/S)/L",
       "property_": "length",
       "magnitude_": 0.000001,
       "dim_": {
@@ -23116,7 +24762,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "nm/s/L",
+      "printSymbol_": "(nm/s)/L",
       "class_": null,
       "isMetric_": false,
       "variable_": "L",
@@ -23124,6 +24770,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "nm/sec/liter; nm/sec/litre; nm per s per l; nm per sec per l; nanometers per second per liter; nanometre per second per litre; nanometres per second per litre",
       "source_": "LOINC",
       "loincProperty_": "VelCnc",
@@ -23142,7 +24789,17 @@ module.exports={
       "ciCode_": "NMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "nmol",
       "class_": "si",
       "isMetric_": true,
@@ -23151,6 +24808,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nanomoles",
       "source_": "LOINC",
       "loincProperty_": "Sub",
@@ -23166,7 +24824,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per 24 hour",
       "csCode_": "nmol/(24.h)",
-      "ciCode_": "NMOL/24.HR",
+      "ciCode_": "NMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 6970065625,
       "dim_": {
@@ -23180,7 +24838,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "nmol/24.h",
+      "printSymbol_": "nmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23188,6 +24846,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol/24hr; nmol/24 hr; nanomoles per 24 hours; nmol/day; nanomoles per day; nmol per day; nanomole/day; nanomol/day",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -23225,6 +24884,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol/day; nanomoles per day; nmol per day; nanomole/day; nanomol/day; nmol/24hr; nmol/24 hr; nanomoles per 24 hours; ",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -23262,6 +24922,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per dL; nanomoles per deciliter; nanomole per decilitre; nanomoles per decilitre; nanomole/deciliter; nanomole/decilitre; nanomol/deciliter; nanomol/decilitre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -23299,6 +24960,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per gram; nanomoles per gram; nanomole/gram",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -23314,7 +24976,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per hour per liter",
       "csCode_": "nmol/h/L",
-      "ciCode_": "NMOL/HR/L",
+      "ciCode_": "(NMOL/HR)/L",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -23328,7 +24990,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "nmol/h/L",
+      "printSymbol_": "(nmol/h)/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23336,6 +24998,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol/hrs/L; nmol per hrs per L; nanomoles per hours per liter; litre; enzymatic activity per volume; enzyme activities",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -23373,6 +25036,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per L; nanomoles per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -23410,6 +25074,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per mg; nanomoles per milligram",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -23425,7 +25090,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milligram per hour",
       "csCode_": "nmol/mg/h",
-      "ciCode_": "NMOL/MG/HR",
+      "ciCode_": "(NMOL/MG)/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -23439,7 +25104,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "nmol/mg/h",
+      "printSymbol_": "(nmol/mg)/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23447,6 +25112,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol/mg/hr; nmol per mg per hr; nanomoles per milligrams per hour",
       "source_": "LOINC",
       "loincProperty_": "SCntRat",
@@ -23484,6 +25150,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nanomoles; nmol/mg prot; nmol per mg prot",
       "source_": "LOINC",
       "loincProperty_": "Ratio; CCnt",
@@ -23521,6 +25188,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per min; nanomoles per minute; milli enzyme units; enzyme activity per volume; enzymatic activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -23536,7 +25204,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per minute per milliliter",
       "csCode_": "nmol/min/mL",
-      "ciCode_": "NMOL/MIN/ML",
+      "ciCode_": "(NMOL/MIN)/ML",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -23550,7 +25218,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "nmol/min/mL",
+      "printSymbol_": "(nmol/min)/mL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23558,6 +25226,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per min per mL; nanomoles per minutes per milliliter; millilitre; milli enzyme units per volume; enzyme activity; enzymatic activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -23595,6 +25264,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per mL; nanomoles per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -23610,7 +25280,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milliliter per hour",
       "csCode_": "nmol/mL/h",
-      "ciCode_": "NMOL/ML/HR",
+      "ciCode_": "(NMOL/ML)/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -23624,7 +25294,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "nmol/mL/h",
+      "printSymbol_": "(nmol/mL)/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23632,6 +25302,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol/mL/hr; nmol per mL per hr; nanomoles per milliliters per hour; millilitres; milli enzyme units per volume; enzyme activity; enzymatic activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -23647,7 +25318,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per milliliter per minute",
       "csCode_": "nmol/mL/min",
-      "ciCode_": "NMOL/ML/MIN",
+      "ciCode_": "(NMOL/ML)/MIN",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -23661,7 +25332,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "nmol/mL/min",
+      "printSymbol_": "(nmol/mL)/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23669,6 +25340,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per mL per min; nanomoles per milliliters per min; millilitres; milli enzyme units per volume; enzyme activity; enzymatic activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -23687,7 +25359,17 @@ module.exports={
       "ciCode_": "NMOL/MMOL",
       "property_": "amount of substance",
       "magnitude_": 0.000001,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "nmol/mmol",
       "class_": "si",
       "isMetric_": true,
@@ -23696,6 +25378,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per mmol; nanomoles per millimole",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -23714,7 +25397,17 @@ module.exports={
       "ciCode_": "NMOL/MMOL",
       "property_": "amount of substance",
       "magnitude_": 0.000001,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "nmol/mmol",
       "class_": "si",
       "isMetric_": true,
@@ -23723,6 +25416,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nanomoles",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -23741,7 +25435,17 @@ module.exports={
       "ciCode_": "NMOL/MOL",
       "property_": "amount of substance",
       "magnitude_": 1e-9,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "nmol/mol",
       "class_": "si",
       "isMetric_": true,
@@ -23750,6 +25454,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per mole; nanomoles",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -23768,7 +25473,17 @@ module.exports={
       "ciCode_": "NMOL/NMOL",
       "property_": "amount of substance",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "nmol/nmol",
       "class_": "si",
       "isMetric_": true,
@@ -23777,6 +25492,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol per nmol; nanomoles",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -23814,6 +25530,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol/sec; nmol per sec; nanomoles per sercond; milli enzyme units; enzyme activity; enzymatic activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -23829,7 +25546,7 @@ module.exports={
       "isBase_": false,
       "name_": "nanomole per second per liter",
       "csCode_": "nmol/s/L",
-      "ciCode_": "NMOL/S/L",
+      "ciCode_": "(NMOL/S)/L",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
       "dim_": {
@@ -23843,7 +25560,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "nmol/s/L",
+      "printSymbol_": "(nmol/s)/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -23851,6 +25568,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "nmol/sec/L; nmol per s per L; nmol per sec per L; nanomoles per seconds per liter; litre; milli enzyme units per volume; enzyme activity; enzymatic activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -23888,6 +25606,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "nanoseconds",
       "source_": "LOINC",
       "loincProperty_": "Time",
@@ -23925,6 +25644,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "nU per mL; nanoenzyme units per milliliter; millilitre; enzymatic activity per volume; enzyme activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -23962,6 +25682,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "electric resistivity; meters; metres",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -23999,6 +25720,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "osm per kg; osmoles per kilogram; osmols",
       "source_": "LOINC",
       "loincProperty_": "Osmol",
@@ -24036,6 +25758,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "osm per L; osmoles per liter; litre; osmols",
       "source_": "LOINC",
       "loincProperty_": "Osmol",
@@ -24073,6 +25796,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "picoamperes",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -24110,6 +25834,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "picograms",
       "source_": "LOINC",
       "loincProperty_": "Mass; EntMass",
@@ -24147,6 +25872,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pg per dL; picograms; decilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -24184,6 +25910,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pg per L; picograms; litre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -24221,6 +25948,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pg per mg; picograms",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -24258,6 +25986,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pg per mL; picograms per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -24295,6 +26024,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pg per mm; picogram/millimeter; picogram/millimetre; picograms per millimeter; millimetre",
       "source_": "LOINC",
       "loincProperty_": "Lineic Mass",
@@ -24332,6 +26062,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "pkats; picokatals",
       "source_": "LOINC",
       "loincProperty_": "CAct",
@@ -24369,6 +26100,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "picoliters; picolitres",
       "source_": "LOINC",
       "loincProperty_": "Vol",
@@ -24406,6 +26138,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "picometers; picometres",
       "source_": "LOINC",
       "loincProperty_": "Len",
@@ -24424,7 +26157,17 @@ module.exports={
       "ciCode_": "PMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "pmol",
       "class_": "si",
       "isMetric_": true,
@@ -24433,6 +26176,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "picomoles; pmols",
       "source_": "LOINC",
       "loincProperty_": "Sub",
@@ -24448,7 +26192,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per 24 hour",
       "csCode_": "pmol/(24.h)",
-      "ciCode_": "PMOL/24.HR",
+      "ciCode_": "PMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 6970065.625,
       "dim_": {
@@ -24462,7 +26206,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "pmol/24.h",
+      "printSymbol_": "pmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24470,6 +26214,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "pmol/24hrs; pmol/24 hrs; pmol per 24 hrs; 24hrs; days; dy; picomoles per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -24507,6 +26252,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "pmol/dy; pmol per day; 24 hours; 24hrs; 24 hrs; picomoles",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -24544,6 +26290,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "pmol per dL; picomoles per deciliter; decilitre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -24581,6 +26328,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "pmol per gm; picomoles per gram; picomole/gram",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -24596,7 +26344,7 @@ module.exports={
       "isBase_": false,
       "name_": "picomole per hour per milliliter ",
       "csCode_": "pmol/h/mL",
-      "ciCode_": "PMOL/HR/ML",
+      "ciCode_": "(PMOL/HR)/ML",
       "property_": "amount of substance",
       "magnitude_": 167281575000000,
       "dim_": {
@@ -24610,7 +26358,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "pmol/h/mL",
+      "printSymbol_": "(pmol/h)/mL",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -24618,6 +26366,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "pmol/hrs/mL; pmol per hrs per mL; picomoles per hour per milliliter; millilitre; micro enzyme units per volume; enzymatic activity; enzyme activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -24655,6 +26404,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "picomole/liter; pmol per L; picomoles; litre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -24692,6 +26442,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "picomole/minute; pmol per min; picomoles per minute; micro enzyme units; enzymatic activity; enzyme activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -24729,6 +26480,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "picomole/milliliter; picomole/millilitre; pmol per mL; picomoles; millilitre; picomols; pmols",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -24747,7 +26499,17 @@ module.exports={
       "ciCode_": "PMOL/UMOL",
       "property_": "amount of substance",
       "magnitude_": 0.000001,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "pmol/μmol",
       "class_": "si",
       "isMetric_": true,
@@ -24756,6 +26518,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "pmol/mcgmol; picomole/micromole; pmol per umol; pmol per mcgmol; picomoles ",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -24793,6 +26556,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "picoseconds; psec",
       "source_": "LOINC",
       "loincProperty_": "Time",
@@ -24830,6 +26594,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "picoteslas",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -24845,7 +26610,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per 12 hour",
       "csCode_": "U/(12.h)",
-      "ciCode_": "U/12.HR",
+      "ciCode_": "U/HR",
       "property_": "catalytic activity",
       "magnitude_": 232335520833.33334,
       "dim_": {
@@ -24859,7 +26624,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/12.h",
+      "printSymbol_": "U/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24867,6 +26632,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U/12hrs; U/ 12hrs; U per 12 hrs; 12hrs; enzyme units per 12 hours; enzyme activity; enzymatic activity per time; umol per min per 12 hours; micromoles per minute per 12 hours; umol/min/12hr",
       "source_": "LOINC",
       "loincProperty_": "CRat",
@@ -24882,7 +26648,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per 2 hour",
       "csCode_": "U/(2.h)",
-      "ciCode_": "U/2.HR",
+      "ciCode_": "U/HR",
       "property_": "catalytic activity",
       "magnitude_": 1394013125000,
       "dim_": {
@@ -24896,7 +26662,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/2.h",
+      "printSymbol_": "U/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24904,6 +26670,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U/2hrs; U/ 2hrs; U per 2 hrs; 2hrs; enzyme units per 2 hours; enzyme activity; enzymatic activity per time; umol per minute per 2 hours; micromoles per minute; umol/min/2hr; umol per min per 2hr",
       "source_": "LOINC",
       "loincProperty_": "CRat",
@@ -24919,7 +26686,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per 24 hour",
       "csCode_": "U/(24.h)",
-      "ciCode_": "U/24.HR",
+      "ciCode_": "U/HR",
       "property_": "catalytic activity",
       "magnitude_": 116167760416.66667,
       "dim_": {
@@ -24933,7 +26700,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/24.h",
+      "printSymbol_": "U/h",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -24941,6 +26708,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U/24hrs; U/ 24hrs; U per 24 hrs; 24hrs; enzyme units per 24 hours; enzyme activity; enzymatic activity per time; micromoles per minute per 24 hours; umol/min/24hr; umol per min per 24hr",
       "source_": "LOINC",
       "loincProperty_": "CRat",
@@ -24978,6 +26746,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "enzyme unit/10; U per 10; enzyme units per 10; enzymatic activity; enzyme activity; micromoles per minute; umol/min/10",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -24993,7 +26762,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per 10 billion",
       "csCode_": "U/10*10",
-      "ciCode_": "U/10*10",
+      "ciCode_": "U/(10*10)",
       "property_": "catalytic activity",
       "magnitude_": 1003689.45,
       "dim_": {
@@ -25007,7 +26776,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/10<sup>10</sup>",
+      "printSymbol_": "U/(10<sup>10</sup>)",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25015,6 +26784,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U per 10*10; enzyme units per 10*10; U per 10 billion; enzyme units; enzymatic activity; micromoles per minute per 10 billion; umol/min/10*10",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -25030,7 +26800,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per trillion",
       "csCode_": "U/10*12",
-      "ciCode_": "U/10*12",
+      "ciCode_": "U/(10*12)",
       "property_": "catalytic activity",
       "magnitude_": 10036.8945,
       "dim_": {
@@ -25044,7 +26814,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/10<sup>12</sup>",
+      "printSymbol_": "U/(10<sup>12</sup>)",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25052,6 +26822,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "enzyme unit/10*12; U per 10*12; enzyme units per 10*12; enzyme units per trillion; enzymatic activity; micromoles per minute per trillion; umol/min/10*12; umol per min per 10*12",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -25067,7 +26838,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per million",
       "csCode_": "U/10*6",
-      "ciCode_": "U/10*6",
+      "ciCode_": "U/(10*6)",
       "property_": "catalytic activity",
       "magnitude_": 10036894500,
       "dim_": {
@@ -25081,7 +26852,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/10<sup>6</sup>",
+      "printSymbol_": "U/(10<sup>6</sup>)",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25089,6 +26860,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "enzyme unit/10*6; U per 10*6; enzyme units per 10*6; enzyme units; enzymatic activity per volume; micromoles per minute per million; umol/min/10*6; umol per min per 10*6",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -25104,7 +26876,7 @@ module.exports={
       "isBase_": false,
       "name_": "enzyme unit per billion",
       "csCode_": "U/10*9",
-      "ciCode_": "U/10*9",
+      "ciCode_": "U/(10*9)",
       "property_": "catalytic activity",
       "magnitude_": 10036894.5,
       "dim_": {
@@ -25118,7 +26890,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "U/10<sup>9</sup>",
+      "printSymbol_": "U/(10<sup>9</sup>)",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25126,6 +26898,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "enzyme unit/10*9; U per 10*9; enzyme units per 10*9; enzymatic activity per volume; micromoles per minute per billion; umol/min/10*9; umol per min per 10*9",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -25163,6 +26936,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U/dy; enzyme units per day; enzyme units; enzyme activity; enzymatic activity per time; micromoles per minute per day; umol/min/day; umol per min per day",
       "source_": "LOINC",
       "loincProperty_": "CRat",
@@ -25200,6 +26974,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U per dL; enzyme units per deciliter; decilitre; micromoles per minute per deciliter; umol/min/dL; umol per min per dL",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -25237,6 +27012,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U/gm; U per gm; enzyme units per gram; micromoles per minute per gram; umol/min/g; umol per min per g",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -25274,6 +27050,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U/hr; U per hr; enzyme units per hour; micromoles per minute per hour; umol/min/hr; umol per min per hr",
       "source_": "LOINC",
       "loincProperty_": "CRat",
@@ -25311,6 +27088,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "enzyme unit/liter; enzyme unit/litre; U per L; enzyme units per liter; enzyme unit per litre; micromoles per minute per liter; umol/min/L; umol per min per L",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -25348,6 +27126,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "enzyme unit/minute; U per min; enzyme units; umol/min/min; micromoles per minute per minute; micromoles per min per min; umol",
       "source_": "LOINC",
       "loincProperty_": "CRat",
@@ -25385,6 +27164,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U per mL; enzyme units per milliliter; millilitre; micromoles per minute per milliliter; umol/min/mL; umol per min per mL",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -25422,6 +27202,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "U/sec; U per second; enzyme units per second; micromoles per minute per second; umol/min/sec; umol per min per sec",
       "source_": "LOINC",
       "loincProperty_": "CRat",
@@ -25440,7 +27221,17 @@ module.exports={
       "ciCode_": "U[IU]",
       "property_": "arbitrary",
       "magnitude_": 0.000001,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "μi.U.",
       "class_": "chemical",
       "isMetric_": true,
@@ -25449,6 +27240,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "uIU; u IU; microinternational units",
       "source_": "LOINC",
       "loincProperty_": "Arb",
@@ -25478,7 +27270,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μi.U./L",
+      "printSymbol_": "(μi.U.)/L",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25486,6 +27278,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "uIU/L; u IU/L; uIU per L; microinternational units per liter; litre; ",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -25515,7 +27308,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μi.U./mL",
+      "printSymbol_": "(μi.U.)/mL",
       "class_": "chemical",
       "isMetric_": true,
       "variable_": null,
@@ -25523,6 +27316,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": true,
+      "isMole_": false,
       "synonyms_": "uIU/mL; u IU/mL; uIU per mL; microinternational units per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "ACnc",
@@ -25541,7 +27335,17 @@ module.exports={
       "ciCode_": "UEQ",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "μeq",
       "class_": "chemical",
       "isMetric_": true,
@@ -25550,6 +27354,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "microequivalents; 10^-6 equivalents; 10-6 equivalents",
       "source_": "LOINC",
       "loincProperty_": "Sub",
@@ -25587,6 +27392,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ueq per liter; litre; microequivalents",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -25624,6 +27430,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ueq per milliliter; millilitre; microequivalents",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -25661,6 +27468,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mcg; micrograms; 10^-6 grams; 10-6 grams",
       "source_": "LOINC",
       "loincProperty_": "Mass",
@@ -25676,7 +27484,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per 100 gram",
       "csCode_": "ug/(100.g)",
-      "ciCode_": "UG/100.G",
+      "ciCode_": "UG/G",
       "property_": "mass",
       "magnitude_": 1e-8,
       "dim_": {
@@ -25690,7 +27498,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/100.g",
+      "printSymbol_": "μg/g",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25698,6 +27506,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/100gm; ug/100 gm; mcg; ug per 100g; 100 gm; mcg per 100g; micrograms per 100 grams",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -25713,7 +27522,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per 24 hour",
       "csCode_": "ug/(24.h)",
-      "ciCode_": "UG/24.HR",
+      "ciCode_": "UG/HR",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-11,
       "dim_": {
@@ -25727,7 +27536,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/24.h",
+      "printSymbol_": "μg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25735,6 +27544,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/24hrs; ug/24 hrs; mcg/24hrs; ug per 24hrs; mcg per 24hrs; 24 hrs; micrograms per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -25750,7 +27560,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per 8 hour",
       "csCode_": "ug/(8.h)",
-      "ciCode_": "UG/8.HR",
+      "ciCode_": "UG/HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-11,
       "dim_": {
@@ -25764,7 +27574,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/8.h",
+      "printSymbol_": "μg/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -25772,6 +27582,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/8hrs; ug/8 hrs; mcg/8hrs; ug per 8hrs; mcg per 8hrs; 8 hrs; micrograms per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -25809,6 +27620,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/sft; ug/ft2; ug/ft^2; ug/sq. ft; micrograms; sq. foot; foot squared",
       "source_": "LOINC",
       "loincProperty_": "ArMass",
@@ -25846,6 +27658,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/dy; mcg/dy; ug per day; mcg; micrograms per day",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -25883,6 +27696,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug per dL; mcg/dl; mcg per dl; micrograms per deciliter; decilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -25920,6 +27734,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug per gm; mcg/gm; mcg per g; micrograms per gram",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -25957,6 +27772,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/hr; mcg/hr; mcg per hr; ug per hr; ug per hour; micrograms",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -25994,6 +27810,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug per kg; mcg/kg; mcg per kg; micrograms per kilogram",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -26009,7 +27826,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per kilogram per 8 hour",
       "csCode_": "ug/kg/(8.h)",
-      "ciCode_": "UG/KG/8.HR",
+      "ciCode_": "(UG/KG)/HR",
       "property_": "mass",
       "magnitude_": 3.472222222222222e-14,
       "dim_": {
@@ -26023,7 +27840,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/kg/8.h",
+      "printSymbol_": "(μg/kg)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -26031,6 +27848,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/kg/8hrs; mcg/kg/8hrs; ug/kg/8 hrs; mcg/kg/8 hrs; ug per kg per 8hrs; 8 hrs; mcg per kg per 8hrs; micrograms per kilograms per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -26046,7 +27864,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per kilogram per day",
       "csCode_": "ug/kg/d",
-      "ciCode_": "UG/KG/D",
+      "ciCode_": "(UG/KG)/D",
       "property_": "mass",
       "magnitude_": 1.1574074074074072e-14,
       "dim_": {
@@ -26060,7 +27878,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/kg/d",
+      "printSymbol_": "(μg/kg)/d",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -26068,6 +27886,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/(kg.d); ug/kg/dy; mcg/kg/day; ug per kg per dy; 24 hours; 24hrs; mcg; kilograms; microgram per kilogram and day",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -26083,7 +27902,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per kilogram per hour",
       "csCode_": "ug/kg/h",
-      "ciCode_": "UG/KG/HR",
+      "ciCode_": "(UG/KG)/HR",
       "property_": "mass",
       "magnitude_": 2.7777777777777774e-13,
       "dim_": {
@@ -26097,7 +27916,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/kg/h",
+      "printSymbol_": "(μg/kg)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -26105,6 +27924,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/(kg.h); ug/kg/hr; mcg/kg/hr; ug per kg per hr; mcg per kg per hr; kilograms",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -26120,7 +27940,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per kilogram per minute",
       "csCode_": "ug/kg/min",
-      "ciCode_": "UG/KG/MIN",
+      "ciCode_": "(UG/KG)/MIN",
       "property_": "mass",
       "magnitude_": 1.6666666666666664e-11,
       "dim_": {
@@ -26134,7 +27954,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/kg/min",
+      "printSymbol_": "(μg/kg)/min",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -26142,6 +27962,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/kg/min; ug/kg/min; mcg/kg/min; ug per kg per min; mcg; micrograms per kilograms per minute ",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -26179,6 +28000,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "mcg/L; ug per L; mcg; micrograms per liter; litre ",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -26194,7 +28016,7 @@ module.exports={
       "isBase_": true,
       "name_": "microgram per liter per 24 hour",
       "csCode_": "ug/L/(24.h)",
-      "ciCode_": "UG/L/24.HR",
+      "ciCode_": "(UG/L)/HR",
       "property_": "mass",
       "magnitude_": 1.1574074074074074e-8,
       "dim_": {
@@ -26208,7 +28030,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/L/24.h",
+      "printSymbol_": "(μg/L)/h",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -26216,6 +28038,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/L/24hrs; ug/L/24 hrs; mcg/L/24hrs; ug per L per 24hrs; 24 hrs; day; dy mcg; micrograms per liters per 24 hours; litres",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -26245,7 +28068,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/m<sup>2</sup>",
+      "printSymbol_": "μg/(m<sup>2</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -26253,6 +28076,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/m^2; ug/sq. m; mcg/m2; mcg/m^2; mcg/sq. m; ug per m2; m^2; sq. meter; mcg; micrograms per square meter; meter squared; metre",
       "source_": "LOINC",
       "loincProperty_": "ArMass",
@@ -26282,7 +28106,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μg/m<sup>3</sup>",
+      "printSymbol_": "μg/(m<sup>3</sup>)",
       "class_": null,
       "isMetric_": false,
       "variable_": "M",
@@ -26290,6 +28114,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug/m^3; ug/cu. m; mcg/m3; mcg/m^3; mcg/cu. m; ug per m3; ug per m^3; ug per cu. m; mcg; micrograms per cubic meter; meter cubed; metre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -26327,6 +28152,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug per mg; mcg/mg; mcg per mg; micromilligrams per milligram",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -26364,6 +28190,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug per min; mcg/min; mcg per min; microminutes per minute",
       "source_": "LOINC",
       "loincProperty_": "MRat",
@@ -26401,6 +28228,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug per mL; mcg/mL; mcg per mL; micrograms per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "MCnc",
@@ -26438,6 +28266,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "ug per mmol; mcg/mmol; mcg per mmol; micrograms per millimole",
       "source_": "LOINC",
       "loincProperty_": "Ratio",
@@ -26475,6 +28304,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "ug per ng; mcg/ng; mcg per ng; micrograms per nanogram",
       "source_": "LOINC",
       "loincProperty_": "MCnt",
@@ -26512,6 +28342,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "microkatals; ukats",
       "source_": "LOINC",
       "loincProperty_": "CAct",
@@ -26549,6 +28380,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "microliters; microlitres; mcl",
       "source_": "LOINC",
       "loincProperty_": "Vol",
@@ -26564,7 +28396,7 @@ module.exports={
       "isBase_": false,
       "name_": "microliter per 2 hour",
       "csCode_": "uL/(2.h)",
-      "ciCode_": "UL/2.HR",
+      "ciCode_": "UL/HR",
       "property_": "volume",
       "magnitude_": 1.388888888888889e-13,
       "dim_": {
@@ -26578,7 +28410,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μL/2.h",
+      "printSymbol_": "μL/h",
       "class_": "iso1000",
       "isMetric_": true,
       "variable_": null,
@@ -26586,6 +28418,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "uL/2hrs; uL/2 hrs; mcg/2hr; mcg per 2hr; uL per 2hr; uL per 2 hrs; microliters per 2 hours; microlitres ",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -26623,6 +28456,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "uL/hr; mcg/hr; mcg per hr; uL per hr; microliters per hour; microlitres",
       "source_": "LOINC",
       "loincProperty_": "VRat",
@@ -26660,6 +28494,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "micrometers; micrometres; μm; microns",
       "source_": "LOINC",
       "loincProperty_": "Len",
@@ -26697,6 +28532,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "um/sec; micron/second; microns/second; um per sec; micrometers per second; micrometres",
       "source_": "LOINC",
       "loincProperty_": "Vel",
@@ -26715,7 +28551,17 @@ module.exports={
       "ciCode_": "UMOL",
       "property_": "amount of substance",
       "magnitude_": 602213670000000000,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "μmol",
       "class_": "si",
       "isMetric_": true,
@@ -26724,6 +28570,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "micromoles; umols",
       "source_": "LOINC",
       "loincProperty_": "Sub",
@@ -26739,7 +28586,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per 2 hour",
       "csCode_": "umol/(2.h)",
-      "ciCode_": "UMOL/2.HR",
+      "ciCode_": "UMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 83640787500000,
       "dim_": {
@@ -26753,7 +28600,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μmol/2.h",
+      "printSymbol_": "μmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26761,6 +28608,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol/2hrs; umol/2 hrs; umol per 2 hrs; 2hrs; micromoles per 2 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -26776,7 +28624,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per 24 hour",
       "csCode_": "umol/(24.h)",
-      "ciCode_": "UMOL/24.HR",
+      "ciCode_": "UMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 6970065625000,
       "dim_": {
@@ -26790,7 +28638,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μmol/24.h",
+      "printSymbol_": "μmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26798,6 +28646,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol/24hrs; umol/24 hrs; umol per 24 hrs; per 24hrs; micromoles per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -26813,7 +28662,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per 8 hour",
       "csCode_": "umol/(8.h)",
-      "ciCode_": "UMOL/8.HR",
+      "ciCode_": "UMOL/HR",
       "property_": "amount of substance",
       "magnitude_": 20910196875000,
       "dim_": {
@@ -26827,7 +28676,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μmol/8.h",
+      "printSymbol_": "μmol/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -26835,6 +28684,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol/8hr; umol/8 hr; umol per 8 hr; umol per 8hr; umols per 8hr; umol per 8 hours; micromoles per 8 hours; shift",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -26872,6 +28722,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol/day; umol per day; umols per day; umol per days; micromoles per days; umol/24hr; umol/24 hr; umol per 24 hr; umol per 24hr; umols per 24hr; umol per 24 hours; micromoles per 24 hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -26909,6 +28760,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "micromole/deciliter; micromole/decilitre; umol per dL; micromoles per deciliters; micromole per decilitres",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -26946,6 +28798,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "micromole/gram; umol per g; micromoles per gram",
       "source_": "LOINC",
       "loincProperty_": "SCnt; Ratio",
@@ -26983,6 +28836,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol/hr; umol per hr; umol per hour; micromoles per hours",
       "source_": "LOINC",
       "loincProperty_": "SRat",
@@ -27020,6 +28874,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol per kg; micromoles per kilogram",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -27057,6 +28912,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "micromole/liter; micromole/litre; umol per liter; micromoles per liter; litre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -27072,7 +28928,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per liter per hour",
       "csCode_": "umol/L/h",
-      "ciCode_": "UMOL/L/HR",
+      "ciCode_": "(UMOL/L)/HR",
       "property_": "amount of substance",
       "magnitude_": 167281575000000000,
       "dim_": {
@@ -27086,7 +28942,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μmol/L/h",
+      "printSymbol_": "(μmol/L)/h",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -27094,6 +28950,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol/liter/hr; umol/litre/hr; umol per L per hr; umol per liter per hour; micromoles per liters per hour; litre",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -27131,6 +28988,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "micromole/milligram; umol per mg; micromoles per milligram",
       "source_": "LOINC",
       "loincProperty_": "SCnt",
@@ -27168,6 +29026,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "micromole/minute; umol per min; micromoles per minute; enzyme units",
       "source_": "LOINC",
       "loincProperty_": "CAct",
@@ -27183,7 +29042,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per minute per gram",
       "csCode_": "umol/min/g",
-      "ciCode_": "UMOL/MIN/G",
+      "ciCode_": "(UMOL/MIN)/G",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000,
       "dim_": {
@@ -27197,7 +29056,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μmol/min/g",
+      "printSymbol_": "(μmol/min)/g",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -27205,6 +29064,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol/min/gm; umol per min per gm; micromoles per minutes per gram; U/g; enzyme units",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -27220,7 +29080,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per minute per liter",
       "csCode_": "umol/min/L",
-      "ciCode_": "UMOL/MIN/L",
+      "ciCode_": "(UMOL/MIN)/L",
       "property_": "amount of substance",
       "magnitude_": 10036894500000000000,
       "dim_": {
@@ -27234,7 +29094,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μmol/min/L",
+      "printSymbol_": "(μmol/min)/L",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -27242,6 +29102,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol/min/liter; umol/minute/liter; micromoles per minutes per liter; litre; enzyme units; U/L",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -27279,6 +29140,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol per mL; micromoles per milliliter; millilitre",
       "source_": "LOINC",
       "loincProperty_": "SCnc",
@@ -27294,7 +29156,7 @@ module.exports={
       "isBase_": false,
       "name_": "micromole per milliliter per minute",
       "csCode_": "umol/mL/min",
-      "ciCode_": "UMOL/ML/MIN",
+      "ciCode_": "(UMOL/ML)/MIN",
       "property_": "amount of substance",
       "magnitude_": 1.00368945e+22,
       "dim_": {
@@ -27308,7 +29170,7 @@ module.exports={
           0
         ]
       },
-      "printSymbol_": "μmol/mL/min",
+      "printSymbol_": "(μmol/mL)/min",
       "class_": "si",
       "isMetric_": true,
       "variable_": null,
@@ -27316,6 +29178,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol per mL per min; micromoles per milliliters per minute; millilitres",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -27334,7 +29197,17 @@ module.exports={
       "ciCode_": "UMOL/MMOL",
       "property_": "amount of substance",
       "magnitude_": 0.001,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "μmol/mmol",
       "class_": "si",
       "isMetric_": true,
@@ -27343,6 +29216,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol per mmol; micromoles per millimole",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -27361,7 +29235,17 @@ module.exports={
       "ciCode_": "UMOL/MOL",
       "property_": "amount of substance",
       "magnitude_": 0.000001,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "μmol/mol",
       "class_": "si",
       "isMetric_": true,
@@ -27370,6 +29254,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol per mol; micromoles per mole",
       "source_": "LOINC",
       "loincProperty_": "SRto",
@@ -27388,7 +29273,17 @@ module.exports={
       "ciCode_": "UMOL/UMOL",
       "property_": "amount of substance",
       "magnitude_": 1,
-      "dim_": null,
+      "dim_": {
+        "dimVec_": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "printSymbol_": "μmol/μmol",
       "class_": "si",
       "isMetric_": true,
@@ -27397,6 +29292,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": true,
       "synonyms_": "umol per umol; micromoles per micromole",
       "source_": "LOINC",
       "loincProperty_": "Srto; SFr; EntSRto",
@@ -27434,6 +29330,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "microOhms; µΩ",
       "source_": "LOINC",
       "loincProperty_": "",
@@ -27471,6 +29368,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "microseconds",
       "source_": "LOINC",
       "loincProperty_": "Time",
@@ -27508,6 +29406,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "uU per gm; micro enzyme units per gram; micro enzymatic activity per mass; enzyme activity",
       "source_": "LOINC",
       "loincProperty_": "CCnt",
@@ -27545,6 +29444,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "uU per L; micro enzyme units per liter; litre; enzymatic activity per volume; enzyme activity ",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -27582,6 +29482,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "uU per mL; micro enzyme units per milliliter; millilitre; enzymatic activity per volume; enzyme activity",
       "source_": "LOINC",
       "loincProperty_": "CCnc",
@@ -27619,6 +29520,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": false,
       "isArbitrary_": false,
+      "isMole_": false,
       "synonyms_": "microvolts",
       "source_": "LOINC",
       "loincProperty_": "Elpot",
@@ -29259,19 +31161,23 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
           if (fromUnit && toUnit) {
             try {
-              var rStr = new RegExp('^.?(mol)(?:\{.+\})*');
-              var mCheck = fromUnit.csCode_.match(rStr);
-              var fMol = mCheck;
-              mCheck = toUnit.csCode_.match(rStr);
-              var tMol = mCheck;
-              if (fMol && !molecularWeight || tMol && !molecularWeight) throw new Error('Molecular weight must be supplied for ' + 'conversion between mass and moles; none was supplied.');
-              if (fMol && !tMol) {
-                returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
-              } else if (tMol && !fMol) {
-                returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
-              } else {
+              // if no molecular weight was specified OR if both the from and
+              // to units are mole-based unit objects, perform a normal conversion
+              if (!molecularWeight || fromUnit.isMole_ && toUnit.isMole_) {
+                if (molecularWeight && fromUnit.isMole_ && toUnit.isMole_) returnObj['msg'].push('A molecular weight was specified but a ' + 'mass <-> mole conversion cannot be executed for two mole-based ' + 'units.  A regular conversion was attempted.');
                 returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
               }
+              // if the "from" unit is a mole-based unit, assume a mole to mass
+              // request
+              else if (fromUnit.isMole_) {
+                  returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
+                }
+                // else the "to" unit must be the mole-based unit, so assume a
+                // mass to mole request
+                else {
+                    returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
+                  }
+
               returnObj['status'] = 'succeeded';
               returnObj['fromUnit'] = fromUnit;
               returnObj['toUnit'] = toUnit;
@@ -29659,6 +31565,12 @@ var Unit = exports.Unit = function () {
     this.isArbitrary_ = attrs['isArbitrary_'] || false;
 
     /*
+     * Flag indicating whether or not this unit represents a mole, i.e.,
+     * the base unit of an amount of substance.
+     */
+    this.isMole_ = attrs['isMole_'] || false;
+
+    /*
      * Added when added LOINC list of units
      * synonyms are used by the autocompleter to enhance lookup capabilities
      * while source says where the unit first shows up.  Current sources are
@@ -30028,18 +31940,19 @@ var Unit = exports.Unit = function () {
 
 
     /**
-     * Converts a unit expressed in mass/grams to a unit expressed in moles.  The
-     * "this" unit is the unit expressed in some form of mass (g, mg, mmg, kg,
-     * whatever) and the target or "to" unit - the molUnit parameter - is a unit
-     * expressed in moles - mol, umol, mmol, etc.  The unit expressions surrounding
-     * the moles and mass must be convertible.  No validation of this requirement
-     * is performed.
+     * Calculates the number of units that would result from converting a unit
+     * expressed in mass/grams to a unit expressed in moles.  The "this" unit is
+     * the unit expressed in some form of mass (g, mg, mmg, kg, whatever) and the
+     * target or "to" unit - the molUnit parameter - is a unit expressed in moles
+     * - mol, umol, mmol, etc.  The unit expressions surrounding the moles and
+     * mass must be convertible.  No validation of this requirement is performed.
      *
-     * @param amt the quantity of this units to be converted
+     * @param amt the quantity of this unit to be converted
      * @param molUnit the target/to unit for which the converted # is wanted
      * @param molecularWeight the molecular weight of the substance for which the
      *  conversion is being made
-     * @return the number of moles the molUnit after conversion from this unit
+     * @return the number of moles the molUnit would have after conversion from
+     *  this unit
      */
 
   }, {
@@ -30061,18 +31974,19 @@ var Unit = exports.Unit = function () {
     }
 
     /**
-     * Converts a unit expressed in moles to a unit expressed in mass (grams).
-     * The "this" unit is the unit expressed in some form of moles, e.g., mol,
-     * umol, mmol, etc., and the target or "to" unit is a unit expressed in
-     * some form of mass, e.g., g, mg, mmg, kg, etc.  Any unit expressions
-     * surrounding the moles and mass must be convertible. No validation of this
-     * requirement is performed.
+     * Calculates the number of units that would result from converting a unit
+     * expressed in moles to a unit expressed in mass (grams).  The "this" unit
+     * is the unit expressed in some form of moles, e.g., mol, umol, mmol, etc.,
+     * and the target or "to" unit is a unit expressed in some form of mass, e.g.,
+     * g, mg, mmg, kg, etc.  Any unit expressions surrounding the moles and mass
+     * must be convertible. No validation of this requirement is performed.
      *
-     * @param amt the quantity of this units to be converted
+     * @param amt the quantity of this unit to be converted
      * @param massUnit the target/to unit for which the converted # is wanted
      * @param molecularWeight the molecular weight of the substance for which the
      *  conversion is being made
-     * @return the number of grams the massUnit after conversion from this unit
+     * @return the number of grams the massUnit would have after conversion from
+     *  this unit
      */
 
   }, {
@@ -30149,6 +32063,11 @@ var Unit = exports.Unit = function () {
      *
      * This function does NOT modify this unit
      * @param unit2 the unit to be multiplied with this one
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  multiplication is requested on a unit including an arbitrary unit.  This
+     *  is only used in special cases when adding units to the unit data, and
+     *  normally should not be specified.  The default is false.
+     *
      * @return this unit after it is multiplied
      * @throws an error if one of the units is not on a ratio-scale
      *         and the other is not dimensionless.
@@ -30156,13 +32075,16 @@ var Unit = exports.Unit = function () {
 
   }, {
     key: "multiplyThese",
-    value: function multiplyThese(unit2) {
+    value: function multiplyThese(unit2, allowOp) {
+
+      if (allowOp === undefined) allowOp = false;
 
       var retUnit = this.clone();
 
-      if (retUnit.isArbitrary_) throw new Error("Attempt to multiply arbitrary unit " + retUnit.name_);
-      if (unit2.isArbitrary_) throw new Error("Attempt to multiply by arbitrary unit " + unit2.name_);
-
+      if (!allowOp) {
+        if (retUnit.isArbitrary_) throw new Error("Attempt to multiply arbitrary unit " + retUnit.name_);
+        if (unit2.isArbitrary_) throw new Error("Attempt to multiply by arbitrary unit " + unit2.name_);
+      }
       if (retUnit.cnv_ != null) {
         if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + retUnit.name_ + " " + 'failed.');
       } // end if this unit has a conversion function
@@ -30199,6 +32121,8 @@ var Unit = exports.Unit = function () {
       retUnit.guidance_ = '';
       if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
 
+      if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+
       return retUnit;
     } // end multiplyThese
 
@@ -30212,21 +32136,30 @@ var Unit = exports.Unit = function () {
      *
      * This unit is NOT modified by this function.
      * @param unit2 the unit by which to divide this one
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  division is requested on a unit including an arbitrary unit.  This is
+     *  only used in special cases when adding units to the unit data, and
+     *  normally should not be specified.  The default is false.
+     *
      * @return this unit after it is divided by unit2
      * @throws an error if either of the units is not on a ratio scale.
      * */
 
   }, {
     key: "divide",
-    value: function divide(unit2) {
+    value: function divide(unit2, allowOp) {
+
+      if (allowOp === undefined) allowOp = false;
 
       var retUnit = this.clone();
 
-      if (retUnit.isArbitrary_) throw new Error("Attempt to divide arbitrary unit " + retUnit.name_);
-      if (unit2.isArbitrary_) throw new Error("Attempt to divide by arbitrary unit " + unit2.name_);
+      if (!allowOp) {
+        if (retUnit.isArbitrary_) throw new Error("Attempt to divide arbitrary unit " + retUnit.name_);
+        if (unit2.isArbitrary_) throw new Error("Attempt to divide by arbitrary unit " + unit2.name_);
 
-      if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
-      if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
+        if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
+        if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
+      }
 
       if (retUnit.name_ && unit2.name_) retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
 
@@ -30254,6 +32187,9 @@ var Unit = exports.Unit = function () {
         // and give the inverted clone to this unit.
         else retUnit.dim_ = unit2.dim_.clone().minus();
       } // end if unit2 has a dimension object
+
+      if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+
       return retUnit;
     } // end divide
 
@@ -30580,6 +32516,11 @@ var UnitString = exports.UnitString = function () {
      *  requested for a string that cannot be resolved to a valid unit;
      *  true indicates suggestions are wanted; false indicates they are not,
      *  and is the default if the parameter is not specified;
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  multiplication or division is requested on a unit string including an
+     *  arbitrary unit code.  This is only used in special cases when adding
+     *  units to the unit data, and normally should not be specified.  The
+     *  default is false.
      * @returns an array containing:
      *   the unit object or null if a unit could not be created.  In cases where
      *     a fix was found for a problem string, .e.g., 2.mg for 2mg, a unit will
@@ -30604,7 +32545,7 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: 'parseString',
-    value: function parseString(uStr, valConv, suggest) {
+    value: function parseString(uStr, valConv, suggest, allowOp) {
 
       uStr = uStr.trim();
       // Make sure we have something to work with
@@ -30625,6 +32566,9 @@ var UnitString = exports.UnitString = function () {
       } else {
         this.suggestions_ = [];
       }
+
+      if (allowOp === undefined) allowOp = false;
+
       this.retMsg_ = [];
       this.parensUnits_ = [];
       this.annotations_ = [];
@@ -30669,7 +32613,7 @@ var UnitString = exports.UnitString = function () {
         //  the unit returned in position 0; and the origString (possibly
         //  modified in position 1.  The origString in position 1 will not
         //  be changed by subsequent processing.
-        retObj = this._parseTheString(uStr, origString);
+        retObj = this._parseTheString(uStr, origString, allowOp);
         var finalUnit = retObj[0];
 
         // Do a final check to make sure that finalUnit is a unit and not
@@ -30704,6 +32648,12 @@ var UnitString = exports.UnitString = function () {
      *
      * @param uStr the string defining the unit
      * @param origString the original unit string passed in
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  multiplication or division is requested on a unit string including an
+     *  arbitrary unit code.  This is only used in special cases when adding
+     *  units to the unit data, and normally should not be specified.  The
+     *  default is false.
+     *
      * @returns
      *  an array containing:
      *    the unit object (or null if there were problems creating the unit); and
@@ -30721,7 +32671,9 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: '_parseTheString',
-    value: function _parseTheString(uStr, origString) {
+    value: function _parseTheString(uStr, origString, allowOp) {
+
+      if (allowOp === undefined) allowOp = false;
 
       // Unit to be returned
       var finalUnit = null;
@@ -30809,7 +32761,7 @@ var UnitString = exports.UnitString = function () {
         }
       }
       if (!endProcessing) {
-        finalUnit = this._performUnitArithmetic(uArray, origString);
+        finalUnit = this._performUnitArithmetic(uArray, origString, allowOp);
       }
       return [finalUnit, origString];
     } // end _parseTheString
@@ -31800,6 +33752,12 @@ var UnitString = exports.UnitString = function () {
      *  derived from the unit string passed in to parseString
      * @param origString the original string to be parsed; used to provide
      *  context for messages
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  multiplication or division is requested on a unit string including an
+     *  arbitrary unit code.  This is only used in special cases when adding
+     *  units to the unit data, and normally should not be specified.  The
+     *  default is false.
+     *
      * @returns a single unit object that is the result of the unit arithmetic
      *
      * the this.retMsg_ array will be updated with any user messages
@@ -31808,7 +33766,9 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: '_performUnitArithmetic',
-    value: function _performUnitArithmetic(uArray, origString) {
+    value: function _performUnitArithmetic(uArray, origString, allowOp) {
+
+      if (allowOp === undefined) allowOp = false;
 
       var finalUnit = uArray[0]['un'];
       if (intUtils_.isNumericString(finalUnit)) {
@@ -31843,7 +33803,7 @@ var UnitString = exports.UnitString = function () {
 
             // Perform the operation.  Both the finalUnit and nextUnit
             // are unit objects.
-            isDiv ? finalUnit = finalUnit.divide(nextUnit) : finalUnit = finalUnit.multiplyThese(nextUnit);
+            isDiv ? finalUnit = finalUnit.divide(nextUnit, allowOp) : finalUnit = finalUnit.multiplyThese(nextUnit, allowOp);
           } catch (err) {
             this.retMsg_.unshift(err.message);
             endProcessing = true;

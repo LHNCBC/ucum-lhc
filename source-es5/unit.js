@@ -156,6 +156,12 @@ var Unit = exports.Unit = function () {
     this.isArbitrary_ = attrs['isArbitrary_'] || false;
 
     /*
+     * Flag indicating whether or not this unit represents a mole, i.e.,
+     * the base unit of an amount of substance.
+     */
+    this.isMole_ = attrs['isMole_'] || false;
+
+    /*
      * Added when added LOINC list of units
      * synonyms are used by the autocompleter to enhance lookup capabilities
      * while source says where the unit first shows up.  Current sources are
@@ -525,18 +531,19 @@ var Unit = exports.Unit = function () {
 
 
     /**
-     * Converts a unit expressed in mass/grams to a unit expressed in moles.  The
-     * "this" unit is the unit expressed in some form of mass (g, mg, mmg, kg,
-     * whatever) and the target or "to" unit - the molUnit parameter - is a unit
-     * expressed in moles - mol, umol, mmol, etc.  The unit expressions surrounding
-     * the moles and mass must be convertible.  No validation of this requirement
-     * is performed.
+     * Calculates the number of units that would result from converting a unit
+     * expressed in mass/grams to a unit expressed in moles.  The "this" unit is
+     * the unit expressed in some form of mass (g, mg, mmg, kg, whatever) and the
+     * target or "to" unit - the molUnit parameter - is a unit expressed in moles
+     * - mol, umol, mmol, etc.  The unit expressions surrounding the moles and
+     * mass must be convertible.  No validation of this requirement is performed.
      *
-     * @param amt the quantity of this units to be converted
+     * @param amt the quantity of this unit to be converted
      * @param molUnit the target/to unit for which the converted # is wanted
      * @param molecularWeight the molecular weight of the substance for which the
      *  conversion is being made
-     * @return the number of moles the molUnit after conversion from this unit
+     * @return the number of moles the molUnit would have after conversion from
+     *  this unit
      */
 
   }, {
@@ -558,18 +565,19 @@ var Unit = exports.Unit = function () {
     }
 
     /**
-     * Converts a unit expressed in moles to a unit expressed in mass (grams).
-     * The "this" unit is the unit expressed in some form of moles, e.g., mol,
-     * umol, mmol, etc., and the target or "to" unit is a unit expressed in
-     * some form of mass, e.g., g, mg, mmg, kg, etc.  Any unit expressions
-     * surrounding the moles and mass must be convertible. No validation of this
-     * requirement is performed.
+     * Calculates the number of units that would result from converting a unit
+     * expressed in moles to a unit expressed in mass (grams).  The "this" unit
+     * is the unit expressed in some form of moles, e.g., mol, umol, mmol, etc.,
+     * and the target or "to" unit is a unit expressed in some form of mass, e.g.,
+     * g, mg, mmg, kg, etc.  Any unit expressions surrounding the moles and mass
+     * must be convertible. No validation of this requirement is performed.
      *
-     * @param amt the quantity of this units to be converted
+     * @param amt the quantity of this unit to be converted
      * @param massUnit the target/to unit for which the converted # is wanted
      * @param molecularWeight the molecular weight of the substance for which the
      *  conversion is being made
-     * @return the number of grams the massUnit after conversion from this unit
+     * @return the number of grams the massUnit would have after conversion from
+     *  this unit
      */
 
   }, {
@@ -646,6 +654,11 @@ var Unit = exports.Unit = function () {
      *
      * This function does NOT modify this unit
      * @param unit2 the unit to be multiplied with this one
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  multiplication is requested on a unit including an arbitrary unit.  This
+     *  is only used in special cases when adding units to the unit data, and
+     *  normally should not be specified.  The default is false.
+     *
      * @return this unit after it is multiplied
      * @throws an error if one of the units is not on a ratio-scale
      *         and the other is not dimensionless.
@@ -653,13 +666,16 @@ var Unit = exports.Unit = function () {
 
   }, {
     key: "multiplyThese",
-    value: function multiplyThese(unit2) {
+    value: function multiplyThese(unit2, allowOp) {
+
+      if (allowOp === undefined) allowOp = false;
 
       var retUnit = this.clone();
 
-      if (retUnit.isArbitrary_) throw new Error("Attempt to multiply arbitrary unit " + retUnit.name_);
-      if (unit2.isArbitrary_) throw new Error("Attempt to multiply by arbitrary unit " + unit2.name_);
-
+      if (!allowOp) {
+        if (retUnit.isArbitrary_) throw new Error("Attempt to multiply arbitrary unit " + retUnit.name_);
+        if (unit2.isArbitrary_) throw new Error("Attempt to multiply by arbitrary unit " + unit2.name_);
+      }
       if (retUnit.cnv_ != null) {
         if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + retUnit.name_ + " " + 'failed.');
       } // end if this unit has a conversion function
@@ -696,6 +712,8 @@ var Unit = exports.Unit = function () {
       retUnit.guidance_ = '';
       if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
 
+      if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+
       return retUnit;
     } // end multiplyThese
 
@@ -709,21 +727,30 @@ var Unit = exports.Unit = function () {
      *
      * This unit is NOT modified by this function.
      * @param unit2 the unit by which to divide this one
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  division is requested on a unit including an arbitrary unit.  This is
+     *  only used in special cases when adding units to the unit data, and
+     *  normally should not be specified.  The default is false.
+     *
      * @return this unit after it is divided by unit2
      * @throws an error if either of the units is not on a ratio scale.
      * */
 
   }, {
     key: "divide",
-    value: function divide(unit2) {
+    value: function divide(unit2, allowOp) {
+
+      if (allowOp === undefined) allowOp = false;
 
       var retUnit = this.clone();
 
-      if (retUnit.isArbitrary_) throw new Error("Attempt to divide arbitrary unit " + retUnit.name_);
-      if (unit2.isArbitrary_) throw new Error("Attempt to divide by arbitrary unit " + unit2.name_);
+      if (!allowOp) {
+        if (retUnit.isArbitrary_) throw new Error("Attempt to divide arbitrary unit " + retUnit.name_);
+        if (unit2.isArbitrary_) throw new Error("Attempt to divide by arbitrary unit " + unit2.name_);
 
-      if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
-      if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
+        if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
+        if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
+      }
 
       if (retUnit.name_ && unit2.name_) retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
 
@@ -751,6 +778,9 @@ var Unit = exports.Unit = function () {
         // and give the inverted clone to this unit.
         else retUnit.dim_ = unit2.dim_.clone().minus();
       } // end if unit2 has a dimension object
+
+      if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+
       return retUnit;
     } // end divide
 

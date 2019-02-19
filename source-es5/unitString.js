@@ -135,6 +135,11 @@ var UnitString = exports.UnitString = function () {
      *  requested for a string that cannot be resolved to a valid unit;
      *  true indicates suggestions are wanted; false indicates they are not,
      *  and is the default if the parameter is not specified;
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  multiplication or division is requested on a unit string including an
+     *  arbitrary unit code.  This is only used in special cases when adding
+     *  units to the unit data, and normally should not be specified.  The
+     *  default is false.
      * @returns an array containing:
      *   the unit object or null if a unit could not be created.  In cases where
      *     a fix was found for a problem string, .e.g., 2.mg for 2mg, a unit will
@@ -159,7 +164,7 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: 'parseString',
-    value: function parseString(uStr, valConv, suggest) {
+    value: function parseString(uStr, valConv, suggest, allowOp) {
 
       uStr = uStr.trim();
       // Make sure we have something to work with
@@ -180,6 +185,9 @@ var UnitString = exports.UnitString = function () {
       } else {
         this.suggestions_ = [];
       }
+
+      if (allowOp === undefined) allowOp = false;
+
       this.retMsg_ = [];
       this.parensUnits_ = [];
       this.annotations_ = [];
@@ -224,7 +232,7 @@ var UnitString = exports.UnitString = function () {
         //  the unit returned in position 0; and the origString (possibly
         //  modified in position 1.  The origString in position 1 will not
         //  be changed by subsequent processing.
-        retObj = this._parseTheString(uStr, origString);
+        retObj = this._parseTheString(uStr, origString, allowOp);
         var finalUnit = retObj[0];
 
         // Do a final check to make sure that finalUnit is a unit and not
@@ -259,6 +267,12 @@ var UnitString = exports.UnitString = function () {
      *
      * @param uStr the string defining the unit
      * @param origString the original unit string passed in
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  multiplication or division is requested on a unit string including an
+     *  arbitrary unit code.  This is only used in special cases when adding
+     *  units to the unit data, and normally should not be specified.  The
+     *  default is false.
+     *
      * @returns
      *  an array containing:
      *    the unit object (or null if there were problems creating the unit); and
@@ -276,7 +290,9 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: '_parseTheString',
-    value: function _parseTheString(uStr, origString) {
+    value: function _parseTheString(uStr, origString, allowOp) {
+
+      if (allowOp === undefined) allowOp = false;
 
       // Unit to be returned
       var finalUnit = null;
@@ -364,7 +380,7 @@ var UnitString = exports.UnitString = function () {
         }
       }
       if (!endProcessing) {
-        finalUnit = this._performUnitArithmetic(uArray, origString);
+        finalUnit = this._performUnitArithmetic(uArray, origString, allowOp);
       }
       return [finalUnit, origString];
     } // end _parseTheString
@@ -1355,6 +1371,12 @@ var UnitString = exports.UnitString = function () {
      *  derived from the unit string passed in to parseString
      * @param origString the original string to be parsed; used to provide
      *  context for messages
+     * @param allowOp a boolean used to bypass an error normally thrown when
+     *  multiplication or division is requested on a unit string including an
+     *  arbitrary unit code.  This is only used in special cases when adding
+     *  units to the unit data, and normally should not be specified.  The
+     *  default is false.
+     *
      * @returns a single unit object that is the result of the unit arithmetic
      *
      * the this.retMsg_ array will be updated with any user messages
@@ -1363,7 +1385,9 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: '_performUnitArithmetic',
-    value: function _performUnitArithmetic(uArray, origString) {
+    value: function _performUnitArithmetic(uArray, origString, allowOp) {
+
+      if (allowOp === undefined) allowOp = false;
 
       var finalUnit = uArray[0]['un'];
       if (intUtils_.isNumericString(finalUnit)) {
@@ -1398,7 +1422,7 @@ var UnitString = exports.UnitString = function () {
 
             // Perform the operation.  Both the finalUnit and nextUnit
             // are unit objects.
-            isDiv ? finalUnit = finalUnit.divide(nextUnit) : finalUnit = finalUnit.multiplyThese(nextUnit);
+            isDiv ? finalUnit = finalUnit.divide(nextUnit, allowOp) : finalUnit = finalUnit.multiplyThese(nextUnit, allowOp);
           } catch (err) {
             this.retMsg_.unshift(err.message);
             endProcessing = true;
