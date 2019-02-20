@@ -38,18 +38,6 @@ export class UcumDataUpdater {
 
   constructor() {
     // Make this a singleton.  See UnitTables constructor for details.
-
-    // Unit strings that will fail on the attempt to add them because of
-    // an error on an attempt to divide or multiply an arbitrary unit.
-    // The addNewUnit function will pass along a flag for these strings
-    // to block that failure.  sigh.
-    this.arbUnits_ = ["/[arb'U]", "/[IU]", "[APL'U]/mL", "[arb'U]/mL",
-                     "[CFU]/L", "[CFU]/mL", "[GPL'U]/mL", "[IU]/(2.h)",
-                     "[IU]/(24.h)", "[IU]/d", "[IU]/dL", "[IU]/g",
-                     "[IU]/h", "[IU]/kg", "[IU]/kg/d", "[IU]/L",
-                     "[IU]/min", "[IU]/mL", "[MPL'U]/mL", "10*6.[CFU]/L",
-                     "10*6.[IU]", "k[IU]/L", "k[IU]/mL", "m[IU]/L",
-                     "m[IU]/mL", "u[IU]/L", "u[IU]/mL"];
     let holdThis = UcumDataUpdater.prototype;
     UcumDataUpdater = function () {
       throw (new Error('UcumDataUpdater is a Singleton.  ' +
@@ -157,10 +145,7 @@ export class UcumDataUpdater {
   addNewUnit(inputRec) {
 
     var us = UnitString.getInstance();
-    var recKey = inputRec[Ucum.inputKey_];
-    var allowOp = this.arbUnits_.includes(recKey);
-
-    var parseResp = us.parseString(recKey, 'convert', false, allowOp);
+    var parseResp = us.parseString(inputRec[Ucum.inputKey_], 'convert', false);
 
     var newUnit = parseResp[0];
     if (newUnit) {

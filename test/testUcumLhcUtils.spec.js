@@ -215,17 +215,18 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
   });
-   it("should return 96 for a request to convert 5.33 mmol/L to mg{molybdenum}/dL weight 180.156", function() {
+
+  it("should return 96 for a request to convert 5.33 mmol/L to mg{molybdenum}/dL weight 180.156", function() {
     var resp5 = utils.convertUnitTo('mmol/L', 5.33, 'mg{molybdenum}/dL', false, 180.156);
     assert.equal(resp5.status, 'succeeded', resp5.status);
     assert.equal(resp5.toVal.toPrecision(2), 96, resp5.toVal);
-  })
+  });
 
   it("should return 5.33 for a request to convert 96 mg/dL to mmol/L weight 180.156", function() {
     var resp5 = utils.convertUnitTo('mg/dL', 96, 'mmol/L', false, 180.156);
     assert.equal(resp5.status, 'succeeded', resp5.status);
     assert.equal(resp5.toVal.toPrecision(3), 5.33, resp5.toVal.toPrecision(3));
-  })
+  });
 
   it("should return 3.4 for a request to convert 300.57 umol/L to mg/dL weight 113.1179", function() {
     var resp5 = utils.convertUnitTo('umol/L', 300.57, 'mg/dL', false, 113.1179);
@@ -243,13 +244,13 @@ it("should return a message for invalid unit strings", function() {
     var resp5 = utils.convertUnitTo('mmol/L', 1.67, 'mg/dL', false, 40.078);
     assert.equal(resp5.status, 'succeeded', resp5.status);
     assert.equal(resp5.toVal.toPrecision(2), 6.7, resp5.toVal);
-  })
+  });
 
   it("should return 1.67 for a request to convert 6.7 mg/dL to mmol/L weight 40.078", function() {
     var resp5 = utils.convertUnitTo('mg/dL', 6.7, 'mmol/L', false, 40.078);
     assert.equal(resp5.status, 'succeeded', resp5.status);
     assert.equal(resp5.toVal.toPrecision(3), 1.67, resp5.toVal.toPrecision(3));
-  })
+  });
 }); // end convertUnitTo tests
 
 
@@ -268,7 +269,6 @@ describe('Test getSynonyms method', function() {
     assert.equal('failed', resp2['status']);
     assert.equal('Unable to find any units with synonym = Amess',
                   resp2['msg']);
-
   });
 
   it("should return multiple units for search term month", function() {

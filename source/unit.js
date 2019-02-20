@@ -532,8 +532,7 @@ export class Unit {
    * @param molUnit the target/to unit for which the converted # is wanted
    * @param molecularWeight the molecular weight of the substance for which the
    *  conversion is being made
-   * @return the number of moles the molUnit would have after conversion from
-   *  this unit
+   * @return the equivalent amount in molUnit
    */
   convertMassToMol(amt, molUnit, molecularWeight) {
     // The prefix values that have been applied to this unit, which is the mass
@@ -563,8 +562,7 @@ export class Unit {
    * @param massUnit the target/to unit for which the converted # is wanted
    * @param molecularWeight the molecular weight of the substance for which the
    *  conversion is being made
-   * @return the number of grams the massUnit would have after conversion from
-   *  this unit
+   * @return the equivalent amount in massUnit
    */
   convertMolToMass(amt, massUnit, molecularWeight) {
     // A simple mole unit has a magnitude of avogadro's number.  Get that
@@ -638,32 +636,16 @@ export class Unit {
    * units is a non-ratio unit the other must be dimensionless or
    * else an exception is thrown.
    *
-   * If either unit is an arbitrary unit an exception is raised.
-   *
    * This function does NOT modify this unit
    * @param unit2 the unit to be multiplied with this one
-   * @param allowOp a boolean used to bypass an error normally thrown when
-   *  multiplication is requested on a unit including an arbitrary unit.  This
-   *  is only used in special cases when adding units to the unit data, and
-   *  normally should not be specified.  The default is false.
-   *
    * @return this unit after it is multiplied
    * @throws an error if one of the units is not on a ratio-scale
    *         and the other is not dimensionless.
    */
-  multiplyThese(unit2, allowOp) {
-
-    if (allowOp === undefined)
-      allowOp = false ;
+  multiplyThese(unit2) {
 
     var retUnit = this.clone() ;
 
-    if (!allowOp) {
-      if (retUnit.isArbitrary_)
-        throw (new Error(`Attempt to multiply arbitrary unit ${retUnit.name_}`));
-      if (unit2.isArbitrary_)
-        throw (new Error(`Attempt to multiply by arbitrary unit ${unit2.name_}`));
-    }
     if (retUnit.cnv_ != null) {
       if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero()))
         retUnit.cnvPfx_ *= unit2.magnitude_;
@@ -674,7 +656,6 @@ export class Unit {
 
     else if (unit2.cnv_ != null) {
       if (!retUnit.dim_ || retUnit.dim_.isZero()) {
-        //retUnit.assign(unit2);
         retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
         retUnit.cnv_ = unit2.cnv_ ;
       }
@@ -718,8 +699,13 @@ export class Unit {
     else if (unit2.printSymbol_)
       retUnit.printSymbol_ = unit2.printSymbol_;
 
+    // A unit that has the mole or arbitrary attribute
+    // taints any unit created from it via an arithmetic
+    // operation.  Taint accordingly
     if (!retUnit.isMole_)
       retUnit.isMole_ = unit2.isMole_ ;
+    if (!retUnit.isArbitrary_)
+      retUnit.isArbitrary_ = unit2.isArbitrary_;
 
     return retUnit ;
 
@@ -731,36 +717,19 @@ export class Unit {
    * scale an exception is raised. Mutating to a ratio scale unit
    * is not possible for a unit, only for a measurement.
    *
-   * If either unit is an arbitrary unit an exception is raised.
-   *
    * This unit is NOT modified by this function.
    * @param unit2 the unit by which to divide this one
-   * @param allowOp a boolean used to bypass an error normally thrown when
-   *  division is requested on a unit including an arbitrary unit.  This is
-   *  only used in special cases when adding units to the unit data, and
-   *  normally should not be specified.  The default is false.
-   *
    * @return this unit after it is divided by unit2
    * @throws an error if either of the units is not on a ratio scale.
    * */
-  divide(unit2, allowOp) {
-
-    if (allowOp === undefined)
-      allowOp = false ;
+  divide(unit2) {
 
     var retUnit = this.clone();
 
-    if (!allowOp) {
-      if (retUnit.isArbitrary_)
-        throw (new Error(`Attempt to divide arbitrary unit ${retUnit.name_}`));
-      if (unit2.isArbitrary_)
-        throw (new Error(`Attempt to divide by arbitrary unit ${unit2.name_}`));
-
-      if (retUnit.cnv_ != null)
-        throw (new Error(`Attempt to divide non-ratio unit ${retUnit.name_}`));
-      if (unit2.cnv_ != null)
-        throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
-    }
+    if (retUnit.cnv_ != null)
+      throw (new Error(`Attempt to divide non-ratio unit ${retUnit.name_}`));
+    if (unit2.cnv_ != null)
+      throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
 
     if (retUnit.name_ && unit2.name_)
       retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');
@@ -803,8 +772,13 @@ export class Unit {
         retUnit.dim_ = unit2.dim_.clone().minus();
     } // end if unit2 has a dimension object
 
+    // A unit that has the mole or arbitrary attribute
+    // taints any unit created from it via an arithmetic
+    // operation.  Taint accordingly
     if (!retUnit.isMole_)
       retUnit.isMole_ = unit2.isMole_ ;
+    if (!retUnit.isArbitrary_)
+      retUnit.isArbitrary_ = unit2.isArbitrary_;
 
     return retUnit;
 

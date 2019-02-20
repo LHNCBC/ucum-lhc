@@ -31951,8 +31951,7 @@ var Unit = exports.Unit = function () {
      * @param molUnit the target/to unit for which the converted # is wanted
      * @param molecularWeight the molecular weight of the substance for which the
      *  conversion is being made
-     * @return the number of moles the molUnit would have after conversion from
-     *  this unit
+     * @return the equivalent amount in molUnit
      */
 
   }, {
@@ -31985,8 +31984,7 @@ var Unit = exports.Unit = function () {
      * @param massUnit the target/to unit for which the converted # is wanted
      * @param molecularWeight the molecular weight of the substance for which the
      *  conversion is being made
-     * @return the number of grams the massUnit would have after conversion from
-     *  this unit
+     * @return the equivalent amount in massUnit
      */
 
   }, {
@@ -32059,15 +32057,8 @@ var Unit = exports.Unit = function () {
      * units is a non-ratio unit the other must be dimensionless or
      * else an exception is thrown.
      *
-     * If either unit is an arbitrary unit an exception is raised.
-     *
      * This function does NOT modify this unit
      * @param unit2 the unit to be multiplied with this one
-     * @param allowOp a boolean used to bypass an error normally thrown when
-     *  multiplication is requested on a unit including an arbitrary unit.  This
-     *  is only used in special cases when adding units to the unit data, and
-     *  normally should not be specified.  The default is false.
-     *
      * @return this unit after it is multiplied
      * @throws an error if one of the units is not on a ratio-scale
      *         and the other is not dimensionless.
@@ -32075,23 +32066,16 @@ var Unit = exports.Unit = function () {
 
   }, {
     key: "multiplyThese",
-    value: function multiplyThese(unit2, allowOp) {
-
-      if (allowOp === undefined) allowOp = false;
+    value: function multiplyThese(unit2) {
 
       var retUnit = this.clone();
 
-      if (!allowOp) {
-        if (retUnit.isArbitrary_) throw new Error("Attempt to multiply arbitrary unit " + retUnit.name_);
-        if (unit2.isArbitrary_) throw new Error("Attempt to multiply by arbitrary unit " + unit2.name_);
-      }
       if (retUnit.cnv_ != null) {
         if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + retUnit.name_ + " " + 'failed.');
       } // end if this unit has a conversion function
 
       else if (unit2.cnv_ != null) {
           if (!retUnit.dim_ || retUnit.dim_.isZero()) {
-            //retUnit.assign(unit2);
             retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
             retUnit.cnv_ = unit2.cnv_;
           } else throw new Error("Attempt to multiply non-ratio unit " + unit2.name_);
@@ -32121,7 +32105,11 @@ var Unit = exports.Unit = function () {
       retUnit.guidance_ = '';
       if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
 
+      // A unit that has the mole or arbitrary attribute
+      // taints any unit created from it via an arithmetic
+      // operation.  Taint accordingly
       if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
 
       return retUnit;
     } // end multiplyThese
@@ -32132,34 +32120,20 @@ var Unit = exports.Unit = function () {
      * scale an exception is raised. Mutating to a ratio scale unit
      * is not possible for a unit, only for a measurement.
      *
-     * If either unit is an arbitrary unit an exception is raised.
-     *
      * This unit is NOT modified by this function.
      * @param unit2 the unit by which to divide this one
-     * @param allowOp a boolean used to bypass an error normally thrown when
-     *  division is requested on a unit including an arbitrary unit.  This is
-     *  only used in special cases when adding units to the unit data, and
-     *  normally should not be specified.  The default is false.
-     *
      * @return this unit after it is divided by unit2
      * @throws an error if either of the units is not on a ratio scale.
      * */
 
   }, {
     key: "divide",
-    value: function divide(unit2, allowOp) {
-
-      if (allowOp === undefined) allowOp = false;
+    value: function divide(unit2) {
 
       var retUnit = this.clone();
 
-      if (!allowOp) {
-        if (retUnit.isArbitrary_) throw new Error("Attempt to divide arbitrary unit " + retUnit.name_);
-        if (unit2.isArbitrary_) throw new Error("Attempt to divide by arbitrary unit " + unit2.name_);
-
-        if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
-        if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
-      }
+      if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
+      if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
 
       if (retUnit.name_ && unit2.name_) retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
 
@@ -32188,7 +32162,11 @@ var Unit = exports.Unit = function () {
         else retUnit.dim_ = unit2.dim_.clone().minus();
       } // end if unit2 has a dimension object
 
+      // A unit that has the mole or arbitrary attribute
+      // taints any unit created from it via an arithmetic
+      // operation.  Taint accordingly
       if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
 
       return retUnit;
     } // end divide
@@ -32516,11 +32494,6 @@ var UnitString = exports.UnitString = function () {
      *  requested for a string that cannot be resolved to a valid unit;
      *  true indicates suggestions are wanted; false indicates they are not,
      *  and is the default if the parameter is not specified;
-     * @param allowOp a boolean used to bypass an error normally thrown when
-     *  multiplication or division is requested on a unit string including an
-     *  arbitrary unit code.  This is only used in special cases when adding
-     *  units to the unit data, and normally should not be specified.  The
-     *  default is false.
      * @returns an array containing:
      *   the unit object or null if a unit could not be created.  In cases where
      *     a fix was found for a problem string, .e.g., 2.mg for 2mg, a unit will
@@ -32545,7 +32518,7 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: 'parseString',
-    value: function parseString(uStr, valConv, suggest, allowOp) {
+    value: function parseString(uStr, valConv, suggest) {
 
       uStr = uStr.trim();
       // Make sure we have something to work with
@@ -32566,8 +32539,6 @@ var UnitString = exports.UnitString = function () {
       } else {
         this.suggestions_ = [];
       }
-
-      if (allowOp === undefined) allowOp = false;
 
       this.retMsg_ = [];
       this.parensUnits_ = [];
@@ -32613,7 +32584,7 @@ var UnitString = exports.UnitString = function () {
         //  the unit returned in position 0; and the origString (possibly
         //  modified in position 1.  The origString in position 1 will not
         //  be changed by subsequent processing.
-        retObj = this._parseTheString(uStr, origString, allowOp);
+        retObj = this._parseTheString(uStr, origString);
         var finalUnit = retObj[0];
 
         // Do a final check to make sure that finalUnit is a unit and not
@@ -32648,11 +32619,6 @@ var UnitString = exports.UnitString = function () {
      *
      * @param uStr the string defining the unit
      * @param origString the original unit string passed in
-     * @param allowOp a boolean used to bypass an error normally thrown when
-     *  multiplication or division is requested on a unit string including an
-     *  arbitrary unit code.  This is only used in special cases when adding
-     *  units to the unit data, and normally should not be specified.  The
-     *  default is false.
      *
      * @returns
      *  an array containing:
@@ -32671,9 +32637,7 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: '_parseTheString',
-    value: function _parseTheString(uStr, origString, allowOp) {
-
-      if (allowOp === undefined) allowOp = false;
+    value: function _parseTheString(uStr, origString) {
 
       // Unit to be returned
       var finalUnit = null;
@@ -32761,7 +32725,7 @@ var UnitString = exports.UnitString = function () {
         }
       }
       if (!endProcessing) {
-        finalUnit = this._performUnitArithmetic(uArray, origString, allowOp);
+        finalUnit = this._performUnitArithmetic(uArray, origString);
       }
       return [finalUnit, origString];
     } // end _parseTheString
@@ -33752,11 +33716,6 @@ var UnitString = exports.UnitString = function () {
      *  derived from the unit string passed in to parseString
      * @param origString the original string to be parsed; used to provide
      *  context for messages
-     * @param allowOp a boolean used to bypass an error normally thrown when
-     *  multiplication or division is requested on a unit string including an
-     *  arbitrary unit code.  This is only used in special cases when adding
-     *  units to the unit data, and normally should not be specified.  The
-     *  default is false.
      *
      * @returns a single unit object that is the result of the unit arithmetic
      *
@@ -33766,9 +33725,7 @@ var UnitString = exports.UnitString = function () {
 
   }, {
     key: '_performUnitArithmetic',
-    value: function _performUnitArithmetic(uArray, origString, allowOp) {
-
-      if (allowOp === undefined) allowOp = false;
+    value: function _performUnitArithmetic(uArray, origString) {
 
       var finalUnit = uArray[0]['un'];
       if (intUtils_.isNumericString(finalUnit)) {
@@ -33803,7 +33760,7 @@ var UnitString = exports.UnitString = function () {
 
             // Perform the operation.  Both the finalUnit and nextUnit
             // are unit objects.
-            isDiv ? finalUnit = finalUnit.divide(nextUnit, allowOp) : finalUnit = finalUnit.multiplyThese(nextUnit, allowOp);
+            isDiv ? finalUnit = finalUnit.divide(nextUnit) : finalUnit = finalUnit.multiplyThese(nextUnit);
           } catch (err) {
             this.retMsg_.unshift(err.message);
             endProcessing = true;
