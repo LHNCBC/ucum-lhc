@@ -218,37 +218,37 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 96 for a request to convert 5.33 mmol/L to mg{molybdenum}/dL weight 180.156", function() {
     var resp5 = utils.convertUnitTo('mmol/L', 5.33, 'mg{molybdenum}/dL', false, 180.156);
-    assert.equal(resp5.status, 'succeeded', resp5.status);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(2), 96, resp5.toVal);
   });
 
   it("should return 5.33 for a request to convert 96 mg/dL to mmol/L weight 180.156", function() {
     var resp5 = utils.convertUnitTo('mg/dL', 96, 'mmol/L', false, 180.156);
-    assert.equal(resp5.status, 'succeeded', resp5.status);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), 5.33, resp5.toVal.toPrecision(3));
   });
 
   it("should return 3.4 for a request to convert 300.57 umol/L to mg/dL weight 113.1179", function() {
     var resp5 = utils.convertUnitTo('umol/L', 300.57, 'mg/dL', false, 113.1179);
-    assert.equal(resp5.status, 'succeeded', resp5.status);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), 3.4, resp5.toVal);
   });
 
   it("should return 300.57 for a request to convert 3.4 mg/dL to umol/L weight 113.1179", function() {
     var resp5 = utils.convertUnitTo('mg/dL', 3.4, 'umol/L', false, 113.1179);
-    assert.equal(resp5.status, 'succeeded', resp5.status);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(5), 300.57, resp5.toVal)
   });
 
   it("should return 6.7 for a request to convert 1.67 mmol/L to mg/dL weight 40.078", function() {
     var resp5 = utils.convertUnitTo('mmol/L', 1.67, 'mg/dL', false, 40.078);
-    assert.equal(resp5.status, 'succeeded', resp5.status);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(2), 6.7, resp5.toVal);
   });
 
   it("should return 1.67 for a request to convert 6.7 mg/dL to mmol/L weight 40.078", function() {
     var resp5 = utils.convertUnitTo('mg/dL', 6.7, 'mmol/L', false, 40.078);
-    assert.equal(resp5.status, 'succeeded', resp5.status);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), 1.67, resp5.toVal.toPrecision(3));
   });
 }); // end convertUnitTo tests

@@ -941,6 +941,38 @@ var Unit = exports.Unit = function () {
     } // end power
 
 
+    /*
+     * This function tests this unit against the unit passed in to see if the
+     * two are mole to mass commensurable.  It assumes that one of the units
+     * is a mole-based unit and the other is a mass-based unit.  It does NOT
+     * check to validate that assumption.
+     *
+     * The check is made by setting the dimension vector element corresponding
+     * to the base mass unit (gram) in the mole unit, and then comparing the
+     * two dimension vectors.  If they match, the units are commensurable.
+     * Otherwise they are not.
+     *
+     * @param unit2 the unit to be compared to this one
+     * @returns boolean indicating commensurability
+     */
+
+  }, {
+    key: "isMoleMassCommensurable",
+    value: function isMoleMassCommensurable(unit2) {
+      var tabs = UnitTables.getInstance();
+      var d = tabs.getMassDimensionIndex();
+      var commensurable = false;
+      if (this.isMole_) {
+        var testDim = this.dim_.clone();
+        testDim.setElementAt(d);
+        commensurable = testDim.equals(unit2.dim_);
+      } else {
+        var _testDim = unit2.dim_.clone();
+        _testDim.setElementAt(d);
+        commensurable = _testDim.equals(this.dim_);
+      }
+      return commensurable;
+    }
   }]);
 
   return Unit;

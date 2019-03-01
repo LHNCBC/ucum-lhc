@@ -12,7 +12,6 @@ var fs = require('fs');
 
 export class UnitTables {
 
-
   /**
    * Constructor.  This creates the empty unit tables (hashes) once. After the
    * tables are created, it redefines this constructor to throw an error
@@ -89,6 +88,17 @@ export class UnitTables {
      *              include that synonym.
      */
      this.unitSynonyms_ = {};
+
+    /*
+     * Holds onto the index of the index of the dimension vector flag for
+     * the base mass unit (gram).  This is set when the base unit (gram) is
+     * created, and is stored here so that it doesn't have to be found
+     * over and over again to try to determine whether or not a unit is
+     * mass-based (for mole<->mass conversions)
+     *
+     * @type integer
+     */
+    this.massDimIndex_ = 0;
 
     // Make this a singleton - from mrme44 May 18 comment on
     // on GitHub Gist page of SanderLi/Singleton.js.  Modified
@@ -177,11 +187,13 @@ export class UnitTables {
 
   /**
    * Adds a Unit object to the unitCodes_, unitUcCodes_, unitLcCodes_ and
-   * codeOrder_ tables.
+   * codeOrder_ tables.  This also sets the mass dimension index when the
+   * base mass unit (gram) is read.
    *
    * @param theUnit the unit to be added
    * @returns nothing
-   * @throws an error if theunitCodes_ table already contains a unit with the code
+   * @throws an error if the unitCodes_ table already contains a unit with
+   *  the code
    */
   addUnitCode(theUnit) {
 
@@ -194,6 +206,12 @@ export class UnitTables {
       else {
         this.unitCodes_[uCode] = theUnit;
         this.codeOrder_.push(uCode);
+        if (uCode == 'g') {
+          let dimVec = theUnit.dim_.dimVec_;
+          let d = 0;
+          for (; d < dimVec.length && dimVec[d] < 1; d++) ;
+          this.massDimIndex_ = d;
+        }
       }
     }
     else
@@ -518,6 +536,14 @@ export class UnitTables {
     return nameList ;
   }
 
+
+  /*
+   * Returns the mass dimension index
+   * @returns this.massDimIndex_
+   */
+  getMassDimensionIndex() {
+    return this.massDimIndex_ ;
+  }
 
   /**
    * This provides a sort function for unit codes so that sorting ignores

@@ -31161,15 +31161,23 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
           if (fromUnit && toUnit) {
             try {
-              // if no molecular weight was specified OR if both the from and
-              // to units are mole-based unit objects, perform a normal conversion
-              if (!molecularWeight || fromUnit.isMole_ && toUnit.isMole_) {
-                if (molecularWeight && fromUnit.isMole_ && toUnit.isMole_) returnObj['msg'].push('A molecular weight was specified but a ' + 'mass <-> mole conversion cannot be executed for two mole-based ' + 'units.  A regular conversion was attempted.');
+              // if no molecular weight was specified perform a normal conversion
+              if (!molecularWeight) {
                 returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
-              }
-              // if the "from" unit is a mole-based unit, assume a mole to mass
-              // request
-              else if (fromUnit.isMole_) {
+              } else {
+                if (fromUnit.isMole_ && toUnit.isMole_) {
+                  throw new Error('A molecular weight was specified ' + 'but a mass <-> mole conversion cannot be executed for two ' + 'mole-based units.  No conversion was attempted.');
+                }
+                if (!fromUnit.isMole_ && !toUnit.isMole_) {
+                  throw new Error('A molecular weight was specified ' + 'but a mass <-> mole conversion cannot be executed when ' + 'neither unit is mole-based.  No conversion was attempted.');
+                }
+                if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+                  throw new Error(fromUnitCode + ' and ' + toUnitCode + ' ' + 'cannot be converted between mole and mass units.');
+                }
+
+                // if the "from" unit is a mole-based unit, assume a mole to mass
+                // request
+                if (fromUnit.isMole_) {
                   returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
                 }
                 // else the "to" unit must be the mole-based unit, so assume a
@@ -31177,7 +31185,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
                 else {
                     returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
                   }
-
+              } // end if a molecular weight was specified
               returnObj['status'] = 'succeeded';
               returnObj['fromUnit'] = fromUnit;
               returnObj['toUnit'] = toUnit;
@@ -32350,6 +32358,38 @@ var Unit = exports.Unit = function () {
     } // end power
 
 
+    /*
+     * This function tests this unit against the unit passed in to see if the
+     * two are mole to mass commensurable.  It assumes that one of the units
+     * is a mole-based unit and the other is a mass-based unit.  It does NOT
+     * check to validate that assumption.
+     *
+     * The check is made by setting the dimension vector element corresponding
+     * to the base mass unit (gram) in the mole unit, and then comparing the
+     * two dimension vectors.  If they match, the units are commensurable.
+     * Otherwise they are not.
+     *
+     * @param unit2 the unit to be compared to this one
+     * @returns boolean indicating commensurability
+     */
+
+  }, {
+    key: "isMoleMassCommensurable",
+    value: function isMoleMassCommensurable(unit2) {
+      var tabs = UnitTables.getInstance();
+      var d = tabs.getMassDimensionIndex();
+      var commensurable = false;
+      if (this.isMole_) {
+        var testDim = this.dim_.clone();
+        testDim.setElementAt(d);
+        commensurable = testDim.equals(unit2.dim_);
+      } else {
+        var _testDim = unit2.dim_.clone();
+        _testDim.setElementAt(d);
+        commensurable = _testDim.equals(this.dim_);
+      }
+      return commensurable;
+    }
   }]);
 
   return Unit;
@@ -33949,6 +33989,17 @@ var UnitTables = exports.UnitTables = function () {
      */
     this.unitSynonyms_ = {};
 
+    /*
+     * Holds onto the index of the index of the dimension vector flag for
+     * the base mass unit (gram).  This is set when the base unit (gram) is
+     * created, and is stored here so that it doesn't have to be found
+     * over and over again to try to determine whether or not a unit is
+     * mass-based (for mole<->mass conversions)
+     *
+     * @type integer
+     */
+    this.massDimIndex_ = 0;
+
     // Make this a singleton - from mrme44 May 18 comment on
     // on GitHub Gist page of SanderLi/Singleton.js.  Modified
     // for this class.
@@ -34036,11 +34087,13 @@ var UnitTables = exports.UnitTables = function () {
 
     /**
      * Adds a Unit object to the unitCodes_, unitUcCodes_, unitLcCodes_ and
-     * codeOrder_ tables.
+     * codeOrder_ tables.  This also sets the mass dimension index when the
+     * base mass unit (gram) is read.
      *
      * @param theUnit the unit to be added
      * @returns nothing
-     * @throws an error if theunitCodes_ table already contains a unit with the code
+     * @throws an error if the unitCodes_ table already contains a unit with
+     *  the code
      */
 
   }, {
@@ -34053,6 +34106,12 @@ var UnitTables = exports.UnitTables = function () {
         if (this.unitCodes_[uCode]) throw new Error('UnitTables.addUnitCode called, already contains entry for ' + ('unit with code = ' + uCode));else {
           this.unitCodes_[uCode] = theUnit;
           this.codeOrder_.push(uCode);
+          if (uCode == 'g') {
+            var dimVec = theUnit.dim_.dimVec_;
+            var d = 0;
+            for (; d < dimVec.length && dimVec[d] < 1; d++) {}
+            this.massDimIndex_ = d;
+          }
         }
       } else throw new Error('UnitTables.addUnitCode called for unit that has ' + 'no code.');
     } // end addUnitCode
@@ -34380,6 +34439,17 @@ var UnitTables = exports.UnitTables = function () {
         nameList[i] = codes[i] + Ucum.codeSep_ + this.unitCodes_[codes[i]].name_;
       } // end do for each code
       return nameList;
+    }
+
+    /*
+     * Returns the mass dimension index
+     * @returns this.massDimIndex_
+     */
+
+  }, {
+    key: 'getMassDimensionIndex',
+    value: function getMassDimensionIndex() {
+      return this.massDimIndex_;
     }
 
     /**

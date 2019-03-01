@@ -100,6 +100,17 @@ var UnitTables = exports.UnitTables = function () {
      */
     this.unitSynonyms_ = {};
 
+    /*
+     * Holds onto the index of the index of the dimension vector flag for
+     * the base mass unit (gram).  This is set when the base unit (gram) is
+     * created, and is stored here so that it doesn't have to be found
+     * over and over again to try to determine whether or not a unit is
+     * mass-based (for mole<->mass conversions)
+     *
+     * @type integer
+     */
+    this.massDimIndex_ = 0;
+
     // Make this a singleton - from mrme44 May 18 comment on
     // on GitHub Gist page of SanderLi/Singleton.js.  Modified
     // for this class.
@@ -187,11 +198,13 @@ var UnitTables = exports.UnitTables = function () {
 
     /**
      * Adds a Unit object to the unitCodes_, unitUcCodes_, unitLcCodes_ and
-     * codeOrder_ tables.
+     * codeOrder_ tables.  This also sets the mass dimension index when the
+     * base mass unit (gram) is read.
      *
      * @param theUnit the unit to be added
      * @returns nothing
-     * @throws an error if theunitCodes_ table already contains a unit with the code
+     * @throws an error if the unitCodes_ table already contains a unit with
+     *  the code
      */
 
   }, {
@@ -204,6 +217,12 @@ var UnitTables = exports.UnitTables = function () {
         if (this.unitCodes_[uCode]) throw new Error('UnitTables.addUnitCode called, already contains entry for ' + ('unit with code = ' + uCode));else {
           this.unitCodes_[uCode] = theUnit;
           this.codeOrder_.push(uCode);
+          if (uCode == 'g') {
+            var dimVec = theUnit.dim_.dimVec_;
+            var d = 0;
+            for (; d < dimVec.length && dimVec[d] < 1; d++) {}
+            this.massDimIndex_ = d;
+          }
         }
       } else throw new Error('UnitTables.addUnitCode called for unit that has ' + 'no code.');
     } // end addUnitCode
@@ -531,6 +550,17 @@ var UnitTables = exports.UnitTables = function () {
         nameList[i] = codes[i] + Ucum.codeSep_ + this.unitCodes_[codes[i]].name_;
       } // end do for each code
       return nameList;
+    }
+
+    /*
+     * Returns the mass dimension index
+     * @returns this.massDimIndex_
+     */
+
+  }, {
+    key: 'getMassDimensionIndex',
+    value: function getMassDimensionIndex() {
+      return this.massDimIndex_;
     }
 
     /**
