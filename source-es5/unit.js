@@ -944,8 +944,10 @@ var Unit = exports.Unit = function () {
     /*
      * This function tests this unit against the unit passed in to see if the
      * two are mole to mass commensurable.  It assumes that one of the units
-     * is a mole-based unit and the other is a mass-based unit.  It does NOT
-     * check to validate that assumption.
+     * is a mole-based unit and the other is a mass-based unit.  It also assumes
+     * that the mole-based unit has a single mole unit in the numerator and that
+     * the mass-based unit has a single mass unit in the numerator.  It does NOT
+     * check to validate those assumptions.
      *
      * The check is made by setting the dimension vector element corresponding
      * to the base mass unit (gram) in the mole unit, and then comparing the

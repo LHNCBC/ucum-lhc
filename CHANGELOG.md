@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.6.0] - 2019-03-
+## [2.6.0] - 2019-03-07
 ### Added
-- Added library function to convert mass to moles expression.
+- Added capability to existing convertUnitTo library function to convert mass 
+to moles expression.
 
 ## [2.5.5] - 2019-02-28
 ### Fixed

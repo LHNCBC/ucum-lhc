@@ -157,7 +157,7 @@ of unit strings, and includes a link to the
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
 the full deal.
 
-**convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest)**
+**convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight)**
 
 This method converts a number of one type of unit to the equivalent number of
 another type of unit.  Note that the number returned is not trimmed or
@@ -177,7 +177,9 @@ using them in actual clinical settings.
 * _@param_ molecularWeight the molecular weight of the substance in question
    when a conversion is being requested from mass to moles and vice versa.
    This is required when one of the units represents a value in moles.  It is
-   ignored if neither unit includes a measurement in moles.    
+   ignored if neither unit includes a measurement in moles.  In such cases
+   the mole-based unit must have a single mole unit in the numerator and the
+   mass-based unit must have a single mass unit in the numerator.  
 * _@returns_ a hash with six elements:
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
