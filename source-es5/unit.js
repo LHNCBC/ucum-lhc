@@ -27,6 +27,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 var isInteger = require("is-integer");
+var UnitTables = require("./unitTables.js").UnitTables;
 
 var Unit = exports.Unit = function () {
 
@@ -153,6 +154,12 @@ var Unit = exports.Unit = function () {
      * Flag indicating whether or not this is an arbitrary unit
      */
     this.isArbitrary_ = attrs['isArbitrary_'] || false;
+
+    /*
+     * Flag indicating whether or not this unit represents a mole, i.e.,
+     * the base unit of an amount of substance.
+     */
+    this.isMole_ = attrs['isMole_'] || false;
 
     /*
      * Added when added LOINC list of units
@@ -524,6 +531,77 @@ var Unit = exports.Unit = function () {
 
 
     /**
+     * Calculates the number of units that would result from converting a unit
+     * expressed in mass/grams to a unit expressed in moles.  The "this" unit is
+     * the unit expressed in some form of mass (g, mg, mmg, kg, whatever) and the
+     * target or "to" unit - the molUnit parameter - is a unit expressed in moles
+     * - mol, umol, mmol, etc.  The unit expressions surrounding the moles and
+     * mass must be convertible.  No validation of this requirement is performed.
+     *
+     * @param amt the quantity of this unit to be converted
+     * @param molUnit the target/to unit for which the converted # is wanted
+     * @param molecularWeight the molecular weight of the substance for which the
+     *  conversion is being made
+     * @return the equivalent amount in molUnit
+     */
+
+  }, {
+    key: "convertMassToMol",
+    value: function convertMassToMol(amt, molUnit, molecularWeight) {
+      // The prefix values that have been applied to this unit, which is the mass
+      // (grams) unit, are reflected in the magnitude.  So the number of moles
+      // represented by this unit equals the number of grams -- amount * magnitude
+      // divided by the molecular Weight
+      var molAmt = this.magnitude_ * amt / molecularWeight;
+      // The molUnit's basic magnitude, before prefixes are applied,
+      // is avogadro's number, get that and divide it out of the current magnitude.
+      var tabs = UnitTables.getInstance();
+      var avoNum = tabs.getUnitByCode('mol').magnitude_;
+      var molesFactor = molUnit.magnitude_ / avoNum;
+      // return the molAmt divided by the molesFactor as the number of moles
+      // for the molUnit
+      return molAmt / molesFactor;
+    }
+
+    /**
+     * Calculates the number of units that would result from converting a unit
+     * expressed in moles to a unit expressed in mass (grams).  The "this" unit
+     * is the unit expressed in some form of moles, e.g., mol, umol, mmol, etc.,
+     * and the target or "to" unit is a unit expressed in some form of mass, e.g.,
+     * g, mg, mmg, kg, etc.  Any unit expressions surrounding the moles and mass
+     * must be convertible. No validation of this requirement is performed.
+     *
+     * @param amt the quantity of this unit to be converted
+     * @param massUnit the target/to unit for which the converted # is wanted
+     * @param molecularWeight the molecular weight of the substance for which the
+     *  conversion is being made
+     * @return the equivalent amount in massUnit
+     */
+
+  }, {
+    key: "convertMolToMass",
+    value: function convertMolToMass(amt, massUnit, molecularWeight) {
+      // A simple mole unit has a magnitude of avogadro's number.  Get that
+      // number now (since not everyone agrees on what it is, and what is
+      // being used in this system might change).
+      var tabs = UnitTables.getInstance();
+      var avoNum = tabs.getUnitByCode('mol').magnitude_;
+      // Determine what prefix values (mg or mg/dL, etc.) have been applied to
+      // this unit by dividing the simple mole unit magnitude out of the
+      // current mole unit magnitude.
+      var molesFactor = this.magnitude_ / avoNum;
+      // The number of grams (mass) is equal to the number of moles (amt)
+      // times the molecular weight.  We also multiply that by the prefix values
+      // applied to the current unit (molesFactor) to get the grams for this
+      // particular unit.
+      var massAmt = molesFactor * amt * molecularWeight;
+      // Finally, we return the mass amount/grams for this particular unit
+      // divided by any effects of prefixes applied to the "to" unit, which
+      // is assumed to be some form of a gram unit
+      return massAmt / massUnit.magnitude_;
+    }
+
+    /**
      * Mutates this unit into a unit on a ratio scale and converts a specified
      * number of units to an appropriate value for this converted unit
      *
@@ -570,8 +648,6 @@ var Unit = exports.Unit = function () {
      * units is a non-ratio unit the other must be dimensionless or
      * else an exception is thrown.
      *
-     * If either unit is an arbitrary unit an exception is raised.
-     *
      * This function does NOT modify this unit
      * @param unit2 the unit to be multiplied with this one
      * @return this unit after it is multiplied
@@ -585,16 +661,12 @@ var Unit = exports.Unit = function () {
 
       var retUnit = this.clone();
 
-      if (retUnit.isArbitrary_) throw new Error("Attempt to multiply arbitrary unit " + retUnit.name_);
-      if (unit2.isArbitrary_) throw new Error("Attempt to multiply by arbitrary unit " + unit2.name_);
-
       if (retUnit.cnv_ != null) {
         if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + retUnit.name_ + " " + 'failed.');
       } // end if this unit has a conversion function
 
       else if (unit2.cnv_ != null) {
           if (!retUnit.dim_ || retUnit.dim_.isZero()) {
-            //retUnit.assign(unit2);
             retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
             retUnit.cnv_ = unit2.cnv_;
           } else throw new Error("Attempt to multiply non-ratio unit " + unit2.name_);
@@ -624,6 +696,12 @@ var Unit = exports.Unit = function () {
       retUnit.guidance_ = '';
       if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
 
+      // A unit that has the mole or arbitrary attribute
+      // taints any unit created from it via an arithmetic
+      // operation.  Taint accordingly
+      if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
+
       return retUnit;
     } // end multiplyThese
 
@@ -632,8 +710,6 @@ var Unit = exports.Unit = function () {
      * Divides this unit by another unit. If this unit is not on a ratio
      * scale an exception is raised. Mutating to a ratio scale unit
      * is not possible for a unit, only for a measurement.
-     *
-     * If either unit is an arbitrary unit an exception is raised.
      *
      * This unit is NOT modified by this function.
      * @param unit2 the unit by which to divide this one
@@ -646,9 +722,6 @@ var Unit = exports.Unit = function () {
     value: function divide(unit2) {
 
       var retUnit = this.clone();
-
-      if (retUnit.isArbitrary_) throw new Error("Attempt to divide arbitrary unit " + retUnit.name_);
-      if (unit2.isArbitrary_) throw new Error("Attempt to divide by arbitrary unit " + unit2.name_);
 
       if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
       if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
@@ -679,6 +752,13 @@ var Unit = exports.Unit = function () {
         // and give the inverted clone to this unit.
         else retUnit.dim_ = unit2.dim_.clone().minus();
       } // end if unit2 has a dimension object
+
+      // A unit that has the mole or arbitrary attribute
+      // taints any unit created from it via an arithmetic
+      // operation.  Taint accordingly
+      if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
+
       return retUnit;
     } // end divide
 
@@ -861,6 +941,40 @@ var Unit = exports.Unit = function () {
     } // end power
 
 
+    /*
+     * This function tests this unit against the unit passed in to see if the
+     * two are mole to mass commensurable.  It assumes that one of the units
+     * is a mole-based unit and the other is a mass-based unit.  It also assumes
+     * that the mole-based unit has a single mole unit in the numerator and that
+     * the mass-based unit has a single mass unit in the numerator.  It does NOT
+     * check to validate those assumptions.
+     *
+     * The check is made by setting the dimension vector element corresponding
+     * to the base mass unit (gram) in the mole unit, and then comparing the
+     * two dimension vectors.  If they match, the units are commensurable.
+     * Otherwise they are not.
+     *
+     * @param unit2 the unit to be compared to this one
+     * @returns boolean indicating commensurability
+     */
+
+  }, {
+    key: "isMoleMassCommensurable",
+    value: function isMoleMassCommensurable(unit2) {
+      var tabs = UnitTables.getInstance();
+      var d = tabs.getMassDimensionIndex();
+      var commensurable = false;
+      if (this.isMole_) {
+        var testDim = this.dim_.clone();
+        testDim.setElementAt(d);
+        commensurable = testDim.equals(unit2.dim_);
+      } else {
+        var _testDim = unit2.dim_.clone();
+        _testDim.setElementAt(d);
+        commensurable = _testDim.equals(this.dim_);
+      }
+      return commensurable;
+    }
   }]);
 
   return Unit;

@@ -101,7 +101,7 @@ return, if requested, a list of suggested units in the suggestions array
 that is returned.  Suggestions are based on matching the expression with
 unit names and synonyms.
 
-* _@param_ uStr the string to be validated
+* _@param_ uStr the string to be validated;
 * _@param_ suggest a boolean to indicate whether or not suggestions are
     requested for a string that cannot be resolved to a valid unit;
     true indicates suggestions are wanted; false indicates they are not,
@@ -157,7 +157,7 @@ of unit strings, and includes a link to the
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
 the full deal.
 
-**convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest)**
+**convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight)**
 
 This method converts a number of one type of unit to the equivalent number of
 another type of unit.  Note that the number returned is not trimmed or
@@ -166,14 +166,19 @@ rounded to any particular precision or significant digits.
 Disclaimer:  Conversion results should be verified independently before
 using them in actual clinical settings.
 
-* _@param_ fromUnitCode the unit code/expression/string of the unit to be converted
-* _@param_ fromVal the number of "from" units to be converted to "to" units
+* _@param_ fromUnitCode the unit code/expression/string of the unit to be converted;
+* _@param_ fromVal the number of "from" units to be converted to "to" units;
 * _@param_ toUnitCode the unit code/expression/string of the unit that the from 
-  field is to be converted to
+  field is to be converted to;
 * _@param_ suggest a boolean to indicate whether or not suggestions are
    requested for a string that cannot be resolved to a valid unit;
    true indicates suggestions are wanted; false indicates they are not,
    and is the default if the parameter is not specified;
+* _@param_ molecularWeight the molecular weight of the substance in question
+   when a conversion is being requested from mass to moles and vice versa.
+   It is ignored if neither unit includes a measurement in moles.  In such cases
+   the mole-based unit must have a single mole unit in the numerator and the
+   mass-based unit must have a single mass unit in the numerator.  
 * _@returns_ a hash with six elements:
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if

@@ -38,7 +38,6 @@ export class UcumDataUpdater {
 
   constructor() {
     // Make this a singleton.  See UnitTables constructor for details.
-
     let holdThis = UcumDataUpdater.prototype;
     UcumDataUpdater = function () {
       throw (new Error('UcumDataUpdater is a Singleton.  ' +
@@ -146,7 +145,7 @@ export class UcumDataUpdater {
   addNewUnit(inputRec) {
 
     var us = UnitString.getInstance();
-    var parseResp = us.parseString(inputRec[Ucum.inputKey_]);
+    var parseResp = us.parseString(inputRec[Ucum.inputKey_], 'convert', false);
 
     var newUnit = parseResp[0];
     if (newUnit) {

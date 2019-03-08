@@ -162,8 +162,8 @@ describe('Test unit scalar multiplication functions', function() {
   });
 }) ; // end Test unit scalar multiplication functions
 
-describe('Test attempts to multiply/divide arbitrary units', function() {
-  it('should throw an error on attempt to multiply mol by cfu', function(){
+describe('Test requests to multiply/divide arbitrary units', function() {
+  describe('Test multiplication of arbitrary units', function(){
     var molUnit = uTabs.getUnitByCode('mol');
     var cfuUnit = uTabs.getUnitByCode('[CFU]');
     var errMsg = null;
@@ -172,12 +172,19 @@ describe('Test attempts to multiply/divide arbitrary units', function() {
     }
     catch(err) {
       errMsg = err.message;
-    }
-    assert.equal('Attempt to multiply by arbitrary unit colony forming units',
-      errMsg);
+    };
+    it('should not throw an error on attempt to multiply mol by cfu', function(){
+      assert.equal(errMsg, null);
+    });
+    it('should return a properly concatenated name for mol * [CRU]', function(){
+      assert.equal(retUnit.csCode_, 'mol.[CFU]');
+    });
+    it('should return a unit with the isMole_ & isArbitrary_ flags set', function(){
+      assert.equal(retUnit.isMole_, true);
+      assert.equal(retUnit.isArbitrary_, true);
+    });
   });
-
-  it('should throw an error on attempt to divide cfu by mol', function(){
+  describe('Test division of arbitrary units', function (){
     var molUnit = uTabs.getUnitByCode('mol');
     var cfuUnit = uTabs.getUnitByCode('[CFU]');
     var errMsg = null;
@@ -186,11 +193,19 @@ describe('Test attempts to multiply/divide arbitrary units', function() {
     }
     catch(err) {
       errMsg = err.message;
-    }
-    assert.equal('Attempt to divide arbitrary unit colony forming units',
-      errMsg);
+    };
+    it('should not throw an error on attempt to divide cfu by mol', function(){
+      assert.equal(errMsg, null);
+    });
+    it('should return a properly concatenated name for [CFU] / mol', function(){
+      assert.equal(retUnit.csCode_, '[CFU]/mol');
+    });
+    it('should return a unit with the isMole_ & isArbitrary_ flags set', function(){
+      assert.equal(retUnit.isMole_, true);
+      assert.equal(retUnit.isArbitrary_, true);
+    });
   });
-}) ; // end Test attempts to multiply/divide arbitrary units
+}) ; // end Test requests to multiply/divide arbitrary units
 
 describe('Test attempts to convert arbitrary units', function() {
   it('should throw an error on attempt to convert 5 iu to cfu', function(){

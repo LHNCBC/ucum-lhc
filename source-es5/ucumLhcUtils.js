@@ -183,6 +183,10 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      *  requested for a string that cannot be resolved to a valid unit;
      *  true indicates suggestions are wanted; false indicates they are not,
      *  and is the default if the parameter is not specified;
+     * @param molecularWeight the molecular weight of the substance in question
+     *  when a conversion is being requested from mass to moles and vice versa.
+     *  This is required when one of the units represents a value in moles.  It is
+     *  ignored if neither unit includes a measurement in moles.
      * @returns a hash with six elements:
      *  'status' that will be: 'succeeded' if the conversion was successfully
      *     calculated; 'failed' if the conversion could not be made, e.g., if
@@ -229,9 +233,10 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
   }, {
     key: 'convertUnitTo',
-    value: function convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest) {
-
+    value: function convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight) {
       if (suggest === undefined) suggest = false;
+
+      if (molecularWeight === undefined) molecularWeight = null;
 
       var returnObj = { 'status': 'failed',
         'toVal': null,
@@ -284,7 +289,31 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
           if (fromUnit && toUnit) {
             try {
-              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+              // if no molecular weight was specified perform a normal conversion
+              if (!molecularWeight) {
+                returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+              } else {
+                if (fromUnit.isMole_ && toUnit.isMole_) {
+                  throw new Error('A molecular weight was specified ' + 'but a mass <-> mole conversion cannot be executed for two ' + 'mole-based units.  No conversion was attempted.');
+                }
+                if (!fromUnit.isMole_ && !toUnit.isMole_) {
+                  throw new Error('A molecular weight was specified ' + 'but a mass <-> mole conversion cannot be executed when ' + 'neither unit is mole-based.  No conversion was attempted.');
+                }
+                if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+                  throw new Error(fromUnitCode + ' and ' + toUnitCode + ' ' + 'cannot be converted between mole and mass units.');
+                }
+
+                // if the "from" unit is a mole-based unit, assume a mole to mass
+                // request
+                if (fromUnit.isMole_) {
+                  returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
+                }
+                // else the "to" unit must be the mole-based unit, so assume a
+                // mass to mole request
+                else {
+                    returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
+                  }
+              } // end if a molecular weight was specified
               returnObj['status'] = 'succeeded';
               returnObj['fromUnit'] = fromUnit;
               returnObj['toUnit'] = toUnit;
