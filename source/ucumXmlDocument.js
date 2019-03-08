@@ -220,6 +220,7 @@ export class UcumXmlDocument {
         attrs['class_'] = curUA.attr.class;
       }
       let valNode = curUA.childNamed('value');
+      attrs['isMole_'] = (curUA.attr.Code == 'mol') ;
 
       // Process special units
       if (curUA.attr.isSpecial) {
@@ -430,7 +431,7 @@ export class UcumXmlDocument {
    * This writes out the ucumDefs data file, which contains all prefixes and
    * units (base units and others) read and parsed from the XML file.
    *
-   * This creates the file in the dist/data directory and appends the
+   * This creates the file in the data directory and appends the
    * current Date object value to "ucumDefs" so that this does not run
    * into problems with a previously existing file.
    */
@@ -451,7 +452,7 @@ export class UcumXmlDocument {
                      'prefixes' : pfxArray,
                      'units' : uArray};
     let dt = new Date();
-    jsonfile.writeFileSync('../dist/data/ucumDefs' + dt.valueOf() + '.json',
+    jsonfile.writeFileSync('../data/ucumDefs' + dt.valueOf() + '.json',
                            defsHash,
                            {spaces: 2, encoding: 'utf8', mode: 0o644, flag: 'w'});
   } // end writeJsonFile
@@ -460,7 +461,7 @@ export class UcumXmlDocument {
    * This writes out the ucumDefs data file, which contains all prefixes and
    * units (base units and others) read and parsed from the XML file.
    *
-   * This creates the file in the dist/data directory and appends the
+   * This creates the file in the data directory and appends the
    * current Date object value to "ucumDefs" so that this does not run
    * into problems with a previously existing file.
    */
@@ -481,7 +482,7 @@ export class UcumXmlDocument {
     let versionText = `version ${versionNum}, revision ${revNum}, ` +
              `dated ${revDate}`;
 
-    fs.writeFileSync('../dist/data/ucumEssenceVersion.txt',
+    fs.writeFileSync('../data/ucumEssenceVersion.txt',
       versionText, {encoding: 'utf8', mode: 0o644, flag: 'w'});
   } // end writeVersionText
 

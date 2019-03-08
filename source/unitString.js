@@ -158,6 +158,7 @@ export class UnitString {
     else {
       this.suggestions_ = [] ;
     }
+
     this.retMsg_ = [];
     this.parensUnits_ = [];
     this.annotations_ = [] ;
@@ -239,6 +240,7 @@ export class UnitString {
    *
    * @param uStr the string defining the unit
    * @param origString the original unit string passed in
+   *
    * @returns
    *  an array containing:
    *    the unit object (or null if there were problems creating the unit); and
@@ -1404,6 +1406,7 @@ export class UnitString {
    *  derived from the unit string passed in to parseString
    * @param origString the original string to be parsed; used to provide
    *  context for messages
+   *
    * @returns a single unit object that is the result of the unit arithmetic
    *
    * the this.retMsg_ array will be updated with any user messages

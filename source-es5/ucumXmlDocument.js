@@ -226,6 +226,7 @@ var UcumXmlDocument = exports.UcumXmlDocument = function () {
           attrs['class_'] = curUA.attr.class;
         }
         var valNode = curUA.childNamed('value');
+        attrs['isMole_'] = curUA.attr.Code == 'mol';
 
         // Process special units
         if (curUA.attr.isSpecial) {
@@ -421,7 +422,7 @@ var UcumXmlDocument = exports.UcumXmlDocument = function () {
      * This writes out the ucumDefs data file, which contains all prefixes and
      * units (base units and others) read and parsed from the XML file.
      *
-     * This creates the file in the dist/data directory and appends the
+     * This creates the file in the data directory and appends the
      * current Date object value to "ucumDefs" so that this does not run
      * into problems with a previously existing file.
      */
@@ -440,14 +441,14 @@ var UcumXmlDocument = exports.UcumXmlDocument = function () {
         'prefixes': pfxArray,
         'units': uArray };
       var dt = new Date();
-      jsonfile.writeFileSync('../dist/data/ucumDefs' + dt.valueOf() + '.json', defsHash, { spaces: 2, encoding: 'utf8', mode: 420, flag: 'w' });
+      jsonfile.writeFileSync('../data/ucumDefs' + dt.valueOf() + '.json', defsHash, { spaces: 2, encoding: 'utf8', mode: 420, flag: 'w' });
     } // end writeJsonFile
 
     /**
      * This writes out the ucumDefs data file, which contains all prefixes and
      * units (base units and others) read and parsed from the XML file.
      *
-     * This creates the file in the dist/data directory and appends the
+     * This creates the file in the data directory and appends the
      * current Date object value to "ucumDefs" so that this does not run
      * into problems with a previously existing file.
      */
@@ -470,7 +471,7 @@ var UcumXmlDocument = exports.UcumXmlDocument = function () {
       revDate = revDate.trim();
       var versionText = "version " + versionNum + ", revision " + revNum + ", " + ("dated " + revDate);
 
-      fs.writeFileSync('../dist/data/ucumEssenceVersion.txt', versionText, { encoding: 'utf8', mode: 420, flag: 'w' });
+      fs.writeFileSync('../data/ucumEssenceVersion.txt', versionText, { encoding: 'utf8', mode: 420, flag: 'w' });
     } // end writeVersionText
 
   }]);

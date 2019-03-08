@@ -107,7 +107,7 @@ export var Ucum = {
    * avoid that.
    */
    specUnits_ : { 'B[10.nV]' : 'specialUnitOne',
-                  '[m/s2/Hz^(1/2)]' : 'specialUnitTwo'} 
+                  '[m/s2/Hz^(1/2)]' : 'specialUnitTwo'}
 } ;
 
 
