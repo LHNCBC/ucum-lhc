@@ -176,8 +176,7 @@ using them in actual clinical settings.
    and is the default if the parameter is not specified;
 * _@param_ molecularWeight the molecular weight of the substance in question
    when a conversion is being requested from mass to moles and vice versa.
-   This is required when one of the units represents a value in moles.  It is
-   ignored if neither unit includes a measurement in moles.  In such cases
+   It is ignored if neither unit includes a measurement in moles.  In such cases
    the mole-based unit must have a single mole unit in the numerator and the
    mass-based unit must have a single mass unit in the numerator.  
 * _@returns_ a hash with six elements:
