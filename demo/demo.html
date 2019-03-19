@@ -82,10 +82,7 @@
                   </span>
                   <div id="convertFromName" class="unit-name" wrap="soft"></div>
                 </div>
-                <span id="advSearchOpts" type="button" class="standalone-button"
-                      onclick="demoPkg.UcumDemo.getInstance().toggleDisplay(
-                              'advancedSearchCnv','toggleAdvancedSearchCnvB',
-                              'Hide', 'Show')">advanced options</span>
+
 
               </div> <!-- left inner container -->
               <div class="flex-container middle-column">
@@ -108,14 +105,28 @@
                   </span>
                   <div id="convertToName" class="unit-name" wrap="soft"></div>
                 </div>
+                <!-- we don't seem to be using the precision-line at the moment
+                     but leaving it here is required for the precision code
+                     left in demo.js.  #precision-line in the css file is set
+                     to display: hidden-->
                 <div id="precision-line">
                   <input type="number" min="0" max="20" id="precision"
                          onchange="demoPkg.UcumDemo.getInstance().updatePrecision('convMsg')">
                       decimal digits.
                 </div>
+
               </div><!-- right inner container -->
 
             </div> <!-- outer-container -->
+            <div id="molecular-weight">
+              Molecular weight of the substance being converted: &nbsp
+              <input type="text" id="moleWeight"
+                     onchange="demoPkg.UcumDemo.getInstance().checkNumVal('moleWeight')">
+            </div>
+            <span id="advSearchOpts" type="button" class="standalone-button"
+                  onclick="demoPkg.UcumDemo.getInstance().toggleDisplay(
+                              'advancedSearchCnv','toggleAdvancedSearchCnvB',
+                              'Hide', 'Show')">advanced options</span>
             <div id="advancedSearchCnv" style="display: none">
               <!-- this section is built in the demo code when the page is loaded -->
             </div> <!-- advancedSearchCnv division -->

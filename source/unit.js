@@ -8,11 +8,12 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
+var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
-var isInteger = require("is-integer");
-var UnitTables = require("./unitTables.js").UnitTables;
+var UnitTables;
 
+var isInteger = require("is-integer");
 import * as intUtils_ from "./ucumInternalUtils.js";
 
 export class Unit {
@@ -268,7 +269,7 @@ export class Unit {
   /**
    * This assigns all properties of a unit passed to it to this unit.
    *
-   * @param the unit whose properties are to be assigned to this one.
+   * @param unit2 the unit whose properties are to be assigned to this one.
    * @return nothing; this unit is updated
    */
   assign(unit2) {
@@ -315,12 +316,11 @@ export class Unit {
    */
   fullEquals(unit2) {
 
-    let match = true ;
     let thisAttr = Object.keys(this).sort();
     let u2Attr = Object.keys(unit2).sort();
 
     let keyLen = thisAttr.length ;
-    match = (keyLen === u2Attr.length);
+    let match = (keyLen === u2Attr.length);
 
     // check each attribute.   Dimension objects have to checked using
     // the equals function of the Dimension class.
@@ -383,8 +383,16 @@ export class Unit {
 
     // reject request if both units have dimensions that are not equal
     if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
-      throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
-                      `to ${this.csCode_}.`));
+      // check first to see if a mole<->mass conversion is appropriate
+      if ((((this.isMole_ && fromUnit._isMassBased()) ||
+            (this._isMassBased() && fromUnit.isMole_))) &&
+           this.isMoleMassCommensurable(fromUnit)) {
+        throw(new Error(Ucum.needMoleWeightMsg_));
+      }
+      else {
+        throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
+          `to ${this.csCode_}.`));
+      }
     }
     // reject request if there is a "from" dimension but no "to" dimension
     if (fromUnit.dim_ && (!this.dim_ || this.dim_.isNull())) {
@@ -510,7 +518,8 @@ export class Unit {
     // built here really is, it will have to stay.
     for (let i = 0, max = Dimension.getMax(); i < max; i++) {
       let elem = this.dim_.getElementAt(i);
-      let uA = UnitTables.getUnitsByDimension(new Dimension(i));
+      let tabs = this._getUnitTables();
+      let uA = tabs.getUnitsByDimension(new Dimension(i));
       if(uA == null)
         throw(new Error(`Can't find base unit for dimension ${i}`));
       this.name_ = uA.name + elem;
@@ -542,7 +551,7 @@ export class Unit {
     let molAmt = (this.magnitude_ * amt)/molecularWeight ;
     // The molUnit's basic magnitude, before prefixes are applied,
     // is avogadro's number, get that and divide it out of the current magnitude.
-    let tabs = UnitTables.getInstance();
+    let tabs = this._getUnitTables();
     let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
     let molesFactor = molUnit.magnitude_ / avoNum ;
     // return the molAmt divided by the molesFactor as the number of moles
@@ -568,7 +577,7 @@ export class Unit {
     // A simple mole unit has a magnitude of avogadro's number.  Get that
     // number now (since not everyone agrees on what it is, and what is
     // being used in this system might change).
-    let tabs = UnitTables.getInstance();
+    let tabs = this._getUnitTables();
     let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
     // Determine what prefix values (mg or mg/dL, etc.) have been applied to
     // this unit by dividing the simple mole unit magnitude out of the
@@ -978,7 +987,7 @@ export class Unit {
    * @returns boolean indicating commensurability
    */
   isMoleMassCommensurable(unit2) {
-    let tabs = UnitTables.getInstance();
+    let tabs = this._getUnitTables();
     let d = tabs.getMassDimensionIndex();
     let commensurable = false ;
     if (this.isMole_) {
@@ -992,6 +1001,38 @@ export class Unit {
       commensurable = (testDim.equals(this.dim_));
     }
     return commensurable ;
+  }
+
+
+  /**
+   * This checks a unit object to see if is mass-based, by checking to see
+   * if its dimension vector contains a 1 at the index where the base gram
+   * unit contains a 1.
+   *
+   * @private
+   */
+  _isMassBased() {
+    let tabs = this._getUnitTables();
+    let d = tabs.getMassDimensionIndex();
+    let massBased = false ;
+    if (this.dim_)
+      massBased = (this.dim_.getElementAt(d) == 1) ;
+    return massBased ;
+  }
+
+
+  /**
+   * This returns the UnitTables singleton object.  Including the require
+   * statement included here causes a circular dependency condition that
+   * resulted in the UnitTables object not being defined for the Unit object.
+   * sigh.  Thanks, Paul, for figuring this out.
+   *
+   * @private
+   */
+  _getUnitTables() {
+    if (!UnitTables)
+      UnitTables = require('./unitTables.js').UnitTables;
+    return UnitTables.getInstance();
   }
 
 } // end Unit class

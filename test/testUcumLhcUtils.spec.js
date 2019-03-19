@@ -6,6 +6,7 @@
  */
 
 var assert = require('assert');
+var Ucum = require('../source-es5/config.js').Ucum;
 var UcumJsonDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs ;
 var UTables = require("../source-es5/unitTables.js").UnitTables;
 var Utils = require("../source-es5/ucumLhcUtils.js").UcumLhcUtils;
@@ -188,20 +189,11 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
   });
 
-  it("should return an error for an attempt to translate mol to 32.4(ug/g).mg", function() {
+  it("should return a missing molecular weight error for an attempt to translate mol to 32.4(ug/g).mg", function() {
     var resp4 = utils.convertUnitTo('mol', 1, '32.4(ug/g).mg');
     assert.equal(resp4.status, 'failed', resp4.status);
     assert.equal(resp4.msg[0], '4(ug/g) is not a valid UCUM code.  We assumed you meant 4.(ug/g).', resp4.msg[0]);
-    assert.equal(resp4.msg[1], 'Sorry.  mol cannot be converted to (32.(4.(ug/g))).mg.', resp4.msg[1]);
-    assert.equal(resp4.toVal, null, resp4.toVal);
-    assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
-    assert.equal(resp4.toUnit, undefined, resp4.toUnit);
-  });
-
-  it("should return an error for an attempt to translate mmol/mol to kg", function() {
-    var resp4 = utils.convertUnitTo('mmol/mol', 1, 'kg');
-    assert.equal(resp4.status, 'failed', resp4.status);
-    assert.equal(resp4.msg[0], 'Sorry.  mmol/mol cannot be converted to kg.', resp4.msg[0]);
+    assert.equal(resp4.msg[1], Ucum.needMoleWeightMsg_);
     assert.equal(resp4.toVal, null, resp4.toVal);
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);

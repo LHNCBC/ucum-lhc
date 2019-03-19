@@ -81,6 +81,15 @@ export var Ucum = {
                'the default unit 1 (the unity).',
 
   /**
+   * Message that is displayed or returned when a conversion is requested
+   * for two units where (only) a mass<->moles conversion is appropriate
+   * but no molecular weight was specified.
+   */
+  needMoleWeightMsg_ : 'Did you wish to convert between mass and moles?  The ' +
+                       'molecular weight of the substance represented by the ' +
+                       'units is required to perform the conversion.',
+
+  /**
    * Hash that matches unit column names to names used in the csv file
    * that is submitted to the data updater.
    */

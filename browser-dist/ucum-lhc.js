@@ -29646,6 +29646,13 @@ var Ucum = exports.Ucum = {
   bracesMsg_: 'FYI - annotations (text in curly braces {}) are ignored, ' + 'except that an annotation without a leading symbol implies ' + 'the default unit 1 (the unity).',
 
   /**
+   * Message that is displayed or returned when a conversion is requested
+   * for two units where (only) a mass<->moles conversion is appropriate
+   * but no molecular weight was specified.
+   */
+  needMoleWeightMsg_: 'Did you wish to convert between mass and moles?  The ' + 'molecular weight of the substance represented by the ' + 'units is required to perform the conversion.',
+
+  /**
    * Hash that matches unit column names to names used in the csv file
    * that is submitted to the data updater.
    */
@@ -31186,6 +31193,9 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
                     returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
                   }
               } // end if a molecular weight was specified
+
+              // if an error hasn't been thrown - either from convertFrom or here,
+              // set the return object to show success
               returnObj['status'] = 'succeeded';
               returnObj['fromUnit'] = fromUnit;
               returnObj['toUnit'] = toUnit;
@@ -31195,7 +31205,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
             }
           } // end if we have the from and to units
         } catch (err) {
-          returnObj['status'] = 'error';
+          if (err.message == Ucum.needMoleWeightMsg_) returnObj['status'] = 'failed';else returnObj['status'] = 'error';
           returnObj['msg'].push(err.message);
         }
       }
@@ -31415,7 +31425,7 @@ var UnitTables = exports.UnitTables = require("./unitTables.js").UnitTables;
 
 
 },{"./config.js":6,"./ucumLhcUtils.js":13,"./unitTables.js":17}],15:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -31424,7 +31434,7 @@ exports.Unit = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _ucumInternalUtils = require("./ucumInternalUtils.js");
+var _ucumInternalUtils = require('./ucumInternalUtils.js');
 
 var intUtils_ = _interopRequireWildcard(_ucumInternalUtils);
 
@@ -31441,10 +31451,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
+var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
+var UnitTables;
+
 var isInteger = require("is-integer");
-var UnitTables = require("./unitTables.js").UnitTables;
 
 var Unit = exports.Unit = function () {
 
@@ -31641,7 +31653,7 @@ var Unit = exports.Unit = function () {
 
 
   _createClass(Unit, [{
-    key: "assignUnity",
+    key: 'assignUnity',
     value: function assignUnity() {
       this.name_ = "";
       this.magnitude_ = 1;
@@ -31665,11 +31677,11 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "assignVals",
+    key: 'assignVals',
     value: function assignVals(vals) {
       for (var key in vals) {
         var uKey = !key.charAt(key.length - 1) === '_' ? key + '_' : key;
-        if (this.hasOwnProperty(uKey)) this[uKey] = vals[key];else throw new Error("Parameter error; " + key + " is not a property of a Unit");
+        if (this.hasOwnProperty(uKey)) this[uKey] = vals[key];else throw new Error('Parameter error; ' + key + ' is not a property of a Unit');
       }
     } // end assignVals
 
@@ -31681,7 +31693,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "clone",
+    key: 'clone',
     value: function clone() {
       var _this = this;
 
@@ -31698,12 +31710,12 @@ var Unit = exports.Unit = function () {
     /**
      * This assigns all properties of a unit passed to it to this unit.
      *
-     * @param the unit whose properties are to be assigned to this one.
+     * @param unit2 the unit whose properties are to be assigned to this one.
      * @return nothing; this unit is updated
      */
 
   }, {
-    key: "assign",
+    key: 'assign',
     value: function assign(unit2) {
       var _this2 = this;
 
@@ -31728,7 +31740,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "equals",
+    key: 'equals',
     value: function equals(unit2) {
 
       return this.magnitude_ === unit2.magnitude_ && this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_ && (this.dim_ === null && unit2.dim_ === null || this.dim_.equals(unit2.dim_));
@@ -31744,15 +31756,14 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "fullEquals",
+    key: 'fullEquals',
     value: function fullEquals(unit2) {
 
-      var match = true;
       var thisAttr = Object.keys(this).sort();
       var u2Attr = Object.keys(unit2).sort();
 
       var keyLen = thisAttr.length;
-      match = keyLen === u2Attr.length;
+      var match = keyLen === u2Attr.length;
 
       // check each attribute.   Dimension objects have to checked using
       // the equals function of the Dimension class.
@@ -31775,7 +31786,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "getProperty",
+    key: 'getProperty',
     value: function getProperty(propertyName) {
       var uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName : propertyName + '_';
       return this[uProp];
@@ -31803,25 +31814,30 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "convertFrom",
+    key: 'convertFrom',
     value: function convertFrom(num, fromUnit) {
       var newNum = 0.0;
 
-      if (this.isArbitrary_) throw new Error("Attempt to convert arbitrary unit " + this.name_);
-      if (fromUnit.isArbitrary_) throw new Error("Attempt to convert to arbitrary unit " + fromUnit.name_);
+      if (this.isArbitrary_) throw new Error('Attempt to convert arbitrary unit ' + this.name_);
+      if (fromUnit.isArbitrary_) throw new Error('Attempt to convert to arbitrary unit ' + fromUnit.name_);
 
       // reject request if both units have dimensions that are not equal
       if (fromUnit.dim_ && this.dim_ && !fromUnit.dim_.equals(this.dim_)) {
-        throw new Error("Sorry.  " + fromUnit.csCode_ + " cannot be converted " + ("to " + this.csCode_ + "."));
+        // check first to see if a mole<->mass conversion is appropriate
+        if ((this.isMole_ && fromUnit._isMassBased() || this._isMassBased() && fromUnit.isMole_) && this.isMoleMassCommensurable(fromUnit)) {
+          throw new Error(Ucum.needMoleWeightMsg_);
+        } else {
+          throw new Error('Sorry.  ' + fromUnit.csCode_ + ' cannot be converted ' + ('to ' + this.csCode_ + '.'));
+        }
       }
       // reject request if there is a "from" dimension but no "to" dimension
       if (fromUnit.dim_ && (!this.dim_ || this.dim_.isNull())) {
-        throw new Error("Sorry.  " + fromUnit.csCode_ + " cannot be converted " + ("to " + this.csCode_ + "."));
+        throw new Error('Sorry.  ' + fromUnit.csCode_ + ' cannot be converted ' + ('to ' + this.csCode_ + '.'));
       }
 
       // reject request if there is a "to" dimension but no "from" dimension
       if (this.dim_ && (!fromUnit.dim_ || fromUnit.dim_.isNull())) {
-        throw new Error("Sorry.  " + fromUnit.csCode_ + " cannot be converted " + ("to " + this.csCode_ + "."));
+        throw new Error('Sorry.  ' + fromUnit.csCode_ + ' cannot be converted ' + ('to ' + this.csCode_ + '.'));
       }
 
       var fromCnv = fromUnit.cnv_;
@@ -31882,7 +31898,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "convertTo",
+    key: 'convertTo',
     value: function convertTo(num, toUnit) {
 
       return toUnit.convertFrom(num, this);
@@ -31901,7 +31917,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "convertCoherent",
+    key: 'convertCoherent',
     value: function convertCoherent(num) {
 
       // convert mag' * u' into canonical number * u on ratio scale
@@ -31921,7 +31937,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "mutateCoherent",
+    key: 'mutateCoherent',
     value: function mutateCoherent(num) {
 
       // convert mu' * u' into canonical mu * u on ratio scale
@@ -31939,8 +31955,9 @@ var Unit = exports.Unit = function () {
       // built here really is, it will have to stay.
       for (var i = 0, max = Dimension.getMax(); i < max; i++) {
         var elem = this.dim_.getElementAt(i);
-        var uA = UnitTables.getUnitsByDimension(new Dimension(i));
-        if (uA == null) throw new Error("Can't find base unit for dimension " + i);
+        var tabs = this._getUnitTables();
+        var uA = tabs.getUnitsByDimension(new Dimension(i));
+        if (uA == null) throw new Error('Can\'t find base unit for dimension ' + i);
         this.name_ = uA.name + elem;
       }
       return num;
@@ -31963,7 +31980,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "convertMassToMol",
+    key: 'convertMassToMol',
     value: function convertMassToMol(amt, molUnit, molecularWeight) {
       // The prefix values that have been applied to this unit, which is the mass
       // (grams) unit, are reflected in the magnitude.  So the number of moles
@@ -31972,7 +31989,7 @@ var Unit = exports.Unit = function () {
       var molAmt = this.magnitude_ * amt / molecularWeight;
       // The molUnit's basic magnitude, before prefixes are applied,
       // is avogadro's number, get that and divide it out of the current magnitude.
-      var tabs = UnitTables.getInstance();
+      var tabs = this._getUnitTables();
       var avoNum = tabs.getUnitByCode('mol').magnitude_;
       var molesFactor = molUnit.magnitude_ / avoNum;
       // return the molAmt divided by the molesFactor as the number of moles
@@ -31996,12 +32013,12 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "convertMolToMass",
+    key: 'convertMolToMass',
     value: function convertMolToMass(amt, massUnit, molecularWeight) {
       // A simple mole unit has a magnitude of avogadro's number.  Get that
       // number now (since not everyone agrees on what it is, and what is
       // being used in this system might change).
-      var tabs = UnitTables.getInstance();
+      var tabs = this._getUnitTables();
       var avoNum = tabs.getUnitByCode('mol').magnitude_;
       // Determine what prefix values (mg or mg/dL, etc.) have been applied to
       // this unit by dividing the simple mole unit magnitude out of the
@@ -32028,7 +32045,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "mutateRatio",
+    key: 'mutateRatio',
     value: function mutateRatio(num) {
       if (this.cnv_ == null) return this.mutateCoherent(num);else return num;
     } // end mutateRatio
@@ -32045,7 +32062,7 @@ var Unit = exports.Unit = function () {
      * */
 
   }, {
-    key: "multiplyThis",
+    key: 'multiplyThis',
     value: function multiplyThis(s) {
 
       var retUnit = this.clone();
@@ -32073,20 +32090,20 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "multiplyThese",
+    key: 'multiplyThese',
     value: function multiplyThese(unit2) {
 
       var retUnit = this.clone();
 
       if (retUnit.cnv_ != null) {
-        if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit " + retUnit.name_ + " " + 'failed.');
+        if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error('Attempt to multiply non-ratio unit ' + retUnit.name_ + ' ' + 'failed.');
       } // end if this unit has a conversion function
 
       else if (unit2.cnv_ != null) {
           if (!retUnit.dim_ || retUnit.dim_.isZero()) {
             retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
             retUnit.cnv_ = unit2.cnv_;
-          } else throw new Error("Attempt to multiply non-ratio unit " + unit2.name_);
+          } else throw new Error('Attempt to multiply non-ratio unit ' + unit2.name_);
         } // end if unit2 has a conversion function
 
         // else neither unit has a conversion function
@@ -32135,13 +32152,13 @@ var Unit = exports.Unit = function () {
      * */
 
   }, {
-    key: "divide",
+    key: 'divide',
     value: function divide(unit2) {
 
       var retUnit = this.clone();
 
-      if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit " + retUnit.name_);
-      if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit " + unit2.name_);
+      if (retUnit.cnv_ != null) throw new Error('Attempt to divide non-ratio unit ' + retUnit.name_);
+      if (unit2.cnv_ != null) throw new Error('Attempt to divide by non-ratio unit ' + unit2.name_);
 
       if (retUnit.name_ && unit2.name_) retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
 
@@ -32192,10 +32209,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "invert",
+    key: 'invert',
     value: function invert() {
 
-      if (this.cnv_ != null) throw new Error("Attempt to invert a non-ratio unit - " + this.name_);
+      if (this.cnv_ != null) throw new Error('Attempt to invert a non-ratio unit - ' + this.name_);
 
       this.name_ = this.invertString(this.name_);
       this.magnitude_ = 1 / this.magnitude_;
@@ -32214,7 +32231,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "invertString",
+    key: 'invertString',
     value: function invertString(theString) {
 
       if (theString.length > 0) {
@@ -32248,7 +32265,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "_concatStrs",
+    key: '_concatStrs',
     value: function _concatStrs(str1, operator, str2, startChar, endChar) {
 
       return this._buildOneString(str1, startChar, endChar) + operator + this._buildOneString(str2, startChar, endChar);
@@ -32270,7 +32287,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "_buildOneString",
+    key: '_buildOneString',
     value: function _buildOneString(str, startChar, endChar) {
       var ret = '';
       if (intUtils_.isNumericString(str)) {
@@ -32306,10 +32323,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "power",
+    key: 'power',
     value: function power(p) {
 
-      if (this.cnv_ != null) throw new Error("Attempt to raise a non-ratio unit, " + this.name_ + ", " + 'to a power.');
+      if (this.cnv_ != null) throw new Error('Attempt to raise a non-ratio unit, ' + this.name_ + ', ' + 'to a power.');
 
       //this.name_ = UnitString.pow(this.name_, p);
       // the above line is replaced with the code below, as the pow method
@@ -32376,9 +32393,9 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: "isMoleMassCommensurable",
+    key: 'isMoleMassCommensurable',
     value: function isMoleMassCommensurable(unit2) {
-      var tabs = UnitTables.getInstance();
+      var tabs = this._getUnitTables();
       var d = tabs.getMassDimensionIndex();
       var commensurable = false;
       if (this.isMole_) {
@@ -32392,13 +32409,47 @@ var Unit = exports.Unit = function () {
       }
       return commensurable;
     }
+
+    /**
+     * This checks a unit object to see if is mass-based, by checking to see
+     * if its dimension vector contains a 1 at the index where the base gram
+     * unit contains a 1.
+     *
+     * @private
+     */
+
+  }, {
+    key: '_isMassBased',
+    value: function _isMassBased() {
+      var tabs = this._getUnitTables();
+      var d = tabs.getMassDimensionIndex();
+      var massBased = false;
+      if (this.dim_) massBased = this.dim_.getElementAt(d) == 1;
+      return massBased;
+    }
+
+    /**
+     * This returns the UnitTables singleton object.  Including the require
+     * statement included here causes a circular dependency condition that
+     * resulted in the UnitTables object not being defined for the Unit object.
+     * sigh.  Thanks, Paul, for figuring this out.
+     *
+     * @private
+     */
+
+  }, {
+    key: '_getUnitTables',
+    value: function _getUnitTables() {
+      if (!UnitTables) UnitTables = require('./unitTables.js').UnitTables;
+      return UnitTables.getInstance();
+    }
   }]);
 
   return Unit;
 }(); // end Unit class
 
 
-},{"./dimension.js":7,"./ucumFunctions.js":10,"./ucumInternalUtils.js":11,"./unitTables.js":17,"is-integer":4}],16:[function(require,module,exports){
+},{"./config.js":6,"./dimension.js":7,"./ucumFunctions.js":10,"./ucumInternalUtils.js":11,"./unitTables.js":17,"is-integer":4}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

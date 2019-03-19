@@ -314,6 +314,9 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
                     returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
                   }
               } // end if a molecular weight was specified
+
+              // if an error hasn't been thrown - either from convertFrom or here,
+              // set the return object to show success
               returnObj['status'] = 'succeeded';
               returnObj['fromUnit'] = fromUnit;
               returnObj['toUnit'] = toUnit;
@@ -323,7 +326,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
             }
           } // end if we have the from and to units
         } catch (err) {
-          returnObj['status'] = 'error';
+          if (err.message == Ucum.needMoleWeightMsg_) returnObj['status'] = 'failed';else returnObj['status'] = 'error';
           returnObj['msg'].push(err.message);
         }
       }
