@@ -32421,10 +32421,12 @@ var Unit = exports.Unit = function () {
   }, {
     key: '_isMassBased',
     value: function _isMassBased() {
-      var tabs = this._getUnitTables();
-      var d = tabs.getMassDimensionIndex();
       var massBased = false;
-      if (this.dim_) massBased = this.dim_.getElementAt(d) == 1;
+      if (this.dim_) {
+        var tabs = this._getUnitTables();
+        var d = tabs.getMassDimensionIndex();
+        massBased = this.dim_.getElementAt(d) == 1;
+      }
       return massBased;
     }
 

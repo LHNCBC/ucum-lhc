@@ -1012,11 +1012,12 @@ export class Unit {
    * @private
    */
   _isMassBased() {
-    let tabs = this._getUnitTables();
-    let d = tabs.getMassDimensionIndex();
     let massBased = false ;
-    if (this.dim_)
-      massBased = (this.dim_.getElementAt(d) == 1) ;
+    if (this.dim_) {
+      let tabs = this._getUnitTables();
+      let d = tabs.getMassDimensionIndex();
+      massBased = (this.dim_.getElementAt(d) == 1);
+    }
     return massBased ;
   }
 

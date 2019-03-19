@@ -429,7 +429,8 @@ var UcumDemo = exports.UcumDemo = function () {
      * This method is run when the Converter tab is displayed, to reset the
      * variables that track the validity of the three inputs ("from" unit code,
      * "from" value, and "to" unit code) that must be correct to attempt a
-     * conversion.
+     * conversion as well as to reset the molecular weight division to hidden
+     * status and the associated moleWeight input field to null.
      */
 
   }, {
@@ -460,6 +461,12 @@ var UcumDemo = exports.UcumDemo = function () {
       var toNumField = document.getElementById('convertToNum');
       toNumField.value = 1;
       toNumField.classList.remove("invalid");
+
+      var mWeightDiv = document.getElementById('molecular-weight');
+      mWeightDiv.style.visibility = 'hidden';
+
+      var mWeightFld = document.getElementById('moleWeight');
+      mWeightFld.value = null;
 
       if (window.location.hash !== '#converter' && window.location.hash !== '') {
         this.blockLocationChangeHandler = true;
