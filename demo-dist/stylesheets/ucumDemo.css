@@ -242,8 +242,30 @@ button {
 #precision-line{
   text-align: center;
   padding-top: 8px;
+  display: none;
+}
+
+#molecular-weight {
+  text-align: center;
+  padding-top: 2px;
+  padding-bottom: 6px;
   visibility: hidden;
 }
+
+#moleWeight {
+  width: 80px;
+}
+/*  tried this so that I could make the moleWeight input field a number
+    without a spinner, but it just doesn't work on Firefox, or I couldn't
+    make it work.  If you can make it work, I'd recommend making that
+    field a number.  Just remove the spinner buttons.
+.no-spin::-webkit-inner-spin-button,
+.no-spin::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+  -moz-appearance: textfield !important;
+  appearance: none;
+} */
 
 .small-print {
   font-size: 12px;
@@ -313,6 +335,11 @@ ul.tab li a {
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+}
+
+#advSearchOpts {
+  margin-top: 20px;
+  text-align: center;
 }
 
 #advancedSearchCnv, #advancedSearchVal {

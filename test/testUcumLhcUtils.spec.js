@@ -6,6 +6,7 @@
  */
 
 var assert = require('assert');
+var Ucum = require('../source-es5/config.js').Ucum;
 var UcumJsonDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs ;
 var UTables = require("../source-es5/unitTables.js").UnitTables;
 var Utils = require("../source-es5/ucumLhcUtils.js").UcumLhcUtils;
@@ -188,20 +189,11 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
   });
 
-  it("should return an error for an attempt to translate mol to 32.4(ug/g).mg", function() {
+  it("should return a missing molecular weight error for an attempt to translate mol to 32.4(ug/g).mg", function() {
     var resp4 = utils.convertUnitTo('mol', 1, '32.4(ug/g).mg');
     assert.equal(resp4.status, 'failed', resp4.status);
     assert.equal(resp4.msg[0], '4(ug/g) is not a valid UCUM code.  We assumed you meant 4.(ug/g).', resp4.msg[0]);
-    assert.equal(resp4.msg[1], 'Sorry.  mol cannot be converted to (32.(4.(ug/g))).mg.', resp4.msg[1]);
-    assert.equal(resp4.toVal, null, resp4.toVal);
-    assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
-    assert.equal(resp4.toUnit, undefined, resp4.toUnit);
-  });
-
-  it("should return an error for an attempt to translate mmol/mol to kg", function() {
-    var resp4 = utils.convertUnitTo('mmol/mol', 1, 'kg');
-    assert.equal(resp4.status, 'failed', resp4.status);
-    assert.equal(resp4.msg[0], 'Sorry.  mmol/mol cannot be converted to kg.', resp4.msg[0]);
+    assert.equal(resp4.msg[1], Ucum.needMoleWeightMsg_);
     assert.equal(resp4.toVal, null, resp4.toVal);
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
@@ -251,6 +243,31 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), 1.67, resp5.toVal.toPrecision(3));
   });
+
+  it("should return .001 for a request to convert 1 umol.L/g to mg.L/g weight 1", function() {
+    var resp5 = utils.convertUnitTo('umol.L/g', 1, 'mg.L/g', false, 1);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
+    assert.equal(resp5.toVal.toPrecision(3), .001, resp5.toVal.toPrecision(3));
+  });
+
+  it("should return .001 for a request to convert 1 mg.umol to mg2 weight 1", function() {
+    var resp5 = utils.convertUnitTo('mg.umol', 1, 'mg2', false, 1);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
+    assert.equal(resp5.toVal.toPrecision(3), .001, resp5.toVal.toPrecision(3));
+  });
+
+  it("should return an error for an attempt to translate 1 pmol to 1/g weight 1", function() {
+    var resp4 = utils.convertUnitTo('pmol', 1, '1/g', false, 1);
+    assert.equal(resp4.status, 'failed', resp4.status);
+    assert.equal(resp4.msg[0], 'Sorry.  pmol cannot be converted to 1/g.', resp4.msg[0]);
+  });
+
+  it("should return an error for an attempt to translate 1 pmol/g to mg/dL weight 1", function() {
+    var resp4 = utils.convertUnitTo('pmol/g', 1, 'mg/dL', false, 1);
+    assert.equal(resp4.status, 'failed', resp4.status);
+    assert.equal(resp4.msg[0], 'Sorry.  pmol/g cannot be converted to mg/dL.', resp4.msg[0]);
+  });
+
 }); // end convertUnitTo tests
 
 

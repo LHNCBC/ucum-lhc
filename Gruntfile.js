@@ -48,7 +48,7 @@ module.exports = function(grunt) {
       options: {
         compact: false,
         sourceMap: true,
-        presets: ['es2015']
+        presets: ['env']
       },
       dist: {   // the non-browser distribution files
         files: [{

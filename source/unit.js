@@ -8,11 +8,12 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
+var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
-var isInteger = require("is-integer");
-var UnitTables = require("./unitTables.js").UnitTables;
+var UnitTables;
 
+var isInteger = require("is-integer");
 import * as intUtils_ from "./ucumInternalUtils.js";
 
 export class Unit {
@@ -142,10 +143,13 @@ export class Unit {
     this.isArbitrary_ = attrs['isArbitrary_'] || false;
 
     /*
-     * Flag indicating whether or not this unit represents a mole, i.e.,
-     * the base unit of an amount of substance.
+     * Integer indicating what level of exponent applies to a mole-based portion
+     * of the unit.  So, for the unit "mol", this will be 1.  For "mol2" this
+     * will be 2.  For "1/mol" this will be -1.  Any unit that does not include
+     * a mole will have a 0 in this field.  This is used to determine
+     * commensurability for mole<->mass conversions.
      */
-    this.isMole_ = attrs['isMole_'] || false;
+    this.moleExp_ = attrs['moleExp_'] || 0;
 
     /*
      * Added when added LOINC list of units
@@ -268,7 +272,7 @@ export class Unit {
   /**
    * This assigns all properties of a unit passed to it to this unit.
    *
-   * @param the unit whose properties are to be assigned to this one.
+   * @param unit2 the unit whose properties are to be assigned to this one.
    * @return nothing; this unit is updated
    */
   assign(unit2) {
@@ -315,12 +319,11 @@ export class Unit {
    */
   fullEquals(unit2) {
 
-    let match = true ;
     let thisAttr = Object.keys(this).sort();
     let u2Attr = Object.keys(unit2).sort();
 
     let keyLen = thisAttr.length ;
-    match = (keyLen === u2Attr.length);
+    let match = (keyLen === u2Attr.length);
 
     // check each attribute.   Dimension objects have to checked using
     // the equals function of the Dimension class.
@@ -383,8 +386,14 @@ export class Unit {
 
     // reject request if both units have dimensions that are not equal
     if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
-      throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
-                      `to ${this.csCode_}.`));
+      // check first to see if a mole<->mass conversion is appropriate
+      if (this.isMoleMassCommensurable(fromUnit)) {
+        throw(new Error(Ucum.needMoleWeightMsg_));
+      }
+      else {
+        throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
+          `to ${this.csCode_}.`));
+      }
     }
     // reject request if there is a "from" dimension but no "to" dimension
     if (fromUnit.dim_ && (!this.dim_ || this.dim_.isNull())) {
@@ -510,7 +519,8 @@ export class Unit {
     // built here really is, it will have to stay.
     for (let i = 0, max = Dimension.getMax(); i < max; i++) {
       let elem = this.dim_.getElementAt(i);
-      let uA = UnitTables.getUnitsByDimension(new Dimension(i));
+      let tabs = this._getUnitTables();
+      let uA = tabs.getUnitsByDimension(new Dimension(i));
       if(uA == null)
         throw(new Error(`Can't find base unit for dimension ${i}`));
       this.name_ = uA.name + elem;
@@ -542,7 +552,7 @@ export class Unit {
     let molAmt = (this.magnitude_ * amt)/molecularWeight ;
     // The molUnit's basic magnitude, before prefixes are applied,
     // is avogadro's number, get that and divide it out of the current magnitude.
-    let tabs = UnitTables.getInstance();
+    let tabs = this._getUnitTables();
     let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
     let molesFactor = molUnit.magnitude_ / avoNum ;
     // return the molAmt divided by the molesFactor as the number of moles
@@ -568,7 +578,7 @@ export class Unit {
     // A simple mole unit has a magnitude of avogadro's number.  Get that
     // number now (since not everyone agrees on what it is, and what is
     // being used in this system might change).
-    let tabs = UnitTables.getInstance();
+    let tabs = this._getUnitTables();
     let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
     // Determine what prefix values (mg or mg/dL, etc.) have been applied to
     // this unit by dividing the simple mole unit magnitude out of the
@@ -699,13 +709,16 @@ export class Unit {
     else if (unit2.printSymbol_)
       retUnit.printSymbol_ = unit2.printSymbol_;
 
-    // A unit that has the mole or arbitrary attribute
-    // taints any unit created from it via an arithmetic
-    // operation.  Taint accordingly
-    if (!retUnit.isMole_)
-      retUnit.isMole_ = unit2.isMole_ ;
-    if (!retUnit.isArbitrary_)
-      retUnit.isArbitrary_ = unit2.isArbitrary_;
+    // Update the mole exponent count by adding the count for unit2 to the
+    // count for this unit.
+    retUnit.moleExp_ = retUnit.moleExp_ + unit2.moleExp_ ;
+
+    // A unit that has the arbitrary attribute taints any unit created from it
+    // via an arithmetic operation.  Taint accordingly
+    // if (!retUnit.isMole_)
+    //   retUnit.isMole_ = unit2.isMole_ ;
+     if (!retUnit.isArbitrary_)
+       retUnit.isArbitrary_ = unit2.isArbitrary_;
 
     return retUnit ;
 
@@ -772,11 +785,14 @@ export class Unit {
         retUnit.dim_ = unit2.dim_.clone().minus();
     } // end if unit2 has a dimension object
 
-    // A unit that has the mole or arbitrary attribute
-    // taints any unit created from it via an arithmetic
-    // operation.  Taint accordingly
-    if (!retUnit.isMole_)
-      retUnit.isMole_ = unit2.isMole_ ;
+    // Update the mole exponent count by subtracting the count for unit2 from
+    // the // count for this unit.
+    retUnit.moleExp_ = retUnit.moleExp_ - unit2.moleExp_ ;
+
+    // A unit that has the arbitrary attribute taints any unit created from
+    // it via an arithmetic operation.  Taint accordingly
+    // if (!retUnit.isMole_)
+    //   retUnit.isMole_ = unit2.isMole_ ;
     if (!retUnit.isArbitrary_)
       retUnit.isArbitrary_ = unit2.isArbitrary_;
 
@@ -978,20 +994,37 @@ export class Unit {
    * @returns boolean indicating commensurability
    */
   isMoleMassCommensurable(unit2) {
-    let tabs = UnitTables.getInstance();
+    let tabs = this._getUnitTables();
     let d = tabs.getMassDimensionIndex();
     let commensurable = false ;
-    if (this.isMole_) {
+    if (this.moleExp_ === 1 && unit2.moleExp_ === 0) {
       let testDim = this.dim_.clone();
-      testDim.setElementAt(d);
+      let curVal = testDim.getElementAt(d);
+      testDim.setElementAt(d, (curVal + this.moleExp_));
       commensurable = (testDim.equals(unit2.dim_));
     }
-    else {
+    else if (unit2.moleExp_ === 1 && this.moleExp_ === 0) {
       let testDim = unit2.dim_.clone();
-      testDim.setElementAt(d);
+      let curVal = testDim.getElementAt(d);
+      testDim.setElementAt(d, (curVal + unit2.moleExp_));
       commensurable = (testDim.equals(this.dim_));
     }
     return commensurable ;
+  }
+
+
+  /**
+   * This returns the UnitTables singleton object.  Including the require
+   * statement included here causes a circular dependency condition that
+   * resulted in the UnitTables object not being defined for the Unit object.
+   * sigh.  Thanks, Paul, for figuring this out.
+   *
+   * @private
+   */
+  _getUnitTables() {
+    if (!UnitTables)
+      UnitTables = require('./unitTables.js').UnitTables;
+    return UnitTables.getInstance();
   }
 
 } // end Unit class

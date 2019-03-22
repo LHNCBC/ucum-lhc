@@ -429,7 +429,8 @@ var UcumDemo = exports.UcumDemo = function () {
      * This method is run when the Converter tab is displayed, to reset the
      * variables that track the validity of the three inputs ("from" unit code,
      * "from" value, and "to" unit code) that must be correct to attempt a
-     * conversion.
+     * conversion as well as to reset the molecular weight division to hidden
+     * status and the associated moleWeight input field to null.
      */
 
   }, {
@@ -460,6 +461,12 @@ var UcumDemo = exports.UcumDemo = function () {
       var toNumField = document.getElementById('convertToNum');
       toNumField.value = 1;
       toNumField.classList.remove("invalid");
+
+      var mWeightDiv = document.getElementById('molecular-weight');
+      mWeightDiv.style.visibility = 'hidden';
+
+      var mWeightFld = document.getElementById('moleWeight');
+      mWeightFld.value = null;
 
       if (window.location.hash !== '#converter' && window.location.hash !== '') {
         this.blockLocationChangeHandler = true;
@@ -574,7 +581,7 @@ var UcumDemo = exports.UcumDemo = function () {
      *  string to be validated
      * @param tabName the name of the tab ('Converter' or 'Validator') that
      *  contains the input field
-     * @param msgElementID the ID of the web page element to received messages
+     * @param msgElementID the ID of the web page element to receive messages
      *  (success and error).
      * @returns nothing directly; return is the success/error message
      */
@@ -596,6 +603,17 @@ var UcumDemo = exports.UcumDemo = function () {
         suggsField = document.getElementById("convSuggestions");
         suggsField.innerHTML = '';
         suggsField.style.display = 'none';
+        // This is called by a change to one of the unit fields, so
+        // hide the molecular weight division, clear the moleWeight input
+        // value, and clear the value of the last result field, if any
+        var mWeightDiv = document.getElementById('molecular-weight');
+        mWeightDiv.style.visibility = 'hidden';
+        var mWeightFld = document.getElementById('moleWeight');
+        mWeightFld.value = null;
+        if (this.lastResultFld_) {
+          var rf = document.getElementById(this.lastResultFld_);
+          rf.value = '';
+        }
       }
 
       var resFld = document.getElementById(msgElementID);
@@ -770,10 +788,12 @@ var UcumDemo = exports.UcumDemo = function () {
       } else if (elementID === 'convertFromNum') {
         this.convFromNum_ = valid;
         resultSide = 'to';
-      } else {
-        // assume convertToNum
+      } else if (elementID === 'convertToNum') {
         this.convToNum_ = valid;
         resultSide = 'from';
+      } else {
+        // assume moleWeight
+        if (this.lastResultFld_ === 'convertFromNum') resultSide = 'from';else resultSide = 'to';
       }
 
       // set or remove the indicator (currently a red border) on the invalid field
@@ -812,7 +832,7 @@ var UcumDemo = exports.UcumDemo = function () {
 
       var checkFld = document.getElementById(numField);
       var checkVal = escapeHtml(checkFld.value);
-      var resFld = numField === 'convertFromNum' ? document.getElementById('convertToNum') : document.getElementById('convertFromNum');
+      if (numField === 'moleWeight') var resFld = document.getElementById(this.lastResultFld_);else resFld = numField === 'convertFromNum' ? document.getElementById('convertToNum') : document.getElementById('convertFromNum');
       var resultString = document.getElementById('convMsg');
       resultString.innerHTML = '';
 
@@ -906,9 +926,14 @@ var UcumDemo = exports.UcumDemo = function () {
         decDigits = Ucum.decDigits_;
         prec.value = decDigits;
       }
-      // Start out with the precision chooser line hidden
+      // Start out with the precision not displayed
       var precLine = document.getElementById('precision-line');
-      precLine.style.visibility = "hidden";
+      precLine.style.display = "none";
+
+      // Store the name of the result field so that we have it if a larger number
+      // of digits is subsequently requested AND (for the result field name)
+      // when a molecular weight is requested.
+      this.lastResultFld_ = toNumField;
 
       var fromName = document.getElementById(fromField).value;
       var escFromName = escapeHtml(fromName);
@@ -927,13 +952,15 @@ var UcumDemo = exports.UcumDemo = function () {
       suggsField.innerHTML = '';
       suggsField.style.display = 'none';
 
-      var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, true);
+      var weightField = document.getElementById("moleWeight");
+      var moleWeightVal = weightField.value;
+
+      var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, true, moleWeightVal);
       if (resultObj['status'] === 'succeeded') {
         var toVal = resultObj['toVal'];
 
-        // Store the name of the result field and the full number received so
-        // that we have it if a larger number of digits is subsequently requested.
-        this.lastResultFld_ = toNumField;
+        // Store the full result value number received so that we have it if a
+        // larger number of digits is subsequently requested.
         this.lastResult_ = toVal;
 
         // convert the value to a fixed value with the specified number of
@@ -972,10 +999,19 @@ var UcumDemo = exports.UcumDemo = function () {
           resultMsg = 'Sorry - an error occurred while trying to ' + 'perform the conversion.';
         }
 
-        // Else 1 or more invalid unit expressions were found (status = 'failed')
+        // Else result status was failed.  Either a molecular weight is needed
+        // for a mass<->moles conversion or 1 or more invalid unit expressions
+        // were found (status = 'failed')
         else {
             if (resultObj['msg']) {
-              resultMsg = resultObj['msg'].join('<BR>');
+              var idx = resultObj['msg'].indexOf(Ucum.needMoleWeightMsg_);
+              if (idx >= 0) {
+                this._requestMolecularWeight();
+                resultObj['msg'].splice(idx, 1);
+                if (resultObj['msg'].length > 0) resultMsg = resultObj['msg'].join('<BR>');else resultMsg = '';
+              } else {
+                resultMsg = resultObj['msg'].join('<BR>');
+              }
             }
             // if suggestions were found, output the suggestions to the suggestions
             // field
@@ -1332,6 +1368,20 @@ var UcumDemo = exports.UcumDemo = function () {
       }
     } // end _sizeNameDivs
 
+
+    /**
+     * This makes the division with the request for molecular weight
+     * visible.
+     *
+     * @private
+     */
+
+  }, {
+    key: '_requestMolecularWeight',
+    value: function _requestMolecularWeight() {
+      var weightDiv = document.getElementById('molecular-weight');
+      weightDiv.style.visibility = 'visible';
+    }
   }]);
 
   return UcumDemo;

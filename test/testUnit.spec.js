@@ -179,8 +179,7 @@ describe('Test requests to multiply/divide arbitrary units', function() {
     it('should return a properly concatenated name for mol * [CRU]', function(){
       assert.equal(retUnit.csCode_, 'mol.[CFU]');
     });
-    it('should return a unit with the isMole_ & isArbitrary_ flags set', function(){
-      assert.equal(retUnit.isMole_, true);
+    it('should return a unit with the isArbitrary_ flag set', function(){
       assert.equal(retUnit.isArbitrary_, true);
     });
   });
@@ -200,9 +199,26 @@ describe('Test requests to multiply/divide arbitrary units', function() {
     it('should return a properly concatenated name for [CFU] / mol', function(){
       assert.equal(retUnit.csCode_, '[CFU]/mol');
     });
-    it('should return a unit with the isMole_ & isArbitrary_ flags set', function(){
-      assert.equal(retUnit.isMole_, true);
+    it('should return a unit with the isArbitrary_ flag set', function(){
       assert.equal(retUnit.isArbitrary_, true);
+    });
+    it('should return a unit with moleExp_ set to -1', function(){
+      assert.equal(retUnit.moleExp_, -1);
+    });
+  });
+
+  describe('Test multiplication of mole units', function (){
+    var molUnit = uTabs.getUnitByCode('mol');
+    var cfuUnit = uTabs.getUnitByCode('[CFU]');
+    var errMsg = null;
+    try {
+      var retUnit = cfuUnit.multiplyThese(molUnit);
+    }
+    catch(err) {
+      errMsg = err.message;
+    };
+    it('should return a unit with moleExp_ set to 1', function(){
+      assert.equal(retUnit.moleExp_, 1);
     });
   });
 }) ; // end Test requests to multiply/divide arbitrary units

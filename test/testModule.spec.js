@@ -82,7 +82,7 @@ for (let u=0; u < pkgs.length; u++) {
         });
         it("should return msg = Sorry.  [fth_us] cannot be converted to bar.", function () {
           assert.equal(returnObj['msg'][0],
-            "Sorry.  [fth_us] cannot be converted to bar.");
+            "Sorry.  [fth_us] cannot be converted to bar.", returnObj['msg']);
         });
         it("should return a null fromUnit value", function () {
           assert.equal(returnObj['fromUnit'], null);

@@ -284,24 +284,24 @@ export class UcumLhcUtils {
               returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
             }
             else {
-              if (fromUnit.isMole_ && toUnit.isMole_) {
+              if (fromUnit.moleExp_ !== 0 && toUnit.moleExp_ !== 0) {
                 throw(new Error('A molecular weight was specified ' +
                   'but a mass <-> mole conversion cannot be executed for two ' +
                   'mole-based units.  No conversion was attempted.'));
               }
-              if (!fromUnit.isMole_ && !toUnit.isMole_) {
+              if (fromUnit.moleExp_ === 0 && toUnit.moleExp_ === 0) {
                 throw(new Error('A molecular weight was specified ' +
                   'but a mass <-> mole conversion cannot be executed when ' +
                   'neither unit is mole-based.  No conversion was attempted.'));
               }
               if (!fromUnit.isMoleMassCommensurable(toUnit)) {
-                throw(new Error(`${fromUnitCode} and ${toUnitCode} ` +
-                  'cannot be converted between mole and mass units.'));
+                throw(new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                  `converted to ${toUnitCode}.`));
               }
 
               // if the "from" unit is a mole-based unit, assume a mole to mass
               // request
-              if (fromUnit.isMole_) {
+              if (fromUnit.moleExp_ !== 0) {
                 returnObj['toVal'] =
                   fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
               }
@@ -311,8 +311,10 @@ export class UcumLhcUtils {
                 returnObj['toVal'] =
                   fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
               }
-
             } // end if a molecular weight was specified
+
+            // if an error hasn't been thrown - either from convertFrom or here,
+            // set the return object to show success
             returnObj['status'] = 'succeeded';
             returnObj['fromUnit'] = fromUnit;
             returnObj['toUnit'] = toUnit;
@@ -321,10 +323,15 @@ export class UcumLhcUtils {
             returnObj['status'] = 'failed';
             returnObj['msg'].push(err.message);
           }
+
+
         }  // end if we have the from and to units
       }
       catch (err) {
-        returnObj['status'] = 'error';
+        if (err.message == Ucum.needMoleWeightMsg_)
+          returnObj['status'] = 'failed';
+        else
+          returnObj['status'] = 'error';
         returnObj['msg'].push(err.message);
       }
     }
