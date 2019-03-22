@@ -243,6 +243,31 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), 1.67, resp5.toVal.toPrecision(3));
   });
+
+  it("should return .001 for a request to convert 1 umol.L/g to mg.L/g weight 1", function() {
+    var resp5 = utils.convertUnitTo('umol.L/g', 1, 'mg.L/g', false, 1);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
+    assert.equal(resp5.toVal.toPrecision(3), .001, resp5.toVal.toPrecision(3));
+  });
+
+  it("should return .001 for a request to convert 1 mg.umol to mg2 weight 1", function() {
+    var resp5 = utils.convertUnitTo('mg.umol', 1, 'mg2', false, 1);
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
+    assert.equal(resp5.toVal.toPrecision(3), .001, resp5.toVal.toPrecision(3));
+  });
+
+  it("should return an error for an attempt to translate 1 pmol to 1/g weight 1", function() {
+    var resp4 = utils.convertUnitTo('pmol', 1, '1/g', false, 1);
+    assert.equal(resp4.status, 'failed', resp4.status);
+    assert.equal(resp4.msg[0], 'Sorry.  pmol cannot be converted to 1/g.', resp4.msg[0]);
+  });
+
+  it("should return an error for an attempt to translate 1 pmol/g to mg/dL weight 1", function() {
+    var resp4 = utils.convertUnitTo('pmol/g', 1, 'mg/dL', false, 1);
+    assert.equal(resp4.status, 'failed', resp4.status);
+    assert.equal(resp4.msg[0], 'Sorry.  pmol/g cannot be converted to mg/dL.', resp4.msg[0]);
+  });
+
 }); // end convertUnitTo tests
 
 

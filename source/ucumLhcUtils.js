@@ -284,24 +284,24 @@ export class UcumLhcUtils {
               returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
             }
             else {
-              if (fromUnit.isMole_ && toUnit.isMole_) {
+              if (fromUnit.moleExp_ !== 0 && toUnit.moleExp_ !== 0) {
                 throw(new Error('A molecular weight was specified ' +
                   'but a mass <-> mole conversion cannot be executed for two ' +
                   'mole-based units.  No conversion was attempted.'));
               }
-              if (!fromUnit.isMole_ && !toUnit.isMole_) {
+              if (fromUnit.moleExp_ === 0 && toUnit.moleExp_ === 0) {
                 throw(new Error('A molecular weight was specified ' +
                   'but a mass <-> mole conversion cannot be executed when ' +
                   'neither unit is mole-based.  No conversion was attempted.'));
               }
               if (!fromUnit.isMoleMassCommensurable(toUnit)) {
-                throw(new Error(`${fromUnitCode} and ${toUnitCode} ` +
-                  'cannot be converted between mole and mass units.'));
+                throw(new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                  `converted to ${toUnitCode}.`));
               }
 
               // if the "from" unit is a mole-based unit, assume a mole to mass
               // request
-              if (fromUnit.isMole_) {
+              if (fromUnit.moleExp_ !== 0) {
                 returnObj['toVal'] =
                   fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
               }

@@ -143,10 +143,13 @@ export class Unit {
     this.isArbitrary_ = attrs['isArbitrary_'] || false;
 
     /*
-     * Flag indicating whether or not this unit represents a mole, i.e.,
-     * the base unit of an amount of substance.
+     * Integer indicating what level of exponent applies to a mole-based portion
+     * of the unit.  So, for the unit "mol", this will be 1.  For "mol2" this
+     * will be 2.  For "1/mol" this will be -1.  Any unit that does not include
+     * a mole will have a 0 in this field.  This is used to determine
+     * commensurability for mole<->mass conversions.
      */
-    this.isMole_ = attrs['isMole_'] || false;
+    this.moleExp_ = attrs['moleExp_'] || 0;
 
     /*
      * Added when added LOINC list of units
@@ -384,9 +387,7 @@ export class Unit {
     // reject request if both units have dimensions that are not equal
     if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
       // check first to see if a mole<->mass conversion is appropriate
-      if ((((this.isMole_ && fromUnit._isMassBased()) ||
-            (this._isMassBased() && fromUnit.isMole_))) &&
-           this.isMoleMassCommensurable(fromUnit)) {
+      if (this.isMoleMassCommensurable(fromUnit)) {
         throw(new Error(Ucum.needMoleWeightMsg_));
       }
       else {
@@ -708,13 +709,16 @@ export class Unit {
     else if (unit2.printSymbol_)
       retUnit.printSymbol_ = unit2.printSymbol_;
 
-    // A unit that has the mole or arbitrary attribute
-    // taints any unit created from it via an arithmetic
-    // operation.  Taint accordingly
-    if (!retUnit.isMole_)
-      retUnit.isMole_ = unit2.isMole_ ;
-    if (!retUnit.isArbitrary_)
-      retUnit.isArbitrary_ = unit2.isArbitrary_;
+    // Update the mole exponent count by adding the count for unit2 to the
+    // count for this unit.
+    retUnit.moleExp_ = retUnit.moleExp_ + unit2.moleExp_ ;
+
+    // A unit that has the arbitrary attribute taints any unit created from it
+    // via an arithmetic operation.  Taint accordingly
+    // if (!retUnit.isMole_)
+    //   retUnit.isMole_ = unit2.isMole_ ;
+     if (!retUnit.isArbitrary_)
+       retUnit.isArbitrary_ = unit2.isArbitrary_;
 
     return retUnit ;
 
@@ -781,11 +785,14 @@ export class Unit {
         retUnit.dim_ = unit2.dim_.clone().minus();
     } // end if unit2 has a dimension object
 
-    // A unit that has the mole or arbitrary attribute
-    // taints any unit created from it via an arithmetic
-    // operation.  Taint accordingly
-    if (!retUnit.isMole_)
-      retUnit.isMole_ = unit2.isMole_ ;
+    // Update the mole exponent count by subtracting the count for unit2 from
+    // the // count for this unit.
+    retUnit.moleExp_ = retUnit.moleExp_ - unit2.moleExp_ ;
+
+    // A unit that has the arbitrary attribute taints any unit created from
+    // it via an arithmetic operation.  Taint accordingly
+    // if (!retUnit.isMole_)
+    //   retUnit.isMole_ = unit2.isMole_ ;
     if (!retUnit.isArbitrary_)
       retUnit.isArbitrary_ = unit2.isArbitrary_;
 
@@ -990,35 +997,19 @@ export class Unit {
     let tabs = this._getUnitTables();
     let d = tabs.getMassDimensionIndex();
     let commensurable = false ;
-    if (this.isMole_) {
+    if (this.moleExp_ === 1 && unit2.moleExp_ === 0) {
       let testDim = this.dim_.clone();
-      testDim.setElementAt(d);
+      let curVal = testDim.getElementAt(d);
+      testDim.setElementAt(d, (curVal + this.moleExp_));
       commensurable = (testDim.equals(unit2.dim_));
     }
-    else {
+    else if (unit2.moleExp_ === 1 && this.moleExp_ === 0) {
       let testDim = unit2.dim_.clone();
-      testDim.setElementAt(d);
+      let curVal = testDim.getElementAt(d);
+      testDim.setElementAt(d, (curVal + unit2.moleExp_));
       commensurable = (testDim.equals(this.dim_));
     }
     return commensurable ;
-  }
-
-
-  /**
-   * This checks a unit object to see if is mass-based, by checking to see
-   * if its dimension vector contains a 1 at the index where the base gram
-   * unit contains a 1.
-   *
-   * @private
-   */
-  _isMassBased() {
-    let massBased = false ;
-    if (this.dim_) {
-      let tabs = this._getUnitTables();
-      let d = tabs.getMassDimensionIndex();
-      massBased = (this.dim_.getElementAt(d) == 1);
-    }
-    return massBased ;
   }
 
 

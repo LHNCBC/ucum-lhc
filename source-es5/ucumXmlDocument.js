@@ -50,6 +50,14 @@ var UcumXmlDocument = exports.UcumXmlDocument = function () {
     var data = fs.readFileSync(essenceFile_);
     xmlInput_ = new xmldoc.XmlDocument(data);
 
+    // Array of unit codes in the ucum-essence.xml file that indicate a
+    // mole based unit.  The moleExp_ attribute for these units needs to be
+    // set, but there doesn't seem to be an algorithmic way to find these.
+    // Creation of unit objects after this file is processed will pick up
+    // the moleExp_ value from the base mole unit, but the ones defined in
+    // this file will not necessarily do that.
+    this.moleCodes_ = ['mol', 'eq', 'osm', '[pH]', 'kat', 'U'];
+
     // Make this a singleton.  See UnitTables constructor for details.
 
     var holdThis = UcumXmlDocument.prototype;
@@ -226,7 +234,7 @@ var UcumXmlDocument = exports.UcumXmlDocument = function () {
           attrs['class_'] = curUA.attr.class;
         }
         var valNode = curUA.childNamed('value');
-        attrs['isMole_'] = curUA.attr.Code == 'mol';
+        if (this.moleCodes_.includes(curUA.attr.Code)) attrs['moleExp_'] = 1;else attrs['moleExp_'] = 0;
 
         // Process special units
         if (curUA.attr.isSpecial) {

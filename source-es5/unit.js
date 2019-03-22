@@ -158,10 +158,13 @@ var Unit = exports.Unit = function () {
     this.isArbitrary_ = attrs['isArbitrary_'] || false;
 
     /*
-     * Flag indicating whether or not this unit represents a mole, i.e.,
-     * the base unit of an amount of substance.
+     * Integer indicating what level of exponent applies to a mole-based portion
+     * of the unit.  So, for the unit "mol", this will be 1.  For "mol2" this
+     * will be 2.  For "1/mol" this will be -1.  Any unit that does not include
+     * a mole will have a 0 in this field.  This is used to determine
+     * commensurability for mole<->mass conversions.
      */
-    this.isMole_ = attrs['isMole_'] || false;
+    this.moleExp_ = attrs['moleExp_'] || 0;
 
     /*
      * Added when added LOINC list of units
@@ -397,7 +400,7 @@ var Unit = exports.Unit = function () {
       // reject request if both units have dimensions that are not equal
       if (fromUnit.dim_ && this.dim_ && !fromUnit.dim_.equals(this.dim_)) {
         // check first to see if a mole<->mass conversion is appropriate
-        if ((this.isMole_ && fromUnit._isMassBased() || this._isMassBased() && fromUnit.isMole_) && this.isMoleMassCommensurable(fromUnit)) {
+        if (this.isMoleMassCommensurable(fromUnit)) {
           throw new Error(Ucum.needMoleWeightMsg_);
         } else {
           throw new Error('Sorry.  ' + fromUnit.csCode_ + ' cannot be converted ' + ('to ' + this.csCode_ + '.'));
@@ -703,10 +706,14 @@ var Unit = exports.Unit = function () {
       retUnit.guidance_ = '';
       if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
 
-      // A unit that has the mole or arbitrary attribute
-      // taints any unit created from it via an arithmetic
-      // operation.  Taint accordingly
-      if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+      // Update the mole exponent count by adding the count for unit2 to the
+      // count for this unit.
+      retUnit.moleExp_ = retUnit.moleExp_ + unit2.moleExp_;
+
+      // A unit that has the arbitrary attribute taints any unit created from it
+      // via an arithmetic operation.  Taint accordingly
+      // if (!retUnit.isMole_)
+      //   retUnit.isMole_ = unit2.isMole_ ;
       if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
 
       return retUnit;
@@ -760,10 +767,14 @@ var Unit = exports.Unit = function () {
         else retUnit.dim_ = unit2.dim_.clone().minus();
       } // end if unit2 has a dimension object
 
-      // A unit that has the mole or arbitrary attribute
-      // taints any unit created from it via an arithmetic
-      // operation.  Taint accordingly
-      if (!retUnit.isMole_) retUnit.isMole_ = unit2.isMole_;
+      // Update the mole exponent count by subtracting the count for unit2 from
+      // the // count for this unit.
+      retUnit.moleExp_ = retUnit.moleExp_ - unit2.moleExp_;
+
+      // A unit that has the arbitrary attribute taints any unit created from
+      // it via an arithmetic operation.  Taint accordingly
+      // if (!retUnit.isMole_)
+      //   retUnit.isMole_ = unit2.isMole_ ;
       if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
 
       return retUnit;
@@ -971,36 +982,18 @@ var Unit = exports.Unit = function () {
       var tabs = this._getUnitTables();
       var d = tabs.getMassDimensionIndex();
       var commensurable = false;
-      if (this.isMole_) {
+      if (this.moleExp_ === 1 && unit2.moleExp_ === 0) {
         var testDim = this.dim_.clone();
-        testDim.setElementAt(d);
+        var curVal = testDim.getElementAt(d);
+        testDim.setElementAt(d, curVal + this.moleExp_);
         commensurable = testDim.equals(unit2.dim_);
-      } else {
+      } else if (unit2.moleExp_ === 1 && this.moleExp_ === 0) {
         var _testDim = unit2.dim_.clone();
-        _testDim.setElementAt(d);
+        var _curVal = _testDim.getElementAt(d);
+        _testDim.setElementAt(d, _curVal + unit2.moleExp_);
         commensurable = _testDim.equals(this.dim_);
       }
       return commensurable;
-    }
-
-    /**
-     * This checks a unit object to see if is mass-based, by checking to see
-     * if its dimension vector contains a 1 at the index where the base gram
-     * unit contains a 1.
-     *
-     * @private
-     */
-
-  }, {
-    key: '_isMassBased',
-    value: function _isMassBased() {
-      var massBased = false;
-      if (this.dim_) {
-        var tabs = this._getUnitTables();
-        var d = tabs.getMassDimensionIndex();
-        massBased = this.dim_.getElementAt(d) == 1;
-      }
-      return massBased;
     }
 
     /**
