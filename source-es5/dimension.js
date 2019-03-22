@@ -79,11 +79,13 @@ var Dimension = exports.Dimension = function () {
 
 
   /**
-   * Sets the element at the specified position to 1.  If the dimension vector
-   * is null when this is called a zero-filled vector is created and then the
-   * indicated position is set to 1.
+   * Sets the element at the specified position to a specified value.  The
+   * default value is 1.  If the dimension vector is null when this is called
+   * a zero-filled vector is created and then the indicated position is set.
    *
    * @param indexPos the index of the element to be set
+   * @param value the value to assign to the specified element; optional,
+   *  default value is 1
    * @throws an exception if the specified position is invalid, i.e., not a
    *   number or is less than 0 or greater than Ucum.dimLen_
    **/
@@ -91,7 +93,7 @@ var Dimension = exports.Dimension = function () {
 
   _createClass(Dimension, [{
     key: 'setElementAt',
-    value: function setElementAt(indexPos) {
+    value: function setElementAt(indexPos, value) {
 
       if (!Number.isInteger(indexPos) || indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
         throw new Error('Dimension.setElementAt called with an invalid index ' + ('position (' + indexPos + ')'));
@@ -100,7 +102,9 @@ var Dimension = exports.Dimension = function () {
       if (!this.dimVec_) {
         this.assignZero();
       }
-      this.dimVec_[indexPos] = 1;
+      if (value === undefined || value === null) value = 1;
+
+      this.dimVec_[indexPos] = value;
     }
 
     /**
