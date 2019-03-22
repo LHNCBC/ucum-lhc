@@ -9570,7 +9570,7 @@ module.exports={
       "cnvPfx_": 1,
       "isSpecial_": true,
       "isArbitrary_": false,
-      "moleExp_": 1,
+      "moleExp_": 0,
       "synonyms_": "pH scale",
       "source_": "UCUM",
       "loincProperty_": "LogCnc",
