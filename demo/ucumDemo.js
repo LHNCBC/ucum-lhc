@@ -677,10 +677,11 @@ export class UcumDemo {
           retMsg += '<BR>';
         }
         for (let m = 0; m < pMsgLen; m++) {
-          if (!retMsg.includes(parseResp['msg'][m]))
+          if (!retMsg.includes(parseResp['msg'][m])) {
+            if (retMsg != '')
+              retMsg += '<BR>';
             retMsg += parseResp['msg'][m];
-          if ((m + 1) < pMsgLen)
-            retMsg += '<BR>';
+          }
         }
       } // end if there's a message from the parse request
 

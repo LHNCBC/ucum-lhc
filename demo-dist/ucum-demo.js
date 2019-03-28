@@ -787,8 +787,10 @@ var UcumDemo = exports.UcumDemo = function () {
               retMsg += '<BR>';
             }
             for (var m = 0; m < pMsgLen; m++) {
-              if (!retMsg.includes(parseResp['msg'][m])) retMsg += parseResp['msg'][m];
-              if (m + 1 < pMsgLen) retMsg += '<BR>';
+              if (!retMsg.includes(parseResp['msg'][m])) {
+                if (retMsg != '') retMsg += '<BR>';
+                retMsg += parseResp['msg'][m];
+              }
             }
           } // end if there's a message from the parse request
 
