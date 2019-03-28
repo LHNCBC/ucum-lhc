@@ -348,6 +348,9 @@ export class UcumDemo {
     toNumField.value = 1;
     toNumField.classList.remove("invalid");
 
+    let msgField = document.getElementById('convMsg');
+    msgField.innerHTML = '';
+
     // Make sure the number/code boxes are aligned properly and set the
     // first entry flag to true.
     this._sizeNameDivs();
@@ -571,8 +574,12 @@ export class UcumDemo {
 
             // If the last displayed message was displayed again, remove it here.
             // See above for description of how that can happen.
-            if (resFld.innerHTML === lastDispMsg)
+            if (resFld.innerHTML === lastDispMsg) {
               resFld.innerHTML = '';
+            }
+            else {
+              retMsg = resFld.innerHTML ;
+            }
           }
           // If the status returned was 'invalid' it means we had to do a
           // substitution to get a unit.  Set the class on the output
@@ -665,10 +672,16 @@ export class UcumDemo {
       } // end catch
 
       if (parseResp['msg'] && parseResp['msg'].length > 0) {
+        let pMsgLen = parseResp['msg'].length;
         if (retMsg != '') {
           retMsg += '<BR>';
         }
-        retMsg += parseResp['msg'];
+        for (let m = 0; m < pMsgLen; m++) {
+          if (!retMsg.includes(parseResp['msg'][m]))
+            retMsg += parseResp['msg'][m];
+          if ((m + 1) < pMsgLen)
+            retMsg += '<BR>';
+        }
       } // end if there's a message from the parse request
 
       // If there's a message to be displayed (and it's not a repeat of
