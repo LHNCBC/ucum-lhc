@@ -285,7 +285,8 @@ input.invalid {
   border: 3px solid red;
 }
 
-#resultString.invalid, #validationString.invalid {
+#resultString.invalid, #validationString.invalid,
+#convertFromName.invalid, #convertToName.invalid {
   color: red ;
 }
 
