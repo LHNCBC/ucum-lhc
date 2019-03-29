@@ -673,9 +673,6 @@ export class UcumDemo {
 
       if (parseResp['msg'] && parseResp['msg'].length > 0) {
         let pMsgLen = parseResp['msg'].length;
-        if (retMsg != '') {
-          retMsg += '<BR>';
-        }
         for (let m = 0; m < pMsgLen; m++) {
           if (!retMsg.includes(parseResp['msg'][m])) {
             if (retMsg != '')
