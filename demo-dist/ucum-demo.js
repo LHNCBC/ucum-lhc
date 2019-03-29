@@ -635,7 +635,7 @@ var UcumDemo = exports.UcumDemo = function () {
         // displayed, blank out the number field of the opposite number/code set.
         if (this.firstConvEntry_) {
           this.firstConvEntry_ = false;
-          if (elementID = 'convertFrom') {
+          if (elementID === 'convertFrom') {
             var clrFld = document.getElementById('convertToNum');
             clrFld.value = '';
           } else {
