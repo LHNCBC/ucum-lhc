@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.6.2] - 2019-03-29
+### Fixed
+- Demo page changes:  fixed processing flow problem that allowed an attempt to 
+convert an invalid unit;  tweaked flow on initial display of converter tab; 
+added meta data to the page to increase visibility to search engines.  
+
 ## [2.6.1] - 2019-03-22
 ### Added
 - Added mass<-> moles conversion to the UCUM Demo page, with a request to the

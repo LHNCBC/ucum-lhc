@@ -178,12 +178,18 @@ var UcumDemo = exports.UcumDemo = function () {
       };
     }(this));
 
-    // Flags indicating validity of the "from" and "to" unit and number fields
-    // on the conversion tab.
+    // Flags indicating validity of the "from" and "to" unit code and number
+    // fields on the conversion tab.
     this.convFrom_ = false;
     this.convFromNum_ = true;
     this.convTo_ = false;
     this.convToNum_ = true;
+
+    // Flag used to track a first entry on the converter tab.   This is needed
+    // to know when to blank out the "to" number field if the user first enters
+    // a unit code when the converter tab is displayed.   After that point
+    // blanking out a numeric field as appropriate is taken care of.
+    this.firstConvEntry_ = true;
 
     // Remember which numeric value was last reported as the conversion result
     // and what field it was reported in
@@ -462,6 +468,14 @@ var UcumDemo = exports.UcumDemo = function () {
       toNumField.value = 1;
       toNumField.classList.remove("invalid");
 
+      var msgField = document.getElementById('convMsg');
+      msgField.innerHTML = '';
+
+      // Make sure the number/code boxes are aligned properly and set the
+      // first entry flag to true.
+      this._sizeNameDivs();
+      this.firstConvEntry_ = true;
+
       var mWeightDiv = document.getElementById('molecular-weight');
       mWeightDiv.style.visibility = 'hidden';
 
@@ -610,13 +624,39 @@ var UcumDemo = exports.UcumDemo = function () {
         mWeightDiv.style.visibility = 'hidden';
         var mWeightFld = document.getElementById('moleWeight');
         mWeightFld.value = null;
+        /*
         if (this.lastResultFld_) {
-          var rf = document.getElementById(this.lastResultFld_);
+          let rf = document.getElementById(this.lastResultFld_);
           rf.value = '';
+        }
+        */
+
+        // If the user entered a unit code as soon as the converter tab was
+        // displayed, blank out the number field of the opposite number/code set.
+        if (this.firstConvEntry_) {
+          this.firstConvEntry_ = false;
+          if (elementID === 'convertFrom') {
+            var clrFld = document.getElementById('convertToNum');
+            clrFld.value = '';
+          } else {
+            var _clrFld = document.getElementById('convertFromNum');
+            _clrFld.value = '';
+          }
         }
       }
 
+      // Clear the message field, but first hold onto the last message displayed.
+      // This is used at the end of this function to make sure we don't redisplay
+      // the same message.  This can happen if, for example, the user enters a
+      // unit code that requires a substitution, e.g., 2mg instead of 2.mg, and
+      // then enters another unit code in the other code field on the converter
+      // tab.   When the 2mg unit code is checked for validity, a substitution
+      // message is displayed.   When the second unit code is entered and the
+      // conversion is performed, the substitution message gets repeated because
+      // the conversion process will re-evaluate the 2mg unit code.  This avoids
+      // that second display of the same, and no longer needed, message.
       var resFld = document.getElementById(msgElementID);
+      var lastDispMsg = resFld.innerHTML;
       resFld.innerHTML = '';
       var valFld = document.getElementById(elementID);
       var valMsgFld = document.getElementById(elementID + 'Name');
@@ -644,16 +684,27 @@ var UcumDemo = exports.UcumDemo = function () {
             // If we got a unit back and the status isn't 'error', we found a
             // unit (whether or not it matches the original string).
             if (theStatus !== 'error' && theUnit) {
+
               if (tabName === 'Converter') {
                 this.setConvertValues(elementID, true);
+
+                // If the last displayed message was displayed again, remove it here.
+                // See above for description of how that can happen.
+                if (resFld.innerHTML === lastDispMsg) {
+                  resFld.innerHTML = '';
+                } else {
+                  retMsg = resFld.innerHTML;
+                }
               }
               // If the status returned was 'invalid' it means we had to do a
               // substitution to get a unit.  Set the class on the output
-              // strings to invalid
+              // strings to invalid.
               if (theStatus === 'invalid') {
                 valFld.classList.add("invalid");
                 resFld.classList.add("invalid");
                 resFld.classList.remove("valid");
+                valMsg = parseResp['ucumCode'] + ' was substituted for ' + escVal + '.';
+                valMsgFld.classList.add("invalid");
               }
               // Otherwise the status is valid.  If we're on the validator tab
               // set the appropriate classes for the output fields.  This has
@@ -678,18 +729,10 @@ var UcumDemo = exports.UcumDemo = function () {
                   }
                   // For the validator tab, make sure the valid unit message
                   // is the first one that is displayed.  It may be followed
-                  // by a message about substitions, but it should be first.
+                  // by a message about substitutions, but it should be first.
                   if (tabName === 'Validator') {
-
                     if (parseResp['msg'].length > 0) parseResp['msg'].unshift(valMsg);else parseResp['msg'] = valMsg;
                   } // end if this is for the validator tab
-                  // For for the converter tab, the valid unit message goes under
-                  // the field of the unit code last specified.  Call _sizeNameDivs
-                  // to make sure the height of the message areas match.
-                  else {
-                      valMsgFld.innerHTML = valMsg;
-                      this._sizeNameDivs();
-                    }
                 } // end if the status is 'valid'
             } // end if we have a unit and the status is not 'error'
             // Else the status returned is 'error' OR no unit was returned
@@ -697,6 +740,11 @@ var UcumDemo = exports.UcumDemo = function () {
             else {
                 if (tabName === 'Converter') {
                   this.setConvertValues(elementID, false);
+                  valMsg = escVal + ' ';
+                  if (theUnit && theUnit.name) {
+                    valMsg += '(' + theUnit.name + ') ';
+                  }
+                  valMsg += ' is NOT a valid unit expression.';
                 } else {
                   valFld.classList.add("invalid");
                   resFld.classList.add("invalid");
@@ -733,21 +781,38 @@ var UcumDemo = exports.UcumDemo = function () {
             }
           } // end catch
 
-          if (parseResp['msg']) {
-            if (retMsg != '') {
-              retMsg += '<BR>';
+          if (parseResp['msg'] && parseResp['msg'].length > 0) {
+            var pMsgLen = parseResp['msg'].length;
+            for (var m = 0; m < pMsgLen; m++) {
+              if (!retMsg.includes(parseResp['msg'][m])) {
+                if (retMsg != '') retMsg += '<BR>';
+                retMsg += parseResp['msg'][m];
+              }
             }
-            retMsg += parseResp['msg'];
           } // end if there's a message from the parse request
 
-          // If there's a message to be displayed, do it now
-          if (retMsg !== '') {
+          // If there's a message to be displayed (and it's not a repeat of
+          // the last displayed message) do it now
+          if (retMsg !== '' && retMsg !== lastDispMsg) {
             if (uStr !== escVal && uStr !== '') {
               retMsg = this._multipleReplace(retMsg, uStr, escVal);
             }
             resFld.innerHTML = retMsg;
           }
+
+          // If we're on the converter tab, display any pending valid/invalid
+          // message for the code just entered and set the class of the field
+          // that gets that message (under the input field for the code)
+          if (tabName === 'Converter') {
+            valMsgFld.innerHTML = valMsg;
+            if (theStatus === 'valid') valMsgFld.classList.remove('invalid');else valMsgFld.classList.add('invalid');
+          }
         } // end if a value was specified
+
+      // Make sure the number/code blocks are aligned
+      if (tabName === 'Converter') {
+        this._sizeNameDivs();
+      }
     } // end reportUnitStringValidity
 
 
@@ -781,10 +846,12 @@ var UcumDemo = exports.UcumDemo = function () {
       var resultSide = null;
       if (elementID === 'convertFrom') {
         this.convFrom_ = valid;
-        resultSide = 'to';
+        var fromNumFld = document.getElementById('convertFromNum');
+        if (fromNumFld.value == '') resultSide = 'from';else resultSide = 'to';
       } else if (elementID === 'convertTo') {
         this.convTo_ = valid;
-        resultSide = 'to';
+        var toNumFld = document.getElementById('convertToNum');
+        if (toNumFld.value === '') resultSide = 'to';else resultSide = 'from';
       } else if (elementID === 'convertFromNum') {
         this.convFromNum_ = valid;
         resultSide = 'to';
@@ -818,11 +885,11 @@ var UcumDemo = exports.UcumDemo = function () {
 
 
     /**
-     * This method checks a number of units value to make sure it's a valid
-     * number.  It calls setConvertValues to set the validity state flag for
-     * the number of units field as appropriate.
+     * This method checks a number of units value or the moleWeight value to make
+     * it's a valid number.  It calls setConvertValues to set the validity state
+     * flag for the number of units field as appropriate.
      *
-     * @param numField the name of the number of units field
+     * @param numField the name of the input field to check
      *
      */
 
@@ -832,11 +899,14 @@ var UcumDemo = exports.UcumDemo = function () {
 
       var checkFld = document.getElementById(numField);
       var checkVal = escapeHtml(checkFld.value);
-      if (numField === 'moleWeight') var resFld = document.getElementById(this.lastResultFld_);else resFld = numField === 'convertFromNum' ? document.getElementById('convertToNum') : document.getElementById('convertFromNum');
+      if (numField === 'moleWeight') var resFld = document.getElementById(this.lastResultFld_);else {
+        resFld = numField === 'convertFromNum' ? document.getElementById('convertToNum') : document.getElementById('convertFromNum');
+      }
       var resultString = document.getElementById('convMsg');
       resultString.innerHTML = '';
 
       if (checkVal !== '') {
+        resFld.value = '';
         var parsedNum = "" + checkVal;
         if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
           resultString.innerHTML = checkVal + ' is not a valid number.';
@@ -846,14 +916,17 @@ var UcumDemo = exports.UcumDemo = function () {
         }
       } // end if a value was specified
 
-      // If the value is blank, call setConvertValues to set the validity
+      // Else the value is blank. call setConvertValues to set the validity
       // indicator to false and remove any red highlighting that might be there.
-      // Do this for values in both number fields, and blank out the result field
-      if (checkVal === '') {
-        this.setConvertValues('convertFromNum', false, true);
-        this.setConvertValues('convertToNum', false, true);
-        resFld.value = '';
+      else {
+          this.setConvertValues(numField, false, true);
+        }
+
+      // Clear the first entry flag, make sure the number/code blocks are aligned
+      if (this.firstConvEntry_) {
+        this.firstConvEntry_ = false;
       }
+      this._sizeNameDivs();
     } // end checkNumVal
 
 
@@ -941,10 +1014,6 @@ var UcumDemo = exports.UcumDemo = function () {
       var toName = document.getElementById(toField).value;
       var escToName = escapeHtml(toName);
 
-      // clear the "to" number field, which is to get the result
-      var toNumFld = document.getElementById(toNumField);
-      //toNumFld.value = '';
-
       // Get the field to hold an error message and the one to hold suggestions
       var msgField = document.getElementById("convMsg");
       msgField.innerHTML = '';
@@ -956,9 +1025,11 @@ var UcumDemo = exports.UcumDemo = function () {
       var moleWeightVal = weightField.value;
 
       var resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, true, moleWeightVal);
+
       if (resultObj['status'] === 'succeeded') {
         var toVal = resultObj['toVal'];
-
+        var toNumFld = document.getElementById(toNumField);
+        if (toNumField === 'convertToNum') this.convToNum_ = true;else this.convFromNum_ = true;
         // Store the full result value number received so that we have it if a
         // larger number of digits is subsequently requested.
         this.lastResult_ = toVal;
@@ -988,9 +1059,7 @@ var UcumDemo = exports.UcumDemo = function () {
         // e.g., "2m is not a valid UCUM code.  We assumed you meant 2.m"
 
         if (resultObj['msg'].length > 0) {
-          for (var r = 0; r < resultObj['msg'].length; r++) {
-            resultMsg += '<br>' + resultObj['msg'][r];
-          }
+          resultMsg = resultObj['msg'].join('<BR>');
         }
       }
       // Else if an error was signalled, transfer the error message to
