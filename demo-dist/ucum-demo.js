@@ -731,7 +731,7 @@ var UcumDemo = exports.UcumDemo = function () {
                   // is the first one that is displayed.  It may be followed
                   // by a message about substitutions, but it should be first.
                   if (tabName === 'Validator') {
-                    if (parseResp['msg'].length > 0) parseResp['msg'].unshift(valMsg);else parseResp['msg'] = valMsg;
+                    if (parseResp['msg'].length > 0) parseResp['msg'].unshift(valMsg);else parseResp['msg'] = [valMsg];
                   } // end if this is for the validator tab
                 } // end if the status is 'valid'
             } // end if we have a unit and the status is not 'error'
