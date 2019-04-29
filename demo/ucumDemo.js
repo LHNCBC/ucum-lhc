@@ -311,7 +311,7 @@ export class UcumDemo {
     }
     else
       this.blockLocationChangeHandler = false ;
-    
+
   } // end checkTabSwitch
 
 
@@ -620,7 +620,7 @@ export class UcumDemo {
               if (parseResp['msg'].length > 0)
                 parseResp['msg'].unshift(valMsg);
               else
-                parseResp['msg'] = valMsg;
+                parseResp['msg'] = [valMsg];
             } // end if this is for the validator tab
           }  // end if the status is 'valid'
         } // end if we have a unit and the status is not 'error'
