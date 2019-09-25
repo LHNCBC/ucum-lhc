@@ -6,11 +6,11 @@
  */
 
 var assert = require('assert');
-var Ucum = require('../source-es5/config.js').Ucum;
-var UcumJsonDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs ;
-var UTables = require("../source-es5/unitTables.js").UnitTables;
-var Utils = require("../source-es5/ucumLhcUtils.js").UcumLhcUtils;
-var UString = require("../source-es5/unitString.js").UnitString;
+var Ucum = require('../source/config.js').Ucum;
+var UcumJsonDefs = require('../source/ucumJsonDefs.js').UcumJsonDefs ;
+var UTables = require("../source/unitTables.js").UnitTables;
+var Utils = require("../source/ucumLhcUtils.js").UcumLhcUtils;
+var UString = require("../source/unitString.js").UnitString;
 
 var uTabs = UTables.getInstance();
 var uDefs = UcumJsonDefs.getInstance();

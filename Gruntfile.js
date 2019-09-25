@@ -25,13 +25,14 @@ module.exports = function(grunt) {
       } ,
       demo: {
         files: [{
-          cwd: '.',
-          src: ['demo-es5/*']
+          cwd: 'demo-dist',
+          src: ['*.js', '*.css', '*.js.map']
         }]
       }
     },
 
     // use babel to translate ES6 files to ES5 files
+    /*
     babel: {
       options: {
         compact: false,
@@ -56,7 +57,7 @@ module.exports = function(grunt) {
           dest: './demo-es5'
         }]
       }
-    },
+    }, */
 
     // use browserify to prepare the files for client-side use
     browserify: {
@@ -137,6 +138,7 @@ module.exports = function(grunt) {
     // using mocha for the tests
     mochaTest: {
       options: {
+        require: '@babel/register',
         reporter: 'spec'
       } ,
       src: ['./test/*.spec.js']
