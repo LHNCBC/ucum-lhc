@@ -60,7 +60,7 @@
     "webdriver-manager": "^12.0.6"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",

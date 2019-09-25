@@ -25,39 +25,11 @@ module.exports = function(grunt) {
       } ,
       demo: {
         files: [{
-          cwd: 'demo-dist',
-          src: ['*.js', '*.css', '*.js.map']
+          cwd: '.',
+          src: ['demo-dist/*.js', 'demo-dist/*.css', 'demo-dist/*.js.map']
         }]
       }
     },
-
-    // use babel to translate ES6 files to ES5 files
-    /*
-    babel: {
-      options: {
-        compact: false,
-        sourceMap: true,
-        presets: ['@babel/preset-env']
-      },
-      browser: {
-        files: [{
-          expand: true,
-          cwd: '.',
-          flatten: true,
-          src: ['./tmp/ucum-lhc-es6.js'],
-          dest: './browser-dist/ucum-lhc'
-        }]
-      },
-      demo: {
-        files: [{
-          expand: true,
-          cwd: '.',
-          flatten: true,
-          src: ['./demo/*.js'],
-          dest: './demo-es5'
-        }]
-      }
-    }, */
 
     // use browserify to prepare the files for client-side use
     browserify: {
