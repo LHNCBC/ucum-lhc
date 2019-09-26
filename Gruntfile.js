@@ -36,6 +36,8 @@ module.exports = function(grunt) {
     },
 
     // use browserify to prepare the files for client-side use
+    // This is now also used for the npm package.  We need to transpile
+    // for server-side use because of the use of ES6 modules.
     browserify: {
       browser: {
         options: {
