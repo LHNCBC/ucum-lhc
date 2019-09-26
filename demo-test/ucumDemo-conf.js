@@ -1,7 +1,8 @@
 // ucumDemo-conf.js
+var port = 3003;
 exports.config = {
+  port: port,
   framework: 'jasmine',
-  seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['ucumDemo-spec.js'],
   capabilities: {
     browserName: 'firefox'

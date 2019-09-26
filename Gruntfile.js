@@ -1,12 +1,16 @@
+var serveStatic = require('serve-static');
+
 module.exports = function(grunt) {
 
   // Load grunt tasks automatically as needed ("jit")
   require('jit-grunt')(grunt, {
     clean: 'grunt-contrib-clean',
+    connect: 'grunt-contrib-connect',
     cssmin: 'grunt-contrib-cssmin',
-    uglify: 'grunt-contrib-uglify',
+    extract_sourcemap: 'grunt-extract-sourcemap',
     mochaTest: 'grunt-mocha-test',
-    protractor: 'grunt-protractor-runner'
+    protractor: 'grunt-protractor-runner',
+    uglify: 'grunt-contrib-uglify'
   });
 
   // Time how long tasks take.  Just for fun
@@ -63,6 +67,7 @@ module.exports = function(grunt) {
         ]
       }
     },
+
     // use css min to minify the css files
     cssmin: {
       default: {
@@ -137,6 +142,24 @@ module.exports = function(grunt) {
       }
     },
 
+    // Server for protractor tests
+    connect: {
+      options: {
+        hostname: '0.0.0.0'
+      },
+      test: {
+        options: {
+          port: require('./demo-test/ucumDemo-conf').config.port,
+          middleware: function (connect) {
+            return [
+              serveStatic('.')
+            ];
+          }
+        }
+      }
+    },
+
+
     // grunt protractor runner task
     protractor: {
       options: {
@@ -155,14 +178,10 @@ module.exports = function(grunt) {
    });  // end grunt.initConfig
 
   // load and register the tasks
-  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-browserify");
-  grunt.loadNpmTasks('grunt-extract-sourcemap');
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks('grunt-wiredep');
-  grunt.loadNpmTasks('grunt-mocha-test') ;
-  grunt.loadNpmTasks('grunt-protractor-runner');
 
   grunt.registerTask('ssi', 'Flatten SSI includes in your HTML files.', function() {
 
@@ -187,10 +206,10 @@ module.exports = function(grunt) {
                                "build:demo"]);
   grunt.registerTask("test", ['build',
                               'mochaTest',
-                              'protractor']);
+                              'runProtractor']);
   // note that the webdriver manager must be running before the
   // protractor tests will run.  use webdriver-manager start & to
   // start the manager and the selenium server
-  grunt.registerTask("runProtractor", ['protractor']);
+  grunt.registerTask("runProtractor", ['connect', 'protractor']);
 
 };
