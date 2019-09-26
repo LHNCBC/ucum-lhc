@@ -31,6 +31,7 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
+    "babel-loader": "^8.0.6",
     "babelify": "^10.0.0",
     "bootstrap": "^4.3.1",
     "bower": "^1.8.8",
@@ -42,6 +43,7 @@
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
@@ -51,15 +53,17 @@
     "jit-grunt": "^0.10.0",
     "mocha": "^5.2.0",
     "path": "^0.12.7",
-    "protractor": "^5.3.1",
     "semver": "^5.5.1",
     "serve-index": "^1.8.0",
     "serve-static": "^1.12.2",
     "ssi": "^0.3.0",
     "time-grunt": "^1.4.0",
-    "webdriver-manager": "^12.0.6"
+    "webdriver-manager": "^12.0.6",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
   },
   "scripts": {
+    "build": "grunt build && webpack",
     "test": "grunt test"
   },
   "repository": {

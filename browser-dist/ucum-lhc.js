@@ -493,7 +493,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "Num",
       "category_": "Clinical",
-      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000. The unit testing conversion all works. ",
+      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
@@ -531,7 +531,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "Num",
       "category_": "Clinical",
-      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000. The unit testing conversion all works. ",
+      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
@@ -645,7 +645,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "MCnc; MCnt",
       "category_": "Clinical",
-      "guidance_": "[ppth] is often used in solution concentrations as 1 g/L or 1 g/kg. \n\nCan be ambigous and would be better if the metric units was used directly. ",
+      "guidance_": "[ppth] is often used in solution concentrations as 1 g/L or 1 g/kg.\n\nCan be ambigous and would be better if the metric units was used directly. ",
       "csUnitString_": "10*-3",
       "ciUnitString_": "10*-3",
       "baseFactorStr_": "1",
@@ -683,7 +683,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "MCnt; MCnc; SFr",
       "category_": "Clinical",
-      "guidance_": "[ppm] is often used in solution concentrations as 1 mg/L  or 1 mg/kg. Also used to express mole fractions as 1 mmol/mol.\n\n[ppm] is also used in nuclear magnetic resonance (NMR) to represent chemical shift - the difference of a measured frequency in parts per million from the reference frequency. \n\nCan be ambigous and would be better if the metric units was used directly. ",
+      "guidance_": "[ppm] is often used in solution concentrations as 1 mg/L  or 1 mg/kg. Also used to express mole fractions as 1 mmol/mol.\n\n[ppm] is also used in nuclear magnetic resonance (NMR) to represent chemical shift - the difference of a measured frequency in parts per million from the reference frequency.\n\nCan be ambigous and would be better if the metric units was used directly. ",
       "csUnitString_": "10*-6",
       "ciUnitString_": "10*-6",
       "baseFactorStr_": "1",
@@ -25126,7 +25126,7 @@ module.exports={
     },
     {
       "isBase_": false,
-      "name_": "nanomole of 1/2 cystine per milligram of protein",
+      "name_": "nanomole per milligram of protein",
       "csCode_": "nmol/mg{prot}",
       "ciCode_": "NMOL/MG",
       "property_": "amount of substance",
@@ -25151,9 +25151,9 @@ module.exports={
       "isSpecial_": false,
       "isArbitrary_": false,
       "moleExp_": 1,
-      "synonyms_": "nanomoles; half cystine; nmol per 1/2 cys per mg prot",
+      "synonyms_": "nanomoles; nmol/mg prot; nmol per mg prot",
       "source_": "LOINC",
-      "loincProperty_": "SCnt",
+      "loincProperty_": "Ratio; CCnt",
       "category_": "Clinical",
       "guidance_": "",
       "csUnitString_": "10*23",
@@ -30267,7 +30267,7 @@ exports.Prefix = Prefix;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.PrefixTables = void 0;
+exports.PrefixTables = exports.PrefixTablesFactory = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30285,7 +30285,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var PrefixTables =
+var PrefixTablesFactory =
 /*#__PURE__*/
 function () {
   /**
@@ -30296,25 +30296,11 @@ function () {
    * Implementation of this as a singleton is based on the UnitTables
    * implementation.  See that class for details.
    */
-  function PrefixTables() {
-    _classCallCheck(this, PrefixTables);
+  function PrefixTablesFactory() {
+    _classCallCheck(this, PrefixTablesFactory);
 
     this.byCode_ = {};
-    this.byValue_ = {}; // Make this a singleton.  See UnitTables constructor for details.
-
-    var holdThis = PrefixTables.prototype;
-
-    PrefixTables = function PrefixTables() {
-      throw new Error('PrefixTables is a Singleton. ' + 'Use PrefixTables.getInstance() instead.');
-    };
-
-    if (exports) exports.PrefixTables = PrefixTables;
-    PrefixTables.prototype = holdThis;
-    var self = this;
-
-    PrefixTables.getInstance = function () {
-      return self;
-    };
+    this.byValue_ = {};
   }
   /**
    * Provides the number of prefix objects in each table
@@ -30322,7 +30308,7 @@ function () {
    */
 
 
-  _createClass(PrefixTables, [{
+  _createClass(PrefixTablesFactory, [{
     key: "prefixCount",
     value: function prefixCount() {
       return Object.keys(this.byCode_).length;
@@ -30424,31 +30410,20 @@ function () {
     }
   }]);
 
-  return PrefixTables;
-}(); // end PrefixTables class
-
-/**
- *  This function exists ONLY until the original PrefixTables constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton PrefixTable object.  This is based on the UnitTables singleton
- *  implementation; see more detail in the UnitTables constructor description.
- *
- *  @return the singleton PrefixTables object.
- */
+  return PrefixTablesFactory;
+}(); // end PrefixTablesFactory class
+// Create a singleton instance and (to preserve the existing API) an object that
+// provides that instance via getInstance().
 
 
+exports.PrefixTablesFactory = PrefixTablesFactory;
+var prefixTablesInstance = new PrefixTablesFactory();
+var PrefixTables = {
+  getInstance: function getInstance() {
+    return prefixTablesInstance;
+  }
+};
 exports.PrefixTables = PrefixTables;
-
-PrefixTables.getInstance = function () {
-  return new PrefixTables();
-}; // Perform the first request for the tables object, to get the
-// getInstance method set.
-
-
-PrefixTables.getInstance();
 
 },{}],10:[function(require,module,exports){
 "use strict";
@@ -34091,7 +34066,7 @@ var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
 
 var fs = require('fs');
 
-var UnitTables =
+var UnitTablesFactory =
 /*#__PURE__*/
 function () {
   /**
@@ -34113,8 +34088,8 @@ function () {
    * 1. throw error message referring to getInstance
    * 2. call getInstance, returns this - which is OBJECT1.
    */
-  function UnitTables() {
-    _classCallCheck(this, UnitTables);
+  function UnitTablesFactory() {
+    _classCallCheck(this, UnitTablesFactory);
 
     /**
      * Tracks units by name
@@ -34181,23 +34156,7 @@ function () {
      * @type integer
      */
 
-    this.massDimIndex_ = 0; // Make this a singleton - from mrme44 May 18 comment on
-    // on GitHub Gist page of SanderLi/Singleton.js.  Modified
-    // for this class.
-
-    var holdThis = UnitTables.prototype;
-
-    UnitTables = function UnitTables() {
-      throw new Error("UnitTables is a Singleton.  " + 'Use UnitTables.getInstance() instead.');
-    };
-
-    if (exports) exports.UnitTables = UnitTables;
-    UnitTables.prototype = holdThis;
-    var self = this;
-
-    UnitTables.getInstance = function () {
-      return self;
-    };
+    this.massDimIndex_ = 0;
   }
   /**
    * Provides the number of unit objects written to the tables, using the
@@ -34207,7 +34166,7 @@ function () {
    */
 
 
-  _createClass(UnitTables, [{
+  _createClass(UnitTablesFactory, [{
     key: "unitsCount",
     value: function unitsCount() {
       return Object.keys(this.unitCodes_).length;
@@ -34851,31 +34810,19 @@ function () {
 
   }]);
 
-  return UnitTables;
-}(); // end UnitTables
-
-/**
- *  This function exists ONLY until the original UnitTables constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton UnitTables object.  See more detail in the constructor
- *  description.
- *
- *  @returns the singleton UnitTables object.
- */
+  return UnitTablesFactory;
+}(); // end UnitTablesFactory
+// Create a singleton instance and (to preserve the existing API) an object that
+// provides that instance via getInstance().
 
 
+var unitTablesInstance = new UnitTablesFactory();
+var UnitTables = {
+  getInstance: function getInstance() {
+    return unitTablesInstance;
+  }
+};
 exports.UnitTables = UnitTables;
-
-UnitTables.getInstance = function () {
-  return new UnitTables();
-}; // Perform the first request for the tables object, to get the
-// getInstance method set.
-
-
-UnitTables.getInstance();
 
 },{"./config.js":6,"./ucumJsonDefs.js":12,"fs":2}]},{},[14])(14)
 });

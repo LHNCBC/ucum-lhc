@@ -8,7 +8,7 @@
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-export class PrefixTables {
+export class PrefixTablesFactory {
 
   /**
    * Constructor.  This creates the empty PrefixTable hashes once.
@@ -21,17 +21,6 @@ export class PrefixTables {
   constructor(){
     this.byCode_ = {} ;
     this.byValue_ = {};
-
-    // Make this a singleton.  See UnitTables constructor for details.
-
-    let holdThis = PrefixTables.prototype;
-    PrefixTables = function(){throw(new Error('PrefixTables is a Singleton. ' +
-                                    'Use PrefixTables.getInstance() instead.'))};
-    if (exports)
-      exports.PrefixTables = PrefixTables;
-    PrefixTables.prototype = holdThis;
-    let self = this ;
-    PrefixTables.getInstance = function(){return self} ;
   }
 
 
@@ -126,26 +115,14 @@ export class PrefixTables {
     return this.byValue_[value];
   }
 
-} // end PrefixTables class
+} // end PrefixTablesFactory class
 
 
-/**
- *  This function exists ONLY until the original PrefixTables constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton PrefixTable object.  This is based on the UnitTables singleton
- *  implementation; see more detail in the UnitTables constructor description.
- *
- *  @return the singleton PrefixTables object.
- */
-PrefixTables.getInstance = function(){
-  return new PrefixTables();
+// Create a singleton instance and (to preserve the existing API) an object that
+// provides that instance via getInstance().
+var prefixTablesInstance = new PrefixTablesFactory();
+export const PrefixTables = {
+  getInstance: function() {
+    return prefixTablesInstance;
+  }
 }
-
-// Perform the first request for the tables object, to get the
-// getInstance method set.
-PrefixTables.getInstance();
-
-

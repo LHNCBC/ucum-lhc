@@ -112,6 +112,7 @@ export class UcumDataUpdater {
                 upd.msg('transformer', err)});
 
     inFile.on('end', function(){
+      parser.end(); // in case last line of file does not end in newline
       let xdoc = UcumXmlDocument.getInstance();
       xdoc.writeJsonFile();
       let upd=UcumDataUpdater.getInstance();
