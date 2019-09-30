@@ -9,11 +9,9 @@ function commonConfig() {
   return  {
     target: 'node',
     mode: 'development',
-    entry: path.join(__dirname, './impexp/createUnitsFromXmlEssence.js'),
     output: {
       path: __dirname,
-      library: 'ucum',
-      filename: './impexp/createUnitsFromXmlEssenceBuild.js'
+      library: 'ucum'
     },
     module: {
       rules: [
