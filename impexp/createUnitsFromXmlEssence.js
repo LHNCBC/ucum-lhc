@@ -34,11 +34,11 @@
  * Then run from the command line, i.e., node createUnitsFromXmlEssence5.js
  */
 
-var xdoc = require("../source-es5/ucumXmlDocument.js");
-var pfx = require("../source-es5/prefix.js");
-var unit = require("../source-es5/unit.js");
+import { UcumXmlDocument } from "../source/ucumXmlDocument.js";
+var pfx = require("../source/prefix.js");
+var unit = require("../source/unit.js");
 
-var docObj = xdoc.UcumXmlDocument.getInstance() ;
+var docObj = UcumXmlDocument.getInstance() ;
 docObj.parseXml();
 
 

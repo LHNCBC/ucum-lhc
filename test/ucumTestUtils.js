@@ -4,10 +4,10 @@
  *
  */
 
-var JDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs;
-var Unit = require('../source-es5/unit.js').Unit;
-var UnitTables = require('../source-es5/unitTables.js').UnitTables;
-var UnitString = require('../source-es5/unitString.js').UnitString;
+var JDefs = require('../source/ucumJsonDefs.js').UcumJsonDefs;
+var Unit = require('../source/unit.js').Unit;
+var UnitTables = require('../source/unitTables.js').UnitTables;
+var UnitString = require('../source/unitString.js').UnitString;
 
 var uTab = UnitTables.getInstance();
 

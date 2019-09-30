@@ -4,7 +4,7 @@
  * Run from the command line with 'mocha testDimensions.spec.js' or 'grunt test'
  */
 var assert = require('assert');
-var UcumTestUtils = require('../test-es5/ucumTestUtils.js').UcumTestUtils;
+var UcumTestUtils = require('../test/ucumTestUtils.js').UcumTestUtils;
 
 
 describe('Check computed dimension vectors', function() {

@@ -1,24 +1,22 @@
 {
   "name": "@lhncbc/ucum-lhc",
-  "version": "2.6.4",
+  "version": "3.0.0",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
-  "main": "source-es5/ucumPkg.js",
+  "main": "browser-dist/ucum-lhc.js",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
   "directories": {
     "test": "test"
   },
   "files": [
-    "source-es5/*.js",
-    "data/ucumDefs.json",
-    "test/testModule.spec.js"
+    "browser-dist/ucum-lhc.js"
   ],
   "dependencies": {
     "braces": "^2.3.1",
-    "csv": "^1.1.0",
-    "csv-parse": "^1.1.7",
+    "csv-parse": "^4.4.6",
     "csv-stringify": "^1.0.4",
     "escape-html": "^1.0.3",
     "fs": "0.0.1-security",
+    "grunt-extract-sourcemap": "^0.1.19",
     "is-integer": "^1.0.6",
     "jsonfile": "^2.2.3",
     "stream": "0.0.2",
@@ -29,18 +27,21 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
-    "babel-preset-env": "^1.7.0",
-    "babelify": "^7.2.0",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/register": "^7.6.2",
+    "babel-loader": "^8.0.6",
+    "babelify": "^10.0.0",
     "bootstrap": "^4.3.1",
     "bower": "^1.8.8",
     "browserify": "^16.2.3",
     "browserify-fs": "https://github.com/eight04/browserify-fs#eb6645531326de3",
     "connect": "^3.6.6",
     "grunt": "^1.0.4",
-    "grunt-babel": "^6.0.0",
+    "grunt-babel": "^8.0.0",
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
@@ -50,16 +51,18 @@
     "jit-grunt": "^0.10.0",
     "mocha": "^5.2.0",
     "path": "^0.12.7",
-    "protractor": "^5.3.1",
     "semver": "^5.5.1",
     "serve-index": "^1.8.0",
     "serve-static": "^1.12.2",
     "ssi": "^0.3.0",
     "time-grunt": "^1.4.0",
-    "webdriver-manager": "^12.0.6"
+    "webdriver-manager": "^12.0.6",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
   },
   "scripts": {
-    "test": "mocha"
+    "build": "grunt build && webpack",
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",

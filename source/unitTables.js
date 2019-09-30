@@ -10,7 +10,7 @@ var Ucum = require('./config.js').Ucum;
 var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
 var fs = require('fs');
 
-export class UnitTables {
+class UnitTablesFactory {
 
   /**
    * Constructor.  This creates the empty unit tables (hashes) once. After the
@@ -99,19 +99,6 @@ export class UnitTables {
      * @type integer
      */
     this.massDimIndex_ = 0;
-
-    // Make this a singleton - from mrme44 May 18 comment on
-    // on GitHub Gist page of SanderLi/Singleton.js.  Modified
-    // for this class.
-
-    let holdThis = UnitTables.prototype;
-    UnitTables = function(){throw (new Error("UnitTables is a Singleton.  " +
-                                  'Use UnitTables.getInstance() instead.'))};
-    if (exports)
-      exports.UnitTables = UnitTables ;
-    UnitTables.prototype = holdThis;
-    let self = this;
-    UnitTables.getInstance = function(){return self};
   }
 
 
@@ -748,24 +735,14 @@ export class UnitTables {
         {encoding: 'utf8', mode: 0o666, flag: 'w'} );
   } // printSynonyms
 
-} // end UnitTables
+} // end UnitTablesFactory
 
 
-/**
- *  This function exists ONLY until the original UnitTables constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton UnitTables object.  See more detail in the constructor
- *  description.
- *
- *  @returns the singleton UnitTables object.
- */
-UnitTables.getInstance = function(){
-  return new UnitTables();
-} ;
-
-// Perform the first request for the tables object, to get the
-// getInstance method set.
-UnitTables.getInstance();
+// Create a singleton instance and (to preserve the existing API) an object that
+// provides that instance via getInstance().
+var unitTablesInstance = new UnitTablesFactory();
+export const UnitTables = {
+  getInstance: function() {
+    return unitTablesInstance;
+  }
+}

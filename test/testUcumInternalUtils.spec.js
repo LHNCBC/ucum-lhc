@@ -5,16 +5,14 @@
  * or 'grunt test'
  */
 var assert = require('assert');
-//var Utils = require("../source-es5/ucumInternalUtils.js").UcumInternalUtils;
-var UnitTables = require("../source-es5/unitTables.js").UnitTables;
-var UcumJsonDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs ;
+var UnitTables = require("../source/unitTables.js").UnitTables;
+var UcumJsonDefs = require('../source/ucumJsonDefs.js').UcumJsonDefs ;
 
 var uDefs = UcumJsonDefs.getInstance();
 uDefs.loadJsonDefs();
-//var utils = Utils.getInstance();
 var uTabs = UnitTables.getInstance();
 
-import * as utils from "../source-es5/ucumInternalUtils.js";
+import * as utils from "../source/ucumInternalUtils.js";
 
 describe('Test isNumericString', function() {
   it("should return false for no parameter passed", function() {
