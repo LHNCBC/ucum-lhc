@@ -36,6 +36,20 @@ export function isNumericString(theString) {
 
 
 /**
+ *  Checks whether a string qualifies as an integer unit.  Section 2.2.8 ("integer
+ *  numbers", says, "A positive integer number may appear in place of a simple
+ *  unit symbol.  Only a pure string of decimal digits (‘0’–‘9’) is
+ *  interpreted as a number."
+ *  Note:  This leaves open the question of whether "0" is a valid unit, since
+ *  it is positive, but you can't measure anything in units of zero.
+ * @param str the string to check
+ */
+export function isIntegerUnit(str) {
+  return /^\d+$/.test(str);
+}
+
+
+/**
  * This method accepts a term and looks for units that include it as
  * a synonym - or that include the term in its name.
  *

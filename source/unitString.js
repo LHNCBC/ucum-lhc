@@ -210,7 +210,7 @@ export class UnitString {
       // just a number.  Something like "8/{HCP}" will return a "unit" of 8
       // - which is not a unit.  Hm - evidently it is.  So just create a unit
       // object for it.
-      if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
+      if (intUtils_.isIntegerUnit(finalUnit) || typeof finalUnit === 'number') {
         finalUnit = new Unit({
           'csCode_': origString,
           'magnitude_': finalUnit,
@@ -295,7 +295,7 @@ export class UnitString {
 
           // Check to see if it's a number.  If so write the number version of
           // the number back to the "un" attribute and move on
-          if (intUtils_.isNumericString(curCode)) {
+          if (intUtils_.isIntegerUnit(curCode)) {
             uArray[u1]['un'] = Number(curCode);
           }
 
@@ -778,7 +778,7 @@ export class UnitString {
     // this.parensUnits_ array
     if (intUtils_.isNumericString(pNumText)) {
       retUnit = this.parensUnits_[Number(pNumText)];
-      if (!intUtils_.isNumericString(retUnit)) {
+      if (!intUtils_.isIntegerUnit(retUnit)) {
         pStr = retUnit.csCode_;
       }
       else {
@@ -890,7 +890,7 @@ export class UnitString {
           'magnitude_': 1,
           'name_': pStr});
       }
-      else if (intUtils_.isNumericString(retUnit)) {
+      else if (intUtils_.isIntegerUnit(retUnit)) {
         retUnit = new Unit({'csCode_': retUnit,
         'magnitude_': retUnit,
         'name_': retUnit});
@@ -1132,7 +1132,7 @@ export class UnitString {
           exp = codeAndExp[1];
           origUnit = this.utabs_.getUnitByCode(uCode);
         }
-        
+
 
         // If we still don't have a unit, separate out the prefix, if any,
         // and try without it.
@@ -1331,7 +1331,7 @@ export class UnitString {
         // make sure that what's before the annoText is not a number, e.g.,
         // /100{cells}.  But f it is a number, just set the return unit to
         // the number.
-        if (intUtils_.isNumericString(befAnnoText)) {
+        if (intUtils_.isIntegerUnit(befAnnoText)) {
           retUnit = befAnnoText ;
         }
         // Otherwise try to find a unit
@@ -1358,7 +1358,7 @@ export class UnitString {
 
         // Again, test for a number and if it is a number, set the return
         // unit to the number.
-        if (intUtils_.isNumericString(aftAnnoText)) {
+        if (intUtils_.isIntegerUnit(aftAnnoText)) {
           retUnit = aftAnnoText + annoText ;
           this.retMsg_.push(`The annotation ${annoText} before the `
             `${aftAnnoText} is invalid.\n` + this.vcMsgStart_ + retUnit +
@@ -1415,7 +1415,7 @@ export class UnitString {
   _performUnitArithmetic(uArray, origString) {
 
     let finalUnit = uArray[0]['un'];
-    if (intUtils_.isNumericString(finalUnit)) {
+    if (intUtils_.isIntegerUnit(finalUnit)) {
       finalUnit = new Unit({'csCode_' : finalUnit,
         'magnitude_' : Number(finalUnit),
         'name_' : finalUnit}) ;
@@ -1426,7 +1426,7 @@ export class UnitString {
     // We only need to do the arithmetic if we have more than one unit.
     for (let u2 = 1; (u2 < uLen) && !endProcessing; u2++) {
       let nextUnit = uArray[u2]['un'];
-      if (intUtils_.isNumericString(nextUnit)) {
+      if (intUtils_.isIntegerUnit(nextUnit)) {
         nextUnit = new Unit({'csCode_' : nextUnit ,
           'magnitude_' : Number(nextUnit),
           'name_': nextUnit});

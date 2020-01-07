@@ -30701,6 +30701,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.isNumericString = isNumericString;
+exports.isIntegerUnit = isIntegerUnit;
 exports.getSynonyms = getSynonyms;
 
 /**
@@ -30739,6 +30740,20 @@ function isNumericString(theString) {
   return !isNaN(num) && !isNaN(parseFloat(num));
 } // end isNumericString
 
+/**
+ *  Checks whether a string qualifies as an integer unit.  Section 2.2.8 ("integer
+ *  numbers", says, "A positive integer number may appear in place of a simple
+ *  unit symbol.  Only a pure string of decimal digits (‘0’–‘9’) is
+ *  interpreted as a number."
+ *  Note:  This leaves open the question of whether "0" is a valid unit, since
+ *  it is positive, but you can't measure anything in units of zero.
+ * @param str the string to check
+ */
+
+
+function isIntegerUnit(str) {
+  return /^\d+$/.test(str);
+}
 /**
  * This method accepts a term and looks for units that include it as
  * a synonym - or that include the term in its name.
@@ -32720,7 +32735,7 @@ function () {
         // - which is not a unit.  Hm - evidently it is.  So just create a unit
         // object for it.
 
-        if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
+        if (intUtils_.isIntegerUnit(finalUnit) || typeof finalUnit === 'number') {
           finalUnit = new Unit({
             'csCode_': origString,
             'magnitude_': finalUnit,
@@ -32802,7 +32817,7 @@ function () {
             // Check to see if it's a number.  If so write the number version of
             // the number back to the "un" attribute and move on
 
-            if (intUtils_.isNumericString(curCode)) {
+            if (intUtils_.isIntegerUnit(curCode)) {
               uArray[u1]['un'] = Number(curCode);
             } else {
               // The current unit array element is a string.  Check now to see
@@ -33288,7 +33303,7 @@ function () {
       if (intUtils_.isNumericString(pNumText)) {
         retUnit = this.parensUnits_[Number(pNumText)];
 
-        if (!intUtils_.isNumericString(retUnit)) {
+        if (!intUtils_.isIntegerUnit(retUnit)) {
           pStr = retUnit.csCode_;
         } else {
           pStr = retUnit;
@@ -33394,7 +33409,7 @@ function () {
             'magnitude_': 1,
             'name_': pStr
           });
-        } else if (intUtils_.isNumericString(retUnit)) {
+        } else if (intUtils_.isIntegerUnit(retUnit)) {
           retUnit = new Unit({
             'csCode_': retUnit,
             'magnitude_': retUnit,
@@ -33841,7 +33856,7 @@ function () {
             // make sure that what's before the annoText is not a number, e.g.,
             // /100{cells}.  But f it is a number, just set the return unit to
             // the number.
-            if (intUtils_.isNumericString(befAnnoText)) {
+            if (intUtils_.isIntegerUnit(befAnnoText)) {
               retUnit = befAnnoText;
             } // Otherwise try to find a unit
             else {
@@ -33863,7 +33878,7 @@ function () {
           else if (!befAnnoText && aftAnnoText) {
               // Again, test for a number and if it is a number, set the return
               // unit to the number.
-              if (intUtils_.isNumericString(aftAnnoText)) {
+              if (intUtils_.isIntegerUnit(aftAnnoText)) {
                 retUnit = aftAnnoText + annoText;
                 this.retMsg_.push("The annotation ".concat(annoText, " before the ")(_templateObject(), aftAnnoText) + this.vcMsgStart_ + retUnit + this.vcMsgEnd_);
               } else {
@@ -33913,7 +33928,7 @@ function () {
     value: function _performUnitArithmetic(uArray, origString) {
       var finalUnit = uArray[0]['un'];
 
-      if (intUtils_.isNumericString(finalUnit)) {
+      if (intUtils_.isIntegerUnit(finalUnit)) {
         finalUnit = new Unit({
           'csCode_': finalUnit,
           'magnitude_': Number(finalUnit),
@@ -33928,7 +33943,7 @@ function () {
       for (var u2 = 1; u2 < uLen && !endProcessing; u2++) {
         var nextUnit = uArray[u2]['un'];
 
-        if (intUtils_.isNumericString(nextUnit)) {
+        if (intUtils_.isIntegerUnit(nextUnit)) {
           nextUnit = new Unit({
             'csCode_': nextUnit,
             'magnitude_': Number(nextUnit),
