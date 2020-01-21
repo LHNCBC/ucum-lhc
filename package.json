@@ -1,6 +1,6 @@
 {
   "name": "@lhncbc/ucum-lhc",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "browser-dist/ucum-lhc.js",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",

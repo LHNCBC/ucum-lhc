@@ -1,7 +1,7 @@
 {
   "name": "ucum-lhc",
   "description": "Implements Unified Code for Units of Measure functions as javascript library",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "browser-dist/ucum-lhc.js",
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
@@ -10,17 +10,19 @@
   },
   "ignore": [
     "demo-dist/",
+    "demo-test/",
     "demo/",
     "dist/data",
     "impexp/",
     "source/",
     "test/",
     "Gruntfile.js",
-    "cshrc.ucum",
+    "webpack.config.js",
+    "bashrc",
     "data",
     "demo.html",
     "index.html",
-    "npm-shrinkwrap",
-    "package.json"
+    "package.json",
+    "package-lock.json"
   ]
 }

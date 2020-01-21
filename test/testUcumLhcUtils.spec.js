@@ -83,6 +83,13 @@ describe('Test validateUnitString method', function() {
        'allergen units (BAU) where 350 Amb a 1 U/mL = 100,000 BAU/mL']);
   });
 
+  it('should validate integer units', function() {
+    // only postive integers consisting of a string of digits are valid as unit strings
+    assert.equal(utils.validateUnitString('123').status, 'valid');
+    assert.equal(utils.validateUnitString('1e3').status, 'invalid'); // invalid UCUM notation
+    assert.equal(utils.validateUnitString('-123').status, 'invalid');
+  });
+
 }); // end validateUnitString tests
 
 
