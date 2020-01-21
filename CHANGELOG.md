@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2019-09-26
+### Fixed
+- Updated dependencies to get patches for security vulnerabilities.
+- Minor corrections to the UCUM data (mostly with regard to extra properties we
+  added like "guidance").
+### Changed
+- As result of the dependency update, the build process needed to be revised,
+  and the individual transpiled files were removed.  The package.json "main"
+  file has changed.  This is not expected to cause a problem for normal usage of
+  the package (relying on the "main" file), and the API has not changed, but due
+  to the upheaval, a semver-major change seemed warranted.
+
+## [2.6.4] - 2019-06-05
+### Fixed
+- Updated dependencies to get patches for security vulnerabilities.
+
 ## [2.6.3] - 2019-04-29
 ### Fixed
 - Demo page: The validation message on the Validator tab was displayed

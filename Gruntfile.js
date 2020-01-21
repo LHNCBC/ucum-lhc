@@ -1,12 +1,16 @@
+var serveStatic = require('serve-static');
+
 module.exports = function(grunt) {
 
   // Load grunt tasks automatically as needed ("jit")
   require('jit-grunt')(grunt, {
     clean: 'grunt-contrib-clean',
+    connect: 'grunt-contrib-connect',
     cssmin: 'grunt-contrib-cssmin',
-    uglify: 'grunt-contrib-uglify',
+    extract_sourcemap: 'grunt-extract-sourcemap',
     mochaTest: 'grunt-mocha-test',
-    protractor: 'grunt-protractor-runner'
+    protractor: 'grunt-protractor-runner',
+    uglify: 'grunt-contrib-uglify'
   });
 
   // Time how long tasks take.  Just for fun
@@ -17,101 +21,55 @@ module.exports = function(grunt) {
 
     // clean out directories
     clean: {
-      dist: {   // the non-browser distribution files
-        files: [{
-          cwd: '.',
-          src: ['source-es5/*']
-        }]
-      } ,
       browser: {
         files: [{
           cwd: '.',
-          src: ['source-es5/*', 'browser-dist/*']
+          src: ['tmp', 'browser-dist/*']
         }]
       } ,
       demo: {
         files: [{
           cwd: '.',
-          src: ['demo-es5/*']
-        }]
-      } ,
-      test: {
-        files: [{
-          cwd: '.',
-          src: ['test-es5/*']
-        }]
-      }
-    },
-
-    // use babel to translate ES6 files to ES5 files
-    babel: {
-      options: {
-        compact: false,
-        sourceMap: true,
-        presets: ['env']
-      },
-      dist: {   // the non-browser distribution files
-        files: [{
-          expand: true,
-          cwd: '.',
-          flatten: true,
-          src: ['./source/*.js'],
-          dest: './source-es5'
-        }]
-      },
-      browser: {
-        files: [{
-          expand: true,
-          cwd: '.',
-          flatten: true,
-          src: ['./source/*.js'],
-          dest: './source-es5'
-        }]
-      },
-      demo: {
-        files: [{
-          expand: true,
-          cwd: '.',
-          flatten: true,
-          src: ['./demo/*.js'],
-          dest: './demo-es5'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: '.',
-          flatten: true,
-          src: ['./test/*.js'],
-          dest: './test-es5'
+          src: ['demo-dist/*.js', 'demo-dist/*.css', 'demo-dist/*.js.map']
         }]
       }
     },
 
     // use browserify to prepare the files for client-side use
+    // This is now also used for the npm package.  We need to transpile
+    // for server-side use because of the use of ES6 modules.
     browserify: {
       browser: {
         options: {
           browserifyOptions: {
+            debug: true,
             standalone: "ucumPkg"
-          }
+          },
+          transform: [["babelify", { "presets": ["@babel/preset-env"] }]]
         },
+        debug: true,
         files: [{dest: "./browser-dist/ucum-lhc.js",
-                 src: ["./source-es5/ucumPkg.js"]}
+                 src: ["./source/ucumPkg.js"]}
         ]
       },
       demo: {
         options: {
           browserifyOptions: {
+            debug: true,
             standalone: "demoPkg"
           },
-          exclude: ['./source-es5/*.js']
+          exclude: ['./browser-dist/*.js'],
+          transform: [["babelify", {
+            global: true, // transform node_modules (csv-parse)
+            "presets": ["@babel/preset-env"]
+          }]]
         },
         files: [{dest: "./demo-dist/ucum-demo.js",
-                 src: ["./demo-es5/main.js"]}
+                 src: ["./demo/main.js"]}
         ]
       }
     },
+
     // use css min to minify the css files
     cssmin: {
       default: {
@@ -122,15 +80,34 @@ module.exports = function(grunt) {
       }
     } ,
 
+    extract_sourcemap: {
+      browser: {
+        files: {
+          'browser-dist': ['browser-dist/ucum-lhc.js']
+        }
+      },
+      demo: {
+        files: {
+          'demo-dist': ['demo-dist/ucum-demo.js']
+        }
+      },
+    },
+
     // use uglify to minify the javascript files
     uglify: {
-      options: { compress: true },
+      options: { sourceMap: true, compress: true },
       browser: {
+        options: {
+          sourceMapIn: './browser-dist/ucum-lhc.js.map'
+        },
         files: {
           './browser-dist/ucum-lhc.min.js' : [ './browser-dist/ucum-lhc.js']
         }
       },
       demo: {
+        options: {
+          sourceMapIn: './demo-dist/ucum-demo.js.map'
+        },
         files: {
           './demo-dist/ucum-demo.min.js' : ['./demo-dist/ucum-demo.js']
         }
@@ -140,9 +117,10 @@ module.exports = function(grunt) {
     // using mocha for the tests
     mochaTest: {
       options: {
+        require: '@babel/register',
         reporter: 'spec'
       } ,
-      src: ['./test-es5/*.spec.js']
+      src: ['./test/*.spec.js']
     },
 
 
@@ -166,6 +144,24 @@ module.exports = function(grunt) {
       }
     },
 
+    // Server for protractor tests
+    connect: {
+      options: {
+        hostname: '0.0.0.0'
+      },
+      test: {
+        options: {
+          port: require('./demo-test/ucumDemo-conf').config.port,
+          middleware: function (connect) {
+            return [
+              serveStatic('.')
+            ];
+          }
+        }
+      }
+    },
+
+
     // grunt protractor runner task
     protractor: {
       options: {
@@ -184,13 +180,10 @@ module.exports = function(grunt) {
    });  // end grunt.initConfig
 
   // load and register the tasks
-  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks('grunt-wiredep');
-  grunt.loadNpmTasks('grunt-mocha-test') ;
-  grunt.loadNpmTasks('grunt-protractor-runner');
 
   grunt.registerTask('ssi', 'Flatten SSI includes in your HTML files.', function() {
 
@@ -201,29 +194,24 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask("build:dist", ["clean:dist",
-                                    "babel:dist"]);
   grunt.registerTask("build:browser", ["clean:browser",
-                                       "babel:browser",
                                        "browserify:browser",
+                                       "extract_sourcemap:browser",
                                        "uglify:browser"]);
   grunt.registerTask("build:demo", ["clean:demo",
                                     "ssi",
-                                    "babel:demo",
                                     "browserify:demo",
+                                    "extract_sourcemap:demo",
                                     "cssmin",
                                     "uglify:demo"]);
-  grunt.registerTask("build:test", ["clean:test",
-                                    "babel:test"]);
-  grunt.registerTask("build", ["build:dist",
-                               "build:browser",
-                               "build:demo",
-                               "build:test"]);
+  grunt.registerTask("build", ["build:browser",
+                               "build:demo"]);
   grunt.registerTask("test", ['build',
-                              'mochaTest']);
+                              'mochaTest',
+                              'runProtractor']);
   // note that the webdriver manager must be running before the
   // protractor tests will run.  use webdriver-manager start & to
   // start the manager and the selenium server
-  grunt.registerTask("runProtractor", ['protractor']);
+  grunt.registerTask("runProtractor", ['connect', 'protractor']);
 
 };

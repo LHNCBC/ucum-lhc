@@ -24,15 +24,15 @@ var transform = require('stream-transform');
 var stringify = require('csv-stringify');
 var str = require('string-to-stream') ;
 
-var JDefs = require('../source-es5/ucumJsonDefs.js').UcumJsonDefs;
-var Unit = require('../source-es5/unit.js').Unit;
-var Dimension = require('../source-es5/dimension.js').Dimension;
-var UnitTables = require('../source-es5/unitTables.js').UnitTables;
-var UnitString = require('../source-es5/unitString.js').UnitString;
-var UcumXmlDocument = require('../source-es5/ucumXmlDocument.js').UcumXmlDocument;
+var JDefs = require('../source/ucumJsonDefs.js').UcumJsonDefs;
+var Unit = require('../source/unit.js').Unit;
+var Dimension = require('../source/dimension.js').Dimension;
+var UnitTables = require('../source/unitTables.js').UnitTables;
+var UnitString = require('../source/unitString.js').UnitString;
+var UcumXmlDocument = require('../source/ucumXmlDocument.js').UcumXmlDocument;
 
-var UcumLhcUtils = require("../source-es5/ucumLhcUtils.js").UcumLhcUtils;
-var Ucum = require('../source-es5/config.js').Ucum;
+var UcumLhcUtils = require("../source/ucumLhcUtils.js").UcumLhcUtils;
+var Ucum = require('../source/config.js').Ucum;
 
 export class UcumDataUpdater {
 
@@ -112,6 +112,7 @@ export class UcumDataUpdater {
                 upd.msg('transformer', err)});
 
     inFile.on('end', function(){
+      parser.end(); // in case last line of file does not end in newline
       let xdoc = UcumXmlDocument.getInstance();
       xdoc.writeJsonFile();
       let upd=UcumDataUpdater.getInstance();

@@ -493,7 +493,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "Num",
       "category_": "Clinical",
-      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000. The unit testing conversion all works. ",
+      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
@@ -531,7 +531,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "Num",
       "category_": "Clinical",
-      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000. The unit testing conversion all works. ",
+      "guidance_": "10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
@@ -645,7 +645,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "MCnc; MCnt",
       "category_": "Clinical",
-      "guidance_": "[ppth] is often used in solution concentrations as 1 g/L or 1 g/kg. \n\nCan be ambigous and would be better if the metric units was used directly. ",
+      "guidance_": "[ppth] is often used in solution concentrations as 1 g/L or 1 g/kg.\n\nCan be ambigous and would be better if the metric units was used directly. ",
       "csUnitString_": "10*-3",
       "ciUnitString_": "10*-3",
       "baseFactorStr_": "1",
@@ -683,7 +683,7 @@ module.exports={
       "source_": "UCUM",
       "loincProperty_": "MCnt; MCnc; SFr",
       "category_": "Clinical",
-      "guidance_": "[ppm] is often used in solution concentrations as 1 mg/L  or 1 mg/kg. Also used to express mole fractions as 1 mmol/mol.\n\n[ppm] is also used in nuclear magnetic resonance (NMR) to represent chemical shift - the difference of a measured frequency in parts per million from the reference frequency. \n\nCan be ambigous and would be better if the metric units was used directly. ",
+      "guidance_": "[ppm] is often used in solution concentrations as 1 mg/L  or 1 mg/kg. Also used to express mole fractions as 1 mmol/mol.\n\n[ppm] is also used in nuclear magnetic resonance (NMR) to represent chemical shift - the difference of a measured frequency in parts per million from the reference frequency.\n\nCan be ambigous and would be better if the metric units was used directly. ",
       "csUnitString_": "10*-6",
       "ciUnitString_": "10*-6",
       "baseFactorStr_": "1",
@@ -25126,7 +25126,7 @@ module.exports={
     },
     {
       "isBase_": false,
-      "name_": "nanomole of 1/2 cystine per milligram of protein",
+      "name_": "nanomole per milligram of protein",
       "csCode_": "nmol/mg{prot}",
       "ciCode_": "NMOL/MG",
       "property_": "amount of substance",
@@ -25151,9 +25151,9 @@ module.exports={
       "isSpecial_": false,
       "isArbitrary_": false,
       "moleExp_": 1,
-      "synonyms_": "nanomoles; half cystine; nmol per 1/2 cys per mg prot",
+      "synonyms_": "nanomoles; nmol/mg prot; nmol per mg prot",
       "source_": "LOINC",
-      "loincProperty_": "SCnt",
+      "loincProperty_": "Ratio; CCnt",
       "category_": "Clinical",
       "guidance_": "",
       "csUnitString_": "10*23",
@@ -29562,11 +29562,13 @@ module.exports = Number.isNaN || function (x) {
 };
 
 },{}],6:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Ucum = void 0;
+
 /*
  * This defines the namespace for the UCUM classes and provides
  * a place for the definition of global variables and constants.
@@ -29574,9 +29576,7 @@ Object.defineProperty(exports, "__esModule", {
  * The javascript for this UCUM implementation uses syntax as
  * defined by the ECMAScript 6 standard
  */
-
-var Ucum = exports.Ucum = {
-
+var Ucum = {
   /**
    *  Flag indicating whether or not we're using case sensitive labels
    *  I don't think we need this.  I think we're just going with
@@ -29604,7 +29604,6 @@ var Ucum = exports.Ucum = {
    * are displayed together
    */
   codeSep_: ': ',
-
   // Message text variations for validation methods and conversion methods
   valMsgStart_: 'Did you mean ',
   valMsgEnd_: '?',
@@ -29678,23 +29677,28 @@ var Ucum = exports.Ucum = {
    * So we use this object to identify them and substitute placeholders to
    * avoid that.
    */
-  specUnits_: { 'B[10.nV]': 'specialUnitOne',
-    '[m/s2/Hz^(1/2)]': 'specialUnitTwo' }
+  specUnits_: {
+    'B[10.nV]': 'specialUnitOne',
+    '[m/s2/Hz^(1/2)]': 'specialUnitTwo'
+  }
 };
-
+exports.Ucum = Ucum;
 
 },{}],7:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Dimension = void 0;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * This class implements an object containing the vector of exponents for
@@ -29709,10 +29713,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Lee Mericle, based on java version by Gunther Schadow
  */
 var UC = require('./config.js');
+
 var isInteger = require("is-integer");
 
-var Dimension = exports.Dimension = function () {
-
+var Dimension =
+/*#__PURE__*/
+function () {
   /**
    * Constructor.
    *
@@ -29739,30 +29745,31 @@ var Dimension = exports.Dimension = function () {
     if (UC.Ucum.dimLen_ === 0) {
       throw new Error('Dimension.setDimensionLen must be called before ' + 'Dimension constructor');
     }
+
     if (dimSetting === undefined || dimSetting === null) {
       this.assignZero();
     } else if (dimSetting instanceof Array) {
       if (dimSetting.length !== UC.Ucum.dimLen_) {
-        throw new Error('Parameter error, incorrect length of vector passed to ' + ('Dimension constructor, vector = ' + JSON.stringify(dimSetting)));
+        throw new Error('Parameter error, incorrect length of vector passed to ' + "Dimension constructor, vector = ".concat(JSON.stringify(dimSetting)));
       }
+
       this.dimVec_ = [];
+
       for (var d = 0; d < UC.Ucum.dimLen_; d++) {
         this.dimVec_.push(dimSetting[d]);
       }
-    }
-
-    // In es6 this should be Number.isInteger(dimSetting).  But Babel
+    } // In es6 this should be Number.isInteger(dimSetting).  But Babel
     // doesn't transpile that correctly, so we need to use the isInteger
     // module.  :0
     else if (isInteger(dimSetting)) {
         if (dimSetting < 0 || dimSetting >= UC.Ucum.dimLen_) {
           throw new Error('Parameter error, invalid element number specified for ' + 'Dimension constructor');
         }
+
         this.assignZero();
         this.dimVec_[dimSetting] = 1;
       }
   } // end constructor
-
 
   /**
    * Sets the element at the specified position to a specified value.  The
@@ -29778,21 +29785,19 @@ var Dimension = exports.Dimension = function () {
 
 
   _createClass(Dimension, [{
-    key: 'setElementAt',
+    key: "setElementAt",
     value: function setElementAt(indexPos, value) {
-
       if (!Number.isInteger(indexPos) || indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
-        throw new Error('Dimension.setElementAt called with an invalid index ' + ('position (' + indexPos + ')'));
+        throw new Error("Dimension.setElementAt called with an invalid index " + "position (".concat(indexPos, ")"));
       }
 
       if (!this.dimVec_) {
         this.assignZero();
       }
-      if (value === undefined || value === null) value = 1;
 
+      if (value === undefined || value === null) value = 1;
       this.dimVec_[indexPos] = value;
     }
-
     /**
      * Gets the value of the element at the specified position
      *
@@ -29804,16 +29809,16 @@ var Dimension = exports.Dimension = function () {
      **/
 
   }, {
-    key: 'getElementAt',
+    key: "getElementAt",
     value: function getElementAt(indexPos) {
       if (!Number.isInteger(indexPos) || indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
-        throw new Error('Dimension.getElementAt called with an invalid index ' + ('position (' + indexPos + ')'));
+        throw new Error("Dimension.getElementAt called with an invalid index " + "position (".concat(indexPos, ")"));
       }
+
       var ret = null;
       if (this.dimVec_) ret = this.dimVec_[indexPos];
       return ret;
     }
-
     /**
      * This returns the value of the property named by the parameter
      * passed in.  Although we currently only have one property, dimVec_,
@@ -29828,12 +29833,11 @@ var Dimension = exports.Dimension = function () {
      */
 
   }, {
-    key: 'getProperty',
+    key: "getProperty",
     value: function getProperty(propertyName) {
       var uProp = !propertyName.endsWith('_') ? propertyName + '_' : propertyName;
       return this[uProp];
     } // end getProperty
-
 
     /**
      * Return a string that represents the dimension vector.  Returns null if
@@ -29845,13 +29849,12 @@ var Dimension = exports.Dimension = function () {
      **/
 
   }, {
-    key: 'toString',
+    key: "toString",
     value: function toString() {
       var ret = null;
       if (this.dimVec_) ret = '[' + this.dimVec_.join(', ') + ']';
       return ret;
     }
-
     /**
      * Adds the vector of the dimension object passed in to this
      * dimension object's vector.  This object's vector is changed.
@@ -29864,19 +29867,20 @@ var Dimension = exports.Dimension = function () {
      **/
 
   }, {
-    key: 'add',
+    key: "add",
     value: function add(dim2) {
       if (!dim2 instanceof Dimension) {
-        throw new Error('Dimension.add called with an invalid parameter - ' + ((typeof dim2 === 'undefined' ? 'undefined' : _typeof(dim2)) + ' instead of a Dimension object'));
+        throw new Error("Dimension.add called with an invalid parameter - " + "".concat(_typeof(dim2), " instead of a Dimension object"));
       }
+
       if (this.dimVec_ && dim2.dimVec_) {
         for (var i = 0; i < UC.Ucum.dimLen_; i++) {
           this.dimVec_[i] += dim2.dimVec_[i];
         }
       }
+
       return this;
     }
-
     /**
      * Subtracts the vector of the dimension object passed in from this
      * dimension object's vector.  This object's vector is changed.
@@ -29888,19 +29892,20 @@ var Dimension = exports.Dimension = function () {
      **/
 
   }, {
-    key: 'sub',
+    key: "sub",
     value: function sub(dim2) {
       if (!dim2 instanceof Dimension) {
-        throw new Error('Dimension.sub called with an invalid parameter - ' + ((typeof dim2 === 'undefined' ? 'undefined' : _typeof(dim2)) + ' instead of a Dimension object'));
+        throw new Error("Dimension.sub called with an invalid parameter - " + "".concat(_typeof(dim2), " instead of a Dimension object"));
       }
+
       if (this.dimVec_ && dim2.dimVec_) {
         for (var i = 0; i < UC.Ucum.dimLen_; i++) {
           this.dimVec_[i] -= dim2.dimVec_[i];
         }
       }
+
       return this;
     }
-
     /**
      * Inverts this dimension object's vector (by multiplying each element
      * by negative 1).  This object's vector is changed - unless it is null,
@@ -29910,16 +29915,16 @@ var Dimension = exports.Dimension = function () {
      **/
 
   }, {
-    key: 'minus',
+    key: "minus",
     value: function minus() {
       if (this.dimVec_) {
         for (var i = 0; i < UC.Ucum.dimLen_; i++) {
           this.dimVec_[i] = -this.dimVec_[i];
         }
       }
+
       return this;
     }
-
     /**
      * Multiplies this dimension object's vector with a scalar.  This is used
      * when a unit is raised to a power.  This object's vector is changed unless
@@ -29931,19 +29936,20 @@ var Dimension = exports.Dimension = function () {
      */
 
   }, {
-    key: 'mul',
+    key: "mul",
     value: function mul(s) {
       if (!isInteger(s)) {
-        throw new Error('Dimension.sub called with an invalid parameter - ' + ((typeof dim2 === 'undefined' ? 'undefined' : _typeof(dim2)) + ' instead of a number'));
+        throw new Error("Dimension.sub called with an invalid parameter - " + "".concat(typeof dim2 === "undefined" ? "undefined" : _typeof(dim2), " instead of a number"));
       }
+
       if (this.dimVec_) {
         for (var i = 0; i < UC.Ucum.dimLen_; i++) {
           this.dimVec_[i] *= s;
         }
       }
+
       return this;
     }
-
     /**
      * Tests for equality of this dimension object's vector and that of
      * the dimension object passed in.  If the dimension vector for one of
@@ -29956,13 +29962,15 @@ var Dimension = exports.Dimension = function () {
      */
 
   }, {
-    key: 'equals',
+    key: "equals",
     value: function equals(dim2) {
       if (!dim2 instanceof Dimension) {
-        throw new Error('Dimension.equals called with an invalid parameter - ' + ((typeof dim2 === 'undefined' ? 'undefined' : _typeof(dim2)) + ' instead of a Dimension object'));
+        throw new Error("Dimension.equals called with an invalid parameter - " + "".concat(_typeof(dim2), " instead of a Dimension object"));
       }
+
       var isEqual = true;
       var dimVec2 = dim2.dimVec_;
+
       if (this.dimVec_ && dimVec2) {
         for (var i = 0; isEqual && i < UC.Ucum.dimLen_; i++) {
           isEqual = this.dimVec_[i] === dimVec2[i];
@@ -29970,9 +29978,9 @@ var Dimension = exports.Dimension = function () {
       } else {
         isEqual = this.dimVec_ === null && dimVec2 === null;
       }
+
       return isEqual;
     }
-
     /**
      * Assigns the contents of the vector belonging to the dimension object
      * passed in to this dimension's vector.  If this dimension vector is null
@@ -29987,23 +29995,23 @@ var Dimension = exports.Dimension = function () {
      */
 
   }, {
-    key: 'assignDim',
+    key: "assignDim",
     value: function assignDim(dim2) {
-
       if (!dim2 instanceof Dimension) {
-        throw new Error('Dimension.assignDim called with an invalid parameter - ' + ((typeof dim2 === 'undefined' ? 'undefined' : _typeof(dim2)) + ' instead of a Dimension object'));
+        throw new Error("Dimension.assignDim called with an invalid parameter - " + "".concat(_typeof(dim2), " instead of a Dimension object"));
       }
+
       if (dim2.dimVec_ === null) this.dimVec_ = null;else {
         if (this.dimVec_ === null) {
           this.dimVec_ = [];
         }
+
         for (var i = 0; i < UC.Ucum.dimLen_; i++) {
           this.dimVec_[i] = dim2.dimVec_[i];
         }
       }
       return this;
     }
-
     /**
      * Sets all elements of this dimension object's vector to zero.
      * If this object's vector is null, it is created as a zero-filled vector.
@@ -30012,16 +30020,16 @@ var Dimension = exports.Dimension = function () {
      */
 
   }, {
-    key: 'assignZero',
+    key: "assignZero",
     value: function assignZero() {
       if (this.dimVec_ === null || this.dimVec_ === undefined) this.dimVec_ = [];
 
       for (var i = 0; i < UC.Ucum.dimLen_; i++) {
         this.dimVec_.push(0);
       }
+
       return this;
     }
-
     /**
      * Tests for a dimension vector set to all zeroes.
      *
@@ -30031,17 +30039,18 @@ var Dimension = exports.Dimension = function () {
      */
 
   }, {
-    key: 'isZero',
+    key: "isZero",
     value: function isZero() {
       var allZero = this.dimVec_ !== null;
+
       if (this.dimVec_) {
         for (var i = 0; allZero && i < UC.Ucum.dimLen_; i++) {
           allZero = this.dimVec_[i] === 0;
         }
       }
+
       return allZero;
     }
-
     /**
      * Tests for a Dimension object with no dimension vector (dimVec_ is null).
      *
@@ -30050,11 +30059,10 @@ var Dimension = exports.Dimension = function () {
      */
 
   }, {
-    key: 'isNull',
+    key: "isNull",
     value: function isNull() {
       return this.dimVec_ === null;
     }
-
     /**
      * Creates and returns a clone of this Dimension object
      *
@@ -30062,7 +30070,7 @@ var Dimension = exports.Dimension = function () {
      */
 
   }, {
-    key: 'clone',
+    key: "clone",
     value: function clone() {
       var that = new Dimension();
       that.assignDim(this);
@@ -30074,16 +30082,21 @@ var Dimension = exports.Dimension = function () {
 }(); // end Dimension class
 
 
+exports.Dimension = Dimension;
+
 },{"./config.js":6,"is-integer":4}],8:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.Prefix = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * Prefix objects are defined in this file.
@@ -30098,8 +30111,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var Ucum = require('./config.js');
 
-var Prefix = exports.Prefix = function () {
-
+var Prefix =
+/*#__PURE__*/
+function () {
   /**
    * Creates a single prefix object.
    *
@@ -30126,7 +30140,6 @@ var Prefix = exports.Prefix = function () {
     if (attrs['code_'] === undefined || attrs['code_'] === null || attrs['name_'] === undefined || attrs['name_'] === null || attrs['value_'] === undefined || attrs['value_'] === null || attrs['exp_'] === undefined) {
       throw new Error('Prefix constructor called missing one or more parameters.  ' + 'Prefix codes (cs or ci), name, value and exponent must all be specified ' + 'and all but the exponent must not be null.');
     }
-
     /**
      * The prefix code, e.g., k for kilo.  This should be the case-sensitive
      * code.  Since there's no way to check to see if it's the case-sensitive
@@ -30135,35 +30148,36 @@ var Prefix = exports.Prefix = function () {
      * codes are also all uppercase), we'll just have to believe that the
      * right one was passed in.
      */
-    this.code_ = attrs['code_'];
 
+
+    this.code_ = attrs['code_'];
     /**
      * The case-insensitive code, e.g., K for kilo
      */
-    this.ciCode_ = attrs['ciCode_'];
 
+    this.ciCode_ = attrs['ciCode_'];
     /**
      * The prefix name, e.g., kilo
      */
-    this.name_ = attrs['name_'];
 
+    this.name_ = attrs['name_'];
     /**
      * The printSymbol for the prefix, e.g., k for kilo
      */
-    this.printSymbol_ = attrs['printSymbol_'];
 
+    this.printSymbol_ = attrs['printSymbol_'];
     /**
      * The value to use in multiplying the magnitude of a unit
      */
-    if (typeof attrs['value_'] === 'string') this.value_ = parseFloat(attrs['value_']);else this.value_ = attrs['value_'];
 
+    if (typeof attrs['value_'] === 'string') this.value_ = parseFloat(attrs['value_']);else this.value_ = attrs['value_'];
     /**
      * The exponent used to create the value from 10.  For prefixes that are
      * not based on 10, this will be null.
      */
+
     this.exp_ = attrs['exp_'];
   } // end constructor
-
 
   /**
    * Returns the value for the current prefix object
@@ -30172,66 +30186,60 @@ var Prefix = exports.Prefix = function () {
 
 
   _createClass(Prefix, [{
-    key: 'getValue',
+    key: "getValue",
     value: function getValue() {
       return this.value_;
     }
-
     /**
      * Returns the prefix code for the current prefix object
      * @return the code for the current prefix object
      */
 
   }, {
-    key: 'getCode',
+    key: "getCode",
     value: function getCode() {
       return this.code_;
     }
-
     /**
      * Returns the case-insensitive code for the current prefix object
      * @return the case_insensitive code for the current prefix object
      */
 
   }, {
-    key: 'getCiCode',
+    key: "getCiCode",
     value: function getCiCode() {
       return this.ciCode_;
     }
-
     /**
      * Returns the prefix name for the current prefix object
      * @return the name for the current prefix object
      */
 
   }, {
-    key: 'getName',
+    key: "getName",
     value: function getName() {
       return this.name_;
     }
-
     /**
      * Returns the print symbol for the current prefix object
      * @return the print symbol for the current prefix object
      */
 
   }, {
-    key: 'getPrintSymbol',
+    key: "getPrintSymbol",
     value: function getPrintSymbol() {
       return this.printSymbol_;
     }
-
     /**
      * Returns the exponent for the current prefix object
      * @return the exponent for the current prefix object
      */
 
   }, {
-    key: 'getExp',
+    key: "getExp",
     value: function getExp() {
       return this.exp_;
     }
-
     /**
      * Provides way to tell if one prefix equals another.  The second prefix
      * must match all attribute values.
@@ -30241,7 +30249,7 @@ var Prefix = exports.Prefix = function () {
      */
 
   }, {
-    key: 'equals',
+    key: "equals",
     value: function equals(prefix2) {
       return this.code_ === prefix2.code_ && this.ciCode_ === prefix2.ciCode_ && this.name_ === prefix2.name_ && this.printSymbol_ === prefix2.printSymbol_ && this.value_ === prefix2.value_ && this.exp_ === prefix2.exp_;
     }
@@ -30251,16 +30259,21 @@ var Prefix = exports.Prefix = function () {
 }(); // end Prefix class
 
 
+exports.Prefix = Prefix;
+
 },{"./config.js":6}],9:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.PrefixTables = exports.PrefixTablesFactory = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * The tables of defined prefixes is defined in this file.
@@ -30272,8 +30285,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var PrefixTables = exports.PrefixTables = function () {
-
+var PrefixTablesFactory =
+/*#__PURE__*/
+function () {
   /**
    * Constructor.  This creates the empty PrefixTable hashes once.
    * There is one hash whose key is the prefix code and one whose
@@ -30282,38 +30296,23 @@ var PrefixTables = exports.PrefixTables = function () {
    * Implementation of this as a singleton is based on the UnitTables
    * implementation.  See that class for details.
    */
-  function PrefixTables() {
-    _classCallCheck(this, PrefixTables);
+  function PrefixTablesFactory() {
+    _classCallCheck(this, PrefixTablesFactory);
 
     this.byCode_ = {};
     this.byValue_ = {};
-
-    // Make this a singleton.  See UnitTables constructor for details.
-
-    var holdThis = PrefixTables.prototype;
-    PrefixTables = function PrefixTables() {
-      throw new Error('PrefixTables is a Singleton. ' + 'Use PrefixTables.getInstance() instead.');
-    };
-    if (exports) exports.PrefixTables = PrefixTables;
-    PrefixTables.prototype = holdThis;
-    var self = this;
-    PrefixTables.getInstance = function () {
-      return self;
-    };
   }
-
   /**
    * Provides the number of prefix objects in each table
    * @returns count of the number of prefix objects in each table
    */
 
 
-  _createClass(PrefixTables, [{
-    key: 'prefixCount',
+  _createClass(PrefixTablesFactory, [{
+    key: "prefixCount",
     value: function prefixCount() {
       return Object.keys(this.byCode_).length;
     }
-
     /**
      * This is used to get all prefix objects by value.  Currently it is used
      * to create a csv file with all prefixes and units.
@@ -30321,19 +30320,20 @@ var PrefixTables = exports.PrefixTables = function () {
      */
 
   }, {
-    key: 'allPrefixesByValue',
+    key: "allPrefixesByValue",
     value: function allPrefixesByValue() {
       var prefixBuff = '';
-      var pList = Object.keys(this.byValue_);
-      //pList.sort() ;
+      var pList = Object.keys(this.byValue_); //pList.sort() ;
+
       var pLen = pList.length;
+
       for (var p = 0; p < pLen; p++) {
         var pfx = this.getPrefixByValue(pList[p]);
         prefixBuff += pfx.code_ + ',' + pfx.name_ + ',,' + pfx.value_ + '\r\n';
       }
+
       return prefixBuff;
     }
-
     /**
      * This is used to get all prefix objects.  Currently it is used
      * to get the objects to write to the json ucum definitions file
@@ -30344,18 +30344,19 @@ var PrefixTables = exports.PrefixTables = function () {
      */
 
   }, {
-    key: 'allPrefixesByCode',
+    key: "allPrefixesByCode",
     value: function allPrefixesByCode() {
       var prefixList = [];
       var pList = Object.keys(this.byCode_);
       pList.sort();
       var pLen = pList.length;
+
       for (var p = 0; p < pLen; p++) {
         prefixList.push(this.getPrefixByCode(pList[p]));
       }
+
       return prefixList;
     }
-
     /**
      * Adds a prefix object to the tables
      *
@@ -30363,12 +30364,11 @@ var PrefixTables = exports.PrefixTables = function () {
      */
 
   }, {
-    key: 'add',
+    key: "add",
     value: function add(prefixObj) {
       this.byCode_[prefixObj.getCode()] = prefixObj;
       this.byValue_[prefixObj.getValue()] = prefixObj;
     }
-
     /**
      * Tests whether a prefix object is found for a specified code.  This
      * is used to determine whether or not a prefix object has been created
@@ -30380,11 +30380,10 @@ var PrefixTables = exports.PrefixTables = function () {
      */
 
   }, {
-    key: 'isDefined',
+    key: "isDefined",
     value: function isDefined(code) {
       return this.byCode_[code] !== null && this.byCode_[code] !== undefined;
     }
-
     /**
      * Obtains a prefix object for a specified code.
      *
@@ -30393,11 +30392,10 @@ var PrefixTables = exports.PrefixTables = function () {
      */
 
   }, {
-    key: 'getPrefixByCode',
+    key: "getPrefixByCode",
     value: function getPrefixByCode(code) {
       return this.byCode_[code];
     }
-
     /**
      * Obtains a prefix object for a specified value.
      *
@@ -30406,44 +30404,35 @@ var PrefixTables = exports.PrefixTables = function () {
      */
 
   }, {
-    key: 'getPrefixByValue',
+    key: "getPrefixByValue",
     value: function getPrefixByValue(value) {
       return this.byValue_[value];
     }
   }]);
 
-  return PrefixTables;
-}(); // end PrefixTables class
+  return PrefixTablesFactory;
+}(); // end PrefixTablesFactory class
+// Create a singleton instance and (to preserve the existing API) an object that
+// provides that instance via getInstance().
 
 
-/**
- *  This function exists ONLY until the original PrefixTables constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton PrefixTable object.  This is based on the UnitTables singleton
- *  implementation; see more detail in the UnitTables constructor description.
- *
- *  @return the singleton PrefixTables object.
- */
-
-
-PrefixTables.getInstance = function () {
-  return new PrefixTables();
+exports.PrefixTablesFactory = PrefixTablesFactory;
+var prefixTablesInstance = new PrefixTablesFactory();
+var PrefixTables = {
+  getInstance: function getInstance() {
+    return prefixTablesInstance;
+  }
 };
-
-// Perform the first request for the tables object, to get the
-// getInstance method set.
-PrefixTables.getInstance();
-
+exports.PrefixTables = PrefixTables;
 
 },{}],10:[function(require,module,exports){
-'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+"use strict";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /*
  * This class manages the special functions used by some units.
@@ -30451,9 +30440,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-
-var UcumFunctions = function () {
-
+var UcumFunctions =
+/*#__PURE__*/
+function () {
   /**
    * Constructor
    *
@@ -30464,168 +30453,191 @@ var UcumFunctions = function () {
     _classCallCheck(this, UcumFunctions);
 
     // Create the hash containing the function pairs
-    this.funcs = {};
-
-    // Celsius - convert to Celsius from kelvin and from Celsius to kelvin
+    this.funcs = {}; // Celsius - convert to Celsius from kelvin and from Celsius to kelvin
     // where kelvin is the base unit for temperature
-    this.funcs['cel'] = { cnvTo: function cnvTo(x) {
+
+    this.funcs['cel'] = {
+      cnvTo: function cnvTo(x) {
         return x - 273.15;
       },
       cnvFrom: function cnvFrom(x) {
         return x + 273.15;
-      } };
-
-    // Fahrenheit - convert to Fahrenheit from kelvin and from Fahrenheit to
+      }
+    }; // Fahrenheit - convert to Fahrenheit from kelvin and from Fahrenheit to
     // kelvin - which is the base unit for temperature
-    this.funcs['degf'] = { cnvTo: function cnvTo(x) {
+
+    this.funcs['degf'] = {
+      cnvTo: function cnvTo(x) {
         return x - 459.67;
       },
       cnvFrom: function cnvFrom(x) {
         return x + 459.67;
-      } };
-
-    // Reaumur - convert between Reaumur and Kelvin.   Because of the way the
+      }
+    }; // Reaumur - convert between Reaumur and Kelvin.   Because of the way the
     // calling code in the Units class is set up (in the convertFrom method),
     // what is given here as the convertTo function is actually the convert
     // from method and vice versa.
     //this.funcs['degre'] = {cnvTo   : function(x){return x + 273.15;},
     //                    cnvFrom : function(x){return x - 273.15;}};
-    this.funcs['degre'] = { cnvTo: function cnvTo(x) {
+
+    this.funcs['degre'] = {
+      cnvTo: function cnvTo(x) {
         return x - 273.15;
       },
       cnvFrom: function cnvFrom(x) {
         return x + 273.15;
-      } };
-
-    // pH - convert to pH from moles per liter and from moles per liter to pH
+      }
+    }; // pH - convert to pH from moles per liter and from moles per liter to pH
     // where a mole is an amount of a substance (a count of particles)
-    this.funcs['ph'] = { cnvTo: function cnvTo(x) {
+
+    this.funcs['ph'] = {
+      cnvTo: function cnvTo(x) {
         return -Math.log(x) / Math.LN10;
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(10, -x);
-      } };
-
-    // ln - natural logarithm (base e 2.71828) - apply (cnvTo) and invert (cnvFrom)
+      }
+    }; // ln - natural logarithm (base e 2.71828) - apply (cnvTo) and invert (cnvFrom)
     // and 2ln - two times the natural logarithm
-    this.funcs['ln'] = { cnvTo: function cnvTo(x) {
+
+    this.funcs['ln'] = {
+      cnvTo: function cnvTo(x) {
         return Math.log(x);
       },
       cnvFrom: function cnvFrom(x) {
         return Math.exp(x);
-      } };
-    this.funcs['2ln'] = { cnvTo: function cnvTo(x) {
+      }
+    };
+    this.funcs['2ln'] = {
+      cnvTo: function cnvTo(x) {
         return 2 * Math.log(x);
       },
       cnvFrom: function cnvFrom(x) {
         return Math.exp(x / 2);
-      } };
+      }
+    }; // lg - the decadic logarithm (base 10)
 
-    // lg - the decadic logarithm (base 10)
-    this.funcs['lg'] = { cnvTo: function cnvTo(x) {
+    this.funcs['lg'] = {
+      cnvTo: function cnvTo(x) {
         return Math.log(x) / Math.LN10;
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(10, x);
-      } };
-    this.funcs['10lg'] = { cnvTo: function cnvTo(x) {
+      }
+    };
+    this.funcs['10lg'] = {
+      cnvTo: function cnvTo(x) {
         return 10 * Math.log(x) / Math.LN10;
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(10, x / 10);
-      } };
-    this.funcs['20lg'] = { cnvTo: function cnvTo(x) {
+      }
+    };
+    this.funcs['20lg'] = {
+      cnvTo: function cnvTo(x) {
         return 20 * Math.log(x) / Math.LN10;
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(10, x / 20);
-      } };
-    // The plain text ucum units file uses '2lg'
-    this.funcs['2lg'] = { cnvTo: function cnvTo(x) {
+      }
+    }; // The plain text ucum units file uses '2lg'
+
+    this.funcs['2lg'] = {
+      cnvTo: function cnvTo(x) {
         return 2 * Math.log(x) / Math.LN10;
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(10, x / 2);
-      } };
-    // The xml essence ucum file uses lgTimes2
-    this.funcs['lgtimes2'] = this.funcs['2lg'];
+      }
+    }; // The xml essence ucum file uses lgTimes2
 
-    // ld - dual logarithm (base 2)
-    this.funcs['ld'] = { cnvTo: function cnvTo(x) {
+    this.funcs['lgtimes2'] = this.funcs['2lg']; // ld - dual logarithm (base 2)
+
+    this.funcs['ld'] = {
+      cnvTo: function cnvTo(x) {
         return Math.log(x) / Math.LN2;
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(2, x);
-      } };
+      }
+    }; // tan - tangent
 
-    // tan - tangent
-    this.funcs['100tan'] = { cnvTo: function cnvTo(x) {
+    this.funcs['100tan'] = {
+      cnvTo: function cnvTo(x) {
         return Math.tan(x) * 100;
       },
       cnvFrom: function cnvFrom(x) {
         return Math.atan(x / 100);
-      } };
-    // the xml essence ucum file uses both 100tan and tanTimes100
-    this.funcs['tanTimes100'] = this.funcs['100tan'];
+      }
+    }; // the xml essence ucum file uses both 100tan and tanTimes100
 
-    // sqrt - square root
-    this.funcs['sqrt'] = { cnvTo: function cnvTo(x) {
+    this.funcs['tanTimes100'] = this.funcs['100tan']; // sqrt - square root
+
+    this.funcs['sqrt'] = {
+      cnvTo: function cnvTo(x) {
         return Math.sqrt(x);
       },
       cnvFrom: function cnvFrom(x) {
         return x * x;
-      } };
+      }
+    }; // inv - inverse
 
-    // inv - inverse
-    this.funcs['inv'] = { cnvTo: function cnvTo(x) {
+    this.funcs['inv'] = {
+      cnvTo: function cnvTo(x) {
         return 1.0 / x;
       },
       cnvFrom: function cnvFrom(x) {
         return 1.0 / x;
-      } };
+      }
+    }; // homeopathic potency functions
 
-    // homeopathic potency functions
-    this.funcs['hpX'] = { cnvTo: function cnvTo(x) {
+    this.funcs['hpX'] = {
+      cnvTo: function cnvTo(x) {
         return -this.funcs['lg'](x);
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(10, -x);
-      } };
-
-    this.funcs['hpC'] = { cnvTo: function cnvTo(x) {
+      }
+    };
+    this.funcs['hpC'] = {
+      cnvTo: function cnvTo(x) {
         return -this.func['ln'](x) / this.funcs['ln'](100);
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(100, -x);
-      } };
-
-    this.funcs['hpM'] = { cnvTo: function cnvTo(x) {
+      }
+    };
+    this.funcs['hpM'] = {
+      cnvTo: function cnvTo(x) {
         return -this.funcs['ln'](x) / this.funcs['ln'](1000);
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(1000, -x);
-      } };
-
-    this.funcs['hpQ'] = { cnvTo: function cnvTo(x) {
+      }
+    };
+    this.funcs['hpQ'] = {
+      cnvTo: function cnvTo(x) {
         return -this.funcs['ln'](x) / this.funcs['ln'](50000);
       },
       cnvFrom: function cnvFrom(x) {
         return Math.pow(50000, -x);
-      } };
+      }
+    }; // Make this a singleton.  See UnitTables constructor for details.
 
-    // Make this a singleton.  See UnitTables constructor for details.
     var holdThis = UcumFunctions.prototype;
     if (exports) exports.UcumFunctions = UcumFunctions;
+
     UcumFunctions = function UcumFunctions() {
       throw new Error('UcumFunctions is a Singleton. ' + 'Use UcumFunctions.getInstance() instead.');
     };
+
     UcumFunctions.prototype = holdThis;
     var self = this;
+
     UcumFunctions.getInstance = function () {
       return self;
     };
   } // end of constructor
-
 
   /**
    * Returns the function with the name specified
@@ -30637,15 +30649,13 @@ var UcumFunctions = function () {
 
 
   _createClass(UcumFunctions, [{
-    key: 'forName',
+    key: "forName",
     value: function forName(fname) {
       fname = fname.toLowerCase();
-
       var f = this.funcs[fname];
-      if (f === null) throw new Error('Requested function ' + fname + ' is not defined');
+      if (f === null) throw new Error("Requested function ".concat(fname, " is not defined"));
       return f;
     }
-
     /**
      * Returns a flag indicating whether or not the function has been
      * defined.
@@ -30655,7 +30665,7 @@ var UcumFunctions = function () {
      */
 
   }, {
-    key: 'isDefined',
+    key: "isDefined",
     value: function isDefined(fname) {
       fname = fname.toLowerCase();
       return this.funcs[fname] !== null;
@@ -30664,7 +30674,6 @@ var UcumFunctions = function () {
 
   return UcumFunctions;
 }(); // end of UcumFunctions class
-
 
 /**
  *  This function exists ONLY until the original UcumFunctions constructor
@@ -30682,17 +30691,18 @@ var UcumFunctions = function () {
 UcumFunctions.getInstance = function () {
   return new UcumFunctions();
 };
+
 UcumFunctions.getInstance();
 
-
 },{}],11:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.isNumericString = isNumericString;
 exports.getSynonyms = getSynonyms;
+
 /**
  * Internal utilities used by multiple UCUM classes.  For example,
  * isNumericString is used by both the UnitString and UcumLhcUtils
@@ -30711,9 +30721,7 @@ exports.getSynonyms = getSynonyms;
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-
 var UnitTables = require('./unitTables.js').UnitTables;
-
 /**
  * This function tests a string to see if it contains only numbers (digits,
  * a period, leading - or +).  This code was taken from a stackoverflow
@@ -30723,11 +30731,13 @@ var UnitTables = require('./unitTables.js').UnitTables;
  * @params theString
  * @returns true if the string contains only numbers; false otherwise
  */
+
+
 function isNumericString(theString) {
   var num = "" + theString; //coerce num to be a string
+
   return !isNaN(num) && !isNaN(parseFloat(num));
 } // end isNumericString
-
 
 /**
  * This method accepts a term and looks for units that include it as
@@ -30744,14 +30754,14 @@ function isNumericString(theString) {
  *    the unit's csCode_, the unit's name_, and the unit's guidance_
  *
  */
-function getSynonyms(theSyn) {
 
+
+function getSynonyms(theSyn) {
   var retObj = {};
   var utab = UnitTables.getInstance();
   var resp = {};
-  resp = utab.getUnitBySynonym(theSyn);
+  resp = utab.getUnitBySynonym(theSyn); // If we didn't get any units, transfer the status and message
 
-  // If we didn't get any units, transfer the status and message
   if (!resp['units']) {
     retObj['status'] = resp['status'];
     retObj['msg'] = resp['msg'];
@@ -30759,17 +30769,21 @@ function getSynonyms(theSyn) {
     retObj['status'] = 'succeeded';
     var aLen = resp['units'].length;
     retObj['units'] = [];
+
     for (var a = 0; a < aLen; a++) {
       var theUnit = resp['units'][a];
       retObj['units'][a] = {
         'code': theUnit.csCode_,
         'name': theUnit.name_,
-        'guidance': theUnit.guidance_ };
+        'guidance': theUnit.guidance_
+      };
     } // end do for all units returned
+
   } // end if we got a units list
+
+
   return retObj;
 } // end getSynonyms
-
 
 },{"./unitTables.js":17}],12:[function(require,module,exports){
 "use strict";
@@ -30777,10 +30791,13 @@ function getSynonyms(theSyn) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.UcumJsonDefs = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * This class handles opening, reading and loading the JSON file of ucum
@@ -30789,17 +30806,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Lee Mericle
  *
  */
-
 var Pfx = require("./prefix.js");
-var PfxT = require("./prefixTables.js");
-var Un = require("./unit.js");
-var Utab = require('./unitTables.js');
 
-// requiring the file will take care of opening it for use
+var PfxT = require("./prefixTables.js");
+
+var Un = require("./unit.js");
+
+var Utab = require('./unitTables.js'); // requiring the file will take care of opening it for use
+
+
 var jsonDefs_ = require('../data/ucumDefs.json');
 
-var UcumJsonDefs = exports.UcumJsonDefs = function () {
-
+var UcumJsonDefs =
+/*#__PURE__*/
+function () {
   /**
    * Constructor.  This reads the json file (essenceFile_) into the
    * jsonDefs hash and makes this a singlton object.
@@ -30809,19 +30829,20 @@ var UcumJsonDefs = exports.UcumJsonDefs = function () {
     _classCallCheck(this, UcumJsonDefs);
 
     // Make this a singleton.  See UnitTables constructor for details.
-
     var holdThis = UcumJsonDefs.prototype;
+
     UcumJsonDefs = function UcumJsonDefs() {
       throw new Error('UcumJsonDefs is a Singleton. ' + 'Use UcumJsonDefs.getInstance() instead.');
     };
+
     if (exports) exports.UcumJsonDefs = UcumJsonDefs;
     UcumJsonDefs.prototype = holdThis;
     var self = this;
+
     UcumJsonDefs.getInstance = function () {
       return self;
     };
   } // end constructor
-
 
   /**
    * This method loads the JSON prefix and unit objects into the prefix and
@@ -30834,9 +30855,7 @@ var UcumJsonDefs = exports.UcumJsonDefs = function () {
   _createClass(UcumJsonDefs, [{
     key: "loadJsonDefs",
     value: function loadJsonDefs() {
-
       if (Utab.UnitTables.getInstance().unitsCount() === 0) {
-
         var pTab = PfxT.PrefixTables.getInstance();
         var prefixes = jsonDefs_["prefixes"];
         var plen = prefixes.length;
@@ -30855,6 +30874,7 @@ var UcumJsonDefs = exports.UcumJsonDefs = function () {
           uTab.addUnit(newUnit);
         }
       } // end if the data has not already been loaded
+
     } // end loadJsonDefs
 
   }]);
@@ -30875,28 +30895,31 @@ var UcumJsonDefs = exports.UcumJsonDefs = function () {
  */
 
 
+exports.UcumJsonDefs = UcumJsonDefs;
+
 UcumJsonDefs.getInstance = function () {
   return new UcumJsonDefs();
 };
 
-
 },{"../data/ucumDefs.json":1,"./prefix.js":8,"./prefixTables.js":9,"./unit.js":15,"./unitTables.js":17}],13:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.UcumLhcUtils = undefined;
+exports.UcumLhcUtils = void 0;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
 
-var _ucumInternalUtils = require('./ucumInternalUtils.js');
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-var intUtils_ = _interopRequireWildcard(_ucumInternalUtils);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * This class provides a single point of access to the LHC UCUM utilities
@@ -30905,18 +30928,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *
  */
 var Ucum = require('./config.js').Ucum;
+
 var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
+
 var UnitTables = require('./unitTables.js').UnitTables;
+
 var UnitString = require('./unitString.js').UnitString;
+
 var Unit = require('./unit.js').Unit;
+
 var Prefix = require('./prefix.js').Prefix;
+
 var fs = require('fs');
 
 /**
  * UCUM external utilities class
  */
-var UcumLhcUtils = exports.UcumLhcUtils = function () {
-
+var UcumLhcUtils =
+/*#__PURE__*/
+function () {
   /**
    * Constructor.  This loads the json prefix and unit definitions if
    * they haven't been loaded already and creates itself as a singleton object.
@@ -30926,17 +30956,15 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
     _classCallCheck(this, UcumLhcUtils);
 
     if (UnitTables.getInstance().unitsCount() === 0) {
-
       // Load the prefix and unit objects
       var uDefs = UcumJsonDefs.getInstance();
       uDefs.loadJsonDefs();
-    }
-
-    // Get the UnitString parser that will be used with this instance
+    } // Get the UnitString parser that will be used with this instance
     // of the LHC Utilities
+
+
     this.uStrParser_ = UnitString.getInstance();
   } // end constructor
-
 
   /**
    * This method calls the useHTMLInMessages method on the UnitString
@@ -30949,12 +30977,11 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
 
   _createClass(UcumLhcUtils, [{
-    key: 'useHTMLInMessages',
+    key: "useHTMLInMessages",
     value: function useHTMLInMessages(use) {
       if (use === undefined) use = true;
       this.uStrParser_.useHTMLInMessages(use);
     }
-
     /**
      * This method calls the useBraceMsgForEachString method on the UnitString
      * object.  It should be called by web applications where unit
@@ -30966,12 +30993,11 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      */
 
   }, {
-    key: 'useBraceMsgForEachString',
+    key: "useBraceMsgForEachString",
     value: function useBraceMsgForEachString(use) {
       if (use === undefined) use = true;
       this.uStrParser_.useBraceMsgForEachString(use);
     }
-
     /**
      * This method validates a unit string.  It first checks to see if the
      * string passed in is a unit code that is found in the unit codes table.
@@ -31027,33 +31053,38 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      */
 
   }, {
-    key: 'validateUnitString',
+    key: "validateUnitString",
     value: function validateUnitString(uStr, suggest, valConv) {
-
       if (suggest === undefined) suggest = false;
-
       if (valConv === undefined) valConv = 'validate';
-
       var resp = this.getSpecifiedUnit(uStr, valConv, suggest);
       var theUnit = resp['unit'];
       var retObj = {};
+
       if (!theUnit) {
-        retObj = { 'status': !resp['origString'] || resp['origString'] === null ? 'error' : 'invalid',
-          'ucumCode': null };
+        retObj = {
+          'status': !resp['origString'] || resp['origString'] === null ? 'error' : 'invalid',
+          'ucumCode': null
+        };
       } else {
-        retObj = { 'status': resp['origString'] === uStr ? 'valid' : 'invalid',
+        retObj = {
+          'status': resp['origString'] === uStr ? 'valid' : 'invalid',
           'ucumCode': resp['origString'],
-          'unit': { 'code': theUnit.csCode_,
+          'unit': {
+            'code': theUnit.csCode_,
             'name': theUnit.name_,
-            'guidance': theUnit.guidance_ } };
+            'guidance': theUnit.guidance_
+          }
+        };
       }
+
       if (resp['suggestions']) {
         retObj['suggestions'] = resp['suggestions'];
       }
+
       retObj['msg'] = resp['retMsg'];
       return retObj;
     } // end validateUnitString
-
 
     /**
      * This method converts one unit to another
@@ -31115,59 +31146,67 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      */
 
   }, {
-    key: 'convertUnitTo',
+    key: "convertUnitTo",
     value: function convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight) {
       if (suggest === undefined) suggest = false;
-
       if (molecularWeight === undefined) molecularWeight = null;
-
-      var returnObj = { 'status': 'failed',
+      var returnObj = {
+        'status': 'failed',
         'toVal': null,
-        'msg': [] };
+        'msg': []
+      };
 
       if (fromUnitCode) {
         fromUnitCode = fromUnitCode.trim();
       }
+
       if (!fromUnitCode || fromUnitCode == '') {
         returnObj['status'] = 'error';
         returnObj['msg'].push('No "from" unit expression specified.');
       }
+
       if (fromVal === null || isNaN(fromVal) || typeof fromVal !== 'number' && !intUtils_.isNumericString(fromVal)) {
         returnObj['status'] = 'error';
         returnObj['msg'].push('No "from" value, or an invalid "from" value, ' + 'was specified.');
       }
+
       if (toUnitCode) {
         toUnitCode = toUnitCode.trim();
       }
+
       if (!toUnitCode || toUnitCode == '') {
         returnObj['status'] = 'error';
         returnObj['msg'].push('No "to" unit expression specified.');
       }
+
       if (returnObj['status'] !== 'error') {
         try {
           var fromUnit = null;
-
           var parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
           fromUnit = parseResp['unit'];
           if (parseResp['retMsg']) returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+
           if (parseResp['suggestions']) {
             returnObj['suggestions'] = {};
             returnObj['suggestions']['from'] = parseResp['suggestions'];
           }
+
           if (!fromUnit) {
-            returnObj['msg'].push('Unable to find a unit for ' + fromUnitCode + ', ' + 'so no conversion could be performed.');
+            returnObj['msg'].push("Unable to find a unit for ".concat(fromUnitCode, ", ") + "so no conversion could be performed.");
           }
 
           var toUnit = null;
           parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
           toUnit = parseResp['unit'];
           if (parseResp['retMsg']) returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+
           if (parseResp['suggestions']) {
             if (!returnObj['suggestions']) returnObj['suggestions'] = {};
             returnObj['suggestions']['to'] = parseResp['suggestions'];
           }
+
           if (!toUnit) {
-            returnObj['msg'].push('Unable to find a unit for ' + toUnitCode + ', ' + 'so no conversion could be performed.');
+            returnObj['msg'].push("Unable to find a unit for ".concat(toUnitCode, ", ") + "so no conversion could be performed.");
           }
 
           if (fromUnit && toUnit) {
@@ -31179,27 +31218,29 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
                 if (fromUnit.moleExp_ !== 0 && toUnit.moleExp_ !== 0) {
                   throw new Error('A molecular weight was specified ' + 'but a mass <-> mole conversion cannot be executed for two ' + 'mole-based units.  No conversion was attempted.');
                 }
+
                 if (fromUnit.moleExp_ === 0 && toUnit.moleExp_ === 0) {
                   throw new Error('A molecular weight was specified ' + 'but a mass <-> mole conversion cannot be executed when ' + 'neither unit is mole-based.  No conversion was attempted.');
                 }
-                if (!fromUnit.isMoleMassCommensurable(toUnit)) {
-                  throw new Error('Sorry.  ' + fromUnitCode + ' cannot be ' + ('converted to ' + toUnitCode + '.'));
-                }
 
-                // if the "from" unit is a mole-based unit, assume a mole to mass
+                if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+                  throw new Error("Sorry.  ".concat(fromUnitCode, " cannot be ") + "converted to ".concat(toUnitCode, "."));
+                } // if the "from" unit is a mole-based unit, assume a mole to mass
                 // request
+
+
                 if (fromUnit.moleExp_ !== 0) {
                   returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
-                }
-                // else the "to" unit must be the mole-based unit, so assume a
+                } // else the "to" unit must be the mole-based unit, so assume a
                 // mass to mole request
                 else {
                     returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
                   }
               } // end if a molecular weight was specified
-
               // if an error hasn't been thrown - either from convertFrom or here,
               // set the return object to show success
+
+
               returnObj['status'] = 'succeeded';
               returnObj['fromUnit'] = fromUnit;
               returnObj['toUnit'] = toUnit;
@@ -31208,6 +31249,7 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
               returnObj['msg'].push(err.message);
             }
           } // end if we have the from and to units
+
         } catch (err) {
           if (err.message == Ucum.needMoleWeightMsg_) returnObj['status'] = 'failed';else returnObj['status'] = 'error';
           returnObj['msg'].push(err.message);
@@ -31216,7 +31258,6 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
 
       return returnObj;
     } // end convertUnitTo
-
 
     /**
      * This method accepts a term and looks for units that include it as
@@ -31235,9 +31276,10 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      */
 
   }, {
-    key: 'checkSynonyms',
+    key: "checkSynonyms",
     value: function checkSynonyms(theSyn) {
       var retObj = {};
+
       if (theSyn === undefined || theSyn === null) {
         retObj['status'] = 'error';
         retObj['msg'] = 'No term specified for synonym search.';
@@ -31245,9 +31287,9 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         retObj = intUtils_.getSynonyms(theSyn);
       } // end if a search synonym was supplied
 
+
       return retObj;
     } // end checkSynonyms
-
 
     /**
      * This method parses a unit string to get (or try to get) the unit
@@ -31282,11 +31324,9 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      */
 
   }, {
-    key: 'getSpecifiedUnit',
+    key: "getSpecifiedUnit",
     value: function getSpecifiedUnit(uName, valConv, suggest) {
-
       if (suggest === undefined) suggest = false;
-
       var retObj = {};
       retObj['retMsg'] = [];
 
@@ -31294,14 +31334,12 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
         retObj['retMsg'].push('No unit string specified.');
       } else {
         var utab = UnitTables.getInstance();
-        uName = uName.trim();
-
-        // go ahead and just try using the name as the code.  This may or may not
+        uName = uName.trim(); // go ahead and just try using the name as the code.  This may or may not
         // work, but if it does, it cuts out a lot of parsing.
-        var theUnit = utab.getUnitByCode(uName);
 
-        // If we found it, set the returned unit string to what was passed in;
+        var theUnit = utab.getUnitByCode(uName); // If we found it, set the returned unit string to what was passed in;
         // otherwise try parsing as a unit string
+
         if (theUnit) {
           retObj['unit'] = theUnit;
           retObj['origString'] = uName;
@@ -31313,15 +31351,16 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
             if (resp[2]) retObj['retMsg'] = resp[2];
             retObj['suggestions'] = resp[3];
           } catch (err) {
-            console.log('Unit requested for unit string ' + uName + '.' + 'request unsuccessful; error thrown = ' + err.message);
-            retObj['retMsg'].unshift(uName + ' is not a valid unit.  ' + ('' + err.message));
+            console.log("Unit requested for unit string ".concat(uName, ".") + 'request unsuccessful; error thrown = ' + err.message);
+            retObj['retMsg'].unshift("".concat(uName, " is not a valid unit.  ") + "".concat(err.message));
           }
         } // end if the unit was not found as a unit name
+
       } // end if a unit expression was specified
+
 
       return retObj;
     } // end getSpecifiedUnit
-
 
     /**
      * This method retrieves a list of units commensurable, i.e., that can be
@@ -31335,19 +31374,20 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      */
 
   }, {
-    key: 'commensurablesList',
+    key: "commensurablesList",
     value: function commensurablesList(fromName) {
-
       var retMsg = [];
       var commUnits = null;
       var parseResp = this.getSpecifiedUnit(fromName, 'validate', false);
       var fromUnit = parseResp['unit'];
       if (parseResp['retMsg'].length > 0) retMsg = parseResp['retMsg'];
+
       if (!fromUnit) {
-        retMsg.push('Could not find unit ' + fromName + '.');
+        retMsg.push("Could not find unit ".concat(fromName, "."));
       } else {
         var dimVec = null;
         var fromDim = fromUnit.getProperty('dim_');
+
         if (!fromDim) {
           retMsg.push('No commensurable units were found for ' + fromName);
         } else {
@@ -31357,15 +31397,18 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
             retMsg.push(err.message);
             if (err.message === "Dimension does not have requested property(dimVec_)") dimVec = null;
           }
+
           if (dimVec) {
             var utab = UnitTables.getInstance();
             commUnits = utab.getUnitsByDimension(dimVec);
           }
         } // end if the from unit has a dimension vector
+
       } // end if we found a "from" unit
+
+
       return [commUnits, retMsg];
     } // end commensurablesList
-
 
     /**
      * Creates a file containing a list of the units.  The file is created
@@ -31373,21 +31416,23 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
      */
 
   }, {
-    key: 'printUnits',
+    key: "printUnits",
     value: function printUnits() {
-
       // for now, create a list of the units created and save it to a file
       // for debugging.  This is a temporary file.
       var utab = UnitTables.getInstance();
       var uct = utab.unitsCount();
       var uList = utab.printUnits(true);
-      fs.writeFileSync('JsonUnitsList.txt', uList, { encoding: 'utf8', mode: 438, flag: 'w' });
+      fs.writeFileSync('JsonUnitsList.txt', uList, {
+        encoding: 'utf8',
+        mode: 438,
+        flag: 'w'
+      });
     }
   }]);
 
   return UcumLhcUtils;
 }(); // end UcumLhcUtils class
-
 
 /**
  *  This function exists ONLY until the original UcumLhcUtils constructor
@@ -31405,10 +31450,11 @@ var UcumLhcUtils = exports.UcumLhcUtils = function () {
  */
 
 
+exports.UcumLhcUtils = UcumLhcUtils;
+
 UcumLhcUtils.getInstance = function () {
   return new UcumLhcUtils();
 };
-
 
 },{"./config.js":6,"./prefix.js":8,"./ucumInternalUtils.js":11,"./ucumJsonDefs.js":12,"./unit.js":15,"./unitString.js":16,"./unitTables.js":17,"fs":2}],14:[function(require,module,exports){
 "use strict";
@@ -31416,35 +31462,45 @@ UcumLhcUtils.getInstance = function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.UnitTables = exports.UcumLhcUtils = exports.Ucum = void 0;
+
 /**
  * This exports definitions for ucum classes that need references to them
  * available to the demo code.  The actual code will be in the ucumPkg
  * library found in the dist directory.  This file provides the hooks to
  * those classes within the library.
  */
+var Ucum = require("./config.js").Ucum;
 
-var Ucum = exports.Ucum = require("./config.js").Ucum;
-var UcumLhcUtils = exports.UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
-var UnitTables = exports.UnitTables = require("./unitTables.js").UnitTables;
+exports.Ucum = Ucum;
 
+var UcumLhcUtils = require("./ucumLhcUtils.js").UcumLhcUtils;
+
+exports.UcumLhcUtils = UcumLhcUtils;
+
+var UnitTables = require("./unitTables.js").UnitTables;
+
+exports.UnitTables = UnitTables;
 
 },{"./config.js":6,"./ucumLhcUtils.js":13,"./unitTables.js":17}],15:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Unit = undefined;
+exports.Unit = void 0;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
 
-var _ucumInternalUtils = require('./ucumInternalUtils.js');
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-var intUtils_ = _interopRequireWildcard(_ucumInternalUtils);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * This class represents one unit of measure.  It includes
@@ -31456,14 +31512,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *
  */
 var Ucum = require('./config.js').Ucum;
+
 var Dimension = require('./dimension.js').Dimension;
+
 var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
+
 var UnitTables;
 
 var isInteger = require("is-integer");
 
-var Unit = exports.Unit = function () {
-
+var Unit =
+/*#__PURE__*/
+function () {
   /**
    * Constructor.
    *
@@ -31498,27 +31558,26 @@ var Unit = exports.Unit = function () {
      * Flag indicating whether or not this is a base unit
      */
     this.isBase_ = attrs['isBase_'] || false;
-
     /*
      * The unit name, e.g., meter
      */
-    this.name_ = attrs['name_'] || '';
 
+    this.name_ = attrs['name_'] || '';
     /*
      * The unit's case-sensitive code, e.g., m
      */
-    this.csCode_ = attrs['csCode_'] || '';
 
+    this.csCode_ = attrs['csCode_'] || '';
     /*
      * The unit's case-insensitive code, e.g., M
      */
-    this.ciCode_ = attrs['ciCode_'] || '';
 
+    this.ciCode_ = attrs['ciCode_'] || '';
     /*
      * The unit's property, e.g., length
      */
-    this.property_ = attrs['property_'] || '';
 
+    this.property_ = attrs['property_'] || '';
     /*
      * The magnitude of the unit, e.g., 3600/3937 for a yard,
      * where a yard - 3600/3973 * m(eter).  The Dimension
@@ -31526,15 +31585,15 @@ var Unit = exports.Unit = function () {
      * a yard is based, and this magnitude specifies how to figure
      * this unit based on the base unit.
      */
-    this.magnitude_ = attrs['magnitude_'] || 1;
 
+    this.magnitude_ = attrs['magnitude_'] || 1;
     /*
      * The Dimension object of the unit
      */
+
     if (attrs['dim_'] === undefined || attrs['dim_'] === null) {
       this.dim_ = new Dimension();
-    }
-    // When the unit data stored in json format is reloaded, the dimension data
+    } // When the unit data stored in json format is reloaded, the dimension data
     // is recognized as a a hash, not as a Dimension object.
     else if (attrs['dim_']['dimVec_'] !== undefined) {
         this.dim_ = new Dimension(attrs['dim_']['dimVec_']);
@@ -31548,46 +31607,48 @@ var Unit = exports.Unit = function () {
     /*
      * The print symbol of the unit, e.g., m
      */
-    this.printSymbol_ = attrs['printSymbol_'] || null;
 
+
+    this.printSymbol_ = attrs['printSymbol_'] || null;
     /*
      * The class of the unit, where given, e.g., dimless
      */
-    this.class_ = attrs['class_'] || null;
 
+    this.class_ = attrs['class_'] || null;
     /*
      * A flag indicating whether or not the unit is metric
      */
-    this.isMetric_ = attrs['isMetric_'] || false;
 
+    this.isMetric_ = attrs['isMetric_'] || false;
     /*
      * The "variable" - which I think is used only for base units
      * The symbol for the variable as used in equations, e.g., s for distance
      */
+
     this.variable_ = attrs['variable_'] || null; // comes from 'dim' in XML
 
     /*
      * The conversion function
      */
-    this.cnv_ = attrs['cnv_'] || null;
 
+    this.cnv_ = attrs['cnv_'] || null;
     /*
      * The conversion prefix
      */
-    this.cnvPfx_ = attrs['cnvPfx_'] || 1;
 
+    this.cnvPfx_ = attrs['cnvPfx_'] || 1;
     /*
      * Flag indicating whether or not this is a "special" unit, i.e., is
      * constructed using a function specific to the measurement, e.g.,
      * fahrenheit and celsius
      */
-    this.isSpecial_ = attrs['isSpecial_'] || false;
 
+    this.isSpecial_ = attrs['isSpecial_'] || false;
     /*
      * Flag indicating whether or not this is an arbitrary unit
      */
-    this.isArbitrary_ = attrs['isArbitrary_'] || false;
 
+    this.isArbitrary_ = attrs['isArbitrary_'] || false;
     /*
      * Integer indicating what level of exponent applies to a mole-based portion
      * of the unit.  So, for the unit "mol", this will be 1.  For "mol2" this
@@ -31595,8 +31656,8 @@ var Unit = exports.Unit = function () {
      * a mole will have a 0 in this field.  This is used to determine
      * commensurability for mole<->mass conversions.
      */
-    this.moleExp_ = attrs['moleExp_'] || 0;
 
+    this.moleExp_ = attrs['moleExp_'] || 0;
     /*
      * Added when added LOINC list of units
      * synonyms are used by the autocompleter to enhance lookup capabilities
@@ -31604,16 +31665,17 @@ var Unit = exports.Unit = function () {
      * UCUM - which are units from the unitsofmeasure.org list and LOINC -
      * which are units from the LOINC data.
      */
+
     this.synonyms_ = attrs['synonyms_'] || null;
     this.source_ = attrs['source_'] || null;
     this.loincProperty_ = attrs['loincProperty_'] || null;
     this.category_ = attrs['category_'] || null;
     this.guidance_ = attrs['guidance_'] || null;
-
     /*
      * Used to compute dimension; storing for now until I complete
      * unit definition parsing
      */
+
     /*
      * Case sensitive (cs) and case insensitive (ci) base unit strings,
      * includes exponent and prefix if applicable - specified in
@@ -31626,16 +31688,16 @@ var Unit = exports.Unit = function () {
      * (unit code h) is created from the unit min (minute) with a value
      * of 60.
      */
+
     this.csUnitString_ = attrs['csUnitString_'] || null;
     this.ciUnitString_ = attrs['ciUnitString_'] || null;
-
     /*
      * String and numeric versions of factor applied to unit specified in
      * <value Unit=x UNIT=X value="nnn">nnn</value> -- the value part
      */
+
     this.baseFactorStr_ = attrs['baseFactorStr_'] || null;
     this.baseFactor_ = attrs['baseFactor_'] || null;
-
     /*
      * Flag used to indicate units where the definition process failed
      * when parsing units from the official units definitions file
@@ -31648,9 +31710,9 @@ var Unit = exports.Unit = function () {
      * This is NOT used when trying to validate a unit string
      * submitted during a conversion or validation attempt.
      */
+
     this.defError_ = attrs['defError_'] || false;
   } // end constructor
-
 
   /**
    * Assign the unity (= dimensionless unit 1) to this unit.
@@ -31660,7 +31722,7 @@ var Unit = exports.Unit = function () {
 
 
   _createClass(Unit, [{
-    key: 'assignUnity',
+    key: "assignUnity",
     value: function assignUnity() {
       this.name_ = "";
       this.magnitude_ = 1;
@@ -31670,7 +31732,6 @@ var Unit = exports.Unit = function () {
       this.cnvPfx_ = 1;
       return this;
     } // end assignUnity
-
 
     /**
      * This assigns one or more values, as provided in the hash passed in,
@@ -31684,14 +31745,13 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'assignVals',
+    key: "assignVals",
     value: function assignVals(vals) {
       for (var key in vals) {
         var uKey = !key.charAt(key.length - 1) === '_' ? key + '_' : key;
-        if (this.hasOwnProperty(uKey)) this[uKey] = vals[key];else throw new Error('Parameter error; ' + key + ' is not a property of a Unit');
+        if (this.hasOwnProperty(uKey)) this[uKey] = vals[key];else throw new Error("Parameter error; ".concat(key, " is not a property of a Unit"));
       }
     } // end assignVals
-
 
     /**
      * This creates a clone of this unit.
@@ -31700,7 +31760,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'clone',
+    key: "clone",
     value: function clone() {
       var _this = this;
 
@@ -31713,7 +31773,6 @@ var Unit = exports.Unit = function () {
       return retUnit;
     } // end clone
 
-
     /**
      * This assigns all properties of a unit passed to it to this unit.
      *
@@ -31722,7 +31781,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'assign',
+    key: "assign",
     value: function assign(unit2) {
       var _this2 = this;
 
@@ -31735,7 +31794,6 @@ var Unit = exports.Unit = function () {
       });
     } // end assign
 
-
     /**
      * This determines whether or not object properties of the unit
      * passed in are equal to the corresponding properties in this unit.
@@ -31747,12 +31805,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'equals',
+    key: "equals",
     value: function equals(unit2) {
-
       return this.magnitude_ === unit2.magnitude_ && this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_ && (this.dim_ === null && unit2.dim_ === null || this.dim_.equals(unit2.dim_));
     } // end equals
-
 
     /**
      * This method compares every attribute of two objects to determine
@@ -31763,22 +31819,21 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'fullEquals',
+    key: "fullEquals",
     value: function fullEquals(unit2) {
-
       var thisAttr = Object.keys(this).sort();
       var u2Attr = Object.keys(unit2).sort();
-
       var keyLen = thisAttr.length;
-      var match = keyLen === u2Attr.length;
-
-      // check each attribute.   Dimension objects have to checked using
+      var match = keyLen === u2Attr.length; // check each attribute.   Dimension objects have to checked using
       // the equals function of the Dimension class.
+
       for (var k = 0; k < keyLen && match; k++) {
         if (thisAttr[k] === u2Attr[k]) {
           if (thisAttr[k] === 'dim_') match = this.dim_.equals(unit2.dim_);else match = this[thisAttr[k]] === unit2[thisAttr[k]];
         } else match = false;
       } // end do for each key and attribute
+
+
       return match;
     } // end of fullEquals
 
@@ -31793,12 +31848,11 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'getProperty',
+    key: "getProperty",
     value: function getProperty(propertyName) {
       var uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName : propertyName + '_';
       return this[uProp];
     } // end getProperty
-
 
     /**
      * Takes a measurement consisting of a number of units and a unit and returns
@@ -31821,54 +31875,51 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'convertFrom',
+    key: "convertFrom",
     value: function convertFrom(num, fromUnit) {
       var newNum = 0.0;
+      if (this.isArbitrary_) throw new Error("Attempt to convert arbitrary unit ".concat(this.name_));
+      if (fromUnit.isArbitrary_) throw new Error("Attempt to convert to arbitrary unit ".concat(fromUnit.name_)); // reject request if both units have dimensions that are not equal
 
-      if (this.isArbitrary_) throw new Error('Attempt to convert arbitrary unit ' + this.name_);
-      if (fromUnit.isArbitrary_) throw new Error('Attempt to convert to arbitrary unit ' + fromUnit.name_);
-
-      // reject request if both units have dimensions that are not equal
       if (fromUnit.dim_ && this.dim_ && !fromUnit.dim_.equals(this.dim_)) {
         // check first to see if a mole<->mass conversion is appropriate
         if (this.isMoleMassCommensurable(fromUnit)) {
           throw new Error(Ucum.needMoleWeightMsg_);
         } else {
-          throw new Error('Sorry.  ' + fromUnit.csCode_ + ' cannot be converted ' + ('to ' + this.csCode_ + '.'));
+          throw new Error("Sorry.  ".concat(fromUnit.csCode_, " cannot be converted ") + "to ".concat(this.csCode_, "."));
         }
-      }
-      // reject request if there is a "from" dimension but no "to" dimension
-      if (fromUnit.dim_ && (!this.dim_ || this.dim_.isNull())) {
-        throw new Error('Sorry.  ' + fromUnit.csCode_ + ' cannot be converted ' + ('to ' + this.csCode_ + '.'));
-      }
+      } // reject request if there is a "from" dimension but no "to" dimension
 
-      // reject request if there is a "to" dimension but no "from" dimension
+
+      if (fromUnit.dim_ && (!this.dim_ || this.dim_.isNull())) {
+        throw new Error("Sorry.  ".concat(fromUnit.csCode_, " cannot be converted ") + "to ".concat(this.csCode_, "."));
+      } // reject request if there is a "to" dimension but no "from" dimension
+
+
       if (this.dim_ && (!fromUnit.dim_ || fromUnit.dim_.isNull())) {
-        throw new Error('Sorry.  ' + fromUnit.csCode_ + ' cannot be converted ' + ('to ' + this.csCode_ + '.'));
+        throw new Error("Sorry.  ".concat(fromUnit.csCode_, " cannot be converted ") + "to ".concat(this.csCode_, "."));
       }
 
       var fromCnv = fromUnit.cnv_;
-      var fromMag = fromUnit.magnitude_;
-
-      // If the same conversion function is specified for both units, which
+      var fromMag = fromUnit.magnitude_; // If the same conversion function is specified for both units, which
       // includes neither unit having a conversion function, multiply the
       // "from" unit's magnitude by the number passed in and then divide
       // that result by this unit's magnitude.  Do this for units with
       // and without dimension vectors.  PROBLEM with 2 non-commensurable
       // units with no dimension vector or function, e.g., byte to mol
+
       if (fromCnv === this.cnv_) {
         newNum = num * fromMag / this.magnitude_;
-      }
-      // else use a function to get the number to be returned
+      } // else use a function to get the number to be returned
       else {
           var x = 0.0;
           var funcs = UcumFunctions.getInstance();
+
           if (fromCnv != null) {
             // turn num * fromUnit.magnitude into its ratio scale equivalent,
             // e.g., convert Celsius to Kelvin
             var fromFunc = funcs.forName(fromCnv);
-            x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
-            //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
+            x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag; //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
           } else {
             x = num * fromMag;
           }
@@ -31883,9 +31934,9 @@ var Unit = exports.Unit = function () {
           }
         } // end if either unit has a conversion function
 
+
       return newNum;
     } // end convertFrom
-
 
     /**
      * Takes a number and a target unit and returns the number for a measurement
@@ -31905,12 +31956,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'convertTo',
+    key: "convertTo",
     value: function convertTo(num, toUnit) {
-
       return toUnit.convertFrom(num, this);
     } // end convertTo
-
 
     /**
      * Takes a given number of this unit returns the number of this unit
@@ -31924,15 +31973,12 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'convertCoherent',
+    key: "convertCoherent",
     value: function convertCoherent(num) {
-
       // convert mag' * u' into canonical number * u on ratio scale
       if (this.cnv_ !== null) num = this.cnv_.f_from(num / this.cnvPfx_) * this.magnitude_;
-
       return num;
     } // end convertCoherent
-
 
     /**
      * Mutates this unit into a coherent unit and converts a given number of
@@ -31944,32 +31990,31 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'mutateCoherent',
+    key: "mutateCoherent",
     value: function mutateCoherent(num) {
-
       // convert mu' * u' into canonical mu * u on ratio scale
-      num = this.convertCoherent(num);
+      num = this.convertCoherent(num); // mutate to coherent unit
 
-      // mutate to coherent unit
       this.magnitude_ = 1;
       this.cnv_ = null;
       this.cnvPfx_ = 1;
-      this.name_ = "";
-
-      // build a name as a term of coherent base units
+      this.name_ = ""; // build a name as a term of coherent base units
       // This is probably ALL WRONG and a HORRIBLE MISTAKE
       // but until we figure out what the heck the name being
       // built here really is, it will have to stay.
+
       for (var i = 0, max = Dimension.getMax(); i < max; i++) {
         var elem = this.dim_.getElementAt(i);
+
         var tabs = this._getUnitTables();
+
         var uA = tabs.getUnitsByDimension(new Dimension(i));
-        if (uA == null) throw new Error('Can\'t find base unit for dimension ' + i);
+        if (uA == null) throw new Error("Can't find base unit for dimension ".concat(i));
         this.name_ = uA.name + elem;
       }
+
       return num;
     } // end mutateCoherent
-
 
     /**
      * Calculates the number of units that would result from converting a unit
@@ -31987,23 +32032,23 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'convertMassToMol',
+    key: "convertMassToMol",
     value: function convertMassToMol(amt, molUnit, molecularWeight) {
       // The prefix values that have been applied to this unit, which is the mass
       // (grams) unit, are reflected in the magnitude.  So the number of moles
       // represented by this unit equals the number of grams -- amount * magnitude
       // divided by the molecular Weight
-      var molAmt = this.magnitude_ * amt / molecularWeight;
-      // The molUnit's basic magnitude, before prefixes are applied,
+      var molAmt = this.magnitude_ * amt / molecularWeight; // The molUnit's basic magnitude, before prefixes are applied,
       // is avogadro's number, get that and divide it out of the current magnitude.
+
       var tabs = this._getUnitTables();
+
       var avoNum = tabs.getUnitByCode('mol').magnitude_;
-      var molesFactor = molUnit.magnitude_ / avoNum;
-      // return the molAmt divided by the molesFactor as the number of moles
+      var molesFactor = molUnit.magnitude_ / avoNum; // return the molAmt divided by the molesFactor as the number of moles
       // for the molUnit
+
       return molAmt / molesFactor;
     }
-
     /**
      * Calculates the number of units that would result from converting a unit
      * expressed in moles to a unit expressed in mass (grams).  The "this" unit
@@ -32020,28 +32065,28 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'convertMolToMass',
+    key: "convertMolToMass",
     value: function convertMolToMass(amt, massUnit, molecularWeight) {
       // A simple mole unit has a magnitude of avogadro's number.  Get that
       // number now (since not everyone agrees on what it is, and what is
       // being used in this system might change).
       var tabs = this._getUnitTables();
-      var avoNum = tabs.getUnitByCode('mol').magnitude_;
-      // Determine what prefix values (mg or mg/dL, etc.) have been applied to
+
+      var avoNum = tabs.getUnitByCode('mol').magnitude_; // Determine what prefix values (mg or mg/dL, etc.) have been applied to
       // this unit by dividing the simple mole unit magnitude out of the
       // current mole unit magnitude.
-      var molesFactor = this.magnitude_ / avoNum;
-      // The number of grams (mass) is equal to the number of moles (amt)
+
+      var molesFactor = this.magnitude_ / avoNum; // The number of grams (mass) is equal to the number of moles (amt)
       // times the molecular weight.  We also multiply that by the prefix values
       // applied to the current unit (molesFactor) to get the grams for this
       // particular unit.
-      var massAmt = molesFactor * amt * molecularWeight;
-      // Finally, we return the mass amount/grams for this particular unit
+
+      var massAmt = molesFactor * amt * molecularWeight; // Finally, we return the mass amount/grams for this particular unit
       // divided by any effects of prefixes applied to the "to" unit, which
       // is assumed to be some form of a gram unit
+
       return massAmt / massUnit.magnitude_;
     }
-
     /**
      * Mutates this unit into a unit on a ratio scale and converts a specified
      * number of units to an appropriate value for this converted unit
@@ -32052,11 +32097,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'mutateRatio',
+    key: "mutateRatio",
     value: function mutateRatio(num) {
       if (this.cnv_ == null) return this.mutateCoherent(num);else return num;
     } // end mutateRatio
-
 
     /**
      * Multiplies this unit with a scalar. Special meaning for
@@ -32069,9 +32113,8 @@ var Unit = exports.Unit = function () {
      * */
 
   }, {
-    key: 'multiplyThis',
+    key: "multiplyThis",
     value: function multiplyThis(s) {
-
       var retUnit = this.clone();
       if (retUnit.cnv_ != null) retUnit.cnvPfx_ *= s;else retUnit.magnitude_ *= s;
       var mulVal = s.toString();
@@ -32079,10 +32122,8 @@ var Unit = exports.Unit = function () {
       retUnit.csCode_ = this._concatStrs(mulVal, '.', this.csCode_, '(', ')');
       retUnit.ciCode_ = this._concatStrs(mulVal, '.', this.ciCode_, '(', ')');
       retUnit.printSymbol_ = this._concatStrs(mulVal, '.', this.printSymbol_, '(', ')');
-
       return retUnit;
     } // end multiplyThis
-
 
     /**
      * Multiplies this unit with another unit. If one of the
@@ -32097,59 +32138,52 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'multiplyThese',
+    key: "multiplyThese",
     value: function multiplyThese(unit2) {
-
       var retUnit = this.clone();
 
       if (retUnit.cnv_ != null) {
-        if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error('Attempt to multiply non-ratio unit ' + retUnit.name_ + ' ' + 'failed.');
+        if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error("Attempt to multiply non-ratio unit ".concat(retUnit.name_, " ") + 'failed.');
       } // end if this unit has a conversion function
-
       else if (unit2.cnv_ != null) {
           if (!retUnit.dim_ || retUnit.dim_.isZero()) {
             retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
             retUnit.cnv_ = unit2.cnv_;
-          } else throw new Error('Attempt to multiply non-ratio unit ' + unit2.name_);
+          } else throw new Error("Attempt to multiply non-ratio unit ".concat(unit2.name_));
         } // end if unit2 has a conversion function
-
         // else neither unit has a conversion function
         else {
             retUnit.magnitude_ *= unit2.magnitude_;
           } // end if unit2 does not have a conversion function
-
       // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
       // is a dimension in unit2.dim_; else just transfer it to this dimension
+
+
       if (!retUnit.dim_ || retUnit.dim_ && !retUnit.dim_.dimVec_) {
         if (unit2.dim_) retUnit.dim_ = unit2.dim_.clone();else retUnit.dim_ = unit2.dim_;
-      }
-      // Else this.dim_ is there.  If there is a dimension for unit2,
+      } // Else this.dim_ is there.  If there is a dimension for unit2,
       // add it to this one.
       else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
           retUnit.dim_.add(unit2.dim_);
-        }
-
-      // Concatenate the unit info (name, code, etc) for all cases
+        } // Concatenate the unit info (name, code, etc) for all cases
       // where the multiplication was performed (an error wasn't thrown)
+
+
       retUnit.name_ = this._concatStrs(retUnit.name_, '*', unit2.name_, '[', ']');
       retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '.', unit2.csCode_, '(', ')');
       if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '.', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
       retUnit.guidance_ = '';
-      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_;
-
-      // Update the mole exponent count by adding the count for unit2 to the
+      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_; // Update the mole exponent count by adding the count for unit2 to the
       // count for this unit.
-      retUnit.moleExp_ = retUnit.moleExp_ + unit2.moleExp_;
 
-      // A unit that has the arbitrary attribute taints any unit created from it
+      retUnit.moleExp_ = retUnit.moleExp_ + unit2.moleExp_; // A unit that has the arbitrary attribute taints any unit created from it
       // via an arithmetic operation.  Taint accordingly
       // if (!retUnit.isMole_)
       //   retUnit.isMole_ = unit2.isMole_ ;
-      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
 
+      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
       return retUnit;
     } // end multiplyThese
-
 
     /**
      * Divides this unit by another unit. If this unit is not on a ratio
@@ -32163,54 +32197,42 @@ var Unit = exports.Unit = function () {
      * */
 
   }, {
-    key: 'divide',
+    key: "divide",
     value: function divide(unit2) {
-
       var retUnit = this.clone();
-
-      if (retUnit.cnv_ != null) throw new Error('Attempt to divide non-ratio unit ' + retUnit.name_);
-      if (unit2.cnv_ != null) throw new Error('Attempt to divide by non-ratio unit ' + unit2.name_);
-
+      if (retUnit.cnv_ != null) throw new Error("Attempt to divide non-ratio unit ".concat(retUnit.name_));
+      if (unit2.cnv_ != null) throw new Error("Attempt to divide by non-ratio unit ".concat(unit2.name_));
       if (retUnit.name_ && unit2.name_) retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
-
       retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '/', unit2.csCode_, '(', ')');
-
       if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '/', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.invertString(unit2.ciCode_);
-
       retUnit.guidance_ = '';
-
       retUnit.magnitude_ /= unit2.magnitude_;
-
-      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '/', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_);
-
-      // Continue if unit2 has a dimension object.
+      if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '/', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_); // Continue if unit2 has a dimension object.
       // If this object has a dimension object, subtract unit2's dim_ object from
       // this one. The sub method will take care of cases where the dimVec_ arrays
       // are missing on one or both dim_ objects.
+
       if (unit2.dim_) {
         if (retUnit.dim_) {
           if (retUnit.dim_.isNull()) retUnit.dim_.assignZero();
           retUnit.dim_ = retUnit.dim_.sub(unit2.dim_);
         } // end if this.dim_ exists
-
         // Else if this dim_ object is missing, clone unit2's dim_ object
         // and give the inverted clone to this unit.
         else retUnit.dim_ = unit2.dim_.clone().minus();
       } // end if unit2 has a dimension object
-
       // Update the mole exponent count by subtracting the count for unit2 from
       // the // count for this unit.
-      retUnit.moleExp_ = retUnit.moleExp_ - unit2.moleExp_;
 
-      // A unit that has the arbitrary attribute taints any unit created from
+
+      retUnit.moleExp_ = retUnit.moleExp_ - unit2.moleExp_; // A unit that has the arbitrary attribute taints any unit created from
       // it via an arithmetic operation.  Taint accordingly
       // if (!retUnit.isMole_)
       //   retUnit.isMole_ = unit2.isMole_ ;
-      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
 
+      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
       return retUnit;
     } // end divide
-
 
     /**
      * Invert this unit with respect to multiplication. If this unit is not
@@ -32224,17 +32246,14 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'invert',
+    key: "invert",
     value: function invert() {
-
-      if (this.cnv_ != null) throw new Error('Attempt to invert a non-ratio unit - ' + this.name_);
-
+      if (this.cnv_ != null) throw new Error("Attempt to invert a non-ratio unit - ".concat(this.name_));
       this.name_ = this.invertString(this.name_);
       this.magnitude_ = 1 / this.magnitude_;
       this.dim_.minus();
       return this;
     } // end invert
-
 
     /**
      * Inverts a string, where the string is assumed to be a code or a name
@@ -32246,23 +32265,27 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'invertString',
+    key: "invertString",
     value: function invertString(theString) {
-
       if (theString.length > 0) {
         var stringRep = theString.replace('/', "!").replace('.', '/').replace("!", '.');
+
         switch (stringRep.charAt(0)) {
           case '.':
-            theString = stringRep.substr(1);break;
+            theString = stringRep.substr(1);
+            break;
+
           case '/':
-            theString = stringRep;break;
+            theString = stringRep;
+            break;
+
           default:
             theString = "/" + stringRep;
         }
       }
+
       return theString;
     } // end invertString
-
 
     /**
      * This function handles concatenation of two strings and an operator.
@@ -32280,12 +32303,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: '_concatStrs',
+    key: "_concatStrs",
     value: function _concatStrs(str1, operator, str2, startChar, endChar) {
-
       return this._buildOneString(str1, startChar, endChar) + operator + this._buildOneString(str2, startChar, endChar);
     }
-
     /**
      * This function handles creation of one string to be included in a
      * concatenated string.   Basically it checks to see if the string
@@ -32302,9 +32323,10 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: '_buildOneString',
+    key: "_buildOneString",
     value: function _buildOneString(str, startChar, endChar) {
       var ret = '';
+
       if (intUtils_.isNumericString(str)) {
         ret = str;
       } else {
@@ -32316,9 +32338,9 @@ var Unit = exports.Unit = function () {
           ret = str;
         }
       }
+
       return ret;
     }
-
     /**
      * Raises the unit to a power.  For example
      *  kg.m/s2 raised to the -2 power would be kg-2.m-2/s-4
@@ -32338,31 +32360,33 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'power',
+    key: "power",
     value: function power(p) {
-
-      if (this.cnv_ != null) throw new Error('Attempt to raise a non-ratio unit, ' + this.name_ + ', ' + 'to a power.');
-
-      //this.name_ = UnitString.pow(this.name_, p);
+      if (this.cnv_ != null) throw new Error("Attempt to raise a non-ratio unit, ".concat(this.name_, ", ") + 'to a power.'); //this.name_ = UnitString.pow(this.name_, p);
       // the above line is replaced with the code below, as the pow method
       // never actually existing in the UnitString class.  (Tried to use
       // Schadow java code but this way ended up being a lot easier).
+
       var uStr = this.csCode_;
       var uArray = uStr.match(/([./]|[^./]+)/g);
       var arLen = uArray.length;
 
       for (var i = 0; i < arLen; i++) {
         var un = uArray[i];
+
         if (un !== '/' && un !== '.') {
           var nun = parseInt(un);
           if (isInteger(nun)) uArray[i] = Math.pow(nun, p).toString();else {
             var uLen = un.length;
+
             for (var u = uLen - 1; u >= 0; u--) {
               var uChar = parseInt(un[u]);
+
               if (!isInteger(uChar)) {
                 if (un[u] === '-' || un[u] === '+') {
                   u--;
                 }
+
                 if (u < uLen - 1) {
                   var exp = parseInt(un.substr(u));
                   exp = Math.pow(exp, p);
@@ -32372,23 +32396,29 @@ var Unit = exports.Unit = function () {
                   uArray[i] += p.toString();
                   u = -1;
                 } // end if there are/aren't some numbers at the end
+
+
                 u = -1;
               } // end if this character is not a number
+
             } // end searching backwards for start of exponent
+
           } // end if this element is not a number
         } // end if the current element is not an operator
+
       } // end do for each element of the units array
-
       // reassemble the updated units array to a string
-      this.csCode_ = uArray.join('');
 
+
+      this.csCode_ = uArray.join('');
       this.magnitude_ = Math.pow(this.magnitude_, p);
+
       if (this.dim_) {
         this.dim_.mul(p);
       }
+
       return this;
     } // end power
-
 
     /*
      * This function tests this unit against the unit passed in to see if the
@@ -32408,11 +32438,13 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: 'isMoleMassCommensurable',
+    key: "isMoleMassCommensurable",
     value: function isMoleMassCommensurable(unit2) {
       var tabs = this._getUnitTables();
+
       var d = tabs.getMassDimensionIndex();
       var commensurable = false;
+
       if (this.moleExp_ === 1 && unit2.moleExp_ === 0) {
         var testDim = this.dim_.clone();
         var curVal = testDim.getElementAt(d);
@@ -32420,13 +32452,16 @@ var Unit = exports.Unit = function () {
         commensurable = testDim.equals(unit2.dim_);
       } else if (unit2.moleExp_ === 1 && this.moleExp_ === 0) {
         var _testDim = unit2.dim_.clone();
+
         var _curVal = _testDim.getElementAt(d);
+
         _testDim.setElementAt(d, _curVal + unit2.moleExp_);
+
         commensurable = _testDim.equals(this.dim_);
       }
+
       return commensurable;
     }
-
     /**
      * This returns the UnitTables singleton object.  Including the require
      * statement included here causes a circular dependency condition that
@@ -32437,7 +32472,7 @@ var Unit = exports.Unit = function () {
      */
 
   }, {
-    key: '_getUnitTables',
+    key: "_getUnitTables",
     value: function _getUnitTables() {
       if (!UnitTables) UnitTables = require('./unitTables.js').UnitTables;
       return UnitTables.getInstance();
@@ -32448,39 +32483,54 @@ var Unit = exports.Unit = function () {
 }(); // end Unit class
 
 
+exports.Unit = Unit;
+
 },{"./config.js":6,"./dimension.js":7,"./ucumFunctions.js":10,"./ucumInternalUtils.js":11,"./unitTables.js":17,"is-integer":4}],16:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.UnitString = undefined;
+exports.UnitString = void 0;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
 
-var _templateObject = _taggedTemplateLiteral(['', ' is invalid.\n'], ['', ' is invalid.\\n']);
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-var _ucumInternalUtils = require('./ucumInternalUtils.js');
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var intUtils_ = _interopRequireWildcard(_ucumInternalUtils);
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["", " is invalid.\n"], ["", " is invalid.\\n"]);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+  _templateObject = function _templateObject() {
+    return data;
+  };
 
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * This class handles the parsing of a unit string into a unit object
  */
-
 var Ucum = require('./config.js').Ucum;
+
 var Unit = require('./unit.js').Unit;
+
 var UnitTables = require('./unitTables.js').UnitTables;
+
 var PrefixTables = require('./prefixTables.js').PrefixTables;
 
-var UnitString = exports.UnitString = function () {
-
+var UnitString =
+/*#__PURE__*/
+function () {
   /**
    * Constructor
    */
@@ -32489,49 +32539,41 @@ var UnitString = exports.UnitString = function () {
 
     // Get instances of the unit and prefix tables and the utilities
     this.utabs_ = UnitTables.getInstance();
-    this.pfxTabs_ = PrefixTables.getInstance();
-
-    // Set emphasis characters to defaults.  These are used to emphasize
+    this.pfxTabs_ = PrefixTables.getInstance(); // Set emphasis characters to defaults.  These are used to emphasize
     // certain characters or strings in user messages.  They can be reset in
     // the useHTMLInMessages method.
-    this.openEmph_ = Ucum.openEmph_;
-    this.closeEmph_ = Ucum.closeEmph_;
 
-    // Set the braces message to blank.  This message is displayed for each
+    this.openEmph_ = Ucum.openEmph_;
+    this.closeEmph_ = Ucum.closeEmph_; // Set the braces message to blank.  This message is displayed for each
     // validation request on the web page, but is included separately as
     // a note on the validation spreadsheet.  The useBraceMsgForEachString
     // method should be used to set the message to be displayed for each
     // unit string.
-    this.bracesMsg_ = '';
 
-    // Set the flags used, with indices, as place holders in unit strings
+    this.bracesMsg_ = ''; // Set the flags used, with indices, as place holders in unit strings
     // for parenthetical strings and strings within braces.
+
     this.parensFlag_ = "parens_placeholder"; // in lieu of Jehoshaphat
+
     this.pFlagLen_ = this.parensFlag_.length;
     this.braceFlag_ = "braces_placeholder"; // in lieu of Nebuchadnezzar
-    this.bFlagLen_ = this.braceFlag_.length;
 
-    // Initialize the message start/end strings, which will be set when
+    this.bFlagLen_ = this.braceFlag_.length; // Initialize the message start/end strings, which will be set when
     // parseString is called.
+
     this.vcMsgStart_ = null;
-    this.vcMsgEnd_ = null;
-
-    // Arrays used by multiple methods within this class to hold persistent
+    this.vcMsgEnd_ = null; // Arrays used by multiple methods within this class to hold persistent
     // data.  Just gets too bulky to pass these guys around.
-
     // Messages to be returned to the calling function
-    this.retMsg_ = [];
 
-    // Units for parenthetical unit strings
-    this.parensUnits_ = [];
+    this.retMsg_ = []; // Units for parenthetical unit strings
 
-    // annotation text for annotations found in unit strings
-    this.annotations_ = [];
+    this.parensUnits_ = []; // annotation text for annotations found in unit strings
 
-    // suggestions for unit strings that for which no unit was found
+    this.annotations_ = []; // suggestions for unit strings that for which no unit was found
+
     this.suggestions = [];
   } // end constructor
-
 
   /**
    * Sets the emphasis strings to the HTML used in the webpage display - or
@@ -32543,7 +32585,7 @@ var UnitString = exports.UnitString = function () {
 
 
   _createClass(UnitString, [{
-    key: 'useHTMLInMessages',
+    key: "useHTMLInMessages",
     value: function useHTMLInMessages(use) {
       if (use === undefined || use) {
         this.openEmph_ = Ucum.openEmphHTML_;
@@ -32554,7 +32596,6 @@ var UnitString = exports.UnitString = function () {
       }
     } // end useHTMLInMessages
 
-
     /**
      * Sets the braces message to be displayed for each unit string validation
      * requested, as appropriate.
@@ -32564,11 +32605,10 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: 'useBraceMsgForEachString',
+    key: "useBraceMsgForEachString",
     value: function useBraceMsgForEachString(use) {
       if (use === undefined || use) this.bracesMsg_ = Ucum.bracesMsg_;else this.bracesMsg_ = '';
     }
-
     /**
      * Parses a unit string, returns a unit, a possibly updated version of
      * the string passed in, and messages and suggestions where appropriate.
@@ -32609,11 +32649,10 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: 'parseString',
+    key: "parseString",
     value: function parseString(uStr, valConv, suggest) {
+      uStr = uStr.trim(); // Make sure we have something to work with
 
-      uStr = uStr.trim();
-      // Make sure we have something to work with
       if (uStr === '' || uStr === null) {
         throw new Error('Please specify a unit expression to be validated.');
       }
@@ -32635,11 +32674,8 @@ var UnitString = exports.UnitString = function () {
       this.retMsg_ = [];
       this.parensUnits_ = [];
       this.annotations_ = [];
-
       var origString = uStr;
-      var retObj = [];
-
-      // Extract any annotations, i.e., text enclosed in braces ({}) from the
+      var retObj = []; // Extract any annotations, i.e., text enclosed in braces ({}) from the
       // string before further processing.  Store each one in this.annotations_
       // array and put a placeholder in the string for the annotation.  Do
       // this before other processing in case an annotation contains characters
@@ -32647,42 +32683,43 @@ var UnitString = exports.UnitString = function () {
       // subsequent processing.
 
       uStr = this._getAnnotations(uStr);
+
       if (this.retMsg_.length > 0) {
         retObj[0] = null;
         retObj[1] = null;
       } else {
         // Flag used to block further processing on an unrecoverable error
-        var endProcessing = this.retMsg_.length > 0;
-
-        // First check for one of the "special" units.  If it's one of those, put
+        var endProcessing = this.retMsg_.length > 0; // First check for one of the "special" units.  If it's one of those, put
         // in a substitution phrase for it to avoid having it separated on its
         // embedded operator.  This will only happen, by the way, if it is
         // preceded by a prefix or followed by an operator and another unit.
+
         var sUnit = null;
+
         for (sUnit in Ucum.specUnits_) {
           while (uStr.includes(sUnit)) {
             uStr = uStr.replace(sUnit, Ucum.specUnits_[sUnit]);
           }
-        }
-
-        // Check for spaces and throw an error if any are found.  The spec
+        } // Check for spaces and throw an error if any are found.  The spec
         // explicitly forbids spaces except in annotations, which is why any
         // annotations are extracted before this check is made.
+
+
         if (uStr.indexOf(' ') > -1) {
           throw new Error('Blank spaces are not allowed in unit expressions.');
         } // end if blanks were found in the string
-
         // assign the array returned to retObj.  It will contain 2 elements:
         //  the unit returned in position 0; and the origString (possibly
         //  modified in position 1.  The origString in position 1 will not
         //  be changed by subsequent processing.
-        retObj = this._parseTheString(uStr, origString);
-        var finalUnit = retObj[0];
 
-        // Do a final check to make sure that finalUnit is a unit and not
+
+        retObj = this._parseTheString(uStr, origString);
+        var finalUnit = retObj[0]; // Do a final check to make sure that finalUnit is a unit and not
         // just a number.  Something like "8/{HCP}" will return a "unit" of 8
         // - which is not a unit.  Hm - evidently it is.  So just create a unit
         // object for it.
+
         if (intUtils_.isNumericString(finalUnit) || typeof finalUnit === 'number') {
           finalUnit = new Unit({
             'csCode_': origString,
@@ -32691,13 +32728,14 @@ var UnitString = exports.UnitString = function () {
           });
           retObj[0] = finalUnit;
         } // end final check
+
       } // end if no annotation errors were found
+
 
       retObj[2] = this.retMsg_;
       if (this.suggestions_ && this.suggestions_.length > 0) retObj[3] = this.suggestions_;
       return retObj;
     } // end parseString
-
 
     /**
      * Parses a unit string, returns a unit, a possibly updated version of
@@ -32728,73 +32766,67 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_parseTheString',
+    key: "_parseTheString",
     value: function _parseTheString(uStr, origString) {
-
       // Unit to be returned
-      var finalUnit = null;
+      var finalUnit = null; // Flag used to block further processing on an unrecoverable error
 
-      // Flag used to block further processing on an unrecoverable error
-      var endProcessing = this.retMsg_.length > 0;
-
-      // Call _processParens to search for and process any/all parenthetical
+      var endProcessing = this.retMsg_.length > 0; // Call _processParens to search for and process any/all parenthetical
       // strings in uStr.  Units created for parenthetical strings will be
       // stored in the this.parensUnits_ array.
+
       var parensResp = this._processParens(uStr, origString);
-      endProcessing = parensResp[2];
 
-      // The array used to hold the units and their operators.
-      var uArray = [];
+      endProcessing = parensResp[2]; // The array used to hold the units and their operators.
 
-      // Continue if we didn't hit a problem
+      var uArray = []; // Continue if we didn't hit a problem
+
       if (!endProcessing) {
         uStr = parensResp[0];
-        origString = parensResp[1];
-
-        // Call _makeUnitsArray to convert the string to an array of unit
+        origString = parensResp[1]; // Call _makeUnitsArray to convert the string to an array of unit
         // descriptors with operators.
+
         var mkUArray = this._makeUnitsArray(uStr, origString);
 
         endProcessing = mkUArray[2];
+
         if (!endProcessing) {
           uArray = mkUArray[0];
-          origString = mkUArray[1];
-          // Create a unit object out of each un element
+          origString = mkUArray[1]; // Create a unit object out of each un element
+
           var uLen = uArray.length;
+
           for (var u1 = 0; u1 < uLen; u1++) {
             //for (let u1 = 0; u1 < uLen && !endProcessing; u1++) {
-            var curCode = uArray[u1]['un'];
-
-            // Determine the type of the "un" attribute of the current array element
-
+            var curCode = uArray[u1]['un']; // Determine the type of the "un" attribute of the current array element
             // Check to see if it's a number.  If so write the number version of
             // the number back to the "un" attribute and move on
+
             if (intUtils_.isNumericString(curCode)) {
               uArray[u1]['un'] = Number(curCode);
             } else {
               // The current unit array element is a string.  Check now to see
               // if it is or contains a parenthesized unit from this.parensUnits_.
               // If so, call _getParens to process the string and get the unit.
-
               if (curCode.indexOf(this.parensFlag_) >= 0) {
-                var parenUnit = this._getParensUnit(curCode, origString);
-                // if we couldn't process the string, set the end flag and bypass
+                var parenUnit = this._getParensUnit(curCode, origString); // if we couldn't process the string, set the end flag and bypass
                 // further processing.
-                if (!endProcessing) endProcessing = parenUnit[1];
 
-                // If we're good, put the unit in the uArray and replace the
+
+                if (!endProcessing) endProcessing = parenUnit[1]; // If we're good, put the unit in the uArray and replace the
                 // curCode, which contains the parentheses placeholders, etc.,
                 // with the unit's code - including any substitutions.
+
                 if (!endProcessing) {
                   uArray[u1]['un'] = parenUnit[0];
                 }
               } // end if the curCode contains a parenthesized unit
-
               // Else it's not a parenthetical unit and not a number. Call
               // _makeUnit to create a unit for it.
               else {
-                  var uRet = this._makeUnit(curCode, origString);
-                  // If we didn't get a unit, set the endProcessing flag.
+                  var uRet = this._makeUnit(curCode, origString); // If we didn't get a unit, set the endProcessing flag.
+
+
                   if (uRet[0] === null) {
                     endProcessing = true;
                   } else {
@@ -32802,26 +32834,32 @@ var UnitString = exports.UnitString = function () {
                     origString = uRet[1];
                   }
                 } // end if the curCode is not a parenthetical expression
-            } // end if the "un" array is a not a number
-          } // end do for each element in the units array
-        } // end if _makeUnitsArray did not return an error
-      } // end if _processParens did not find an error that causes a stop
 
+            } // end if the "un" array is a not a number
+
+          } // end do for each element in the units array
+
+        } // end if _makeUnitsArray did not return an error
+
+      } // end if _processParens did not find an error that causes a stop
       // If we're still good, continue
+
+
       if (!endProcessing) {
         // Process the units (and numbers) to create one final unit object
         if ((uArray[0] === null || uArray[0] === ' ' || uArray[0]['un'] === undefined || uArray[0]['un'] === null) && this.retMsg_.length === 0) {
           // not sure what this might be, but this is a safeguard
-          this.retMsg_.push('Unit string (' + origString + ') did not contain ' + 'anything that could be used to create a unit, or else something ' + 'that is not handled yet by this package.  Sorry');
+          this.retMsg_.push("Unit string (".concat(origString, ") did not contain ") + "anything that could be used to create a unit, or else something " + "that is not handled yet by this package.  Sorry");
           endProcessing = true;
         }
       }
+
       if (!endProcessing) {
         finalUnit = this._performUnitArithmetic(uArray, origString);
       }
+
       return [finalUnit, origString];
     } // end _parseTheString
-
 
     /**
      * Extracts all annotations from a unit string, replacing them with
@@ -32838,12 +32876,13 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_getAnnotations',
+    key: "_getAnnotations",
     value: function _getAnnotations(uString) {
       var openBrace = uString.indexOf('{');
-      while (openBrace >= 0) {
 
+      while (openBrace >= 0) {
         var _closeBrace = uString.indexOf('}');
+
         if (_closeBrace < 0) {
           this.retMsg_.push('Missing closing brace for annotation starting at ' + this.openEmph_ + uString.substr(openBrace) + this.closeEmph_);
           openBrace = -1;
@@ -32855,13 +32894,13 @@ var UnitString = exports.UnitString = function () {
           openBrace = uString.indexOf('{');
         }
       } // end do while we have an opening brace
-
       // check for a stray/unmatched closing brace
+
+
       var closeBrace = uString.indexOf('}');
       if (closeBrace >= 0) this.retMsg_.push('Missing opening brace for closing brace found at ' + this.openEmph_ + uString.substring(0, closeBrace + 1) + this.closeEmph_);
       return uString;
     } // end _getAnnotations
-
 
     /**
      * Finds and processes any/all parenthesized unit strings. This should only
@@ -32895,45 +32934,42 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_processParens',
+    key: "_processParens",
     value: function _processParens(uString, origString) {
-
       // Unit strings array and index
       var uStrArray = [];
       var uStrAryPos = 0;
       var stopProcessing = false;
-
-      var pu = this.parensUnits_.length;
-
-      // Count of characters trimmed off the beginning of the unit string (uString)
+      var pu = this.parensUnits_.length; // Count of characters trimmed off the beginning of the unit string (uString)
       // as units are removed from it; used for error messages to provide
       // context.
-      var trimmedCt = 0;
 
-      // Break the unit string into pieces that consist of text outside of
+      var trimmedCt = 0; // Break the unit string into pieces that consist of text outside of
       // parenthetical strings and placeholders for the parenthetical units.
       // This method is called recursively for parenthetical strings and the units
       // returned are stored in the this.parensUnits_ array.
+
       while (uString !== "" && !stopProcessing) {
         var openCt = 0;
         var closeCt = 0;
-        var openPos = uString.indexOf('(');
-
-        // If an opening parenthesis was not found, check for an unmatched
+        var openPos = uString.indexOf('('); // If an opening parenthesis was not found, check for an unmatched
         // close parenthesis.  If one was found report the error and end
         // processing.
+
         if (openPos < 0) {
           var closePos = uString.indexOf(')');
+
           if (closePos >= 0) {
-            var theMsg = 'Missing open parenthesis for close ' + ('parenthesis at ' + uString.substring(0, closePos + trimmedCt)) + ('' + this.openEmph_ + uString.substr(closePos, 1) + this.closeEmph_);
+            var theMsg = "Missing open parenthesis for close " + "parenthesis at ".concat(uString.substring(0, closePos + trimmedCt)) + "".concat(this.openEmph_).concat(uString.substr(closePos, 1)).concat(this.closeEmph_);
+
             if (closePos < uString.length - 1) {
-              theMsg += '' + uString.substr(closePos + 1);
+              theMsg += "".concat(uString.substr(closePos + 1));
             }
+
             this.retMsg_.push(theMsg);
             uStrArray[uStrAryPos] = uString;
             stopProcessing = true;
           } // end if a close parenthesis was found
-
           // If no parentheses were found in the current unit string, transfer
           // it to the units array and blank out the string, which will end
           // the search for parenthetical units.
@@ -32941,41 +32977,45 @@ var UnitString = exports.UnitString = function () {
               uStrArray[uStrAryPos] = uString;
               uString = "";
             } // end if no close parenthesis was found
-        } // end if no open parenthesis was found
 
+        } // end if no open parenthesis was found
         // Otherwise an open parenthesis was found. Process the string that
         // includes the parenthetical group
         else {
-            openCt += 1;
-            // Write the text before the parentheses (if any) to the unit strings array
+            openCt += 1; // Write the text before the parentheses (if any) to the unit strings array
+
             var uLen = uString.length;
+
             if (openPos > 0) {
               uStrArray[uStrAryPos++] = uString.substr(0, openPos);
-            }
-
-            // Find the matching closePos, i.e., the one that closes the
+            } // Find the matching closePos, i.e., the one that closes the
             // parenthetical group that this one opens.  Look also for
             // another open parenthesis, in case this includes nested parenthetical
             // strings.  This continues until it finds the same number of close
             // parentheses as open parentheses, or runs out of string to check.
             // In the case of nested parentheses this will identify the outer set
             // of parentheses.
+
+
             var _closePos = 0;
             var c = openPos + 1;
+
             for (; c < uLen && openCt != closeCt; c++) {
               if (uString[c] === '(') openCt += 1;else if (uString[c] === ')') closeCt += 1;
-            }
-
-            // Put a placeholder for the group in the unit strings array and recursively
+            } // Put a placeholder for the group in the unit strings array and recursively
             // call this method for the parenthetical group.  Put the unit returned
             // in this.parensUnits_.  Set the unit string to whatever follows
             // the position of the closing parenthesis for this group, to be
             // processed by the next iteration of this loop.  If there's nothing
             // left uString is set to "".
+
+
             if (openCt === closeCt) {
               _closePos = c;
               uStrArray[uStrAryPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
+
               var parseResp = this._parseTheString(uString.substring(openPos + 1, _closePos - 1), origString);
+
               if (parseResp[0] === null) stopProcessing = true;else {
                 origString = parseResp[1];
                 this.parensUnits_[pu++] = parseResp[0];
@@ -32983,20 +33023,21 @@ var UnitString = exports.UnitString = function () {
                 trimmedCt = _closePos;
               }
             } // end if the number of open and close parentheses matched
-
             // If the number of open and close parentheses doesn't match, indicate
             // an error.
             else {
                 uStrArray.push(origString.substr(openPos));
-                this.retMsg_.push('Missing close parenthesis for open parenthesis at ' + ('' + origString.substring(0, openPos + trimmedCt)) + ('' + this.openEmph_ + origString.substr(openPos, 1)) + ('' + this.closeEmph_ + origString.substr(openPos + 1)));
+                this.retMsg_.push("Missing close parenthesis for open parenthesis at " + "".concat(origString.substring(0, openPos + trimmedCt)) + "".concat(this.openEmph_).concat(origString.substr(openPos, 1)) + "".concat(this.closeEmph_).concat(origString.substr(openPos + 1)));
                 stopProcessing = true;
               }
           } // end if an open parenthesis was found
+
       } // end do while the input string is not empty
+
+
       if (stopProcessing) this.parensUnits_ = [];
       return [uStrArray.join(''), origString, stopProcessing];
     } // end _processParens
-
 
     /**
      * Breaks the unit string into an array of unit descriptors and operators.
@@ -33019,56 +33060,54 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_makeUnitsArray',
+    key: "_makeUnitsArray",
     value: function _makeUnitsArray(uStr, origString) {
-
       // Separate the string into pieces based on delimiters / (division) and .
       // (multiplication).  The idea is to get an array of units on which we
       // can then perform any operations (prefixes, multiplication, division).
-
       var uArray1 = uStr.match(/([./]|[^./]+)/g);
       var endProcessing = false;
       var uArray = [];
-      var startNumCheck = /(^[0-9]+)(\[?[a-zA-Z\_0-9a-zA-Z\_]+\]?$)/;
-
-      // If the first element in the array is the division operator (/), the
+      var startNumCheck = /(^[0-9]+)(\[?[a-zA-Z\_0-9a-zA-Z\_]+\]?$)/; // If the first element in the array is the division operator (/), the
       // string started with '/'.  Add a first element containing 1 to the
       // array, which will cause the correct computation to be performed (inversion).
+
       if (uArray1[0] === "/") {
         uArray1.unshift("1");
-      }
-      // If the first element in the array is the multiplication operator (.)
+      } // If the first element in the array is the multiplication operator (.)
       // return an error.
       else if (uArray1[0] === '.') {
-          this.retMsg_.push(origString + ' is not a valid UCUM code. ' + 'The multiplication operator at the beginning of the expression is ' + 'not valid. A multiplication operator must appear only between ' + 'two codes.');
+          this.retMsg_.push("".concat(origString, " is not a valid UCUM code. ") + "The multiplication operator at the beginning of the expression is " + "not valid. A multiplication operator must appear only between " + "two codes.");
           endProcessing = true;
         }
+
       if (!endProcessing) {
         // Check to see if there is a number preceding a unit code, e.g., 2mg
         // If so, update the first element to remove the number (2mg -> mg) and
         // add two elements to the beginning of the array - the number and the
         // multiplication operator.
-
         if (!intUtils_.isNumericString(uArray1[0])) {
           var numRes = uArray1[0].match(startNumCheck);
+
           if (numRes && numRes.length === 3 && numRes[1] !== '' && numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
             var dispVal = numRes[2];
 
             if (!endProcessing && numRes[2].includes(this.parensFlag_)) {
               var parensback = this._getParensUnit(numRes[2], origString);
+
               numRes[2] = parensback[0]['csCode_'];
-              dispVal = '(' + numRes[2] + ')';
+              dispVal = "(".concat(numRes[2], ")");
               endProcessing = parensback[1];
             }
+
             if (!endProcessing) {
-              this.retMsg_.push('' + numRes[1] + dispVal + ' is not a valid UCUM code.' + ('  ' + this.vcMsgStart_ + numRes[1] + '.' + dispVal + this.vcMsgEnd_));
-              origString = origString.replace('' + numRes[1] + dispVal, numRes[1] + '.' + dispVal);
+              this.retMsg_.push("".concat(numRes[1]).concat(dispVal, " is not a valid UCUM code.") + "  ".concat(this.vcMsgStart_).concat(numRes[1], ".").concat(dispVal).concat(this.vcMsgEnd_));
+              origString = origString.replace("".concat(numRes[1]).concat(dispVal), "".concat(numRes[1], ".").concat(dispVal));
               uArray1[0] = numRes[2];
               uArray1.unshift(numRes[1], '.');
             }
           }
         } // end if the first element is not a number (only)
-
         // Create an array of unit/operator objects.  The unit is, for now, the
         // string containing the unit code (e.g., Hz for hertz) including
         // a possible prefix and exponent.   The operator is the operator to be
@@ -33076,22 +33115,27 @@ var UnitString = exports.UnitString = function () {
         // us two objects.  The first will have a unit of a, and a blank operator
         // (because it's the first unit).  The second would have a unit of b
         // and the multiplication operator (.).
+
+
         if (!endProcessing) {
           var u1 = uArray1.length;
-          uArray = [{ op: "", un: uArray1[0] }];
-          for (var n = 1; n < u1; n++) {
+          uArray = [{
+            op: "",
+            un: uArray1[0]
+          }];
 
+          for (var n = 1; n < u1; n++) {
             // check to make sure that we don't have two operators together, e.g.,
             // mg./K.  If so, let the user know the problem.
-            var theOp = uArray1[n++];
-            // oh wait - check to make sure something is even there, that the
+            var theOp = uArray1[n++]; // oh wait - check to make sure something is even there, that the
             // user didn't end the expression with an operator.
+
             if (!uArray1[n]) {
-              this.retMsg_.push(origString + ' is not a valid UCUM code. ' + ('It is terminated with the operator ' + this.openEmph_) + ('' + theOp + this.closeEmph_ + '.'));
+              this.retMsg_.push("".concat(origString, " is not a valid UCUM code. ") + "It is terminated with the operator ".concat(this.openEmph_) + "".concat(theOp).concat(this.closeEmph_, "."));
               n = u1;
               endProcessing = true;
             } else if (Ucum.validOps_.includes(uArray1[n])) {
-              this.retMsg_.push(origString + ' is not a valid UCUM code. ' + ('A unit code is missing between' + this.openEmph_) + ('' + theOp + this.closeEmph_ + 'and' + this.openEmph_) + ('' + uArray1[n] + this.closeEmph_ + 'in' + this.openEmph_) + ('' + theOp + uArray1[n] + this.closeEmph_ + '.'));
+              this.retMsg_.push("".concat(origString, " is not a valid UCUM code. ") + "A unit code is missing between".concat(this.openEmph_) + "".concat(theOp).concat(this.closeEmph_, "and").concat(this.openEmph_) + "".concat(uArray1[n]).concat(this.closeEmph_, "in").concat(this.openEmph_) + "".concat(theOp).concat(uArray1[n]).concat(this.closeEmph_, "."));
               n = u1;
               endProcessing = true;
             } else {
@@ -33105,53 +33149,80 @@ var UnitString = exports.UnitString = function () {
               // 2.kJ.
               if (!intUtils_.isNumericString(uArray1[n])) {
                 var numRes2 = uArray1[n].match(startNumCheck);
+
                 if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' && numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
                   var invalidString = numRes2[0];
+
                   if (!endProcessing && numRes2[2].includes(this.parensFlag_)) {
                     var _parensback = this._getParensUnit(numRes2[2], origString);
+
                     numRes2[2] = _parensback[0]['csCode_'];
-                    invalidString = '(' + numRes2[2] + ')';
+                    invalidString = "(".concat(numRes2[2], ")");
                     endProcessing = _parensback[1];
+
                     if (!endProcessing) {
-                      this.retMsg_.push('' + numRes2[1] + invalidString + ' is not a ' + ('valid UCUM code.  ' + this.vcMsgStart_ + numRes2[1] + '.' + invalidString) + ('' + this.vcMsgEnd_));
-                      var parensString = '(' + numRes2[1] + '.' + invalidString + ')';
-                      origString = origString.replace('' + numRes2[1] + invalidString, parensString);
+                      this.retMsg_.push("".concat(numRes2[1]).concat(invalidString, " is not a ") + "valid UCUM code.  ".concat(this.vcMsgStart_).concat(numRes2[1], ".").concat(invalidString) + "".concat(this.vcMsgEnd_));
+                      var parensString = "(".concat(numRes2[1], ".").concat(invalidString, ")");
+                      origString = origString.replace("".concat(numRes2[1]).concat(invalidString), parensString);
+
                       var nextParens = this._processParens(parensString, origString);
+
                       endProcessing = nextParens[2];
+
                       if (!endProcessing) {
-                        uArray.push({ op: theOp, un: nextParens[0] });
-                      }
-                      //uArray.push({op: '.', un: numRes2[2]});
+                        uArray.push({
+                          op: theOp,
+                          un: nextParens[0]
+                        });
+                      } //uArray.push({op: '.', un: numRes2[2]});
+
                     }
                   } // end if the string represents a parenthesized unit
                   else {
                       var parensStr = '(' + numRes2[1] + '.' + numRes2[2] + ')';
-                      var parensResp = this._processParens(parensStr, origString);
-                      // if a "stop processing" flag was returned, set the n index to end
+
+                      var parensResp = this._processParens(parensStr, origString); // if a "stop processing" flag was returned, set the n index to end
                       // the loop and set the endProcessing flag
+
+
                       if (parensResp[2]) {
                         n = u1;
                         endProcessing = true;
                       } else {
-                        this.retMsg_.push(numRes2[0] + ' is not a ' + ('valid UCUM code.  ' + this.vcMsgStart_ + numRes2[1] + '.' + numRes2[2]) + ('' + this.vcMsgEnd_));
+                        this.retMsg_.push("".concat(numRes2[0], " is not a ") + "valid UCUM code.  ".concat(this.vcMsgStart_).concat(numRes2[1], ".").concat(numRes2[2]) + "".concat(this.vcMsgEnd_));
                         origString = origString.replace(numRes2[0], parensStr);
-                        uArray.push({ op: theOp, un: parensResp[0] });
+                        uArray.push({
+                          op: theOp,
+                          un: parensResp[0]
+                        });
                       } // end if no error on the processParens call
+
                     } // end if the string does not represent a parenthesized unit
+
                 } // end if the string is a number followed by a string
                 else {
-                    uArray.push({ op: theOp, un: uArray1[n] });
+                    uArray.push({
+                      op: theOp,
+                      un: uArray1[n]
+                    });
                   }
               } else {
-                uArray.push({ op: theOp, un: uArray1[n] });
+                uArray.push({
+                  op: theOp,
+                  un: uArray1[n]
+                });
               }
             } // end if there isn't a missing operator or unit code
+
           } // end do for each element in uArray1
+
         } // end if a processing error didn't occur in getParensUnit
+
       } // end if the string did not begin with a '.' with no following digit
+
+
       return [uArray, origString, endProcessing];
     } // end _makeUnitsArray
-
 
     /**
      * Takes a unit string containing parentheses flags and returns the unit they
@@ -33183,143 +33254,157 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_getParensUnit',
+    key: "_getParensUnit",
     value: function _getParensUnit(pStr, origString) {
       var endProcessing = false;
       var retAry = [];
       var retUnit = null;
       var befAnnoText = null;
-      var aftAnnoText = null;
-
-      // Get the location of the flags.  We're assuming there are only two
+      var aftAnnoText = null; // Get the location of the flags.  We're assuming there are only two
       // because _processParens takes care of nesting.  By the time we get
       // here we should not be looking a nested parens.  Also get any text
       // before and after the parentheses.  Once we get the unit we update
       // the input string with the unit's csCode_, which will wipe out any
       // before and after text
+
       var psIdx = pStr.indexOf(this.parensFlag_);
       var befText = null;
+
       if (psIdx > 0) {
         befText = pStr.substr(0, psIdx - 1);
       }
+
       var peIdx = pStr.lastIndexOf(this.parensFlag_);
       var aftText = null;
+
       if (peIdx + this.pFlagLen_ < pStr.length) {
         aftText = pStr.substr(peIdx + this.pFlagLen_);
-      }
+      } // Get the text between the flags
 
-      // Get the text between the flags
-      var pNumText = pStr.substring(psIdx + this.pFlagLen_, peIdx);
 
-      // Make sure the index is a number, and if it is, get the unit from the
+      var pNumText = pStr.substring(psIdx + this.pFlagLen_, peIdx); // Make sure the index is a number, and if it is, get the unit from the
       // this.parensUnits_ array
+
       if (intUtils_.isNumericString(pNumText)) {
         retUnit = this.parensUnits_[Number(pNumText)];
+
         if (!intUtils_.isNumericString(retUnit)) {
           pStr = retUnit.csCode_;
         } else {
           pStr = retUnit;
         }
-      }
-      // If it's not a number, it's a programming error.  Throw a fit.
+      } // If it's not a number, it's a programming error.  Throw a fit.
       else {
-          throw new Error('Processing error - invalid parens number ' + pNumText + ' ' + ('found in ' + pStr + '.'));
-        }
-
-      // If there's something in front of the starting parentheses flag, check to
+          throw new Error("Processing error - invalid parens number ".concat(pNumText, " ") + "found in ".concat(pStr, "."));
+        } // If there's something in front of the starting parentheses flag, check to
       // see if it's a number or an annotation.
+
+
       if (befText) {
         // If it's a number, assume that multiplication was assumed
         if (intUtils_.isNumericString(befText)) {
           var nMag = retUnit.getProperty('magnitude_');
           nMag *= Number(befText);
-          retUnit.assignVals({ 'magnitude_': nMag });
-          pStr = befText + '.' + pStr;
-          this.retMsg_.push('' + befText + pStr + ' is not a valid UCUM code.\n' + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
+          retUnit.assignVals({
+            'magnitude_': nMag
+          });
+          pStr = "".concat(befText, ".").concat(pStr);
+          this.retMsg_.push("".concat(befText).concat(pStr, " is not a valid UCUM code.\n") + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
         } else {
           if (befText.indexOf(this.braceFlag_) >= 0) {
-            var annoRet = this._getAnnoText(befText, origString);
-            // if we found not only an annotation, but text before or after
+            var annoRet = this._getAnnoText(befText, origString); // if we found not only an annotation, but text before or after
             // the annotation (remembering that this is all before the
             // parentheses) throw an error - because we don't know what
             // to do with it.  Could it be missing an operator?
+
+
             if (annoRet[1] || annoRet[2]) {
-              throw new Error('Text found before the parentheses (' + (befText + ') included an annotation along with other text ') + ('for parenthetical unit ' + retUnit.csCode_));
-            }
-            // Otherwise put the annotation after the unit string and note
+              throw new Error("Text found before the parentheses (" + "".concat(befText, ") included an annotation along with other text ") + "for parenthetical unit ".concat(retUnit.csCode_));
+            } // Otherwise put the annotation after the unit string and note
             // the misplacement.
+
+
             pStr += annoRet[0];
-            this.retMsg_.push('The annotation ' + annoRet[0] + ' before the unit ' + 'code is invalid.\n' + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
-          }
-          // else the text before the parentheses is neither a number nor
+            this.retMsg_.push("The annotation ".concat(annoRet[0], " before the unit ") + "code is invalid.\n" + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
+          } // else the text before the parentheses is neither a number nor
           // an annotation.  If suggestions were NOT requested, record an
           // error.
           else if (!this.suggestions_) {
-              this.retMsg_.push(befText + ' preceding the unit code ' + pStr + ' ' + 'is invalid.  Unable to make a substitution.');
+              this.retMsg_.push("".concat(befText, " preceding the unit code ").concat(pStr, " ") + "is invalid.  Unable to make a substitution.");
               endProcessing = true;
-            }
-            // otherwise try for suggestions
+            } // otherwise try for suggestions
             else {
                 var suggestStat = this._getSuggestions(befText);
+
                 endProcessing = suggestStat !== 'succeeded';
               } // end if a brace was found or, if not, suggestions were not or
           // were requested
-        } // end if text preceding the parentheses was not a number
-      } // end if there was text before the parentheses
 
+        } // end if text preceding the parentheses was not a number
+
+      } // end if there was text before the parentheses
       // Process any text after the parentheses
+
+
       if (aftText) {
         // if it's an annotation, get it and add it to the pStr
         if (aftText.indexOf(this.braceFlag_) >= 0) {
-          var _annoRet = this._getAnnoText(aftText, origString);
-          // if we found not only an annotation, but text before or after
+          var _annoRet = this._getAnnoText(aftText, origString); // if we found not only an annotation, but text before or after
           // the annotation (remembering that this is all after the
           // parentheses) throw an error - because we don't know what
           // to do with it.  Could it be missing an operator?
+
+
           if (_annoRet[1] || _annoRet[2]) {
-            throw new Error('Text found after the parentheses (' + (aftText + ') included an annotation along with other text ') + ('for parenthetical unit ' + retUnit.csCode_));
-          }
-          // Otherwise put the annotation after the unit string - no message
+            throw new Error("Text found after the parentheses (" + "".concat(aftText, ") included an annotation along with other text ") + "for parenthetical unit ".concat(retUnit.csCode_));
+          } // Otherwise put the annotation after the unit string - no message
           // needed.
+
+
           pStr += _annoRet[0];
-        }
-        // Otherwise check to see if it's an exponent.  If so, warn the
+        } // Otherwise check to see if it's an exponent.  If so, warn the
         // user that it's not valid - but try it anyway
         else {
-
             if (intUtils_.isNumericString(aftText)) {
               pStr += aftText;
               retUnit = retUnit.power(Number(aftText));
-              this.retMsg_.push('An exponent (' + aftText + ') following a parenthesis ' + 'is invalid as of revision 1.9 of the UCUM Specification.\n  ' + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
-            }
-            // else the text after the parentheses is neither a number nor
+              this.retMsg_.push("An exponent (".concat(aftText, ") following a parenthesis ") + "is invalid as of revision 1.9 of the UCUM Specification.\n  " + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
+            } // else the text after the parentheses is neither a number nor
             // an annotation.  If suggestions were NOT requested, record an
             // error.
             else if (!this.suggestions_) {
-                this.retMsg_.push('Text ' + aftText + ' following the unit code ' + pStr + ' ' + 'is invalid.  Unable to make a substitution.');
+                this.retMsg_.push("Text ".concat(aftText, " following the unit code ").concat(pStr, " ") + "is invalid.  Unable to make a substitution.");
                 endProcessing = true;
-              }
-              // otherwise try for suggestions
+              } // otherwise try for suggestions
               else {
                   var _suggestStat = this._getSuggestions(befText);
+
                   endProcessing = _suggestStat !== 'succeeded';
                 } // end if text following the parentheses not an exponent
+
           } // end if text following the parentheses is not an annotation
+
       } // end if there is text following the parentheses
+
+
       if (!endProcessing) {
         if (!retUnit) {
           retUnit = new Unit({
             'csCode_': pStr,
             'magnitude_': 1,
-            'name_': pStr });
+            'name_': pStr
+          });
         } else if (intUtils_.isNumericString(retUnit)) {
-          retUnit = new Unit({ 'csCode_': retUnit,
+          retUnit = new Unit({
+            'csCode_': retUnit,
             'magnitude_': retUnit,
-            'name_': retUnit });
+            'name_': retUnit
+          });
         } else {
           retUnit.csCode_ = pStr;
         }
       }
+
       return [retUnit, endProcessing];
     } // end _getParensUnit
 
@@ -33347,34 +33432,33 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_getAnnoText',
+    key: "_getAnnoText",
     value: function _getAnnoText(pStr, origString) {
-
       // if the starting braces flag is not at index 0, get the starting
       // text and the adjust the pStr to omit it.
       var asIdx = pStr.indexOf(this.braceFlag_);
       var startText = asIdx > 0 ? pStr.substring(0, asIdx) : null;
+
       if (asIdx !== 0) {
         pStr = pStr.substr(asIdx);
-      }
+      } // Get the location of the end flag and, if text follows it, get the text
 
-      // Get the location of the end flag and, if text follows it, get the text
+
       var aeIdx = pStr.indexOf(this.braceFlag_, 1);
-      var endText = aeIdx + this.bFlagLen_ < pStr.length ? pStr.substr(aeIdx + this.bFlagLen_) : null;
-
-      // Get the index of the annotation in this.annotations_.
+      var endText = aeIdx + this.bFlagLen_ < pStr.length ? pStr.substr(aeIdx + this.bFlagLen_) : null; // Get the index of the annotation in this.annotations_.
       // Check it to make sure it's valid, and if not, throw an error
+
       var idx = pStr.substring(this.bFlagLen_, aeIdx);
       var idxNum = Number(idx);
-      if (!intUtils_.isNumericString(idx) || idxNum >= this.annotations_.length) {
-        throw new Error('Processing Error - invalid annotation index ' + idx + ' found ' + ('in ' + pStr + ' that was created from ' + origString));
-      }
 
-      // Replace the flags and annotation index with the annotation expression
+      if (!intUtils_.isNumericString(idx) || idxNum >= this.annotations_.length) {
+        throw new Error("Processing Error - invalid annotation index ".concat(idx, " found ") + "in ".concat(pStr, " that was created from ").concat(origString));
+      } // Replace the flags and annotation index with the annotation expression
+
+
       pStr = this.annotations_[idxNum];
       return [pStr, startText, endText];
     } // end _getAnnoText
-
 
     /**
      * Takes a unit string and looks for suggested units.  This should be
@@ -33403,29 +33487,30 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_getSuggestions',
+    key: "_getSuggestions",
     value: function _getSuggestions(pStr) {
-
       var retObj = intUtils_.getSynonyms(pStr);
+
       if (retObj['status'] === 'succeeded') {
         var suggSet = {};
-        suggSet['msg'] = pStr + ' is not a valid UCUM code.  We found possible ' + 'units that might be what was meant:';
+        suggSet['msg'] = "".concat(pStr, " is not a valid UCUM code.  We found possible ") + "units that might be what was meant:";
         suggSet['invalidUnit'] = pStr;
         var synLen = retObj['units'].length;
         suggSet['units'] = [];
+
         for (var s = 0; s < synLen; s++) {
           var unit = retObj['units'][s];
           var unitArray = [unit['code'], unit['name'], unit['guidance']];
-
           suggSet['units'].push(unitArray);
         }
+
         this.suggestions_.push(suggSet);
       } else {
-        this.retMsg_.push(pStr + ' is not a valid UCUM code.  No alternatives ' + 'were found.');
+        this.retMsg_.push("".concat(pStr, " is not a valid UCUM code.  No alternatives ") + "were found.");
       }
+
       return retObj['status'];
     } // end getSuggestions
-
 
     /**
      * Creates a unit object from a string defining one unit.  The string
@@ -33450,125 +33535,128 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_makeUnit',
+    key: "_makeUnit",
     value: function _makeUnit(uCode, origString) {
-
       // First try the code just as is, without looking for annotations,
       // prefixes, exponents, or elephants.
       var retUnit = this.utabs_.getUnitByCode(uCode);
+
       if (retUnit) {
         retUnit = retUnit.clone();
-      }
-
-      // If we found it, we're done.  No need to parse for those elephants (or
+      } // If we found it, we're done.  No need to parse for those elephants (or
       // other stuff).
       else if (uCode.indexOf(this.braceFlag_) >= 0) {
           var getAnnoRet = this._getUnitWithAnnotation(uCode, origString);
+
           retUnit = getAnnoRet[0];
+
           if (retUnit) {
             origString = getAnnoRet[1];
-          }
-          // If a unit is not found, retUnit will be returned null and
+          } // If a unit is not found, retUnit will be returned null and
           // the this.retMsg_ array will contain a message describing the problem.
           // If a unit is found, of course, all is good. So ... nothing left
           // to see here, move along.
+
         } // end if the uCode includes an annotation
-
         else {
-
             // So we didn't find a unit for the full uCode or for one with
             // annotations.  Try looking for a unit that uses a carat (^)
             // instead of an asterisk (*)
-
             if (uCode.indexOf('^') > -1) {
               var tryCode = uCode.replace('^', '*');
               retUnit = this.utabs_.getUnitByCode(tryCode);
+
               if (retUnit) {
                 retUnit = retUnit.clone();
                 retUnit.csCode_ = retUnit.csCode_.replace('*', '^');
                 retUnit.ciCode_ = retUnit.ciCode_.replace('*', '^');
               }
-            }
-            // If that didn't work, check to see if it should have brackets
+            } // If that didn't work, check to see if it should have brackets
             // around it (uCode = degF when it should be [degF]
+
+
             if (!retUnit) {
               var addBrackets = '[' + uCode + ']';
               retUnit = this.utabs_.getUnitByCode(addBrackets);
+
               if (retUnit) {
                 retUnit = retUnit.clone();
                 origString = origString.replace(uCode, addBrackets);
-                this.retMsg_.push(uCode + ' is not a valid unit expression, but ' + (addBrackets + ' is.\n') + this.vcMsgStart_ + (addBrackets + ' (' + retUnit.name_ + ')' + this.vcMsgEnd_));
+                this.retMsg_.push("".concat(uCode, " is not a valid unit expression, but ") + "".concat(addBrackets, " is.\n") + this.vcMsgStart_ + "".concat(addBrackets, " (").concat(retUnit.name_, ")").concat(this.vcMsgEnd_));
               } // end if we found the unit after adding brackets
-            } // end trying to add brackets
 
+            } // end trying to add brackets
             // If we didn't find it, try it as a name
+
+
             if (!retUnit) {
               var retUnitAry = this.utabs_.getUnitByName(uCode);
+
               if (retUnitAry && retUnitAry.length > 0) {
                 retUnit = retUnitAry[0].clone();
                 var mString = 'The UCUM code for ' + uCode + ' is ' + retUnit.csCode_ + '.\n' + this.vcMsgStart_ + retUnit.csCode_ + this.vcMsgEnd_;
                 var dupMsg = false;
+
                 for (var r = 0; r < this.retMsg_.length && !dupMsg; r++) {
                   dupMsg = this.retMsg_[r] === mString;
-                }if (!dupMsg) this.retMsg_.push(mString);
+                }
+
+                if (!dupMsg) this.retMsg_.push(mString);
                 var rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
                 var res = origString.match(rStr);
                 origString = origString.replace(rStr, res[1] + retUnit.csCode_ + res[3]);
                 uCode = retUnit.csCode_;
               }
-            }
-
-            // If we still don't have a unit, try assuming a modifier (prefix and/or
+            } // If we still don't have a unit, try assuming a modifier (prefix and/or
             // exponent) and look for a unit without the modifier
-            if (!retUnit) {
 
+
+            if (!retUnit) {
               // Well, first see if it's one of the special units.  If so,
               // replace the placeholder text with the actual unit string, keeping
               // whatever text (probably a prefix) goes with the unit string.
               var sUnit = null;
+
               for (sUnit in Ucum.specUnits_) {
                 if (uCode.includes(Ucum.specUnits_[sUnit])) uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
               }
+
               retUnit = this.utabs_.getUnitByCode(uCode);
               if (retUnit) retUnit = retUnit.clone();
             }
-            if (!retUnit) {
 
+            if (!retUnit) {
               var origCode = uCode;
               var origUnit = null;
               var exp = null;
               var pfxCode = null;
               var pfxObj = null;
               var pfxVal = null;
-              var pfxExp = null;
-
-              // Look first for an exponent.  If we got one, separate it out and
+              var pfxExp = null; // Look first for an exponent.  If we got one, separate it out and
               // try to get the unit again
+
               var codeAndExp = this._isCodeWithExponent(uCode);
+
               if (codeAndExp) {
                 uCode = codeAndExp[0];
                 exp = codeAndExp[1];
                 origUnit = this.utabs_.getUnitByCode(uCode);
-              }
-
-              // If we still don't have a unit, separate out the prefix, if any,
+              } // If we still don't have a unit, separate out the prefix, if any,
               // and try without it.
+
+
               if (!origUnit) {
                 // Try for a single character prefix first.
                 pfxCode = uCode.charAt(0);
-                pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
+                pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode); // if we got a prefix, get its info and remove it from the unit code
 
-                // if we got a prefix, get its info and remove it from the unit code
                 if (pfxObj) {
                   pfxVal = pfxObj.getValue();
                   pfxExp = pfxObj.getExp();
                   var pCodeLen = pfxCode.length;
-                  uCode = uCode.substr(pCodeLen);
+                  uCode = uCode.substr(pCodeLen); // try again for the unit
 
-                  // try again for the unit
-                  origUnit = this.utabs_.getUnitByCode(uCode);
-
-                  // If we still don't have a unit, see if the prefix could be the
+                  origUnit = this.utabs_.getUnitByCode(uCode); // If we still don't have a unit, see if the prefix could be the
                   // two character "da" (deka) prefix.  That's the only prefix with
                   // two characters, and without this check it's interpreted as "d"
                   // (deci) and the "a" is considered part of the unit code.
@@ -33577,25 +33665,26 @@ var UnitString = exports.UnitString = function () {
                     pfxCode = 'da';
                     pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
                     pfxVal = pfxObj.getValue();
-                    uCode = uCode.substr(1);
+                    uCode = uCode.substr(1); // try one more time for the unit
 
-                    // try one more time for the unit
                     origUnit = this.utabs_.getUnitByCode(uCode);
                   }
                 } // end if we found a prefix
-              } // end if we didn't get a unit after removing an exponent
 
+              } // end if we didn't get a unit after removing an exponent
               // If we still haven't found anything, we're done looking.
               // (We tried with the full unit string, with the unit string
               // without the exponent, the unit string without a prefix,
               // common errors, etc. That's all we can try).
+
+
               if (!origUnit) {
-                retUnit = null;
-                // BUT if the user asked for suggestions, at least look for them
+                retUnit = null; // BUT if the user asked for suggestions, at least look for them
+
                 if (this.suggestions_) {
                   var suggestStat = this._getSuggestions(origCode);
                 } else {
-                  this.retMsg_.push(origCode + ' is not a valid UCUM code.');
+                  this.retMsg_.push("".concat(origCode, " is not a valid UCUM code."));
                 }
               } else {
                 // Otherwise we found a unit object.  Clone it and then apply the
@@ -33606,19 +33695,19 @@ var UnitString = exports.UnitString = function () {
                 var theMag = retUnit.getProperty('magnitude_');
                 var theName = retUnit.getProperty('name_');
                 var theCiCode = retUnit.getProperty('ciCode_');
-                var thePrintSymbol = retUnit.getProperty('printSymbol_');
-                // If there is an exponent for the unit, apply it to the dimension
+                var thePrintSymbol = retUnit.getProperty('printSymbol_'); // If there is an exponent for the unit, apply it to the dimension
                 // and magnitude now
+
                 if (exp) {
                   exp = parseInt(exp);
                   var expMul = exp;
                   if (theDim) theDim = theDim.mul(exp);
                   theMag = Math.pow(theMag, exp);
-                  retUnit.assignVals({ 'magnitude_': theMag });
+                  retUnit.assignVals({
+                    'magnitude_': theMag
+                  }); // If there is also a prefix, apply the exponent to the prefix.
 
-                  // If there is also a prefix, apply the exponent to the prefix.
                   if (pfxObj) {
-
                     // if the prefix base is 10 it will have an exponent.  Multiply
                     // the current prefix exponent by the exponent for the unit
                     // we're working with.  Then raise the prefix value to the level
@@ -33626,29 +33715,37 @@ var UnitString = exports.UnitString = function () {
                     if (pfxExp) {
                       expMul *= pfxObj.getExp();
                       pfxVal = Math.pow(10, expMul);
-                    }
-                    // If the prefix base is not 10, it won't have an exponent.
+                    } // If the prefix base is not 10, it won't have an exponent.
                     // At the moment I don't see any units using the prefixes
                     // that aren't base 10.   But if we get one the prefix value
                     // will be applied to the magnitude (below) if the unit does
                     // not have a conversion function, and to the conversion prefix
                     // if it does.
-                  } // end if there's a prefix as well as the exponent
-                } // end if there's an exponent
 
+                  } // end if there's a prefix as well as the exponent
+
+                } // end if there's an exponent
                 // Now apply the prefix, if there is one, to the conversion
                 // prefix or the magnitude
+
+
                 if (pfxObj) {
                   if (retUnit.cnv_) {
-                    retUnit.assignVals({ 'cnvPfx_': pfxVal });
+                    retUnit.assignVals({
+                      'cnvPfx_': pfxVal
+                    });
                   } else {
                     theMag *= pfxVal;
-                    retUnit.assignVals({ 'magnitude_': theMag });
+                    retUnit.assignVals({
+                      'magnitude_': theMag
+                    });
                   }
-                }
-                // if we have a prefix and/or an exponent, add them to the unit
+                } // if we have a prefix and/or an exponent, add them to the unit
                 // attributes - name, csCode, ciCode and print symbol
+
+
                 var theCode = retUnit.csCode_;
+
                 if (pfxObj) {
                   theName = pfxObj.getName() + theName;
                   theCode = pfxCode + theCode;
@@ -33661,6 +33758,7 @@ var UnitString = exports.UnitString = function () {
                     'printSymbol_': thePrintSymbol
                   });
                 }
+
                 if (exp) {
                   var expStr = exp.toString();
                   retUnit.assignVals({
@@ -33671,11 +33769,14 @@ var UnitString = exports.UnitString = function () {
                   });
                 }
               } // end if an original unit was found (without prefix and/or exponent)
+
             } // end if we didn't get a unit for the full unit code (w/out modifiers)
+
           } // end if we didn't find the unit on the first try, before parsing
+
+
       return [retUnit, origString];
     } // end _makeUnit
-
 
     /**
      * This method handles unit creation when an annotation is included
@@ -33692,49 +33793,46 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_getUnitWithAnnotation',
+    key: "_getUnitWithAnnotation",
     value: function _getUnitWithAnnotation(uCode, origString) {
+      var retUnit = null; // Get the annotation and anything that precedes or follows it.
 
-      var retUnit = null;
-
-      // Get the annotation and anything that precedes or follows it.
       var annoRet = this._getAnnoText(uCode, origString);
+
       var annoText = annoRet[0];
       var befAnnoText = annoRet[1];
-      var aftAnnoText = annoRet[2];
+      var aftAnnoText = annoRet[2]; // Add the warning about annotations - just once.
 
-      // Add the warning about annotations - just once.
-
-      if (this.bracesMsg_ && !this.retMsg_.includes(this.bracesMsg_)) this.retMsg_.push(this.bracesMsg_);
-
-      // If there's no text before or after the annotation, it's probably
+      if (this.bracesMsg_ && !this.retMsg_.includes(this.bracesMsg_)) this.retMsg_.push(this.bracesMsg_); // If there's no text before or after the annotation, it's probably
       // something that should be interpreted as a 1, e.g., {KCT'U}.
       // HOWEVER, it could also be a case where someone used braces instead
       // of brackets, e.g., {degF} instead of [degF].  Check for that before
       // we assume it should be a 1.
+
       var msgLen = this.retMsg_.length;
+
       if (!befAnnoText && !aftAnnoText) {
         var tryBrackets = '[' + annoText.substring(1, annoText.length - 1) + ']';
-        var mkUnitRet = this._makeUnit(tryBrackets, origString);
 
-        // If we got back a unit, assign it to the returned unit, and add
+        var mkUnitRet = this._makeUnit(tryBrackets, origString); // If we got back a unit, assign it to the returned unit, and add
         // a message to advise the user that brackets should enclose the code
+
+
         if (mkUnitRet[0]) {
           retUnit = mkUnitRet[0];
           origString = origString.replace(annoText, tryBrackets);
-          this.retMsg_.push(annoText + ' is not a valid unit expression, but ' + (tryBrackets + ' is.\n') + this.vcMsgStart_ + (tryBrackets + ' (' + retUnit.name_ + ')' + this.vcMsgEnd_));
-        }
-        // Otherwise assume that this should be interpreted as a 1
+          this.retMsg_.push("".concat(annoText, " is not a valid unit expression, but ") + "".concat(tryBrackets, " is.\n") + this.vcMsgStart_ + "".concat(tryBrackets, " (").concat(retUnit.name_, ")").concat(this.vcMsgEnd_));
+        } // Otherwise assume that this should be interpreted as a 1
         else {
             // remove error message generated for trybrackets
             if (this.retMsg_.length > msgLen) {
               this.retMsg_.pop();
             }
+
             uCode = 1;
             retUnit = 1;
           }
       } // end if it's only an annotation
-
       else {
           // if there's text before and no text after, assume the text before
           // the annotation is the unit code (with an annotation following it).
@@ -33745,58 +33843,53 @@ var UnitString = exports.UnitString = function () {
             // the number.
             if (intUtils_.isNumericString(befAnnoText)) {
               retUnit = befAnnoText;
-            }
-            // Otherwise try to find a unit
+            } // Otherwise try to find a unit
             else {
-                var _mkUnitRet = this._makeUnit(befAnnoText, origString);
+                var _mkUnitRet = this._makeUnit(befAnnoText, origString); // if a unit was returned
 
-                // if a unit was returned
+
                 if (_mkUnitRet[0]) {
                   retUnit = _mkUnitRet[0];
                   retUnit.csCode_ += annoText;
                   origString = _mkUnitRet[1];
-                }
-                // Otherwise add a not found message
+                } // Otherwise add a not found message
                 else {
-                    this.retMsg_.push('Unable to find a unit for ' + befAnnoText + ' that ' + ('precedes the annotation ' + annoText + '.'));
+                    this.retMsg_.push("Unable to find a unit for ".concat(befAnnoText, " that ") + "precedes the annotation ".concat(annoText, "."));
                   }
               }
-          }
-          // else if there's only text after the annotation, try for a unit
+          } // else if there's only text after the annotation, try for a unit
           // from the after text and assume the user put the annotation in
           // the wrong place (and tell them)
           else if (!befAnnoText && aftAnnoText) {
-
               // Again, test for a number and if it is a number, set the return
               // unit to the number.
               if (intUtils_.isNumericString(aftAnnoText)) {
                 retUnit = aftAnnoText + annoText;
-                this.retMsg_.push(('The annotation ' + annoText + ' before the ')(_templateObject, aftAnnoText) + this.vcMsgStart_ + retUnit + this.vcMsgEnd_);
+                this.retMsg_.push("The annotation ".concat(annoText, " before the ")(_templateObject(), aftAnnoText) + this.vcMsgStart_ + retUnit + this.vcMsgEnd_);
               } else {
                 var _mkUnitRet2 = this._makeUnit(aftAnnoText, origString);
+
                 if (_mkUnitRet2[0]) {
                   retUnit = _mkUnitRet2[0];
                   retUnit.csCode_ += annoText;
                   origString = retUnit.csCode_;
-                  this.retMsg_.push('The annotation ' + annoText + ' before the unit ' + 'code is invalid.\n' + this.vcMsgStart_ + retUnit.csCode_ + this.vcMsgEnd_);
-                }
-                // Otherwise add a not found message
+                  this.retMsg_.push("The annotation ".concat(annoText, " before the unit ") + "code is invalid.\n" + this.vcMsgStart_ + retUnit.csCode_ + this.vcMsgEnd_);
+                } // Otherwise add a not found message
                 else {
-                    this.retMsg_.push('Unable to find a unit for ' + befAnnoText + ' that ' + ('follows the annotation ' + annoText + '.'));
+                    this.retMsg_.push("Unable to find a unit for ".concat(befAnnoText, " that ") + "follows the annotation ".concat(annoText, "."));
                   }
               }
-            }
-            // else it's got text before AND after the annotation.  Now what?
+            } // else it's got text before AND after the annotation.  Now what?
             // For now this is an error.  This may be a case of a missing
             // operator but that is not handled yet.
             else {
-                this.retMsg_.push('Unable to find a unit for ' + befAnnoText + annoText + (aftAnnoText + '.\nWe are not sure how to interpret text both before ') + 'and after the annotation.  Sorry');
+                this.retMsg_.push("Unable to find a unit for ".concat(befAnnoText).concat(annoText) + "".concat(aftAnnoText, ".\nWe are not sure how to interpret text both before ") + "and after the annotation.  Sorry");
               }
         } // else if there's text before/and or after the annotation
 
+
       return [retUnit, origString];
     } // end _getUnitWithAnnotations
-
 
     /**
      * Performs unit arithmetic for the units in the units array.  That array
@@ -33816,31 +33909,40 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_performUnitArithmetic',
+    key: "_performUnitArithmetic",
     value: function _performUnitArithmetic(uArray, origString) {
-
       var finalUnit = uArray[0]['un'];
+
       if (intUtils_.isNumericString(finalUnit)) {
-        finalUnit = new Unit({ 'csCode_': finalUnit,
+        finalUnit = new Unit({
+          'csCode_': finalUnit,
           'magnitude_': Number(finalUnit),
-          'name_': finalUnit });
+          'name_': finalUnit
+        });
       }
+
       var uLen = uArray.length;
-      var endProcessing = false;
-      // Perform the arithmetic for the units, starting with the first 2 units.
+      var endProcessing = false; // Perform the arithmetic for the units, starting with the first 2 units.
       // We only need to do the arithmetic if we have more than one unit.
+
       for (var u2 = 1; u2 < uLen && !endProcessing; u2++) {
         var nextUnit = uArray[u2]['un'];
+
         if (intUtils_.isNumericString(nextUnit)) {
-          nextUnit = new Unit({ 'csCode_': nextUnit,
+          nextUnit = new Unit({
+            'csCode_': nextUnit,
             'magnitude_': Number(nextUnit),
-            'name_': nextUnit });
+            'name_': nextUnit
+          });
         }
+
         if (nextUnit === null || typeof nextUnit !== 'number' && !nextUnit.getProperty) {
-          var msgString = 'Unit string (' + origString + ') contains unrecognized ' + 'element';
+          var msgString = "Unit string (".concat(origString, ") contains unrecognized ") + 'element';
+
           if (nextUnit) {
-            msgString += ' (' + this.openEmph_ + nextUnit.toString() + (this.closeEmph_ + ')');
+            msgString += " (".concat(this.openEmph_).concat(nextUnit.toString()) + "".concat(this.closeEmph_, ")");
           }
+
           msgString += '; could not parse full string.  Sorry';
           this.retMsg_.push(msgString);
           endProcessing = true;
@@ -33848,10 +33950,9 @@ var UnitString = exports.UnitString = function () {
           try {
             // Is the operation division?
             var thisOp = uArray[u2]['op'];
-            var isDiv = thisOp === '/';
-
-            // Perform the operation.  Both the finalUnit and nextUnit
+            var isDiv = thisOp === '/'; // Perform the operation.  Both the finalUnit and nextUnit
             // are unit objects.
+
             isDiv ? finalUnit = finalUnit.divide(nextUnit) : finalUnit = finalUnit.multiplyThese(nextUnit);
           } catch (err) {
             this.retMsg_.unshift(err.message);
@@ -33859,10 +33960,12 @@ var UnitString = exports.UnitString = function () {
             finalUnit = null;
           }
         } // end if we have another valid unit/number to process
+
       } // end do for each unit after the first one
+
+
       return finalUnit;
     } // end _performUnitArithmetic
-
 
     /**
      * This tests a string to see if it starts with characters and ends with
@@ -33890,14 +33993,12 @@ var UnitString = exports.UnitString = function () {
      */
 
   }, {
-    key: '_isCodeWithExponent',
+    key: "_isCodeWithExponent",
     value: function _isCodeWithExponent(uCode) {
-
       var ret = [];
-      var res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/);
-
-      // If we got a return with an exponent, separate the exponent from the
+      var res = uCode.match(/(^[^\-\+]+?)([\-\+\d]+)$/); // If we got a return with an exponent, separate the exponent from the
       // unit and return both (as separate values)
+
       if (res && res[2] && res[2] !== "") {
         ret.push(res[1]);
         ret.push(res[2]);
@@ -33905,6 +34006,7 @@ var UnitString = exports.UnitString = function () {
       else {
           ret = null;
         }
+
       return ret;
     } // end _isCodeWithExponent
 
@@ -33912,7 +34014,6 @@ var UnitString = exports.UnitString = function () {
 
   return UnitString;
 }(); // end class UnitString
-
 
 /**
  *  This function exists ONLY until the original UnitString constructor
@@ -33927,27 +34028,30 @@ var UnitString = exports.UnitString = function () {
  */
 
 
+exports.UnitString = UnitString;
+
 UnitString.getInstance = function () {
   return new UnitString();
 };
-
 /*
 // Perform the first request for the object, to set the getInstance method.
 UnitString.getInstance();
 
 */
 
-
 },{"./config.js":6,"./prefixTables.js":9,"./ucumInternalUtils.js":11,"./unit.js":15,"./unitTables.js":17}],17:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.UnitTables = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * This class manages Hashtables that provide references to
@@ -33956,13 +34060,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-
 var Ucum = require('./config.js').Ucum;
+
 var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
+
 var fs = require('fs');
 
-var UnitTables = exports.UnitTables = function () {
-
+var UnitTablesFactory =
+/*#__PURE__*/
+function () {
   /**
    * Constructor.  This creates the empty unit tables (hashes) once. After the
    * tables are created, it redefines this constructor to throw an error
@@ -33982,8 +34088,8 @@ var UnitTables = exports.UnitTables = function () {
    * 1. throw error message referring to getInstance
    * 2. call getInstance, returns this - which is OBJECT1.
    */
-  function UnitTables() {
-    _classCallCheck(this, UnitTables);
+  function UnitTablesFactory() {
+    _classCallCheck(this, UnitTablesFactory);
 
     /**
      * Tracks units by name
@@ -33994,7 +34100,6 @@ var UnitTables = exports.UnitTables = function () {
      *              with the code = "s" and the unit with code = "'".
      */
     this.unitNames_ = {};
-
     /**
      * Tracks units by code using case-sensitive version.
      *
@@ -34002,24 +34107,24 @@ var UnitTables = exports.UnitTables = function () {
      *              value is the reference to the Unit object.  Codes must
      *              be unique.
      */
-    this.unitCodes_ = {};
 
+    this.unitCodes_ = {};
     /**
      * Keeps track of the order in which units are defined.  The order is
      * important because unit definitions build on previous definitions.
      *
      * @type {Array}
      */
-    this.codeOrder_ = [];
 
+    this.codeOrder_ = [];
     /**
      * Tracks units by unit strings, e.g., cm-1
      *
      * @type hash - key is the unit string
      *              value is an array of unit objects with that ciUnitString.
      */
-    this.unitStrings_ = {};
 
+    this.unitStrings_ = {};
     /**
      * Tracks units by Dimension vector
      *
@@ -34030,8 +34135,8 @@ var UnitTables = exports.UnitTables = function () {
      *              unit vector, and this can be used to provide a list
      *              of commensurable units.
      */
-    this.unitDimensions_ = {};
 
+    this.unitDimensions_ = {};
     /**
      * Maps synonyms to units.   Not built until first requested.
      *
@@ -34039,8 +34144,8 @@ var UnitTables = exports.UnitTables = function () {
      *              value is an array of references to Unit objects that
      *              include that synonym.
      */
-    this.unitSynonyms_ = {};
 
+    this.unitSynonyms_ = {};
     /*
      * Holds onto the index of the index of the dimension vector flag for
      * the base mass unit (gram).  This is set when the base unit (gram) is
@@ -34050,24 +34155,9 @@ var UnitTables = exports.UnitTables = function () {
      *
      * @type integer
      */
+
     this.massDimIndex_ = 0;
-
-    // Make this a singleton - from mrme44 May 18 comment on
-    // on GitHub Gist page of SanderLi/Singleton.js.  Modified
-    // for this class.
-
-    var holdThis = UnitTables.prototype;
-    UnitTables = function UnitTables() {
-      throw new Error("UnitTables is a Singleton.  " + 'Use UnitTables.getInstance() instead.');
-    };
-    if (exports) exports.UnitTables = UnitTables;
-    UnitTables.prototype = holdThis;
-    var self = this;
-    UnitTables.getInstance = function () {
-      return self;
-    };
   }
-
   /**
    * Provides the number of unit objects written to the tables, using the
    * codes table since codes must be unique.
@@ -34076,12 +34166,11 @@ var UnitTables = exports.UnitTables = function () {
    */
 
 
-  _createClass(UnitTables, [{
-    key: 'unitsCount',
+  _createClass(UnitTablesFactory, [{
+    key: "unitsCount",
     value: function unitsCount() {
       return Object.keys(this.unitCodes_).length;
     }
-
     /**
      * Adds a Unit object to the tables.
      *
@@ -34092,10 +34181,10 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'addUnit',
+    key: "addUnit",
     value: function addUnit(theUnit) {
-
       var uName = theUnit['name_'];
+
       if (uName) {
         this.addUnitName(theUnit);
       }
@@ -34105,12 +34194,10 @@ var UnitTables = exports.UnitTables = function () {
 
       try {
         if (theUnit['dim_'].getProperty('dimVec_')) this.addUnitDimension(theUnit);
-      } catch (err) {
-        // do nothing - throws error if the property is null
+      } catch (err) {// do nothing - throws error if the property is null
         // and that's OK here.
       }
     } // end addUnit
-
 
     /**
      * Adds a Unit object to the unitNames_ table.  More than one unit
@@ -34126,16 +34213,14 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'addUnitName',
+    key: "addUnitName",
     value: function addUnitName(theUnit) {
-
       var uName = theUnit['name_'];
 
       if (uName) {
         if (this.unitNames_[uName]) this.unitNames_[uName].push(theUnit);else this.unitNames_[uName] = [theUnit];
-      } else throw new Error('UnitTables.addUnitName called for a unit with no name.  ' + ('Unit code = ' + theUnit['csCode_'] + '.'));
+      } else throw new Error('UnitTables.addUnitName called for a unit with no name.  ' + "Unit code = ".concat(theUnit['csCode_'], "."));
     } // end addUnitName
-
 
     /**
      * Adds a Unit object to the unitCodes_, unitUcCodes_, unitLcCodes_ and
@@ -34149,25 +34234,28 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'addUnitCode',
+    key: "addUnitCode",
     value: function addUnitCode(theUnit) {
-
       var uCode = theUnit['csCode_'];
-      if (uCode) {
 
-        if (this.unitCodes_[uCode]) throw new Error('UnitTables.addUnitCode called, already contains entry for ' + ('unit with code = ' + uCode));else {
+      if (uCode) {
+        if (this.unitCodes_[uCode]) throw new Error("UnitTables.addUnitCode called, already contains entry for " + "unit with code = ".concat(uCode));else {
           this.unitCodes_[uCode] = theUnit;
           this.codeOrder_.push(uCode);
+
           if (uCode == 'g') {
             var dimVec = theUnit.dim_.dimVec_;
             var d = 0;
-            for (; d < dimVec.length && dimVec[d] < 1; d++) {}
+
+            for (; d < dimVec.length && dimVec[d] < 1; d++) {
+              ;
+            }
+
             this.massDimIndex_ = d;
           }
         }
       } else throw new Error('UnitTables.addUnitCode called for unit that has ' + 'no code.');
     } // end addUnitCode
-
 
     /**
      * Adds a unit object to the unitStrings_ table.  More than one unit
@@ -34183,18 +34271,19 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'addUnitString',
+    key: "addUnitString",
     value: function addUnitString(theUnit) {
-
       var uString = null;
       if (Ucum.caseSensitive_ == true) uString = theUnit['csUnitString_'];else uString = theUnit['ciUnitString_'];
 
       if (uString) {
-        var uEntry = { mag: theUnit['baseFactorStr_'], unit: theUnit };
+        var uEntry = {
+          mag: theUnit['baseFactorStr_'],
+          unit: theUnit
+        };
         if (this.unitStrings_[uString]) this.unitStrings_[uString].push(uEntry);else this.unitStrings_[uString] = [uEntry];
       }
     } // end addUnitString
-
 
     /**
      * Adds a Unit object to the unitDimensions_ table.  More than one unit
@@ -34208,16 +34297,14 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'addUnitDimension',
+    key: "addUnitDimension",
     value: function addUnitDimension(theUnit) {
-
       var uDim = theUnit['dim_'].getProperty('dimVec_');
 
       if (uDim) {
         if (this.unitDimensions_[uDim]) this.unitDimensions_[uDim].push(theUnit);else this.unitDimensions_[uDim] = [theUnit];
-      } else throw new Error('UnitTables.addUnitDimension called for a unit with no dimension.  ' + ('Unit code = ' + theUnit['csCode_'] + '.'));
+      } else throw new Error('UnitTables.addUnitDimension called for a unit with no dimension.  ' + "Unit code = ".concat(theUnit['csCode_'], "."));
     } // end addUnitDimension
-
 
     /**
      * Builds the unitSynonyms_ table. This is called the first time the
@@ -34231,33 +34318,35 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'buildUnitSynonyms',
+    key: "buildUnitSynonyms",
     value: function buildUnitSynonyms() {
-
       for (var code in this.unitCodes_) {
         var theUnit = this.unitCodes_[code];
-        var uSyns = theUnit.synonyms_;
+        var uSyns = theUnit.synonyms_; // If the current unit has synonyms, process each synonym (often multiples)
 
-        // If the current unit has synonyms, process each synonym (often multiples)
         if (uSyns) {
           var synsAry = uSyns.split(';');
+
           if (synsAry[0] !== '') {
             var aLen = synsAry.length;
-            for (var a = 0; a < aLen; a++) {
-              var theSyn = synsAry[a].trim();
 
-              // call addSynonymCodes to process each word in the
+            for (var a = 0; a < aLen; a++) {
+              var theSyn = synsAry[a].trim(); // call addSynonymCodes to process each word in the
               // synonym, e.g., "British fluid ounces"
+
               this.addSynonymCodes(code, theSyn);
             } // end do for each synonym
-          } // end if the current unit has a non-null synonym attribute
-        } // end if the unit has any synonyms
 
+          } // end if the current unit has a non-null synonym attribute
+
+        } // end if the unit has any synonyms
         // Now call addSynonymCodes to process each word in the unit's name
+
+
         this.addSynonymCodes(code, theUnit.name_);
       } // end do for each unit
-    } // end buildUnitSynonyms
 
+    } // end buildUnitSynonyms
 
     /**
      * Adds unit code entries to the synonyms table for a string containing
@@ -34269,33 +34358,31 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'addSynonymCodes',
+    key: "addSynonymCodes",
     value: function addSynonymCodes(theCode, theSynonyms) {
-
       var words = theSynonyms.split(' ');
       var wLen = words.length;
 
       for (var w = 0; w < wLen; w++) {
-        var word = words[w];
-
-        // if there is already a synonyms entry for the word,
+        var word = words[w]; // if there is already a synonyms entry for the word,
         // get the array of unit codes currently assigned to
         // the word and add the code for the current word to
         // the synonyms array if it's not already there.
+
         if (this.unitSynonyms_[word]) {
           var synCodes = this.unitSynonyms_[word];
+
           if (synCodes.indexOf(theCode) === -1) {
             this.unitSynonyms_[word].push(theCode);
           }
-        }
-        // else there are no synonyms entry for the word.  Create a
+        } // else there are no synonyms entry for the word.  Create a
         // synonyms array for the word, setting it to contain the unit code.
         else {
             this.unitSynonyms_[word] = [theCode];
           }
       } // end do for each word in the synonyms being processed
-    } // end addSynonymCodes
 
+    } // end addSynonymCodes
 
     /**
      *  Returns a unit object with a case-sensitive code matching the
@@ -34306,15 +34393,16 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'getUnitByCode',
+    key: "getUnitByCode",
     value: function getUnitByCode(uCode) {
       var retUnit = null;
+
       if (uCode) {
         retUnit = this.unitCodes_[uCode];
       }
+
       return retUnit;
     }
-
     /**
      *  Returns a array of unit objects based on the unit's name.  Usually this
      *  will be an array of one, but there may be more, since unit names are
@@ -34331,33 +34419,42 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'getUnitByName',
+    key: "getUnitByName",
     value: function getUnitByName(uName) {
-
       if (uName === null || uName === undefined) {
         throw new Error('Unable to find unit by name because no name was provided.');
       }
+
       var sepPos = uName.indexOf(Ucum.codeSep_);
       var uCode = null;
+
       if (sepPos >= 1) {
         uCode = uName.substr(sepPos + Ucum.codeSep_.length);
         uName = uName.substr(0, sepPos);
       }
+
       var retUnits = this.unitNames_[uName];
+
       if (retUnits) {
         var uLen = retUnits.length;
 
         if (uCode && uLen > 1) {
           var i = 0;
-          for (; retUnits[i].csCode_ !== uCode && i < uLen; i++) {}
+
+          for (; retUnits[i].csCode_ !== uCode && i < uLen; i++) {
+            ;
+          }
+
           if (i < uLen) retUnits = [retUnits[i]];else {
             retUnits = null;
           }
         } // end if we need to find both a name and a code
+
       } // end if we got an array of units
+
+
       return retUnits;
     } // end getUnitByName
-
 
     /**
      *  Returns an array of unit objects with the specified unit string.
@@ -34370,16 +34467,17 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'getUnitByString',
+    key: "getUnitByString",
     value: function getUnitByString(uString) {
       var retAry = null;
+
       if (uString) {
         retAry = this.unitStrings_[uString];
         if (retAry === undefined) retAry = null;
       }
+
       return retAry;
     }
-
     /**
      *  Returns a array of unit objects based on the unit's dimension vector.
      *
@@ -34392,22 +34490,22 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'getUnitsByDimension',
+    key: "getUnitsByDimension",
     value: function getUnitsByDimension(uDim) {
-
       var unitsArray = null;
+
       if (uDim === null || uDim === undefined) {
         throw new Error('Unable to find unit by because no dimension ' + 'vector was provided.');
       }
 
       unitsArray = this.unitDimensions_[uDim];
+
       if (unitsArray === undefined || unitsArray === null) {
-        console.log('Unable to find unit with dimension = ' + uDim);
+        console.log("Unable to find unit with dimension = ".concat(uDim));
       }
 
       return unitsArray;
     } // end getUnitsByDimension
-
 
     /**
      *  Returns a array of unit objects that include the specified synonym.
@@ -34423,9 +34521,8 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'getUnitBySynonym',
+    key: "getUnitBySynonym",
     value: function getUnitBySynonym(uSyn) {
-
       var retObj = {};
       var unitsArray = [];
 
@@ -34433,31 +34530,37 @@ var UnitTables = exports.UnitTables = function () {
         if (uSyn === null || uSyn === undefined) {
           retObj['status'] = 'error';
           throw new Error('Unable to find unit by synonym because no synonym ' + 'was provided.');
-        }
-        // If this is the first request for a unit by synonym, build the hash map
+        } // If this is the first request for a unit by synonym, build the hash map
+
+
         if (Object.keys(this.unitSynonyms_).length === 0) {
           this.buildUnitSynonyms();
         }
+
         var foundCodes = [];
         foundCodes = this.unitSynonyms_[uSyn];
+
         if (foundCodes) {
           retObj['status'] = 'succeeded';
           var fLen = foundCodes.length;
+
           for (var f = 0; f < fLen; f++) {
             unitsArray.push(this.unitCodes_[foundCodes[f]]);
           }
+
           retObj['units'] = unitsArray;
         }
+
         if (unitsArray.length === 0) {
           retObj['status'] = 'failed';
-          retObj['msg'] = 'Unable to find any units with synonym = ' + uSyn;
+          retObj['msg'] = "Unable to find any units with synonym = ".concat(uSyn);
         }
       } catch (err) {
         retObj['msg'] = err.message;
       }
+
       return retObj;
     } // end getUnitBySynonym
-
 
     /**
      * Gets a list of all unit names in the Unit tables
@@ -34466,11 +34569,10 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'getAllUnitNames',
+    key: "getAllUnitNames",
     value: function getAllUnitNames() {
       return Object.keys(this.unitNames_);
     } // end getAllUnitNames
-
 
     /**
      * Gets a list of all unit names in the tables.  Where more than one
@@ -34481,29 +34583,30 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'getUnitNamesList',
+    key: "getUnitNamesList",
     value: function getUnitNamesList() {
       var nameList = [];
       var codes = Object.keys(this.unitCodes_);
       codes.sort(this.compareCodes);
       var uLen = codes.length;
+
       for (var i = 0; i < uLen; i++) {
         nameList[i] = codes[i] + Ucum.codeSep_ + this.unitCodes_[codes[i]].name_;
       } // end do for each code
+
+
       return nameList;
     }
-
     /*
      * Returns the mass dimension index
      * @returns this.massDimIndex_
      */
 
   }, {
-    key: 'getMassDimensionIndex',
+    key: "getMassDimensionIndex",
     value: function getMassDimensionIndex() {
       return this.massDimIndex_;
     }
-
     /**
      * This provides a sort function for unit codes so that sorting ignores
      * square brackets and case.
@@ -34514,7 +34617,7 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'compareCodes',
+    key: "compareCodes",
     value: function compareCodes(a, b) {
       a = a.replace(/[\[\]]/g, '');
       a = a.toLowerCase();
@@ -34522,7 +34625,6 @@ var UnitTables = exports.UnitTables = function () {
       b = b.toLowerCase();
       return a < b ? -1 : 1;
     }
-
     /**
      * Gets a list of all unit codes in the Unit tables
      *
@@ -34530,11 +34632,10 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'getAllUnitCodes',
+    key: "getAllUnitCodes",
     value: function getAllUnitCodes() {
       return Object.keys(this.unitCodes_);
     } // end getAllUnitNames
-
 
     /**
      * This is used to get all unit objects.  Currently it is used
@@ -34547,17 +34648,17 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'allUnitsByDef',
+    key: "allUnitsByDef",
     value: function allUnitsByDef() {
-
       var unitsList = [];
       var uLen = this.codeOrder_.length;
+
       for (var u = 0; u < uLen; u++) {
         unitsList.push(this.getUnitByCode(this.codeOrder_[u]));
       }
+
       return unitsList;
     } // end allUnitsByDef
-
 
     /**
      * This is used to get all unit objects, ordered by unit name.  Currently it
@@ -34571,19 +34672,23 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'allUnitsByName',
+    key: "allUnitsByName",
     value: function allUnitsByName(cols, sep) {
       if (sep === undefined || sep === null) sep = '|';
       var unitBuff = '';
       var unitsList = this.getAllUnitNames();
       var uLen = unitsList.length;
       var cLen = cols.length;
+
       for (var i = 0; i < uLen; i++) {
         var nameRecs = this.getUnitByName(unitsList[i]);
+
         for (var u = 0; u < nameRecs.length; u++) {
           var rec = nameRecs[u];
+
           for (var c = 0; c < cLen; c++) {
             if (c > 0) unitBuff += sep;
+
             if (cols[c] === 'dim_') {
               if (rec.dim_ !== null && rec.dim_ !== undefined && rec.dim_.dimVec_ instanceof Array) unitBuff += '[' + rec.dim_.dimVec_.join(',') + ']';else unitBuff += '';
             } else {
@@ -34591,12 +34696,15 @@ var UnitTables = exports.UnitTables = function () {
               if (typeof cbuf === 'string') unitBuff += cbuf.replace(/[\n\r]/g, ' ');else unitBuff += cbuf;
             }
           } // end do for each column requested
+
+
           unitBuff += '\r\n';
         } // end do for each unit in the unit names array
+
       }
+
       return unitBuff;
     } // end allUnitsByName
-
 
     /**
      * This creates a list of all units in the tables.  It uses the byCode
@@ -34613,16 +34721,18 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'printUnits',
+    key: "printUnits",
     value: function printUnits(doLong, sep) {
       if (doLong === undefined) doLong = false;
       if (sep === undefined) sep = '|';
       var codeList = '';
       var uLen = this.codeOrder_.length;
       var unitString = 'csCode' + sep;
+
       if (doLong) {
         unitString += 'ciCode' + sep;
       }
+
       unitString += 'name' + sep;
       if (doLong) unitString += 'isBase' + sep;
       unitString += 'magnitude' + sep + 'dimension' + sep + 'from unit(s)' + sep + 'value' + sep + 'function' + sep;
@@ -34633,33 +34743,39 @@ var UnitTables = exports.UnitTables = function () {
       for (var u = 0; u < uLen; u++) {
         var curUnit = this.getUnitByCode(this.codeOrder_[u]);
         unitString = this.codeOrder_[u] + sep;
+
         if (doLong) {
           unitString += curUnit.getProperty('ciCode_') + sep;
         }
+
         unitString += curUnit.getProperty('name_') + sep;
+
         if (doLong) {
           if (curUnit.getProperty('isBase_')) unitString += 'true' + sep;else unitString += 'false' + sep;
         }
+
         unitString += curUnit.getProperty('magnitude_') + sep;
         var curDim = curUnit.getProperty('dim_');
+
         if (curDim) {
           unitString += curDim.dimVec_ + sep;
         } else {
           unitString += 'null' + sep;
         }
-        if (curUnit.csUnitString_) unitString += curUnit.csUnitString_ + sep + curUnit.baseFactor_ + sep;else unitString += 'null' + sep + 'null' + sep;
 
+        if (curUnit.csUnitString_) unitString += curUnit.csUnitString_ + sep + curUnit.baseFactor_ + sep;else unitString += 'null' + sep + 'null' + sep;
         if (curUnit.cnv_) unitString += curUnit.cnv_ + sep;else unitString += 'null' + sep;
 
         if (doLong) {
           unitString += curUnit.getProperty('property_') + sep + curUnit.getProperty('printSymbol_') + sep + curUnit.getProperty('synonyms_') + sep + curUnit.getProperty('source_') + sep + curUnit.getProperty('class_') + sep + curUnit.getProperty('isMetric_') + sep + curUnit.getProperty('variable_') + sep + curUnit.getProperty('isSpecial_') + sep + curUnit.getProperty('isArbitrary_') + sep;
         }
+
         if (curUnit.defError_) unitString += 'problem parsing this one, deferred to later.';
         codeList += unitString + '\n';
       }
+
       return codeList;
     }
-
     /**
      * This creates a list of the synonyms in the unitSynonyms hash.  It writes
      * it in synonym order and in csv format, and includes the synonym, the number
@@ -34671,11 +34787,12 @@ var UnitTables = exports.UnitTables = function () {
      */
 
   }, {
-    key: 'printSynonyms',
+    key: "printSynonyms",
     value: function printSynonyms() {
       var sList = 'synonym|unit count|unit codes\n';
       var sKeys = Object.keys(this.unitSynonyms_).sort();
       var sLen = sKeys.length;
+
       for (var s = 0; s < sLen; s++) {
         var sKey = sKeys[s];
         var kLen = this.unitSynonyms_[sKey].length;
@@ -34683,36 +34800,31 @@ var UnitTables = exports.UnitTables = function () {
         codes = codes.substring(1, codes.length - 2);
         sList += sKey + '|' + kLen + '|' + codes + '\n';
       }
-      fs.writeFileSync('SynonymsList.txt', sList, { encoding: 'utf8', mode: 438, flag: 'w' });
+
+      fs.writeFileSync('SynonymsList.txt', sList, {
+        encoding: 'utf8',
+        mode: 438,
+        flag: 'w'
+      });
     } // printSynonyms
 
   }]);
 
-  return UnitTables;
-}(); // end UnitTables
+  return UnitTablesFactory;
+}(); // end UnitTablesFactory
+// Create a singleton instance and (to preserve the existing API) an object that
+// provides that instance via getInstance().
 
 
-/**
- *  This function exists ONLY until the original UnitTables constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton UnitTables object.  See more detail in the constructor
- *  description.
- *
- *  @returns the singleton UnitTables object.
- */
-
-
-UnitTables.getInstance = function () {
-  return new UnitTables();
+var unitTablesInstance = new UnitTablesFactory();
+var UnitTables = {
+  getInstance: function getInstance() {
+    return unitTablesInstance;
+  }
 };
-
-// Perform the first request for the tables object, to get the
-// getInstance method set.
-UnitTables.getInstance();
-
+exports.UnitTables = UnitTables;
 
 },{"./config.js":6,"./ucumJsonDefs.js":12,"fs":2}]},{},[14])(14)
 });
+
+//# sourceMappingURL=ucum-lhc.js.map
