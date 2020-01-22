@@ -194,18 +194,13 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask("build:browser", ["clean:browser",
-                                       "browserify:browser",
-                                       "extract_sourcemap:browser",
-                                       "uglify:browser"]);
   grunt.registerTask("build:demo", ["clean:demo",
                                     "ssi",
                                     "browserify:demo",
                                     "extract_sourcemap:demo",
                                     "cssmin",
                                     "uglify:demo"]);
-  grunt.registerTask("build", ["build:browser",
-                               "build:demo"]);
+  grunt.registerTask("build", ["build:demo"]);
   grunt.registerTask("test", ['build',
                               'mochaTest',
                               'runProtractor']);
