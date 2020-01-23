@@ -4,7 +4,7 @@
  *
  */
 
-var JDefs = require('../source-cjs/ucumJsonDefs.js').UcumJsonDefs;
+var { ucumJsonDefs } = require('../source-cjs/ucumJsonDefs.js') ;
 var Unit = require('../source-cjs/unit.js').Unit;
 var UnitTables = require('../source-cjs/unitTables.js').UnitTables;
 var UnitString = require('../source-cjs/unitString.js').UnitString;
@@ -32,8 +32,7 @@ class UcumTestUtils {
     let problems = [];
 
     // Load the data
-    let jDefs = JDefs.getInstance();
-    jDefs.loadJsonDefs();
+    ucumJsonDefs.loadJsonDefs();
 
     let uString = UnitString.getInstance();
     let parseResp = null;

@@ -6,10 +6,9 @@
  */
 var assert = require('assert');
 var UnitTables = require("../source-cjs/unitTables.js").UnitTables;
-var UcumJsonDefs = require('../source-cjs/ucumJsonDefs.js').UcumJsonDefs ;
+var { ucumJsonDefs } = require('../source-cjs/ucumJsonDefs.js') ;
 
-var uDefs = UcumJsonDefs.getInstance();
-uDefs.loadJsonDefs();
+ucumJsonDefs.loadJsonDefs();
 var uTabs = UnitTables.getInstance();
 
 var utils = require("../source-cjs/ucumInternalUtils.js");

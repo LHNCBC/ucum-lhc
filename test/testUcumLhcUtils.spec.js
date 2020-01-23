@@ -7,14 +7,13 @@
 
 var assert = require('assert');
 var Ucum = require('../source-cjs/config.js').Ucum;
-var UcumJsonDefs = require('../source-cjs/ucumJsonDefs.js').UcumJsonDefs ;
+var {ucumJsonDefs} = require('../source-cjs/ucumJsonDefs.js');
 var UTables = require("../source-cjs/unitTables.js").UnitTables;
 var Utils = require("../source-cjs/ucumLhcUtils.js").UcumLhcUtils;
 var UString = require("../source-cjs/unitString.js").UnitString;
 
 var uTabs = UTables.getInstance();
-var uDefs = UcumJsonDefs.getInstance();
-uDefs.loadJsonDefs();
+ucumJsonDefs.loadJsonDefs();
 var uString = UString.getInstance();
 
 var utils = Utils.getInstance();

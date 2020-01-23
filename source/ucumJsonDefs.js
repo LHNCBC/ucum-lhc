@@ -17,27 +17,6 @@ var jsonDefs_ = require('../data/ucumDefs.json');
 export class UcumJsonDefs {
 
   /**
-   * Constructor.  This reads the json file (essenceFile_) into the
-   * jsonDefs hash and makes this a singlton object.
-   *
-   */
-  constructor() {
-
-    // Make this a singleton.  See UnitTables constructor for details.
-
-    let holdThis = UcumJsonDefs.prototype;
-    UcumJsonDefs = function(){throw (new Error('UcumJsonDefs is a Singleton. ' +
-                                    'Use UcumJsonDefs.getInstance() instead.'))};
-    if (exports)
-      exports.UcumJsonDefs = UcumJsonDefs;
-    UcumJsonDefs.prototype = holdThis;
-    let self = this ;
-    UcumJsonDefs.getInstance = function(){return self} ;
-
-  } // end constructor
-
-
-  /**
    * This method loads the JSON prefix and unit objects into the prefix and
    * unit tables.
    *
@@ -69,18 +48,5 @@ export class UcumJsonDefs {
 
 } // end UcumJsonDefs class
 
-/**
- *  This function exists ONLY until the original UcumJsonDefs constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton UcumJsonDefs object.  This is based on the UnitTables singleton
- *  implementation; see more detail in the UnitTables constructor description.
- *
- *  @return the singleton UcumJsonDefs object.
- */
-UcumJsonDefs.getInstance = function(){
-  return new UcumJsonDefs();
-}
-
+var ucumJsonDefs = new UcumJsonDefs();
+export {ucumJsonDefs};

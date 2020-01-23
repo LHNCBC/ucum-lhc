@@ -1,14 +1,16 @@
 {
   "name": "@lhncbc/ucum-lhc",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
-  "main": "browser-dist/ucum-lhc.js",
+  "main": "source-cjs/ucumPkg.js",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
   "directories": {
     "test": "test"
   },
   "files": [
-    "browser-dist/ucum-lhc.js"
+    "browser-dist/ucum-lhc.js",
+    "source-cjs/*",
+    "source/*"
   ],
   "dependencies": {
     "braces": "^2.3.1",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.8.3",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
     "babel-loader": "^8.0.6",

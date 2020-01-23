@@ -7,7 +7,6 @@
  */
 
 var Ucum = require('./config.js').Ucum;
-var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
 var fs = require('fs');
 
 class UnitTablesFactory {

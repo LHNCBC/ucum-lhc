@@ -10,7 +10,7 @@
  */
 var Ucum = require('./config.js').Ucum;
 var Dimension = require('./dimension.js').Dimension;
-var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
+import funcs from "./ucumFunctions.js";
 var UnitTables;
 
 var isInteger = require("is-integer");
@@ -422,7 +422,6 @@ export class Unit {
     // else use a function to get the number to be returned
     else {
       let x = 0.0 ;
-      let funcs = UcumFunctions.getInstance();
       if (fromCnv != null) {
         // turn num * fromUnit.magnitude into its ratio scale equivalent,
         // e.g., convert Celsius to Kelvin

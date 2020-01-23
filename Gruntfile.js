@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 
   // Load grunt tasks automatically as needed ("jit")
   require('jit-grunt')(grunt, {
+    babel: 'grunt-babel',
     clean: 'grunt-contrib-clean',
     connect: 'grunt-contrib-connect',
     cssmin: 'grunt-contrib-cssmin',
@@ -31,6 +32,29 @@ module.exports = function(grunt) {
         files: [{
           cwd: '.',
           src: ['demo-dist/*.js', 'demo-dist/*.css', 'demo-dist/*.js.map']
+        }]
+      },
+      npm: {
+        files: [{
+          cwd: '.',
+          src: ['source-cjs/*']
+        }]
+      }
+    },
+
+    // This configures the npm build (for which we just need the modules
+    // converted to CommonJS modules).
+    babel: {
+      npm: {
+        options: {
+          sourceMap: true,
+          plugins: ["@babel/plugin-transform-modules-commonjs"],
+        },
+        files: [{
+          cwd: 'source',
+          expand: true,
+          src: '*.js',
+          dest: './source-cjs/'
         }]
       }
     },
@@ -194,6 +218,7 @@ module.exports = function(grunt) {
 
   });
 
+  grunt.registerTask("build:npm", ["clean:npm", "babel:npm"]);
   grunt.registerTask("build:browser", ["clean:browser",
                                        "browserify:browser",
                                        "extract_sourcemap:browser",
@@ -205,6 +230,7 @@ module.exports = function(grunt) {
                                     "cssmin",
                                     "uglify:demo"]);
   grunt.registerTask("build", ["build:browser",
+                               "build:npm",
                                "build:demo"]);
   grunt.registerTask("test", ['build',
                               'mochaTest',

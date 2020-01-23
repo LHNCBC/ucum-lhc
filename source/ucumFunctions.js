@@ -96,17 +96,6 @@ class UcumFunctions {
                               return -(this.funcs['ln'](x))/this.funcs['ln'](50000);},
                       cnvFrom : function(x){return Math.pow(50000, -x);}};
 
-
-    // Make this a singleton.  See UnitTables constructor for details.
-    let holdThis = UcumFunctions.prototype;
-    if (exports)
-      exports.UcumFunctions = UcumFunctions ;
-    UcumFunctions = function(){throw (new Error('UcumFunctions is a Singleton. ' +
-                           'Use UcumFunctions.getInstance() instead.'))};
-    UcumFunctions.prototype = holdThis;
-    let self = this ;
-    UcumFunctions.getInstance = function(){return self} ;
-
   } // end of constructor
 
 
@@ -119,7 +108,7 @@ class UcumFunctions {
    */
   forName(fname) {
     fname = fname.toLowerCase();
-    
+
     let f = this.funcs[fname] ;
     if (f === null)
       throw(new Error(`Requested function ${fname} is not defined`));
@@ -141,19 +130,4 @@ class UcumFunctions {
 
 } // end of UcumFunctions class
 
-
-/**
- *  This function exists ONLY until the original UcumFunctions constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton UcumFunctions object.  This is based on the UnitTables singleton
- *  implementation; see more detail in the UnitTables constructor description.
- *
- *  @return the singleton Functions object.
- */
-UcumFunctions.getInstance = function(){
-  return new UcumFunctions();
-}
-UcumFunctions.getInstance();
+export default new UcumFunctions(); // one singleton instance

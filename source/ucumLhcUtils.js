@@ -5,7 +5,7 @@
  *
  */
 var Ucum = require('./config.js').Ucum;
-var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs ;
+import {ucumJsonDefs} from './ucumJsonDefs.js';
 var UnitTables = require('./unitTables.js').UnitTables;
 var UnitString = require('./unitString.js').UnitString;
 var Unit = require('./unit.js').Unit;
@@ -29,8 +29,7 @@ export class UcumLhcUtils {
       if (UnitTables.getInstance().unitsCount() === 0) {
 
         // Load the prefix and unit objects
-        let uDefs = UcumJsonDefs.getInstance();
-        uDefs.loadJsonDefs();
+        ucumJsonDefs.loadJsonDefs();
       }
 
       // Get the UnitString parser that will be used with this instance

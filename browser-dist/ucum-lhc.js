@@ -30428,6 +30428,11 @@ exports.PrefixTables = PrefixTables;
 },{}],10:[function(require,module,exports){
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -30622,20 +30627,6 @@ function () {
       cnvFrom: function cnvFrom(x) {
         return Math.pow(50000, -x);
       }
-    }; // Make this a singleton.  See UnitTables constructor for details.
-
-    var holdThis = UcumFunctions.prototype;
-    if (exports) exports.UcumFunctions = UcumFunctions;
-
-    UcumFunctions = function UcumFunctions() {
-      throw new Error('UcumFunctions is a Singleton. ' + 'Use UcumFunctions.getInstance() instead.');
-    };
-
-    UcumFunctions.prototype = holdThis;
-    var self = this;
-
-    UcumFunctions.getInstance = function () {
-      return self;
     };
   } // end of constructor
 
@@ -30675,24 +30666,11 @@ function () {
   return UcumFunctions;
 }(); // end of UcumFunctions class
 
-/**
- *  This function exists ONLY until the original UcumFunctions constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton UcumFunctions object.  This is based on the UnitTables singleton
- *  implementation; see more detail in the UnitTables constructor description.
- *
- *  @return the singleton Functions object.
- */
+
+var _default = new UcumFunctions(); // one singleton instance
 
 
-UcumFunctions.getInstance = function () {
-  return new UcumFunctions();
-};
-
-UcumFunctions.getInstance();
+exports.default = _default;
 
 },{}],11:[function(require,module,exports){
 "use strict";
@@ -30806,7 +30784,7 @@ function getSynonyms(theSyn) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.UcumJsonDefs = void 0;
+exports.ucumJsonDefs = exports.UcumJsonDefs = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30835,40 +30813,19 @@ var jsonDefs_ = require('../data/ucumDefs.json');
 var UcumJsonDefs =
 /*#__PURE__*/
 function () {
-  /**
-   * Constructor.  This reads the json file (essenceFile_) into the
-   * jsonDefs hash and makes this a singlton object.
-   *
-   */
   function UcumJsonDefs() {
     _classCallCheck(this, UcumJsonDefs);
-
-    // Make this a singleton.  See UnitTables constructor for details.
-    var holdThis = UcumJsonDefs.prototype;
-
-    UcumJsonDefs = function UcumJsonDefs() {
-      throw new Error('UcumJsonDefs is a Singleton. ' + 'Use UcumJsonDefs.getInstance() instead.');
-    };
-
-    if (exports) exports.UcumJsonDefs = UcumJsonDefs;
-    UcumJsonDefs.prototype = holdThis;
-    var self = this;
-
-    UcumJsonDefs.getInstance = function () {
-      return self;
-    };
-  } // end constructor
-
-  /**
-   * This method loads the JSON prefix and unit objects into the prefix and
-   * unit tables.
-   *
-   * @returns nothing
-   */
-
+  }
 
   _createClass(UcumJsonDefs, [{
     key: "loadJsonDefs",
+
+    /**
+     * This method loads the JSON prefix and unit objects into the prefix and
+     * unit tables.
+     *
+     * @returns nothing
+     */
     value: function loadJsonDefs() {
       if (Utab.UnitTables.getInstance().unitsCount() === 0) {
         var pTab = PfxT.PrefixTables.getInstance();
@@ -30897,24 +30854,10 @@ function () {
   return UcumJsonDefs;
 }(); // end UcumJsonDefs class
 
-/**
- *  This function exists ONLY until the original UcumJsonDefs constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton UcumJsonDefs object.  This is based on the UnitTables singleton
- *  implementation; see more detail in the UnitTables constructor description.
- *
- *  @return the singleton UcumJsonDefs object.
- */
-
 
 exports.UcumJsonDefs = UcumJsonDefs;
-
-UcumJsonDefs.getInstance = function () {
-  return new UcumJsonDefs();
-};
+var ucumJsonDefs = new UcumJsonDefs();
+exports.ucumJsonDefs = ucumJsonDefs;
 
 },{"../data/ucumDefs.json":1,"./prefix.js":8,"./prefixTables.js":9,"./unit.js":15,"./unitTables.js":17}],13:[function(require,module,exports){
 "use strict";
@@ -30923,6 +30866,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.UcumLhcUtils = void 0;
+
+var _ucumJsonDefs = require("./ucumJsonDefs.js");
 
 var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
 
@@ -30943,8 +30888,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  *
  */
 var Ucum = require('./config.js').Ucum;
-
-var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
 
 var UnitTables = require('./unitTables.js').UnitTables;
 
@@ -30972,8 +30915,7 @@ function () {
 
     if (UnitTables.getInstance().unitsCount() === 0) {
       // Load the prefix and unit objects
-      var uDefs = UcumJsonDefs.getInstance();
-      uDefs.loadJsonDefs();
+      _ucumJsonDefs.ucumJsonDefs.loadJsonDefs();
     } // Get the UnitString parser that will be used with this instance
     // of the LHC Utilities
 
@@ -31505,11 +31447,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Unit = void 0;
 
+var _ucumFunctions = _interopRequireDefault(require("./ucumFunctions.js"));
+
 var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -31529,8 +31475,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Ucum = require('./config.js').Ucum;
 
 var Dimension = require('./dimension.js').Dimension;
-
-var UcumFunctions = require("./ucumFunctions.js").UcumFunctions;
 
 var UnitTables;
 
@@ -31928,12 +31872,12 @@ function () {
       } // else use a function to get the number to be returned
       else {
           var x = 0.0;
-          var funcs = UcumFunctions.getInstance();
 
           if (fromCnv != null) {
             // turn num * fromUnit.magnitude into its ratio scale equivalent,
             // e.g., convert Celsius to Kelvin
-            var fromFunc = funcs.forName(fromCnv);
+            var fromFunc = _ucumFunctions.default.forName(fromCnv);
+
             x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag; //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
           } else {
             x = num * fromMag;
@@ -31942,7 +31886,8 @@ function () {
           if (this.cnv_ != null) {
             // turn mag * origUnit on ratio scale into a non-ratio unit,
             // e.g. convert Kelvin to Fahrenheit
-            var toFunc = funcs.forName(this.cnv_);
+            var toFunc = _ucumFunctions.default.forName(this.cnv_);
+
             newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
           } else {
             newNum = x / this.magnitude_;
@@ -34077,8 +34022,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  */
 var Ucum = require('./config.js').Ucum;
 
-var UcumJsonDefs = require('./ucumJsonDefs.js').UcumJsonDefs;
-
 var fs = require('fs');
 
 var UnitTablesFactory =
@@ -34839,7 +34782,7 @@ var UnitTables = {
 };
 exports.UnitTables = UnitTables;
 
-},{"./config.js":6,"./ucumJsonDefs.js":12,"fs":2}]},{},[14])(14)
+},{"./config.js":6,"fs":2}]},{},[14])(14)
 });
 
 //# sourceMappingURL=ucum-lhc.js.map
