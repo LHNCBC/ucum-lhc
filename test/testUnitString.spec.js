@@ -5,10 +5,10 @@
  */
 
 var assert = require('assert');
-var UcumJsonDefs = require('../source/ucumJsonDefs.js').UcumJsonDefs ;
-var UTables = require("../source/unitTables.js").UnitTables;
-var UnitObj = require("../source/unit.js").Unit;
-var UnitString = require("../source/unitString.js").UnitString;
+var UcumJsonDefs = require('../source-cjs/ucumJsonDefs.js').UcumJsonDefs ;
+var UTables = require("../source-cjs/unitTables.js").UnitTables;
+var UnitObj = require("../source-cjs/unit.js").Unit;
+var UnitString = require("../source-cjs/unitString.js").UnitString;
 
 var uTabs = UTables.getInstance();
 var uDefs = UcumJsonDefs.getInstance();

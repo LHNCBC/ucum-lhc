@@ -117,7 +117,7 @@ module.exports = function(grunt) {
     // using mocha for the tests
     mochaTest: {
       options: {
-        require: '@babel/register',
+        // require: '@babel/register', // Commenting out automatic transpilation so we can test the CommonJS (npm) build
         reporter: 'spec'
       } ,
       src: ['./test/*.spec.js']
