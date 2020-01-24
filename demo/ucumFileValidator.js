@@ -13,6 +13,7 @@ var transform = require('stream-transform');
 var stringify = require('csv-stringify');
 var str = require('string-to-stream') ;
 
+var ucumPkg = require('@lhncbc/ucum-lhc');
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;
 var Ucum = ucumPkg.Ucum;
 

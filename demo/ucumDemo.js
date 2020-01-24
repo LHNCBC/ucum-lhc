@@ -8,7 +8,7 @@
 var fs = require('browserify-fs');
 var escapeHtml = require('escape-html');
 
-var Ucum = require('@lhncbc/ucum-lhc').Ucum;
+var ucumPkg = require('@lhncbc/ucum-lhc');
 var UcumDemoConfig = require('./demoConfig.js').UcumDemoConfig;
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;
 var UnitTables = ucumPkg.UnitTables;
