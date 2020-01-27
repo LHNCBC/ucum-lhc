@@ -1,0 +1,6 @@
+*FYI - annotations (text in curly braces {}) are ignored, except that an annotation without a leading symbol implies the default unit 1 (the unity).
+unit,whatever,Unit String Tested,Validation Result,Notes
+kg,abcd,kg,kg is a valid UCUM unit.,
+kggk,zzz,kggk,kggk is not a valid UCUM unit.,kggk is not a valid UCUM code.  No alternatives were found.
+/week,,/week,/week is not a valid UCUM unit.,"The UCUM code for week is wk.
+Did you mean wk?"

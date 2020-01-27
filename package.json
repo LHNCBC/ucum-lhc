@@ -4,18 +4,12 @@
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
   "dependencies": {
     "@lhncbc/ucum-lhc": "^3.0.1",
-    "braces": "^2.3.1",
     "csv-parse": "^4.4.6",
     "csv-stringify": "^1.0.4",
     "escape-html": "^1.0.3",
-    "fs": "0.0.1-security",
-    "grunt-extract-sourcemap": "^0.1.19",
-    "is-integer": "^1.0.6",
-    "jsonfile": "^2.2.3",
     "stream": "0.0.2",
     "stream-transform": "^0.1.1",
-    "string-to-stream": "^1.1.0",
-    "xmldoc": "^0.4.0"
+    "string-to-stream": "^1.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -38,6 +32,7 @@
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-extract-sourcemap": "^0.1.19",
     "grunt-mocha-test": "^0.13.2",
     "grunt-protractor-runner": "^5.0.0",
     "grunt-wiredep": "^3.0.1",
@@ -49,12 +44,12 @@
     "serve-static": "^1.12.2",
     "ssi": "^0.3.0",
     "time-grunt": "^1.4.0",
-    "webdriver-manager": "^12.0.6",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
   },
   "scripts": {
     "build": "grunt build",
+    "update-webdriver": "node node_modules/protractor/bin/webdriver-manager update --versions.chrome $(google-chrome --version |awk '{print $NF}')",
     "test": "grunt test"
   },
   "repository": {
