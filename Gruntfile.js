@@ -8,7 +8,6 @@ module.exports = function(grunt) {
     connect: 'grunt-contrib-connect',
     cssmin: 'grunt-contrib-cssmin',
     extract_sourcemap: 'grunt-extract-sourcemap',
-    mochaTest: 'grunt-mocha-test',
     protractor: 'grunt-protractor-runner',
     uglify: 'grunt-contrib-uglify'
   });
@@ -85,16 +84,6 @@ module.exports = function(grunt) {
         }
       }
     } ,
-
-    // using mocha for the tests
-    mochaTest: {
-      options: {
-        require: '@babel/register',
-        reporter: 'spec'
-      } ,
-      src: ['./test/*.spec.js']
-    },
-
 
     // watch application files to see if they need to be re-browserified,
     // and bower components to see if they change
@@ -174,7 +163,6 @@ module.exports = function(grunt) {
                                     "uglify:demo"]);
   grunt.registerTask("build", ["build:demo"]);
   grunt.registerTask("test", ['build',
-                              'mochaTest',
                               'runProtractor']);
   // note that the webdriver manager must be running before the
   // protractor tests will run.  use webdriver-manager start & to
