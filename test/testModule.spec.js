@@ -18,7 +18,7 @@ var pkgs = ['../source-cjs/ucumPkg.js', '../browser-dist/ucum-lhc.js'];
 for (let u=0; u < pkgs.length; u++) {
   let ucum = require(pkgs[u]);
   let utils = ucum.UcumLhcUtils.getInstance();
-  describe.only('Tests using ' + pkgs[u], function() {
+  describe('Tests using ' + pkgs[u], function() {
     describe('Validate_m2/g4', function () {
       describe('Validation Return Object', function () {
         var returnObj = utils.validateUnitString('m2/g4');
