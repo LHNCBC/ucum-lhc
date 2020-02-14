@@ -1,28 +1,15 @@
 {
-  "name": "@lhncbc/ucum-lhc",
-  "version": "3.0.0",
-  "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
-  "main": "browser-dist/ucum-lhc.js",
+  "description": "Demo of @lhncbc/ucum-lhc",
+  "main": "demo.html",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
-  "directories": {
-    "test": "test"
-  },
-  "files": [
-    "browser-dist/ucum-lhc.js"
-  ],
   "dependencies": {
-    "braces": "^2.3.1",
+    "@lhncbc/ucum-lhc": "^4.0.1",
     "csv-parse": "^4.4.6",
     "csv-stringify": "^1.0.4",
     "escape-html": "^1.0.3",
-    "fs": "0.0.1-security",
-    "grunt-extract-sourcemap": "^0.1.19",
-    "is-integer": "^1.0.6",
-    "jsonfile": "^2.2.3",
     "stream": "0.0.2",
     "stream-transform": "^0.1.1",
-    "string-to-stream": "^1.1.0",
-    "xmldoc": "^0.4.0"
+    "string-to-stream": "^1.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -32,7 +19,6 @@
     "babel-loader": "^8.0.6",
     "babelify": "^10.0.0",
     "bootstrap": "^4.3.1",
-    "bower": "^1.8.8",
     "browserify": "^16.2.3",
     "browserify-fs": "https://github.com/eight04/browserify-fs#eb6645531326de3",
     "connect": "^3.6.6",
@@ -45,23 +31,22 @@
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-mocha-test": "^0.13.2",
+    "grunt-extract-sourcemap": "^0.1.19",
     "grunt-protractor-runner": "^5.0.0",
     "grunt-wiredep": "^3.0.1",
     "jit-grunt": "^0.10.0",
-    "mocha": "^5.2.0",
     "path": "^0.12.7",
     "semver": "^5.5.1",
     "serve-index": "^1.8.0",
     "serve-static": "^1.12.2",
     "ssi": "^0.3.0",
     "time-grunt": "^1.4.0",
-    "webdriver-manager": "^12.0.6",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
   },
   "scripts": {
-    "build": "grunt build && webpack",
+    "build": "grunt build",
+    "update-webdriver": "node node_modules/protractor/bin/webdriver-manager update --versions.chrome $(google-chrome --version |awk '{print $NF}')",
     "test": "grunt test"
   },
   "repository": {

@@ -8,7 +8,6 @@ module.exports = function(grunt) {
     connect: 'grunt-contrib-connect',
     cssmin: 'grunt-contrib-cssmin',
     extract_sourcemap: 'grunt-extract-sourcemap',
-    mochaTest: 'grunt-mocha-test',
     protractor: 'grunt-protractor-runner',
     uglify: 'grunt-contrib-uglify'
   });
@@ -21,12 +20,6 @@ module.exports = function(grunt) {
 
     // clean out directories
     clean: {
-      browser: {
-        files: [{
-          cwd: '.',
-          src: ['tmp', 'browser-dist/*']
-        }]
-      } ,
       demo: {
         files: [{
           cwd: '.',
@@ -39,26 +32,12 @@ module.exports = function(grunt) {
     // This is now also used for the npm package.  We need to transpile
     // for server-side use because of the use of ES6 modules.
     browserify: {
-      browser: {
-        options: {
-          browserifyOptions: {
-            debug: true,
-            standalone: "ucumPkg"
-          },
-          transform: [["babelify", { "presets": ["@babel/preset-env"] }]]
-        },
-        debug: true,
-        files: [{dest: "./browser-dist/ucum-lhc.js",
-                 src: ["./source/ucumPkg.js"]}
-        ]
-      },
       demo: {
         options: {
           browserifyOptions: {
             debug: true,
             standalone: "demoPkg"
           },
-          exclude: ['./browser-dist/*.js'],
           transform: [["babelify", {
             global: true, // transform node_modules (csv-parse)
             "presets": ["@babel/preset-env"]
@@ -96,14 +75,6 @@ module.exports = function(grunt) {
     // use uglify to minify the javascript files
     uglify: {
       options: { sourceMap: true, compress: true },
-      browser: {
-        options: {
-          sourceMapIn: './browser-dist/ucum-lhc.js.map'
-        },
-        files: {
-          './browser-dist/ucum-lhc.min.js' : [ './browser-dist/ucum-lhc.js']
-        }
-      },
       demo: {
         options: {
           sourceMapIn: './demo-dist/ucum-demo.js.map'
@@ -113,16 +84,6 @@ module.exports = function(grunt) {
         }
       }
     } ,
-
-    // using mocha for the tests
-    mochaTest: {
-      options: {
-        require: '@babel/register',
-        reporter: 'spec'
-      } ,
-      src: ['./test/*.spec.js']
-    },
-
 
     // watch application files to see if they need to be re-browserified,
     // and bower components to see if they change
@@ -194,20 +155,14 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask("build:browser", ["clean:browser",
-                                       "browserify:browser",
-                                       "extract_sourcemap:browser",
-                                       "uglify:browser"]);
   grunt.registerTask("build:demo", ["clean:demo",
                                     "ssi",
                                     "browserify:demo",
                                     "extract_sourcemap:demo",
                                     "cssmin",
                                     "uglify:demo"]);
-  grunt.registerTask("build", ["build:browser",
-                               "build:demo"]);
+  grunt.registerTask("build", ["build:demo"]);
   grunt.registerTask("test", ['build',
-                              'mochaTest',
                               'runProtractor']);
   // note that the webdriver manager must be running before the
   // protractor tests will run.  use webdriver-manager start & to
