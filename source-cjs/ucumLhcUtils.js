@@ -1,3 +1,18 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UcumLhcUtils = void 0;
+
+var _ucumJsonDefs = require("./ucumJsonDefs.js");
+
+var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 /**
  * This class provides a single point of access to the LHC UCUM utilities
  *
@@ -5,39 +20,36 @@
  *
  */
 var Ucum = require('./config.js').Ucum;
-import {ucumJsonDefs} from './ucumJsonDefs.js';
-var UnitTables = require('./unitTables.js').UnitTables;
-var UnitString = require('./unitString.js').UnitString;
-var Unit = require('./unit.js').Unit;
-var Prefix = require('./prefix.js').Prefix;
-var fs = require('fs');
 
-import * as intUtils_ from "./ucumInternalUtils.js";
+var UnitTables = require('./unitTables.js').UnitTables;
+
+var UnitString = require('./unitString.js').UnitString;
+
+var Unit = require('./unit.js').Unit;
+
+var Prefix = require('./prefix.js').Prefix;
+
+var fs = require('fs');
 
 /**
  * UCUM external utilities class
  */
-export class UcumLhcUtils {
-
+class UcumLhcUtils {
   /**
    * Constructor.  This loads the json prefix and unit definitions if
    * they haven't been loaded already and creates itself as a singleton object.
    *
    */
   constructor() {
+    if (UnitTables.getInstance().unitsCount() === 0) {
+      // Load the prefix and unit objects
+      _ucumJsonDefs.ucumJsonDefs.loadJsonDefs();
+    } // Get the UnitString parser that will be used with this instance
+    // of the LHC Utilities
 
-      if (UnitTables.getInstance().unitsCount() === 0) {
 
-        // Load the prefix and unit objects
-        ucumJsonDefs.loadJsonDefs();
-      }
-
-      // Get the UnitString parser that will be used with this instance
-      // of the LHC Utilities
-      this.uStrParser_ = UnitString.getInstance();
-
+    this.uStrParser_ = UnitString.getInstance();
   } // end constructor
-
 
   /**
    * This method calls the useHTMLInMessages method on the UnitString
@@ -47,13 +59,12 @@ export class UcumLhcUtils {
    * @param use flag indicating whether or not to use the braces message;
    *  defaults to true
    */
+
+
   useHTMLInMessages(use) {
-    if (use === undefined)
-      use = true ;
+    if (use === undefined) use = true;
     this.uStrParser_.useHTMLInMessages(use);
   }
-
-
   /**
    * This method calls the useBraceMsgForEachString method on the UnitString
    * object.  It should be called by web applications where unit
@@ -63,13 +74,12 @@ export class UcumLhcUtils {
    * @param use flag indicating whether or not to use the braces message;
    *  defaults to true
    */
+
+
   useBraceMsgForEachString(use) {
-    if (use === undefined)
-      use = true ;
+    if (use === undefined) use = true;
     this.uStrParser_.useBraceMsgForEachString(use);
   }
-
-
   /**
    * This method validates a unit string.  It first checks to see if the
    * string passed in is a unit code that is found in the unit codes table.
@@ -123,37 +133,39 @@ export class UcumLhcUtils {
    *     If no suggestions were requested and found, this property is not
    *     returned.
    */
+
+
   validateUnitString(uStr, suggest, valConv) {
-
-    if (suggest === undefined)
-      suggest = false ;
-
-    if (valConv === undefined)
-      valConv = 'validate' ;
-
+    if (suggest === undefined) suggest = false;
+    if (valConv === undefined) valConv = 'validate';
     let resp = this.getSpecifiedUnit(uStr, valConv, suggest);
     let theUnit = resp['unit'];
     let retObj = {};
+
     if (!theUnit) {
-      retObj = {'status': (!resp['origString'] || resp['origString'] === null) ?
-                           'error' : 'invalid',
-                'ucumCode': null};
+      retObj = {
+        'status': !resp['origString'] || resp['origString'] === null ? 'error' : 'invalid',
+        'ucumCode': null
+      };
+    } else {
+      retObj = {
+        'status': resp['origString'] === uStr ? 'valid' : 'invalid',
+        'ucumCode': resp['origString'],
+        'unit': {
+          'code': theUnit.csCode_,
+          'name': theUnit.name_,
+          'guidance': theUnit.guidance_
+        }
+      };
     }
-    else {
-      retObj = {'status': resp['origString'] === uStr ? 'valid': 'invalid',
-                'ucumCode': resp['origString'],
-                'unit': {'code': theUnit.csCode_,
-                         'name': theUnit.name_,
-                         'guidance': theUnit.guidance_ }};
-    }
+
     if (resp['suggestions']) {
       retObj['suggestions'] = resp['suggestions'];
     }
+
     retObj['msg'] = resp['retMsg'];
     return retObj;
-
   } // end validateUnitString
-
 
   /**
    * This method converts one unit to another
@@ -213,67 +225,68 @@ export class UcumLhcUtils {
    *  'toUnit' the unit object for the toUnitCode passed in; returned
    *     in case it's needed for additional data from the object.
    */
+
+
   convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight) {
-    if (suggest === undefined)
-      suggest = false ;
-
-    if (molecularWeight === undefined)
-      molecularWeight = null ;
-
-    let returnObj = {'status' : 'failed',
-                     'toVal' : null,
-                     'msg' : []} ;
+    if (suggest === undefined) suggest = false;
+    if (molecularWeight === undefined) molecularWeight = null;
+    let returnObj = {
+      'status': 'failed',
+      'toVal': null,
+      'msg': []
+    };
 
     if (fromUnitCode) {
       fromUnitCode = fromUnitCode.trim();
     }
+
     if (!fromUnitCode || fromUnitCode == '') {
       returnObj['status'] = 'error';
       returnObj['msg'].push('No "from" unit expression specified.');
     }
-    if (fromVal === null || isNaN(fromVal) || (typeof fromVal !== 'number' &&
-        !intUtils_.isNumericString(fromVal))) {
+
+    if (fromVal === null || isNaN(fromVal) || typeof fromVal !== 'number' && !intUtils_.isNumericString(fromVal)) {
       returnObj['status'] = 'error';
-      returnObj['msg'].push('No "from" value, or an invalid "from" value, ' +
-                         'was specified.');
+      returnObj['msg'].push('No "from" value, or an invalid "from" value, ' + 'was specified.');
     }
+
     if (toUnitCode) {
       toUnitCode = toUnitCode.trim();
     }
+
     if (!toUnitCode || toUnitCode == '') {
       returnObj['status'] = 'error';
       returnObj['msg'].push('No "to" unit expression specified.');
     }
+
     if (returnObj['status'] !== 'error') {
       try {
         let fromUnit = null;
-
         let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
         fromUnit = parseResp['unit'];
-        if (parseResp['retMsg'])
-          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+        if (parseResp['retMsg']) returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+
         if (parseResp['suggestions']) {
           returnObj['suggestions'] = {};
           returnObj['suggestions']['from'] = parseResp['suggestions'];
         }
+
         if (!fromUnit) {
-          returnObj['msg'].push(`Unable to find a unit for ${fromUnitCode}, ` +
-            `so no conversion could be performed.`);
+          returnObj['msg'].push(`Unable to find a unit for ${fromUnitCode}, ` + `so no conversion could be performed.`);
         }
 
         let toUnit = null;
         parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
         toUnit = parseResp['unit'];
-        if (parseResp['retMsg'])
-          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+        if (parseResp['retMsg']) returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+
         if (parseResp['suggestions']) {
-          if (!returnObj['suggestions'])
-            returnObj['suggestions'] = {} ;
+          if (!returnObj['suggestions']) returnObj['suggestions'] = {};
           returnObj['suggestions']['to'] = parseResp['suggestions'];
         }
+
         if (!toUnit) {
-          returnObj['msg'].push(`Unable to find a unit for ${toUnitCode}, ` +
-                                `so no conversion could be performed.`);
+          returnObj['msg'].push(`Unable to find a unit for ${toUnitCode}, ` + `so no conversion could be performed.`);
         }
 
         if (fromUnit && toUnit) {
@@ -281,64 +294,50 @@ export class UcumLhcUtils {
             // if no molecular weight was specified perform a normal conversion
             if (!molecularWeight) {
               returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
-            }
-            else {
+            } else {
               if (fromUnit.moleExp_ !== 0 && toUnit.moleExp_ !== 0) {
-                throw(new Error('A molecular weight was specified ' +
-                  'but a mass <-> mole conversion cannot be executed for two ' +
-                  'mole-based units.  No conversion was attempted.'));
-              }
-              if (fromUnit.moleExp_ === 0 && toUnit.moleExp_ === 0) {
-                throw(new Error('A molecular weight was specified ' +
-                  'but a mass <-> mole conversion cannot be executed when ' +
-                  'neither unit is mole-based.  No conversion was attempted.'));
-              }
-              if (!fromUnit.isMoleMassCommensurable(toUnit)) {
-                throw(new Error(`Sorry.  ${fromUnitCode} cannot be ` +
-                  `converted to ${toUnitCode}.`));
+                throw new Error('A molecular weight was specified ' + 'but a mass <-> mole conversion cannot be executed for two ' + 'mole-based units.  No conversion was attempted.');
               }
 
-              // if the "from" unit is a mole-based unit, assume a mole to mass
-              // request
-              if (fromUnit.moleExp_ !== 0) {
-                returnObj['toVal'] =
-                  fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
+              if (fromUnit.moleExp_ === 0 && toUnit.moleExp_ === 0) {
+                throw new Error('A molecular weight was specified ' + 'but a mass <-> mole conversion cannot be executed when ' + 'neither unit is mole-based.  No conversion was attempted.');
               }
-              // else the "to" unit must be the mole-based unit, so assume a
+
+              if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+                throw new Error(`Sorry.  ${fromUnitCode} cannot be ` + `converted to ${toUnitCode}.`);
+              } // if the "from" unit is a mole-based unit, assume a mole to mass
+              // request
+
+
+              if (fromUnit.moleExp_ !== 0) {
+                returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
+              } // else the "to" unit must be the mole-based unit, so assume a
               // mass to mole request
               else {
-                returnObj['toVal'] =
-                  fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
-              }
+                  returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
+                }
             } // end if a molecular weight was specified
-
             // if an error hasn't been thrown - either from convertFrom or here,
             // set the return object to show success
+
+
             returnObj['status'] = 'succeeded';
             returnObj['fromUnit'] = fromUnit;
             returnObj['toUnit'] = toUnit;
-          }
-          catch (err) {
+          } catch (err) {
             returnObj['status'] = 'failed';
             returnObj['msg'].push(err.message);
           }
+        } // end if we have the from and to units
 
-
-        }  // end if we have the from and to units
-      }
-      catch (err) {
-        if (err.message == Ucum.needMoleWeightMsg_)
-          returnObj['status'] = 'failed';
-        else
-          returnObj['status'] = 'error';
+      } catch (err) {
+        if (err.message == Ucum.needMoleWeightMsg_) returnObj['status'] = 'failed';else returnObj['status'] = 'error';
         returnObj['msg'].push(err.message);
       }
     }
 
-    return returnObj ;
-
+    return returnObj;
   } // end convertUnitTo
-
 
   /**
    * This method accepts a term and looks for units that include it as
@@ -355,20 +354,21 @@ export class UcumLhcUtils {
    *    'guidance' is the unit's guidance_
    *
    */
+
+
   checkSynonyms(theSyn) {
-    let retObj = {} ;
+    let retObj = {};
+
     if (theSyn === undefined || theSyn === null) {
       retObj['status'] = 'error';
-      retObj['msg'] = 'No term specified for synonym search.'
-    }
-    else {
+      retObj['msg'] = 'No term specified for synonym search.';
+    } else {
       retObj = intUtils_.getSynonyms(theSyn);
     } // end if a search synonym was supplied
 
-    return retObj ;
 
+    return retObj;
   } // end checkSynonyms
-
 
   /**
    * This method parses a unit string to get (or try to get) the unit
@@ -401,53 +401,44 @@ export class UcumLhcUtils {
    *   The return hash will not contain a suggestions array if a valid unit
    *   was found or if suggestions were not requested and found.
    */
+
+
   getSpecifiedUnit(uName, valConv, suggest) {
-
-    if (suggest === undefined)
-      suggest = false ;
-
+    if (suggest === undefined) suggest = false;
     let retObj = {};
     retObj['retMsg'] = [];
 
     if (!uName) {
       retObj['retMsg'].push('No unit string specified.');
-    }
-    else {
+    } else {
       let utab = UnitTables.getInstance();
-      uName = uName.trim();
-
-      // go ahead and just try using the name as the code.  This may or may not
+      uName = uName.trim(); // go ahead and just try using the name as the code.  This may or may not
       // work, but if it does, it cuts out a lot of parsing.
-      let theUnit = utab.getUnitByCode(uName);
 
-      // If we found it, set the returned unit string to what was passed in;
+      let theUnit = utab.getUnitByCode(uName); // If we found it, set the returned unit string to what was passed in;
       // otherwise try parsing as a unit string
+
       if (theUnit) {
-        retObj['unit'] = theUnit ;
+        retObj['unit'] = theUnit;
         retObj['origString'] = uName;
-      }
-      else {
+      } else {
         try {
           let resp = this.uStrParser_.parseString(uName, valConv, suggest);
           retObj['unit'] = resp[0];
           retObj['origString'] = resp[1];
-          if (resp[2])
-            retObj['retMsg'] = resp[2];
+          if (resp[2]) retObj['retMsg'] = resp[2];
           retObj['suggestions'] = resp[3];
-        }
-        catch (err) {
-          console.log(`Unit requested for unit string ${uName}.` +
-            'request unsuccessful; error thrown = ' + err.message);
-            retObj['retMsg'].unshift(`${uName} is not a valid unit.  ` +
-                                     `${err.message}`);
+        } catch (err) {
+          console.log(`Unit requested for unit string ${uName}.` + 'request unsuccessful; error thrown = ' + err.message);
+          retObj['retMsg'].unshift(`${uName} is not a valid unit.  ` + `${err.message}`);
         }
       } // end if the unit was not found as a unit name
+
     } // end if a unit expression was specified
 
+
     return retObj;
-
   } // end getSpecifiedUnit
-
 
   /**
    * This method retrieves a list of units commensurable, i.e., that can be
@@ -459,61 +450,63 @@ export class UcumLhcUtils {
    *   first element is the list of commensurable units if any were found
    *   second element is an error message if the "from" unit is not found
    */
-  commensurablesList(fromName) {
 
+
+  commensurablesList(fromName) {
     let retMsg = [];
-    let commUnits = null ;
+    let commUnits = null;
     let parseResp = this.getSpecifiedUnit(fromName, 'validate', false);
     let fromUnit = parseResp['unit'];
-    if (parseResp['retMsg'].length > 0)
-      retMsg = parseResp['retMsg'] ;
+    if (parseResp['retMsg'].length > 0) retMsg = parseResp['retMsg'];
+
     if (!fromUnit) {
       retMsg.push(`Could not find unit ${fromName}.`);
-    }
-    else {
-      let dimVec = null ;
+    } else {
+      let dimVec = null;
       let fromDim = fromUnit.getProperty('dim_');
+
       if (!fromDim) {
-        retMsg.push('No commensurable units were found for ' + fromName) ;
-      }
-      else {
+        retMsg.push('No commensurable units were found for ' + fromName);
+      } else {
         try {
           dimVec = fromDim.getProperty('dimVec_');
-        }
-        catch (err) {
+        } catch (err) {
           retMsg.push(err.message);
-          if (err.message ===
-            "Dimension does not have requested property(dimVec_)")
-            dimVec = null;
+          if (err.message === "Dimension does not have requested property(dimVec_)") dimVec = null;
         }
+
         if (dimVec) {
           let utab = UnitTables.getInstance();
           commUnits = utab.getUnitsByDimension(dimVec);
         }
       } // end if the from unit has a dimension vector
-    } // end if we found a "from" unit
-    return [commUnits , retMsg];
-  } // end commensurablesList
 
+    } // end if we found a "from" unit
+
+
+    return [commUnits, retMsg];
+  } // end commensurablesList
 
   /**
    * Creates a file containing a list of the units.  The file is created
    * in the current directory.
    */
-  printUnits() {
 
+
+  printUnits() {
     // for now, create a list of the units created and save it to a file
     // for debugging.  This is a temporary file.
     let utab = UnitTables.getInstance();
     let uct = utab.unitsCount();
     let uList = utab.printUnits(true);
-    fs.writeFileSync('JsonUnitsList.txt', uList,
-        {encoding: 'utf8', mode: 0o666, flag: 'w'} );
+    fs.writeFileSync('JsonUnitsList.txt', uList, {
+      encoding: 'utf8',
+      mode: 0o666,
+      flag: 'w'
+    });
   }
 
-
 } // end UcumLhcUtils class
-
 
 /**
  *  This function exists ONLY until the original UcumLhcUtils constructor
@@ -529,10 +522,11 @@ export class UcumLhcUtils {
  *
  *  @return the (formerly singleton) UcumLhcUtils object.
  */
-UcumLhcUtils.getInstance = function(){
+
+
+exports.UcumLhcUtils = UcumLhcUtils;
+
+UcumLhcUtils.getInstance = function () {
   return new UcumLhcUtils();
-} ;
-
-
-
-
+};
+//# sourceMappingURL=ucumLhcUtils.js.map

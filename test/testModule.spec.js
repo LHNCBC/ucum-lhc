@@ -14,8 +14,7 @@
  */
 
 var assert = require('assert');
-var pkgs = ['../source/ucumPkg.js', '../browser-dist/ucum-lhc.js'];
-
+var pkgs = ['../source-cjs/ucumPkg.js', '../browser-dist/ucum-lhc.js'];
 for (let u=0; u < pkgs.length; u++) {
   let ucum = require(pkgs[u]);
   let utils = ucum.UcumLhcUtils.getInstance();

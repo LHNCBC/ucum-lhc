@@ -1,3 +1,19 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Unit = void 0;
+
+var _ucumFunctions = _interopRequireDefault(require("./ucumFunctions.js"));
+
+var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * This class represents one unit of measure.  It includes
@@ -9,15 +25,14 @@
  *
  */
 var Ucum = require('./config.js').Ucum;
+
 var Dimension = require('./dimension.js').Dimension;
-import funcs from "./ucumFunctions.js";
+
 var UnitTables;
 
 var isInteger = require("is-integer");
-import * as intUtils_ from "./ucumInternalUtils.js";
 
-export class Unit {
-
+class Unit {
   /**
    * Constructor.
    *
@@ -34,7 +49,6 @@ export class Unit {
    *
    */
   constructor(attrs = {}) {
-
     // Process the attrs hash passed in, which may be empty.
     // Create and assign values (from the attrs hash or defaults) to all
     // attributes.  From Class Declarations in Understanding ECMAScript,
@@ -48,28 +62,27 @@ export class Unit {
     /*
      * Flag indicating whether or not this is a base unit
      */
-    this.isBase_ = attrs['isBase_'] || false ;
-
+    this.isBase_ = attrs['isBase_'] || false;
     /*
      * The unit name, e.g., meter
      */
-    this.name_ = attrs['name_'] || '';
 
+    this.name_ = attrs['name_'] || '';
     /*
      * The unit's case-sensitive code, e.g., m
      */
-    this.csCode_ = attrs['csCode_'] || '';
 
+    this.csCode_ = attrs['csCode_'] || '';
     /*
      * The unit's case-insensitive code, e.g., M
      */
-    this.ciCode_ = attrs['ciCode_'] || '';
 
+    this.ciCode_ = attrs['ciCode_'] || '';
     /*
      * The unit's property, e.g., length
      */
-    this.property_ = attrs['property_'] || '';
 
+    this.property_ = attrs['property_'] || '';
     /*
      * The magnitude of the unit, e.g., 3600/3937 for a yard,
      * where a yard - 3600/3973 * m(eter).  The Dimension
@@ -77,71 +90,70 @@ export class Unit {
      * a yard is based, and this magnitude specifies how to figure
      * this unit based on the base unit.
      */
-    this.magnitude_ = attrs['magnitude_'] || 1;
 
+    this.magnitude_ = attrs['magnitude_'] || 1;
     /*
      * The Dimension object of the unit
      */
+
     if (attrs['dim_'] === undefined || attrs['dim_'] === null) {
       this.dim_ = new Dimension();
-    }
-    // When the unit data stored in json format is reloaded, the dimension data
+    } // When the unit data stored in json format is reloaded, the dimension data
     // is recognized as a a hash, not as a Dimension object.
     else if (attrs['dim_']['dimVec_'] !== undefined) {
-      this.dim_ = new Dimension(attrs['dim_']['dimVec_']) ;
-    }
-    else if (attrs['dim_'] instanceof Dimension) {
-      this.dim_ = attrs['dim_'];
-    }
-    else if (attrs['dim_'] instanceof Array || isInteger(attrs['dim_'])) {
-      this.dim_ = new Dimension(attrs['dim_']) ;
-    }
-    else {
-      this.dim_ = new Dimension();
-    }
+        this.dim_ = new Dimension(attrs['dim_']['dimVec_']);
+      } else if (attrs['dim_'] instanceof Dimension) {
+        this.dim_ = attrs['dim_'];
+      } else if (attrs['dim_'] instanceof Array || isInteger(attrs['dim_'])) {
+        this.dim_ = new Dimension(attrs['dim_']);
+      } else {
+        this.dim_ = new Dimension();
+      }
     /*
      * The print symbol of the unit, e.g., m
      */
-    this.printSymbol_ = attrs['printSymbol_'] || null;
 
+
+    this.printSymbol_ = attrs['printSymbol_'] || null;
     /*
      * The class of the unit, where given, e.g., dimless
      */
-    this.class_ = attrs['class_'] || null;
 
+    this.class_ = attrs['class_'] || null;
     /*
      * A flag indicating whether or not the unit is metric
      */
-    this.isMetric_ = attrs['isMetric_'] || false;
 
+    this.isMetric_ = attrs['isMetric_'] || false;
     /*
      * The "variable" - which I think is used only for base units
      * The symbol for the variable as used in equations, e.g., s for distance
      */
-    this.variable_ = attrs['variable_'] || null ;  // comes from 'dim' in XML
+
+    this.variable_ = attrs['variable_'] || null; // comes from 'dim' in XML
 
     /*
      * The conversion function
      */
-    this.cnv_ = attrs['cnv_'] || null;
 
+    this.cnv_ = attrs['cnv_'] || null;
     /*
      * The conversion prefix
      */
-    this.cnvPfx_ = attrs['cnvPfx_'] || 1;
 
+    this.cnvPfx_ = attrs['cnvPfx_'] || 1;
     /*
      * Flag indicating whether or not this is a "special" unit, i.e., is
      * constructed using a function specific to the measurement, e.g.,
      * fahrenheit and celsius
      */
-    this.isSpecial_ = attrs['isSpecial_'] || false ;
 
+    this.isSpecial_ = attrs['isSpecial_'] || false;
     /*
      * Flag indicating whether or not this is an arbitrary unit
      */
-    this.isArbitrary_ = attrs['isArbitrary_'] || false;
 
+    this.isArbitrary_ = attrs['isArbitrary_'] || false;
     /*
      * Integer indicating what level of exponent applies to a mole-based portion
      * of the unit.  So, for the unit "mol", this will be 1.  For "mol2" this
@@ -149,8 +161,8 @@ export class Unit {
      * a mole will have a 0 in this field.  This is used to determine
      * commensurability for mole<->mass conversions.
      */
-    this.moleExp_ = attrs['moleExp_'] || 0;
 
+    this.moleExp_ = attrs['moleExp_'] || 0;
     /*
      * Added when added LOINC list of units
      * synonyms are used by the autocompleter to enhance lookup capabilities
@@ -158,16 +170,17 @@ export class Unit {
      * UCUM - which are units from the unitsofmeasure.org list and LOINC -
      * which are units from the LOINC data.
      */
-    this.synonyms_ = attrs['synonyms_'] || null ;
-    this.source_ = attrs['source_'] || null ;
+
+    this.synonyms_ = attrs['synonyms_'] || null;
+    this.source_ = attrs['source_'] || null;
     this.loincProperty_ = attrs['loincProperty_'] || null;
     this.category_ = attrs['category_'] || null;
     this.guidance_ = attrs['guidance_'] || null;
-
     /*
      * Used to compute dimension; storing for now until I complete
      * unit definition parsing
      */
+
     /*
      * Case sensitive (cs) and case insensitive (ci) base unit strings,
      * includes exponent and prefix if applicable - specified in
@@ -180,16 +193,16 @@ export class Unit {
      * (unit code h) is created from the unit min (minute) with a value
      * of 60.
      */
-    this.csUnitString_ = attrs['csUnitString_'] || null ;
-    this.ciUnitString_ = attrs['ciUnitString_'] || null ;
 
+    this.csUnitString_ = attrs['csUnitString_'] || null;
+    this.ciUnitString_ = attrs['ciUnitString_'] || null;
     /*
      * String and numeric versions of factor applied to unit specified in
      * <value Unit=x UNIT=X value="nnn">nnn</value> -- the value part
      */
+
     this.baseFactorStr_ = attrs['baseFactorStr_'] || null;
     this.baseFactor_ = attrs['baseFactor_'] || null;
-
     /*
      * Flag used to indicate units where the definition process failed
      * when parsing units from the official units definitions file
@@ -202,29 +215,26 @@ export class Unit {
      * This is NOT used when trying to validate a unit string
      * submitted during a conversion or validation attempt.
      */
-    this.defError_ = attrs['defError_'] || false ;
 
-
+    this.defError_ = attrs['defError_'] || false;
   } // end constructor
-
 
   /**
    * Assign the unity (= dimensionless unit 1) to this unit.
    *
    * @return this unit
    */
+
+
   assignUnity() {
-    this.name_  = "" ;
-    this.magnitude_ = 1 ;
-    if (!this.dim_)
-      this.dim_ = new Dimension();
-    this.dim_.assignZero() ;
-    this.cnv_ = null ;
-    this.cnvPfx_ = 1 ;
+    this.name_ = "";
+    this.magnitude_ = 1;
+    if (!this.dim_) this.dim_ = new Dimension();
+    this.dim_.assignZero();
+    this.cnv_ = null;
+    this.cnvPfx_ = 1;
     return this;
-
   } // end assignUnity
-
 
   /**
    * This assigns one or more values, as provided in the hash passed in,
@@ -236,38 +246,31 @@ export class Unit {
    *        of name_.
    * @return nothing
    */
+
+
   assignVals(vals) {
     for (let key in vals) {
-      let uKey = !(key.charAt(key.length - 1)) === '_' ? key + '_' : key ;
-      if (this.hasOwnProperty(uKey))
-        this[uKey] = vals[key];
-      else
-        throw(new Error(`Parameter error; ${key} is not a property of a Unit`));
+      let uKey = !key.charAt(key.length - 1) === '_' ? key + '_' : key;
+      if (this.hasOwnProperty(uKey)) this[uKey] = vals[key];else throw new Error(`Parameter error; ${key} is not a property of a Unit`);
     }
   } // end assignVals
-
 
   /**
    * This creates a clone of this unit.
    *
    * @return the clone
    */
+
+
   clone() {
-    let retUnit = new Unit() ;
+    let retUnit = new Unit();
     Object.getOwnPropertyNames(this).forEach(val => {
       if (val === 'dim_') {
-        if (this['dim_'])
-          retUnit['dim_'] = this['dim_'].clone();
-        else
-          retUnit['dim_'] = null;
-      }
-      else
-        retUnit[val] = this[val];
+        if (this['dim_']) retUnit['dim_'] = this['dim_'].clone();else retUnit['dim_'] = null;
+      } else retUnit[val] = this[val];
     });
-    return retUnit ;
-
+    return retUnit;
   } // end clone
-
 
   /**
    * This assigns all properties of a unit passed to it to this unit.
@@ -275,20 +278,17 @@ export class Unit {
    * @param unit2 the unit whose properties are to be assigned to this one.
    * @return nothing; this unit is updated
    */
+
+
   assign(unit2) {
     Object.getOwnPropertyNames(unit2).forEach(val => {
       if (val === 'dim_') {
-        if (unit2['dim_'])
-          this['dim_'] = unit2['dim_'].clone();
-        else
-          this['dim_'] = null;
-      }
-      else {
+        if (unit2['dim_']) this['dim_'] = unit2['dim_'].clone();else this['dim_'] = null;
+      } else {
         this[val] = unit2[val];
       }
     });
   } // end assign
-
 
   /**
    * This determines whether or not object properties of the unit
@@ -299,16 +299,11 @@ export class Unit {
    * @param unit2 the unit whose properties are to be checked.
    * @return boolean indicating whether or not they match
    */
+
+
   equals(unit2) {
-
-    return (this.magnitude_ === unit2.magnitude_ &&
-            this.cnv_ === unit2.cnv_ &&
-            this.cnvPfx_ === unit2.cnvPfx_ &&
-            ((this.dim_ === null && unit2.dim_ === null) ||
-             this.dim_.equals(unit2.dim_)));
-
+    return this.magnitude_ === unit2.magnitude_ && this.cnv_ === unit2.cnv_ && this.cnvPfx_ === unit2.cnvPfx_ && (this.dim_ === null && unit2.dim_ === null || this.dim_.equals(unit2.dim_));
   } // end equals
-
 
   /**
    * This method compares every attribute of two objects to determine
@@ -317,28 +312,24 @@ export class Unit {
    * @param unit2 the unit that is to be compared to this unit
    * @return boolean indicating whether or not every attribute matches
    */
-  fullEquals(unit2) {
 
+
+  fullEquals(unit2) {
     let thisAttr = Object.keys(this).sort();
     let u2Attr = Object.keys(unit2).sort();
-
-    let keyLen = thisAttr.length ;
-    let match = (keyLen === u2Attr.length);
-
-    // check each attribute.   Dimension objects have to checked using
+    let keyLen = thisAttr.length;
+    let match = keyLen === u2Attr.length; // check each attribute.   Dimension objects have to checked using
     // the equals function of the Dimension class.
+
     for (let k = 0; k < keyLen && match; k++) {
       if (thisAttr[k] === u2Attr[k]) {
-        if (thisAttr[k] === 'dim_')
-          match = this.dim_.equals(unit2.dim_);
-        else
-          match = this[thisAttr[k]] === unit2[thisAttr[k]];
-      }
-      else
-        match = false ;
+        if (thisAttr[k] === 'dim_') match = this.dim_.equals(unit2.dim_);else match = this[thisAttr[k]] === unit2[thisAttr[k]];
+      } else match = false;
     } // end do for each key and attribute
-    return match ;
-  }// end of fullEquals
+
+
+    return match;
+  } // end of fullEquals
 
   /**
    * This returns the value of the property named by the parameter
@@ -349,13 +340,12 @@ export class Unit {
    * @return the requested property, if found for this unit
    * @throws an error if the property is not found for this unit
    */
+
+
   getProperty(propertyName) {
-    let uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName :
-                                             propertyName + '_' ;
-    return this[uProp] ;
-
+    let uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName : propertyName + '_';
+    return this[uProp];
   } // end getProperty
-
 
   /**
    * Takes a measurement consisting of a number of units and a unit and returns
@@ -376,78 +366,70 @@ export class Unit {
    * @throws an error if the dimension of the fromUnit differs from this unit's
    * dimension
    */
+
+
   convertFrom(num, fromUnit) {
-    let newNum = 0.0 ;
+    let newNum = 0.0;
+    if (this.isArbitrary_) throw new Error(`Attempt to convert arbitrary unit ${this.name_}`);
+    if (fromUnit.isArbitrary_) throw new Error(`Attempt to convert to arbitrary unit ${fromUnit.name_}`); // reject request if both units have dimensions that are not equal
 
-    if (this.isArbitrary_)
-      throw (new Error(`Attempt to convert arbitrary unit ${this.name_}`));
-    if (fromUnit.isArbitrary_)
-      throw (new Error(`Attempt to convert to arbitrary unit ${fromUnit.name_}`));
-
-    // reject request if both units have dimensions that are not equal
-    if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
+    if (fromUnit.dim_ && this.dim_ && !fromUnit.dim_.equals(this.dim_)) {
       // check first to see if a mole<->mass conversion is appropriate
       if (this.isMoleMassCommensurable(fromUnit)) {
-        throw(new Error(Ucum.needMoleWeightMsg_));
+        throw new Error(Ucum.needMoleWeightMsg_);
+      } else {
+        throw new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` + `to ${this.csCode_}.`);
       }
-      else {
-        throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
-          `to ${this.csCode_}.`));
-      }
-    }
-    // reject request if there is a "from" dimension but no "to" dimension
+    } // reject request if there is a "from" dimension but no "to" dimension
+
+
     if (fromUnit.dim_ && (!this.dim_ || this.dim_.isNull())) {
-      throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
-        `to ${this.csCode_}.`));
-    }
+      throw new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` + `to ${this.csCode_}.`);
+    } // reject request if there is a "to" dimension but no "from" dimension
 
-    // reject request if there is a "to" dimension but no "from" dimension
+
     if (this.dim_ && (!fromUnit.dim_ || fromUnit.dim_.isNull())) {
-      throw(new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` +
-        `to ${this.csCode_}.`));
+      throw new Error(`Sorry.  ${fromUnit.csCode_} cannot be converted ` + `to ${this.csCode_}.`);
     }
 
-    let fromCnv = fromUnit.cnv_ ;
-    let fromMag = fromUnit.magnitude_ ;
-
-    // If the same conversion function is specified for both units, which
+    let fromCnv = fromUnit.cnv_;
+    let fromMag = fromUnit.magnitude_; // If the same conversion function is specified for both units, which
     // includes neither unit having a conversion function, multiply the
     // "from" unit's magnitude by the number passed in and then divide
     // that result by this unit's magnitude.  Do this for units with
     // and without dimension vectors.  PROBLEM with 2 non-commensurable
     // units with no dimension vector or function, e.g., byte to mol
-    if (fromCnv === this.cnv_) {
-      newNum = (num * fromMag) / this.magnitude_;
-    }
-    // else use a function to get the number to be returned
-    else {
-      let x = 0.0 ;
-      if (fromCnv != null) {
-        // turn num * fromUnit.magnitude into its ratio scale equivalent,
-        // e.g., convert Celsius to Kelvin
-        let fromFunc = funcs.forName(fromCnv);
-        x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
-        //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
-      }
-      else {
-        x = num * fromMag;
-      }
 
-      if (this.cnv_ != null) {
-        // turn mag * origUnit on ratio scale into a non-ratio unit,
-        // e.g. convert Kelvin to Fahrenheit
-        let toFunc = funcs.forName(this.cnv_);
-        newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
-      }
-      else {
-        newNum = x / this.magnitude_;
-      }
-    } // end if either unit has a conversion function
+    if (fromCnv === this.cnv_) {
+      newNum = num * fromMag / this.magnitude_;
+    } // else use a function to get the number to be returned
+    else {
+        let x = 0.0;
+
+        if (fromCnv != null) {
+          // turn num * fromUnit.magnitude into its ratio scale equivalent,
+          // e.g., convert Celsius to Kelvin
+          let fromFunc = _ucumFunctions.default.forName(fromCnv);
+
+          x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag; //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
+        } else {
+          x = num * fromMag;
+        }
+
+        if (this.cnv_ != null) {
+          // turn mag * origUnit on ratio scale into a non-ratio unit,
+          // e.g. convert Kelvin to Fahrenheit
+          let toFunc = _ucumFunctions.default.forName(this.cnv_);
+
+          newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
+        } else {
+          newNum = x / this.magnitude_;
+        }
+      } // end if either unit has a conversion function
+
 
     return newNum;
-
   } // end convertFrom
-
 
   /**
    * Takes a number and a target unit and returns the number for a measurement
@@ -465,12 +447,11 @@ export class Unit {
    * @throws an error if the dimension of the toUnit differs from this unit's
    *   dimension
    */
+
+
   convertTo(num, toUnit) {
-
-    return toUnit.convertFrom(num, this) ;
-
+    return toUnit.convertFrom(num, this);
   } // end convertTo
-
 
   /**
    * Takes a given number of this unit returns the number of this unit
@@ -482,16 +463,13 @@ export class Unit {
    * @param num the number for the coherent version of this unit
    * @return the number for the coherent version of this unit
    */
+
+
   convertCoherent(num) {
-
     // convert mag' * u' into canonical number * u on ratio scale
-    if(this.cnv_ !== null)
-      num = this.cnv_.f_from(num / this.cnvPfx_) * this.magnitude_;
-
+    if (this.cnv_ !== null) num = this.cnv_.f_from(num / this.cnvPfx_) * this.magnitude_;
     return num;
-
   } // end convertCoherent
-
 
   /**
    * Mutates this unit into a coherent unit and converts a given number of
@@ -501,33 +479,32 @@ export class Unit {
    * @return the number of this unit after conversion
    * @throws an error if the dimensions differ
    */
+
+
   mutateCoherent(num) {
-
     // convert mu' * u' into canonical mu * u on ratio scale
-    num = this.convertCoherent(num) ;
+    num = this.convertCoherent(num); // mutate to coherent unit
 
-    // mutate to coherent unit
     this.magnitude_ = 1;
     this.cnv_ = null;
     this.cnvPfx_ = 1;
-    this.name_ = "";
-
-    // build a name as a term of coherent base units
+    this.name_ = ""; // build a name as a term of coherent base units
     // This is probably ALL WRONG and a HORRIBLE MISTAKE
     // but until we figure out what the heck the name being
     // built here really is, it will have to stay.
+
     for (let i = 0, max = Dimension.getMax(); i < max; i++) {
       let elem = this.dim_.getElementAt(i);
+
       let tabs = this._getUnitTables();
+
       let uA = tabs.getUnitsByDimension(new Dimension(i));
-      if(uA == null)
-        throw(new Error(`Can't find base unit for dimension ${i}`));
+      if (uA == null) throw new Error(`Can't find base unit for dimension ${i}`);
       this.name_ = uA.name + elem;
     }
+
     return num;
-
   } // end mutateCoherent
-
 
   /**
    * Calculates the number of units that would result from converting a unit
@@ -543,22 +520,24 @@ export class Unit {
    *  conversion is being made
    * @return the equivalent amount in molUnit
    */
+
+
   convertMassToMol(amt, molUnit, molecularWeight) {
     // The prefix values that have been applied to this unit, which is the mass
     // (grams) unit, are reflected in the magnitude.  So the number of moles
     // represented by this unit equals the number of grams -- amount * magnitude
     // divided by the molecular Weight
-    let molAmt = (this.magnitude_ * amt)/molecularWeight ;
-    // The molUnit's basic magnitude, before prefixes are applied,
+    let molAmt = this.magnitude_ * amt / molecularWeight; // The molUnit's basic magnitude, before prefixes are applied,
     // is avogadro's number, get that and divide it out of the current magnitude.
-    let tabs = this._getUnitTables();
-    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
-    let molesFactor = molUnit.magnitude_ / avoNum ;
-    // return the molAmt divided by the molesFactor as the number of moles
-    // for the molUnit
-    return molAmt/molesFactor ;
-  }
 
+    let tabs = this._getUnitTables();
+
+    let avoNum = tabs.getUnitByCode('mol').magnitude_;
+    let molesFactor = molUnit.magnitude_ / avoNum; // return the molAmt divided by the molesFactor as the number of moles
+    // for the molUnit
+
+    return molAmt / molesFactor;
+  }
   /**
    * Calculates the number of units that would result from converting a unit
    * expressed in moles to a unit expressed in mass (grams).  The "this" unit
@@ -573,28 +552,29 @@ export class Unit {
    *  conversion is being made
    * @return the equivalent amount in massUnit
    */
+
+
   convertMolToMass(amt, massUnit, molecularWeight) {
     // A simple mole unit has a magnitude of avogadro's number.  Get that
     // number now (since not everyone agrees on what it is, and what is
     // being used in this system might change).
     let tabs = this._getUnitTables();
-    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
-    // Determine what prefix values (mg or mg/dL, etc.) have been applied to
+
+    let avoNum = tabs.getUnitByCode('mol').magnitude_; // Determine what prefix values (mg or mg/dL, etc.) have been applied to
     // this unit by dividing the simple mole unit magnitude out of the
     // current mole unit magnitude.
-    let molesFactor = this.magnitude_ / avoNum ;
-    // The number of grams (mass) is equal to the number of moles (amt)
+
+    let molesFactor = this.magnitude_ / avoNum; // The number of grams (mass) is equal to the number of moles (amt)
     // times the molecular weight.  We also multiply that by the prefix values
     // applied to the current unit (molesFactor) to get the grams for this
     // particular unit.
-    let massAmt = (molesFactor * amt) * molecularWeight ;
-    // Finally, we return the mass amount/grams for this particular unit
+
+    let massAmt = molesFactor * amt * molecularWeight; // Finally, we return the mass amount/grams for this particular unit
     // divided by any effects of prefixes applied to the "to" unit, which
     // is assumed to be some form of a gram unit
-    return massAmt / massUnit.magnitude_ ;
+
+    return massAmt / massUnit.magnitude_;
   }
-
-
   /**
    * Mutates this unit into a unit on a ratio scale and converts a specified
    * number of units to an appropriate value for this converted unit
@@ -603,14 +583,11 @@ export class Unit {
    * @return the magnitude of this unit after it's converted
    * @throw an error if the dimensions differ
    */
+
+
   mutateRatio(num) {
-    if (this.cnv_ == null)
-      return this.mutateCoherent(num);
-    else
-      return num;
-
+    if (this.cnv_ == null) return this.mutateCoherent(num);else return num;
   } // end mutateRatio
-
 
   /**
    * Multiplies this unit with a scalar. Special meaning for
@@ -621,24 +598,18 @@ export class Unit {
    * @param s the value by which this unit is to be multiplied
    * @return a copy this unit multiplied by s
    * */
-  multiplyThis(s) {
 
-    let retUnit = this.clone() ;
-    if (retUnit.cnv_ != null)
-      retUnit.cnvPfx_ *= s;
-    else
-      retUnit.magnitude_ *= s;
+
+  multiplyThis(s) {
+    let retUnit = this.clone();
+    if (retUnit.cnv_ != null) retUnit.cnvPfx_ *= s;else retUnit.magnitude_ *= s;
     let mulVal = s.toString();
     retUnit.name_ = this._concatStrs(mulVal, '*', this.name_, '[', ']');
     retUnit.csCode_ = this._concatStrs(mulVal, '.', this.csCode_, '(', ')');
     retUnit.ciCode_ = this._concatStrs(mulVal, '.', this.ciCode_, '(', ')');
-    retUnit.printSymbol_ = this._concatStrs(mulVal, '.', this.printSymbol_,
-        '(', ')');
-
+    retUnit.printSymbol_ = this._concatStrs(mulVal, '.', this.printSymbol_, '(', ')');
     return retUnit;
-
   } // end multiplyThis
-
 
   /**
    * Multiplies this unit with another unit. If one of the
@@ -651,78 +622,53 @@ export class Unit {
    * @throws an error if one of the units is not on a ratio-scale
    *         and the other is not dimensionless.
    */
-  multiplyThese(unit2) {
 
-    var retUnit = this.clone() ;
+
+  multiplyThese(unit2) {
+    var retUnit = this.clone();
 
     if (retUnit.cnv_ != null) {
-      if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero()))
-        retUnit.cnvPfx_ *= unit2.magnitude_;
-      else
-        throw (new Error(`Attempt to multiply non-ratio unit ${retUnit.name_} ` +
-          'failed.'));
+      if (unit2.cnv_ == null && (!unit2.dim_ || unit2.dim_.isZero())) retUnit.cnvPfx_ *= unit2.magnitude_;else throw new Error(`Attempt to multiply non-ratio unit ${retUnit.name_} ` + 'failed.');
     } // end if this unit has a conversion function
-
     else if (unit2.cnv_ != null) {
-      if (!retUnit.dim_ || retUnit.dim_.isZero()) {
-        retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
-        retUnit.cnv_ = unit2.cnv_ ;
-      }
-      else
-        throw (new Error(`Attempt to multiply non-ratio unit ${unit2.name_}`));
-    } // end if unit2 has a conversion function
-
-    // else neither unit has a conversion function
-    else {
-      retUnit.magnitude_ *= unit2.magnitude_;
-    } // end if unit2 does not have a conversion function
-
+        if (!retUnit.dim_ || retUnit.dim_.isZero()) {
+          retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
+          retUnit.cnv_ = unit2.cnv_;
+        } else throw new Error(`Attempt to multiply non-ratio unit ${unit2.name_}`);
+      } // end if unit2 has a conversion function
+      // else neither unit has a conversion function
+      else {
+          retUnit.magnitude_ *= unit2.magnitude_;
+        } // end if unit2 does not have a conversion function
     // If this.dim_ isn't there, clone the dimension in unit2 - if dimVec_
     // is a dimension in unit2.dim_; else just transfer it to this dimension
-    if (!retUnit.dim_ || (retUnit.dim_ && !retUnit.dim_.dimVec_)) {
-      if (unit2.dim_)
-        retUnit.dim_ = unit2.dim_.clone();
-      else
-        retUnit.dim_ = unit2.dim_;
-    }
-    // Else this.dim_ is there.  If there is a dimension for unit2,
+
+
+    if (!retUnit.dim_ || retUnit.dim_ && !retUnit.dim_.dimVec_) {
+      if (unit2.dim_) retUnit.dim_ = unit2.dim_.clone();else retUnit.dim_ = unit2.dim_;
+    } // Else this.dim_ is there.  If there is a dimension for unit2,
     // add it to this one.
     else if (unit2.dim_ && unit2.dim_ instanceof Dimension) {
-      retUnit.dim_.add(unit2.dim_);
-    }
-
-    // Concatenate the unit info (name, code, etc) for all cases
+        retUnit.dim_.add(unit2.dim_);
+      } // Concatenate the unit info (name, code, etc) for all cases
     // where the multiplication was performed (an error wasn't thrown)
+
+
     retUnit.name_ = this._concatStrs(retUnit.name_, '*', unit2.name_, '[', ']');
-    retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '.', unit2.csCode_,
-      '(', ')');
-    if (retUnit.ciCode_ && unit2.ciCode_)
-      retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '.', unit2.ciCode_,
-        '(', ')');
-    else if (unit2.ciCode_)
-      retUnit.ciCode_ = unit2.ciCode_;
+    retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '.', unit2.csCode_, '(', ')');
+    if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '.', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
     retUnit.guidance_ = '';
-    if (retUnit.printSymbol_ && unit2.printSymbol_)
-      retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.',
-        unit2.printSymbol_, '(', ')');
-    else if (unit2.printSymbol_)
-      retUnit.printSymbol_ = unit2.printSymbol_;
-
-    // Update the mole exponent count by adding the count for unit2 to the
+    if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_; // Update the mole exponent count by adding the count for unit2 to the
     // count for this unit.
-    retUnit.moleExp_ = retUnit.moleExp_ + unit2.moleExp_ ;
 
-    // A unit that has the arbitrary attribute taints any unit created from it
+    retUnit.moleExp_ = retUnit.moleExp_ + unit2.moleExp_; // A unit that has the arbitrary attribute taints any unit created from it
     // via an arithmetic operation.  Taint accordingly
     // if (!retUnit.isMole_)
     //   retUnit.isMole_ = unit2.isMole_ ;
-     if (!retUnit.isArbitrary_)
-       retUnit.isArbitrary_ = unit2.isArbitrary_;
 
-    return retUnit ;
-
+    if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
+    return retUnit;
   } // end multiplyThese
-
 
   /**
    * Divides this unit by another unit. If this unit is not on a ratio
@@ -734,71 +680,43 @@ export class Unit {
    * @return this unit after it is divided by unit2
    * @throws an error if either of the units is not on a ratio scale.
    * */
+
+
   divide(unit2) {
-
     var retUnit = this.clone();
-
-    if (retUnit.cnv_ != null)
-      throw (new Error(`Attempt to divide non-ratio unit ${retUnit.name_}`));
-    if (unit2.cnv_ != null)
-      throw (new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`));
-
-    if (retUnit.name_ && unit2.name_)
-      retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');
-    else if (unit2.name_)
-      retUnit.name_ = unit2.invertString(unit2.name_);
-
-    retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '/', unit2.csCode_,
-      '(', ')');
-
-    if (retUnit.ciCode_ && unit2.ciCode_)
-      retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '/', unit2.ciCode_,
-      '(', ')');
-    else if (unit2.ciCode_)
-      retUnit.ciCode_ = unit2.invertString(unit2.ciCode_) ;
-
+    if (retUnit.cnv_ != null) throw new Error(`Attempt to divide non-ratio unit ${retUnit.name_}`);
+    if (unit2.cnv_ != null) throw new Error(`Attempt to divide by non-ratio unit ${unit2.name_}`);
+    if (retUnit.name_ && unit2.name_) retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
+    retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '/', unit2.csCode_, '(', ')');
+    if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '/', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.invertString(unit2.ciCode_);
     retUnit.guidance_ = '';
-
     retUnit.magnitude_ /= unit2.magnitude_;
-
-    if (retUnit.printSymbol_ && unit2.printSymbol_)
-      retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '/',
-        unit2.printSymbol_, '(', ')');
-    else if (unit2.printSymbol_)
-      retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_);
-
-    // Continue if unit2 has a dimension object.
+    if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '/', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_); // Continue if unit2 has a dimension object.
     // If this object has a dimension object, subtract unit2's dim_ object from
     // this one. The sub method will take care of cases where the dimVec_ arrays
     // are missing on one or both dim_ objects.
+
     if (unit2.dim_) {
       if (retUnit.dim_) {
-        if (retUnit.dim_.isNull())
-          retUnit.dim_.assignZero();
+        if (retUnit.dim_.isNull()) retUnit.dim_.assignZero();
         retUnit.dim_ = retUnit.dim_.sub(unit2.dim_);
       } // end if this.dim_ exists
-
       // Else if this dim_ object is missing, clone unit2's dim_ object
       // and give the inverted clone to this unit.
-      else
-        retUnit.dim_ = unit2.dim_.clone().minus();
+      else retUnit.dim_ = unit2.dim_.clone().minus();
     } // end if unit2 has a dimension object
-
     // Update the mole exponent count by subtracting the count for unit2 from
     // the // count for this unit.
-    retUnit.moleExp_ = retUnit.moleExp_ - unit2.moleExp_ ;
 
-    // A unit that has the arbitrary attribute taints any unit created from
+
+    retUnit.moleExp_ = retUnit.moleExp_ - unit2.moleExp_; // A unit that has the arbitrary attribute taints any unit created from
     // it via an arithmetic operation.  Taint accordingly
     // if (!retUnit.isMole_)
     //   retUnit.isMole_ = unit2.isMole_ ;
-    if (!retUnit.isArbitrary_)
-      retUnit.isArbitrary_ = unit2.isArbitrary_;
 
+    if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
     return retUnit;
-
   } // end divide
-
 
   /**
    * Invert this unit with respect to multiplication. If this unit is not
@@ -810,18 +728,15 @@ export class Unit {
    * @return this unit after being inverted
    * @throws and error if this unit is not on a ratio scale
    */
+
+
   invert() {
-
-    if (this.cnv_ != null)
-      throw (new Error(`Attempt to invert a non-ratio unit - ${this.name_}`));
-
+    if (this.cnv_ != null) throw new Error(`Attempt to invert a non-ratio unit - ${this.name_}`);
     this.name_ = this.invertString(this.name_);
-    this.magnitude_ = 1/this.magnitude_ ;
+    this.magnitude_ = 1 / this.magnitude_;
     this.dim_.minus();
     return this;
-
   } // end invert
-
 
   /**
    * Inverts a string, where the string is assumed to be a code or a name
@@ -831,20 +746,28 @@ export class Unit {
    * @param the string to be inverted
    * @return the inverted string
    */
-  invertString(theString) {
 
+
+  invertString(theString) {
     if (theString.length > 0) {
       let stringRep = theString.replace('/', "!").replace('.', '/').replace("!", '.');
-      switch(stringRep.charAt(0)) {
-        case '.' : theString = stringRep.substr(1); break;
-        case '/' : theString = stringRep; break;
-        default  : theString = "/" + stringRep;
+
+      switch (stringRep.charAt(0)) {
+        case '.':
+          theString = stringRep.substr(1);
+          break;
+
+        case '/':
+          theString = stringRep;
+          break;
+
+        default:
+          theString = "/" + stringRep;
       }
     }
+
     return theString;
-
   } // end invertString
-
 
   /**
    * This function handles concatenation of two strings and an operator.
@@ -860,13 +783,11 @@ export class Unit {
    *  a string
    * @returns the built string
    */
+
+
   _concatStrs(str1, operator, str2, startChar, endChar) {
-
-    return this._buildOneString(str1, startChar, endChar) +
-      operator + this._buildOneString(str2, startChar, endChar) ;
+    return this._buildOneString(str1, startChar, endChar) + operator + this._buildOneString(str2, startChar, endChar);
   }
-
-
   /**
    * This function handles creation of one string to be included in a
    * concatenated string.   Basically it checks to see if the string
@@ -881,27 +802,25 @@ export class Unit {
    * @param endChar ending enclosing character
    * @returns the string
    */
+
+
   _buildOneString(str, startChar, endChar) {
-    let ret = '' ;
+    let ret = '';
+
     if (intUtils_.isNumericString(str)) {
       ret = str;
-    }
-    else {
+    } else {
       if (str.charAt(0) === '(' || str.charAt(0) === '[') {
         ret = str;
-      }
-      else if (str.includes('.') || str.includes('/') ||
-               str.includes('*') || str.includes(' ')) {
-        ret = startChar + str + endChar ;
-      }
-      else {
-        ret = str ;
+      } else if (str.includes('.') || str.includes('/') || str.includes('*') || str.includes(' ')) {
+        ret = startChar + str + endChar;
+      } else {
+        ret = str;
       }
     }
-    return ret ;
+
+    return ret;
   }
-
-
   /**
    * Raises the unit to a power.  For example
    *  kg.m/s2 raised to the -2 power would be kg-2.m-2/s-4
@@ -919,62 +838,66 @@ export class Unit {
    * @return this unit after it is raised
    * @throws an error if this unit is not on a ratio scale.
    */
+
+
   power(p) {
-
-    if (this.cnv_ != null)
-      throw (new Error(`Attempt to raise a non-ratio unit, ${this.name_}, ` +
-                       'to a power.'));
-
-    //this.name_ = UnitString.pow(this.name_, p);
+    if (this.cnv_ != null) throw new Error(`Attempt to raise a non-ratio unit, ${this.name_}, ` + 'to a power.'); //this.name_ = UnitString.pow(this.name_, p);
     // the above line is replaced with the code below, as the pow method
     // never actually existing in the UnitString class.  (Tried to use
     // Schadow java code but this way ended up being a lot easier).
-    let uStr = this.csCode_ ;
-    let uArray = uStr.match(/([./]|[^./]+)/g) ;
+
+    let uStr = this.csCode_;
+    let uArray = uStr.match(/([./]|[^./]+)/g);
     let arLen = uArray.length;
 
     for (let i = 0; i < arLen; i++) {
-      let un = uArray[i] ;
+      let un = uArray[i];
+
       if (un !== '/' && un !== '.') {
         let nun = parseInt(un);
-        if (isInteger(nun))
-          uArray[i] = (Math.pow(nun, p).toString());
-        else {
-          let uLen = un.length ;
+        if (isInteger(nun)) uArray[i] = Math.pow(nun, p).toString();else {
+          let uLen = un.length;
+
           for (let u = uLen - 1; u >= 0; u--) {
             let uChar = parseInt(un[u]);
+
             if (!isInteger(uChar)) {
               if (un[u] === '-' || un[u] === '+') {
                 u--;
               }
+
               if (u < uLen - 1) {
                 let exp = parseInt(un.substr(u));
                 exp = Math.pow(exp, p);
                 uArray[i] = un.substr(0, u) + exp.toString();
                 u = -1;
-              }
-              else {
+              } else {
                 uArray[i] += p.toString();
                 u = -1;
               } // end if there are/aren't some numbers at the end
+
+
               u = -1;
             } // end if this character is not a number
+
           } // end searching backwards for start of exponent
+
         } // end if this element is not a number
       } // end if the current element is not an operator
+
     } // end do for each element of the units array
-
     // reassemble the updated units array to a string
-    this.csCode_ = uArray.join('');
 
+
+    this.csCode_ = uArray.join('');
     this.magnitude_ = Math.pow(this.magnitude_, p);
+
     if (this.dim_) {
       this.dim_.mul(p);
     }
+
     return this;
-
   } // end power
-
 
   /*
    * This function tests this unit against the unit passed in to see if the
@@ -992,26 +915,28 @@ export class Unit {
    * @param unit2 the unit to be compared to this one
    * @returns boolean indicating commensurability
    */
+
+
   isMoleMassCommensurable(unit2) {
     let tabs = this._getUnitTables();
+
     let d = tabs.getMassDimensionIndex();
-    let commensurable = false ;
+    let commensurable = false;
+
     if (this.moleExp_ === 1 && unit2.moleExp_ === 0) {
       let testDim = this.dim_.clone();
       let curVal = testDim.getElementAt(d);
-      testDim.setElementAt(d, (curVal + this.moleExp_));
-      commensurable = (testDim.equals(unit2.dim_));
-    }
-    else if (unit2.moleExp_ === 1 && this.moleExp_ === 0) {
+      testDim.setElementAt(d, curVal + this.moleExp_);
+      commensurable = testDim.equals(unit2.dim_);
+    } else if (unit2.moleExp_ === 1 && this.moleExp_ === 0) {
       let testDim = unit2.dim_.clone();
       let curVal = testDim.getElementAt(d);
-      testDim.setElementAt(d, (curVal + unit2.moleExp_));
-      commensurable = (testDim.equals(this.dim_));
+      testDim.setElementAt(d, curVal + unit2.moleExp_);
+      commensurable = testDim.equals(this.dim_);
     }
-    return commensurable ;
+
+    return commensurable;
   }
-
-
   /**
    * This returns the UnitTables singleton object.  Including the require
    * statement included here causes a circular dependency condition that
@@ -1020,10 +945,15 @@ export class Unit {
    *
    * @private
    */
+
+
   _getUnitTables() {
-    if (!UnitTables)
-      UnitTables = require('./unitTables.js').UnitTables;
+    if (!UnitTables) UnitTables = require('./unitTables.js').UnitTables;
     return UnitTables.getInstance();
   }
 
 } // end Unit class
+
+
+exports.Unit = Unit;
+//# sourceMappingURL=unit.js.map

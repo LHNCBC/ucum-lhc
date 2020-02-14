@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] 2020-01-27
+### Changed
+- This main file of the npm package is now a file that uses CommonJS modules
+  (i.e., NodeJs-compatible) instead of a browserified bundle.  The problem with
+  serving a browserfied bundle via npm was that if you pulled it in and then
+  tried to browserify it along with application code, an exception would be thrown
+  because browserify has already run on part of the code.  The change should be
+  transparent to the user of the package, but just in case there is some
+  unforeseen consequence, I am incrementing the major version.   If your
+  application needs the browserified version, that is still available in the
+  browser-dist directory.
+
 ## [3.0.1] 2020-01-07
 ### Fixed
 - Corrected processing so that strings like "1e2" are no longer considered valid

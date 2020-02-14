@@ -6,13 +6,12 @@
  */
 
 var assert = require('assert');
-var UcumJsonDefs = require('../source/ucumJsonDefs.js').UcumJsonDefs ;
-var UTables = require("../source/unitTables.js").UnitTables;
-var UnitObj = require("../source/unit.js").Unit;
+var { ucumJsonDefs } = require('../source-cjs/ucumJsonDefs.js') ;
+var UTables = require("../source-cjs/unitTables.js").UnitTables;
+var UnitObj = require("../source-cjs/unit.js").Unit;
 
 var uTabs = UTables.getInstance();
-var uDefs = UcumJsonDefs.getInstance();
-uDefs.loadJsonDefs();
+ucumJsonDefs.loadJsonDefs();
 
 
 describe('Test getUnitBySynonym method', function() {

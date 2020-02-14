@@ -4,14 +4,14 @@
  *
  */
 
-var JDefs = require('../source/ucumJsonDefs.js').UcumJsonDefs;
-var Unit = require('../source/unit.js').Unit;
-var UnitTables = require('../source/unitTables.js').UnitTables;
-var UnitString = require('../source/unitString.js').UnitString;
+var { ucumJsonDefs } = require('../source-cjs/ucumJsonDefs.js') ;
+var Unit = require('../source-cjs/unit.js').Unit;
+var UnitTables = require('../source-cjs/unitTables.js').UnitTables;
+var UnitString = require('../source-cjs/unitString.js').UnitString;
 
 var uTab = UnitTables.getInstance();
 
-export class UcumTestUtils {
+class UcumTestUtils {
 
   constructor() {
   }
@@ -32,8 +32,7 @@ export class UcumTestUtils {
     let problems = [];
 
     // Load the data
-    let jDefs = JDefs.getInstance();
-    jDefs.loadJsonDefs();
+    ucumJsonDefs.loadJsonDefs();
 
     let uString = UnitString.getInstance();
     let parseResp = null;
@@ -156,3 +155,4 @@ export class UcumTestUtils {
 } // end UcumTestUtils
 
 
+module.exports = {UcumTestUtils};
