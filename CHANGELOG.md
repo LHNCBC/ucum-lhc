@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.1] 2020-02-14
+### Fixed
+- 4.0.0 was just published today, and is missing a data file in the npm package.
+  This version fixes that.
+
 ## [4.0.0] 2020-01-27
 ### Changed
 - This main file of the npm package is now a file that uses CommonJS modules
