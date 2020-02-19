@@ -467,7 +467,7 @@
       "csCode_": "10*",
       "ciCode_": "10*",
       "property_": "number",
-      "magnitude_": "10",
+      "magnitude_": 10,
       "dim_": {
         "dimVec_": [
           0,
@@ -505,7 +505,7 @@
       "csCode_": "10^",
       "ciCode_": "10^",
       "property_": "number",
-      "magnitude_": "10",
+      "magnitude_": 10,
       "dim_": {
         "dimVec_": [
           0,
