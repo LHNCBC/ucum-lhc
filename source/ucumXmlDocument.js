@@ -244,7 +244,7 @@ export class UcumXmlDocument {
           attrs['baseFactor_'] = 1 ;
         }
         else if (attrs['csCode_'] === '[pH]') {
-          attrs['baseFactor_'] = funcNode.attr.value ;
+          attrs['baseFactor_'] = parseFloat(funcNode.attr.value) ;
         }
         else {
           let slashPos = attrs['csUnitString_'].indexOf('/');
@@ -266,7 +266,7 @@ export class UcumXmlDocument {
           }
           // unit string = m1/s4/Hz, K, deg, V, mV, uV, nV, W, kW
           else {
-            attrs['baseFactor_'] = funcNode.attr.value;
+            attrs['baseFactor_'] = parseFloat(funcNode.attr.value);
           }
         } // end if the unit string is not 1
       } // end if the unit is special
@@ -291,7 +291,7 @@ export class UcumXmlDocument {
           attrs['baseFactor_'] = parseFloat(valNode.attr.value) ;
         }
         else {
-          attrs['baseFactor_'] = valNode.val;
+          attrs['baseFactor_'] = parseFloat(valNode.val);
         }
       } // end if this is not a special unit
 
@@ -328,7 +328,7 @@ export class UcumXmlDocument {
         else if (attrs['csUnitString_'].substr(0,3) == "10*") {
           let exp = parseInt(attrs['csUnitString_'].substr(3));
           attrs['magnitude_'] = Math.pow(10, exp) ;
-          if (attrs['baseFactor_'] !== '1') {
+          if (attrs['baseFactor_'] !== 1) {
             attrs['magnitude_'] *= attrs['baseFactor_'];
           }
         }
