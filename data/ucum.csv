@@ -1,0 +1,786 @@
+case-sensitive code,name (display),category,synonyms,LOINC property,Guidance,source
+',arc minute,Clinical,arcminutes; arcmin; arc minutes; arc mins,Angle,equal to 1/60 degree; used in optometry and opthamology (e.g. visual acuity tests),UCUM
+'',arc second,Clinical,arcseconds; arcsecs,Angle,equal to 1/60 arcminute = 1/3600 degree; used in optometry and opthamology (e.g. visual acuity tests),UCUM
+%,,Clinical,percents,FR; NFR; MFR; CFR; SFR Rto; etc. ,,UCUM
+%[slope],percent of slope,Clinical,% slope; %slope; percents slopes,VelFr; ElpotRatFr; VelRtoFr; AccelFr,,UCUM
+/(12.h),per twelve hour,Clinical,per 12 hours; 12hrs; 12 hrs; /12hrs,Rat,,LOINC
+/[arb'U],per arbitrary unit,Clinical,/arbU,InvA ,,LOINC
+/[HPF],per high power field,Clinical,/HPF; per HPF,Naric,,LOINC
+/[IU],per international unit,Clinical,international units; /IU; per IU,InvA,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+/[LPF],per low power field,Clinical,/LPF; per LPF,Naric,,LOINC
+/10*10,per 10 billion  ,Clinical,/10^10; per 10*10,NFr,"used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",LOINC
+/10*12,per trillion ,Clinical,/10^12; per 10*12,NFr,"used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",LOINC
+/10*3,per thousand,Clinical,/10^3; per 10*3,NFr,"used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",LOINC
+/10*6,per million,Clinical,/10^6; per 10*6;,NFr,"used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",LOINC
+/10*9,per billion,Clinical,/10^9; per 10*9,NFr,"used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",LOINC
+/100,per 100,Clinical,per hundred; 10^2; 10*2,NFr,"used for counting entities, e.g. blood cells; usually these kinds of terms have numerators such as moles or milligrams, and counting that amount per the number in the denominator",LOINC
+/100{cells},per 100 cells,Clinical,/100 cells; /100cells; per hundred,EntMass; EntNum; NFr,,LOINC
+/100{neutrophils},per 100 neutrophils,Clinical,/100 neutrophils; /100neutrophils; per hundred,EntMass; EntNum; NFr,,LOINC
+/100{spermatozoa},per 100 spermatozoa,Clinical,/100 spermatozoa; /100spermatozoa; per hundred,NFr,,LOINC
+/100{WBCs},per 100 white blood cells,Clinical,/100 WBCs; /100WBCs; per hundred,Ratio; NFr,,LOINC
+/a,per year,Clinical,/Years; /yrs; yearly,NRat,,LOINC
+/cm[H2O],per centimeter of water,Clinical,/cmH2O; /cm H2O; centimeters; centimetres,InvPress,,LOINC
+/d,per day,Clinical,/dy; per day,NRat,,LOINC
+/dL,per deciliter,Clinical,per dL; /deciliter; decilitre,NCnc,,LOINC
+/g,per gram,Clinical,/gm; /gram; per g,NCnt,,LOINC
+/h,per hour,Clinical,/hr; /hour; per hr,NRat,,LOINC
+/kg,per kilogram,Clinical,per kg; per kilogram,NCnt,,LOINC
+/L,per liter,Clinical,/liter; litre,NCnc,,LOINC
+/m2,per square meter,Clinical,/m^2; /m*2; /sq. m; per square meter; meter squared; metre,Naric,,LOINC
+/m3,per cubic meter,Clinical,/m^3; /m*3; /cu. m; per cubic meter; meter cubed; per m3; metre,NCncn,,LOINC
+/mg,per milligram,Clinical,/milligram; per mg,NCnt,,LOINC
+/min,per minute,Clinical,/minute; per mins; breaths beats per minute,NRat,,LOINC
+/mL,per milliliter,Clinical,/milliliter; per mL; millilitre,NCncn,,LOINC
+/mm,per millimeter,Clinical,/millimeter; per mm; millimetre,InvLen,,LOINC
+/mo,per month,Clinical,/month; per mo; monthly; month,NRat,,LOINC
+/s,per second,Clinical,/second; /sec; per sec; frequency; Hertz; Herz; Hz; becquerels; Bq; s-1; s^-1,NRat,,LOINC
+/U,per enzyme unit,Clinical,/enzyme units; per U,InvC; NCat,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+/uL,per microliter,Clinical,/microliter; microlitre; /mcl; per uL,ACnc,,LOINC
+/wk,per week,Clinical,"/week; per wk; weekly, weeks",NRat,,LOINC
+[acr_br],acre,Nonclinical,Imperial acres; British; a; ac; ar; acr,Area,the standard unit for acre used in the US and internationally,UCUM
+[acr_us],acre - US,Nonclinical,Acre USA Survey; Acre USA; survey acres,Area,an older unit based on pre 1959 US statute lengths that is still sometimes used in the US only for land survey purposes. ,UCUM
+[Amb'a'1'U],allergen unit for Ambrosia artemisiifolia,Clinical,Amb a 1 unit; Antigen E; AgE U; allergen units,Arb,"Amb a 1 is the major allergen in short ragweed, and can be converted Bioequivalent allergen units (BAU) where 350 Amb a 1 U/mL = 100,000 BAU/mL",UCUM
+[anti'Xa'U],anti factor Xa unit,Clinical,units,ACnc,[anti'Xa'U] unit is equivalent to and can be converted to IU/mL. ,UCUM
+[APL'U],APL unit,Clinical,APL units; APL U; IgA anticardiolipin; IgA Phospholipid; biologic activity of,AMass; ACnc,Units for an anti phospholipid syndrome test,UCUM
+[APL'U]/mL,APL unit per milliliter,Clinical,APL/mL; APL'U/mL; APL U/mL; APL/milliliter; IgA anticardiolipin units per milliliter; IgA Phospholipid Units; millilitre; biologic activity of,ACnc,Units for an anti phospholipid syndrome test,LOINC
+[arb'U],arbitary unit,Clinical,arbitary units; arb units; arbU,Arb,relative unit of measurement to show the ratio of test measurement to reference measurement,UCUM
+[arb'U]/mL,arbitrary unit per milliliter,Clinical,arb'U/mL; arbU/mL; arb U/mL; arbitrary units per milliliter; millilitre,ACnc,relative unit of measurement to show the ratio of test measurement to reference measurement,LOINC
+[AU],allergy unit,Clinical,allergy units; allergen units; AU,Arb,Most standard test allergy units are reported as [IU] or as %. ,LOINC
+[BAU],bioequivalent allergen unit,Clinical,BAU; Bioequivalent Allergy Units; bioequivalent allergen units,Arb,,UCUM
+[bbl_us],barrel - US,Nonclinical,bbl,Vol,"[bbl_us] is the standard unit for oil barrel, which is a unit only used in the US to measure the volume oil. ",UCUM
+[bdsk'U],Bodansky unit,Obsolete,,ACnc,Enzyme unit specific to alkaline phosphatase - better to use standard enzyme unit of U,UCUM
+[beth'U],Bethesda unit,Clinical,BU,ACnc,measures of blood coagulation inhibitior for many blood factors,UCUM
+[bf_i],board foot,Nonclinical,BDFT; FBM; BF; board feet; international,Vol,unit of volume used to measure lumber,UCUM
+[Btu],British thermal unit,Nonclinical,"BTU; B.T.U. ;
+B.Th.U.; BThU; British thermal units",Eng,"equal to the thermochemical British thermal unit equal to 1.054350 kJ; used as a measure of power in the electric power, steam generation, heating, and air conditioning industries",UCUM
+[Btu_39],British thermal unit at 39°F,Nonclinical,BTU 39F; BTU 39 F; B.T.U. 39 F; B.Th.U. 39 F; BThU 39 F; British thermal units,Eng,"equal to 1.05967 kJ; used as a measure of power in the electric power, steam generation, heating, and air conditioning industries",UCUM
+[Btu_59],British thermal unit at 59°F,Nonclinical,BTU 59 F; BTU 59F; B.T.U. 59 F; B.Th.U. 59 F; BThU 59F; British thermal units,Eng,"equal to  1.05480 kJ; used as a measure of power in the electric power, steam generation, heating, and air conditioning industries",UCUM
+[Btu_60],British thermal unit at 60°F,Nonclinical,BTU 60 F; BTU 60F; B.T.U. 60 F; B.Th.U. 60 F; BThU 60 F; British thermal units 60 F,Eng,"equal to 1.05468 kJ; used as a measure of power in the electric power, steam generation, heating, and air conditioning industries",UCUM
+[Btu_IT],international table British thermal unit,Nonclinical,BTU IT;  B.T.U. IT; B.Th.U. IT; BThU IT; British thermal units IT,Eng,"equal to 1.055 kJ; used as a measure of power in the electric power, steam generation, heating, and air conditioning industries",UCUM
+[Btu_m],mean British thermal unit,Nonclinical,"BTU mean;  B.T.U. mean; B.Th.U. mean; BThU mean; British thermal units mean;
+",Eng,"equal to 1.05587 kJ; used as a measure of power in the electric power, steam generation, heating, and air conditioning industries",UCUM
+[Btu_th],thermochemical British thermal unit,Nonclinical,BTU Th;  B.T.U. Th; B.Th.U. Th; BThU Th; thermochemical British thermal units,Eng,"equal to 1.054350 kJ; used as a measure of power in the electric power, steam generation, heating, and air conditioning industries",UCUM
+[bu_br],bushel - British,Obsolete,British bushels; imperial; br bsh; br bu; imp,Vol,Historical unit of dry volume that is rarely used today,UCUM
+[bu_us],bushel - US,Obsolete,US bushels; US bsh; US bu,Vol,Historical unit of dry volume that is rarely used today,UCUM
+[c],velocity of light in a vacuum,Constant,speed of light,Vel,equal to 299792458 m/s (approximately 3 x 10^8 m/s),UCUM
+[Cal],nutrition label Calories,Clinical,food calories; Cal; kcal,Eng,,UCUM
+[car_Au],carat of gold alloys,Nonclinical,karats; k; kt; car au; carats,MFr,unit of purity for gold alloys,UCUM
+[car_m],metric carat,Nonclinical,carats; ct; car m,Mass,unit of mass for gemstones,UCUM
+[CCID_50],50% cell culture infectious dose,Clinical,CCID50; 50% cell culture infective doses,NumThres,,UCUM
+[cft_i],cubic foot,Clinical,ft3; ft^3; ft*3; cu. ft; cubic feet; cubed; [ft_i]3; international,Vol,,UCUM
+[CFU],colony forming units,Clinical,CFU,Num,,LOINC
+[CFU]/L,colony forming units per liter,Clinical,CFU per Liter; CFU/L,NCnc,,LOINC
+[CFU]/mL,colony forming units per milliliter,Clinical,CFU per mL; CFU/mL,NCnc,,LOINC
+[Ch],French (catheter gauge) ,Clinical,"Charrières, French scales; French gauges; Fr, Fg, Ga, FR, Ch",Len; Circ; Diam,,LOINC
+[ch_br],Gunter's chain - British,Obsolete,"Gunter's Chain British; Gunters Chain British;
+Surveyor's Chain British",Len,historical unit used for land survey used only in Great Britain,UCUM
+[ch_us],Gunter's chain - US,Obsolete,surveyor's chain; Surveyor's chain USA; Gunter’s measurement; surveyor’s measurement; Gunter's Chain USA,Len,historical unit used for land survey used only in the US,UCUM
+[cicero],cicero,Obsolete,Didot's pica; ciceros; picas,Len,typography unit for typesetter's length,UCUM
+[cin_i],cubic inch,Clinical,in3; in^3; in*3; inches^3; inches*3; cu. in; cu in; cubic inches; inches cubed; cin,Vol,standard unit used in the US and internationally,UCUM
+[cml_i],circular mil,Clinical,circular mils; cml I; international,Area,,UCUM
+[cr_i],cord,Nonclinical,crd I; international cords,Vol,unit of measure of dry volume used to measure firewood equal 128 ft3,UCUM
+[crd_us],cord - US,Nonclinical,US cord; US cords; crd us; us crd,Vol,unit of measure of dry volume used to measure firewood equal 128 ft3 (the same as international cord [cr_i]),UCUM
+[cup_m],cup - US legal,Clinical,cup m; metric cups,Vol,"standard unit equal to 240 mL used in the US for nutritional labelling, as defined by the FDA. Note that this is different from the US customary cup (236.59 mL) and the metric cup used in Commonwealth nations (250 mL).",UCUM
+[cup_us],cup - US customary,Nonclinical,cup us; us cups,Vol,"Unit defined as 1/2 US pint or 16 US tablespoons ≈ 236.59 mL, which is not the standard unit defined by the FDA of 240 mL - see [cup_m] (metric cup)",UCUM
+[cyd_i],cubic yard,Nonclinical,cubic yards; cubic yds; cu yards; CYs; yards^3; yd^3; yds^3; yd3; yds3,Vol,standard unit used in the US and internationally,UCUM
+[D'ag'U],D-antigen unit (polio),Clinical,DAgU; units,Acnc,unit of potency of poliovirus vaccine used for poliomyelitis prevention reported as D antigen units/mL. The unit is poliovirus type-specific.,UCUM
+[degF],degrees Fahrenheit,Clinical,°F; deg F,Temp,,UCUM
+[degR],degrees Rankine,Obsolete,°R; °Ra; Rankine,Temp,Replaced by Kelvin,UCUM
+[degRe],degrees Réaumur,Obsolete,"°Ré, °Re, °r; Réaumur; degree Reaumur; Reaumur",Temp,replaced by Celsius,UCUM
+[den],Denier (linear mass density),Nonclinical,den; deniers,,equal to the mass in grams per 9000 meters of the fiber (1 denier = 1 strand of silk),UCUM
+[didot],didot,Obsolete,Didot point; dd; Didots Point; didots; points,Len,typography unit for typesetter's length,UCUM
+[diop],diopter (lens),Clinical,diopters; diop; dioptre; dpt; refractive power,InvLen,unit of optical power of lens represented by inverse meters (m^-1),UCUM
+[dpt_us],dry pint - US,Nonclinical,dry pints; dry pint US; US dry pint; dry pt; dpt; dpt us,Vol,"historical unit of dry volume only in the US, but is rarely used today",UCUM
+[dqt_us],dry quart - US,Nonclinical,dry quarts; dry quart US; US dry quart; dry qt; us dry qt; dqt; dqt us,Vol,"historical unit of dry volume only in the US, but is rarely used today",UCUM
+[dr_ap],dram - apothecary,Nonclinical,ʒ; drachm; apothecaries drams; dr ap; dram ap,Mass,unit still used in the US occasionally to measure amount of drugs in pharmacies,UCUM
+[dr_av],Dram mass unit,Clinical,Dram; drams avoirdupois; avoidupois dram; international dram,Mass,"unit from the avoirdupois system, which is used in the US and internationally",UCUM
+[drp],drop - metric (1/20 mL),Clinical,drop dosing units; metric drops; gtt,Vol,"standard unit used in the US and internationally for clinical medicine but note that although [drp] is defined as 1/20 milliliter, in practice, drop sizes will vary due to external factors",UCUM
+[dye'U],Dye unit,Obsolete,units,CCnc,"equivalent to the Somogyi unit, which is an enzyme unit for amylase but better to use U, the standard enzyme unit for measuring catalytic activity",UCUM
+[e],elementary charge,Constant,e; q; electric charges,,the magnitude of the electric charge carried by a single electron or proton ≈ 1.60217×10^-19 Coulombs,UCUM
+[EID_50],50% embryo infectious dose,Clinical,EID50; 50% embryo infective doses; EID50 Egg Infective Dosage,thresNum,,UCUM
+[ELU],ELISA unit,Clinical,Enzyme-Linked Immunosorbent Assay Units; ELU; EL. U,ACnc,,UCUM
+[eps_0],permittivity of vacuum - electric,Constant,ε0; Electric Constant; vacuum permittivity; permittivity of free space ,,approximately equal to 8.854 × 10^−12 F/m (farads per meter),UCUM
+[EU],Ehrlich units (urobilinogen),Clinical,EU/dL; mg{urobilinogen}/dL,ACnc,,UCUM
+[fdr_br],fluid dram - British,Nonclinical,British fluid drams; fdr br,Vol,"equal to 1/8 Imperial fluid ounce = 3.55 mL; used informally to mean small amount of liquor, especially Scotch whiskey",UCUM
+[fdr_us],fluid dram - US,Nonclinical,US fluid drams; fdr us,Vol,"equal to 1/8 US fluid ounce = 3.69 mL; used informally to mean small amount of liquor, especially Scotch whiskey",UCUM
+[FEU],fibrinogen equivalent units,Clinical,FEU,MCnc,Note both the FEU and DDU units are used to report D-dimer measurements. 1 DDU = 1/2 FFU,UCUM
+[FFU],focus forming units (cells),Clinical,FFU,EntNum,,UCUM
+[foz_br],fluid ounce - British,Clinical,British fluid ounces; Imperial fluid ounces;  br fozs; imp fozs; br fl ozs,Vol,Used only in Great Britain and other Commonwealth countries,UCUM
+[foz_m],fluid ounce - metric,Clinical,metric fluid ounces; fozs m; fl ozs m,Vol,"unit used only in the US for nutritional labelling, as set by the FDA",UCUM
+[foz_us],fluid ounce - US,Clinical,US fluid ounces; fl ozs; FO; fl. oz.; foz us,Vol,unit used only in the US,UCUM
+[ft_br],foot - British,Obsolete,British Foot; Imperial Foot; feet; imp fts; br fts,Len,,UCUM
+[ft_i],foot,Clinical,ft; fts; foot; international foot; feet; international feet; height,Len,unit used in the US and internationally,UCUM
+[ft_us],foot - US,Obsolete,US foot; foot US; us ft; ft us; height; visual distance; feet,Len,"Better to use [ft_i] which refers to the length used worldwide, including in the US;  [ft_us] may be confused with land survey units. ",UCUM
+[ft_us]/[ft_us],foot per foot - US,Clinical,ft/ft; ft per ft; feet per feet; visual acuity,LenRto,distance ratio to measure 20:20 vision,
+[fth_br],fathom - British,Obsolete,British fathoms; imperial fathoms; br fth; imp fth,Len,,UCUM
+[fth_i],fathom,Nonclinical,international fathoms,Len,unit used in the US and internationally to measure depth of water; same length as the US fathom,UCUM
+[fth_us],fathom - US,Obsolete,US fathoms; fathom USA; fth us,Len,same length as the international fathom - better to use international fathom ([fth_i]),UCUM
+[fur_us],furlong - US,Nonclinical,US furlongs; fur us,Len,distance unit in horse racing,UCUM
+[G],Newtonian constant of gravitation,Constant,G; gravitational constant; Newton's constant,,gravitational constant = 6.674×10−11 N⋅m2/kg2,UCUM
+[g],standard acceleration of free fall,Constant,standard gravity; g; ɡ0; ɡn,Accel,defined by standard = 9.80665 m/s2,UCUM
+[gal_br],gallon- British,Nonclinical,"imperial gallons, UK gallons; British gallons; br gal; imp gal",Vol,Used only in Great Britain and other Commonwealth countries,UCUM
+[gal_us],gallon - US,Nonclinical,US gallons; US liquid gallon; gal us; Queen Anne's wine gallon,Vol,only gallon unit used in the US; [gal_us] is only used in some other countries in South American and Africa to measure gasoline volume,LOINC
+[gal_wi],gallon - historical,Obsolete,"Corn Gallon British;
+Dry Gallon US; Gallons Historical; Grain Gallon British; Winchester Corn Gallon; historical winchester gallons; wi gal",Vol,historical unit of dry volume no longer used,UCUM
+[gil_br],gill - British,Nonclinical,"imperial gills; British gills; imp gill, br gill",Vol,only used in the context of alcohol volume in Great Britain,UCUM
+[gil_us],gill - US,Nonclinical,US gills; gil us,Vol,only used in the context of alcohol volume in the US,UCUM
+[GPL'U],GPL unit,Clinical,GPL Units; GPL U; IgG anticardiolipin units; IgG Phospholipid,ACnc; AMass,Units for an antiphospholipid test,UCUM
+[GPL'U]/mL,GPL unit per milliliter,Clinical,"GPL U/mL; GPL'U/mL; GPL/mL; GPL U per mL; IgG Phospholipid Units per milliliters; IgG anticardiolipin units; millilitres
+",ACnc; AMass,Units for an antiphospholipid test,LOINC
+[gr],grain,Nonclinical,gr; grains,Mass,an apothecary measure of mass rarely used today,UCUM
+[h],Planck constant,Constant,Planck's constant,,constant = 6.62607004 × 10-34 m2.kg/s; defined as quantum of action,UCUM
+[hd_i],hand,Nonclinical,hands; international,Len,used to measure horse height,UCUM
+[hnsf'U],Hounsfield unit,Clinical,HU; units,,"used to measure X-ray attenuation, especially in CT scans.",UCUM
+[HP],horsepower - mechanical,Nonclinical,imperial horsepowers,EngRat,"refers to mechanical horsepower, which is unit used to measure engine power primarily in the US. ",UCUM
+[HPF],high power field (microscope),Clinical,HPF,Area,"area visible under the maximum magnification power of the objective in microscopy (usually 400x)
+",UCUM
+[in_br],inch - British,Obsolete,imperial inches; imp in; br in; british inches,Len,,UCUM
+[in_i],inch,Clinical,inches; in; international inch; body height,Len,standard unit for inch in the US and internationally,UCUM
+[in_i'H2O],inch of water column,Clinical,inches WC; inAq; in H2O; inch of water gauge; iwg; pressure,Pres,"unit of pressure, especially in respiratory and ventilation care",UCUM
+[in_i'Hg],inch of mercury column,Clinical,inHg; in Hg; pressure; inches,Pres,unit of pressure used in US to measure barometric pressure and occasionally blood pressure (see mm[Hg] for unit used internationally),UCUM
+[in_us],inch - US,Obsolete,US inches; in us; us in;  inch US,Len,"Better to use [in_i] which refers to the length used worldwide, including in the US",UCUM
+[IR],index of reactivity (allergen),Clinical,IR; indexes,Acnc,amount of an allergen callibrated through in-vivo testing using the Stallergenes method. Usually reported in tests as IR/mL,UCUM
+[iU],international unit - arbitrary,Clinical,international units; IE; F2,Arb,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),UCUM
+[IU],international unit - arbitrary,Clinical,international units; IE; F2,Arb,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),UCUM
+[IU]/(2.h),international unit per 2 hour,Clinical,IU/2hrs; IU/2 hours; IU per 2 hrs; international units per 2 hours,ARat,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/(24.h),international unit per 24 hour,Clinical,IU/24hr; IU/24 hours; IU per 24 hrs; international units per 24 hours,ARat,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/d,international unit per day,Clinical,IU/dy; IU/days; IU per dys; international units per day,ARat,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/dL,international unit per deciliter,Clinical,IU/dL; IU per dL; international units per deciliters; decilitres,ACnc,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/g,international unit per gram,Clinical,IU/gm; IU/gram; IU per gm; IU per g; international units per gram,ACnt,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/h,international unit per hour,Clinical,IU/hrs; IU per hours; international units per hour,ARat,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/kg,international unit per kilogram,Clinical,IU/kg; IU/kilogram; IU per kg; units,ACnt,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/kg/d,international unit per kilogram per day,Clinical,IU/kg/dy; IU/kg/day; IU/kilogram/day; IU per kg per day; units,ACntRat,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/L,international unit per liter,Clinical,IU/L; IU/liter; IU per liter; units; litre,ACnc,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/min,international unit per minute,Clinical,IU/min; IU/minute; IU per minute; international units,ARat,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[IU]/mL,international unit per milliliter,Clinical,IU/mL; IU per mL; international units per milliliter; millilitre,ACnc,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+[k],Boltzmann constant,Constant,k; kB,,physical constant relating energy at the individual particle level with temperature = 1.38064852 ×10^−23 J/K,UCUM
+[ka'U],King-Armstrong unit,Obsolete,King-Armstrong Units; King units,AMass,enzyme units for acid phosphatase - better to use enzyme unit [U],UCUM
+[kn_br],knot - British,Obsolete,British knots; kn br; kt,Vel,based on obsolete British nautical mile ,UCUM
+[kn_i],knot,Nonclinical,kn; kt; international knots,Vel,defined as equal to one nautical mile (1.852 km) per hour,UCUM
+[lb_ap],pound - apothecary,Obsolete,apothecary pounds; apothecaries pounds; ap lb; lb ap; ap lbs; lbs ap,Mass,,UCUM
+[lb_av],pound,Clinical,"avoirdupois pounds, international pounds; av lbs; pounds",Mass,standard unit used in the US and internationally,UCUM
+[lb_tr],pound - troy,Nonclinical,troy pounds; tr lbs,Mass,only used for weighing precious metals,UCUM
+[lbf_av],pound force - US,Clinical,lbfs; US lbf; US pound forces,Force,only rarely needed in health care - see [lb_av] which is the more common unit to express weight,UCUM
+[lcwt_av],long hundredweight,Obsolete,imperial hundredweights; imp cwt; lcwt; avoirdupois,Mass,,UCUM
+[Lf],Limit of flocculation,Clinical,Lf doses,Arb,the antigen content  forming 1:1 ratio against 1 unit of antitoxin,UCUM
+[ligne],ligne,Obsolete,Paris lines; lignes,Len,,UCUM
+[lk_br],link for Gunter's chain - British,Obsolete,Links for Gunter's Chain British,Len,,UCUM
+[lk_us],link for Gunter's chain - US,Obsolete,Links for Gunter's Chain USA,Len,,UCUM
+[lne],line,Obsolete,British lines; br L; L; l,Len,,UCUM
+[LPF],low power field (microscope),Clinical,LPF; fields,Area,"area visible under the low magnification of the objective in microscopy (usually 100 x)
+",UCUM
+[lton_av],long ton - British,Nonclinical,imperial tons; weight tons; British long tons; long ton avoirdupois,Mass,Used only in Great Britain and other Commonwealth countries,UCUM
+[ly],light-year,Constant,light years; ly,Len,unit of astronomal distance = 5.88×10^12 mi,UCUM
+[m/s2/Hz^(1/2)],meter per square seconds per square root of hertz,Constant,m/s2/(Hz^.5); m/s2/(Hz^(1/2)); m per s2 per Hz^1/2,,"measures amplitude spectral density, and is equal to the square root of power spectral density
+ ",UCUM
+[m_e],electron mass,Constant,electron rest mass; me,Mass,approximately equal to 9.10938356 × 10-31 kg; defined as the mass of a stationary electron,UCUM
+[m_p],proton mass,Constant,mp; masses,Mass,approximately equal to 1.672622×10−27 kg,UCUM
+[mclg'U],Mac Lagan unit,Obsolete,galactose index; galactose tolerance test; thymol turbidity test unit; mclg U; units; indexes,ACnc,"unit for liver tests - previously used in thymol turbidity tests for liver disease diagnoses, and now is sometimes referred to in the oral galactose tolerance test",UCUM
+[mesh_i],mesh,Clinical,meshes,NLen (lineic number),traditional unit of length defined as the number of strands or particles per inch,UCUM
+[MET],Metabolic Equivalent of Task ,Clinical,metabolic equivalents,RelEngRat,unit used to measure rate of energy expenditure per power in treadmill and other functional tests,UCUM
+[mi_br],mile - British,Obsolete,"imperial miles; British miles; English statute miles; imp mi, br mi",Len,,UCUM
+[mi_i],mile,Clinical,international miles; mi I; statute mile,Len,standard unit used in the US and internationally,UCUM
+[mi_us],mile - US,Nonclinical,U.S. Survey Miles; US statute miles; survey mi; US mi; distance,Len,"Better to use [mi_i] which refers to the length used worldwide, including in the US",UCUM
+[mil_i],mil,Clinical,"thou, thousandth; mils; international",Len,equal to 0.001 international inch,UCUM
+[mil_us],mil - US,Obsolete,"thou, thousandth; mils",Len,better to use [mil_i] which is based on the internationally recognized inch,UCUM
+[min_br],minim - British,Obsolete,min br; br min; ♏ br,Vol,,UCUM
+[min_us],minim - US,Obsolete,min US; US min; ♏ US,Vol,,UCUM
+[MPL'U],MPL unit,Clinical,"MPL units; MPL U; MPL'U; IgM anticardiolipin units; IgM Phospholipid Units
+",ACnc,units for antiphospholipid test,UCUM
+[MPL'U]/mL,MPL unit per milliliter,Clinical,"MPL/mL; MPL U/mL; MPL'U/mL; IgM anticardiolipin units; IgM Phospholipid Units; millilitre
+",ACnc,"units for antiphospholipid test
+",LOINC
+[mu_0],permeability of vacuum - magnetic,Constant,μ0; vacuum permeability; permeability of free space; magnetic constant,,equal to 4π×10^−7 N/A2 (Newtons per square ampere) ≈ 1.2566×10^−6 H/m (Henry per meter),UCUM
+[nmi_br],nautical mile - British,Obsolete,British nautical miles; Imperial nautical miles; Admiralty miles; n.m. br; imp nm,Len,,UCUM
+[nmi_i],nautical mile,Nonclinical,nautical mile; nautical miles; international nautical mile; international nautical miles; nm; n.m.; nmi,Len,standard unit used in the US and internationally,UCUM
+[oz_ap],ounce - apothecary,Obsolete,apothecary ounces; oz ap; ap ozs; ozs ap,Mass,,UCUM
+[oz_av],ounce,Clinical,ounces; international ounces; avoirdupois ounces; av ozs,Mass,standard unit used in the US and internationally,UCUM
+[oz_m],ounce - metric,Clinical,metric ounces; m ozs,Mass,see [oz_av] (the avoirdupois ounce) for the standard ounce used internationally; [oz_m] is equal to 28 grams and is based on the apothecaries' system of mass units which is used in some US pharmacies. ,UCUM
+[oz_tr],ounce - troy,Nonclinical,troy ounces; tr ozs,Mass,unit of mass for precious metals and gemstones only,UCUM
+[pc_br],pace - British,Nonclinical,British paces; br pc,Len,"traditional unit of length equal to 152.4 centimeters, or 1.52 meter. ",UCUM
+[pca],pica (typography),Nonclinical,picas,Len,typography unit for typesetter's length,UCUM
+[pca_pr],Printer's pica  (typography),Nonclinical,pca pr; Printer's picas,Len,typography unit for typesetter's length,UCUM
+[p'diop],prism diopter (magnifying power),Clinical,diopters; dioptres; p diops; pdiop; dpt; pdptr; Δ; cm/m; centimeter per meter; centimetre; metre,Angle,unit for prism correction in eyeglass prescriptions,UCUM
+[PFU],plaque forming units,Clinical,PFU,ACnc,tests usually report unit as number of PFU per unit volume,UCUM
+[pH],pH,Clinical,pH scale,LogCnc,Log concentration of H+,UCUM
+[pi],the number pi,Constant,π,,a mathematical constant; the ratio of a circle's circumference to its diameter ≈ 3.14159,UCUM
+[pied],pied,Obsolete,pieds du roi; Paris foot; royal; French; feet,Len,,UCUM
+[pk_br],peck - British,Nonclinical,imperial pecks; British pecks; br pk; imp pk,Vol,unit of dry volume rarely used today (can be used to measure volume of apples),UCUM
+[pk_us],peck - US,Nonclinical,US pecks; US pk,Vol,unit of dry volume rarely used today (can be used to measure volume of apples),UCUM
+[pnt],point (typography),Nonclinical,DTP points; desktop publishing point; pt; pnt,Len,typography unit for typesetter's length,UCUM
+[pnt_pr],Printer's point (typography),Nonclinical,pnt pr,Len,typography unit for typesetter's length,UCUM
+[PNU],protein nitrogen unit (allergen testing),Clinical,protein nitrogen units; PNU,Mass,defined as 0.01 ug of phosphotungstic acid-precipitable protein nitrogen. Being replaced by bioequivalent allergy units (BAU).,UCUM
+[pouce],pouce,Obsolete,historical French inches; French royal inches,Len,,UCUM
+[ppb],parts per billion,Clinical,ppb; 10^-9,MCnt; MCnc; SFr,"[ppb] is often used in solution concentrations as 1 ug/L  or 1 ug/kg. Also used to express mole fractions as 1 umol/mol.
+
+Can be ambigous and would be better if the metric units was used directly. ",UCUM
+[ppm],parts per million,Clinical,ppm; 10^-6,MCnt; MCnc; SFr,"[ppm] is often used in solution concentrations as 1 mg/L  or 1 mg/kg. Also used to express mole fractions as 1 mmol/mol.
+
+[ppm] is also used in nuclear magnetic resonance (NMR) to represent chemical shift - the difference of a measured frequency in parts per million from the reference frequency.
+
+Can be ambigous and would be better if the metric units was used directly. ",UCUM
+[ppth],parts per thousand,Clinical,ppth; 10^-3,MCnc; MCnt,"[ppth] is often used in solution concentrations as 1 g/L or 1 g/kg.
+
+Can be ambigous and would be better if the metric units was used directly. ",UCUM
+[pptr],parts per trillion,Clinical,pptr; 10^-12,MCnt; MCnc; SFr,"[pptr] is often used in solution concentrations as 1 ng/L or 1 ng/kg. Also used to express mole fractions as 1 nmol/mol.
+
+Can be ambigous and would be better if the metric units was used directly. ",UCUM
+[PRU],peripheral vascular resistance unit,Clinical,peripheral vascular resistance units; peripheral resistance unit; peripheral resistance units; PRU,FldResist,used to assess blood flow in the capillaries; equal to 1 mmH.min/mL = 133.3 Pa·min/mL,UCUM
+[psi],pound per square inch,Clinical,psi; lb/in2; lb per in2,Pres,,UCUM
+[pt_br],pint - British,Clinical,British pints; imperial pints; pt br; br pt; imp pt; pt imp,Vol,Used only in Great Britain and other Commonwealth countries,UCUM
+[pt_us],pint - US,Clinical,US pints; pint US; liquid pint; pt us; us pt,Vol,Used only in the US,UCUM
+[pwt_tr],pennyweight - troy,Obsolete,dwt; denarius weights,Mass,historical unit used to measure mass and cost of precious metals,UCUM
+[qt_br],quart - British,Clinical,British quarts; imperial quarts; br qts,Vol,Used only in Great Britain and other Commonwealth countries,UCUM
+[qt_us],quart - US,Clinical,US quarts; us qts,Vol,Used only in the US,UCUM
+[rch_us],Ramden's chain - US,Obsolete,Ramsden's chain; engineer's chains,Len,distance measuring device used for land survey,UCUM
+[rd_br],rod - British,Obsolete,British rods; br rd,Len,,UCUM
+[rd_us],rod - US,Obsolete,US rod; US rods; rd US; US rd,Len,,UCUM
+[rlk_us],link for Ramden's chain - US,Obsolete,links for Ramsden's chain,Len,,UCUM
+[S],Svedberg unit,Clinical,Sv; 10^-13 seconds; 100 fs; 100 femtoseconds,Time,"unit of time used in measuring particle's sedimentation rate, usually after centrifugation. ",UCUM
+[sc_ap],scruple,Obsolete,scruples; sc ap,Mass,,UCUM
+[sct],section,Nonclinical,sct; sections,Area,tract of land approximately equal to 1 mile square containing 640 acres,UCUM
+[scwt_av],short hundredweight,Nonclinical,hundredweights; s cwt; scwt; avoirdupois,Mass,Used only in the US to equal 100 pounds,UCUM
+[sft_i],square foot,Clinical,ft2; ft^2; ft squared; sq ft; feet; international,Area,standard unit used in the US and internationally,UCUM
+[sin_i],square inch,Clinical,in2; in^2; inches squared; sq inch; inches squared; international,Area,standard unit used in the US and internationally,UCUM
+[smgy'U],Somogyi unit,Clinical,Somogyi units; smgy U,CAct,measures the enzymatic activity of amylase in blood serum - better to use base units mg/mL ,UCUM
+[smi_us],square mile - US,Nonclinical,mi2; mi^2; sq mi; miles squared,Area,"historical unit used only in the US for land survey purposes (based on the US survey mile), not the internationally recognized [mi_i]",UCUM
+[smoot],Smoot,Nonclinical,,Len,prank unit of length from MIT,UCUM
+[srd_us],square rod - US,Nonclinical,rod2; rod^2; sq. rod; rods squared,Area,"Used only in the US to measure land area, based on US statute land survey length units",UCUM
+[ston_av],short ton - US,Clinical,ton; US tons; avoirdupois tons,Mass,Used only in the US,UCUM
+[stone_av],stone - British,Nonclinical,British stones; avoirdupois,Mass,Used primarily in the UK and Ireland to measure body weight,UCUM
+[syd_i],square yard,Clinical,yd2; yd^2; sq. yds; yards squared; international,Area,standard unit used in the US and internationally,UCUM
+[tbs_m],tablespoon - metric,Clinical,metric tablespoons; Tbs;  tbsp; T; tbs m,Vol,standard unit used in the US and internationally,UCUM
+[tbs_us],tablespoon - US,Clinical,Tbs;  tbsp; tbs us; US tablespoons,Vol,unit defined as 0.5 US fluid ounces or 3 teaspoons - used only in the US. See [tbs_m] for the unit used internationally and in the US for nutrional labelling. ,UCUM
+[tb'U],tuberculin unit,Clinical,TU; units,Arb,amount of tuberculin antigen -usually in reference to a TB skin test ,UCUM
+[TCID_50],50% tissue culture infectious dose,Clinical,TCID50; 50% tissue culture infective dose,NumThres,,UCUM
+[todd'U],Todd unit,Clinical,units,InvThres; RtoThres,the unit for the results of the testing for antistreptolysin O (ASO),UCUM
+[tsp_m],teaspoon - metric,Clinical,tsp; t; metric teaspoons,Vol,standard unit used in the US and internationally,UCUM
+[tsp_us],teaspoon - US,Nonclinical,tsp; t; US teaspoons,Vol,unit defined as 1/6 US fluid ounces - used only in the US. See [tsp_m] for the unit used internationally and in the US for nutrional labelling. ,UCUM
+[twp],township,Nonclinical,twp; townships,Area,land measurement equal to 6 mile square,UCUM
+[USP'U],United States Pharmacopeia unit,Clinical,USP U; USP'U,Arb,a dose unit to express potency of drugs and vitamins defined by the United States Pharmacopoeia; usually 1 USP = 1 IU,UCUM
+[wood'U],Wood unit,Clinical,hybrid reference units; HRU; mmHg.min/L; vascular resistance,Pres,simplified unit of measurement for for measuring pulmonary vascular resistance that uses pressure; equal to mmHg.min/L,UCUM
+[yd_br],yard - British,Obsolete,British yards; Br yds; distance,Len,,UCUM
+[yd_i],yard,Clinical,international yards; yds; distance,Len,standard unit used in the US and internationally,UCUM
+[yd_us],yard - US,Obsolete,US yards; us yds; distance,Len; Nrat,"Better to use [yd_i] which refers to the length used worldwide, including in the US; [yd_us] refers to unit used in land surveys in the US",UCUM
+{#}/[HPF],number per high power field,Clinical,#/HPF; # per HPF; number/HPF; numbers per high power field,Naric,,LOINC
+{#}/[LPF],number per low power field,Clinical,#/LPF; # per LPF; number/LPF; numbers per low power field,Naric,,LOINC
+{APS'U},IgA antiphosphatidylserine unit ,Clinical,APS Unit; Phosphatidylserine Antibody IgA Units,ACnc,unit for antiphospholipid test,LOINC
+{EIA_index},EIA index,Clinical,enzyme immunoassay index,ACnc,,LOINC
+{KCT'U},kaolin clotting time,Clinical,KCT,Time,sensitive test to detect lupus anticoagulants; measured in seconds,LOINC
+{MPS'U},IgM antiphosphatidylserine unit,Clinical,Phosphatidylserine Antibody IgM Measurement ,ACnc,,LOINC
+10*,the number ten for arbitrary powers,Clinical,10^; 10 to the arbitrary powers,Num,"10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",UCUM
+10*12/L,trillion per liter,Clinical,10^12/L; 10*12 per Liter; trillion per liter; litre,NCncn,,LOINC
+10*3,10^3 (used for cell count),Clinical,10^3; thousand,Num,usually used for counting entities (e.g. blood cells) per volume,LOINC
+10*3/L,thousand per liter,Clinical,10^3/L; 10*3 per liter; litre,NCncn,,LOINC
+10*3/mL,thousand per milliliter,Clinical,10^3/mL; 10*3 per mL; thousand per milliliter; millilitre,NCncn,,LOINC
+10*3/uL,thousand per microliter,Clinical,10^3/uL; 10*3 per uL; thousand per microliter; microlitre,NCncn,,LOINC
+10*4/uL,10 thousand per microliter,Clinical,10^4/uL; 10*4 per uL; microlitre,NCncn,,LOINC
+10*5,10^5 ,Clinical,one hundred thousand,Num,,LOINC
+10*6,10^6,Clinical,,Num,,LOINC
+10*6.[CFU]/L,million colony forming unit per liter,Clinical,10*6 CFU/L; 10^6 CFU/L; 10^6CFU; 10^6 CFU per liter; million colony forming units; litre,ACnc,,LOINC
+10*6.[IU],million international unit,Clinical,10*6 IU; 10^6 IU; international units,arb,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+10*6/(24.h),million per 24 hour,Clinical,10*6/24hrs; 10^6/24 hrs; 10*6 per 24 hrs; 10^6 per 24 hours,NRat,,LOINC
+10*6/kg,million per kilogram,Clinical,10^6/kg; 10*6 per kg; 10*6 per kilogram; millions,NCnt,,LOINC
+10*6/L,million per liter,Clinical,10^6/L; 10*6 per Liter; 10^6 per Liter; litre,NCncn,,LOINC
+10*6/mL,million per milliliter,Clinical,10^6/mL; 10*6 per mL; 10*6 per milliliter; millilitre,NCncn,,LOINC
+10*6/uL,million per microliter,Clinical,10^6/uL; 10^6 per uL; 10^6/mcl; 10^6 per mcl; 10^6 per microliter; microlitre,NCncn,,LOINC
+10*8,10^8,Clinical,100 million; one hundred million; 10^8,Num,,LOINC
+10*9/L,billion per liter,Clinical,10^9/L; 10*9 per Liter; litre,NCncn,,LOINC
+10*9/mL,billion per milliliter,Clinical,10^9/mL; 10*9 per mL; 10^9 per mL; 10*9 per milliliter; millilitre,NCncn,,LOINC
+10*9/uL,billion per microliter,Clinical,10^9/uL; 10^9 per uL; 10^9/mcl; 10^9 per mcl; 10*9 per uL; 10*9 per mcl; 10*9/mcl; 10^9 per microliter; microlitre,NCncn,,LOINC
+10.L/(min.m2),10 liter per minute per square meter,Clinical,10 liters per minutes per square meter; 10 L per min per m2; m^2; 10 L/(min*m2); 10L/(min*m^2); litres; sq. meter; metre; meters squared,ArVRat,,LOINC
+10.L/min,10 liter per minute,Clinical,10 liters per minute; 10 L per min; 10L; 10 L/min; litre,VRat,,LOINC
+10.uN.s/(cm5.m2),10 micronewton second per centimeter to the fifth power per square meter,Clinical,dyne seconds per centimeter5 and square meter; dyn.s/(cm5.m2); dyn.s/cm5/m2; cm^5; m^2,,unit to measure systemic vascular resistance per body surface area,LOINC
+10^,the number ten for arbitrary powers,Clinical,10*; 10 to the arbitrary power,Num,"10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",UCUM
+24.h,24 hour,Clinical,24hrs; 24 hrs; 24 hours; days; dy,Time,,LOINC
+A,Ampere,Clinical,Amperes,ElpotRat,unit of electric current equal to flow rate of electrons equal to 16.2415×10^18 elementary charges moving past a boundary in one second or 1 Coulomb/second,UCUM
+a,year,Clinical,"years; a; yr, yrs; annum",Time,,UCUM
+A/m,ampere per meter,Clinical,A/m; amp/meter; magnetic field strength; H; B; amperes per meter; metre,,unit of magnetic field strength,LOINC
+a_g,mean Gregorian year,Clinical,mean Gregorian yr; a gregorian; years,Time,has an average of 365.2425 days and is the most internationally used civil calendar.,UCUM
+a_j,mean Julian year,Clinical,mean Julian yr; a julian; years,Time,"has an average of 365.25 days, and in everyday use, has been replaced by the Gregorian year. However, this unit is used in astronomy to calculate light year. ",UCUM
+a_t,tropical year,Clinical,solar years; a tropical; years,Time,has an average of 365.242181 days but is constantly changing.,UCUM
+Ao,Ångström,Clinical,Å; Angstroms; Ao; Ångströms,Len,equal to 10^-10 meters; used to express wave lengths and atom scaled differences ,UCUM
+ar,are,Clinical,100 m2; 100 m^2; 100 square meter; meters squared; metres,Area,metric base unit for area defined as 100 m^2,UCUM
+atm,standard atmosphere,Clinical,reference pressure; atmos; std atmosphere,Pres,"defined as being precisely equal to 101,325 Pa",UCUM
+att,technical atmosphere,Obsolete,at; tech atm; tech atmosphere;  kgf/cm2; atms; atmospheres,Pres,non-SI unit of pressure equal to one kilogram-force per square centimeter,UCUM
+AU,astronomic unit,Clinical,AU; units,Len,unit of length used in astronomy for measuring distance in Solar system,UCUM
+b,barn,Clinical,barns,Area,used in high-energy physics to express cross-sectional areas,UCUM
+B,bel,Clinical,bels,LogRto,Logarithm of the ratio of power- or field-type quantities; usually expressed in decibels ,UCUM
+B[10.nV],bel 10 nanovolt,Clinical,bel 10 nV; B 10 nV; 10 nanovolts bels,LogRtoElp,used to express power gain in electrical circuits,UCUM
+B[kW],bel kilowatt,Clinical,bel kW; B kW; kilowatt bel; kW bel; kW B,LogRto,used to express power,UCUM
+B[mV],bel millivolt,Clinical,bel mV; B mV; millivolt bels; 10^-3V bels; 10*-3V ,LogRtoElp,used to express power gain in electrical circuits,UCUM
+B[SPL],bel sound pressure,Clinical,bel SPL; B SPL; sound pressure bels,LogRto,used to measure sound level in acoustics,UCUM
+B[uV],bel microvolt,Clinical,bel uV; B uV; microvolts bels; 10^-6V bel; 10*-6V bel,LogRto,used to express power gain in electrical circuits,UCUM
+B[V],bel volt,Clinical,bel V; B V; volts bels,LogRtoElp,used to express power gain in electrical circuits,UCUM
+B[W],bel watt,Clinical,bel W; b W; b Watt; Watts bels,LogRto,used to express power,UCUM
+bar,bar,Nonclinical,bars,Pres,"unit of pressure equal to 10^5 Pascals, primarily used by meteorologists and in weather forecasting",UCUM
+Bd,baud,Nonclinical,Bd; bauds,Freq,unit to express rate in symbols per second or pulses per second. ,UCUM
+Bi,Biot,Clinical,Bi; abamperes; abA,ElpotRat,equal to 10 amperes,UCUM
+bit,bit,Nonclinical,bits,,dimensionless information unit of 1 used in computing and digital communications,UCUM
+bit_s,bit - logarithmic,Nonclinical,bit-s; bit s; bit logarithmic,LogA,"defined as the log base 2 of the number of distinct signals; cannot practically be used to express more than 1000 bits
+
+In information theory, the definition of the amount of self-information and information entropy is often expressed with the binary logarithm (log base 2)",UCUM
+Bq,becquerel,Clinical,activity; radiation; becquerels,,measure of the atomic radiation rate with units s^-1,UCUM
+By,byte,Nonclinical,bytes,,equal to 8 bits,UCUM
+C,coulomb,Clinical,coulombs,,"defined as amount of 1 electron charge = 6.2415093×10^18 e, and equivalent to 1 Ampere-second",UCUM
+cal,calorie,Clinical,gram calories; small calories,Enrg,"equal to 4.184 joules (the same value as the thermochemical calorie, which is the most common calorie used in medicine and biochemistry)",UCUM
+cal_[15],calorie at 15°C,Nonclinical,calorie 15 C; cals 15 C; calories at 15 C,Enrg,equal to 4.1855 joules; calorie most often used in engineering,UCUM
+cal_[20],calorie at 20°C,Clinical,calorie 20 C; cal 20 C; calories at 20 C,Enrg,equal to 4.18190  joules. ,UCUM
+cal_IT,international table calorie,Nonclinical,calories IT; IT cals; international steam table calories,Enrg,used in engineering steam tables and defined as 1/860 international watt-hour; equal to 4.1868 joules,UCUM
+cal_m,mean calorie,Clinical,mean cals; mean calories,Enrg,equal to 4.19002 joules. ,UCUM
+cal_th,thermochemical calorie,Clinical,thermochemical calories; th cals,Enrg,equal to 4.184 joules; used as the unit in medicine and biochemistry (equal to cal),UCUM
+cd,candela,Clinical,candelas,,SI base unit of luminous intensity,UCUM
+Cel,degree Celsius,Clinical,°C; degrees,Temp,,UCUM
+cg,centigram,Clinical,centigrams; cg; cgm,Mass,,LOINC
+Ci,Curie,Obsolete,curies,,unit for measuring atomic disintegration rate; replaced by the Bequerel (Bq) unit,UCUM
+circ,circle - plane angle,Clinical,angles; circles,Angle,,UCUM
+cL,centiliter,Clinical,centiliters; centilitres,Vol,,LOINC
+cm,centimeter,Clinical,centimeters; centimetres,Len,,LOINC
+cm[H2O],centimeter of water,Clinical,cm H2O; cmH2O; centimetres; pressure,Pres,unit of pressure mostly applies to blood pressure,LOINC
+cm[H2O]/L/s,centimeter of water per liter per second,Clinical,cm[H2O]/(L/s); cm[H2O].s/L; cm H2O/L/sec; cmH2O/L/sec; cmH2O/Liter; cmH2O per L per secs; centimeters of water per liters per second; centimetres; litres; cm[H2O]/(L/s),PresRat,unit used to measure mean pulmonary resistance,LOINC
+cm[H2O]/s/m,centimeter of water per second per meter,Clinical,cm[H2O]/(s.m); cm H2O/s/m; cmH2O; cmH2O/sec/m; cmH2O per secs per meters; centimeters of water per seconds per meter; centimetres; metre,PresRat,unit used to measure pulmonary pressure time product,LOINC
+cm[Hg],centimeter of mercury,Clinical,centimeters of mercury; centimetres; cmHg; cm Hg,Pres,unit of pressure where 1 cmHg = 10 torr,LOINC
+cm2,square centimeter,Clinical,cm^2; sq cm; centimeters squared; square centimeters; centimetre; area,Area,,LOINC
+cm2/s,square centimeter per second,Clinical,cm^2/sec; square centimeters per second; sq cm per sec; cm2; centimeters squared; centimetres,AreaRat,,LOINC
+cP,centipoise,Clinical,cps; centiposes,Visc,unit of dynamic viscosity in the CGS system with base units: 10^−3 Pa.s = 1 mPa·.s (1 millipascal second),LOINC
+cSt,centistoke,Clinical,centistokes,Visc,unit for kinematic viscosity with base units of mm^2/s (square millimeter per second),LOINC
+d,day,Clinical,days; age; dy; 24 hours; 24 hrs,Time,,UCUM
+daL/min,dekaliter per minute,Clinical,dekalitres; dekaliters per minute; per min,VRat,,LOINC
+daL/min/m2,dekaliter per minute per square meter,Clinical,daL/min/m^2; daL/minute/m2; sq. meter; dekaliters per minutes per square meter; meter squared; dekalitres; metre,ArVRat,The area usually is the body surface area used to normalize cardiovascular measures for patient's size,LOINC
+dB,decibel,Clinical,decibels,LogRto,unit most commonly used in acoustics as unit of sound pressure level. (also see B[SPL] or bel sound pressure level). ,LOINC
+deg,degree - plane angle,Clinical,°; degree of arc; arc degree; arcdegree; angle,Angle,one degree is equivalent to π/180 radians.,UCUM
+deg/s,degree per second,Clinical,deg/sec; deg per sec; °/sec; twist rate; angular speed; rotational speed,ARat,unit of angular (rotational) speed used to express turning rate,LOINC
+dg,decigram,Clinical,decigrams; dgm; 0.1 grams; 1/10 gm,Mass,equal to 1/10 gram,LOINC
+dL,deciliter,Clinical,deciliters; decilitres; 0.1 liters; 1/10 L,Vol,equal to 1/10 liter,LOINC
+dm,decimeter,Clinical,decimeters; decimetres; 0.1 meters; 1/10 m; 10 cm; centimeters,Len,equal to 1/10 meter or 10 centimeters,LOINC
+dm2/s2,square decimeter per square second,Clinical,dm2 per s2; dm^2/s^2; decimeters squared per second squared; sq dm; sq sec,EngMass (massic energy),units for energy per unit mass or Joules per kilogram (J/kg = kg.m2/s2/kg = m2/s2) ,LOINC
+dyn,dyne,Clinical,dynes,Force,unit of force equal to 10^-5 Newtons,UCUM
+dyn.s/(cm.m2),dyne second per centimeter per square meter,Clinical,(dyn*s)/(cm*m2); (dyn*s)/(cm*m^2); dyn s per cm per m2; m^2; dyne seconds per centimeters per square meter; centimetres; sq. meter; squared,,,LOINC
+dyn.s/cm,dyne second per centimeter,Clinical,(dyn*s)/cm; dyn sec per cm; seconds; centimetre; dyne seconds,,,LOINC
+eq,equivalent,Clinical,equivalents,Sub,equivalence equals moles per valence,UCUM
+eq/L,equivalent per liter,Clinical,eq/liter; eq/litre; eqs; equivalents per liter; litre,SCnc,equivalence equals moles per valence,LOINC
+eq/mL,equivalent per milliliter,Clinical,equivalent/milliliter; equivalents per milliliter; eq per mL; millilitre,SCnc,equivalence equals moles per valence,LOINC
+eq/mmol,equivalent per millimole,Clinical,equivalent/millimole; equivalents per millimole; eq per mmol,SRto,equivalence equals moles per valence,LOINC
+eq/umol,equivalent per micromole,Clinical,equivalent/micromole; equivalents per micromole; eq per umol,SRto,equivalence equals moles per valence,LOINC
+erg,erg,Clinical,"10^-7 Joules, 10-7 Joules; 100 nJ; 100 nanoJoules; 1 dyne cm; 1 g.cm2/s2",Eng,unit of energy = 1 dyne centimeter = 10^-7 Joules,UCUM
+eV,electronvolt,Clinical,Electron Volts; electronvolts,Eng,unit of kinetic energy = 1 V * 1.602×10^−19 C = 1.6×10−19 Joules,UCUM
+F,farad,Clinical,farads; electric capacitance,,CGS unit of electric capacitance with base units C/V (Coulomb per Volt),UCUM
+fg,femtogram,Clinical,fg; fgm; femtograms; weight,Mass,equal to 10^-15 grams,LOINC
+fL,femtoliter,Clinical,femtolitres; femtoliters,Vol; EntVol,equal to 10^-15 liters,LOINC
+fm,femtometer,Clinical,femtometres; femtometers,Len,equal to 10^-15 meters,LOINC
+fmol,femtomole,Clinical,femtomoles,EntSub,equal to 10^-15 moles,LOINC
+fmol/g,femtomole per gram,Clinical,femtomoles; fmol/gm; fmol per gm,SCnt,,LOINC
+fmol/L,femtomole per liter,Clinical,femtomoles; fmol per liter; litre,SCnc,,LOINC
+fmol/mg,femtomole per milligram,Clinical,fmol per mg; femtomoles,SCnt,,LOINC
+fmol/mL,femtomole per milliliter,Clinical,femtomoles; millilitre; fmol per mL; fmol per milliliter,SCnc,,LOINC
+g,gram,Clinical,grams; gm,Mass,,UCUM
+G,Gauss,Clinical,magnetic fields; magnetic flux density; induction; B,magnetic,"CGS unit of magnetic flux density, known as magnetic field B; defined as one maxwell unit per square centimeter (see Oersted for CGS unit for H field)",UCUM
+g%,gram percent,Clinical,gram %; gram%; grams per deciliter; g/dL; gm per dL; gram percents,MCnc,"equivalent to unit gram per deciliter (g/dL), a unit often used in medical tests to represent solution concentrations",UCUM
+g.m,gram meter,Clinical,g*m; gxm; meters; metres,Enrg,Unit for measuring stroke work (heart work),LOINC
+g/(100.g),gram per 100 gram,Clinical,g/100 gm; 100gm; grams per 100 grams; gm per 100 gm,MCnt,,LOINC
+g/(12.h),gram per 12 hour,Clinical,gm/12hrs; 12 hrs; gm per 12 hrs; 12hrs; grams per 12 hours,MRat,,LOINC
+g/(24.h),gram per 24 hour,Clinical,gm/24hrs; gm/24 hrs; gm per 24 hrs; 24hrs; grams per 24 hours; gm/dy; gm per dy; grams per day,MRat,,LOINC
+g/(3.d),gram per 3 days,Clinical,gm/3dy; gm/3 dy; gm per 3 days; grams,MRat,,LOINC
+g/(4.h),gram per 4 hour,Clinical,gm/4hrs; gm/4 hrs; gm per 4 hrs; 4hrs; grams per 4 hours,MRat,,LOINC
+g/(48.h),gram per 48 hour,Clinical,gm/48hrs; gm/48 hrs; gm per 48 hrs; 48hrs; grams per 48 hours,MRat,,LOINC
+g/(5.h),gram per 5 hour,Clinical,gm/5hrs; gm/5 hrs; gm per 5 hrs; 5hrs; grams per 5 hours,MRat,,LOINC
+g/(6.h),gram per 6 hour,Clinical,gm/6hrs; gm/6 hrs; gm per 6 hrs; 6hrs; grams per 6 hours,MRat,,LOINC
+g/(72.h),gram per 72 hour,Clinical,gm/72hrs; gm/72 hrs; gm per 72 hrs; 72hrs; grams per 72 hours,MRat,,LOINC
+g/cm3,gram per cubic centimeter,Clinical,g/cm^3; gm per cm3; g per cm^3; grams per centimeter cubed; cu. cm; centimetre; g/mL; gram per milliliter; millilitre,MCnc,g/cm3 = g/mL,LOINC
+g/d,gram per day,Clinical,gm/dy; gm per dy; grams per day; gm/24hrs; gm/24 hrs; gm per 24 hrs; 24hrs; grams per 24 hours; serving,MRat,,LOINC
+g/dL,gram per deciliter,Clinical,gm/dL; gm per dL; grams per deciliter; decilitre,MCnc,,LOINC
+g/g,gram per gram,Clinical,gm; grams,MRto ,,LOINC
+g/h,gram per hour,Clinical,gm/hr; gm per hr; grams; intake; output,MRat,,LOINC
+g/h/m2,gram per hour per square meter,Clinical,gm/hr/m2; gm/h/m2; /m^2; sq. m; g per hr per m2; grams per hours per square meter; meter squared; metre,ArMRat,,LOINC
+g/kg ,gram per kilogram,Clinical,g per kg; gram per kilograms,MCnt,,LOINC
+g/kg/(8.h),gram per kilogram per 8 hour ,Clinical,g/(8.kg.h); gm/kg/8hrs; 8 hrs; g per kg per 8 hrs; 8hrs; grams per kilograms per 8 hours; shift,MCntRat; RelMRat,"unit often used to describe mass in grams of protein consumed in a 8 hours, divided by the subject's body weight in kilograms. Also used to measure mass dose rate per body mass",LOINC
+g/kg/d,gram per kilogram per day,Clinical,g/(kg.d); gm/kg/dy; gm per kg per dy; grams per kilograms per day,RelMRat,"unit often used to describe mass in grams of protein consumed in a day, divided by the subject's body weight in kilograms. Also used to measure mass dose rate per body mass",LOINC
+g/kg/h,gram per kilogram per hour,Clinical,g/(kg.h); g/kg/hr; g per kg per hrs; grams per kilograms per hour,MCntRat; RelMRat,unit used to measure mass dose rate per body mass,LOINC
+g/kg/min,gram per kilogram per minute,Clinical,g/(kg.min); g/kg/min; g per kg per min; grams per kilograms per minute,MCntRat; RelMRat,unit used to measure mass dose rate per body mass,LOINC
+g/L,gram per liter,Clinical,gm per liter; g/liter; grams per liter; litre,MCnc,,LOINC
+g/m2,gram per square meter,Clinical,g/m^2; gram/square meter; g/sq m; g per m2; g per m^2; grams per square meter; meters squared; metre,ArMass,Tests measure myocardial mass (heart ventricle system) per body surface area; unit used to measure mass dose per body surface area,LOINC
+g/mg,gram per milligram,Clinical,g per mg; grams per milligram,MCnt; MRto,,LOINC
+g/min,gram per minute,Clinical,g per min; grams per minute; gram/minute,MRat,,LOINC
+g/mL,gram per milliliter,Clinical,g per mL; grams per milliliter; millilitre,MCnc,,LOINC
+g/mmol,gram per millimole,Clinical,grams per millimole; g per mmol,Ratio,,LOINC
+Gal,Gal,Clinical,galileos; Gals,Accel,unit of acceleration used in gravimetry; equivalent to cm/s2 ,UCUM
+Gb,Gilbert,Clinical,Gi; magnetomotive force; Gilberts,,unit of magnetomotive force (magnetic potential),UCUM
+gf,gram-force,Clinical,Newtons; gram forces,Force,May be specific to unit related to cardiac output,UCUM
+gon,gon,Nonclinical,gon (grade); gons,Angle,unit of plane angle measurement equal to 1/400 circle,UCUM
+Gy,gray,Clinical,absorbed doses; ionizing radiation doses; kerma; grays,EngCnt,unit of ionizing radiation dose with base units of 1 joule of radiation energy per kilogram of matter,UCUM
+H,henry,Clinical,henries; inductance,,unit of electrical inductance; usually expressed in millihenrys (mH) or microhenrys (uH).,UCUM
+h,hour,Clinical,hours; hrs; age,Time,,UCUM
+Hz,hertz,Clinical,Herz; frequency; frequencies,Freq; Num,equal to one cycle per second,UCUM
+J,joule,Clinical,joules,Enrg,"unit of energy defined as the work required to move an object 1 m with a force of 1 N (N.m) or an electric charge of 1 C through 1 V (C.V), or to produce 1 W for 1 s (W.s) ",UCUM
+J/L,joule per liter,Clinical,joules per liter; litre; J per L,EngCnc,,LOINC
+K,degree Kelvin,Clinical,Kelvin; degrees,Temp,"absolute, thermodynamic temperature scale ",LOINC
+K/W,degree Kelvin per Watt,Clinical,degree Kelvin/Watt; K per W; thermal ohm; thermal resistance; degrees,TempEngRat,unit for absolute thermal resistance equal to the reciprocal of thermal conductance. Unit used for tests to measure work of breathing,LOINC
+k[IU]/L,kilo international unit per liter,Clinical,kIU/L; kIU per L; kIU per liter; kilo international units; litre; allergens; allergy units,ACnc,IgE has an WHO reference standard so IgE allergen testing can be reported as k[IU]/L,LOINC
+k[IU]/mL,kilo international unit per milliliter,Clinical,kIU/mL; kIU per mL; kIU per milliliter; kilo international units; millilitre; allergens; allergy units,ACnc,IgE has an WHO reference standard so IgE allergen testing can be reported as k[IU]/mL,LOINC
+kat,katal,Clinical,mol/secs; moles per second; mol*sec-1; mol*s-1; mol.s-1; katals; catalytic activity; enzymatic; enzyme units; activities,CAct,kat is a unit of catalytic activity with base units = mol/s. Rarely used because its units are too large to practically express catalytic activity. See enzyme unit [U] which is the standard unit for catalytic activity.,UCUM
+kat/kg,katal per kilogram,Clinical,kat per kg; katals per kilogram; mol/s/kg; moles per seconds per kilogram,CCnt,kat is a unit of catalytic activity with base units = mol/s. Rarely used because its units are too large to practically express catalytic activity. See enzyme unit [U] which is the standard unit for catalytic activity.,LOINC
+kat/L,katal per liter,Clinical,kat per L; katals per liter; litre; mol/s/L; moles per seconds per liter,CCnc,kat is a unit of catalytic activity with base units = mol/s. Rarely used because its units are too large to practically express catalytic activity. See enzyme unit [U] which is the standard unit for catalytic activity.,LOINC
+kcal,kilocalorie,Clinical,kilogram calories; large calories; food calories; kcals,EngRat,"It is equal to 1000 calories (equal to 4.184 kJ). But in practical usage, kcal refers to food calories which excludes caloric content in fiber and other constitutes that is not digestible by humans. Also see nutrition label Calories ([Cal])",LOINC
+kcal/(24.h),kilocalorie per 24 hour,Clinical,kcal/24hrs; kcal/24 hrs; kcal per 24hrs; kilocalories per 24 hours; kilojoules; kJ/24hr; kJ/(24.h); kJ/dy; kilojoules per days; intake; calories burned; metabolic rate; food calories,EngRat,,
+kcal/[oz_av],kilocalorie per ounce,Clinical,kcal/oz; kcal per ozs; large calories per ounces; food calories; servings; international,EngCnt,used in nutrition to represent calorie of food,LOINC
+kcal/d,kilocalorie per day,Clinical,kcal/dy; kcal per day; kilocalories per days; kilojoules; kJ/dy; kilojoules per days; intake; calories burned; metabolic rate; food calories,EngRat,unit in nutrition for food intake (measured in calories) in a day,LOINC
+kcal/h,kilocalorie per hour,Clinical,kcal/hrs; kcals per hr; intake; kilocalories per hours; kilojoules,EngRat,used in nutrition to represent caloric requirement or consumption,LOINC
+kcal/kg/(24.h),kilocalorie per kilogram per 24 hour,Clinical,kcal/kg/24hrs; 24 hrs; kcal per kg per 24hrs; kilocalories per kilograms per 24 hours; kilojoules,EngCntRat,used in nutrition to represent caloric requirement per day based on subject's body weight in kilograms,LOINC
+kg,kilogram,Clinical,kilograms; kgs,Mass,,LOINC
+kg.m/s,kilogram meter per second,Clinical,kg*m/s; kg.m per sec; kg*m per sec; p; momentum,,unit for momentum =  mass times velocity,LOINC
+kg/(s.m2),kilogram per second per square meter,Clinical,kg/(s*m2); kg/(s*m^2); kg per s per m2; per sec; per m^2; kilograms per seconds per square meter; meter squared; metre,ArMRat,,LOINC
+kg/h,kilogram per hour,Clinical,kg/hr; kg per hr; kilograms per hour,MRat,,LOINC
+kg/L,kilogram per liter,Clinical,kg per liter; litre; kilograms,MCnc,,LOINC
+kg/m2,kilogram per square meter,Clinical,kg/m^2; kg/sq. m; kg per m2; per m^2; per sq. m; kilograms; meter squared; metre; BMI,Ratio,units for body mass index (BMI),LOINC
+kg/m3,kilogram per cubic meter,Clinical,kg/m^3; kg/cu. m; kg per m3; per m^3; per cu. m; kilograms; meters cubed; metre,MCnc,,LOINC
+kg/min,kilogram per minute,Clinical,kilogram/minute; kg per min; kilograms per minute,MRat,,LOINC
+kg/mol,kilogram per mole,Clinical,kilogram/mole; kg per mol; kilograms per mole,SCnt,,LOINC
+kg/s,kilogram per second,Clinical,kg/sec; kilogram/second; kg per sec; kilograms; second,MRat,,LOINC
+kL,kiloliter,Clinical,kiloliters; kilolitres; m3; m^3; meters cubed; metre,Vol,,LOINC
+km,kilometer,Clinical,kilometers; kilometres; distance,Len,,LOINC
+kPa,kilopascal,Clinical,kilopascals; pressure,Pres; PPresDiff,,LOINC
+ks,kilosecond,Clinical,kiloseconds; ksec,Time,,LOINC
+kU,kilo enzyme unit,Clinical,units; mmol/min; millimoles per minute,CAct,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 kU = 1 mmol/min,LOINC
+kU/g,kilo enzyme unit per gram,Clinical,units per grams; kU per gm,CCnt,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 kU = 1 mmol/min,LOINC
+kU/L,kilo enzyme unit per liter,Clinical,units per liter; litre; enzymatic activity; enzyme activity per volume; activities,ACnc; CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 kU = 1 mmol/min,LOINC
+kU/mL,kilo enzyme unit per milliliter,Clinical,kU per mL; units per milliliter; millilitre; enzymatic activity per volume; enzyme activities,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 kU = 1 mmol/min,LOINC
+Ky,Kayser,Clinical,wavenumbers; kaysers,InvLen,unit of wavelength equal to cm^-1,UCUM
+l,Liters,Clinical,"cubic decimeters; decimeters cubed; decimetres; dm3; dm^3; litres; liters, LT
+",Vol,"Because lower case ""l"" can be read as the number ""1"", though this is a valid UCUM units. UCUM strongly reccomends using  ""L""",UCUM
+L,Liters,Clinical,"cubic decimeters; decimeters cubed; decimetres; dm3; dm^3; litres; liters, LT
+",Vol,"Because lower case ""l"" can be read as the number ""1"", though this is a valid UCUM units. UCUM strongly reccomends using  ""L""",UCUM
+L/(24.h),Liters per 24 hour,Clinical,L/24hrs; L/24 hrs; L per 24hrs; liters per 24 hours; day; dy; litres; volume flow rate,VRat,,LOINC
+L/(8.h),Liters per 8 hour,Clinical,L/8hrs; L/8 hrs; L per 8hrs; liters per 8 hours; litres; volume flow rate; shift,VRat,,LOINC
+L/(min.m2) ,Liters per minute per square meter,Clinical,L/(min.m2); L/min/m^2; L/min/sq. meter; L per min per m2; m^2; liters per minutes per square meter; meter squared; litres; metre ,ArVRat,unit for tests that measure cardiac output per body surface area (cardiac index),LOINC
+L/d,Liters per day,Clinical,L/dy; L per day; 24hrs; 24 hrs; 24 hours; liters; litres,VRat,,LOINC
+L/h,Liters per hour,Clinical,L/hr; L per hr; litres,VRat,,LOINC
+L/kg,Liters per kilogram,Clinical,L per kg; litre,VCnt,,LOINC
+L/L,Liters per liter,Clinical,L per L; liter/liter; litre,VFr,,LOINC
+L/min,Liters per minute,Clinical,liters per minute; litre,VRat,,LOINC
+L/min/m2,Liters per minute per square meter,Clinical,L/(min.m2); L/min/m^2; L/min/sq. meter; L per min per m2; m^2; liters per minutes per square meter; meter squared; litres; metre ,ArVRat,unit for tests that measure cardiac output per body surface area (cardiac index),
+L/s,Liters per second,Clinical,L per sec; litres,VRat,unit used often to measure gas flow and peak expiratory flow,LOINC
+L/s/s2,Liters per second per square second,Clinical,L/s/s^2; L/sec/sec2; L/sec/sec^2; L/sec/sq. sec; L per s per s2; L per sec per sec2; s^2; sec^2; liters per seconds per square second; second squared; litres ,ArVRat,unit for tests that measure cardiac output/body surface area,LOINC
+lm,lumen,Clinical,luminous flux; lumens,,unit of luminous flux defined as 1 lm = 1 cd⋅sr (candela times sphere),UCUM
+lm.m2,lumen square meter,Clinical,lm*m2; lm*m^2; lumen meters squared; lumen sq. meters; metres,,,LOINC
+Lmb,Lambert,Clinical,luminance; lamberts,,unit of luminance defined as 1 lambert = 1/ π candela per square meter,UCUM
+lx,lux,Clinical,illuminance; luxes,,unit of illuminance equal to one lumen per square meter. ,UCUM
+m,meter,Clinical,meters; metres; distance,Len,unit of length = 1.09361 yards,UCUM
+m/s,meter per second,Clinical,meter/second; m per sec; meters per second; metres; velocity; speed,Vel,unit of velocity,LOINC
+m/s2,meter per square second,Clinical,m/s^2; m/sq. sec; m per s2; per s^2; meters per square second; second squared; sq second; metres; acceleration,Accel,unit of acceleration,LOINC
+m[H2O],meter of water column,Clinical,mH2O; m H2O; meters of water column; metres; pressure,Pres,,UCUM
+m[Hg],meter of mercury column,Clinical,mHg; m Hg; meters of mercury column; metres; pressure,Pres,,UCUM
+m[IU]/L,milli international unit per liter,Clinical,mIU/L; m IU/L; mIU per liter; units; litre,ACnc,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+m[IU]/mL,milli  international unit per milliliter,Clinical,mIU/mL; m IU/mL; mIU per mL; milli international units per milliliter; millilitre,ACnc,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+m2,square meter,Clinical,m^2; sq m; square meters; meters squared; metres,Area,unit often used to represent body surface area,LOINC
+m2/s,square meter per second,Clinical,m^2/sec; m2 per sec; m^2 per sec; sq m/sec; meters squared/seconds; sq m per sec; meters squared; metres,ArRat,,LOINC
+m3/s,cubic meter per second,Clinical,m^3/sec; m3 per sec; m^3 per sec; cu m/sec; cubic meters per seconds; meters cubed; metres,VRat,,LOINC
+mA,milliampere,Clinical,mamp; milliamperes,ElpotRat,unit of electric current,LOINC
+mbar,millibar,Clinical,millibars,Pres,unit of pressure,LOINC
+mbar.s/L,millibar second per liter,Clinical,mbar*s/L; mbar.s per L; mbar*s per L; millibar seconds per liter; millibar second per litre,,unit to measure expiratory resistance,LOINC
+mbar/L/s,millibar per liter per second,Clinical,mbar/(L.s); mbar/L/sec; mbar/liter/second;  mbar per L per sec; mbar per liter per second; millibars per liters per seconds; litres,PresCncRat,unit to measure expiratory resistance,LOINC
+meq,milliequivalent,Clinical,milliequivalents; meqs,Sub,equivalence equals moles per valence,LOINC
+meq/(2.h),milliequivalent per 2 hour,Clinical,meq/2hrs; meq/2 hrs; meq per 2 hrs; milliequivalents per 2 hours,SRat,equivalence equals moles per valence,LOINC
+meq/(24.h),milliequivalent per 24 hour,Clinical,meq/24hrs; meq/24 hrs; meq per 24 hrs; milliequivalents per 24 hours,SRat,equivalence equals moles per valence,LOINC
+meq/(8.h),milliequivalent per 8 hour,Clinical,meq/8hrs; meq/8 hrs; meq per 8 hrs; milliequivalents per 8 hours; shift,SRat,equivalence equals moles per valence,LOINC
+meq/d,milliequivalent per day,Clinical,meq/dy; meq per day; milliquivalents per days; meq/24hrs; meq/24 hrs; meq per 24 hrs; milliequivalents per 24 hours,SRat,equivalence equals moles per valence,LOINC
+meq/dL,milliequivalent per deciliter,Clinical,meq per dL; milliequivalents per deciliter; decilitre,SCnc,equivalence equals moles per valence,LOINC
+meq/g,milliequivalent per gram,Clinical,mgq/gm; meq per gm; milliequivalents per gram,MCnt,equivalence equals moles per valence,LOINC
+meq/h,milliequivalent per hour,Clinical,meq/hrs; meq per hrs; milliequivalents per hour,SRat,equivalence equals moles per valence,LOINC
+meq/kg,milliequivalent per kilogram,Clinical,meq per kg; milliequivalents per kilogram,SCnt,equivalence equals moles per valence; used to measure dose per patient body mass,LOINC
+meq/kg/h,milliequivalent per kilogram per hour,Clinical,meq/(kg.h); meq/kg/hr; meq per kg per hr; milliequivalents per kilograms per hour,SCntRat,equivalence equals moles per valence; unit used to measure dose rate per patient body mass,LOINC
+meq/L,milliequivalent per liter,Clinical,milliequivalents per liter; litre; meq per l; acidity,SCnc,equivalence equals moles per valence,LOINC
+meq/m2,milliequivalent per square meter,Clinical,meq/m^2; meq/sq. m; milliequivalents per square meter; meter squared; metre,ArSub,equivalence equals moles per valence; note that the use of m2 in clinical units ofter refers to body surface area,LOINC
+meq/min,milliequivalent per minute,Clinical,meq per min; milliequivalents per minute,SRat,equivalence equals moles per valence,LOINC
+meq/mL,milliequivalent per milliliter,Clinical,meq per mL; milliequivalents per milliliter; millilitre,SCnc,equivalence equals moles per valence,LOINC
+mg,milligram,Clinical,milligrams,Mass,,LOINC
+mg/(10.h),milligram per 10 hour,Clinical,mg/10hrs; mg/10 hrs; mg per 10 hrs; milligrams per 10 hours,MRat,,LOINC
+mg/(12.h),milligram per 12 hour,Clinical,mg/12hrs; mg/12 hrs; per 12 hrs; 12hrs; milligrams per 12 hours,MRat,units used for tests in urine,LOINC
+mg/(2.h),milligram per 2 hour,Clinical,mg/2hrs; mg/2 hrs; mg per 2 hrs; 2hrs; milligrams per 2 hours,MRat,units used for tests in urine,LOINC
+mg/(24.h),milligram per 24 hour,Clinical,mg/24hrs; mg/24 hrs; milligrams per 24 hours; mg/kg/dy; mg per kg per day; milligrams per kilograms per days,MRat,,LOINC
+mg/(6.h),milligram per 6 hour,Clinical,mg/6hrs; mg/6 hrs; mg per 6 hrs; 6hrs; milligrams per 6 hours,MRat,,LOINC
+mg/(72.h),milligram per 72 hour,Clinical,mg/72hrs;  mg/72 hrs; 72 hrs; 72hrs; milligrams per 72 hours,MRat,,LOINC
+mg/(8.h),milligram per 8 hour,Clinical,mg/8hrs; mg/8 hrs; milligrams per 8 hours; shift,MRat,,LOINC
+mg/d,milligram per day,Clinical,mg/24hrs; mg/24 hrs; milligrams per 24 hours; mg/dy; mg per day; milligrams,MRat,,LOINC
+mg/dL,milligram per deciliter,Clinical,mg per dL; milligrams per deciliter; decilitre,MCnc,,LOINC
+mg/g,milligram per gram,Clinical,mg per gm; milligrams per gram,MCnt; MRto,,LOINC
+mg/h,milligram per hour,Clinical,mg/hr; mg per hr; milligrams,MRat,,LOINC
+mg/kg,milligram per kilogram,Clinical,mg per kg; milligrams per kilograms,MCnt,,LOINC
+mg/kg/(8.h),milligram per kilogram per 8 hour,Clinical,mg/(8.h.kg); mg/kg/8hrs; mg/kg/8 hrs; mg per kg per 8hrs; 8 hrs; milligrams per kilograms per 8 hours; shift,RelMRat; MCntRat,unit used to measure mass dose rate per patient body mass,LOINC
+mg/kg/d,milligram per kilogram per day,Clinical,mg/(kg.d); mg/(kg.24.h)mg/kg/dy; mg per kg per day; milligrams per kilograms per days; mg/kg/(24.h); mg/kg/24hrs; 24 hrs; 24 hours,RelMRat ,unit used to measure mass dose rate per patient body mass,LOINC
+mg/kg/h,milligram per kilogram per hour,Clinical,mg/(kg.h); mg/kg/hr; mg per kg per hr; milligrams per kilograms per hour,RelMRat; MCntRat,unit used to measure mass dose rate per patient body mass,LOINC
+mg/kg/min,milligram per kilogram per minute,Clinical,mg/(kg.min); mg per kg per min; milligrams per kilograms per minute,RelMRat; MCntRat,unit used to measure mass dose rate per patient body mass,LOINC
+mg/L,milligram per liter,Clinical,mg per l; milligrams per liter; litre,MCnc,,LOINC
+mg/m2,milligram per square meter,Clinical,mg/m^2; mg/sq. m; mg per m2; mg per m^2; mg per sq. milligrams; meter squared; metre,ArMass,,LOINC
+mg/m3,milligram per cubic meter,Clinical,mg/m^3; mg/cu. m; mg per m3; milligrams per cubic meter; meter cubed; metre,MCnc,,LOINC
+mg/mg,milligram per milligram,Clinical,mg per mg; milligrams; milligram/milligram,MRto,,LOINC
+mg/min,milligram per minute,Clinical,mg per min; milligrams per minutes; milligram/minute,MRat,,LOINC
+mg/mL,milligram per milliliter,Clinical,mg per mL; milligrams per milliliters; millilitre,MCnc,,LOINC
+mg/mmol,milligram per millimole,Clinical,mg per mmol; milligrams per millimole; ,Ratio,,LOINC
+mg/wk,milligram per week,Clinical,mg/week; mg per wk; milligrams per weeks; milligram/week,Mrat,,LOINC
+mho,mho,Obsolete,siemens; ohm reciprocals; Ω^−1; Ω-1 ,,unit of electric conductance (the inverse of electrical resistance) equal to ohm^-1,UCUM
+min,minute,Clinical,minutes,Time,,UCUM
+mL,milliliter,Clinical,milliliters; millilitres,Vol,,LOINC
+mL/(10.h),milliliter per 10 hour,Clinical,ml/10hrs; ml/10 hrs; mL per 10hrs; 10 hrs; milliliters per 10 hours; millilitres,VRat,,LOINC
+mL/(12.h),milliliter per 12 hour,Clinical,ml/12hrs; ml/12 hrs; mL per 12hrs; 12 hrs; milliliters per 12 hours; millilitres,VRat,,LOINC
+mL/(2.h),milliliter per 2 hour,Clinical,ml/2hrs; ml/2 hrs; mL per 2hrs; 2 hrs; milliliters per 2 hours; millilitres ,VRat,,LOINC
+mL/(24.h),milliliter per 24 hour,Clinical,ml/24hrs; ml/24 hrs; mL per 24hrs; 24 hrs; milliliters per 24 hours; millilitres; ml/dy; /day; ml per dy; days; fluid outputs; fluid inputs; flow rate,VRat,,LOINC
+mL/(4.h),milliliter per 4 hour,Clinical,ml/4hrs; ml/4 hrs; mL per 4hrs; 4 hrs; milliliters per 4 hours; millilitres,VRat,,LOINC
+mL/(5.h),milliliter per 5 hour,Clinical,ml/5hrs; ml/5 hrs; mL per 5hrs; 5 hrs; milliliters per 5 hours; millilitres,VRat,,LOINC
+mL/(6.h),milliliter per 6 hour,Clinical,ml/6hrs; ml/6 hrs; mL per 6hrs; 6 hrs; milliliters per 6 hours; millilitres,VRat,,LOINC
+mL/(72.h),milliliter per 72 hour,Clinical,ml/72hrs; ml/72 hrs; mL per 72hrs; 72 hrs; milliliters per 72 hours; millilitres,VRat,,LOINC
+mL/(8.h),milliliter per 8 hour,Clinical,ml/8hrs; ml/8 hrs; mL per 8hrs; 8 hrs; milliliters per 8 hours; millilitres; shift,VRat,,LOINC
+mL/(8.h)/kg,milliliter per 8 hour per kilogram,Clinical,mL/kg/(8.h); ml/8h/kg; ml/8 h/kg; ml/8hr/kg; ml/8 hr/kgr; mL per 8h per kg; 8 h; 8hr; 8 hr; milliliters per 8 hours per kilogram; millilitres; shift,VRatCnt,unit used to measure renal excretion volume rate per body mass,LOINC
+mL/[sin_i],milliliter per square inch (international),Clinical,mL/sin; mL/in2; mL/in^2; mL per sin; in2; in^2; sq. in; milliliters per square inch; inch squared,ArVol,,LOINC
+mL/cm[H2O],milliliter per centimeter of water,Clinical,milliliters per centimeter of water; millilitre per centimetre of water; millilitres per centimetre of water; mL/cmH2O; mL/cm H2O; mL per cmH2O; mL per cm H2O,Compli,unit used to measure dynamic lung compliance,LOINC
+mL/d,milliliter per day,Clinical,ml/day; ml per day; milliliters per day; 24 hours; 24hrs; millilitre;,VRat,usually used to measure fluid output or input; flow rate,LOINC
+mL/dL,milliliter per deciliter,Clinical,mL per dL; millilitres; decilitre; milliliters,VFr; VFrDiff,,LOINC
+mL/h,milliliter per hour,Clinical,mL/hr; mL per hr; milliliters per hour; millilitres; fluid intake; fluid output,VRat,,LOINC
+mL/kg,milliliter per kilogram,Clinical,mL per kg; milliliters per kilogram; millilitres,VCnt,,LOINC
+mL/kg/(8.h),milliliter per kilogram per 8 hour,Clinical,mL/(8.h.kg); mL/kg/8hrs; mL/kg/8 hrs; mL per kg per 8hrs; 8 hrs; milliliters per kilograms per 8 hours; millilitres; shift,VCntRat; RelEngRat,unit used to measure renal excretion volume rate per body mass,LOINC
+mL/kg/d,milliliter per kilogram per day,Clinical,mL/(kg.d); mL/kg/dy; mL per kg per day; milliliters per kilograms per day; mg/kg/24hrs; 24 hrs; per 24 hours millilitres,VCntRat; RelEngRat,unit used to measure renal excretion volume rate per body mass,LOINC
+mL/kg/h,milliliter per kilogram per hour,Clinical,mL/(kg.h); mL/kg/hr; mL per kg per hr; milliliters per kilograms per hour; millilitres,VCntRat; RelEngRat,unit used to measure renal excretion volume rate per body mass,LOINC
+mL/kg/min,milliliter per kilogram per minute,Clinical,mL/(kg.min); mL/kg/dy; mL per kg per day; milliliters per kilograms per day; millilitres,RelEngRat,used for tests that measure activity metabolic rate compared to standard resting metabolic rate ,LOINC
+mL/m2,milliliter per square meter,Clinical,mL/m^2; mL/sq. meter; mL per m2; m^2; sq. meter; milliliters per square meter; millilitres; meter squared,ArVol,used for tests that relate to heart work - e.g. ventricular stroke volume; atrial volume per body surface area,LOINC
+mL/mbar,milliliter per millibar,Clinical,mL per mbar; milliliters per millibar; millilitres,,unit used to measure dynamic lung compliance,LOINC
+mL/min,milliliter per minute,Clinical,mL per min; milliliters; millilitres,VRat,,LOINC
+mL/min/m2,milliliter per minute per square meter,Clinical,ml/min/m^2; ml/min/sq. meter; mL per min per m2; m^2; sq. meter; milliliters per minutes per square meter; millilitres; metre; meter squared,ArVRat,unit used to measure volume per body surface area; oxygen consumption index,LOINC
+mL/mm,milliliter per millimeter,Clinical,mL per mm; milliliters per millimeter; millilitres; millimetre,Lineic Volume,,LOINC
+mL/s,milliliter per second,Clinical,ml/sec; mL per sec; milliliters per second; millilitres,Vel; VelRat; VRat,,LOINC
+mm,millimeter,Clinical,millimeters; millimetres; height; length; diameter; thickness; axis; curvature; size,Len,,LOINC
+mm/h,millimeter per hour,Clinical,mm/hr; mm per hr; millimeters per hour; millimetres,Vel,unit to measure sedimentation rate,LOINC
+mm/min,millimeter per minute,Clinical,mm per min; millimeters per minute; millimetres,Vel,,LOINC
+mm[H2O],millimeter of water,Clinical,mmH2O; mm H2O; millimeters of water; millimetres,Pres,,LOINC
+mm[Hg],millimeter of mercury,Clinical,mmHg; mm Hg; millimeters of mercury; millimetres,Pres; PPres; Ratio,1 mm[Hg] = 1 torr; unit to measure blood pressure,LOINC
+mm2,square millimeter,Clinical,mm^2; sq. mm.; sq. millimeters; millimeters squared; millimetres,Area,,LOINC
+mmol,millimole,Clinical,millimoles,Sub,,LOINC
+mmol/(12.h),millimole per 12 hour,Clinical,mmol/12hrs; mmol/12 hrs; mmol per 12 hrs; 12hrs; millimoles per 12 hours,SRat,unit for tests related to urine,LOINC
+mmol/(2.h),millimole per 2 hour,Clinical,mmol/2hrs; mmol/2 hrs; mmol per 2 hrs; 2hrs; millimoles per 2 hours,SRat,unit for tests related to urine,LOINC
+mmol/(24.h),millimole per 24 hour,Clinical,mmol/24hrs; mmol/24 hrs; mmol per 24 hrs; 24hrs; millimoles per 24 hours,SRat,,LOINC
+mmol/(5.h),millimole per 5 hour,Clinical,mmol/5hrs; mmol/5 hrs; mmol per 5 hrs; 5hrs; millimoles per 5 hours,SRat,unit for tests related to doses,LOINC
+mmol/(6.h),millimole per 6 hour,Clinical,mmol/6hrs; mmol/6 hrs; mmol per 6 hrs; 6hrs; millimoles per 6 hours,SRat,unit for tests related to urine,LOINC
+mmol/(8.h),millimole per 8 hour,Clinical,mmol/8hrs; mmol/8 hrs; mmol per 8 hrs; 8hrs; millimoles per 8 hours; shift,SRat,,LOINC
+mmol/d,millimole per day,Clinical,mmol/24hrs; mmol/24 hrs; mmol per 24 hrs; 24hrs; millimoles per 24 hours,SRat,,LOINC
+mmol/dL,millimole per deciliter,Clinical,mmol per dL; millimoles; decilitre,SCnc,,LOINC
+mmol/g,millimole per gram,Clinical,mmol per gram; millimoles,SCnt,,LOINC
+mmol/h,millimole per hour,Clinical,mmol/hr; mmol per hr; millimoles per hour,SRat,unit for tests related to urine,LOINC
+mmol/kg,millimole per kilogram,Clinical,mmol per kg; millimoles per kilogram,SCnt,unit for tests related to stool,LOINC
+mmol/kg/(8.h),millimole per kilogram per 8 hour,Clinical,mmol/(8.h.kg); mmol/kg/8hrs; mmol/kg/8 hrs; mmol per kg per 8hrs; 8 hrs; millimoles per kilograms per 8 hours; shift,CCnt,unit used to measure molar dose rate per patient body mass,LOINC
+mmol/kg/d,millimole per kilogram per day,Clinical,mmol/kg/dy; mmol/kg/day; mmol per kg per dy; millimoles per kilograms per day,RelSRat,unit used to measure molar dose rate per patient body mass,LOINC
+mmol/kg/h,millimole per kilogram per hour,Clinical,mmol/kg/hr; mmol per kg per hr; millimoles per kilograms per hour,CCnt,unit used to measure molar dose rate per patient body mass,LOINC
+mmol/kg/min,millimole per kilogram per minute,Clinical,mmol/(kg.min); mmol/kg/min; mmol per kg per min; millimoles per kilograms per minute,CCnt,unit used to measure molar dose rate per patient body mass; note that the unit for the enzyme unit U = umol/min. mmol/kg/min = kU/kg; ,LOINC
+mmol/L,millimole per liter,Clinical,mmol per L; millimoles per liter; litre,SCnc,unit for tests related to doses,LOINC
+mmol/m2,millimole per square meter,Clinical,mmol/m^2; mmol/sq. meter;  mmol per m2; m^2; sq. meter; millimoles; meter squared; metre,ArSub,unit used to measure molar dose per patient body surface area,LOINC
+mmol/min,millimole per minute,Clinical,mmol per min; millimoles per minute,Srat; CAct,unit for the enzyme unit U = umol/min. mmol/min = kU,LOINC
+mmol/mmol,millimole per millimole,Clinical,mmol per mmol; millimoles per millimole,SRto,,LOINC
+mmol/mol,millimole per mole,Clinical,mmol per mol; millimoles per mole,SRto,,LOINC
+mmol/s/L,millimole per second per liter,Clinical,mmol/sec/L; mmol per s per L; per sec; millimoles per seconds per liter; litre,CCnc ,,LOINC
+mo,month,Clinical,months; duration,Time,based on Julian calendar which has an average of 30.435 days per month (this unit is used in astronomy but not in everyday life - see mo_g),UCUM
+mo_g,mean Gregorian month,Clinical,months; month-gregorian; mo-gregorian,Time,has an average 30.436875 days per month and is from the most internationally used civil calendar.,UCUM
+mo_j,mean Julian month,Clinical,mo-julian; mo Julian; months,Time,has an average of 30.435 days per month,UCUM
+mo_s,synodal month,Nonclinical,Moon; synodic month; lunar month; mo-s; mo s; months; moons,Time,"has an average of 29.53 days per month, unit used in astronomy",UCUM
+mol,mole,Clinical,moles,Sub,Measure the number of molecules ,UCUM
+mol/kg,mole per kilogram,Clinical,mol per kg; moles; mols,SCnt,unit for tests related to stool,LOINC
+mol/kg/s,mole per kilogram per second,Clinical,mol/kg/sec; mol per kg per sec; moles per kilograms per second; mols,CCnt,unit of catalytic activity (mol/s) per mass (kg),LOINC
+mol/L,mole per liter,Clinical,mol per L; moles per liter; litre; moles; mols,SCnc,unit often used in tests measuring oxygen content,LOINC
+mol/m3,mole per cubic meter,Clinical,mol/m^3; mol/cu. m; mol per m3; m^3; cu. meter; mols; moles; meters cubed; metre; mole per kiloliter; kilolitre; mol/kL,SCnc,,LOINC
+mol/mL,mole per milliliter,Clinical,mol per mL; moles; millilitre; mols,SCnc,,LOINC
+mol/mol,mole per mole,Clinical,mol per mol; moles per mol; mols,SRto,,LOINC
+mol/s,mole per second,Clinical,mol per sec; moles per second; mols,SRat,,LOINC
+mosm,milliosmole,Clinical,milliosmoles,Osmol,equal to 1/1000 of an osmole,LOINC
+mosm/kg,milliosmole per kilogram,Clinical,mosm per kg; milliosmoles per kilogram,Osmol,,LOINC
+mosm/L,milliosmole per liter,Clinical,mosm per liter; litre; milliosmoles,Osmol,,LOINC
+mPa,millipascal,Clinical,millipascals,Pres,unit of pressure,LOINC
+mPa.s,millipascal second,Clinical,mPa*s; millipoise; mP; dynamic viscosity,Visc,"base units for millipoise, a measurement of dynamic viscosity",LOINC
+Ms,megasecond,Clinical,megaseconds,Time,,LOINC
+ms,millisecond,Clinical,milliseconds; duration,Time,,LOINC
+mU/g,milli enzyme unit per gram,Clinical,mU per gm; milli enzyme units per gram; enzyme activity; enzymatic activity per mass,CCnt,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 mU = 1 nmol/min,LOINC
+mU/L,milli enzyme unit per liter,Clinical,mU per liter; litre; milli enzyme units enzymatic activity per volume; enzyme activity,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 mU = 1 nmol/min,LOINC
+mU/mg,milli enzyme unit per milligram,Clinical,mU per mg; milli enzyme units per milligram,CCnt,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 mU = 1 nmol/min,LOINC
+mU/mL,milli enzyme unit per milliliter,Clinical,mU per mL; milli enzyme units per milliliter; millilitre; enzymatic activity per volume; enzyme activity,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 mU = 1 nmol/min,LOINC
+mU/mL/min,milli enzyme unit per milliliter per minute,Clinical,mU per mL per min; mU per milliliters per minute; millilitres; milli enzyme units; enzymatic activity; enzyme activity,CCncRat,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 mU = 1 nmol/min,LOINC
+mV,millivolt,Clinical,millivolts,Elpot,unit of electric potential (voltage),LOINC
+Mx,Maxwell,Clinical,magnetix flux; Maxwells,,unit of magnetic flux,UCUM
+N,newton,Clinical,Newtons,Force,unit of force with base units kg.m/s2,UCUM
+N.cm,Newton centimeter,Clinical,N*cm; Ncm; N cm; Newton*centimeters; Newton* centimetres; torque; work,,"as a measurement of work, N.cm = 1/100 Joules;
+note that N.m is the standard unit of measurement for torque (although dimensionally equivalent to Joule), and N.cm can also be thought of as a torqe unit",LOINC
+N.s,Newton second,Clinical,Newton*seconds; N*s; N s; Ns; impulse; imp,,standard unit of impulse,LOINC
+ng,nanogram,Clinical,nanograms,Mass,,LOINC
+ng/(24.h),nanogram per 24 hour,Clinical,ng/24hrs; ng/24 hrs; nanograms per 24 hours,MRat,,LOINC
+ng/(8.h),nanogram per 8 hour,Clinical,ng/8hrs; ng/8 hrs; nanograms per 8 hours,MRat,,LOINC
+ng/10*6,nanogram per million,Clinical,ng/10^6; ng per 10*6; 10^6; nanograms,MNum,,LOINC
+ng/d,nanogram per day,Clinical,ng/dy; ng per day; nanograms ,MRat,,LOINC
+ng/dL,nanogram per deciliter,Clinical,ng per dL; nanograms per deciliter; decilitre,MCnc,,LOINC
+ng/g,nanogram per gram,Clinical,ng/gm; ng per gm; nanograms per gram,MCnt,,LOINC
+ng/h,nanogram per hour,Clinical,ng/hr; ng per hr; nanograms per hour,MRat,,LOINC
+ng/kg,nanogram per kilogram,Clinical,ng per kg; nanograms per kilogram,MCnt,,LOINC
+ng/kg/(8.h),nanogram per kilogram per 8 hour,Clinical,ng/(8.h.kg); ng/kg/8hrs; ng/kg/8 hrs; ng per kg per 8hrs; 8 hrs; nanograms per kilograms per 8 hours; shift,MRtoRat ,unit used to measure mass dose rate per patient body mass,LOINC
+ng/kg/h,nanogram per kilogram per hour,Clinical,ng/(kg.h); ng/kg/hr; ng per kg per hr; nanograms per kilograms per hour,MRtoRat ,unit used to measure mass dose rate per patient body mass,LOINC
+ng/kg/min,nanogram per kilogram per minute,Clinical,ng/(kg.min); ng per kg per min; nanograms per kilograms per minute,MRtoRat ,unit used to measure mass dose rate per patient body mass,LOINC
+ng/L,nanogram per liter,Clinical,ng per L; nanograms per liter; litre,MCnc,,LOINC
+ng/m2,nanogram per square meter,Clinical,ng/m^2; ng/sq. m; ng per m2; m^2; sq. meter; nanograms; meter squared; metre,ArMass,unit used to measure mass dose per patient body surface area,LOINC
+ng/mg,nanogram per milligram,Clinical,ng per mg; nanograms,MCnt,,LOINC
+ng/mg/h,nanogram per milligram per hour,Clinical,ng/mg/hr; ng per mg per hr; nanograms per milligrams per hour,MRtoRat ,,LOINC
+ng/min,nanogram per minute,Clinical,ng per min; nanograms,MRat,,LOINC
+ng/mL,nanogram per millliiter,Clinical,ng per mL; nanograms; millilitre,MCnc,,LOINC
+ng/mL/h,nanogram per milliliter per hour,Clinical,ng/mL/hr; ng per mL per mL; nanograms per milliliter per hour; nanogram per millilitre per hour; nanograms per millilitre per hour; enzymatic activity per volume; enzyme activity per milliliters,CCnc,tests that measure enzymatic activity,LOINC
+ng/s,nanogram per second,Clinical,ng/sec; ng per sec; nanograms per second,MRat,,LOINC
+ng/U,nanogram per enzyme unit,Clinical,ng per U; nanograms per enzyme unit,CMass,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+nkat,nanokatal,Clinical,nanokatals,CAct,kat is a unit of catalytic activity with base units = mol/s. Rarely used because its units are too large to practically express catalytic activity. See enzyme unit [U] which is the standard unit for catalytic activity.,LOINC
+nL,nanoliter,Clinical,nanoliters; nanolitres,Vol,,LOINC
+nm,nanometer,Clinical,nanometers; nanometres,Len,,LOINC
+nm/s/L,nanometer per second per liter,Clinical,nm/sec/liter; nm/sec/litre; nm per s per l; nm per sec per l; nanometers per second per liter; nanometre per second per litre; nanometres per second per litre,VelCnc,,LOINC
+nmol,nanomole,Clinical,nanomoles,Sub,,LOINC
+nmol/(24.h),nanomole per 24 hour,Clinical,nmol/24hr; nmol/24 hr; nanomoles per 24 hours; nmol/day; nanomoles per day; nmol per day; nanomole/day; nanomol/day,SRat,,LOINC
+nmol/d,nanomole per day,Clinical,nmol/day; nanomoles per day; nmol per day; nanomole/day; nanomol/day; nmol/24hr; nmol/24 hr; nanomoles per 24 hours; ,SRat,,LOINC
+nmol/dL,nanomole per deciliter,Clinical,nmol per dL; nanomoles per deciliter; nanomole per decilitre; nanomoles per decilitre; nanomole/deciliter; nanomole/decilitre; nanomol/deciliter; nanomol/decilitre,SCnc,,LOINC
+nmol/g,nanomole per gram,Clinical,nmol per gram; nanomoles per gram; nanomole/gram,SCnt,,LOINC
+nmol/h/L,nanomole per hour per liter,Clinical,nmol/hrs/L; nmol per hrs per L; nanomoles per hours per liter; litre; enzymatic activity per volume; enzyme activities,CCnc,,LOINC
+nmol/L,nanomole per liter,Clinical,nmol per L; nanomoles per liter; litre,SCnc,,LOINC
+nmol/mg,nanomole per milligram,Clinical,nmol per mg; nanomoles per milligram,SCnt,,LOINC
+nmol/mg/h,nanomole per milligram per hour,Clinical,nmol/mg/hr; nmol per mg per hr; nanomoles per milligrams per hour,SCntRat,,LOINC
+nmol/mg{prot},nanomole per milligram of protein,Clinical,nanomoles; nmol/mg prot; nmol per mg prot,Ratio; CCnt,,LOINC
+nmol/min,nanomole per minute,Clinical,nmol per min; nanomoles per minute; milli enzyme units; enzyme activity per volume; enzymatic activity,CCnc,unit for the enzyme unit U = umol/min. nmol/min = mU (milli enzyme unit),LOINC
+nmol/min/mL,nanomole per minute per milliliter,Clinical,nmol per min per mL; nanomoles per minutes per milliliter; millilitre; milli enzyme units per volume; enzyme activity; enzymatic activity,CCnc,unit for the enzyme unit U = umol/min. nmol/mL/min = mU/mL,LOINC
+nmol/mL,nanomole per milliliter,Clinical,nmol per mL; nanomoles per milliliter; millilitre,SCnc,,LOINC
+nmol/mL/h,nanomole per milliliter per hour,Clinical,nmol/mL/hr; nmol per mL per hr; nanomoles per milliliters per hour; millilitres; milli enzyme units per volume; enzyme activity; enzymatic activity,CCnc,unit for the enzyme unit U = umol/min.,LOINC
+nmol/mL/min,nanomole per milliliter per minute,Clinical,nmol per mL per min; nanomoles per milliliters per min; millilitres; milli enzyme units per volume; enzyme activity; enzymatic activity,CCnc,unit for the enzyme unit U = umol/min. nmol/mL/min = mU/mL,LOINC
+nmol/mmol,nanomole per millimole,Clinical,nmol per mmol; nanomoles per millimole,SRto,,LOINC
+nmol/mmol{creat},nanomole per millimole of creatinine,Clinical,nanomoles,SRto,,LOINC
+nmol/mol,nanomole per mole,Clinical,nmol per mole; nanomoles,SRto,,LOINC
+nmol/nmol,nanomole per nanomole,Clinical,nmol per nmol; nanomoles,SRto,,LOINC
+nmol/s,nanomole per second,Clinical,nmol/sec; nmol per sec; nanomoles per sercond; milli enzyme units; enzyme activity; enzymatic activity,CCnc,unit for the enzyme unit U = umol/min.,LOINC
+nmol/s/L,nanomole per second per liter,Clinical,nmol/sec/L; nmol per s per L; nmol per sec per L; nanomoles per seconds per liter; litre; milli enzyme units per volume; enzyme activity; enzymatic activity,CCnc,unit for the enzyme unit U = umol/min.,LOINC
+Np,neper,Clinical,nepers,LogRto,"logarithmic unit for ratios of measurements of physical field and power quantities, such as gain and loss of electronic signals",UCUM
+ns,nanosecond,Clinical,nanoseconds,Time,,LOINC
+nU/mL,nanoenzyme unit per milliliter,Clinical,nU per mL; nanoenzyme units per milliliter; millilitre; enzymatic activity per volume; enzyme activity,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 fU = pmol/min,LOINC
+Oe,Oersted,Clinical,H magnetic B field; Oersteds,,CGS unit of the auxiliary magnetic field H defined as 1 dyne per unit pole = 1000/4π amperes per meter (see Gauss for CGS unit for B field),UCUM
+Ohm,ohm,Clinical,Ω; resistance; ohms,,unit of electrical resistance with units of Volt per Ampere,UCUM
+Ohm.m,Ohm meter,Clinical,electric resistivity; meters; metres,,unit of electric resistivity,LOINC
+osm,osmole,Clinical,osmoles; osmols,Osmol,the number of moles of solute that contribute to the osmotic pressure of a solution,UCUM
+osm/kg,osmole per kilogram,Clinical,osm per kg; osmoles per kilogram; osmols,Osmol,,LOINC
+osm/L,osmole per liter,Clinical,osm per L; osmoles per liter; litre; osmols,Osmol,,LOINC
+P,Poise,Clinical,dynamic viscosity; poises,Visc,unit of dynamic viscosity where 1 Poise = 1/10 Pascal second,UCUM
+Pa,pascal,Clinical,pascals,Pres,standard unit of pressure equal to 1 newton per square meter (N/m2),UCUM
+pA,picoampere,Clinical,picoamperes,,equal to 10^-12 amperes,LOINC
+pc,parsec,Clinical,parsecs,Len,"unit of length equal to 3.26 light years, nad used to measure large distances to objects outside our Solar System",UCUM
+pg,picogram,Clinical,picograms,Mass; EntMass,,LOINC
+pg/dL,picogram per deciliter,Clinical,pg per dL; picograms; decilitre,MCnc,,LOINC
+pg/L,picogram per liter,Clinical,pg per L; picograms; litre,MCnc,,LOINC
+pg/mg,picogram per milligram,Clinical,pg per mg; picograms,MCnt,,LOINC
+pg/mL,picogram per milliliter,Clinical,pg per mL; picograms per milliliter; millilitre,MCnc,,LOINC
+pg/mm,picogram per millimeter,Clinical,pg per mm; picogram/millimeter; picogram/millimetre; picograms per millimeter; millimetre,Lineic Mass,,LOINC
+ph,phot,Clinical,phots,,"CGS photometric unit of illuminance, or luminous flux through an area equal to 10000 lumens per square meter = 10000 lux",UCUM
+pkat,picokatal,Clinical,pkats; picokatals,CAct,kat is a unit of catalytic activity with base units = mol/s. Rarely used because its units are too large to practically express catalytic activity. See enzyme unit [U] which is the standard unit for catalytic activity.,LOINC
+pL,picoliter,Clinical,picoliters; picolitres,Vol,,LOINC
+pm,picometer,Clinical,picometers; picometres,Len,,LOINC
+pmol,picomole,Clinical,picomoles; pmols,Sub,,LOINC
+pmol/(24.h),picomole per 24 hour,Clinical,pmol/24hrs; pmol/24 hrs; pmol per 24 hrs; 24hrs; days; dy; picomoles per 24 hours,SRat,,LOINC
+pmol/d,picomole per day,Clinical,pmol/dy; pmol per day; 24 hours; 24hrs; 24 hrs; picomoles,SRat,,LOINC
+pmol/dL,picomole per deciliter,Clinical,pmol per dL; picomoles per deciliter; decilitre,SCnc,,LOINC
+pmol/g,picomole per gram,Clinical,pmol per gm; picomoles per gram; picomole/gram,SCnt,,LOINC
+pmol/h/mL,picomole per hour per milliliter ,Clinical,pmol/hrs/mL; pmol per hrs per mL; picomoles per hour per milliliter; millilitre; micro enzyme units per volume; enzymatic activity; enzyme activity,CCnc,unit for the enzyme unit U = umol/min. ,LOINC
+pmol/L,picomole per liter,Clinical,picomole/liter; pmol per L; picomoles; litre,SCnc,,LOINC
+pmol/min,picomole per minute,Clinical,picomole/minute; pmol per min; picomoles per minute; micro enzyme units; enzymatic activity; enzyme activity,CCnc,unit for the enzyme unit U = umol/min. pmol/min = uU (micro enzyme unit),LOINC
+pmol/mL,picomole per milliliter,Clinical,picomole/milliliter; picomole/millilitre; pmol per mL; picomoles; millilitre; picomols; pmols,SCnc,,LOINC
+pmol/umol,picomole per micromole,Clinical,pmol/mcgmol; picomole/micromole; pmol per umol; pmol per mcgmol; picomoles ,SRto,,LOINC
+ps,picosecond,Clinical,picoseconds; psec,Time,,LOINC
+pT,picotesla,Clinical,picoteslas,,SI unit of magnetic field strength for magnetic field B,LOINC
+R,Roentgen,Clinical,röntgen; Roentgens,,unit of exposure of X-rays and gamma rays in air; unit used primarily in the US but strongly discouraged by NIST,UCUM
+RAD,radiation absorbed dose,Clinical,doses,,unit of radiation absorbed dose used primarily in the US with base units 100 ergs per gram of material. Also see the SI unit Gray (Gy).,UCUM
+rad,radian,Clinical,radians,Angle,unit of angular measure where 1 radian = 1/2π turn =  57.296 degrees. ,UCUM
+REM,radiation equivalent man,Clinical,Roentgen Equivalent in Man; rems;  dose equivalents,,unit of equivalent dose which measures the effect of radiation on humans equal to 0.01 sievert. Used primarily in the US. Also see SI unit Sievert (Sv),UCUM
+S,siemens,Clinical,Reciprocal ohm; mho; Ω−1; conductance,,unit of electric conductance (the inverse of electrical resistance) equal to ohm^-1,UCUM
+s,second - time,Clinical,seconds,Time,,UCUM
+sb,stilb,Obsolete,stilbs,,unit of luminance; equal to and replaced by unit candela per square centimeter (cd/cm2),UCUM
+sph,spere - solid angle,Clinical,speres,Angle,equal to the solid angle of an entire sphere = 4πsr (sr = steradian) ,UCUM
+sr,steradian - solid angle,Clinical,square radian; rad2; rad^2,Angle,unit of solid angle in three-dimensional geometry analagous to radian; used in photometry which measures the perceived brightness of object by human eye (e.g. radiant intensity = watt/steradian),UCUM
+St,Stokes,Clinical,kinematic viscosity,Visc,unit of kimematic viscosity with units cm2/s,UCUM
+st,stere,Nonclinical,stère; m3; cubic meter; m^3; meters cubed; metre,Vol,"equal to one cubic meter, usually used for measuring firewoord",UCUM
+Sv,sievert,Clinical,sieverts; radiation dose quantities; equivalent doses; effective dose; operational dose; committed dose,,SI unit for radiation dose equivalent equal to 1 Joule/kilogram.,UCUM
+T,tesla,Clinical,Teslas; magnetic field,,SI unit of magnetic field strength for magnetic field B equal to 1 Weber/square meter =  1 kg/(s2*A),UCUM
+t,metric ton,Nonclinical,tonnes; megagrams; tons,Mass,"equal to 1000 kg used in the US (recognized by NIST as metric ton), and internationally (recognized as tonne)",UCUM
+tex,tex,Clinical,linear mass density; texes,,unit of linear mass density for fibers equal to gram per 1000 meters,UCUM
+Torr,Torr,Clinical,torrs,Pres,1 torr = 1 mmHg; unit used to measure blood pressure,UCUM
+u,unified atomic mass unit,Clinical,unified atomic mass units;  amu; Dalton; Da,Mass,the mass of 1/12 of an unbound Carbon-12 atom nuclide equal to 1.6606x10^-27 kg ,UCUM
+U,enzyme unit,Clinical,micromoles per minute; umol/min; umol per minute; umol min-1; enzymatic activity; enzyme activity,CAct,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),UCUM
+U/(12.h),enzyme unit per 12 hour,Clinical,U/12hrs; U/ 12hrs; U per 12 hrs; 12hrs; enzyme units per 12 hours; enzyme activity; enzymatic activity per time; umol per min per 12 hours; micromoles per minute per 12 hours; umol/min/12hr,CRat,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/(2.h),enzyme unit per 2 hour,Clinical,U/2hrs; U/ 2hrs; U per 2 hrs; 2hrs; enzyme units per 2 hours; enzyme activity; enzymatic activity per time; umol per minute per 2 hours; micromoles per minute; umol/min/2hr; umol per min per 2hr,CRat,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/(24.h),enzyme unit per 24 hour,Clinical,U/24hrs; U/ 24hrs; U per 24 hrs; 24hrs; enzyme units per 24 hours; enzyme activity; enzymatic activity per time; micromoles per minute per 24 hours; umol/min/24hr; umol per min per 24hr,CRat,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/10,enzyme unit per 10,Clinical,enzyme unit/10; U per 10; enzyme units per 10; enzymatic activity; enzyme activity; micromoles per minute; umol/min/10,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/10*10,enzyme unit per 10 billion,Clinical,U per 10*10; enzyme units per 10*10; U per 10 billion; enzyme units; enzymatic activity; micromoles per minute per 10 billion; umol/min/10*10,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/10*12,enzyme unit per trillion,Clinical,enzyme unit/10*12; U per 10*12; enzyme units per 10*12; enzyme units per trillion; enzymatic activity; micromoles per minute per trillion; umol/min/10*12; umol per min per 10*12,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/10*6,enzyme unit per million,Clinical,enzyme unit/10*6; U per 10*6; enzyme units per 10*6; enzyme units; enzymatic activity per volume; micromoles per minute per million; umol/min/10*6; umol per min per 10*6,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/10*9,enzyme unit per billion,Clinical,enzyme unit/10*9; U per 10*9; enzyme units per 10*9; enzymatic activity per volume; micromoles per minute per billion; umol/min/10*9; umol per min per 10*9,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/d,enzyme unit per day,Clinical,U/dy; enzyme units per day; enzyme units; enzyme activity; enzymatic activity per time; micromoles per minute per day; umol/min/day; umol per min per day,CRat,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/dL,enzyme unit per deciliter,Clinical,U per dL; enzyme units per deciliter; decilitre; micromoles per minute per deciliter; umol/min/dL; umol per min per dL,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/g,enzyme unit per gram,Clinical,U/gm; U per gm; enzyme units per gram; micromoles per minute per gram; umol/min/g; umol per min per g,CCnt,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/h,enzyme unit per hour,Clinical,U/hr; U per hr; enzyme units per hour; micromoles per minute per hour; umol/min/hr; umol per min per hr,CRat,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/L,enzyme unit per liter,Clinical,enzyme unit/liter; enzyme unit/litre; U per L; enzyme units per liter; enzyme unit per litre; micromoles per minute per liter; umol/min/L; umol per min per L,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/min,enzyme unit per minute,Clinical,enzyme unit/minute; U per min; enzyme units; umol/min/min; micromoles per minute per minute; micromoles per min per min; umol,CRat,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/mL,enzyme unit per milliliter,Clinical,U per mL; enzyme units per milliliter; millilitre; micromoles per minute per milliliter; umol/min/mL; umol per min per mL,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+U/s,enzyme unit per second,Clinical,U/sec; U per second; enzyme units per second; micromoles per minute per second; umol/min/sec; umol per min per sec,CRat,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min),LOINC
+u[IU],micro international unit,Clinical,uIU; u IU; microinternational units,Arb,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+u[IU]/L,micro international unit per liter,Clinical,uIU/L; u IU/L; uIU per L; microinternational units per liter; litre; ,ACnc,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+u[IU]/mL,micro international unit per milliliter,Clinical,uIU/mL; u IU/mL; uIU per mL; microinternational units per milliliter; millilitre,ACnc,International units (IU) are analyte and reference specimen  specific arbitrary units (held at WHO),LOINC
+ueq,microequivalent,Clinical,microequivalents; 10^-6 equivalents; 10-6 equivalents,Sub,,LOINC
+ueq/L,microequivalent per liter,Clinical,ueq per liter; litre; microequivalents,MCnc,,LOINC
+ueq/mL,microequivalent per milliliter,Clinical,ueq per milliliter; millilitre; microequivalents,MCnc,,LOINC
+ug,microgram,Clinical,mcg; micrograms; 10^-6 grams; 10-6 grams,Mass,,LOINC
+ug/(100.g),microgram per 100 gram,Clinical,ug/100gm; ug/100 gm; mcg; ug per 100g; 100 gm; mcg per 100g; micrograms per 100 grams,MCnt,,LOINC
+ug/(24.h),microgram per 24 hour,Clinical,ug/24hrs; ug/24 hrs; mcg/24hrs; ug per 24hrs; mcg per 24hrs; 24 hrs; micrograms per 24 hours,MRat,,LOINC
+ug/(8.h),microgram per 8 hour,Clinical,ug/8hrs; ug/8 hrs; mcg/8hrs; ug per 8hrs; mcg per 8hrs; 8 hrs; micrograms per 8 hours; shift,MRat,,LOINC
+ug/[sft_i],microgram per square foot (international),Clinical,ug/sft; ug/ft2; ug/ft^2; ug/sq. ft; micrograms; sq. foot; foot squared,ArMass,,LOINC
+ug/d,microgram per day,Clinical,ug/dy; mcg/dy; ug per day; mcg; micrograms per day,MRat,,LOINC
+ug/dL,microgram per deciliter,Clinical,ug per dL; mcg/dl; mcg per dl; micrograms per deciliter; decilitre,MCnc,,LOINC
+ug/g,microgram per gram,Clinical,ug per gm; mcg/gm; mcg per g; micrograms per gram,MCnt,,LOINC
+ug/h,microgram per hour,Clinical,ug/hr; mcg/hr; mcg per hr; ug per hr; ug per hour; micrograms,MRat,,LOINC
+ug/kg,microgram per kilogram,Clinical,ug per kg; mcg/kg; mcg per kg; micrograms per kilogram,MCnt,,LOINC
+ug/kg/(8.h),microgram per kilogram per 8 hour,Clinical,ug/kg/8hrs; mcg/kg/8hrs; ug/kg/8 hrs; mcg/kg/8 hrs; ug per kg per 8hrs; 8 hrs; mcg per kg per 8hrs; micrograms per kilograms per 8 hours; shift,,unit used to measure mass dose rate per patient body mass,LOINC
+ug/kg/d,microgram per kilogram per day,Clinical,ug/(kg.d); ug/kg/dy; mcg/kg/day; ug per kg per dy; 24 hours; 24hrs; mcg; kilograms; microgram per kilogram and day,,unit used to measure mass dose rate per patient body mass,LOINC
+ug/kg/h,microgram per kilogram per hour,Clinical,ug/(kg.h); ug/kg/hr; mcg/kg/hr; ug per kg per hr; mcg per kg per hr; kilograms,,unit used to measure mass dose rate per patient body mass,LOINC
+ug/kg/min,microgram per kilogram per minute,Clinical,ug/kg/min; ug/kg/min; mcg/kg/min; ug per kg per min; mcg; micrograms per kilograms per minute ,,unit used to measure mass dose rate per patient body mass,LOINC
+ug/L,microgram per liter,Clinical,mcg/L; ug per L; mcg; micrograms per liter; litre ,MCnc,,LOINC
+ug/L/(24.h),microgram per liter per 24 hour,Clinical,ug/L/24hrs; ug/L/24 hrs; mcg/L/24hrs; ug per L per 24hrs; 24 hrs; day; dy mcg; micrograms per liters per 24 hours; litres,,unit used to measure mass dose rate per patient body mass,LOINC
+ug/m2,microgram per square meter,Clinical,ug/m^2; ug/sq. m; mcg/m2; mcg/m^2; mcg/sq. m; ug per m2; m^2; sq. meter; mcg; micrograms per square meter; meter squared; metre,ArMass,unit used to measure mass dose per patient body surface area,LOINC
+ug/m3,microgram per cubic meter,Clinical,ug/m^3; ug/cu. m; mcg/m3; mcg/m^3; mcg/cu. m; ug per m3; ug per m^3; ug per cu. m; mcg; micrograms per cubic meter; meter cubed; metre,MCnc,,LOINC
+ug/mg,microgram per milligram,Clinical,ug per mg; mcg/mg; mcg per mg; micromilligrams per milligram,MCnt,,LOINC
+ug/min,microgram per minute,Clinical,ug per min; mcg/min; mcg per min; microminutes per minute,MRat,,LOINC
+ug/mL,microgram per milliliter,Clinical,ug per mL; mcg/mL; mcg per mL; micrograms per milliliter; millilitre,MCnc,,LOINC
+ug/mmol,microgram per millimole,Clinical,ug per mmol; mcg/mmol; mcg per mmol; micrograms per millimole,Ratio,,LOINC
+ug/ng,microgram per nanogram,Clinical,ug per ng; mcg/ng; mcg per ng; micrograms per nanogram,MCnt,,LOINC
+ukat,microkatal,Clinical,microkatals; ukats,CAct,kat is a unit of catalytic activity with base units = mol/s. Rarely used because its units are too large to practically express catalytic activity. See enzyme unit [U] which is the standard unit for catalytic activity.,LOINC
+uL,microliter,Clinical,microliters; microlitres; mcl,Vol,,LOINC
+uL/(2.h),microliter per 2 hour,Clinical,uL/2hrs; uL/2 hrs; mcg/2hr; mcg per 2hr; uL per 2hr; uL per 2 hrs; microliters per 2 hours; microlitres ,VRat,,LOINC
+uL/h,microliter per hour,Clinical,uL/hr; mcg/hr; mcg per hr; uL per hr; microliters per hour; microlitres,VRat,,LOINC
+um,micrometer,Clinical,micrometers; micrometres; μm; microns,Len,Unit of length that is usually used in tests related to the eye,LOINC
+um/s,microns per second,Clinical,um/sec; micron/second; microns/second; um per sec; micrometers per second; micrometres,Vel,,LOINC
+umol,micromole,Clinical,micromoles; umols,Sub,,LOINC
+umol/(2.h),micromole per 2 hour,Clinical,umol/2hrs; umol/2 hrs; umol per 2 hrs; 2hrs; micromoles per 2 hours,SRat,,LOINC
+umol/(24.h),micromole per 24 hour,Clinical,umol/24hrs; umol/24 hrs; umol per 24 hrs; per 24hrs; micromoles per 24 hours,SRat,,LOINC
+umol/(8.h),micromole per 8 hour,Clinical,umol/8hr; umol/8 hr; umol per 8 hr; umol per 8hr; umols per 8hr; umol per 8 hours; micromoles per 8 hours; shift,SRat,,LOINC
+umol/d,micromole per day,Clinical,umol/day; umol per day; umols per day; umol per days; micromoles per days; umol/24hr; umol/24 hr; umol per 24 hr; umol per 24hr; umols per 24hr; umol per 24 hours; micromoles per 24 hours,SRat,,LOINC
+umol/dL,micromole per deciliter,Clinical,micromole/deciliter; micromole/decilitre; umol per dL; micromoles per deciliters; micromole per decilitres,SCnc,,LOINC
+umol/g,micromole per gram,Clinical,micromole/gram; umol per g; micromoles per gram,SCnt; Ratio,,LOINC
+umol/h,micromole per hour,Clinical,umol/hr; umol per hr; umol per hour; micromoles per hours,SRat,,LOINC
+umol/kg,micromole per kilogram,Clinical,umol per kg; micromoles per kilogram,SCnt,,LOINC
+umol/L,micromole per liter,Clinical,micromole/liter; micromole/litre; umol per liter; micromoles per liter; litre,SCnc,,LOINC
+umol/L/h,micromole per liter per hour,Clinical,umol/liter/hr; umol/litre/hr; umol per L per hr; umol per liter per hour; micromoles per liters per hour; litre,CCnc,unit for the enzyme unit U = umol/min; umol/L/h is a derived unit of enzyme units,LOINC
+umol/mg,micromole per milligram,Clinical,micromole/milligram; umol per mg; micromoles per milligram,SCnt,,LOINC
+umol/min,micromole per minute,Clinical,micromole/minute; umol per min; micromoles per minute; enzyme units,CAct,unit for the enzyme unit U = umol/min,LOINC
+umol/min/g,micromole per minute per gram,Clinical,umol/min/gm; umol per min per gm; micromoles per minutes per gram; U/g; enzyme units,CCnt,unit for the enzyme unit U = umol/min. umol/min/g = U/g,LOINC
+umol/min/L,micromole per minute per liter,Clinical,umol/min/liter; umol/minute/liter; micromoles per minutes per liter; litre; enzyme units; U/L,CCnc,unit for the enzyme unit U = umol/min. umol/min/L = U/L,LOINC
+umol/mL,micromole per milliliter,Clinical,umol per mL; micromoles per milliliter; millilitre,SCnc,,LOINC
+umol/mL/min,micromole per milliliter per minute,Clinical,umol per mL per min; micromoles per milliliters per minute; millilitres,CCnc,unit for the enzyme unit U = umol/min. umol/mL/min = U/mL,LOINC
+umol/mmol,micromole per millimole,Clinical,umol per mmol; micromoles per millimole,SRto,,LOINC
+umol/mol,micromole per mole,Clinical,umol per mol; micromoles per mole,SRto,,LOINC
+umol/umol,micromole per micromole,Clinical,umol per umol; micromoles per micromole,Srto; SFr; EntSRto,,LOINC
+uOhm,microOhm,Clinical,microOhms; µΩ,,unit of electric resistance,LOINC
+us,microsecond,Clinical,microseconds,Time,,LOINC
+uU/g,micro enzyme unit per gram,Clinical,uU per gm; micro enzyme units per gram; micro enzymatic activity per mass; enzyme activity,CCnt,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 uU = 1pmol/min,LOINC
+uU/L,micro enzyme unit per liter,Clinical,uU per L; micro enzyme units per liter; litre; enzymatic activity per volume; enzyme activity ,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 uU = 1pmol/min,LOINC
+uU/mL,micro enzyme unit per milliliter,Clinical,uU per mL; micro enzyme units per milliliter; millilitre; enzymatic activity per volume; enzyme activity,CCnc,1 U is the standard enzyme unit which equals 1 micromole substrate catalyzed per minute (1 umol/min); 1 uU = 1pmol/min,LOINC
+uV,microvolt,Clinical,microvolts,Elpot,unit of electric potential (voltage),LOINC
+V,volt,Clinical,volts,Elpot,unit of electric potential (voltage) = 1 Joule per Coulomb (J/C),UCUM
+W,watt,Clinical,watts,EngRat,unit of power equal to 1 Joule per second (J/s) =  kg⋅m2⋅s−3,UCUM
+Wb,weber,Clinical,magnetic flux; webers,,unit of magnetic flux equal to Volt second,UCUM
+wk,week,Clinical,weeks; wks,Time,,UCUM

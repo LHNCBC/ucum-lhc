@@ -2,7 +2,6 @@
 // (which need access to local files, and were difficult (if not impossible) to
 // build using browserify).
 
-const webpack = require('webpack');
 const path = require('path');
 
 function commonConfig() {
@@ -32,13 +31,16 @@ function commonConfig() {
 
 var configs = [];
 var progConfig = commonConfig();
-progConfig.entry = path.join(__dirname, './impexp/createUnitsFromXmlEssence.js'),
-progConfig.output.filename = './impexp/createUnitsFromXmlEssenceBuild.js'
-configs.push(progConfig);
-
-progConfig = commonConfig();
-progConfig.entry = path.join(__dirname, './impexp/updateData.js'),
-progConfig.output.filename = './impexp/updateDataBuild.js'
+progConfig.entry = path.join(__dirname, './impexp/updateData.js');
+progConfig.externals = [
+    function (context, request, callback) {
+      if(/ucumDefs\.json/.test(request)) {
+        return callback(null, 'commonjs ' + request);
+      }
+      callback();
+    }
+];
+progConfig.output.filename = './impexp/updateDataBuild.js';
 configs.push(progConfig);
 
 module.exports = configs;
