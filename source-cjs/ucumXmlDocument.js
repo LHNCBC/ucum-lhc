@@ -24,8 +24,6 @@ var UnitTables = require('./unitTables.js').UnitTables;
 
 var jsonfile = require('jsonfile');
 
-var fs = require('fs');
-
 var xmldoc = require('xmldoc');
 
 var fs = require('fs');
@@ -84,7 +82,7 @@ class UcumXmlDocument {
   parseXml() {
     this.parsePrefixes(xmlInput_.childrenNamed("prefix"));
     this.parseBaseUnits(xmlInput_.childrenNamed("base-unit"));
-    this.parseUnitStrings(xmlInput_.childrenNamed("unit")); // Create the json file of the prefix and unit definitions
+    this.parseUnitStrings(xmlInput_.childrenNamed("unit")); // Create or replace the json file of the prefix and unit definitions
 
     this.writeJsonFile();
     this.writeVersionText();
@@ -242,7 +240,7 @@ class UcumXmlDocument {
         if (attrs['csUnitString_'] === '1') {
           attrs['baseFactor_'] = 1;
         } else if (attrs['csCode_'] === '[pH]') {
-          attrs['baseFactor_'] = funcNode.attr.value;
+          attrs['baseFactor_'] = parseFloat(funcNode.attr.value);
         } else {
           let slashPos = attrs['csUnitString_'].indexOf('/');
           let ar = []; // unit string = K/9 or K/4 or m2/s4/Hz
@@ -261,7 +259,7 @@ class UcumXmlDocument {
               attrs['csUnitString_'] = "Pa";
             } // unit string = m1/s4/Hz, K, deg, V, mV, uV, nV, W, kW
             else {
-                attrs['baseFactor_'] = funcNode.attr.value;
+                attrs['baseFactor_'] = parseFloat(funcNode.attr.value);
               }
         } // end if the unit string is not 1
 
@@ -281,7 +279,7 @@ class UcumXmlDocument {
           if (attrs['csCode_'] === '[pi]') attrs['baseFactor_'] = parseFloat(attrs['baseFactorStr_']);else if (valNode.childNamed('sup')) {
             attrs['baseFactor_'] = parseFloat(valNode.attr.value);
           } else {
-            attrs['baseFactor_'] = valNode.val;
+            attrs['baseFactor_'] = parseFloat(valNode.val);
           }
         } // end if this is not a special unit
       // Arbitrary units are defined in the UCUM spec as "not of any
@@ -316,7 +314,7 @@ class UcumXmlDocument {
               let exp = parseInt(attrs['csUnitString_'].substr(3));
               attrs['magnitude_'] = Math.pow(10, exp);
 
-              if (attrs['baseFactor_'] !== '1') {
+              if (attrs['baseFactor_'] !== 1) {
                 attrs['magnitude_'] *= attrs['baseFactor_'];
               }
             } // else I don't know what it is.
@@ -420,9 +418,7 @@ class UcumXmlDocument {
    * This writes out the ucumDefs data file, which contains all prefixes and
    * units (base units and others) read and parsed from the XML file.
    *
-   * This creates the file in the data directory and appends the
-   * current Date object value to "ucumDefs" so that this does not run
-   * into problems with a previously existing file.
+   * This creates or replace the file "ucumDefs.json" in the data directory.
    */
 
 
@@ -438,7 +434,7 @@ class UcumXmlDocument {
       'units': uArray
     };
     let dt = new Date();
-    jsonfile.writeFileSync('../data/ucumDefs' + dt.valueOf() + '.json', defsHash, {
+    jsonfile.writeFileSync('../data/ucumDefs.json', defsHash, {
       spaces: 2,
       encoding: 'utf8',
       mode: 0o644,

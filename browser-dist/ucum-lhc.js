@@ -468,7 +468,7 @@ module.exports={
       "csCode_": "10*",
       "ciCode_": "10*",
       "property_": "number",
-      "magnitude_": "10",
+      "magnitude_": 10,
       "dim_": {
         "dimVec_": [
           0,
@@ -497,7 +497,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -506,7 +506,7 @@ module.exports={
       "csCode_": "10^",
       "ciCode_": "10^",
       "property_": "number",
-      "magnitude_": "10",
+      "magnitude_": 10,
       "dim_": {
         "dimVec_": [
           0,
@@ -535,7 +535,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -611,7 +611,7 @@ module.exports={
       "csUnitString_": "10*-2",
       "ciUnitString_": "10*-2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -649,7 +649,7 @@ module.exports={
       "csUnitString_": "10*-3",
       "ciUnitString_": "10*-3",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -687,7 +687,7 @@ module.exports={
       "csUnitString_": "10*-6",
       "ciUnitString_": "10*-6",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -725,7 +725,7 @@ module.exports={
       "csUnitString_": "10*-9",
       "ciUnitString_": "10*-9",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -763,7 +763,7 @@ module.exports={
       "csUnitString_": "10*-12",
       "ciUnitString_": "10*-12",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -801,7 +801,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -839,7 +839,7 @@ module.exports={
       "csUnitString_": "rad2",
       "ciUnitString_": "RAD2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -877,7 +877,7 @@ module.exports={
       "csUnitString_": "s-1",
       "ciUnitString_": "S-1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -915,7 +915,7 @@ module.exports={
       "csUnitString_": "kg.m/s2",
       "ciUnitString_": "KG.M/S2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -953,7 +953,7 @@ module.exports={
       "csUnitString_": "N/m2",
       "ciUnitString_": "N/M2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -991,7 +991,7 @@ module.exports={
       "csUnitString_": "N.m",
       "ciUnitString_": "N.M",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1029,7 +1029,7 @@ module.exports={
       "csUnitString_": "J/s",
       "ciUnitString_": "J/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1067,7 +1067,7 @@ module.exports={
       "csUnitString_": "C/s",
       "ciUnitString_": "C/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1105,7 +1105,7 @@ module.exports={
       "csUnitString_": "J/C",
       "ciUnitString_": "J/C",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1143,7 +1143,7 @@ module.exports={
       "csUnitString_": "C/V",
       "ciUnitString_": "C/V",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1181,7 +1181,7 @@ module.exports={
       "csUnitString_": "V/A",
       "ciUnitString_": "V/A",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1219,7 +1219,7 @@ module.exports={
       "csUnitString_": "Ohm-1",
       "ciUnitString_": "OHM-1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1257,7 +1257,7 @@ module.exports={
       "csUnitString_": "V.s",
       "ciUnitString_": "V.S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1295,7 +1295,7 @@ module.exports={
       "csUnitString_": "K",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1333,7 +1333,7 @@ module.exports={
       "csUnitString_": "Wb/m2",
       "ciUnitString_": "WB/M2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1371,7 +1371,7 @@ module.exports={
       "csUnitString_": "Wb/A",
       "ciUnitString_": "WB/A",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1409,7 +1409,7 @@ module.exports={
       "csUnitString_": "cd.sr",
       "ciUnitString_": "CD.SR",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1447,7 +1447,7 @@ module.exports={
       "csUnitString_": "lm/m2",
       "ciUnitString_": "LM/M2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1485,7 +1485,7 @@ module.exports={
       "csUnitString_": "s-1",
       "ciUnitString_": "S-1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1523,7 +1523,7 @@ module.exports={
       "csUnitString_": "J/kg",
       "ciUnitString_": "J/KG",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1561,7 +1561,7 @@ module.exports={
       "csUnitString_": "J/kg",
       "ciUnitString_": "J/KG",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1599,7 +1599,7 @@ module.exports={
       "csUnitString_": "[pi].rad/360",
       "ciUnitString_": "[PI].RAD/360",
       "baseFactorStr_": "2",
-      "baseFactor_": "2",
+      "baseFactor_": 2,
       "defError_": false
     },
     {
@@ -1637,7 +1637,7 @@ module.exports={
       "csUnitString_": "deg",
       "ciUnitString_": "DEG",
       "baseFactorStr_": "0.9",
-      "baseFactor_": "0.9",
+      "baseFactor_": 0.9,
       "defError_": false
     },
     {
@@ -1675,7 +1675,7 @@ module.exports={
       "csUnitString_": "deg/60",
       "ciUnitString_": "DEG/60",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1713,7 +1713,7 @@ module.exports={
       "csUnitString_": "'/60",
       "ciUnitString_": "'/60",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1751,7 +1751,7 @@ module.exports={
       "csUnitString_": "dm3",
       "ciUnitString_": "DM3",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1789,7 +1789,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -1827,7 +1827,7 @@ module.exports={
       "csUnitString_": "m2",
       "ciUnitString_": "M2",
       "baseFactorStr_": "100",
-      "baseFactor_": "100",
+      "baseFactor_": 100,
       "defError_": false
     },
     {
@@ -1865,7 +1865,7 @@ module.exports={
       "csUnitString_": "s",
       "ciUnitString_": "S",
       "baseFactorStr_": "60",
-      "baseFactor_": "60",
+      "baseFactor_": 60,
       "defError_": false
     },
     {
@@ -1903,7 +1903,7 @@ module.exports={
       "csUnitString_": "min",
       "ciUnitString_": "MIN",
       "baseFactorStr_": "60",
-      "baseFactor_": "60",
+      "baseFactor_": 60,
       "defError_": false
     },
     {
@@ -1941,7 +1941,7 @@ module.exports={
       "csUnitString_": "h",
       "ciUnitString_": "HR",
       "baseFactorStr_": "24",
-      "baseFactor_": "24",
+      "baseFactor_": 24,
       "defError_": false
     },
     {
@@ -1979,7 +1979,7 @@ module.exports={
       "csUnitString_": "d",
       "ciUnitString_": "D",
       "baseFactorStr_": "365.24219",
-      "baseFactor_": "365.24219",
+      "baseFactor_": 365.24219,
       "defError_": false
     },
     {
@@ -2017,7 +2017,7 @@ module.exports={
       "csUnitString_": "d",
       "ciUnitString_": "D",
       "baseFactorStr_": "365.25",
-      "baseFactor_": "365.25",
+      "baseFactor_": 365.25,
       "defError_": false
     },
     {
@@ -2055,7 +2055,7 @@ module.exports={
       "csUnitString_": "d",
       "ciUnitString_": "D",
       "baseFactorStr_": "365.2425",
-      "baseFactor_": "365.2425",
+      "baseFactor_": 365.2425,
       "defError_": false
     },
     {
@@ -2093,7 +2093,7 @@ module.exports={
       "csUnitString_": "a_j",
       "ciUnitString_": "ANN_J",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -2131,7 +2131,7 @@ module.exports={
       "csUnitString_": "d",
       "ciUnitString_": "D",
       "baseFactorStr_": "7",
-      "baseFactor_": "7",
+      "baseFactor_": 7,
       "defError_": false
     },
     {
@@ -2169,7 +2169,7 @@ module.exports={
       "csUnitString_": "d",
       "ciUnitString_": "D",
       "baseFactorStr_": "29.53059",
-      "baseFactor_": "29.53059",
+      "baseFactor_": 29.53059,
       "defError_": false
     },
     {
@@ -2207,7 +2207,7 @@ module.exports={
       "csUnitString_": "a_j/12",
       "ciUnitString_": "ANN_J/12",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -2245,7 +2245,7 @@ module.exports={
       "csUnitString_": "a_g/12",
       "ciUnitString_": "ANN_G/12",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -2283,7 +2283,7 @@ module.exports={
       "csUnitString_": "mo_j",
       "ciUnitString_": "MO_J",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -2435,7 +2435,7 @@ module.exports={
       "csUnitString_": "Mm",
       "ciUnitString_": "MAM",
       "baseFactorStr_": "149597.870691",
-      "baseFactor_": "149597.870691",
+      "baseFactor_": 149597.870691,
       "defError_": false
     },
     {
@@ -2511,7 +2511,7 @@ module.exports={
       "csUnitString_": "m/s",
       "ciUnitString_": "M/S",
       "baseFactorStr_": "299792458",
-      "baseFactor_": "299792458",
+      "baseFactor_": 299792458,
       "defError_": false
     },
     {
@@ -2739,7 +2739,7 @@ module.exports={
       "csUnitString_": "[e].V",
       "ciUnitString_": "[E].V",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -2891,7 +2891,7 @@ module.exports={
       "csUnitString_": "m/s2",
       "ciUnitString_": "M/S2",
       "baseFactorStr_": "980665e-5",
-      "baseFactor_": "9.80665",
+      "baseFactor_": 9.80665,
       "defError_": false
     },
     {
@@ -2929,7 +2929,7 @@ module.exports={
       "csUnitString_": "Pa",
       "ciUnitString_": "PAL",
       "baseFactorStr_": "133.322",
-      "baseFactor_": "133.322",
+      "baseFactor_": 133.322,
       "defError_": false
     },
     {
@@ -2967,7 +2967,7 @@ module.exports={
       "csUnitString_": "Pa",
       "ciUnitString_": "PAL",
       "baseFactorStr_": "101325",
-      "baseFactor_": "101325",
+      "baseFactor_": 101325,
       "defError_": false
     },
     {
@@ -3005,7 +3005,7 @@ module.exports={
       "csUnitString_": "[c].a_j",
       "ciUnitString_": "[C].ANN_J",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3043,7 +3043,7 @@ module.exports={
       "csUnitString_": "g.[g]",
       "ciUnitString_": "G.[G]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3081,7 +3081,7 @@ module.exports={
       "csUnitString_": "cm-1",
       "ciUnitString_": "CM-1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3119,7 +3119,7 @@ module.exports={
       "csUnitString_": "cm/s2",
       "ciUnitString_": "CM/S2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3157,7 +3157,7 @@ module.exports={
       "csUnitString_": "g.cm/s2",
       "ciUnitString_": "G.CM/S2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3195,7 +3195,7 @@ module.exports={
       "csUnitString_": "dyn.cm",
       "ciUnitString_": "DYN.CM",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3233,7 +3233,7 @@ module.exports={
       "csUnitString_": "dyn.s/cm2",
       "ciUnitString_": "DYN.S/CM2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3271,7 +3271,7 @@ module.exports={
       "csUnitString_": "A",
       "ciUnitString_": "A",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -3309,7 +3309,7 @@ module.exports={
       "csUnitString_": "cm2/s",
       "ciUnitString_": "CM2/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3461,7 +3461,7 @@ module.exports={
       "csUnitString_": "Oe.cm",
       "ciUnitString_": "OE.CM",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3499,7 +3499,7 @@ module.exports={
       "csUnitString_": "cd/cm2",
       "ciUnitString_": "CD/CM2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3537,7 +3537,7 @@ module.exports={
       "csUnitString_": "cd/cm2/[pi]",
       "ciUnitString_": "CD/CM2/[PI]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3689,7 +3689,7 @@ module.exports={
       "csUnitString_": "erg/g",
       "ciUnitString_": "ERG/G",
       "baseFactorStr_": "100",
-      "baseFactor_": "100",
+      "baseFactor_": 100,
       "defError_": false
     },
     {
@@ -3727,7 +3727,7 @@ module.exports={
       "csUnitString_": "RAD",
       "ciUnitString_": "[RAD]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -3765,7 +3765,7 @@ module.exports={
       "csUnitString_": "cm",
       "ciUnitString_": "CM",
       "baseFactorStr_": "254e-2",
-      "baseFactor_": "2.54",
+      "baseFactor_": 2.54,
       "defError_": false
     },
     {
@@ -3803,7 +3803,7 @@ module.exports={
       "csUnitString_": "[in_i]",
       "ciUnitString_": "[IN_I]",
       "baseFactorStr_": "12",
-      "baseFactor_": "12",
+      "baseFactor_": 12,
       "defError_": false
     },
     {
@@ -3841,7 +3841,7 @@ module.exports={
       "csUnitString_": "[ft_i]",
       "ciUnitString_": "[FT_I]",
       "baseFactorStr_": "3",
-      "baseFactor_": "3",
+      "baseFactor_": 3,
       "defError_": false
     },
     {
@@ -3879,7 +3879,7 @@ module.exports={
       "csUnitString_": "[ft_i]",
       "ciUnitString_": "[FT_I]",
       "baseFactorStr_": "5280",
-      "baseFactor_": "5280",
+      "baseFactor_": 5280,
       "defError_": false
     },
     {
@@ -3917,7 +3917,7 @@ module.exports={
       "csUnitString_": "[ft_i]",
       "ciUnitString_": "[FT_I]",
       "baseFactorStr_": "6",
-      "baseFactor_": "6",
+      "baseFactor_": 6,
       "defError_": false
     },
     {
@@ -3955,7 +3955,7 @@ module.exports={
       "csUnitString_": "m",
       "ciUnitString_": "M",
       "baseFactorStr_": "1852",
-      "baseFactor_": "1852",
+      "baseFactor_": 1852,
       "defError_": false
     },
     {
@@ -3993,7 +3993,7 @@ module.exports={
       "csUnitString_": "[nmi_i]/h",
       "ciUnitString_": "[NMI_I]/H",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4031,7 +4031,7 @@ module.exports={
       "csUnitString_": "[in_i]2",
       "ciUnitString_": "[IN_I]2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4069,7 +4069,7 @@ module.exports={
       "csUnitString_": "[ft_i]2",
       "ciUnitString_": "[FT_I]2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4107,7 +4107,7 @@ module.exports={
       "csUnitString_": "[yd_i]2",
       "ciUnitString_": "[YD_I]2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4145,7 +4145,7 @@ module.exports={
       "csUnitString_": "[in_i]3",
       "ciUnitString_": "[IN_I]3",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4183,7 +4183,7 @@ module.exports={
       "csUnitString_": "[ft_i]3",
       "ciUnitString_": "[FT_I]3",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4221,7 +4221,7 @@ module.exports={
       "csUnitString_": "[yd_i]3",
       "ciUnitString_": "[YD_I]3",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4259,7 +4259,7 @@ module.exports={
       "csUnitString_": "[in_i]3",
       "ciUnitString_": "[IN_I]3",
       "baseFactorStr_": "144",
-      "baseFactor_": "144",
+      "baseFactor_": 144,
       "defError_": false
     },
     {
@@ -4297,7 +4297,7 @@ module.exports={
       "csUnitString_": "[ft_i]3",
       "ciUnitString_": "[FT_I]3",
       "baseFactorStr_": "128",
-      "baseFactor_": "128",
+      "baseFactor_": 128,
       "defError_": false
     },
     {
@@ -4373,7 +4373,7 @@ module.exports={
       "csUnitString_": "[pi]/4.[mil_i]2",
       "ciUnitString_": "[PI]/4.[MIL_I]2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4411,7 +4411,7 @@ module.exports={
       "csUnitString_": "[in_i]",
       "ciUnitString_": "[IN_I]",
       "baseFactorStr_": "4",
-      "baseFactor_": "4",
+      "baseFactor_": 4,
       "defError_": false
     },
     {
@@ -4449,7 +4449,7 @@ module.exports={
       "csUnitString_": "m/3937",
       "ciUnitString_": "M/3937",
       "baseFactorStr_": "1200",
-      "baseFactor_": "1200",
+      "baseFactor_": 1200,
       "defError_": false
     },
     {
@@ -4487,7 +4487,7 @@ module.exports={
       "csUnitString_": "[ft_us]",
       "ciUnitString_": "[FT_US]",
       "baseFactorStr_": "3",
-      "baseFactor_": "3",
+      "baseFactor_": 3,
       "defError_": false
     },
     {
@@ -4525,7 +4525,7 @@ module.exports={
       "csUnitString_": "[ft_us]/12",
       "ciUnitString_": "[FT_US]/12",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4563,7 +4563,7 @@ module.exports={
       "csUnitString_": "[ft_us]",
       "ciUnitString_": "[FT_US]",
       "baseFactorStr_": "16.5",
-      "baseFactor_": "16.5",
+      "baseFactor_": 16.5,
       "defError_": false
     },
     {
@@ -4601,7 +4601,7 @@ module.exports={
       "csUnitString_": "[rd_us]",
       "ciUnitString_": "[RD_US]",
       "baseFactorStr_": "4",
-      "baseFactor_": "4",
+      "baseFactor_": 4,
       "defError_": false
     },
     {
@@ -4639,7 +4639,7 @@ module.exports={
       "csUnitString_": "[ch_us]/100",
       "ciUnitString_": "[CH_US]/100",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4677,7 +4677,7 @@ module.exports={
       "csUnitString_": "[ft_us]",
       "ciUnitString_": "[FT_US]",
       "baseFactorStr_": "100",
-      "baseFactor_": "100",
+      "baseFactor_": 100,
       "defError_": false
     },
     {
@@ -4715,7 +4715,7 @@ module.exports={
       "csUnitString_": "[rch_us]/100",
       "ciUnitString_": "[RCH_US]/100",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4753,7 +4753,7 @@ module.exports={
       "csUnitString_": "[ft_us]",
       "ciUnitString_": "[FT_US]",
       "baseFactorStr_": "6",
-      "baseFactor_": "6",
+      "baseFactor_": 6,
       "defError_": false
     },
     {
@@ -4791,7 +4791,7 @@ module.exports={
       "csUnitString_": "[rd_us]",
       "ciUnitString_": "[RD_US]",
       "baseFactorStr_": "40",
-      "baseFactor_": "40",
+      "baseFactor_": 40,
       "defError_": false
     },
     {
@@ -4829,7 +4829,7 @@ module.exports={
       "csUnitString_": "[fur_us]",
       "ciUnitString_": "[FUR_US]",
       "baseFactorStr_": "8",
-      "baseFactor_": "8",
+      "baseFactor_": 8,
       "defError_": false
     },
     {
@@ -4867,7 +4867,7 @@ module.exports={
       "csUnitString_": "[rd_us]2",
       "ciUnitString_": "[RD_US]2",
       "baseFactorStr_": "160",
-      "baseFactor_": "160",
+      "baseFactor_": 160,
       "defError_": false
     },
     {
@@ -4905,7 +4905,7 @@ module.exports={
       "csUnitString_": "[rd_us]2",
       "ciUnitString_": "[RD_US]2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4943,7 +4943,7 @@ module.exports={
       "csUnitString_": "[mi_us]2",
       "ciUnitString_": "[MI_US]2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -4981,7 +4981,7 @@ module.exports={
       "csUnitString_": "[mi_us]2",
       "ciUnitString_": "[MI_US]2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5019,7 +5019,7 @@ module.exports={
       "csUnitString_": "[sct]",
       "ciUnitString_": "[SCT]",
       "baseFactorStr_": "36",
-      "baseFactor_": "36",
+      "baseFactor_": 36,
       "defError_": false
     },
     {
@@ -5095,7 +5095,7 @@ module.exports={
       "csUnitString_": "cm",
       "ciUnitString_": "CM",
       "baseFactorStr_": "2.539998",
-      "baseFactor_": "2.539998",
+      "baseFactor_": 2.539998,
       "defError_": false
     },
     {
@@ -5133,7 +5133,7 @@ module.exports={
       "csUnitString_": "[in_br]",
       "ciUnitString_": "[IN_BR]",
       "baseFactorStr_": "12",
-      "baseFactor_": "12",
+      "baseFactor_": 12,
       "defError_": false
     },
     {
@@ -5171,7 +5171,7 @@ module.exports={
       "csUnitString_": "[ft_br]",
       "ciUnitString_": "[FT_BR]",
       "baseFactorStr_": "16.5",
-      "baseFactor_": "16.5",
+      "baseFactor_": 16.5,
       "defError_": false
     },
     {
@@ -5209,7 +5209,7 @@ module.exports={
       "csUnitString_": "[rd_br]",
       "ciUnitString_": "[RD_BR]",
       "baseFactorStr_": "4",
-      "baseFactor_": "4",
+      "baseFactor_": 4,
       "defError_": false
     },
     {
@@ -5247,7 +5247,7 @@ module.exports={
       "csUnitString_": "[ch_br]/100",
       "ciUnitString_": "[CH_BR]/100",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5285,7 +5285,7 @@ module.exports={
       "csUnitString_": "[ft_br]",
       "ciUnitString_": "[FT_BR]",
       "baseFactorStr_": "6",
-      "baseFactor_": "6",
+      "baseFactor_": 6,
       "defError_": false
     },
     {
@@ -5323,7 +5323,7 @@ module.exports={
       "csUnitString_": "[ft_br]",
       "ciUnitString_": "[FT_BR]",
       "baseFactorStr_": "2.5",
-      "baseFactor_": "2.5",
+      "baseFactor_": 2.5,
       "defError_": false
     },
     {
@@ -5361,7 +5361,7 @@ module.exports={
       "csUnitString_": "[ft_br]",
       "ciUnitString_": "[FT_BR]",
       "baseFactorStr_": "3",
-      "baseFactor_": "3",
+      "baseFactor_": 3,
       "defError_": false
     },
     {
@@ -5399,7 +5399,7 @@ module.exports={
       "csUnitString_": "[ft_br]",
       "ciUnitString_": "[FT_BR]",
       "baseFactorStr_": "5280",
-      "baseFactor_": "5280",
+      "baseFactor_": 5280,
       "defError_": false
     },
     {
@@ -5437,7 +5437,7 @@ module.exports={
       "csUnitString_": "[ft_br]",
       "ciUnitString_": "[FT_BR]",
       "baseFactorStr_": "6080",
-      "baseFactor_": "6080",
+      "baseFactor_": 6080,
       "defError_": false
     },
     {
@@ -5475,7 +5475,7 @@ module.exports={
       "csUnitString_": "[nmi_br]/h",
       "ciUnitString_": "[NMI_BR]/H",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5513,7 +5513,7 @@ module.exports={
       "csUnitString_": "[yd_br]2",
       "ciUnitString_": "[YD_BR]2",
       "baseFactorStr_": "4840",
-      "baseFactor_": "4840",
+      "baseFactor_": 4840,
       "defError_": false
     },
     {
@@ -5551,7 +5551,7 @@ module.exports={
       "csUnitString_": "[in_i]3",
       "ciUnitString_": "[IN_I]3",
       "baseFactorStr_": "231",
-      "baseFactor_": "231",
+      "baseFactor_": 231,
       "defError_": false
     },
     {
@@ -5589,7 +5589,7 @@ module.exports={
       "csUnitString_": "[gal_us]",
       "ciUnitString_": "[GAL_US]",
       "baseFactorStr_": "42",
-      "baseFactor_": "42",
+      "baseFactor_": 42,
       "defError_": false
     },
     {
@@ -5627,7 +5627,7 @@ module.exports={
       "csUnitString_": "[gal_us]/4",
       "ciUnitString_": "[GAL_US]/4",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5665,7 +5665,7 @@ module.exports={
       "csUnitString_": "[qt_us]/2",
       "ciUnitString_": "[QT_US]/2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5703,7 +5703,7 @@ module.exports={
       "csUnitString_": "[pt_us]/4",
       "ciUnitString_": "[PT_US]/4",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5741,7 +5741,7 @@ module.exports={
       "csUnitString_": "[gil_us]/4",
       "ciUnitString_": "[GIL_US]/4",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5779,7 +5779,7 @@ module.exports={
       "csUnitString_": "[foz_us]/8",
       "ciUnitString_": "[FOZ_US]/8",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5817,7 +5817,7 @@ module.exports={
       "csUnitString_": "[fdr_us]/60",
       "ciUnitString_": "[FDR_US]/60",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5855,7 +5855,7 @@ module.exports={
       "csUnitString_": "[ft_i]3",
       "ciUnitString_": "[FT_I]3",
       "baseFactorStr_": "128",
-      "baseFactor_": "128",
+      "baseFactor_": 128,
       "defError_": false
     },
     {
@@ -5893,7 +5893,7 @@ module.exports={
       "csUnitString_": "[in_i]3",
       "ciUnitString_": "[IN_I]3",
       "baseFactorStr_": "2150.42",
-      "baseFactor_": "2150.42",
+      "baseFactor_": 2150.42,
       "defError_": false
     },
     {
@@ -5931,7 +5931,7 @@ module.exports={
       "csUnitString_": "[bu_us]/8",
       "ciUnitString_": "[BU_US]/8",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -5969,7 +5969,7 @@ module.exports={
       "csUnitString_": "[bu_us]/4",
       "ciUnitString_": "[BU_US]/4",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6007,7 +6007,7 @@ module.exports={
       "csUnitString_": "[pk_us]/8",
       "ciUnitString_": "[PK_US]/8",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6045,7 +6045,7 @@ module.exports={
       "csUnitString_": "[dqt_us]/2",
       "ciUnitString_": "[DQT_US]/2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6083,7 +6083,7 @@ module.exports={
       "csUnitString_": "[foz_us]/2",
       "ciUnitString_": "[FOZ_US]/2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6121,7 +6121,7 @@ module.exports={
       "csUnitString_": "[tbs_us]/3",
       "ciUnitString_": "[TBS_US]/3",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6159,7 +6159,7 @@ module.exports={
       "csUnitString_": "[tbs_us]",
       "ciUnitString_": "[TBS_US]",
       "baseFactorStr_": "16",
-      "baseFactor_": "16",
+      "baseFactor_": 16,
       "defError_": false
     },
     {
@@ -6197,7 +6197,7 @@ module.exports={
       "csUnitString_": "mL",
       "ciUnitString_": "ML",
       "baseFactorStr_": "30",
-      "baseFactor_": "30",
+      "baseFactor_": 30,
       "defError_": false
     },
     {
@@ -6235,7 +6235,7 @@ module.exports={
       "csUnitString_": "mL",
       "ciUnitString_": "ML",
       "baseFactorStr_": "240",
-      "baseFactor_": "240",
+      "baseFactor_": 240,
       "defError_": false
     },
     {
@@ -6273,7 +6273,7 @@ module.exports={
       "csUnitString_": "mL",
       "ciUnitString_": "mL",
       "baseFactorStr_": "5",
-      "baseFactor_": "5",
+      "baseFactor_": 5,
       "defError_": false
     },
     {
@@ -6311,7 +6311,7 @@ module.exports={
       "csUnitString_": "mL",
       "ciUnitString_": "mL",
       "baseFactorStr_": "15",
-      "baseFactor_": "15",
+      "baseFactor_": 15,
       "defError_": false
     },
     {
@@ -6349,7 +6349,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": "L",
       "baseFactorStr_": "4.54609",
-      "baseFactor_": "4.54609",
+      "baseFactor_": 4.54609,
       "defError_": false
     },
     {
@@ -6387,7 +6387,7 @@ module.exports={
       "csUnitString_": "[gal_br]",
       "ciUnitString_": "[GAL_BR]",
       "baseFactorStr_": "2",
-      "baseFactor_": "2",
+      "baseFactor_": 2,
       "defError_": false
     },
     {
@@ -6425,7 +6425,7 @@ module.exports={
       "csUnitString_": "[pk_br]",
       "ciUnitString_": "[PK_BR]",
       "baseFactorStr_": "4",
-      "baseFactor_": "4",
+      "baseFactor_": 4,
       "defError_": false
     },
     {
@@ -6463,7 +6463,7 @@ module.exports={
       "csUnitString_": "[gal_br]/4",
       "ciUnitString_": "[GAL_BR]/4",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6501,7 +6501,7 @@ module.exports={
       "csUnitString_": "[qt_br]/2",
       "ciUnitString_": "[QT_BR]/2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6539,7 +6539,7 @@ module.exports={
       "csUnitString_": "[pt_br]/4",
       "ciUnitString_": "[PT_BR]/4",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6577,7 +6577,7 @@ module.exports={
       "csUnitString_": "[gil_br]/5",
       "ciUnitString_": "[GIL_BR]/5",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6615,7 +6615,7 @@ module.exports={
       "csUnitString_": "[foz_br]/8",
       "ciUnitString_": "[FOZ_BR]/8",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6653,7 +6653,7 @@ module.exports={
       "csUnitString_": "[fdr_br]/60",
       "ciUnitString_": "[FDR_BR]/60",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6691,7 +6691,7 @@ module.exports={
       "csUnitString_": "mg",
       "ciUnitString_": "MG",
       "baseFactorStr_": "64.79891",
-      "baseFactor_": "64.79891",
+      "baseFactor_": 64.79891,
       "defError_": false
     },
     {
@@ -6729,7 +6729,7 @@ module.exports={
       "csUnitString_": "[gr]",
       "ciUnitString_": "[GR]",
       "baseFactorStr_": "7000",
-      "baseFactor_": "7000",
+      "baseFactor_": 7000,
       "defError_": false
     },
     {
@@ -6767,7 +6767,7 @@ module.exports={
       "csUnitString_": "[lb_av].[g]",
       "ciUnitString_": "[LB_AV].[G]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6805,7 +6805,7 @@ module.exports={
       "csUnitString_": "[lb_av]/16",
       "ciUnitString_": "[LB_AV]/16",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6843,7 +6843,7 @@ module.exports={
       "csUnitString_": "[oz_av]/16",
       "ciUnitString_": "[OZ_AV]/16",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -6881,7 +6881,7 @@ module.exports={
       "csUnitString_": "[lb_av]",
       "ciUnitString_": "[LB_AV]",
       "baseFactorStr_": "100",
-      "baseFactor_": "100",
+      "baseFactor_": 100,
       "defError_": false
     },
     {
@@ -6919,7 +6919,7 @@ module.exports={
       "csUnitString_": "[lb_av]",
       "ciUnitString_": "[LB_AV]",
       "baseFactorStr_": "112",
-      "baseFactor_": "112",
+      "baseFactor_": 112,
       "defError_": false
     },
     {
@@ -6957,7 +6957,7 @@ module.exports={
       "csUnitString_": "[scwt_av]",
       "ciUnitString_": "[SCWT_AV]",
       "baseFactorStr_": "20",
-      "baseFactor_": "20",
+      "baseFactor_": 20,
       "defError_": false
     },
     {
@@ -6995,7 +6995,7 @@ module.exports={
       "csUnitString_": "[lcwt_av]",
       "ciUnitString_": "[LCWT_AV]",
       "baseFactorStr_": "20",
-      "baseFactor_": "20",
+      "baseFactor_": 20,
       "defError_": false
     },
     {
@@ -7033,7 +7033,7 @@ module.exports={
       "csUnitString_": "[lb_av]",
       "ciUnitString_": "[LB_AV]",
       "baseFactorStr_": "14",
-      "baseFactor_": "14",
+      "baseFactor_": 14,
       "defError_": false
     },
     {
@@ -7071,7 +7071,7 @@ module.exports={
       "csUnitString_": "[gr]",
       "ciUnitString_": "[GR]",
       "baseFactorStr_": "24",
-      "baseFactor_": "24",
+      "baseFactor_": 24,
       "defError_": false
     },
     {
@@ -7109,7 +7109,7 @@ module.exports={
       "csUnitString_": "[pwt_tr]",
       "ciUnitString_": "[PWT_TR]",
       "baseFactorStr_": "20",
-      "baseFactor_": "20",
+      "baseFactor_": 20,
       "defError_": false
     },
     {
@@ -7147,7 +7147,7 @@ module.exports={
       "csUnitString_": "[oz_tr]",
       "ciUnitString_": "[OZ_TR]",
       "baseFactorStr_": "12",
-      "baseFactor_": "12",
+      "baseFactor_": 12,
       "defError_": false
     },
     {
@@ -7185,7 +7185,7 @@ module.exports={
       "csUnitString_": "[gr]",
       "ciUnitString_": "[GR]",
       "baseFactorStr_": "20",
-      "baseFactor_": "20",
+      "baseFactor_": 20,
       "defError_": false
     },
     {
@@ -7223,7 +7223,7 @@ module.exports={
       "csUnitString_": "[sc_ap]",
       "ciUnitString_": "[SC_AP]",
       "baseFactorStr_": "3",
-      "baseFactor_": "3",
+      "baseFactor_": 3,
       "defError_": false
     },
     {
@@ -7261,7 +7261,7 @@ module.exports={
       "csUnitString_": "[dr_ap]",
       "ciUnitString_": "[DR_AP]",
       "baseFactorStr_": "8",
-      "baseFactor_": "8",
+      "baseFactor_": 8,
       "defError_": false
     },
     {
@@ -7299,7 +7299,7 @@ module.exports={
       "csUnitString_": "[oz_ap]",
       "ciUnitString_": "[OZ_AP]",
       "baseFactorStr_": "12",
-      "baseFactor_": "12",
+      "baseFactor_": 12,
       "defError_": false
     },
     {
@@ -7337,7 +7337,7 @@ module.exports={
       "csUnitString_": "g",
       "ciUnitString_": "g",
       "baseFactorStr_": "28",
-      "baseFactor_": "28",
+      "baseFactor_": 28,
       "defError_": false
     },
     {
@@ -7375,7 +7375,7 @@ module.exports={
       "csUnitString_": "[in_i]/12",
       "ciUnitString_": "[IN_I]/12",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -7413,7 +7413,7 @@ module.exports={
       "csUnitString_": "[lne]/6",
       "ciUnitString_": "[LNE]/6",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -7451,7 +7451,7 @@ module.exports={
       "csUnitString_": "[pnt]",
       "ciUnitString_": "[PNT]",
       "baseFactorStr_": "12",
-      "baseFactor_": "12",
+      "baseFactor_": 12,
       "defError_": false
     },
     {
@@ -7489,7 +7489,7 @@ module.exports={
       "csUnitString_": "[in_i]",
       "ciUnitString_": "[IN_I]",
       "baseFactorStr_": "0.013837",
-      "baseFactor_": "0.013837",
+      "baseFactor_": 0.013837,
       "defError_": false
     },
     {
@@ -7527,7 +7527,7 @@ module.exports={
       "csUnitString_": "[pnt_pr]",
       "ciUnitString_": "[PNT_PR]",
       "baseFactorStr_": "12",
-      "baseFactor_": "12",
+      "baseFactor_": 12,
       "defError_": false
     },
     {
@@ -7565,7 +7565,7 @@ module.exports={
       "csUnitString_": "cm",
       "ciUnitString_": "CM",
       "baseFactorStr_": "32.48",
-      "baseFactor_": "32.48",
+      "baseFactor_": 32.48,
       "defError_": false
     },
     {
@@ -7603,7 +7603,7 @@ module.exports={
       "csUnitString_": "[pied]/12",
       "ciUnitString_": "[PIED]/12",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -7641,7 +7641,7 @@ module.exports={
       "csUnitString_": "[pouce]/12",
       "ciUnitString_": "[POUCE]/12",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -7679,7 +7679,7 @@ module.exports={
       "csUnitString_": "[ligne]/6",
       "ciUnitString_": "[LIGNE]/6",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -7717,7 +7717,7 @@ module.exports={
       "csUnitString_": "[didot]",
       "ciUnitString_": "[DIDOT]",
       "baseFactorStr_": "12",
-      "baseFactor_": "12",
+      "baseFactor_": 12,
       "defError_": false
     },
     {
@@ -7793,7 +7793,7 @@ module.exports={
       "csUnitString_": "K/9",
       "ciUnitString_": "K/9",
       "baseFactorStr_": "5",
-      "baseFactor_": "5",
+      "baseFactor_": 5,
       "defError_": false
     },
     {
@@ -7869,7 +7869,7 @@ module.exports={
       "csUnitString_": "J",
       "ciUnitString_": "J",
       "baseFactorStr_": "4.18580",
-      "baseFactor_": "4.18580",
+      "baseFactor_": 4.1858,
       "defError_": false
     },
     {
@@ -7907,7 +7907,7 @@ module.exports={
       "csUnitString_": "J",
       "ciUnitString_": "J",
       "baseFactorStr_": "4.18190",
-      "baseFactor_": "4.18190",
+      "baseFactor_": 4.1819,
       "defError_": false
     },
     {
@@ -7945,7 +7945,7 @@ module.exports={
       "csUnitString_": "J",
       "ciUnitString_": "J",
       "baseFactorStr_": "4.19002",
-      "baseFactor_": "4.19002",
+      "baseFactor_": 4.19002,
       "defError_": false
     },
     {
@@ -7983,7 +7983,7 @@ module.exports={
       "csUnitString_": "J",
       "ciUnitString_": "J",
       "baseFactorStr_": "4.1868",
-      "baseFactor_": "4.1868",
+      "baseFactor_": 4.1868,
       "defError_": false
     },
     {
@@ -8021,7 +8021,7 @@ module.exports={
       "csUnitString_": "J",
       "ciUnitString_": "J",
       "baseFactorStr_": "4.184",
-      "baseFactor_": "4.184",
+      "baseFactor_": 4.184,
       "defError_": false
     },
     {
@@ -8059,7 +8059,7 @@ module.exports={
       "csUnitString_": "cal_th",
       "ciUnitString_": "CAL_TH",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8097,7 +8097,7 @@ module.exports={
       "csUnitString_": "kcal_th",
       "ciUnitString_": "KCAL_TH",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8135,7 +8135,7 @@ module.exports={
       "csUnitString_": "kJ",
       "ciUnitString_": "kJ",
       "baseFactorStr_": "1.05967",
-      "baseFactor_": "1.05967",
+      "baseFactor_": 1.05967,
       "defError_": false
     },
     {
@@ -8173,7 +8173,7 @@ module.exports={
       "csUnitString_": "kJ",
       "ciUnitString_": "kJ",
       "baseFactorStr_": "1.05480",
-      "baseFactor_": "1.05480",
+      "baseFactor_": 1.0548,
       "defError_": false
     },
     {
@@ -8211,7 +8211,7 @@ module.exports={
       "csUnitString_": "kJ",
       "ciUnitString_": "kJ",
       "baseFactorStr_": "1.05468",
-      "baseFactor_": "1.05468",
+      "baseFactor_": 1.05468,
       "defError_": false
     },
     {
@@ -8249,7 +8249,7 @@ module.exports={
       "csUnitString_": "kJ",
       "ciUnitString_": "kJ",
       "baseFactorStr_": "1.05587",
-      "baseFactor_": "1.05587",
+      "baseFactor_": 1.05587,
       "defError_": false
     },
     {
@@ -8287,7 +8287,7 @@ module.exports={
       "csUnitString_": "kJ",
       "ciUnitString_": "kJ",
       "baseFactorStr_": "1.05505585262",
-      "baseFactor_": "1.05505585262",
+      "baseFactor_": 1.05505585262,
       "defError_": false
     },
     {
@@ -8325,7 +8325,7 @@ module.exports={
       "csUnitString_": "kJ",
       "ciUnitString_": "kJ",
       "baseFactorStr_": "1.054350",
-      "baseFactor_": "1.054350",
+      "baseFactor_": 1.05435,
       "defError_": false
     },
     {
@@ -8363,7 +8363,7 @@ module.exports={
       "csUnitString_": "[Btu_th]",
       "ciUnitString_": "[BTU_TH]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8401,7 +8401,7 @@ module.exports={
       "csUnitString_": "[ft_i].[lbf_av]/s",
       "ciUnitString_": "[FT_I].[LBF_AV]/S",
       "baseFactorStr_": "550",
-      "baseFactor_": "550",
+      "baseFactor_": 550,
       "defError_": false
     },
     {
@@ -8439,7 +8439,7 @@ module.exports={
       "csUnitString_": "g/km",
       "ciUnitString_": "G/KM",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8477,7 +8477,7 @@ module.exports={
       "csUnitString_": "g/9/km",
       "ciUnitString_": "G/9/KM",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8515,7 +8515,7 @@ module.exports={
       "csUnitString_": "kPa",
       "ciUnitString_": "KPAL",
       "baseFactorStr_": "980665e-5",
-      "baseFactor_": "9.80665",
+      "baseFactor_": 9.80665,
       "defError_": false
     },
     {
@@ -8553,7 +8553,7 @@ module.exports={
       "csUnitString_": "kPa",
       "ciUnitString_": "KPAL",
       "baseFactorStr_": "133.3220",
-      "baseFactor_": "133.3220",
+      "baseFactor_": 133.322,
       "defError_": false
     },
     {
@@ -8591,7 +8591,7 @@ module.exports={
       "csUnitString_": "m[H2O].[in_i]/m",
       "ciUnitString_": "M[H2O].[IN_I]/M",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8629,7 +8629,7 @@ module.exports={
       "csUnitString_": "m[Hg].[in_i]/m",
       "ciUnitString_": "M[HG].[IN_I]/M",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8667,7 +8667,7 @@ module.exports={
       "csUnitString_": "mm[Hg].s/ml",
       "ciUnitString_": "MM[HG].S/ML",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8705,7 +8705,7 @@ module.exports={
       "csUnitString_": "mm[Hg].min/L",
       "ciUnitString_": "MM[HG].MIN/L",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8743,7 +8743,7 @@ module.exports={
       "csUnitString_": "m",
       "ciUnitString_": "/M",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8781,7 +8781,7 @@ module.exports={
       "csUnitString_": "rad",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8819,7 +8819,7 @@ module.exports={
       "csUnitString_": "deg",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8857,7 +8857,7 @@ module.exports={
       "csUnitString_": "[in_i]",
       "ciUnitString_": "/[IN_I]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8895,7 +8895,7 @@ module.exports={
       "csUnitString_": "mm/3",
       "ciUnitString_": "MM/3",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8933,7 +8933,7 @@ module.exports={
       "csUnitString_": "ml/20",
       "ciUnitString_": "ML/20",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -8971,7 +8971,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9009,7 +9009,7 @@ module.exports={
       "csUnitString_": "mL/min/kg",
       "ciUnitString_": "ML/MIN/KG",
       "baseFactorStr_": "3.5",
-      "baseFactor_": "3.5",
+      "baseFactor_": 3.5,
       "defError_": false
     },
     {
@@ -9199,7 +9199,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9237,7 +9237,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9275,7 +9275,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9313,7 +9313,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9351,7 +9351,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9389,7 +9389,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9427,7 +9427,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9465,7 +9465,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9503,7 +9503,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9541,7 +9541,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9579,7 +9579,7 @@ module.exports={
       "csUnitString_": "mol/l",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9617,7 +9617,7 @@ module.exports={
       "csUnitString_": "g/dl",
       "ciUnitString_": "G/DL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9693,7 +9693,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9731,7 +9731,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "100",
-      "baseFactor_": "100",
+      "baseFactor_": 100,
       "defError_": false
     },
     {
@@ -9769,7 +9769,7 @@ module.exports={
       "csUnitString_": "mol/s",
       "ciUnitString_": "MOL/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9807,7 +9807,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9845,7 +9845,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9883,7 +9883,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9921,7 +9921,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9959,7 +9959,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -9997,7 +9997,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10035,7 +10035,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10073,7 +10073,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10111,7 +10111,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10149,7 +10149,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10187,7 +10187,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10225,7 +10225,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10263,7 +10263,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10301,7 +10301,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10339,7 +10339,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10377,7 +10377,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10415,7 +10415,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10453,7 +10453,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10491,7 +10491,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10529,7 +10529,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10567,7 +10567,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10605,7 +10605,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10643,7 +10643,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10681,7 +10681,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10719,7 +10719,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10757,7 +10757,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10795,7 +10795,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10833,7 +10833,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10871,7 +10871,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10909,7 +10909,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10947,7 +10947,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -10985,7 +10985,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11023,7 +11023,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11061,7 +11061,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11213,7 +11213,7 @@ module.exports={
       "csUnitString_": "V",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11251,7 +11251,7 @@ module.exports={
       "csUnitString_": "mV",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11289,7 +11289,7 @@ module.exports={
       "csUnitString_": "uV",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11327,7 +11327,7 @@ module.exports={
       "csUnitString_": "nV",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -11365,7 +11365,7 @@ module.exports={
       "csUnitString_": "W",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11403,7 +11403,7 @@ module.exports={
       "csUnitString_": "kW",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11441,7 +11441,7 @@ module.exports={
       "csUnitString_": "m3",
       "ciUnitString_": "M3",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11479,7 +11479,7 @@ module.exports={
       "csUnitString_": "nm",
       "ciUnitString_": "NM",
       "baseFactorStr_": "0.1",
-      "baseFactor_": "0.1",
+      "baseFactor_": 0.1,
       "defError_": false
     },
     {
@@ -11517,7 +11517,7 @@ module.exports={
       "csUnitString_": "fm2",
       "ciUnitString_": "FM2",
       "baseFactorStr_": "100",
-      "baseFactor_": "100",
+      "baseFactor_": 100,
       "defError_": false
     },
     {
@@ -11555,7 +11555,7 @@ module.exports={
       "csUnitString_": "kgf/cm2",
       "ciUnitString_": "KGF/CM2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11593,7 +11593,7 @@ module.exports={
       "csUnitString_": "S",
       "ciUnitString_": "S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11631,7 +11631,7 @@ module.exports={
       "csUnitString_": "[lbf_av]/[in_i]2",
       "ciUnitString_": "[LBF_AV]/[IN_I]2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11669,7 +11669,7 @@ module.exports={
       "csUnitString_": "[pi].rad",
       "ciUnitString_": "[PI].RAD",
       "baseFactorStr_": "2",
-      "baseFactor_": "2",
+      "baseFactor_": 2,
       "defError_": false
     },
     {
@@ -11707,7 +11707,7 @@ module.exports={
       "csUnitString_": "[pi].sr",
       "ciUnitString_": "[PI].SR",
       "baseFactorStr_": "4",
-      "baseFactor_": "4",
+      "baseFactor_": 4,
       "defError_": false
     },
     {
@@ -11745,7 +11745,7 @@ module.exports={
       "csUnitString_": "g",
       "ciUnitString_": "G",
       "baseFactorStr_": "2e-1",
-      "baseFactor_": "0.2",
+      "baseFactor_": 0.2,
       "defError_": false
     },
     {
@@ -11783,7 +11783,7 @@ module.exports={
       "csUnitString_": "/24",
       "ciUnitString_": "/24",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11821,7 +11821,7 @@ module.exports={
       "csUnitString_": "[in_i]",
       "ciUnitString_": "[IN_I]",
       "baseFactorStr_": "67",
-      "baseFactor_": "67",
+      "baseFactor_": 67,
       "defError_": false
     },
     {
@@ -11859,7 +11859,7 @@ module.exports={
       "csUnitString_": "m2/s4/Hz",
       "ciUnitString_": null,
       "baseFactorStr_": null,
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11935,7 +11935,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -11973,7 +11973,7 @@ module.exports={
       "csUnitString_": "bit",
       "ciUnitString_": "bit",
       "baseFactorStr_": "8",
-      "baseFactor_": "8",
+      "baseFactor_": 8,
       "defError_": false
     },
     {
@@ -12011,7 +12011,7 @@ module.exports={
       "csUnitString_": "s",
       "ciUnitString_": "/s",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13341,7 +13341,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13379,7 +13379,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13417,7 +13417,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13455,7 +13455,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13493,7 +13493,7 @@ module.exports={
       "csUnitString_": "m/3937",
       "ciUnitString_": "M/3937",
       "baseFactorStr_": "1200",
-      "baseFactor_": "1200",
+      "baseFactor_": 1200,
       "defError_": false
     },
     {
@@ -13531,7 +13531,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13569,7 +13569,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13607,7 +13607,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13645,7 +13645,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13683,7 +13683,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13721,7 +13721,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13759,7 +13759,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13797,7 +13797,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13835,7 +13835,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13873,7 +13873,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13911,7 +13911,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13949,7 +13949,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -13987,7 +13987,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -14253,7 +14253,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14291,7 +14291,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14329,7 +14329,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14367,7 +14367,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14405,7 +14405,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14443,7 +14443,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14481,7 +14481,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14519,7 +14519,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14557,7 +14557,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14595,7 +14595,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14633,7 +14633,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14671,7 +14671,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14709,7 +14709,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14747,7 +14747,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14785,7 +14785,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14823,7 +14823,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14861,7 +14861,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14899,7 +14899,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -14937,7 +14937,7 @@ module.exports={
       "csUnitString_": "1",
       "ciUnitString_": "1",
       "baseFactorStr_": "10",
-      "baseFactor_": "10",
+      "baseFactor_": 10,
       "defError_": false
     },
     {
@@ -15127,7 +15127,7 @@ module.exports={
       "csUnitString_": "C/s",
       "ciUnitString_": "C/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -15203,7 +15203,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -15279,7 +15279,7 @@ module.exports={
       "csUnitString_": "kPa",
       "ciUnitString_": "KPAL",
       "baseFactorStr_": "980665e-5",
-      "baseFactor_": "9.80665",
+      "baseFactor_": 9.80665,
       "defError_": false
     },
     {
@@ -15317,7 +15317,7 @@ module.exports={
       "csUnitString_": "kPa",
       "ciUnitString_": "KPAL",
       "baseFactorStr_": "980665e-5",
-      "baseFactor_": "9.80665",
+      "baseFactor_": 9.80665,
       "defError_": false
     },
     {
@@ -15355,7 +15355,7 @@ module.exports={
       "csUnitString_": "kPa",
       "ciUnitString_": "KPAL",
       "baseFactorStr_": "980665e-5",
-      "baseFactor_": "9.80665",
+      "baseFactor_": 9.80665,
       "defError_": false
     },
     {
@@ -15393,7 +15393,7 @@ module.exports={
       "csUnitString_": "kPa",
       "ciUnitString_": "KPAL",
       "baseFactorStr_": "133.3220",
-      "baseFactor_": "133.3220",
+      "baseFactor_": 133.322,
       "defError_": false
     },
     {
@@ -15507,7 +15507,7 @@ module.exports={
       "csUnitString_": "dyn.s/cm2",
       "ciUnitString_": "DYN.S/CM2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -15545,7 +15545,7 @@ module.exports={
       "csUnitString_": "cm2/s",
       "ciUnitString_": "CM2/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -15583,7 +15583,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -15621,7 +15621,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -15697,7 +15697,7 @@ module.exports={
       "csUnitString_": "[pi].rad/360",
       "ciUnitString_": "[PI].RAD/360",
       "baseFactorStr_": "2",
-      "baseFactor_": "2",
+      "baseFactor_": 2,
       "defError_": false
     },
     {
@@ -15773,7 +15773,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -15887,7 +15887,7 @@ module.exports={
       "csUnitString_": "g.cm/s2",
       "ciUnitString_": "G.CM/S2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -15925,7 +15925,7 @@ module.exports={
       "csUnitString_": "g.cm/s2",
       "ciUnitString_": "G.CM/S2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -15963,7 +15963,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -16001,7 +16001,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -16039,7 +16039,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -16077,7 +16077,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -16153,7 +16153,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -16229,7 +16229,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -16267,7 +16267,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -16305,7 +16305,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -16343,7 +16343,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -16381,7 +16381,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -17445,7 +17445,7 @@ module.exports={
       "csUnitString_": "N.m",
       "ciUnitString_": "N.M",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17521,7 +17521,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17559,7 +17559,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17597,7 +17597,7 @@ module.exports={
       "csUnitString_": "mol/s",
       "ciUnitString_": "MOL/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17635,7 +17635,7 @@ module.exports={
       "csUnitString_": "mol/s",
       "ciUnitString_": "MOL/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17673,7 +17673,7 @@ module.exports={
       "csUnitString_": "cal_th",
       "ciUnitString_": "CAL_TH",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17711,7 +17711,7 @@ module.exports={
       "csUnitString_": "cal_th",
       "ciUnitString_": "CAL_TH",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17749,7 +17749,7 @@ module.exports={
       "csUnitString_": "cal_th",
       "ciUnitString_": "CAL_TH",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17787,7 +17787,7 @@ module.exports={
       "csUnitString_": "cal_th",
       "ciUnitString_": "CAL_TH",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17825,7 +17825,7 @@ module.exports={
       "csUnitString_": "cal_th",
       "ciUnitString_": "CAL_TH",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -17863,7 +17863,7 @@ module.exports={
       "csUnitString_": "cal_th",
       "ciUnitString_": "CAL_TH",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18281,7 +18281,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18357,7 +18357,7 @@ module.exports={
       "csUnitString_": "N/m2",
       "ciUnitString_": "N/M2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18433,7 +18433,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18471,7 +18471,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18509,7 +18509,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18547,7 +18547,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18585,7 +18585,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18623,7 +18623,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18661,7 +18661,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18699,7 +18699,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18737,7 +18737,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18775,7 +18775,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18813,7 +18813,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18851,7 +18851,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18889,7 +18889,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18927,7 +18927,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -18965,7 +18965,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19003,7 +19003,7 @@ module.exports={
       "csUnitString_": "cd.sr",
       "ciUnitString_": "CD.SR",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19117,7 +19117,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19155,7 +19155,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19307,7 +19307,7 @@ module.exports={
       "csUnitString_": "C/s",
       "ciUnitString_": "C/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19459,7 +19459,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19497,7 +19497,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19535,7 +19535,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19573,7 +19573,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19611,7 +19611,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19649,7 +19649,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19687,7 +19687,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19725,7 +19725,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19763,7 +19763,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19801,7 +19801,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19839,7 +19839,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19877,7 +19877,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19915,7 +19915,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -19953,7 +19953,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -20941,7 +20941,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -20979,7 +20979,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21017,7 +21017,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21055,7 +21055,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21093,7 +21093,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21131,7 +21131,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21169,7 +21169,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21207,7 +21207,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21245,7 +21245,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21283,7 +21283,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21321,7 +21321,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21359,7 +21359,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21397,7 +21397,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21435,7 +21435,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21473,7 +21473,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21511,7 +21511,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21549,7 +21549,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21587,7 +21587,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21625,7 +21625,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21663,7 +21663,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21701,7 +21701,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21739,7 +21739,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21777,7 +21777,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21815,7 +21815,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21853,7 +21853,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21891,7 +21891,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -21929,7 +21929,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -22081,7 +22081,7 @@ module.exports={
       "csUnitString_": "kPa",
       "ciUnitString_": "KPAL",
       "baseFactorStr_": "980665e-5",
-      "baseFactor_": "9.80665",
+      "baseFactor_": 9.80665,
       "defError_": false
     },
     {
@@ -22119,7 +22119,7 @@ module.exports={
       "csUnitString_": "kPa",
       "ciUnitString_": "KPAL",
       "baseFactorStr_": "133.3220",
-      "baseFactor_": "133.3220",
+      "baseFactor_": 133.322,
       "defError_": false
     },
     {
@@ -22195,7 +22195,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22233,7 +22233,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22271,7 +22271,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22309,7 +22309,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22347,7 +22347,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22385,7 +22385,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22423,7 +22423,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22461,7 +22461,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22499,7 +22499,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22537,7 +22537,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22575,7 +22575,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22613,7 +22613,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22651,7 +22651,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22689,7 +22689,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22727,7 +22727,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22765,7 +22765,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22803,7 +22803,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22841,7 +22841,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22879,7 +22879,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22917,7 +22917,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22955,7 +22955,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -22993,7 +22993,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -23031,7 +23031,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -23069,7 +23069,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -23107,7 +23107,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -23145,7 +23145,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -23183,7 +23183,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -23221,7 +23221,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -23259,7 +23259,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -23297,7 +23297,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23335,7 +23335,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23373,7 +23373,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23411,7 +23411,7 @@ module.exports={
       "csUnitString_": "N/m2",
       "ciUnitString_": "N/M2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23449,7 +23449,7 @@ module.exports={
       "csUnitString_": "N/m2",
       "ciUnitString_": "N/M2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23563,7 +23563,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23601,7 +23601,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23639,7 +23639,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23677,7 +23677,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23715,7 +23715,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23753,7 +23753,7 @@ module.exports={
       "csUnitString_": "J/C",
       "ciUnitString_": "J/C",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23791,7 +23791,7 @@ module.exports={
       "csUnitString_": "kg.m/s2",
       "ciUnitString_": "KG.M/S2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -23829,7 +23829,7 @@ module.exports={
       "csUnitString_": "kg.m/s2",
       "ciUnitString_": "KG.M/S2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -24665,7 +24665,7 @@ module.exports={
       "csUnitString_": "mol/s",
       "ciUnitString_": "MOL/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -24703,7 +24703,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -24817,7 +24817,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -24855,7 +24855,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -24893,7 +24893,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -24931,7 +24931,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -24969,7 +24969,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25007,7 +25007,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25045,7 +25045,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25083,7 +25083,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25121,7 +25121,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25159,7 +25159,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25197,7 +25197,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25235,7 +25235,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25273,7 +25273,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25311,7 +25311,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25349,7 +25349,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25387,7 +25387,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25425,7 +25425,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25463,7 +25463,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25501,7 +25501,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25539,7 +25539,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25577,7 +25577,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -25653,7 +25653,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -25691,7 +25691,7 @@ module.exports={
       "csUnitString_": "V/A",
       "ciUnitString_": "V/A",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -25729,7 +25729,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -25767,7 +25767,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -25805,7 +25805,7 @@ module.exports={
       "csUnitString_": "C/s",
       "ciUnitString_": "C/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26071,7 +26071,7 @@ module.exports={
       "csUnitString_": "mol/s",
       "ciUnitString_": "MOL/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26109,7 +26109,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26185,7 +26185,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26223,7 +26223,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26261,7 +26261,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26299,7 +26299,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26337,7 +26337,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26375,7 +26375,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26413,7 +26413,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26451,7 +26451,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26489,7 +26489,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26527,7 +26527,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -26603,7 +26603,7 @@ module.exports={
       "csUnitString_": "Wb/m2",
       "ciUnitString_": "WB/M2",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26641,7 +26641,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26679,7 +26679,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26717,7 +26717,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26755,7 +26755,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26793,7 +26793,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26831,7 +26831,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26869,7 +26869,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26907,7 +26907,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26945,7 +26945,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -26983,7 +26983,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27021,7 +27021,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27059,7 +27059,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27097,7 +27097,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27135,7 +27135,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27173,7 +27173,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27211,7 +27211,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27249,7 +27249,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27287,7 +27287,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27325,7 +27325,7 @@ module.exports={
       "csUnitString_": "[iU]",
       "ciUnitString_": "[IU]",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27363,7 +27363,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27401,7 +27401,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -27439,7 +27439,7 @@ module.exports={
       "csUnitString_": "mol",
       "ciUnitString_": "MOL",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -28351,7 +28351,7 @@ module.exports={
       "csUnitString_": "mol/s",
       "ciUnitString_": "MOL/S",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -28389,7 +28389,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -28427,7 +28427,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -28465,7 +28465,7 @@ module.exports={
       "csUnitString_": "l",
       "ciUnitString_": null,
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -28579,7 +28579,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28617,7 +28617,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28655,7 +28655,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28693,7 +28693,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28731,7 +28731,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28769,7 +28769,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28807,7 +28807,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28845,7 +28845,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28883,7 +28883,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28921,7 +28921,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28959,7 +28959,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -28997,7 +28997,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -29035,7 +29035,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -29073,7 +29073,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -29111,7 +29111,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -29149,7 +29149,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -29187,7 +29187,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -29225,7 +29225,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -29263,7 +29263,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -29301,7 +29301,7 @@ module.exports={
       "csUnitString_": "10*23",
       "ciUnitString_": "10*23",
       "baseFactorStr_": "6.0221367",
-      "baseFactor_": "6.0221367",
+      "baseFactor_": 6.0221367,
       "defError_": false
     },
     {
@@ -29339,7 +29339,7 @@ module.exports={
       "csUnitString_": "V/A",
       "ciUnitString_": "V/A",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -29415,7 +29415,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -29453,7 +29453,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -29491,7 +29491,7 @@ module.exports={
       "csUnitString_": "umol/min",
       "ciUnitString_": "UMOL/MIN",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     },
     {
@@ -29529,7 +29529,7 @@ module.exports={
       "csUnitString_": "J/C",
       "ciUnitString_": "J/C",
       "baseFactorStr_": "1",
-      "baseFactor_": "1",
+      "baseFactor_": 1,
       "defError_": false
     }
   ]
@@ -30805,10 +30805,7 @@ var PfxT = require("./prefixTables.js");
 
 var Un = require("./unit.js");
 
-var Utab = require('./unitTables.js'); // requiring the file will take care of opening it for use
-
-
-var jsonDefs_ = require('../data/ucumDefs.json');
+var Utab = require('./unitTables.js');
 
 var UcumJsonDefs =
 /*#__PURE__*/
@@ -30827,6 +30824,9 @@ function () {
      * @returns nothing
      */
     value: function loadJsonDefs() {
+      // requiring the file will take care of opening it for use
+      var jsonDefs_ = require('../data/ucumDefs.json');
+
       if (Utab.UnitTables.getInstance().unitsCount() === 0) {
         var pTab = PfxT.PrefixTables.getInstance();
         var prefixes = jsonDefs_["prefixes"];
