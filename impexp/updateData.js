@@ -1,14 +1,18 @@
-// This runs the code to update the json data from a csv file
-//
-// updateData.sh inputFileName
-//
-var UcumDataUpdater = require("./ucumDataUpdater.js").UcumDataUpdater;
+/**
+ * This is the tool for generating ucumDefs.json. See the README for details.
+ */
 
-var inputFileName = process.argv[2];
-if (inputFileName) {
-  var upd = UcumDataUpdater.getInstance();
-  upd.readFile(inputFileName);
-}
-else {
-  console.log('Please specify an input file name');
+const params = process.argv.slice(2);
+
+const fs = require('fs');
+fs.unlinkSync('../data/ucumDefs.json');
+
+const UcumXmlDocument = require('../source/ucumXmlDocument.js').UcumXmlDocument;
+const docObj = UcumXmlDocument.getInstance();
+docObj.parseXml();
+
+if (!params.includes('--skip-ucum-csv')) {
+  const UcumDataUpdater = require('./ucumDataUpdater.js').UcumDataUpdater;
+  const upd = UcumDataUpdater.getInstance();
+  upd.readFile('../data/ucum.csv');
 }

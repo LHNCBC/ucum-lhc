@@ -299,4 +299,10 @@ The code available here on GitHub includes functions and scripts to perform
 additional functions, mainly to convert ucum data from various formats to 
 the data used by our code as well as the code that supports the demo page.
 Click on the green "Clone or download" button above to download the repository.
+    
+### Building the code and data
+If you wish to modify the code, the build process is simply:
 
+    npm run build
+
+If you wish to modify or update either of the source data files (ucum-essence.xml or ucum.csv), see impexp/README.md for instructions on build steps for data changes.

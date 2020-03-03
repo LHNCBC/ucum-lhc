@@ -18,10 +18,7 @@ var PfxT = require("./prefixTables.js");
 
 var Un = require("./unit.js");
 
-var Utab = require('./unitTables.js'); // requiring the file will take care of opening it for use
-
-
-var jsonDefs_ = require('../data/ucumDefs.json');
+var Utab = require('./unitTables.js');
 
 class UcumJsonDefs {
   /**
@@ -31,6 +28,9 @@ class UcumJsonDefs {
    * @returns nothing
    */
   loadJsonDefs() {
+    // requiring the file will take care of opening it for use
+    const jsonDefs_ = require('../data/ucumDefs.json');
+
     if (Utab.UnitTables.getInstance().unitsCount() === 0) {
       let pTab = PfxT.PrefixTables.getInstance();
       let prefixes = jsonDefs_["prefixes"];
