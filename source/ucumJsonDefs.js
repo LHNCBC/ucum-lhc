@@ -10,6 +10,7 @@ var Pfx = require("./prefix.js");
 var PfxT = require("./prefixTables.js");
 var Un = require("./unit.js");
 var Utab = require('./unitTables.js');
+var unpackArray = require('./jsonArrayPack.js').unpackArray;
 
 export class UcumJsonDefs {
 
@@ -21,12 +22,14 @@ export class UcumJsonDefs {
    */
   loadJsonDefs() {
     // requiring the file will take care of opening it for use
-    const jsonDefs_ = require('../data/ucumDefs.json');
+    const jsonDefs = require('../data/ucumDefs.min.json');
+    jsonDefs.prefixes = unpackArray(jsonDefs.prefixes);
+    jsonDefs.units = unpackArray(jsonDefs.units);
 
     if (Utab.UnitTables.getInstance().unitsCount() === 0) {
 
       let pTab = PfxT.PrefixTables.getInstance();
-      let prefixes = jsonDefs_["prefixes"];
+      let prefixes = jsonDefs["prefixes"];
       let plen = prefixes.length;
 
       for (let p = 0; p < plen; p++) {
@@ -35,7 +38,7 @@ export class UcumJsonDefs {
       }
 
       let uTab = Utab.UnitTables.getInstance();
-      let units = jsonDefs_["units"];
+      let units = jsonDefs["units"];
       let ulen = units.length;
 
       for (let u = 0; u < ulen; u++) {

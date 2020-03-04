@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] 2020-03-05
+### Changes
+- the sizes of ucumDefs.json and related files reduced
+
 ## [4.0.2] 2020-03-02
 ### Fixed
 - ucumDefs.json generation: baseFactor_ and magnitude_ should be numbers
