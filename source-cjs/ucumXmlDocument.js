@@ -22,6 +22,8 @@ var UnitString = require("./unitString.js").UnitString;
 
 var UnitTables = require('./unitTables.js').UnitTables;
 
+var packArray = require('./jsonArrayPack.js').packArray;
+
 var jsonfile = require('jsonfile');
 
 var xmldoc = require('xmldoc');
@@ -430,12 +432,17 @@ class UcumXmlDocument {
     let uArray = uTabs.allUnitsByDef();
     let defsHash = {
       'license': licenseText,
-      'prefixes': pfxArray,
-      'units': uArray
+      'prefixes': packArray(pfxArray),
+      'units': packArray(uArray)
     };
     let dt = new Date();
     jsonfile.writeFileSync('../data/ucumDefs.json', defsHash, {
       spaces: 2,
+      encoding: 'utf8',
+      mode: 0o644,
+      flag: 'w'
+    });
+    jsonfile.writeFileSync('../data/ucumDefs.min.json', defsHash, {
       encoding: 'utf8',
       mode: 0o644,
       flag: 'w'

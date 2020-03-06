@@ -4,8 +4,12 @@
 
 const params = process.argv.slice(2);
 
-const fs = require('fs');
-fs.unlinkSync('../data/ucumDefs.json');
+const fs = require('fs'),
+      filenameToDelete = '../data/ucumDefs.json';
+
+if (fs.existsSync(filenameToDelete)) {
+  fs.unlinkSync(filenameToDelete);
+}
 
 const UcumXmlDocument = require('../source/ucumXmlDocument.js').UcumXmlDocument;
 const docObj = UcumXmlDocument.getInstance();
