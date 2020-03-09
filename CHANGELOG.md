@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.1] 2020-03-09
+### Changes
+- removed unnecessary index.html
+
 ## [4.1.0] 2020-03-05
 ### Changes
 - the sizes of ucumDefs.json and related files reduced

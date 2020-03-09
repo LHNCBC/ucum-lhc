@@ -5,13 +5,12 @@ module.exports={"license":"The following data (prefixes and units) was generated
 
 },{}],3:[function(require,module,exports){
 'use strict';
-var numberIsNan = require('number-is-nan');
 
-module.exports = Number.isFinite || function (val) {
-	return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
+module.exports = Number.isFinite || function (value) {
+	return !(typeof value !== 'number' || value !== value || value === Infinity || value === -Infinity);
 };
 
-},{"number-is-nan":5}],4:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 // https://github.com/paulmillr/es6-shim
 // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
 var isFinite = require("is-finite");
@@ -22,12 +21,6 @@ module.exports = Number.isInteger || function(val) {
 };
 
 },{"is-finite":3}],5:[function(require,module,exports){
-'use strict';
-module.exports = Number.isNaN || function (x) {
-	return x !== x;
-};
-
-},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -150,7 +143,7 @@ var Ucum = {
 };
 exports.Ucum = Ucum;
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -158,7 +151,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Dimension = void 0;
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -182,9 +175,7 @@ var UC = require('./config.js');
 
 var isInteger = require("is-integer");
 
-var Dimension =
-/*#__PURE__*/
-function () {
+var Dimension = /*#__PURE__*/function () {
   /**
    * Constructor.
    *
@@ -550,7 +541,7 @@ function () {
 
 exports.Dimension = Dimension;
 
-},{"./config.js":6,"is-integer":4}],8:[function(require,module,exports){
+},{"./config.js":5,"is-integer":4}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -701,7 +692,7 @@ function unpackArray(obj) {
   return obj;
 }
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -728,9 +719,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  */
 var Ucum = require('./config.js');
 
-var Prefix =
-/*#__PURE__*/
-function () {
+var Prefix = /*#__PURE__*/function () {
   /**
    * Creates a single prefix object.
    *
@@ -878,7 +867,7 @@ function () {
 
 exports.Prefix = Prefix;
 
-},{"./config.js":6}],10:[function(require,module,exports){
+},{"./config.js":5}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -902,9 +891,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var PrefixTablesFactory =
-/*#__PURE__*/
-function () {
+var PrefixTablesFactory = /*#__PURE__*/function () {
   /**
    * Constructor.  This creates the empty PrefixTable hashes once.
    * There is one hash whose key is the prefix code and one whose
@@ -1042,7 +1029,7 @@ var PrefixTables = {
 };
 exports.PrefixTables = PrefixTables;
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1062,9 +1049,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var UcumFunctions =
-/*#__PURE__*/
-function () {
+var UcumFunctions = /*#__PURE__*/function () {
   /**
    * Constructor
    *
@@ -1289,7 +1274,7 @@ var _default = new UcumFunctions(); // one singleton instance
 
 exports.default = _default;
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1395,7 +1380,7 @@ function getSynonyms(theSyn) {
   return retObj;
 } // end getSynonyms
 
-},{"./unitTables.js":18}],13:[function(require,module,exports){
+},{"./unitTables.js":17}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1426,9 +1411,7 @@ var Utab = require('./unitTables.js');
 
 var unpackArray = require('./jsonArrayPack.js').unpackArray;
 
-var UcumJsonDefs =
-/*#__PURE__*/
-function () {
+var UcumJsonDefs = /*#__PURE__*/function () {
   function UcumJsonDefs() {
     _classCallCheck(this, UcumJsonDefs);
   }
@@ -1481,8 +1464,10 @@ exports.UcumJsonDefs = UcumJsonDefs;
 var ucumJsonDefs = new UcumJsonDefs();
 exports.ucumJsonDefs = ucumJsonDefs;
 
-},{"../data/ucumDefs.min.json":1,"./jsonArrayPack.js":8,"./prefix.js":9,"./prefixTables.js":10,"./unit.js":16,"./unitTables.js":18}],14:[function(require,module,exports){
+},{"../data/ucumDefs.min.json":1,"./jsonArrayPack.js":7,"./prefix.js":8,"./prefixTables.js":9,"./unit.js":15,"./unitTables.js":17}],13:[function(require,module,exports){
 "use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -1495,7 +1480,7 @@ var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1524,9 +1509,7 @@ var fs = require('fs');
 /**
  * UCUM external utilities class
  */
-var UcumLhcUtils =
-/*#__PURE__*/
-function () {
+var UcumLhcUtils = /*#__PURE__*/function () {
   /**
    * Constructor.  This loads the json prefix and unit definitions if
    * they haven't been loaded already and creates itself as a singleton object.
@@ -2035,7 +2018,7 @@ UcumLhcUtils.getInstance = function () {
   return new UcumLhcUtils();
 };
 
-},{"./config.js":6,"./prefix.js":9,"./ucumInternalUtils.js":12,"./ucumJsonDefs.js":13,"./unit.js":16,"./unitString.js":17,"./unitTables.js":18,"fs":2}],15:[function(require,module,exports){
+},{"./config.js":5,"./prefix.js":8,"./ucumInternalUtils.js":11,"./ucumJsonDefs.js":12,"./unit.js":15,"./unitString.js":16,"./unitTables.js":17,"fs":2}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2061,8 +2044,10 @@ var UnitTables = require("./unitTables.js").UnitTables;
 
 exports.UnitTables = UnitTables;
 
-},{"./config.js":6,"./ucumLhcUtils.js":14,"./unitTables.js":18}],16:[function(require,module,exports){
+},{"./config.js":5,"./ucumLhcUtils.js":13,"./unitTables.js":17}],15:[function(require,module,exports){
 "use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -2075,7 +2060,7 @@ var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2102,9 +2087,7 @@ var UnitTables;
 
 var isInteger = require("is-integer");
 
-var Unit =
-/*#__PURE__*/
-function () {
+var Unit = /*#__PURE__*/function () {
   /**
    * Constructor.
    *
@@ -3067,8 +3050,10 @@ function () {
 
 exports.Unit = Unit;
 
-},{"./config.js":6,"./dimension.js":7,"./ucumFunctions.js":11,"./ucumInternalUtils.js":12,"./unitTables.js":18,"is-integer":4}],17:[function(require,module,exports){
+},{"./config.js":5,"./dimension.js":6,"./ucumFunctions.js":10,"./ucumInternalUtils.js":11,"./unitTables.js":17,"is-integer":4}],16:[function(require,module,exports){
 "use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -3079,7 +3064,7 @@ var intUtils_ = _interopRequireWildcard(require("./ucumInternalUtils.js"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _templateObject() {
   var data = _taggedTemplateLiteral(["", " is invalid.\n"], ["", " is invalid.\\n"]);
@@ -3110,9 +3095,7 @@ var UnitTables = require('./unitTables.js').UnitTables;
 
 var PrefixTables = require('./prefixTables.js').PrefixTables;
 
-var UnitString =
-/*#__PURE__*/
-function () {
+var UnitString = /*#__PURE__*/function () {
   /**
    * Constructor
    */
@@ -4621,7 +4604,7 @@ UnitString.getInstance();
 
 */
 
-},{"./config.js":6,"./prefixTables.js":10,"./ucumInternalUtils.js":12,"./unit.js":16,"./unitTables.js":18}],18:[function(require,module,exports){
+},{"./config.js":5,"./prefixTables.js":9,"./ucumInternalUtils.js":11,"./unit.js":15,"./unitTables.js":17}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4646,9 +4629,7 @@ var Ucum = require('./config.js').Ucum;
 
 var fs = require('fs');
 
-var UnitTablesFactory =
-/*#__PURE__*/
-function () {
+var UnitTablesFactory = /*#__PURE__*/function () {
   /**
    * Constructor.  This creates the empty unit tables (hashes) once. After the
    * tables are created, it redefines this constructor to throw an error
@@ -5404,7 +5385,7 @@ var UnitTables = {
 };
 exports.UnitTables = UnitTables;
 
-},{"./config.js":6,"fs":2}]},{},[15])(15)
+},{"./config.js":5,"fs":2}]},{},[14])(14)
 });
 
 //# sourceMappingURL=ucum-lhc.js.map
