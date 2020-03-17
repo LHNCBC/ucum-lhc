@@ -363,3 +363,8 @@ button[disabled] {
 tr[data-fieldval] {
   vertical-align: top;
 }
+
+/* Code examples should be the same color as plain text, because the red color from bootstrap highlights it very much */
+.tab-content code {
+  color: inherit;
+}
