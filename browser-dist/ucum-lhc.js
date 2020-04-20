@@ -244,7 +244,7 @@ var Dimension = /*#__PURE__*/function () {
   _createClass(Dimension, [{
     key: "setElementAt",
     value: function setElementAt(indexPos, value) {
-      if (!Number.isInteger(indexPos) || indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
+      if (!isInteger(indexPos) || indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
         throw new Error("Dimension.setElementAt called with an invalid index " + "position (".concat(indexPos, ")"));
       }
 
@@ -268,7 +268,7 @@ var Dimension = /*#__PURE__*/function () {
   }, {
     key: "getElementAt",
     value: function getElementAt(indexPos) {
-      if (!Number.isInteger(indexPos) || indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
+      if (!isInteger(indexPos) || indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
         throw new Error("Dimension.getElementAt called with an invalid index " + "position (".concat(indexPos, ")"));
       }
 
@@ -292,7 +292,7 @@ var Dimension = /*#__PURE__*/function () {
   }, {
     key: "getProperty",
     value: function getProperty(propertyName) {
-      var uProp = !propertyName.endsWith('_') ? propertyName + '_' : propertyName;
+      var uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName : propertyName + '_';
       return this[uProp];
     } // end getProperty
 

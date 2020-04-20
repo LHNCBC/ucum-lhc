@@ -81,7 +81,7 @@ export class Dimension {
    **/
   setElementAt(indexPos, value) {
 
-    if (!Number.isInteger(indexPos) ||
+    if (!isInteger(indexPos) ||
         indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
       throw(new Error(`Dimension.setElementAt called with an invalid index ` +
       `position (${indexPos})`));
@@ -107,7 +107,7 @@ export class Dimension {
    *   number or is less than 0 or greater than Ucum.dimLen_
    **/
   getElementAt(indexPos) {
-    if (!Number.isInteger(indexPos) ||
+    if (!isInteger(indexPos) ||
         indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
       throw(new Error(`Dimension.getElementAt called with an invalid index ` +
       `position (${indexPos})`));
@@ -132,8 +132,8 @@ export class Dimension {
    * @throws an error if the property is not found for this Dimension
    */
   getProperty(propertyName) {
-    let uProp = (!(propertyName.endsWith('_'))) ? propertyName + '_' :
-        propertyName ;
+    let uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName : propertyName + '_';
+
     return this[uProp] ;
 
   } // end getProperty
