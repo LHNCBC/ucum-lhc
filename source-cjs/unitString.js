@@ -183,7 +183,7 @@ class UnitString {
       let sUnit = null;
 
       for (sUnit in Ucum.specUnits_) {
-        while (uStr.includes(sUnit)) uStr = uStr.replace(sUnit, Ucum.specUnits_[sUnit]);
+        while (uStr.indexOf(sUnit) !== -1) uStr = uStr.replace(sUnit, Ucum.specUnits_[sUnit]);
       } // Check for spaces and throw an error if any are found.  The spec
       // explicitly forbids spaces except in annotations, which is why any
       // annotations are extracted before this check is made.
@@ -572,7 +572,7 @@ class UnitString {
         if (numRes && numRes.length === 3 && numRes[1] !== '' && numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
           let dispVal = numRes[2];
 
-          if (!endProcessing && numRes[2].includes(this.parensFlag_)) {
+          if (!endProcessing && numRes[2].indexOf(this.parensFlag_) !== -1) {
             let parensback = this._getParensUnit(numRes[2], origString);
 
             numRes[2] = parensback[0]['csCode_'];
@@ -614,7 +614,7 @@ class UnitString {
             this.retMsg_.push(`${origString} is not a valid UCUM code. ` + `It is terminated with the operator ${this.openEmph_}` + `${theOp}${this.closeEmph_}.`);
             n = u1;
             endProcessing = true;
-          } else if (Ucum.validOps_.includes(uArray1[n])) {
+          } else if (Ucum.validOps_.indexOf(uArray1[n]) !== -1) {
             this.retMsg_.push(`${origString} is not a valid UCUM code. ` + `A unit code is missing between${this.openEmph_}` + `${theOp}${this.closeEmph_}and${this.openEmph_}` + `${uArray1[n]}${this.closeEmph_}in${this.openEmph_}` + `${theOp}${uArray1[n]}${this.closeEmph_}.`);
             n = u1;
             endProcessing = true;
@@ -633,7 +633,7 @@ class UnitString {
               if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' && numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
                 let invalidString = numRes2[0];
 
-                if (!endProcessing && numRes2[2].includes(this.parensFlag_)) {
+                if (!endProcessing && numRes2[2].indexOf(this.parensFlag_) !== -1) {
                   let parensback = this._getParensUnit(numRes2[2], origString);
 
                   numRes2[2] = parensback[0]['csCode_'];
@@ -1092,7 +1092,7 @@ class UnitString {
             let sUnit = null;
 
             for (sUnit in Ucum.specUnits_) {
-              if (uCode.includes(Ucum.specUnits_[sUnit])) uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
+              if (uCode.indexOf(Ucum.specUnits_[sUnit]) !== -1) uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
             }
 
             retUnit = this.utabs_.getUnitByCode(uCode);
@@ -1276,7 +1276,7 @@ class UnitString {
     let befAnnoText = annoRet[1];
     let aftAnnoText = annoRet[2]; // Add the warning about annotations - just once.
 
-    if (this.bracesMsg_ && !this.retMsg_.includes(this.bracesMsg_)) this.retMsg_.push(this.bracesMsg_); // If there's no text before or after the annotation, it's probably
+    if (this.bracesMsg_ && this.retMsg_.indexOf(this.bracesMsg_) === -1) this.retMsg_.push(this.bracesMsg_); // If there's no text before or after the annotation, it's probably
     // something that should be interpreted as a 1, e.g., {KCT'U}.
     // HOWEVER, it could also be a case where someone used braces instead
     // of brackets, e.g., {degF} instead of [degF].  Check for that before

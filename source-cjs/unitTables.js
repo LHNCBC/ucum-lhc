@@ -14,8 +14,6 @@ exports.UnitTables = void 0;
  */
 var Ucum = require('./config.js').Ucum;
 
-var fs = require('fs');
-
 class UnitTablesFactory {
   /**
    * Constructor.  This creates the empty unit tables (hashes) once. After the
@@ -696,37 +694,6 @@ class UnitTablesFactory {
 
     return codeList;
   }
-  /**
-   * This creates a list of the synonyms in the unitSynonyms hash.  It writes
-   * it in synonym order and in csv format, and includes the synonym, the number
-   * of units for the synonym, and the list of unit codes for the synonym.
-   * It uses | as a separator rather than a comma, to keep from interfering
-   * with the JSON output for the unit code arrays kept for each synonym.
-   *
-   * @returns outputs to a file named "SynonymsList.txt'
-   */
-
-
-  printSynonyms() {
-    let sList = 'synonym|unit count|unit codes\n';
-    let sKeys = Object.keys(this.unitSynonyms_).sort();
-    let sLen = sKeys.length;
-
-    for (let s = 0; s < sLen; s++) {
-      let sKey = sKeys[s];
-      let kLen = this.unitSynonyms_[sKey].length;
-      let codes = JSON.stringify(this.unitSynonyms_[sKey]);
-      codes = codes.substring(1, codes.length - 2);
-      sList += sKey + '|' + kLen + '|' + codes + '\n';
-    }
-
-    fs.writeFileSync('SynonymsList.txt', sList, {
-      encoding: 'utf8',
-      mode: 0o666,
-      flag: 'w'
-    });
-  } // printSynonyms
-
 
 } // end UnitTablesFactory
 // Create a singleton instance and (to preserve the existing API) an object that

@@ -890,8 +890,7 @@ export class Unit {
       if (str.charAt(0) === '(' || str.charAt(0) === '[') {
         ret = str;
       }
-      else if (str.includes('.') || str.includes('/') ||
-               str.includes('*') || str.includes(' ')) {
+      else if (/[./* ]/.test(str)) {
         ret = startChar + str + endChar ;
       }
       else {

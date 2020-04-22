@@ -231,7 +231,7 @@ class UcumXmlDocument {
       }
 
       let valNode = curUA.childNamed('value');
-      if (this.moleCodes_.includes(curUA.attr.Code)) attrs['moleExp_'] = 1;else attrs['moleExp_'] = 0; // Process special units
+      if (this.moleCodes_.indexOf(curUA.attr.Code) !== -1) attrs['moleExp_'] = 1;else attrs['moleExp_'] = 0; // Process special units
 
       if (curUA.attr.isSpecial) {
         attrs['isSpecial_'] = curUA.attr.isSpecial === "yes";

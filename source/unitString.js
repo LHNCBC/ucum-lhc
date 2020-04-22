@@ -188,7 +188,7 @@ export class UnitString {
       // preceded by a prefix or followed by an operator and another unit.
       let sUnit = null ;
       for (sUnit in Ucum.specUnits_) {
-        while (uStr.includes(sUnit))
+        while (uStr.indexOf(sUnit) !== -1)
           uStr = uStr.replace(sUnit, Ucum.specUnits_[sUnit]);
       }
 
@@ -602,7 +602,7 @@ export class UnitString {
           numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
           let dispVal = numRes[2] ;
 
-          if (!endProcessing && numRes[2].includes(this.parensFlag_)) {
+          if (!endProcessing && numRes[2].indexOf(this.parensFlag_) !== -1) {
             let parensback = this._getParensUnit(numRes[2], origString);
             numRes[2] = parensback[0]['csCode_'];
             dispVal = `(${numRes[2]})`;
@@ -643,7 +643,7 @@ export class UnitString {
             n = u1;
             endProcessing = true;
           }
-          else if (Ucum.validOps_.includes(uArray1[n])) {
+          else if (Ucum.validOps_.indexOf(uArray1[n]) !== -1) {
             this.retMsg_.push(`${origString} is not a valid UCUM code. ` +
               `A unit code is missing between${this.openEmph_}` +
               `${theOp}${this.closeEmph_}and${this.openEmph_}` +
@@ -666,7 +666,7 @@ export class UnitString {
               if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' &&
                 numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
                 let invalidString = numRes2[0];
-                if (!endProcessing && numRes2[2].includes(this.parensFlag_)) {
+                if (!endProcessing && numRes2[2].indexOf(this.parensFlag_) !== -1) {
                   let parensback = this._getParensUnit(numRes2[2], origString);
                   numRes2[2] = parensback[0]['csCode_'];
                   invalidString = `(${numRes2[2]})`;
@@ -1107,7 +1107,7 @@ export class UnitString {
         // whatever text (probably a prefix) goes with the unit string.
         let sUnit = null;
         for (sUnit in Ucum.specUnits_) {
-          if (uCode.includes(Ucum.specUnits_[sUnit]))
+          if (uCode.indexOf(Ucum.specUnits_[sUnit]) !== -1)
             uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
         }
         retUnit = this.utabs_.getUnitByCode(uCode);
@@ -1290,7 +1290,7 @@ export class UnitString {
 
     // Add the warning about annotations - just once.
 
-    if ((this.bracesMsg_) && (!this.retMsg_.includes(this.bracesMsg_)))
+    if (this.bracesMsg_ && this.retMsg_.indexOf(this.bracesMsg_) === -1)
       this.retMsg_.push(this.bracesMsg_);
 
     // If there's no text before or after the annotation, it's probably

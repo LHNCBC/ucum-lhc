@@ -228,7 +228,7 @@ export class UcumXmlDocument {
         attrs['class_'] = curUA.attr.class;
       }
       let valNode = curUA.childNamed('value');
-      if (this.moleCodes_.includes(curUA.attr.Code))
+      if (this.moleCodes_.indexOf(curUA.attr.Code) !== -1)
         attrs['moleExp_'] = 1;
       else
         attrs['moleExp_'] = 0;
