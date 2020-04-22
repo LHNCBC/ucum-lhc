@@ -5,6 +5,17 @@
     <title>Changes made to the ucum-essence.xml file</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="../demo-dist/ucumDemo.min.css" />
+    <style id="antiClickjack">
+      body{display:none !important;}
+    </style>
+    <script type="text/javascript">
+      if (self === top) {
+        var antiClickjack = document.getElementById("antiClickjack");
+        antiClickjack.parentNode.removeChild(antiClickjack);
+      } else {
+        top.location = self.location;
+      }
+    </script>
 </head>
 <body id="demobody">
 <!-- page header -->
@@ -61,7 +72,8 @@
 
 <p>A definition was added for the unit <b>Torr</b>, between the definition for
     <b>[g]</b> and the definition for <b>atm</b>.  The definition is as follows:
-<br><pre>
+</p>
+<pre>
    &lt;unit Code="Torr" CODE="Torr" isMetric="no" class="const"&gt;
       &lt;name&gt;Torr&lt;/name&gt;
       &lt;printSymbol&gt;Torr&lt;/printSymbol&gt;
@@ -69,7 +81,6 @@
       &lt;value Unit="Pa" UNIT="PAL" value="133.322"&gt;133.322&lt;/value&gt;
    &lt;/unit&gt;
 </pre>
-</p>
 </div> <!-- pageText -->
 <!-- page footer -->
 <div id="fine-print">
