@@ -2874,7 +2874,7 @@ var Unit = /*#__PURE__*/function () {
       } else {
         if (str.charAt(0) === '(' || str.charAt(0) === '[') {
           ret = str;
-        } else if (str.includes('.') || str.includes('/') || str.includes('*') || str.includes(' ')) {
+        } else if (/[./* ]/.test(str)) {
           ret = startChar + str + endChar;
         } else {
           ret = str;
@@ -3239,7 +3239,7 @@ var UnitString = /*#__PURE__*/function () {
         var sUnit = null;
 
         for (sUnit in Ucum.specUnits_) {
-          while (uStr.includes(sUnit)) {
+          while (uStr.indexOf(sUnit) !== -1) {
             uStr = uStr.replace(sUnit, Ucum.specUnits_[sUnit]);
           }
         } // Check for spaces and throw an error if any are found.  The spec
@@ -3634,7 +3634,7 @@ var UnitString = /*#__PURE__*/function () {
           if (numRes && numRes.length === 3 && numRes[1] !== '' && numRes[2] !== '' && numRes[2].indexOf(this.braceFlag_) !== 0) {
             var dispVal = numRes[2];
 
-            if (!endProcessing && numRes[2].includes(this.parensFlag_)) {
+            if (!endProcessing && numRes[2].indexOf(this.parensFlag_) !== -1) {
               var parensback = this._getParensUnit(numRes[2], origString);
 
               numRes[2] = parensback[0]['csCode_'];
@@ -3676,7 +3676,7 @@ var UnitString = /*#__PURE__*/function () {
               this.retMsg_.push("".concat(origString, " is not a valid UCUM code. ") + "It is terminated with the operator ".concat(this.openEmph_) + "".concat(theOp).concat(this.closeEmph_, "."));
               n = u1;
               endProcessing = true;
-            } else if (Ucum.validOps_.includes(uArray1[n])) {
+            } else if (Ucum.validOps_.indexOf(uArray1[n]) !== -1) {
               this.retMsg_.push("".concat(origString, " is not a valid UCUM code. ") + "A unit code is missing between".concat(this.openEmph_) + "".concat(theOp).concat(this.closeEmph_, "and").concat(this.openEmph_) + "".concat(uArray1[n]).concat(this.closeEmph_, "in").concat(this.openEmph_) + "".concat(theOp).concat(uArray1[n]).concat(this.closeEmph_, "."));
               n = u1;
               endProcessing = true;
@@ -3695,7 +3695,7 @@ var UnitString = /*#__PURE__*/function () {
                 if (numRes2 && numRes2.length === 3 && numRes2[1] !== '' && numRes2[2] !== '' && numRes2[2].indexOf(this.braceFlag_) !== 0) {
                   var invalidString = numRes2[0];
 
-                  if (!endProcessing && numRes2[2].includes(this.parensFlag_)) {
+                  if (!endProcessing && numRes2[2].indexOf(this.parensFlag_) !== -1) {
                     var _parensback = this._getParensUnit(numRes2[2], origString);
 
                     numRes2[2] = _parensback[0]['csCode_'];
@@ -4160,7 +4160,7 @@ var UnitString = /*#__PURE__*/function () {
               var sUnit = null;
 
               for (sUnit in Ucum.specUnits_) {
-                if (uCode.includes(Ucum.specUnits_[sUnit])) uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
+                if (uCode.indexOf(Ucum.specUnits_[sUnit]) !== -1) uCode = uCode.replace(Ucum.specUnits_[sUnit], sUnit);
               }
 
               retUnit = this.utabs_.getUnitByCode(uCode);
@@ -4345,7 +4345,7 @@ var UnitString = /*#__PURE__*/function () {
       var befAnnoText = annoRet[1];
       var aftAnnoText = annoRet[2]; // Add the warning about annotations - just once.
 
-      if (this.bracesMsg_ && !this.retMsg_.includes(this.bracesMsg_)) this.retMsg_.push(this.bracesMsg_); // If there's no text before or after the annotation, it's probably
+      if (this.bracesMsg_ && this.retMsg_.indexOf(this.bracesMsg_) === -1) this.retMsg_.push(this.bracesMsg_); // If there's no text before or after the annotation, it's probably
       // something that should be interpreted as a 1, e.g., {KCT'U}.
       // HOWEVER, it could also be a case where someone used braces instead
       // of brackets, e.g., {degF} instead of [degF].  Check for that before
