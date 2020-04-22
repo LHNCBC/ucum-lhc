@@ -5,7 +5,6 @@
  * populating the autocompleter unit lists.
  */
 
-var fs = require('browserify-fs');
 var escapeHtml = require('escape-html');
 
 var ucumPkg = require('@lhncbc/ucum-lhc');

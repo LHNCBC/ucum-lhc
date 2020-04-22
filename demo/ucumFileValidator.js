@@ -5,8 +5,6 @@
  * to handle the input and output processing.
  *
  */
-var fs = require('browserify-fs');
-
 var stream = require('stream');
 var parse = require('csv-parse') ;
 var transform = require('stream-transform');
