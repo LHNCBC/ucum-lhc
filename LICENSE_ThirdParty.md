@@ -31,13 +31,6 @@ third-party licenses are needed for the UCUM LHC library (ucum-lhc.js).
     THE SOFTWARE.
     
 ---
-  
-  * **browserify-fs** at [https://npmjs.com/package/browserify-fs](https://npmjs.com/package/browserify-fs),
-    [license](https://github.com/mafintosh/browserify-fs):
-    <br><br>
-    Simply specified as MIT
-    
----
     
  * **CSV for Node.js** at [csv.adaltas.com](csv.adaltas.com),
     which is split into 4 packages, three of which are used by the UCUM-LHC 

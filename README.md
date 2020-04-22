@@ -19,8 +19,6 @@ functions described below.  You might want to try that out first.
 The ucum-lhc code is written in the ECMAScript 6 version of Javascript.
 Since that version is not yet universally supported, the code is compiled to 
 standard Javascript using the [Babel](https://babeljs.io) compiler. 
-The code uses Node.js I/O functions and compatible packages, and browserify-fs
-to replace the I/O functions with code that runs in a browser.
 
 Currently we have code to serve multiple purposes.  The core code supports
 the validation and conversion of UCUM unit expressions as well as a function

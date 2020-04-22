@@ -25,12 +25,6 @@ var UnitTables = require('./unitTables.js').UnitTables;
 
 var UnitString = require('./unitString.js').UnitString;
 
-var Unit = require('./unit.js').Unit;
-
-var Prefix = require('./prefix.js').Prefix;
-
-var fs = require('fs');
-
 /**
  * UCUM external utilities class
  */
@@ -487,24 +481,6 @@ class UcumLhcUtils {
     return [commUnits, retMsg];
   } // end commensurablesList
 
-  /**
-   * Creates a file containing a list of the units.  The file is created
-   * in the current directory.
-   */
-
-
-  printUnits() {
-    // for now, create a list of the units created and save it to a file
-    // for debugging.  This is a temporary file.
-    let utab = UnitTables.getInstance();
-    let uct = utab.unitsCount();
-    let uList = utab.printUnits(true);
-    fs.writeFileSync('JsonUnitsList.txt', uList, {
-      encoding: 'utf8',
-      mode: 0o666,
-      flag: 'w'
-    });
-  }
 
 } // end UcumLhcUtils class
 
