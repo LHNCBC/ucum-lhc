@@ -5,7 +5,6 @@
  * populating the autocompleter unit lists.
  */
 
-var fs = require('browserify-fs');
 var escapeHtml = require('escape-html');
 
 var ucumPkg = require('@lhncbc/ucum-lhc');
@@ -676,7 +675,7 @@ export class UcumDemo {
       if (parseResp['msg'] && parseResp['msg'].length > 0) {
         let pMsgLen = parseResp['msg'].length;
         for (let m = 0; m < pMsgLen; m++) {
-          if (!retMsg.includes(parseResp['msg'][m])) {
+          if (retMsg.indexOf(parseResp['msg'][m]) === -1) {
             if (retMsg != '')
               retMsg += '<BR>';
             retMsg += parseResp['msg'][m];
