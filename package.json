@@ -12,7 +12,7 @@
     "string-to-stream": "^1.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
+    "@babel/cli": "^7.12.10",
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
