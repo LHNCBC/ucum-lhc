@@ -7,6 +7,7 @@
     "csv-parse": "^4.4.6",
     "csv-stringify": "^1.0.4",
     "escape-html": "^1.0.3",
+    "file-saver": "^2.0.5",
     "stream": "0.0.2",
     "stream-transform": "^0.1.1",
     "string-to-stream": "^1.1.0"
