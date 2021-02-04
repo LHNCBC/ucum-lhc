@@ -13,6 +13,7 @@ var UcumDemoConfig = require('./demoConfig.js').UcumDemoConfig;
 var UcumLhcUtils = ucumPkg.UcumLhcUtils;
 var UnitTables = ucumPkg.UnitTables;
 var UcumFileValidator = require('./ucumFileValidator.js').UcumFileValidator;
+var FileSaver = require('file-saver');
 
 
 export class UcumDemo {
@@ -1185,44 +1186,15 @@ export class UcumDemo {
 
   /**
    *  This is called when validation of unit strings in a file is complete.
-   *  It controls display (and disposal) of the download dialog box that
+   *  It controls display of the download dialog box that
    *  lets the user choose where to store the output file and to change
    *  the name of the file to be stored if desired.
    *
-   *  It also clears the file name from input file field and blocks display
-   *  of the column name division.
-   *
-   * @param bUrl the object url of the blob that contains the validated file
+   * @param {Blob} blob - blob that contains the validated file
    *  contents
    */
-  initiateDownload(bUrl){
-
-    // create the download element,  give it the default file name to
-    // create, and append it to the document.
-    let a = document.createElement('a') ;
-    a.id = 'downlink';
-    a.href = bUrl ;
-    a.download = 'UnitStringValidations.csv';
-    document.body.appendChild(a);
-
-    // add a listener that gets rid of the download link once the
-    // user clicks save or cancel
-    function windowFocus(){
-      window.removeEventListener('focus', windowFocus, false);
-      URL.revokeObjectURL(bUrl);
-      let an = document.getElementById('downlink');
-      an.parentElement.removeChild(an);
-      let dia = document.getElementById("inputfile");
-      dia.value = null;
-      let colDiv = document.getElementById('colNameDiv');
-      colDiv.setAttribute('style', 'display:none');
-    }
-    window.addEventListener('focus', windowFocus, false);
-
-    // Click on the download link to initiate display of the box and
-    // then download (if the user selects SAVE).
-    a.click();
-
+  initiateDownload(blob){
+    FileSaver.saveAs(blob, 'UnitStringValidations.csv');
   } // end initiate download
 
 

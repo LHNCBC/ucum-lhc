@@ -46,7 +46,7 @@ export class UcumFileValidator {
    * @param sourceCol this is the name of the column containing the unit
    *  string to be tested.
    * @param fileSaveFunction the function to be called that will save the
-   *  file.  It will be passed one parameter, which will be the Ojbect URL
+   *  file.  It will be passed one parameter, which will be the Blob object
    *  for the data to be written.
    * @param msgHandler the function to be called on errors.  This function
    *  should handle error reporting.  It should take 2 parameters - source,
@@ -140,8 +140,7 @@ export class UcumFileValidator {
     var bUrl = null;
     outStream.on('finish', function () {
       blob = new Blob([this.data], {type: 'text/csv'});
-      bUrl = URL.createObjectURL(blob);
-      fileSaveFunction(bUrl);
+      fileSaveFunction(blob);
     });
 
     // Start the data moving once the file reader is ready (has read in all
