@@ -17,7 +17,6 @@
     "csv-parse": "^4.4.6",
     "csv-stringify": "^1.0.4",
     "escape-html": "^1.0.3",
-    "grunt-extract-sourcemap": "^0.1.19",
     "is-integer": "^1.0.6",
     "jsonfile": "^2.2.3",
     "stream": "0.0.2",
@@ -26,7 +25,7 @@
     "xmldoc": "^0.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
+    "@babel/cli": "^7.12.13",
     "@babel/core": "^7.3.4",
     "@babel/plugin-transform-modules-commonjs": "^7.8.3",
     "@babel/preset-env": "^7.6.2",
@@ -44,6 +43,7 @@
     "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^2.0.0",
+    "grunt-extract-sourcemap": "^0.1.19",
     "grunt-mocha-test": "^0.13.2",
     "grunt-wiredep": "^3.0.1",
     "jit-grunt": "^0.10.0",
