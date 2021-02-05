@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.4] 2021-01-05
+### Fixed
+- Moved grunt-extract-sourcemap to devDependencies.
+- Updated dependencies to avoid issues raised by npm audit (except one
+  on a devDependency).
+
 ## [4.1.3] 2020-04-20
 ### Fixed
 - Fixed to work in IE 11.
