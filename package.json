@@ -47,7 +47,7 @@
     "grunt-mocha-test": "^0.13.2",
     "grunt-wiredep": "^3.0.1",
     "jit-grunt": "^0.10.0",
-    "mocha": "^5.2.0",
+    "mocha": "^8.2.1",
     "path": "^0.12.7",
     "semver": "^5.5.1",
     "time-grunt": "^1.4.0",
