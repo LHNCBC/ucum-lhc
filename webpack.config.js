@@ -33,7 +33,7 @@ var configs = [];
 var progConfig = commonConfig();
 progConfig.entry = path.join(__dirname, './impexp/updateData.js');
 progConfig.externals = [
-    function (context, request, callback) {
+    function ({context, request}, callback) {
       if(/ucumDefs\.json/.test(request)) {
         return callback(null, 'commonjs ' + request);
       }
