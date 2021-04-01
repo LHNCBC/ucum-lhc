@@ -24,7 +24,7 @@
     "connect": "^3.6.6",
     "grunt": "^1.0.4",
     "grunt-babel": "^8.0.0",
-    "grunt-browserify": "^5.0.0",
+    "grunt-browserify": "^6.0.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-connect": "^2.1.0",
