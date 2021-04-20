@@ -90,9 +90,15 @@
 body {
   font-size: 14px;
   font-family: "sans-serif" ;
-  margin: 0px 20px 20px 20px ;
   color: #1E4193 ;
   min-width: 815px;
+  margin: 0 0 20px 0;
+}
+
+#content {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 h1 {

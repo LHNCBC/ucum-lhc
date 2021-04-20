@@ -53,7 +53,7 @@ module.exports = function(grunt) {
     cssmin: {
       default: {
         files: [ {
-          src: ['./demo-dist/stylesheets/ucumDemo.css'],
+          src: ['./demo/stylesheets/ucumDemo.css'],
           dest: './demo-dist/ucumDemo.min.css'
         }]
       }
