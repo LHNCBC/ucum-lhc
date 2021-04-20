@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <base href="../"> <!-- so resources in header.shtml work -->
     <link rel="canonical" href="https://ucum.nlm.nih.gov/ucum-lhc/UcumEssenceModifications.html" />
     <title>Changes made to the ucum-essence.xml file</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="../demo-dist/ucumDemo.min.css" />
+    <link rel="stylesheet" href="demo-dist/ucumDemo.min.css" />
     <style id="antiClickjack">
       body{display:none !important;}
     </style>
@@ -18,25 +19,14 @@
     </script>
 </head>
 <body id="demobody">
-<!-- page header -->
-<div id="header">
-    <a href="http://lhncbc.nlm.nih.gov" id="logo"
-       title="Lister Hill National Center for Biomedical Communications">
-        <img src="../demo-dist/assets/images/lhncbc.jpg"
-             alt="Lister Hill National Center for Biomedical Communications" />
-    </a>
-    <div id="siteNameBox">
-        <a href="../index.html"><span id=siteName>UCUM-LHC</span><br>
-            <span id=tagline>A Unified Code for Units of Measure Software Library
-            from the National Library of Medicine</span></a>
-    </div>
-</div>
+    <!--#include file="../header.shtml" -->
+
 <div>
     <a href="https://ucum.nlm.nih.gov">UCUM Resources</a>&nbsp; &nbsp;
-    <a href="../index.html">UCUM-LHC Overview</a>&nbsp; &nbsp;
-    <a href="../demo.html">UCUM Demo</a>
+    <a href="index.html">UCUM-LHC Overview</a>&nbsp; &nbsp;
+    <a href="demo.html">UCUM Demo</a>
 </div>
-<!-- end page header -->
+
 <h1>Modifications made to the ucum-essence.xml file</h1>
 <BR>
 <h3>Changes in the order of the unit definitions</h3>
@@ -102,7 +92,7 @@
         <li><a title="U.S. Department of Health and Human Services"  href="http://www.hhs.gov/"
         >U.S. Department of Health and Human Services</a></li>
         <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
-                src="../demo-dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
+                src="demo-dist/assets/images/USAgov.gif" alt="USA.gov" id="usagov"></a></li>
     </ul>
 </div><!-- fine-print -->
 <!-- end page footer -->

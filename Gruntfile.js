@@ -97,7 +97,7 @@ module.exports = function(grunt) {
     } ,
 
     // ssi to include html files in demo.html
-    ssi: {
+    ssi: { // see custom task below
       options: {
         configs: [{
           input: './demo/ssi-templates/pages/',
@@ -113,15 +113,6 @@ module.exports = function(grunt) {
           matcher: 'UcumEssenceModifications.html'
         }]
       }
-    /*
-      files: [{
-        src: './demo/ssi-templates/pages/index.html'
-        dest: './'
-      },
-        src: ['./demo/ssi-templates/pages/demo.html',
-              './demo/ssi-templates/pages/UcumEssenceModifications.html'],
-        dest: './demo-dist'
-      }]*/
     },
 
     // Server for protractor tests
