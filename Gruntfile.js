@@ -99,9 +99,9 @@ module.exports = function(grunt) {
     // ssi to include html files in demo.html
     ssi: {
       options: {
-        input: './demo/',
+        input: './demo/ssi-templates/pages/',
         output: './',
-        matcher: 'demo*.html'
+        matcher: 'demo.html'
       }
     },
 
