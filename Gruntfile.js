@@ -99,10 +99,29 @@ module.exports = function(grunt) {
     // ssi to include html files in demo.html
     ssi: {
       options: {
-        input: './demo/ssi-templates/pages/',
-        output: './',
-        matcher: 'demo.html'
+        configs: [{
+          input: './demo/ssi-templates/pages/',
+          output: './',
+          matcher: 'index.html'
+        }, {
+          input: './demo/ssi-templates/pages/',
+          output: './',
+          matcher: 'demo.html'
+        }, {
+          input: './demo/ssi-templates/pages/',
+          output: './demo/',
+          matcher: 'UcumEssenceModifications.html'
+        }]
       }
+    /*
+      files: [{
+        src: './demo/ssi-templates/pages/index.html'
+        dest: './'
+      },
+        src: ['./demo/ssi-templates/pages/demo.html',
+              './demo/ssi-templates/pages/UcumEssenceModifications.html'],
+        dest: './demo-dist'
+      }]*/
     },
 
     // Server for protractor tests
@@ -147,12 +166,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-wiredep');
 
   grunt.registerTask('ssi', 'Flatten SSI includes in your HTML files.', function() {
-
     var ssi = require( 'ssi' );
-    var opts = this.options();
-    var files = new ssi( opts.input, opts.output, opts.matcher) ;
-    files.compile();
-
+    var configs = this.options().configs;
+    for (let c of configs) {
+      var files = new ssi( c.input, c.output, c.matcher) ;
+      files.compile();
+    }
   });
 
   grunt.registerTask("build:demo", ["clean:demo",
