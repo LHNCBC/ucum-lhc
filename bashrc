@@ -1,7 +1,7 @@
 # The following is the standard environment file for the LForms
 # development team.
 
-NODE_DIR=node-v10.14.1-linux-x64
+NODE_DIR=node-v14.16.0-linux-x64
 # Set path
 PATH=~/${NODE_DIR}/bin:/bin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/etc
 
