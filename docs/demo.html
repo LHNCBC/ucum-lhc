@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -29,12 +30,12 @@
     <meta name="keywords" content="UCUM,LHC,Unit Codes,Units of Measure">
     <link rel="stylesheet"
      href="https://clinicaltables.nlm.nih.gov/autocomplete-lhc-versions/18.1.1/autocomplete-lhc.min.css"
-     integrity="JjNQGLGKwnlylBNqm5Al8cA7jt1nF5dHsagzjEEE85ZHogKi96zVUB2wehoMQAZ9"
+     integrity="sha384-JjNQGLGKwnlylBNqm5Al8cA7jt1nF5dHsagzjEEE85ZHogKi96zVUB2wehoMQAZ9"
      crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-     integrity="BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
      crossorigin="anonymous" />
-    <link href="demo-dist/ucumDemo.min.css" rel="stylesheet"/>
+    <link href="ucumDemo.min.css" rel="stylesheet"/>
   </head>
   <body id="demobody" onhashchange="demoPkg.UcumDemo.getInstance().checkTabSwitch();"
         onload="demoPkg.UcumDemo.getInstance().buildAdvancedSettings();" >
@@ -49,13 +50,13 @@
     <!-- page header -->
     <div id="lhc-logo">
       <a href="https://lhncbc.nlm.nih.gov" title="Lister Hill National Center for Biomedical Communications">
-        <img src="demo-dist/assets/images/LHNCBC_white.svg" alt="NIH/NLM/LHNCBC logo"/>
+        <img src="assets/images/LHNCBC_white.svg" alt="NIH/NLM/LHNCBC logo"/>
       </a>
     </div>
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" id="logo"
          title="Lister Hill National Center for Biomedical Communications">
-        <img src="demo-dist/assets/images/lhncbc.jpg"
+        <img src="assets/images/lhncbc.jpg"
              alt="Lister Hill National Center for Biomedical Communications" />
       </a>
       <div id="siteNameBox">
@@ -360,7 +361,7 @@
                 Measure</a>
                 <a href="http://unitsofmeasure.org/ucum-essence.xml">ucum-essence.xml</a>
                 file, version 2.1, revision 442, dated 2017-11-21 19:04:52 -0500 (Tue, 21 Nov 2017), with
-                <a href="demo/UcumEssenceModifications.html">minor content changes.</a>
+                <a href="UcumEssenceModifications.html">minor content changes.</a>
               </li>
               <li>The ucum-essence.xml file has also been extended with commonly used
                 combinations of UCUM units found in <a href="https://loinc.org">LOINC</a>,
@@ -410,7 +411,7 @@
                     Services</a>
         </li>
         <li class="last-item"><a title="USA.gov" href="http://www.usa.gov/"><img
-              src="demo-dist/assets/images/USAgov.gif" alt="USA.gov"
+              src="./assets/images/USAgov.gif" alt="USA.gov"
               id="usagov"></a>
         </li>
       </ul>
@@ -423,7 +424,7 @@
     <script src="https://clinicaltables.nlm.nih.gov/autocomplete-lhc-versions/18.1.1/autocomplete-lhc.min.js"
      integrity="sha384-y5lNC4qz9o7wG9yIIQQNcxxqEkWqnPit6/VnEJ9jag/gFgocblckjXdkE4NWh+0U"
      crossorigin="anonymous"></script>
-    <script src="demo-dist/ucum-demo.min.js"></script>
+    <script src="./ucum-demo.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
      crossorigin="anonymous"></script>

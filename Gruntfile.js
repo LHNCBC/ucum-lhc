@@ -23,7 +23,7 @@ module.exports = function(grunt) {
       demo: {
         files: [{
           cwd: '.',
-          src: ['demo-dist/*.js', 'demo-dist/*.css', 'demo-dist/*.js.map']
+          src: ['docs/*.js', 'docs/*.css', 'docs/*.js.map']
         }]
       }
     },
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
             "presets": ["@babel/preset-env"]
           }]]
         },
-        files: [{dest: "./demo-dist/ucum-demo.js",
+        files: [{dest: "./docs/ucum-demo.js",
                  src: ["./demo/main.js"]}
         ]
       }
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
       default: {
         files: [ {
           src: ['./demo/stylesheets/ucumDemo.css'],
-          dest: './demo-dist/ucumDemo.min.css'
+          dest: './docs/ucumDemo.min.css'
         }]
       }
     } ,
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
       },
       demo: {
         files: {
-          'demo-dist': ['demo-dist/ucum-demo.js']
+          'docs': ['docs/ucum-demo.js']
         }
       },
     },
@@ -77,10 +77,10 @@ module.exports = function(grunt) {
       options: { sourceMap: true, compress: true },
       demo: {
         options: {
-          sourceMapIn: './demo-dist/ucum-demo.js.map'
+          sourceMapIn: './docs/ucum-demo.js.map'
         },
         files: {
-          './demo-dist/ucum-demo.min.js' : ['./demo-dist/ucum-demo.js']
+          './docs/ucum-demo.min.js' : ['./docs/ucum-demo.js']
         }
       }
     } ,
@@ -101,15 +101,15 @@ module.exports = function(grunt) {
       options: {
         configs: [{
           input: './demo/ssi-templates/pages/',
-          output: './',
+          output: './docs/',
           matcher: 'index.html'
         }, {
           input: './demo/ssi-templates/pages/',
-          output: './',
+          output: './docs/',
           matcher: 'demo.html'
         }, {
           input: './demo/ssi-templates/pages/',
-          output: './demo/',
+          output: './docs/',
           matcher: 'UcumEssenceModifications.html'
         }]
       }
@@ -125,7 +125,7 @@ module.exports = function(grunt) {
           port: require('./demo-test/ucumDemo-conf').config.port,
           middleware: function (connect) {
             return [
-              serveStatic('.')
+              serveStatic('./docs')
             ];
           }
         }
