@@ -23,7 +23,7 @@ module.exports = function(grunt) {
       demo: {
         files: [{
           cwd: '.',
-          src: ['demo-dist/*.js', 'demo-dist/*.css', 'demo-dist/*.js.map']
+          src: ['docs/*.js', 'docs/*.css', 'docs/*.js.map']
         }]
       }
     },
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
             "presets": ["@babel/preset-env"]
           }]]
         },
-        files: [{dest: "./demo-dist/ucum-demo.js",
+        files: [{dest: "./docs/ucum-demo.js",
                  src: ["./demo/main.js"]}
         ]
       }
@@ -53,8 +53,8 @@ module.exports = function(grunt) {
     cssmin: {
       default: {
         files: [ {
-          src: ['./demo-dist/stylesheets/ucumDemo.css'],
-          dest: './demo-dist/ucumDemo.min.css'
+          src: ['./demo/stylesheets/ucumDemo.css'],
+          dest: './docs/ucumDemo.min.css'
         }]
       }
     } ,
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
       },
       demo: {
         files: {
-          'demo-dist': ['demo-dist/ucum-demo.js']
+          'docs': ['docs/ucum-demo.js']
         }
       },
     },
@@ -77,10 +77,10 @@ module.exports = function(grunt) {
       options: { sourceMap: true, compress: true },
       demo: {
         options: {
-          sourceMapIn: './demo-dist/ucum-demo.js.map'
+          sourceMapIn: './docs/ucum-demo.js.map'
         },
         files: {
-          './demo-dist/ucum-demo.min.js' : ['./demo-dist/ucum-demo.js']
+          './docs/ucum-demo.min.js' : ['./docs/ucum-demo.js']
         }
       }
     } ,
@@ -97,11 +97,21 @@ module.exports = function(grunt) {
     } ,
 
     // ssi to include html files in demo.html
-    ssi: {
+    ssi: { // see custom task below
       options: {
-        input: './demo/',
-        output: './',
-        matcher: 'demo*.html'
+        configs: [{
+          input: './demo/ssi-templates/pages/',
+          output: './docs/',
+          matcher: 'index.html'
+        }, {
+          input: './demo/ssi-templates/pages/',
+          output: './docs/',
+          matcher: 'demo.html'
+        }, {
+          input: './demo/ssi-templates/pages/',
+          output: './docs/',
+          matcher: 'UcumEssenceModifications.html'
+        }]
       }
     },
 
@@ -115,7 +125,7 @@ module.exports = function(grunt) {
           port: require('./demo-test/ucumDemo-conf').config.port,
           middleware: function (connect) {
             return [
-              serveStatic('.')
+              serveStatic('./docs')
             ];
           }
         }
@@ -147,12 +157,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-wiredep');
 
   grunt.registerTask('ssi', 'Flatten SSI includes in your HTML files.', function() {
-
     var ssi = require( 'ssi' );
-    var opts = this.options();
-    var files = new ssi( opts.input, opts.output, opts.matcher) ;
-    files.compile();
-
+    var configs = this.options().configs;
+    for (let c of configs) {
+      var files = new ssi( c.input, c.output, c.matcher) ;
+      files.compile();
+    }
   });
 
   grunt.registerTask("build:demo", ["clean:demo",
