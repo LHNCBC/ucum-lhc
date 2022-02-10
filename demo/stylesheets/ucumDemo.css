@@ -1,20 +1,5 @@
 /* Styles for the header */
 
-/* NIH/NLM/LHC logo (banner) */
-#lhc-logo {
-  background-color: #0bacb6;
-  padding-top: 4px;
-  padding-left: 5px;
-  padding-bottom: 3px;
-  overflow: hidden;
-}
-#lhc-logo img {
-  height: 35px;
-  width: auto;
-  margin-bottom: -1px;
-  vertical-align: middle;
-}
-
 #header {
   margin-bottom: 20px;
   position: relative;
@@ -58,30 +43,6 @@
   font-size: 300%;
 }
 /* End of styles for the header */
-
-/* Styles for the footer */
-#fine-print {
-  border-top: 2px solid #0BACB6;
-  clear: left;
-  text-align: center;
-  font-size: 11px;
-  padding-top: 10px;
-}
-#fine-print ul.horz-list li {
-  list-style-type: none;
-  display: inline;
-  padding-left: 8px;
-  padding-right: 10px;
-  border-right: 1px solid #999;
-}
-#fine-print ul.horz-list li.last-item {
-  border-right: none;
-}
-#usagov {
-  margin-bottom: -2px;
-  vertical-align: bottom;
-}
-/* End of styles for the footer */
 
 
 
