@@ -6,11 +6,7 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <!-- page header -->
-    <div id="lhc-logo">
-      <a href="https://lhncbc.nlm.nih.gov" title="Lister Hill National Center for Biomedical Communications">
-        <img src="assets/images/LHNCBC_white.svg" alt="NIH/NLM/LHNCBC logo"/>
-      </a>
-    </div>
+    <div id="sharedHeader"></div>
     <div id="header">
       <a href="http://lhncbc.nlm.nih.gov" id="logo"
          title="Lister Hill National Center for Biomedical Communications">
