@@ -252,8 +252,8 @@ describe('Test attempts to convert arbitrary units', function() {
   });
 }) ; // end Test attempts to multiply/divide arbitrary units
 
-describe('Test name generation of complex units', function() {
-  it('Generated name should reflect evaluation order', function(){
+describe('Generated names for complex units', function() {
+  it('should reflect evaluation order', function(){
     var resp1 = uString.parseString('kg/(s2.m)');
     var resp2 = uString.parseString('kg/(m.s2)');
     assert.equal('kilogram/[[second - time<sup>2</sup>]*meter]', resp1[0].name_);

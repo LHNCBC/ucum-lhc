@@ -13,17 +13,6 @@ var UnitString = require("../source-cjs/unitString.js").UnitString;
 var uTabs = UTables.getInstance();
 ucumJsonDefs.loadJsonDefs();
 
-/**
- * To decide if the two numbers are equal
- * @param n1 the first number
- * @param n2 the second number
- * @param precision optional, the number of digits after the decimal point in scientific notion,
- *        use system default if not provided.
- * @return true if the two numbers are considered equal, false otherwise.
- */
-function numEqualScientific(n1, n2, precision) {
-
-}
 
 describe('Test parseString method', function() {
 
