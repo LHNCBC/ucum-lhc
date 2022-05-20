@@ -218,7 +218,6 @@ class UnitString {
 
     retObj[2] = this.retMsg_;
     if (this.suggestions_ && this.suggestions_.length > 0) retObj[3] = this.suggestions_;
-    if (uStr.startsWith('kg/(')) console.log('parseString:', JSON.stringify(retObj, null, 4));
     return retObj;
   } // end parseString
 
