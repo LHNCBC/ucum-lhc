@@ -887,7 +887,8 @@ export class Unit {
       ret = str;
     }
     else {
-      if (str.charAt(0) === '(' || str.charAt(0) === '[') {
+      let lastChar = str.slice(-1);
+      if (str.charAt(0) === '(' && str.endsWith(')') || str.charAt(0) === '['  && str.endsWith(']')) {
         ret = str;
       }
       else if (/[./* ]/.test(str)) {

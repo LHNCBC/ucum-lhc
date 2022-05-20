@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.5] 2021-05-20
+### Fixed
+- Fixed generated name issue for complex units, https://github.com/lhncbc/ucum-lhc/issues/29
+
 ## [4.1.4] 2021-01-05
 ### Fixed
 - Moved grunt-extract-sourcemap to devDependencies.

@@ -2872,7 +2872,9 @@ var Unit = /*#__PURE__*/function () {
       if (intUtils_.isNumericString(str)) {
         ret = str;
       } else {
-        if (str.charAt(0) === '(' || str.charAt(0) === '[') {
+        var lastChar = str.slice(-1);
+
+        if (str.charAt(0) === '(' && str.endsWith(')') || str.charAt(0) === '[' && str.endsWith(']')) {
           ret = str;
         } else if (/[./* ]/.test(str)) {
           ret = startChar + str + endChar;
@@ -3276,6 +3278,7 @@ var UnitString = /*#__PURE__*/function () {
 
       retObj[2] = this.retMsg_;
       if (this.suggestions_ && this.suggestions_.length > 0) retObj[3] = this.suggestions_;
+      if (uStr.startsWith('kg/(')) console.log('parseString:', JSON.stringify(retObj, null, 4));
       return retObj;
     } // end parseString
 
