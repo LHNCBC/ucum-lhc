@@ -872,8 +872,8 @@ export class Unit {
    * concatenated string.   Basically it checks to see if the string
    * needs to be enclosed either in parentheses or square brackets.
    *
-   * The string is enclosed if it is not a number, does not start with
-   * a parenthesis or square bracket, and includes a period, and asterisk,
+   * The string is enclosed if it is not a number, is not already enclosed in a pair of
+   * parentheses or square brackets, and includes a period, and asterisk,
    * a slash or a blank space.
    *
    * @param str the string
@@ -887,7 +887,7 @@ export class Unit {
       ret = str;
     }
     else {
-      if (str.charAt(0) === '(' || str.charAt(0) === '[') {
+      if (str.charAt(0) === '(' && str.endsWith(')') || str.charAt(0) === '['  && str.endsWith(']')) {
         ret = str;
       }
       else if (/[./* ]/.test(str)) {

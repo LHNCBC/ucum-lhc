@@ -711,7 +711,9 @@ describe('Test makeUnit method', function() {
       assert.equal(false, retUnit['isBase_']);
     });
     it("should return a unit with a magnitude_ = 1.5068353943453534e-147", function () {
-      assert.equal(1.5068353943453534e-147, retUnit['magnitude_']);
+      // assert.equal(1.5068353943453534e-147, retUnit['magnitude_']);
+      let magString = retUnit['magnitude_'].toExponential();
+      assert.equal(true, magString.endsWith('e-147') && magString.startsWith('1.50683539434535'));
     });
     it("should return a unit with a dimension vector = [21,42,-21,-0,-0,-0]", function () {
       assert.equal('21,42,-21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
@@ -740,7 +742,9 @@ describe('Test makeUnit method', function() {
       assert.equal(false, retUnit['isBase_']);
     });
     it("should return a unit with a magnitude_ = 6.6364249456354935e+146", function () {
-      assert.equal(6.6364249456354935e+146, retUnit['magnitude_']);
+      // assert.equal(6.6364249456354935e+146, retUnit['magnitude_']);
+      let magString = retUnit['magnitude_'].toExponential();
+      assert.equal(true, magString.endsWith('e+146') && magString.startsWith('6.63642494563549'));
     });
     it("should return a unit with a dimension vector = [-21,42,-21,-0,-0,-0]", function () {
       assert.equal('-21,-42,21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
@@ -769,7 +773,9 @@ describe('Test makeUnit method', function() {
       assert.equal(false, retUnit['isBase_']);
     });
     it("should return a unit with a magnitude_ = 6.6364249456354935e+146", function () {
-      assert.equal(6.6364249456354935e+146, retUnit['magnitude_']);
+      // assert.equal(6.6364249456354935e+146, retUnit['magnitude_']);
+      let magString = retUnit['magnitude_'].toExponential();
+      assert.equal(true, magString.endsWith('e+146') && magString.startsWith('6.63642494563549'));
     });
     it("should return a unit with a dimension vector = [-21,42,-21,-0,-0,-0]", function () {
       assert.equal('-21,-42,21,0,0,0,0', retUnit['dim_']['dimVec_'].toString());
