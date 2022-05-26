@@ -2872,8 +2872,6 @@ var Unit = /*#__PURE__*/function () {
       if (intUtils_.isNumericString(str)) {
         ret = str;
       } else {
-        var lastChar = str.slice(-1);
-
         if (str.charAt(0) === '(' && str.endsWith(')') || str.charAt(0) === '[' && str.endsWith(']')) {
           ret = str;
         } else if (/[./* ]/.test(str)) {
