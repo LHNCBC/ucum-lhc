@@ -3,7 +3,7 @@
   "main": "demo.html",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
   "dependencies": {
-    "@lhncbc/ucum-lhc": "^4.1.4",
+    "@lhncbc/ucum-lhc": "^4.1.5",
     "csv-parse": "^4.4.6",
     "csv-stringify": "^1.0.4",
     "escape-html": "^1.0.3",
@@ -23,7 +23,7 @@
     "browserify": "^16.2.3",
     "coffeescript": "^2.6.1",
     "connect": "^3.6.6",
-    "grunt": "^1.4.1",
+    "grunt": "^1.5.3",
     "grunt-babel": "^8.0.0",
     "grunt-browserify": "^6.0.0",
     "grunt-cli": "^1.2.0",
