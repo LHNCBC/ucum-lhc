@@ -1,7 +1,7 @@
 {
   "name": "ucum-lhc",
   "description": "Implements Unified Code for Units of Measure functions as javascript library",
-  "version": "4.1.5",
+  "version": "4.1.6",
   "main": "browser-dist/ucum-lhc.js",
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
