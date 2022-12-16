@@ -1,8 +1,2 @@
 <div id="sharedFooter"></div>
-<!-- TODO: replace
-           "http://lhcs-sedinkinya-lx.nlm.nih.gov:3000"
-            with
-            "https://clinicaltables.nlm.nih.gov"
-            before merge -->
-<script src="http://lhcs-sedinkinya-lx.nlm.nih.gov:3000/shared/loadShared.min.js"></script>
-<!--<script src="https://clinicaltables.nlm.nih.gov/shared/loadShared.min.js"></script>-->
+<script src="https://clinicaltables.nlm.nih.gov/shared/loadShared.min.js"></script>
