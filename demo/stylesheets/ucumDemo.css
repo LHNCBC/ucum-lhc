@@ -6,17 +6,17 @@
   font-size: 12px;
   font-family: 'Droid Sans',Arial,Helvetica,sans-serif;
   color: #202020;
-  border-top: 2px solid #0BACB6;
+  border-top: 2px solid transparent;
   border-bottom: 7px solid #17b4e3;
   line-height: normal;
   padding-bottom: 10px;
 }
-#fine-print, #header {
+#fine-print {
   border-top: 2px solid #0bacb6;
 }
 #logo {
   position: relative;
-  top: 4px;
+  margin-top: 4px;
   font-size: 18px;
   display: block;
   margin-bottom: 2px;
@@ -31,13 +31,15 @@
   margin-left: 5px;
   border-right: 1px solid #0BACB6;
   padding-right: 5px;
-}
-#logo, #log img {
-  display: block;
+  height: 81px;
+  width: 81px;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
 }
 
 #siteNameBox {
-  margin-top: 2.2em;
+  margin-top: 25px;
 }
 #siteName {
   font-size: 300%;
@@ -51,7 +53,7 @@ body {
   font-family: "sans-serif" ;
   color: #1E4193 ;
   min-width: 815px;
-  margin: 0 0 20px 0;
+  margin: 0;
 }
 
 #content {
