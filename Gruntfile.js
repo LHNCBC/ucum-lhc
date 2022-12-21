@@ -108,7 +108,6 @@ module.exports = function(grunt) {
   // load and register the tasks
   grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-browserify");
-  grunt.loadNpmTasks('grunt-wiredep');
 
   grunt.registerTask("build:npm", ["clean:npm", "babel:npm"]);
   grunt.registerTask("build:browser", ["clean:browser",
