@@ -42,7 +42,7 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-uglify": "^5.2.2",
     "grunt-extract-sourcemap": "^0.1.19",
     "grunt-mocha-test": "^0.13.2",
     "grunt-wiredep": "^3.0.1",
