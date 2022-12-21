@@ -1,6 +1,6 @@
 {
   "name": "@lhncbc/ucum-lhc",
-  "version": "4.1.6",
+  "version": "4.1.7",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "source-cjs/ucumPkg.js",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
@@ -56,8 +56,8 @@
     "webpack-cli": "^3.3.9"
   },
   "scripts": {
-    "build": "source ./bashrc && grunt build && webpack",
-    "test": "source ./bashrc && grunt test"
+    "build": "source ./bashrc.ucum-lhc && grunt build && webpack",
+    "test": "source ./bashrc.ucum-lhc && grunt test"
   },
   "repository": {
     "type": "git",

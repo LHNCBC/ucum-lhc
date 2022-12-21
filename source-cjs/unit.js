@@ -657,7 +657,7 @@ class Unit {
     retUnit.name_ = this._concatStrs(retUnit.name_, '*', unit2.name_, '[', ']');
     retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '.', unit2.csCode_, '(', ')');
     if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '.', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.ciCode_;
-    retUnit.guidance_ = '';
+    retUnit.resetFieldsForDerivedUnit();
     if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '.', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.printSymbol_; // Update the mole exponent count by adding the count for unit2 to the
     // count for this unit.
 
@@ -670,6 +670,17 @@ class Unit {
     return retUnit;
   } // end multiplyThese
 
+  /**
+   *  Clears fields like isBase_, synonyms_, etc. when a unit has been cloned
+   *  from a known unit but it being used to construct a derived unit.
+   */
+
+
+  resetFieldsForDerivedUnit() {
+    this.guidance_ = '';
+    this.synonyms_ = null;
+    this.isBase_ = false;
+  }
   /**
    * Divides this unit by another unit. If this unit is not on a ratio
    * scale an exception is raised. Mutating to a ratio scale unit
@@ -689,7 +700,7 @@ class Unit {
     if (retUnit.name_ && unit2.name_) retUnit.name_ = this._concatStrs(retUnit.name_, '/', unit2.name_, '[', ']');else if (unit2.name_) retUnit.name_ = unit2.invertString(unit2.name_);
     retUnit.csCode_ = this._concatStrs(retUnit.csCode_, '/', unit2.csCode_, '(', ')');
     if (retUnit.ciCode_ && unit2.ciCode_) retUnit.ciCode_ = this._concatStrs(retUnit.ciCode_, '/', unit2.ciCode_, '(', ')');else if (unit2.ciCode_) retUnit.ciCode_ = unit2.invertString(unit2.ciCode_);
-    retUnit.guidance_ = '';
+    retUnit.resetFieldsForDerivedUnit();
     retUnit.magnitude_ /= unit2.magnitude_;
     if (retUnit.printSymbol_ && unit2.printSymbol_) retUnit.printSymbol_ = this._concatStrs(retUnit.printSymbol_, '/', unit2.printSymbol_, '(', ')');else if (unit2.printSymbol_) retUnit.printSymbol_ = unit2.invertString(unit2.printSymbol_); // Continue if unit2 has a dimension object.
     // If this object has a dimension object, subtract unit2's dim_ object from

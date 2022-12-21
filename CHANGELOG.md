@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.7] 2022-12-21
+### Fixed
+- Units from the data/ucum.csv file, which contains many unit strings with
+  prefixes, were previously permitted to take an additional prefix.
+- Units derived from other units were previously being labeled as "base units",
+  though apparently without ill effect on the current public APIs.
+
 ## [4.1.6] 2022-09-13
 ### Changed
 - Update version to 4.1.6 for tagging the last merge, which was to update
