@@ -19,7 +19,6 @@ describe('Test parseString method', function() {
     let uString = UnitString.getInstance();
     let resp = uString.parseString('fs', 'validate');
     let retUnit = resp[0];
-    console.log(JSON.stringify(retUnit, null, 2));
     assert(!retUnit.isBase_);
   });
 
