@@ -15,6 +15,33 @@ ucumJsonDefs.loadJsonDefs();
 
 
 describe('Test parseString method', function() {
+  it('should not return isBase_=true for non-base units', ()=>{
+    let uString = UnitString.getInstance();
+    let resp = uString.parseString('fs', 'validate');
+    let retUnit = resp[0];
+    assert(!retUnit.isBase_);
+  });
+
+  it('should not return isBase_=true for units with arithmetic', ()=>{
+    let uString = UnitString.getInstance();
+    let resp = uString.parseString('s/g', 'validate');
+    let retUnit = resp[0];
+    assert(!retUnit.isBase_);
+  });
+
+  it('should not return isBase_=true for units with exponents', ()=>{
+    let uString = UnitString.getInstance();
+    let resp = uString.parseString('s2', 'validate');
+    let retUnit = resp[0];
+    assert(!retUnit.isBase_);
+  });
+
+  it('should not return synonyms for units not in the table', ()=>{
+    let uString = UnitString.getInstance();
+    let resp = uString.parseString('fs', 'validate');
+    let retUnit = resp[0];
+    assert(!retUnit.synonyms_);
+  });
 
   describe('Test valid single unit string (cal)', function() {
     var uString = UnitString.getInstance();

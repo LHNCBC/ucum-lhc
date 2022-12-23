@@ -194,7 +194,7 @@ class UnitString {
       } // end if blanks were found in the string
       // assign the array returned to retObj.  It will contain 2 elements:
       //  the unit returned in position 0; and the origString (possibly
-      //  modified in position 1.  The origString in position 1 will not
+      //  modified) in position 1.  The origString in position 1 will not
       //  be changed by subsequent processing.
 
 
@@ -1142,7 +1142,14 @@ class UnitString {
                   uCode = uCode.substr(1); // try one more time for the unit
 
                   origUnit = this.utabs_.getUnitByCode(uCode);
-                }
+                } // Reject the unit we found if it might have another prefix.
+                // Such things are in our tables through the LOINC source_
+                // (ucum.csv) which has guidance and synonyms.  I think it should be
+                // safe to exclude anything whose source is LOINC from having a
+                // prefix.
+
+
+                if (origUnit && origUnit.source_ == 'LOINC') origUnit = null;
               } // end if we found a prefix
 
             } // end if we didn't get a unit after removing an exponent
@@ -1163,8 +1170,11 @@ class UnitString {
             } else {
               // Otherwise we found a unit object.  Clone it and then apply the
               // prefix and exponent, if any, to it.  And remove the guidance.
-              retUnit = origUnit.clone();
-              retUnit.guidance_ = '';
+              retUnit = origUnit.clone(); // If we are here, this is only part of the full unit string, so it is
+              // not a base unit, and the synonyms will mostly likely not be correct for the full
+              // string.
+
+              retUnit.resetFieldsForDerivedUnit();
               let theDim = retUnit.getProperty('dim_');
               let theMag = retUnit.getProperty('magnitude_');
               let theName = retUnit.getProperty('name_');

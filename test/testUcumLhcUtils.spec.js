@@ -35,6 +35,11 @@ describe('Test validateUnitString method', function() {
                  'No alternatives were found.', resp2.msg[0]);
   });
 
+  it('should return invalid for a unit with two prefixes', () => {
+    let resp =  utils.validateUnitString('mcg');
+    assert.equal(resp.status, 'invalid', resp.status);
+  });
+
   it("should return a message for 'Gauss'", function() {
     var resp3 = utils.validateUnitString('Gauss');
     assert.equal(resp3.status, 'invalid', resp3.status);

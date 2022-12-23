@@ -1,6 +1,6 @@
 {
   "name": "@lhncbc/ucum-lhc",
-  "version": "4.1.6",
+  "version": "4.1.7",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "source-cjs/ucumPkg.js",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
@@ -26,7 +26,7 @@
     "xmldoc": "^0.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.13",
+    "@babel/cli": "^7.19.3",
     "@babel/core": "^7.3.4",
     "@babel/plugin-transform-modules-commonjs": "^7.8.3",
     "@babel/preset-env": "^7.6.2",
@@ -35,29 +35,27 @@
     "babelify": "^10.0.0",
     "bootstrap": "^4.3.1",
     "bower": "^1.8.8",
-    "browserify": "^16.2.3",
     "grunt": "^1.5.3",
     "grunt-babel": "^8.0.0",
-    "grunt-browserify": "^5.0.0",
-    "grunt-cli": "^1.2.0",
+    "grunt-browserify": "^6.0.0",
+    "grunt-cli": "^1.4.3",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-uglify": "^5.2.2",
     "grunt-extract-sourcemap": "^0.1.19",
     "grunt-mocha-test": "^0.13.2",
-    "grunt-wiredep": "^3.0.1",
     "jit-grunt": "^0.10.0",
-    "mocha": "^8.2.1",
+    "mocha": "^10.2.0",
     "path": "^0.12.7",
     "semver": "^5.5.1",
     "time-grunt": "^1.4.0",
     "webpack": "^5.20.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^5.0.1"
   },
   "scripts": {
-    "build": "source ./bashrc && grunt build && webpack",
-    "test": "source ./bashrc && grunt test"
+    "build": "source ./bashrc.ucum-lhc && grunt build && webpack",
+    "test": "source ./bashrc.ucum-lhc && grunt test"
   },
   "repository": {
     "type": "git",
