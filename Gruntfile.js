@@ -83,17 +83,6 @@ module.exports = function(grunt) {
       }
     } ,
 
-    // watch application files to see if they need to be re-browserified,
-    // and bower components to see if they change
-    watch: {
-      scripts: {
-        files: ["./source/*.js", "./demo/*.js"],
-        tasks: ["browserify"]
-      },
-      files: ['bower_components/*'],
-      tasks: ['wiredep']
-    } ,
-
     // ssi to include html files in demo.html
     ssi: { // see custom task below
       options: {
@@ -118,8 +107,6 @@ module.exports = function(grunt) {
   // load and register the tasks
   grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-browserify");
-  grunt.loadNpmTasks("grunt-contrib-watch");
-  grunt.loadNpmTasks('grunt-wiredep');
 
   grunt.registerTask('ssi', 'Flatten SSI includes in your HTML files.', function() {
     var ssi = require( 'ssi' );
