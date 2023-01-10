@@ -23,17 +23,16 @@
     "browserify": "^16.2.3",
     "coffeescript": "^2.6.1",
     "connect": "^3.6.6",
+    "cypress": "^11.2.0",
     "grunt": "^1.5.3",
     "grunt-babel": "^8.0.0",
     "grunt-browserify": "^6.0.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-extract-sourcemap": "^0.1.19",
-    "grunt-protractor-runner": "^5.0.0",
     "grunt-wiredep": "^3.0.1",
     "jit-grunt": "^0.10.0",
     "path": "^0.12.7",
@@ -47,8 +46,7 @@
   },
   "scripts": {
     "build": "grunt build",
-    "update-webdriver": "node node_modules/protractor/bin/webdriver-manager update --versions.chrome $(google-chrome --version |awk '{print $NF}')",
-    "test": "grunt test"
+    "test": "cypress run"
   },
   "repository": {
     "type": "git",

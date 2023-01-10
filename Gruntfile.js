@@ -5,10 +5,8 @@ module.exports = function(grunt) {
   // Load grunt tasks automatically as needed ("jit")
   require('jit-grunt')(grunt, {
     clean: 'grunt-contrib-clean',
-    connect: 'grunt-contrib-connect',
     cssmin: 'grunt-contrib-cssmin',
     extract_sourcemap: 'grunt-extract-sourcemap',
-    protractor: 'grunt-protractor-runner',
     uglify: 'grunt-contrib-uglify'
   });
 
@@ -113,40 +111,7 @@ module.exports = function(grunt) {
           matcher: 'UcumEssenceModifications.html'
         }]
       }
-    },
-
-    // Server for protractor tests
-    connect: {
-      options: {
-        hostname: '0.0.0.0'
-      },
-      test: {
-        options: {
-          port: require('./demo-test/ucumDemo-conf').config.port,
-          middleware: function (connect) {
-            return [
-              serveStatic('./docs')
-            ];
-          }
-        }
-      }
-    },
-
-
-    // grunt protractor runner task
-    protractor: {
-      options: {
-        configFile: "demo-test/ucumDemo-conf.js",
-        keepAlive: false,
-        noColor: false,
-        args: {}
-      } ,
-      all: {
-        options: {
-          browser: 'firefox'
-        }
-      }
-    }  // end protractor task
+    }
 
    });  // end grunt.initConfig
 
@@ -172,11 +137,4 @@ module.exports = function(grunt) {
                                     "cssmin",
                                     "uglify:demo"]);
   grunt.registerTask("build", ["build:demo"]);
-  grunt.registerTask("test", ['build',
-                              'runProtractor']);
-  // note that the webdriver manager must be running before the
-  // protractor tests will run.  use webdriver-manager start & to
-  // start the manager and the selenium server
-  grunt.registerTask("runProtractor", ['connect', 'protractor']);
-
 };
