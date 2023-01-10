@@ -13,9 +13,9 @@
     "string-to-stream": "^1.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.10",
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.6.2",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.6.2",
     "babelify": "^10.0.0",
     "bootstrap": "^4.3.1",
