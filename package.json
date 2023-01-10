@@ -38,9 +38,7 @@
     "serve-index": "^1.8.0",
     "serve-static": "^1.12.2",
     "ssi": "^0.3.0",
-    "time-grunt": "^1.4.0",
-    "webpack": "^5.30.0",
-    "webpack-cli": "^3.3.9"
+    "time-grunt": "^1.4.0"
   },
   "scripts": {
     "build": "grunt build",
