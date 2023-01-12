@@ -1,3 +1,5 @@
 node_modules
 docs/ucum-demo.js*
 demo-test/cypress/downloads/
+data
+impexp
