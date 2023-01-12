@@ -1,3 +1,9 @@
 node_modules
-/impexp/updateDataBuild.js
 .idea
+# Files from build
+data/ucumEssenceVersion.txt
+impexp/updateDataBuild.js
+impexp/UnitsList.txt
+# Files from build on gh-pages branch
+demo-test/
+docs/
