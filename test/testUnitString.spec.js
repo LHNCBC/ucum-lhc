@@ -950,13 +950,13 @@ describe('Test the processParens method', function() {
 describe('Test getAnnotations method', function() {
 
   it("should return an updated unit string and annotations array for " +
-      " L{annotation string}", function() {
+      " L{annotationString}", function() {
     var uString = UnitString.getInstance();
-    var retString = uString._getAnnotations('L{annotation string}');
+    var retString = uString._getAnnotations('L{annotationString}');
+    assert.deepEqual(uString.retMsg_, []);
     assert.equal(retString, 'L' + uString.braceFlag_ + '0' +
                             uString.braceFlag_);
-    assert.deepEqual(uString.annotations_, ['{annotation string}']);
-    assert.deepEqual(uString.retMsg_, []);
+    assert.deepEqual(uString.annotations_, ['{annotationString}']);
   });
 
   it("should return an updated unit string and annotations array for " +
@@ -989,6 +989,41 @@ describe('Test getAnnotations method', function() {
     assert.equal(uString.retMsg_[0], 'Missing opening brace for closing brace ' +
         'found at ' + uString.openEmph_ +
         'Lannotation}' + uString.closeEmph_);
+  });
+
+  /**
+   *  Checks that the given unit string contains an annotation with an invalid
+   *  character.
+   * @param annotationString the annotation string to test (with braces)
+   */
+  function checkInvalidAnnotationCharacter(annotationString) {
+    var uString = UnitString.getInstance();
+    const unitTestString = 'L'+annotationString;
+    var retString = uString._getAnnotations(unitTestString);
+    assert.equal(uString.retMsg_[0], UnitString.INVALID_ANNOTATION_CHAR_MSG +
+        uString.openEmph_ + annotationString + uString.closeEmph_);
+    assert.equal(retString, unitTestString);
+    assert.deepEqual(uString.annotations_, []);
+  }
+
+  it('should return an invalid character message for L{one two}', function() {
+    checkInvalidAnnotationCharacter('{one two}');
+  });
+
+  it('should return an invalid character message for L{ annotation}', function() {
+    checkInvalidAnnotationCharacter('{ annotation}');
+  });
+
+  it('should return an invalid character message for L{annotation }', function() {
+    checkInvalidAnnotationCharacter('{annotation }');
+  });
+
+  it('should return an invalid character message for L{annotation{}', function() {
+    checkInvalidAnnotationCharacter('{annotation{}');
+  });
+
+  it('should return an invalid character message for L{annotation (char 127)}', function() {
+    checkInvalidAnnotationCharacter('{annotation'+String.fromCharCode(127)+'}');
   });
 
 }); // end test getAnnotations method

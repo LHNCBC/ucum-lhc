@@ -59,9 +59,14 @@ export class UnitString {
 
     // suggestions for unit strings that for which no unit was found
     this.suggestions = [] ;
-
   } // end constructor
 
+
+  // The start of an error message about an invalid annotation character.
+  static INVALID_ANNOTATION_CHAR_MSG = 'An invalid character was found in the annotation ';
+
+  // A regular expression for validating annotation strings.
+  static VALID_ANNOTATION_REGEX = /^\{[!-z|~]*\}$/;
 
   /**
    * Sets the emphasis strings to the HTML used in the webpage display - or
@@ -383,20 +388,30 @@ export class UnitString {
       }
       else {
         let braceStr = uString.substring(openBrace, closeBrace + 1);
-        let aIdx = this.annotations_.length.toString();
-        uString = uString.replace(braceStr, this.braceFlag_ + aIdx +
-          this.braceFlag_);
-        this.annotations_.push(braceStr);
-        openBrace = uString.indexOf('{');
+        // Check for valid characters in the annotation.
+        if (!UnitString.VALID_ANNOTATION_REGEX.test(braceStr)) {
+          this.retMsg_.push(UnitString.INVALID_ANNOTATION_CHAR_MSG +
+            this.openEmph_ + braceStr + this.closeEmph_);
+          openBrace = -1; // end search for annotations
+        }
+        else {
+          let aIdx = this.annotations_.length.toString();
+          uString = uString.replace(braceStr, this.braceFlag_ + aIdx +
+            this.braceFlag_);
+          this.annotations_.push(braceStr);
+          openBrace = uString.indexOf('{');
+        }
       }
     } // end do while we have an opening brace
 
     // check for a stray/unmatched closing brace
-    let closeBrace = uString.indexOf('}');
-    if (closeBrace >= 0)
-      this.retMsg_.push('Missing opening brace for closing brace found at ' +
-        this.openEmph_ + uString.substring(0, closeBrace + 1) +
-        this.closeEmph_);
+    if (this.retMsg_.length == 0) { // if there were no other errors above
+      let closeBrace = uString.indexOf('}');
+      if (closeBrace >= 0)
+        this.retMsg_.push('Missing opening brace for closing brace found at ' +
+          this.openEmph_ + uString.substring(0, closeBrace + 1) +
+          this.closeEmph_);
+    }
     return uString;
   } // end _getAnnotations
 

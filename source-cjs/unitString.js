@@ -11,6 +11,8 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /**
  * This class handles the parsing of a unit string into a unit object
  */
@@ -64,6 +66,8 @@ class UnitString {
 
     this.suggestions = [];
   } // end constructor
+  // The start of an error message about an invalid annotation character.
+
 
   /**
    * Sets the emphasis strings to the HTML used in the webpage display - or
@@ -72,8 +76,6 @@ class UnitString {
    * @param use flag indicating whether or not to use the html message format;
    *  defaults to true
    */
-
-
   useHTMLInMessages(use) {
     if (use === undefined || use) {
       this.openEmph_ = Ucum.openEmphHTML_;
@@ -369,18 +371,28 @@ class UnitString {
         this.retMsg_.push('Missing closing brace for annotation starting at ' + this.openEmph_ + uString.substr(openBrace) + this.closeEmph_);
         openBrace = -1;
       } else {
-        let braceStr = uString.substring(openBrace, closeBrace + 1);
-        let aIdx = this.annotations_.length.toString();
-        uString = uString.replace(braceStr, this.braceFlag_ + aIdx + this.braceFlag_);
-        this.annotations_.push(braceStr);
-        openBrace = uString.indexOf('{');
+        let braceStr = uString.substring(openBrace, closeBrace + 1); // Check for valid characters in the annotation.
+
+        if (!UnitString.VALID_ANNOTATION_REGEX.test(braceStr)) {
+          this.retMsg_.push(UnitString.INVALID_ANNOTATION_CHAR_MSG + this.openEmph_ + braceStr + this.closeEmph_);
+          openBrace = -1; // end search for annotations
+        } else {
+          let aIdx = this.annotations_.length.toString();
+          uString = uString.replace(braceStr, this.braceFlag_ + aIdx + this.braceFlag_);
+          this.annotations_.push(braceStr);
+          openBrace = uString.indexOf('{');
+        }
       }
     } // end do while we have an opening brace
     // check for a stray/unmatched closing brace
 
 
-    let closeBrace = uString.indexOf('}');
-    if (closeBrace >= 0) this.retMsg_.push('Missing opening brace for closing brace found at ' + this.openEmph_ + uString.substring(0, closeBrace + 1) + this.closeEmph_);
+    if (this.retMsg_.length == 0) {
+      // if there were no other errors above
+      let closeBrace = uString.indexOf('}');
+      if (closeBrace >= 0) this.retMsg_.push('Missing opening brace for closing brace found at ' + this.openEmph_ + uString.substring(0, closeBrace + 1) + this.closeEmph_);
+    }
+
     return uString;
   } // end _getAnnotations
 
@@ -1508,6 +1520,11 @@ class UnitString {
 
 
 exports.UnitString = UnitString;
+
+_defineProperty(UnitString, "INVALID_ANNOTATION_CHAR_MSG", 'An invalid character was found in the annotation ');
+
+// A regular expression for validating annotation strings.
+_defineProperty(UnitString, "VALID_ANNOTATION_REGEX", /^\{[!-z|~]*\}$/);
 
 UnitString.getInstance = function () {
   return new UnitString();

@@ -3073,6 +3073,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /**
  * This class handles the parsing of a unit string into a unit object
  */
@@ -3128,18 +3130,19 @@ var UnitString = /*#__PURE__*/function () {
 
     this.suggestions = [];
   } // end constructor
-
-  /**
-   * Sets the emphasis strings to the HTML used in the webpage display - or
-   * blanks them out, depending on the use parameter.
-   *
-   * @param use flag indicating whether or not to use the html message format;
-   *  defaults to true
-   */
+  // The start of an error message about an invalid annotation character.
 
 
   _createClass(UnitString, [{
     key: "useHTMLInMessages",
+
+    /**
+     * Sets the emphasis strings to the HTML used in the webpage display - or
+     * blanks them out, depending on the use parameter.
+     *
+     * @param use flag indicating whether or not to use the html message format;
+     *  defaults to true
+     */
     value: function useHTMLInMessages(use) {
       if (use === undefined || use) {
         this.openEmph_ = Ucum.openEmphHTML_;
@@ -3435,24 +3438,35 @@ var UnitString = /*#__PURE__*/function () {
       var openBrace = uString.indexOf('{');
 
       while (openBrace >= 0) {
-        var _closeBrace = uString.indexOf('}');
+        var closeBrace = uString.indexOf('}');
 
-        if (_closeBrace < 0) {
+        if (closeBrace < 0) {
           this.retMsg_.push('Missing closing brace for annotation starting at ' + this.openEmph_ + uString.substr(openBrace) + this.closeEmph_);
           openBrace = -1;
         } else {
-          var braceStr = uString.substring(openBrace, _closeBrace + 1);
-          var aIdx = this.annotations_.length.toString();
-          uString = uString.replace(braceStr, this.braceFlag_ + aIdx + this.braceFlag_);
-          this.annotations_.push(braceStr);
-          openBrace = uString.indexOf('{');
+          var braceStr = uString.substring(openBrace, closeBrace + 1); // Check for valid characters in the annotation.
+
+          if (!UnitString.VALID_ANNOTATION_REGEX.test(braceStr)) {
+            this.retMsg_.push(UnitString.INVALID_ANNOTATION_CHAR_MSG + this.openEmph_ + braceStr + this.closeEmph_);
+            openBrace = -1; // end search for annotations
+          } else {
+            var aIdx = this.annotations_.length.toString();
+            uString = uString.replace(braceStr, this.braceFlag_ + aIdx + this.braceFlag_);
+            this.annotations_.push(braceStr);
+            openBrace = uString.indexOf('{');
+          }
         }
       } // end do while we have an opening brace
       // check for a stray/unmatched closing brace
 
 
-      var closeBrace = uString.indexOf('}');
-      if (closeBrace >= 0) this.retMsg_.push('Missing opening brace for closing brace found at ' + this.openEmph_ + uString.substring(0, closeBrace + 1) + this.closeEmph_);
+      if (this.retMsg_.length == 0) {
+        // if there were no other errors above
+        var _closeBrace = uString.indexOf('}');
+
+        if (_closeBrace >= 0) this.retMsg_.push('Missing opening brace for closing brace found at ' + this.openEmph_ + uString.substring(0, _closeBrace + 1) + this.closeEmph_);
+      }
+
       return uString;
     } // end _getAnnotations
 
@@ -4593,6 +4607,11 @@ var UnitString = /*#__PURE__*/function () {
 
 
 exports.UnitString = UnitString;
+
+_defineProperty(UnitString, "INVALID_ANNOTATION_CHAR_MSG", 'An invalid character was found in the annotation ');
+
+// A regular expression for validating annotation strings.
+_defineProperty(UnitString, "VALID_ANNOTATION_REGEX", /^\{[!-z|~]*\}$/);
 
 UnitString.getInstance = function () {
   return new UnitString();
