@@ -997,9 +997,9 @@ describe('Test getAnnotations method', function() {
    * @param annotationString the annotation string to test (with braces)
    */
   function checkInvalidAnnotationCharacter(annotationString) {
-    var uString = UnitString.getInstance();
+    const uString = UnitString.getInstance();
     const unitTestString = 'L'+annotationString;
-    var retString = uString._getAnnotations(unitTestString);
+    const retString = uString._getAnnotations(unitTestString);
     assert.equal(uString.retMsg_[0], UnitString.INVALID_ANNOTATION_CHAR_MSG +
         uString.openEmph_ + annotationString + uString.closeEmph_);
     assert.equal(retString, unitTestString);
