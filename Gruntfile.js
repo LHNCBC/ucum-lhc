@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       npm: {
         options: {
           sourceMap: true,
-          plugins: ["@babel/plugin-transform-modules-commonjs"],
+          plugins: ["@babel/plugin-transform-modules-commonjs", "@babel/plugin-proposal-class-properties"],
         },
         files: [{
           cwd: 'source',
@@ -63,7 +63,8 @@ module.exports = function(grunt) {
             debug: true,
             standalone: "ucumPkg"
           },
-          transform: [["babelify", { "presets": ["@babel/preset-env"] }]]
+          transform: [["babelify", { "presets": ["@babel/preset-env"],
+            plugins: ["@babel/plugin-transform-modules-commonjs", "@babel/plugin-proposal-class-properties"] }]]
         },
         debug: true,
         files: [{dest: "./browser-dist/ucum-lhc.js",
