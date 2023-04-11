@@ -279,6 +279,24 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp4.msg[0], 'Sorry.  pmol/g cannot be converted to mg/dL.', resp4.msg[0]);
   });
 
+  it('should say that 1 2.[degF] = 2 [degF]', ()=>{
+    var resp5 = utils.convertUnitTo('2.[degF]', 1, '[degF]');
+    assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
+    assert.equal(resp5.toVal.toPrecision(3), 1);
+  });
+
+  it('should covert 2.[degF] to Cel', ()=>{
+    var resp = utils.convertUnitTo('2.[degF]', 1, 'Cel');
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(7), -16.66667);
+  });
+
+  it('should covert [degF].2 to Cel', ()=>{
+    var resp = utils.convertUnitTo('[degF].2', 1, 'Cel');
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(7), -16.66667);
+  });
+
 }); // end convertUnitTo tests
 
 
@@ -319,4 +337,82 @@ describe('Test getSynonyms method', function() {
 }); // end checkSynonyms tests
 
 
+describe('toBaseUnits', ()=> {
+  // Base units currently appear in the dimension vector in this order
+  // (taken from UnitTables.getInstance().dimVecIndexToBaseUnit_)
+  /*   '0': 'm',
+       '1': 's',
+       '2': 'g',
+       '3': 'rad',
+       '4': 'K',
+       '5': 'C',
+       '6': 'cd' */
 
+  it('should covert cm2/ms3 to base units', ()=>{
+    const baseUnitData = utils.toBaseUnits('cm2/ms3');
+    assert.equal(baseUnitData.msg.length, 0);
+    assert.equal(baseUnitData.magnitude, 100000);
+    assert.deepEqual(baseUnitData.unitToExp, {'m': 2, 's': -3});
+  });
+
+
+  it('should covert B[10.nV] to base units', ()=>{
+    // Equivalent to 0.0000316227766016838 g.m2/(C.s2); 1 B[10.nV]=2*log10(10.nV)
+    const baseUnitData = utils.toBaseUnits('B[10.nV]');
+    assert.equal(baseUnitData.msg.length, 0);
+    assert.equal(baseUnitData.magnitude, undefined);
+    assert.deepEqual(baseUnitData.unitToExp, {'g': 1, 'm': 2, 's': -2, 'C': -1});
+  });
+
+  it('should covert [degF] to base units', ()=>{
+    const baseUnitData = utils.toBaseUnits('[degF]');
+    assert.equal(baseUnitData.msg.length, 0);
+    assert.equal(baseUnitData.magnitude, undefined);
+    assert.deepEqual(baseUnitData.unitToExp, {'K': 1});
+  });
+
+  it('should covert 2.[degF] to base units', ()=>{
+    const baseUnitData = utils.toBaseUnits('2.[degF]');
+    assert.equal(baseUnitData.msg.length, 0);
+    // Special units do not get a magnitude returned
+    assert.equal(baseUnitData.magnitude, undefined);
+    assert.deepEqual(baseUnitData.unitToExp, {'K': 1});
+  });
+
+  it('should covert [degF].2 to base units', ()=>{
+    const baseUnitData = utils.toBaseUnits('[degF].2');
+    assert.equal(baseUnitData.msg.length, 0);
+    assert.equal(baseUnitData.magnitude, undefined);
+    assert.deepEqual(baseUnitData.unitToExp, {'K': 1});
+  });
+
+  it('should not covert [iU] to base units', ()=>{
+    // [iU] is an "arbitrary" unit and cannot be converted
+    const baseUnitData = utils.toBaseUnits('[iU]');
+    assert(baseUnitData.msg.length > 0);
+    assert.equal(baseUnitData.magnitude, undefined);
+    assert.deepEqual(baseUnitData.unitToExp, undefined);
+  });
+
+  it('should not covert m.[iU] to base units', ()=>{
+    // [iU] is an "arbitrary" unit and cannot be converted
+    const baseUnitData = utils.toBaseUnits('m.[iU]');
+    assert(baseUnitData.msg.length > 0);
+    assert.equal(baseUnitData.magnitude, undefined);
+    assert.deepEqual(baseUnitData.unitToExp, undefined);
+  });
+
+  it('should return an error message for a unit string that is a synonym', ()=>{
+    const baseUnitData = utils.toBaseUnits('foot');
+    assert(baseUnitData.msg.length > 0);
+    assert.equal(baseUnitData.magnitude, undefined);
+    assert.deepEqual(baseUnitData.unitToExp, undefined);
+  });
+
+  it('should return an error message for a unit string that is a unrecognized', ()=>{
+    const baseUnitData = utils.toBaseUnits('zzz');
+    assert(baseUnitData.msg.length > 0);
+    assert.equal(baseUnitData.magnitude, undefined);
+    assert.deepEqual(baseUnitData.unitToExp, undefined);
+  });
+});

@@ -218,6 +218,7 @@ export class UnitString {
       if (intUtils_.isIntegerUnit(finalUnit) || typeof finalUnit === 'number') {
         finalUnit = new Unit({
           'csCode_': origString,
+          'ciCode_': origString,
           'magnitude_': finalUnit,
           'name_': origString
         });
@@ -1442,7 +1443,7 @@ export class UnitString {
 
     let finalUnit = uArray[0]['un'];
     if (intUtils_.isIntegerUnit(finalUnit)) {
-      finalUnit = new Unit({'csCode_' : finalUnit,
+      finalUnit = new Unit({'csCode_' : finalUnit, 'ciCode_' : finalUnit,
         'magnitude_' : Number(finalUnit),
         'name_' : finalUnit}) ;
     }
@@ -1453,7 +1454,7 @@ export class UnitString {
     for (let u2 = 1; (u2 < uLen) && !endProcessing; u2++) {
       let nextUnit = uArray[u2]['un'];
       if (intUtils_.isIntegerUnit(nextUnit)) {
-        nextUnit = new Unit({'csCode_' : nextUnit ,
+        nextUnit = new Unit({'csCode_' : nextUnit, 'ciCode_' : nextUnit,
           'magnitude_' : Number(nextUnit),
           'name_': nextUnit});
       }

@@ -1818,6 +1818,79 @@ var UcumLhcUtils = /*#__PURE__*/function () {
     } // end convertUnitTo
 
     /**
+     *  Converts the given unit string into its base units, their exponents, and
+     *  a magnitude, and returns that data.
+     * @param uStr the unit string to be converted to base unit information.
+     * @returns an object with the properties:
+     *  'msg': an array of one or more messages, if the string is invalid or
+     *        an error occurred, indicating the problem, or a suggestion of a
+     *        substitution such as the substitution of 'G' for 'Gauss', or
+     *        an empty array if no messages were generated.
+     *  'magnitude': the value associated with uStr when expressed in the base units.
+     *        If the unit is a "special" unit (as defined in UCUM), this will not
+     *        be returned.
+     *  'unitToExp': a map of base units in uStr to their exponent value.
+     *  If msg has anything in it, magnitude and unitToExp will not be returned.
+     */
+
+  }, {
+    key: "toBaseUnits",
+    value: function toBaseUnits(uStr) {
+      var inputUnitLookup = this.getSpecifiedUnit(uStr, 'validate');
+      var retObj = {};
+      var unit = inputUnitLookup.unit;
+      retObj.msg = inputUnitLookup.retMsg || [];
+
+      if (!unit) {
+        var _inputUnitLookup$retM;
+
+        if (((_inputUnitLookup$retM = inputUnitLookup.retMsg) === null || _inputUnitLookup$retM === void 0 ? void 0 : _inputUnitLookup$retM.length) == 0) retObj.msg.push('Could not find unit information for ' + uStr);
+      } else if (unit.isArbitrary_) {
+        retObj.msg.push('Arbitrary units cannot be converted to base units or other units.');
+      } else if (retObj.msg.length == 0) {
+        var _unit$dim_, _retUnitLookup$retMsg;
+
+        var unitToExp = {};
+        var dimVec = (_unit$dim_ = unit.dim_) === null || _unit$dim_ === void 0 ? void 0 : _unit$dim_.dimVec_;
+        var baseUnitString = '1';
+
+        if (dimVec) {
+          var dimVecIndexToBaseUnit = UnitTables.getInstance().dimVecIndexToBaseUnit_;
+
+          for (var i = 0, len = dimVec.length; i < len; ++i) {
+            var exp = dimVec[i];
+
+            if (exp) {
+              unitToExp[dimVecIndexToBaseUnit[i]] = exp;
+              baseUnitString += '.' + dimVecIndexToBaseUnit[i] + exp;
+            }
+          }
+        } // The unit might have a conversion function, which has to be applied; we
+        // cannot just assume unit_.magnitude_ is the magnitude in base units.
+
+
+        var retUnitLookup = this.getSpecifiedUnit(baseUnitString, 'validate'); // There should not be any error in retUnitLookup, unless there is a bug.
+
+        var retUnit = retUnitLookup.unit;
+        if (!retUnit && ((_retUnitLookup$retMsg = retUnitLookup.retMsg) === null || _retUnitLookup$retMsg === void 0 ? void 0 : _retUnitLookup$retMsg.length) == 0) retObj.msg.push('Unable construct base unit string; tried ' + baseUnitString);else {
+          if (!unit.isSpecial_) {
+            // Special units have a conversion function, which makes the meaning
+            // of a magnitude uncertain when querying for base units, so we skip
+            // that case.
+            try {
+              retObj.magnitude = retUnit.convertFrom(1, unit);
+            } catch (e) {
+              retObj.msg.push(e.toString());
+            }
+          }
+
+          if (retObj.msg.length == 0) retObj.unitToExp = unitToExp;
+        }
+      }
+
+      return retObj;
+    }
+    /**
      * This method accepts a term and looks for units that include it as
      * a synonym - or that include the term in its name.
      *
@@ -2419,8 +2492,8 @@ var Unit = /*#__PURE__*/function () {
     key: "convertFrom",
     value: function convertFrom(num, fromUnit) {
       var newNum = 0.0;
-      if (this.isArbitrary_) throw new Error("Attempt to convert arbitrary unit ".concat(this.name_));
-      if (fromUnit.isArbitrary_) throw new Error("Attempt to convert to arbitrary unit ".concat(fromUnit.name_)); // reject request if both units have dimensions that are not equal
+      if (this.isArbitrary_) throw new Error("Attempt to convert to arbitrary unit \"".concat(this.csCode_, "\""));
+      if (fromUnit.isArbitrary_) throw new Error("Attempt to convert arbitrary unit \"".concat(fromUnit.csCode_, "\"")); // reject request if both units have dimensions that are not equal
 
       if (fromUnit.dim_ && this.dim_ && !fromUnit.dim_.equals(this.dim_)) {
         // check first to see if a mole<->mass conversion is appropriate
@@ -2690,6 +2763,7 @@ var Unit = /*#__PURE__*/function () {
       else if (unit2.cnv_ != null) {
           if (!retUnit.dim_ || retUnit.dim_.isZero()) {
             retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
+            retUnit.magnitude_ = unit2.magnitude_;
             retUnit.cnv_ = unit2.cnv_;
           } else throw new Error("Attempt to multiply non-ratio unit ".concat(unit2.name_));
         } // end if unit2 has a conversion function
@@ -2723,7 +2797,9 @@ var Unit = /*#__PURE__*/function () {
       // if (!retUnit.isMole_)
       //   retUnit.isMole_ = unit2.isMole_ ;
 
-      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
+      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_; // Likewise for special units
+
+      if (!retUnit.isSpecial_) retUnit.isSpecial_ = unit2.isSpecial_;
       return retUnit;
     } // end multiplyThese
 
@@ -3280,6 +3356,7 @@ var UnitString = /*#__PURE__*/function () {
         if (intUtils_.isIntegerUnit(finalUnit) || typeof finalUnit === 'number') {
           finalUnit = new Unit({
             'csCode_': origString,
+            'ciCode_': origString,
             'magnitude_': finalUnit,
             'name_': origString
           });
@@ -4494,6 +4571,7 @@ var UnitString = /*#__PURE__*/function () {
       if (intUtils_.isIntegerUnit(finalUnit)) {
         finalUnit = new Unit({
           'csCode_': finalUnit,
+          'ciCode_': finalUnit,
           'magnitude_': Number(finalUnit),
           'name_': finalUnit
         });
@@ -4509,6 +4587,7 @@ var UnitString = /*#__PURE__*/function () {
         if (intUtils_.isIntegerUnit(nextUnit)) {
           nextUnit = new Unit({
             'csCode_': nextUnit,
+            'ciCode_': nextUnit,
             'magnitude_': Number(nextUnit),
             'name_': nextUnit
           });
@@ -4734,6 +4813,11 @@ var UnitTablesFactory = /*#__PURE__*/function () {
      */
 
     this.massDimIndex_ = 0;
+    /**
+     *  Map of indices in the dimension vector to base unit symbols.
+     */
+
+    this.dimVecIndexToBaseUnit_ = {};
   }
   /**
    * Provides the number of unit objects written to the tables, using the
@@ -4773,6 +4857,17 @@ var UnitTablesFactory = /*#__PURE__*/function () {
         if (theUnit['dim_'].getProperty('dimVec_')) this.addUnitDimension(theUnit);
       } catch (err) {// do nothing - throws error if the property is null
         // and that's OK here.
+      }
+
+      if (theUnit.isBase_) {
+        var dimVec = theUnit.dim_.dimVec_;
+        var nonZeroIndex;
+
+        for (var i = 0, len = dimVec.length; nonZeroIndex == undefined && i < len; ++i) {
+          if (dimVec[i] != 0) nonZeroIndex = i;
+        }
+
+        this.dimVecIndexToBaseUnit_[nonZeroIndex] = theUnit.csCode_;
       }
     } // end addUnit
 

@@ -97,6 +97,11 @@ class UnitTablesFactory {
      * @type integer
      */
     this.massDimIndex_ = 0;
+
+    /**
+     *  Map of indices in the dimension vector to base unit symbols.
+     */
+    this.dimVecIndexToBaseUnit_ = {};
   }
 
 
@@ -138,6 +143,15 @@ class UnitTablesFactory {
       // and that's OK here.
     }
 
+    if (theUnit.isBase_) {
+      const dimVec = theUnit.dim_.dimVec_;
+      let nonZeroIndex;
+      for (let i=0, len=dimVec.length; nonZeroIndex==undefined && i<len; ++i) {
+        if (dimVec[i] != 0)
+          nonZeroIndex = i;
+      }
+      this.dimVecIndexToBaseUnit_[nonZeroIndex] = theUnit.csCode_;
+    }
   } // end addUnit
 
 

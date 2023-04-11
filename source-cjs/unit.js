@@ -370,8 +370,8 @@ class Unit {
 
   convertFrom(num, fromUnit) {
     let newNum = 0.0;
-    if (this.isArbitrary_) throw new Error(`Attempt to convert arbitrary unit ${this.name_}`);
-    if (fromUnit.isArbitrary_) throw new Error(`Attempt to convert to arbitrary unit ${fromUnit.name_}`); // reject request if both units have dimensions that are not equal
+    if (this.isArbitrary_) throw new Error(`Attempt to convert to arbitrary unit "${this.csCode_}"`);
+    if (fromUnit.isArbitrary_) throw new Error(`Attempt to convert arbitrary unit "${fromUnit.csCode_}"`); // reject request if both units have dimensions that are not equal
 
     if (fromUnit.dim_ && this.dim_ && !fromUnit.dim_.equals(this.dim_)) {
       // check first to see if a mole<->mass conversion is appropriate
@@ -633,6 +633,7 @@ class Unit {
     else if (unit2.cnv_ != null) {
         if (!retUnit.dim_ || retUnit.dim_.isZero()) {
           retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
+          retUnit.magnitude_ = unit2.magnitude_;
           retUnit.cnv_ = unit2.cnv_;
         } else throw new Error(`Attempt to multiply non-ratio unit ${unit2.name_}`);
       } // end if unit2 has a conversion function
@@ -666,7 +667,9 @@ class Unit {
     // if (!retUnit.isMole_)
     //   retUnit.isMole_ = unit2.isMole_ ;
 
-    if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
+    if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_; // Likewise for special units
+
+    if (!retUnit.isSpecial_) retUnit.isSpecial_ = unit2.isSpecial_;
     return retUnit;
   } // end multiplyThese
 

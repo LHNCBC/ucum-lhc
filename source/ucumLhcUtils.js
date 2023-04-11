@@ -338,6 +338,74 @@ export class UcumLhcUtils {
 
 
   /**
+   *  Converts the given unit string into its base units, their exponents, and
+   *  a magnitude, and returns that data.
+   * @param uStr the unit string to be converted to base unit information.
+   * @returns an object with the properties:
+   *  'msg': an array of one or more messages, if the string is invalid or
+   *        an error occurred, indicating the problem, or a suggestion of a
+   *        substitution such as the substitution of 'G' for 'Gauss', or
+   *        an empty array if no messages were generated.
+   *  'magnitude': the value associated with uStr when expressed in the base units.
+   *        If the unit is a "special" unit (as defined in UCUM), this will not
+   *        be returned.
+   *  'unitToExp': a map of base units in uStr to their exponent value.
+   *  If msg has anything in it, magnitude and unitToExp will not be returned.
+   */
+  toBaseUnits(uStr) {
+    let inputUnitLookup = this.getSpecifiedUnit(uStr, 'validate');
+    let retObj = {};
+    let unit = inputUnitLookup.unit;
+    retObj.msg = inputUnitLookup.retMsg || [];
+    if (!unit) {
+      if (inputUnitLookup.retMsg?.length == 0)
+        retObj.msg.push('Could not find unit information for '+uStr);
+    }
+    else if (unit.isArbitrary_) {
+      retObj.msg.push('Arbitrary units cannot be converted to base units or other units.');
+    }
+    else if (retObj.msg.length == 0) {
+      let unitToExp = {};
+      let dimVec = unit.dim_?.dimVec_
+      let baseUnitString = '1';
+      if (dimVec) {
+        let dimVecIndexToBaseUnit = UnitTables.getInstance().dimVecIndexToBaseUnit_;
+        for (let i=0, len=dimVec.length; i<len; ++i) {
+          let exp = dimVec[i];
+          if (exp) {
+            unitToExp[dimVecIndexToBaseUnit[i]] = exp;
+            baseUnitString += '.' + dimVecIndexToBaseUnit[i] + exp;
+          }
+        }
+      }
+      // The unit might have a conversion function, which has to be applied; we
+      // cannot just assume unit_.magnitude_ is the magnitude in base units.
+      let retUnitLookup = this.getSpecifiedUnit(baseUnitString, 'validate');
+      // There should not be any error in retUnitLookup, unless there is a bug.
+      let retUnit = retUnitLookup.unit;
+      if (!retUnit && retUnitLookup.retMsg?.length == 0)
+        retObj.msg.push('Unable construct base unit string; tried '+baseUnitString);
+      else {
+        if (!unit.isSpecial_) {
+          // Special units have a conversion function, which makes the meaning
+          // of a magnitude uncertain when querying for base units, so we skip
+          // that case.
+          try {
+            retObj.magnitude = retUnit.convertFrom(1, unit);
+          }
+          catch (e) {
+            retObj.msg.push(e.toString());
+          }
+        }
+        if (retObj.msg.length == 0)
+          retObj.unitToExp = unitToExp;
+      }
+    }
+    return retObj;
+  }
+
+
+  /**
    * This method accepts a term and looks for units that include it as
    * a synonym - or that include the term in its name.
    *
