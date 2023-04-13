@@ -282,7 +282,7 @@ it("should return a message for invalid unit strings", function() {
   it('should say that 1 2.[degF] = 2 [degF]', ()=>{
     var resp5 = utils.convertUnitTo('2.[degF]', 1, '[degF]');
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
-    assert.equal(resp5.toVal.toPrecision(3), 1);
+    assert.equal(resp5.toVal.toPrecision(3), 2);
   });
 
   it('should covert 2.[degF] to Cel', ()=>{

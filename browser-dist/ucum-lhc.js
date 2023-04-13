@@ -2515,40 +2515,28 @@ var Unit = /*#__PURE__*/function () {
       }
 
       var fromCnv = fromUnit.cnv_;
-      var fromMag = fromUnit.magnitude_; // If the same conversion function is specified for both units, which
-      // includes neither unit having a conversion function, multiply the
-      // "from" unit's magnitude by the number passed in and then divide
-      // that result by this unit's magnitude.  Do this for units with
-      // and without dimension vectors.  PROBLEM with 2 non-commensurable
-      // units with no dimension vector or function, e.g., byte to mol
+      var fromMag = fromUnit.magnitude_;
+      var x;
 
-      if (fromCnv === this.cnv_) {
-        newNum = num * fromMag / this.magnitude_;
-      } // else use a function to get the number to be returned
-      else {
-          var x = 0.0;
+      if (fromCnv != null) {
+        // turn num * fromUnit.magnitude into its ratio scale equivalent,
+        // e.g., convert Celsius to Kelvin
+        var fromFunc = _ucumFunctions.default.forName(fromCnv);
 
-          if (fromCnv != null) {
-            // turn num * fromUnit.magnitude into its ratio scale equivalent,
-            // e.g., convert Celsius to Kelvin
-            var fromFunc = _ucumFunctions.default.forName(fromCnv);
+        x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag; //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
+      } else {
+        x = num * fromMag;
+      }
 
-            x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag; //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
-          } else {
-            x = num * fromMag;
-          }
+      if (this.cnv_ != null) {
+        // turn mag * origUnit on ratio scale into a non-ratio unit,
+        // e.g. convert Kelvin to Fahrenheit
+        var toFunc = _ucumFunctions.default.forName(this.cnv_);
 
-          if (this.cnv_ != null) {
-            // turn mag * origUnit on ratio scale into a non-ratio unit,
-            // e.g. convert Kelvin to Fahrenheit
-            var toFunc = _ucumFunctions.default.forName(this.cnv_);
-
-            newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
-          } else {
-            newNum = x / this.magnitude_;
-          }
-        } // end if either unit has a conversion function
-
+        newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
+      } else {
+        newNum = x / this.magnitude_;
+      }
 
       return newNum;
     } // end convertFrom
