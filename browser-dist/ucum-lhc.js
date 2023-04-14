@@ -1820,23 +1820,27 @@ var UcumLhcUtils = /*#__PURE__*/function () {
     /**
      *  Converts the given unit string into its base units, their exponents, and
      *  a magnitude, and returns that data.
-     * @param uStr the unit string to be converted to base unit information.
+     * @param fromUnit the unit string to be converted to base units information
+     * @param fromVal the number of "from" units to be converted
      * @returns an object with the properties:
      *  'msg': an array of one or more messages, if the string is invalid or
      *        an error occurred, indicating the problem, or a suggestion of a
      *        substitution such as the substitution of 'G' for 'Gauss', or
-     *        an empty array if no messages were generated.
-     *  'magnitude': the value associated with uStr when expressed in the base units.
-     *        If the unit is a "special" unit (as defined in UCUM), this will not
-     *        be returned.
-     *  'unitToExp': a map of base units in uStr to their exponent value.
-     *  If msg has anything in it, magnitude and unitToExp will not be returned.
+     *        an empty array if no messages were generated.  If this is not empty,
+     *        no other information will be returned.
+     *  'magnitude': the new value when fromVal units of fromUnits is expressed in the base units.
+     *  'fromUnitIsSpecial': whether the input unit fromUnit is a "special unit"
+     *         as defined in UCUM.  This means there is some function applied to convert
+     *         between fromUnit and the base units, so the returned magnitude is likely not
+     *         useful as a scale factor for other conversions (i.e., it only has validity
+     *         and usefulness for the input values that produced it).
+     *  'unitToExp': a map of base units in uStr to their exponent
      */
 
   }, {
-    key: "toBaseUnits",
-    value: function toBaseUnits(uStr) {
-      var inputUnitLookup = this.getSpecifiedUnit(uStr, 'validate');
+    key: "convertToBaseUnits",
+    value: function convertToBaseUnits(fromUnit, fromVal) {
+      var inputUnitLookup = this.getSpecifiedUnit(fromUnit, 'validate');
       var retObj = {};
       var unit = inputUnitLookup.unit;
       retObj.msg = inputUnitLookup.retMsg || [];
@@ -1844,7 +1848,7 @@ var UcumLhcUtils = /*#__PURE__*/function () {
       if (!unit) {
         var _inputUnitLookup$retM;
 
-        if (((_inputUnitLookup$retM = inputUnitLookup.retMsg) === null || _inputUnitLookup$retM === void 0 ? void 0 : _inputUnitLookup$retM.length) == 0) retObj.msg.push('Could not find unit information for ' + uStr);
+        if (((_inputUnitLookup$retM = inputUnitLookup.retMsg) === null || _inputUnitLookup$retM === void 0 ? void 0 : _inputUnitLookup$retM.length) == 0) retObj.msg.push('Could not find unit information for ' + fromUnit);
       } else if (unit.isArbitrary_) {
         retObj.msg.push('Arbitrary units cannot be converted to base units or other units.');
       } else if (retObj.msg.length == 0) {
@@ -1873,18 +1877,16 @@ var UcumLhcUtils = /*#__PURE__*/function () {
 
         var retUnit = retUnitLookup.unit;
         if (!retUnit && ((_retUnitLookup$retMsg = retUnitLookup.retMsg) === null || _retUnitLookup$retMsg === void 0 ? void 0 : _retUnitLookup$retMsg.length) == 0) retObj.msg.push('Unable construct base unit string; tried ' + baseUnitString);else {
-          if (!unit.isSpecial_) {
-            // Special units have a conversion function, which makes the meaning
-            // of a magnitude uncertain when querying for base units, so we skip
-            // that case.
-            try {
-              retObj.magnitude = retUnit.convertFrom(1, unit);
-            } catch (e) {
-              retObj.msg.push(e.toString());
-            }
+          try {
+            retObj.magnitude = retUnit.convertFrom(fromVal, unit);
+          } catch (e) {
+            retObj.msg.push(e.toString());
           }
 
-          if (retObj.msg.length == 0) retObj.unitToExp = unitToExp;
+          if (retObj.msg.length == 0) {
+            retObj.unitToExp = unitToExp;
+            retObj.fromUnitIsSpecial = unit.isSpecial_;
+          }
         }
       }
 

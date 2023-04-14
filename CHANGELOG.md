@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.2.0] 2023-04-11
-- Added a new API, toBaseUnits, to UcumLhcUtils.
+- Added a new API, convertToBaseUnits, to UcumLhcUtils.
 
 ## [4.1.8] 2023-03-29
 ### Fixed

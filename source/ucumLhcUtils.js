@@ -340,26 +340,30 @@ export class UcumLhcUtils {
   /**
    *  Converts the given unit string into its base units, their exponents, and
    *  a magnitude, and returns that data.
-   * @param uStr the unit string to be converted to base unit information.
+   * @param fromUnit the unit string to be converted to base units information
+   * @param fromVal the number of "from" units to be converted
    * @returns an object with the properties:
    *  'msg': an array of one or more messages, if the string is invalid or
    *        an error occurred, indicating the problem, or a suggestion of a
    *        substitution such as the substitution of 'G' for 'Gauss', or
-   *        an empty array if no messages were generated.
-   *  'magnitude': the value associated with uStr when expressed in the base units.
-   *        If the unit is a "special" unit (as defined in UCUM), this will not
-   *        be returned.
-   *  'unitToExp': a map of base units in uStr to their exponent value.
-   *  If msg has anything in it, magnitude and unitToExp will not be returned.
+   *        an empty array if no messages were generated.  If this is not empty,
+   *        no other information will be returned.
+   *  'magnitude': the new value when fromVal units of fromUnits is expressed in the base units.
+   *  'fromUnitIsSpecial': whether the input unit fromUnit is a "special unit"
+   *         as defined in UCUM.  This means there is some function applied to convert
+   *         between fromUnit and the base units, so the returned magnitude is likely not
+   *         useful as a scale factor for other conversions (i.e., it only has validity
+   *         and usefulness for the input values that produced it).
+   *  'unitToExp': a map of base units in uStr to their exponent
    */
-  toBaseUnits(uStr) {
-    let inputUnitLookup = this.getSpecifiedUnit(uStr, 'validate');
+  convertToBaseUnits(fromUnit, fromVal) {
+    let inputUnitLookup = this.getSpecifiedUnit(fromUnit, 'validate');
     let retObj = {};
     let unit = inputUnitLookup.unit;
     retObj.msg = inputUnitLookup.retMsg || [];
     if (!unit) {
       if (inputUnitLookup.retMsg?.length == 0)
-        retObj.msg.push('Could not find unit information for '+uStr);
+        retObj.msg.push('Could not find unit information for '+fromUnit);
     }
     else if (unit.isArbitrary_) {
       retObj.msg.push('Arbitrary units cannot be converted to base units or other units.');
@@ -378,6 +382,7 @@ export class UcumLhcUtils {
           }
         }
       }
+
       // The unit might have a conversion function, which has to be applied; we
       // cannot just assume unit_.magnitude_ is the magnitude in base units.
       let retUnitLookup = this.getSpecifiedUnit(baseUnitString, 'validate');
@@ -386,19 +391,16 @@ export class UcumLhcUtils {
       if (!retUnit && retUnitLookup.retMsg?.length == 0)
         retObj.msg.push('Unable construct base unit string; tried '+baseUnitString);
       else {
-        if (!unit.isSpecial_) {
-          // Special units have a conversion function, which makes the meaning
-          // of a magnitude uncertain when querying for base units, so we skip
-          // that case.
-          try {
-            retObj.magnitude = retUnit.convertFrom(1, unit);
-          }
-          catch (e) {
-            retObj.msg.push(e.toString());
-          }
+        try {
+          retObj.magnitude = retUnit.convertFrom(fromVal, unit);
         }
-        if (retObj.msg.length == 0)
+        catch (e) {
+          retObj.msg.push(e.toString());
+        }
+        if (retObj.msg.length == 0) {
           retObj.unitToExp = unitToExp;
+          retObj.fromUnitIsSpecial = unit.isSpecial_;
+        }
       }
     }
     return retObj;
