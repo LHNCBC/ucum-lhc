@@ -86,14 +86,14 @@ var Ucum = {
    * displaying messages on a web site; should be blank when output is
    * to a file.
    */
-  openEmphHTML_: '<span class="emphSpan">',
+  openEmphHTML_: ' <span class="emphSpan">',
 
   /**
    * Closing HTML used to emphasize portions of error messages.  Used when
    * displaying messages on a web site; should be blank when output is
    * to a file.
    */
-  closeEmphHTML_: '</span>',
+  closeEmphHTML_: '</span> ',
 
   /**
    * Message that is displayed when annotations are included in a unit
