@@ -340,6 +340,7 @@ export class Unit {
     return match ;
   }// end of fullEquals
 
+
   /**
    * This returns the value of the property named by the parameter
    * passed in.
@@ -380,9 +381,9 @@ export class Unit {
     let newNum = 0.0 ;
 
     if (this.isArbitrary_)
-      throw (new Error(`Attempt to convert arbitrary unit ${this.name_}`));
+      throw (new Error(`Attempt to convert to arbitrary unit "${this.csCode_}"`));
     if (fromUnit.isArbitrary_)
-      throw (new Error(`Attempt to convert to arbitrary unit ${fromUnit.name_}`));
+      throw (new Error(`Attempt to convert arbitrary unit "${fromUnit.csCode_}"`));
 
     // reject request if both units have dimensions that are not equal
     if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
@@ -410,39 +411,27 @@ export class Unit {
     let fromCnv = fromUnit.cnv_ ;
     let fromMag = fromUnit.magnitude_ ;
 
-    // If the same conversion function is specified for both units, which
-    // includes neither unit having a conversion function, multiply the
-    // "from" unit's magnitude by the number passed in and then divide
-    // that result by this unit's magnitude.  Do this for units with
-    // and without dimension vectors.  PROBLEM with 2 non-commensurable
-    // units with no dimension vector or function, e.g., byte to mol
-    if (fromCnv === this.cnv_) {
-      newNum = (num * fromMag) / this.magnitude_;
+    let x;
+    if (fromCnv != null) {
+      // turn num * fromUnit.magnitude into its ratio scale equivalent,
+      // e.g., convert Celsius to Kelvin
+      let fromFunc = funcs.forName(fromCnv);
+      x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
+      //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
     }
-    // else use a function to get the number to be returned
     else {
-      let x = 0.0 ;
-      if (fromCnv != null) {
-        // turn num * fromUnit.magnitude into its ratio scale equivalent,
-        // e.g., convert Celsius to Kelvin
-        let fromFunc = funcs.forName(fromCnv);
-        x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag;
-        //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
-      }
-      else {
-        x = num * fromMag;
-      }
+      x = num * fromMag;
+    }
 
-      if (this.cnv_ != null) {
-        // turn mag * origUnit on ratio scale into a non-ratio unit,
-        // e.g. convert Kelvin to Fahrenheit
-        let toFunc = funcs.forName(this.cnv_);
-        newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
-      }
-      else {
-        newNum = x / this.magnitude_;
-      }
-    } // end if either unit has a conversion function
+    if (this.cnv_ != null) {
+      // turn mag * origUnit on ratio scale into a non-ratio unit,
+      // e.g. convert Kelvin to Fahrenheit
+      let toFunc = funcs.forName(this.cnv_);
+      newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
+    }
+    else {
+      newNum = x / this.magnitude_;
+    }
 
     return newNum;
 
@@ -666,6 +655,7 @@ export class Unit {
     else if (unit2.cnv_ != null) {
       if (!retUnit.dim_ || retUnit.dim_.isZero()) {
         retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
+        retUnit.magnitude_ = unit2.magnitude_;
         retUnit.cnv_ = unit2.cnv_ ;
       }
       else
@@ -716,8 +706,12 @@ export class Unit {
     // via an arithmetic operation.  Taint accordingly
     // if (!retUnit.isMole_)
     //   retUnit.isMole_ = unit2.isMole_ ;
-     if (!retUnit.isArbitrary_)
-       retUnit.isArbitrary_ = unit2.isArbitrary_;
+    if (!retUnit.isArbitrary_)
+      retUnit.isArbitrary_ = unit2.isArbitrary_;
+
+    // Likewise for special units
+    if (!retUnit.isSpecial_)
+      retUnit.isSpecial_ = unit2.isSpecial_;
 
     return retUnit ;
 

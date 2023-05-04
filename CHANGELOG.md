@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.0] 2023-04-11
+### Added
+- Added a new API, convertToBaseUnits, to UcumLhcUtils.
+### Fixed
+- Added some needed space around symbols in HTML error messages.
+
 ## [4.1.8] 2023-03-29
 ### Fixed
 - Now validates that characters within annotation strings are in the permitted

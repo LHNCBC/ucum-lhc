@@ -101,6 +101,11 @@ class UnitTablesFactory {
      */
 
     this.massDimIndex_ = 0;
+    /**
+     *  Map of indices in the dimension vector to base unit symbols.
+     */
+
+    this.dimVecIndexToBaseUnit_ = {};
   }
   /**
    * Provides the number of unit objects written to the tables, using the
@@ -137,6 +142,17 @@ class UnitTablesFactory {
       if (theUnit['dim_'].getProperty('dimVec_')) this.addUnitDimension(theUnit);
     } catch (err) {// do nothing - throws error if the property is null
       // and that's OK here.
+    }
+
+    if (theUnit.isBase_) {
+      const dimVec = theUnit.dim_.dimVec_;
+      let nonZeroIndex;
+
+      for (let i = 0, len = dimVec.length; nonZeroIndex == undefined && i < len; ++i) {
+        if (dimVec[i] != 0) nonZeroIndex = i;
+      }
+
+      this.dimVecIndexToBaseUnit_[nonZeroIndex] = theUnit.csCode_;
     }
   } // end addUnit
 

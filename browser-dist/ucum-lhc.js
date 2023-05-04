@@ -86,14 +86,14 @@ var Ucum = {
    * displaying messages on a web site; should be blank when output is
    * to a file.
    */
-  openEmphHTML_: '<span class="emphSpan">',
+  openEmphHTML_: ' <span class="emphSpan">',
 
   /**
    * Closing HTML used to emphasize portions of error messages.  Used when
    * displaying messages on a web site; should be blank when output is
    * to a file.
    */
-  closeEmphHTML_: '</span>',
+  closeEmphHTML_: '</span> ',
 
   /**
    * Message that is displayed when annotations are included in a unit
@@ -1818,6 +1818,81 @@ var UcumLhcUtils = /*#__PURE__*/function () {
     } // end convertUnitTo
 
     /**
+     *  Converts the given unit string into its base units, their exponents, and
+     *  a magnitude, and returns that data.
+     * @param fromUnit the unit string to be converted to base units information
+     * @param fromVal the number of "from" units to be converted
+     * @returns an object with the properties:
+     *  'msg': an array of one or more messages, if the string is invalid or
+     *        an error occurred, indicating the problem, or a suggestion of a
+     *        substitution such as the substitution of 'G' for 'Gauss', or
+     *        an empty array if no messages were generated.  If this is not empty,
+     *        no other information will be returned.
+     *  'magnitude': the new value when fromVal units of fromUnits is expressed in the base units.
+     *  'fromUnitIsSpecial': whether the input unit fromUnit is a "special unit"
+     *         as defined in UCUM.  This means there is some function applied to convert
+     *         between fromUnit and the base units, so the returned magnitude is likely not
+     *         useful as a scale factor for other conversions (i.e., it only has validity
+     *         and usefulness for the input values that produced it).
+     *  'unitToExp': a map of base units in uStr to their exponent
+     */
+
+  }, {
+    key: "convertToBaseUnits",
+    value: function convertToBaseUnits(fromUnit, fromVal) {
+      var inputUnitLookup = this.getSpecifiedUnit(fromUnit, 'validate');
+      var retObj = {};
+      var unit = inputUnitLookup.unit;
+      retObj.msg = inputUnitLookup.retMsg || [];
+
+      if (!unit) {
+        var _inputUnitLookup$retM;
+
+        if (((_inputUnitLookup$retM = inputUnitLookup.retMsg) === null || _inputUnitLookup$retM === void 0 ? void 0 : _inputUnitLookup$retM.length) == 0) retObj.msg.push('Could not find unit information for ' + fromUnit);
+      } else if (unit.isArbitrary_) {
+        retObj.msg.push('Arbitrary units cannot be converted to base units or other units.');
+      } else if (retObj.msg.length == 0) {
+        var _unit$dim_, _retUnitLookup$retMsg;
+
+        var unitToExp = {};
+        var dimVec = (_unit$dim_ = unit.dim_) === null || _unit$dim_ === void 0 ? void 0 : _unit$dim_.dimVec_;
+        var baseUnitString = '1';
+
+        if (dimVec) {
+          var dimVecIndexToBaseUnit = UnitTables.getInstance().dimVecIndexToBaseUnit_;
+
+          for (var i = 0, len = dimVec.length; i < len; ++i) {
+            var exp = dimVec[i];
+
+            if (exp) {
+              unitToExp[dimVecIndexToBaseUnit[i]] = exp;
+              baseUnitString += '.' + dimVecIndexToBaseUnit[i] + exp;
+            }
+          }
+        } // The unit might have a conversion function, which has to be applied; we
+        // cannot just assume unit_.magnitude_ is the magnitude in base units.
+
+
+        var retUnitLookup = this.getSpecifiedUnit(baseUnitString, 'validate'); // There should not be any error in retUnitLookup, unless there is a bug.
+
+        var retUnit = retUnitLookup.unit;
+        if (!retUnit && ((_retUnitLookup$retMsg = retUnitLookup.retMsg) === null || _retUnitLookup$retMsg === void 0 ? void 0 : _retUnitLookup$retMsg.length) == 0) retObj.msg.push('Unable construct base unit string; tried ' + baseUnitString);else {
+          try {
+            retObj.magnitude = retUnit.convertFrom(fromVal, unit);
+          } catch (e) {
+            retObj.msg.push(e.toString());
+          }
+
+          if (retObj.msg.length == 0) {
+            retObj.unitToExp = unitToExp;
+            retObj.fromUnitIsSpecial = unit.isSpecial_;
+          }
+        }
+      }
+
+      return retObj;
+    }
+    /**
      * This method accepts a term and looks for units that include it as
      * a synonym - or that include the term in its name.
      *
@@ -2419,8 +2494,8 @@ var Unit = /*#__PURE__*/function () {
     key: "convertFrom",
     value: function convertFrom(num, fromUnit) {
       var newNum = 0.0;
-      if (this.isArbitrary_) throw new Error("Attempt to convert arbitrary unit ".concat(this.name_));
-      if (fromUnit.isArbitrary_) throw new Error("Attempt to convert to arbitrary unit ".concat(fromUnit.name_)); // reject request if both units have dimensions that are not equal
+      if (this.isArbitrary_) throw new Error("Attempt to convert to arbitrary unit \"".concat(this.csCode_, "\""));
+      if (fromUnit.isArbitrary_) throw new Error("Attempt to convert arbitrary unit \"".concat(fromUnit.csCode_, "\"")); // reject request if both units have dimensions that are not equal
 
       if (fromUnit.dim_ && this.dim_ && !fromUnit.dim_.equals(this.dim_)) {
         // check first to see if a mole<->mass conversion is appropriate
@@ -2442,40 +2517,28 @@ var Unit = /*#__PURE__*/function () {
       }
 
       var fromCnv = fromUnit.cnv_;
-      var fromMag = fromUnit.magnitude_; // If the same conversion function is specified for both units, which
-      // includes neither unit having a conversion function, multiply the
-      // "from" unit's magnitude by the number passed in and then divide
-      // that result by this unit's magnitude.  Do this for units with
-      // and without dimension vectors.  PROBLEM with 2 non-commensurable
-      // units with no dimension vector or function, e.g., byte to mol
+      var fromMag = fromUnit.magnitude_;
+      var x;
 
-      if (fromCnv === this.cnv_) {
-        newNum = num * fromMag / this.magnitude_;
-      } // else use a function to get the number to be returned
-      else {
-          var x = 0.0;
+      if (fromCnv != null) {
+        // turn num * fromUnit.magnitude into its ratio scale equivalent,
+        // e.g., convert Celsius to Kelvin
+        var fromFunc = _ucumFunctions.default.forName(fromCnv);
 
-          if (fromCnv != null) {
-            // turn num * fromUnit.magnitude into its ratio scale equivalent,
-            // e.g., convert Celsius to Kelvin
-            var fromFunc = _ucumFunctions.default.forName(fromCnv);
+        x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag; //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
+      } else {
+        x = num * fromMag;
+      }
 
-            x = fromFunc.cnvFrom(num * fromUnit.cnvPfx_) * fromMag; //x = fromFunc.cnvFrom(num * fromMag) * fromUnit.cnvPfx_;
-          } else {
-            x = num * fromMag;
-          }
+      if (this.cnv_ != null) {
+        // turn mag * origUnit on ratio scale into a non-ratio unit,
+        // e.g. convert Kelvin to Fahrenheit
+        var toFunc = _ucumFunctions.default.forName(this.cnv_);
 
-          if (this.cnv_ != null) {
-            // turn mag * origUnit on ratio scale into a non-ratio unit,
-            // e.g. convert Kelvin to Fahrenheit
-            var toFunc = _ucumFunctions.default.forName(this.cnv_);
-
-            newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
-          } else {
-            newNum = x / this.magnitude_;
-          }
-        } // end if either unit has a conversion function
-
+        newNum = toFunc.cnvTo(x / this.magnitude_) / this.cnvPfx_;
+      } else {
+        newNum = x / this.magnitude_;
+      }
 
       return newNum;
     } // end convertFrom
@@ -2690,6 +2753,7 @@ var Unit = /*#__PURE__*/function () {
       else if (unit2.cnv_ != null) {
           if (!retUnit.dim_ || retUnit.dim_.isZero()) {
             retUnit.cnvPfx_ = unit2.cnvPfx_ * retUnit.magnitude_;
+            retUnit.magnitude_ = unit2.magnitude_;
             retUnit.cnv_ = unit2.cnv_;
           } else throw new Error("Attempt to multiply non-ratio unit ".concat(unit2.name_));
         } // end if unit2 has a conversion function
@@ -2723,7 +2787,9 @@ var Unit = /*#__PURE__*/function () {
       // if (!retUnit.isMole_)
       //   retUnit.isMole_ = unit2.isMole_ ;
 
-      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_;
+      if (!retUnit.isArbitrary_) retUnit.isArbitrary_ = unit2.isArbitrary_; // Likewise for special units
+
+      if (!retUnit.isSpecial_) retUnit.isSpecial_ = unit2.isSpecial_;
       return retUnit;
     } // end multiplyThese
 
@@ -3280,6 +3346,7 @@ var UnitString = /*#__PURE__*/function () {
         if (intUtils_.isIntegerUnit(finalUnit) || typeof finalUnit === 'number') {
           finalUnit = new Unit({
             'csCode_': origString,
+            'ciCode_': origString,
             'magnitude_': finalUnit,
             'name_': origString
           });
@@ -4494,6 +4561,7 @@ var UnitString = /*#__PURE__*/function () {
       if (intUtils_.isIntegerUnit(finalUnit)) {
         finalUnit = new Unit({
           'csCode_': finalUnit,
+          'ciCode_': finalUnit,
           'magnitude_': Number(finalUnit),
           'name_': finalUnit
         });
@@ -4509,6 +4577,7 @@ var UnitString = /*#__PURE__*/function () {
         if (intUtils_.isIntegerUnit(nextUnit)) {
           nextUnit = new Unit({
             'csCode_': nextUnit,
+            'ciCode_': nextUnit,
             'magnitude_': Number(nextUnit),
             'name_': nextUnit
           });
@@ -4734,6 +4803,11 @@ var UnitTablesFactory = /*#__PURE__*/function () {
      */
 
     this.massDimIndex_ = 0;
+    /**
+     *  Map of indices in the dimension vector to base unit symbols.
+     */
+
+    this.dimVecIndexToBaseUnit_ = {};
   }
   /**
    * Provides the number of unit objects written to the tables, using the
@@ -4773,6 +4847,17 @@ var UnitTablesFactory = /*#__PURE__*/function () {
         if (theUnit['dim_'].getProperty('dimVec_')) this.addUnitDimension(theUnit);
       } catch (err) {// do nothing - throws error if the property is null
         // and that's OK here.
+      }
+
+      if (theUnit.isBase_) {
+        var dimVec = theUnit.dim_.dimVec_;
+        var nonZeroIndex;
+
+        for (var i = 0, len = dimVec.length; nonZeroIndex == undefined && i < len; ++i) {
+          if (dimVec[i] != 0) nonZeroIndex = i;
+        }
+
+        this.dimVecIndexToBaseUnit_[nonZeroIndex] = theUnit.csCode_;
       }
     } // end addUnit
 

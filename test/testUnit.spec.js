@@ -149,6 +149,7 @@ describe('Test unit scalar multiplication functions', function() {
     var retUnit = avUnit.multiplyThis(2);
     assert.equal('2*pound', retUnit.name_);
     assert.equal('2.[lb_av]', retUnit.csCode_);
+    assert.equal('2.[LB_AV]', retUnit.ciCode_);
     assert.equal(2 * avUnit.magnitude_, retUnit.magnitude_);
   });
 
@@ -157,6 +158,7 @@ describe('Test unit scalar multiplication functions', function() {
     var retUnit = celUnit.multiplyThis(2);
     assert.equal('2*[degree Celsius]', retUnit.name_);
     assert.equal('2.Cel', retUnit.csCode_);
+    assert.equal('2.CEL', retUnit.ciCode_);
     assert.equal(2 * celUnit.cnvPfx_, retUnit.cnvPfx_);
   });
 }) ; // end Test unit scalar multiplication functions
@@ -233,7 +235,7 @@ describe('Test attempts to convert arbitrary units', function() {
     catch(err) {
       errMsg = err.message;
     }
-    assert.equal('Attempt to convert arbitrary unit colony forming units',
+    assert.equal('Attempt to convert to arbitrary unit "[CFU]"',
       errMsg);
   });
 
@@ -247,7 +249,7 @@ describe('Test attempts to convert arbitrary units', function() {
     catch(err) {
       errMsg = err.message;
     }
-    assert.equal('Attempt to convert to arbitrary unit international unit - arbitrary',
+    assert.equal('Attempt to convert arbitrary unit "[IU]"',
       errMsg);
   });
 }) ; // end Test attempts to multiply/divide arbitrary units
@@ -258,5 +260,28 @@ describe('Generated names for complex units', function() {
     var resp2 = uString.parseString('kg/(m.s2)');
     assert.equal('kilogram/[[second - time<sup>2</sup>]*meter]', resp1[0].name_);
     assert.equal('kilogram/[meter*[second - time<sup>2</sup>]]', resp2[0].name_);
-  })
+  });
+
+  it('should handle numeric units', function(){
+    var unit = uString.parseString('2.[degF]')[0];
+    assert.equal(unit.name_, '2*[degrees Fahrenheit]');
+    assert.equal(unit.csCode_, '2.[degF]');
+    assert.equal(unit.ciCode_, '2.[DEGF]');
+  });
+
+  it('should handle numeric units when they come last', function(){
+    var unit = uString.parseString('[degF].2')[0];
+    assert.equal(unit.name_, '[degrees Fahrenheit]*2');
+    assert.equal(unit.csCode_, '[degF].2');
+    assert.equal(unit.ciCode_, '[DEGF].2');
+  });
+
+  it('should handle numeric units by themselves', function(){
+    // This is not a "complex" unit, but belongs with the previous case
+    var unit = uString.parseString('2')[0];
+    assert.equal(unit.name_, '2');
+    assert.equal(unit.csCode_, '2');
+    assert.equal(unit.ciCode_, '2');
+  });
+
 }) ; // end Test attempts to multiply/divide arbitrary units

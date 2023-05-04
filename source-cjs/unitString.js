@@ -209,6 +209,7 @@ class UnitString {
       if (intUtils_.isIntegerUnit(finalUnit) || typeof finalUnit === 'number') {
         finalUnit = new Unit({
           'csCode_': origString,
+          'ciCode_': origString,
           'magnitude_': finalUnit,
           'name_': origString
         });
@@ -1410,6 +1411,7 @@ class UnitString {
     if (intUtils_.isIntegerUnit(finalUnit)) {
       finalUnit = new Unit({
         'csCode_': finalUnit,
+        'ciCode_': finalUnit,
         'magnitude_': Number(finalUnit),
         'name_': finalUnit
       });
@@ -1425,6 +1427,7 @@ class UnitString {
       if (intUtils_.isIntegerUnit(nextUnit)) {
         nextUnit = new Unit({
           'csCode_': nextUnit,
+          'ciCode_': nextUnit,
           'magnitude_': Number(nextUnit),
           'name_': nextUnit
         });
