@@ -244,8 +244,8 @@ a {
 }
 
 .emphSpan {
-  color: red;
-  font-weight: 500;
+  color: darkred;
+  font-weight: bold;
 }
 
 input.invalid {
