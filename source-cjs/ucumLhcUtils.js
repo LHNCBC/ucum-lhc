@@ -134,24 +134,17 @@ class UcumLhcUtils {
     if (valConv === undefined) valConv = 'validate';
     let resp = this.getSpecifiedUnit(uStr, valConv, suggest);
     let theUnit = resp['unit'];
-    let retObj = {};
-
-    if (!theUnit) {
-      retObj = {
-        'status': !resp['origString'] || resp['origString'] === null ? 'error' : 'invalid',
-        'ucumCode': null
-      };
-    } else {
-      retObj = {
-        'status': resp['origString'] === uStr ? 'valid' : 'invalid',
-        'ucumCode': resp['origString'],
-        'unit': {
-          'code': theUnit.csCode_,
-          'name': theUnit.name_,
-          'guidance': theUnit.guidance_
-        }
-      };
-    }
+    let retObj = !theUnit ? {
+      'ucumCode': null
+    } : {
+      'ucumCode': resp['origString'],
+      'unit': {
+        'code': theUnit.csCode_,
+        'name': theUnit.name_,
+        'guidance': theUnit.guidance_
+      }
+    };
+    retObj.status = resp.status;
 
     if (resp['suggestions']) {
       retObj['suggestions'] = resp['suggestions'];
@@ -339,11 +332,15 @@ class UcumLhcUtils {
    * @param fromUnit the unit string to be converted to base units information
    * @param fromVal the number of "from" units to be converted
    * @returns an object with the properties:
+   *  'status' that will be: 'succeeded' if the conversion was successfully
+   *     calculated; 'invalid' if fromUnit is not a valid UCUM code; 'failed' if
+   *     the conversion could not be made (e.g., if it is an "arbitrary" unit);
+   *     or 'error' if an error occurred;
    *  'msg': an array of one or more messages, if the string is invalid or
    *        an error occurred, indicating the problem, or a suggestion of a
    *        substitution such as the substitution of 'G' for 'Gauss', or
-   *        an empty array if no messages were generated.  If this is not empty,
-   *        no other information will be returned.
+   *        an empty array if no messages were generated.  There can also be a
+   *        message that is just informational or warning.
    *  'magnitude': the new value when fromVal units of fromUnits is expressed in the base units.
    *  'fromUnitIsSpecial': whether the input unit fromUnit is a "special unit"
    *         as defined in UCUM.  This means there is some function applied to convert
@@ -356,7 +353,9 @@ class UcumLhcUtils {
 
   convertToBaseUnits(fromUnit, fromVal) {
     let inputUnitLookup = this.getSpecifiedUnit(fromUnit, 'validate');
-    let retObj = {};
+    let retObj = {
+      status: inputUnitLookup.status == 'valid' ? 'succeeded' : inputUnitLookup.status
+    };
     let unit = inputUnitLookup.unit;
     retObj.msg = inputUnitLookup.retMsg || [];
 
@@ -364,7 +363,8 @@ class UcumLhcUtils {
       if (inputUnitLookup.retMsg?.length == 0) retObj.msg.push('Could not find unit information for ' + fromUnit);
     } else if (unit.isArbitrary_) {
       retObj.msg.push('Arbitrary units cannot be converted to base units or other units.');
-    } else if (retObj.msg.length == 0) {
+      retObj.status = 'failed';
+    } else if (retObj.status == 'succeeded') {
       let unitToExp = {};
       let dimVec = unit.dim_?.dimVec_;
       let baseUnitString = '1';
@@ -387,14 +387,19 @@ class UcumLhcUtils {
       let retUnitLookup = this.getSpecifiedUnit(baseUnitString, 'validate'); // There should not be any error in retUnitLookup, unless there is a bug.
 
       let retUnit = retUnitLookup.unit;
-      if (!retUnit && retUnitLookup.retMsg?.length == 0) retObj.msg.push('Unable construct base unit string; tried ' + baseUnitString);else {
+
+      if (retUnitLookup.status !== 'valid') {
+        retObj.msg.push('Unable construct base unit string; tried ' + baseUnitString);
+        retObj.status = 'error';
+      } else {
         try {
           retObj.magnitude = retUnit.convertFrom(fromVal, unit);
         } catch (e) {
           retObj.msg.push(e.toString());
+          retObj.status = 'error';
         }
 
-        if (retObj.msg.length == 0) {
+        if (retObj.status == 'succeeded') {
           retObj.unitToExp = unitToExp;
           retObj.fromUnitIsSpecial = unit.isSpecial_;
         }
@@ -447,13 +452,18 @@ class UcumLhcUtils {
    *  true indicates suggestions are wanted; false indicates they are not,
    *  and is the default if the parameter is not specified;
    * @returns a hash containing:
+   *   'status' will be 'valid' (uName is a valid UCUM code), 'invalid'
+   *     (the uStr is not a valid UCUM code, and substitutions or
+   *     suggestions may or may not be returned, depending on what was
+   *     requested and found); or 'error' (an input or programming error
+   *     occurred);
    *   'unit' the unit object (or null if there were problems creating the
    *     unit);
    *   'origString' the possibly updated unit string passed in;
    *   'retMsg' an array of user messages (informational, error or warning) if
    *     any were generated (IF any were generated, otherwise will be an
    *     empty array); and
-   *  'suggestions' is an array of 1 or more hash objects.  Each hash
+   *   'suggestions' is an array of 1 or more hash objects.  Each hash
    *     contains three elements:
    *       'msg' which is a message indicating what unit expression the
    *          suggestions are for;
@@ -499,7 +509,17 @@ class UcumLhcUtils {
       } // end if the unit was not found as a unit name
 
     } // end if a unit expression was specified
+    // Set the status field
 
+
+    if (!retObj.unit) {
+      // No unit was found; check whether origString has a value
+      retObj.status = !retObj.origString ? 'error' : 'invalid';
+    } else {
+      // Check whether substitutions were made to the unit string in order to
+      // find the unit
+      retObj.status = retObj.origString === uName ? 'valid' : 'invalid';
+    }
 
     return retObj;
   } // end getSpecifiedUnit

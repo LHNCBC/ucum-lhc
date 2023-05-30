@@ -1617,24 +1617,17 @@ var UcumLhcUtils = /*#__PURE__*/function () {
       if (valConv === undefined) valConv = 'validate';
       var resp = this.getSpecifiedUnit(uStr, valConv, suggest);
       var theUnit = resp['unit'];
-      var retObj = {};
-
-      if (!theUnit) {
-        retObj = {
-          'status': !resp['origString'] || resp['origString'] === null ? 'error' : 'invalid',
-          'ucumCode': null
-        };
-      } else {
-        retObj = {
-          'status': resp['origString'] === uStr ? 'valid' : 'invalid',
-          'ucumCode': resp['origString'],
-          'unit': {
-            'code': theUnit.csCode_,
-            'name': theUnit.name_,
-            'guidance': theUnit.guidance_
-          }
-        };
-      }
+      var retObj = !theUnit ? {
+        'ucumCode': null
+      } : {
+        'ucumCode': resp['origString'],
+        'unit': {
+          'code': theUnit.csCode_,
+          'name': theUnit.name_,
+          'guidance': theUnit.guidance_
+        }
+      };
+      retObj.status = resp.status;
 
       if (resp['suggestions']) {
         retObj['suggestions'] = resp['suggestions'];
@@ -1823,11 +1816,15 @@ var UcumLhcUtils = /*#__PURE__*/function () {
      * @param fromUnit the unit string to be converted to base units information
      * @param fromVal the number of "from" units to be converted
      * @returns an object with the properties:
+     *  'status' that will be: 'succeeded' if the conversion was successfully
+     *     calculated; 'invalid' if fromUnit is not a valid UCUM code; 'failed' if
+     *     the conversion could not be made (e.g., if it is an "arbitrary" unit);
+     *     or 'error' if an error occurred;
      *  'msg': an array of one or more messages, if the string is invalid or
      *        an error occurred, indicating the problem, or a suggestion of a
      *        substitution such as the substitution of 'G' for 'Gauss', or
-     *        an empty array if no messages were generated.  If this is not empty,
-     *        no other information will be returned.
+     *        an empty array if no messages were generated.  There can also be a
+     *        message that is just informational or warning.
      *  'magnitude': the new value when fromVal units of fromUnits is expressed in the base units.
      *  'fromUnitIsSpecial': whether the input unit fromUnit is a "special unit"
      *         as defined in UCUM.  This means there is some function applied to convert
@@ -1841,7 +1838,9 @@ var UcumLhcUtils = /*#__PURE__*/function () {
     key: "convertToBaseUnits",
     value: function convertToBaseUnits(fromUnit, fromVal) {
       var inputUnitLookup = this.getSpecifiedUnit(fromUnit, 'validate');
-      var retObj = {};
+      var retObj = {
+        status: inputUnitLookup.status == 'valid' ? 'succeeded' : inputUnitLookup.status
+      };
       var unit = inputUnitLookup.unit;
       retObj.msg = inputUnitLookup.retMsg || [];
 
@@ -1851,8 +1850,9 @@ var UcumLhcUtils = /*#__PURE__*/function () {
         if (((_inputUnitLookup$retM = inputUnitLookup.retMsg) === null || _inputUnitLookup$retM === void 0 ? void 0 : _inputUnitLookup$retM.length) == 0) retObj.msg.push('Could not find unit information for ' + fromUnit);
       } else if (unit.isArbitrary_) {
         retObj.msg.push('Arbitrary units cannot be converted to base units or other units.');
-      } else if (retObj.msg.length == 0) {
-        var _unit$dim_, _retUnitLookup$retMsg;
+        retObj.status = 'failed';
+      } else if (retObj.status == 'succeeded') {
+        var _unit$dim_;
 
         var unitToExp = {};
         var dimVec = (_unit$dim_ = unit.dim_) === null || _unit$dim_ === void 0 ? void 0 : _unit$dim_.dimVec_;
@@ -1876,14 +1876,19 @@ var UcumLhcUtils = /*#__PURE__*/function () {
         var retUnitLookup = this.getSpecifiedUnit(baseUnitString, 'validate'); // There should not be any error in retUnitLookup, unless there is a bug.
 
         var retUnit = retUnitLookup.unit;
-        if (!retUnit && ((_retUnitLookup$retMsg = retUnitLookup.retMsg) === null || _retUnitLookup$retMsg === void 0 ? void 0 : _retUnitLookup$retMsg.length) == 0) retObj.msg.push('Unable construct base unit string; tried ' + baseUnitString);else {
+
+        if (retUnitLookup.status !== 'valid') {
+          retObj.msg.push('Unable construct base unit string; tried ' + baseUnitString);
+          retObj.status = 'error';
+        } else {
           try {
             retObj.magnitude = retUnit.convertFrom(fromVal, unit);
           } catch (e) {
             retObj.msg.push(e.toString());
+            retObj.status = 'error';
           }
 
-          if (retObj.msg.length == 0) {
+          if (retObj.status == 'succeeded') {
             retObj.unitToExp = unitToExp;
             retObj.fromUnitIsSpecial = unit.isSpecial_;
           }
@@ -1937,13 +1942,18 @@ var UcumLhcUtils = /*#__PURE__*/function () {
      *  true indicates suggestions are wanted; false indicates they are not,
      *  and is the default if the parameter is not specified;
      * @returns a hash containing:
+     *   'status' will be 'valid' (uName is a valid UCUM code), 'invalid'
+     *     (the uStr is not a valid UCUM code, and substitutions or
+     *     suggestions may or may not be returned, depending on what was
+     *     requested and found); or 'error' (an input or programming error
+     *     occurred);
      *   'unit' the unit object (or null if there were problems creating the
      *     unit);
      *   'origString' the possibly updated unit string passed in;
      *   'retMsg' an array of user messages (informational, error or warning) if
      *     any were generated (IF any were generated, otherwise will be an
      *     empty array); and
-     *  'suggestions' is an array of 1 or more hash objects.  Each hash
+     *   'suggestions' is an array of 1 or more hash objects.  Each hash
      *     contains three elements:
      *       'msg' which is a message indicating what unit expression the
      *          suggestions are for;
@@ -1990,7 +2000,17 @@ var UcumLhcUtils = /*#__PURE__*/function () {
         } // end if the unit was not found as a unit name
 
       } // end if a unit expression was specified
+      // Set the status field
 
+
+      if (!retObj.unit) {
+        // No unit was found; check whether origString has a value
+        retObj.status = !retObj.origString ? 'error' : 'invalid';
+      } else {
+        // Check whether substitutions were made to the unit string in order to
+        // find the unit
+        retObj.status = retObj.origString === uName ? 'valid' : 'invalid';
+      }
 
       return retObj;
     } // end getSpecifiedUnit
@@ -4459,24 +4479,30 @@ var UnitString = /*#__PURE__*/function () {
       if (!befAnnoText && !aftAnnoText) {
         var tryBrackets = '[' + annoText.substring(1, annoText.length - 1) + ']';
 
-        var mkUnitRet = this._makeUnit(tryBrackets, origString); // If we got back a unit, assign it to the returned unit, and add
-        // a message to advise the user that brackets should enclose the code
+        var mkUnitRet = this._makeUnit(tryBrackets, origString); // Nearly anything inside braces is valid, so we don't want to change the
+        // unit, but we can put the found unit in the message as a sort of
+        // warning.
 
 
         if (mkUnitRet[0]) {
-          retUnit = mkUnitRet[0];
-          origString = origString.replace(annoText, tryBrackets);
-          this.retMsg_.push("".concat(annoText, " is not a valid unit expression, but ") + "".concat(tryBrackets, " is.\n") + this.vcMsgStart_ + "".concat(tryBrackets, " (").concat(retUnit.name_, ")").concat(this.vcMsgEnd_));
-        } // Otherwise assume that this should be interpreted as a 1
-        else {
-            // remove error message generated for trybrackets
-            if (this.retMsg_.length > msgLen) {
-              this.retMsg_.pop();
-            }
-
-            uCode = 1;
-            retUnit = 1;
+          retUnit = uCode;
+          this.retMsg_.push("".concat(annoText, " is a valid unit expression, but ") + "did you mean ".concat(tryBrackets, " (").concat(mkUnitRet[0].name_, ")?"));
+        } else {
+          // remove error message generated for trybrackets
+          if (this.retMsg_.length > msgLen) {
+            this.retMsg_.pop();
           }
+        } // This is the case where the string is only this annotation.
+        // Create and return a unit object, as we do for numeric units in
+        // parseString.
+
+
+        retUnit = new Unit({
+          'csCode_': annoText,
+          'ciCode_': annoText,
+          'magnitude_': 1,
+          'name_': annoText
+        });
       } // end if it's only an annotation
       else {
           // if there's text before and no text after, assume the text before

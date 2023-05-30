@@ -360,29 +360,31 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+
   describe('test for unit string {degF}', function() {
     var uString = UnitString.getInstance();
-    var degUnit = uTabs.getUnitByCode('[degF]');
     var retMsg = [];
     var origString = '{degF}';
     var resp = uString.parseString('{degF}', 'validate');
     var retUnit = resp[0];
     var retOrig = resp[1];
     var respMsg = resp[2] ;
-    it("should return a unit matching the [degF] unit", function() {
-      assert(degUnit.equals(retUnit),
-        `retUnit = ${JSON.stringify(retUnit)}\ndegUnit = ${JSON.stringify(degUnit)}`);
+    it("should return a unit for the annotation", function() {
+      assert.equal(retUnit.name_, '{degF}');
+      assert.equal(retUnit.csCode_, '{degF}');
+      assert.equal(retUnit.ciCode_, '{degF}');
     });
-    it("should return the origString with a substitution", function() {
-      assert.equal('[degF]', retOrig, `retOrig = ${retOrig}`);
+    it("should return the origString", function() {
+      assert.equal(retOrig, origString, `retOrig = ${retOrig}`);
     });
     it("should return a message about the correct code", function() {
-      assert.equal(1, respMsg.length, `respMsg.length = ${respMsg.length}`);
-      assert.equal('{degF} is not a valid unit expression, but [degF] is.\n' +
-        'Did you mean [degF] (degrees Fahrenheit)?', respMsg[0],
+      assert.equal(respMsg.length, 1, `respMsg.length = ${respMsg.length}`);
+      assert.equal(respMsg[0], '{degF} is a valid unit expression, but ' +
+        'did you mean [degF] (degrees Fahrenheit)?',
         `respMsg = ${JSON.stringify(respMsg)}`);
     });
   }) ;
+
 
   describe('test for unit string in_i', function() {
     var uString = UnitString.getInstance();
