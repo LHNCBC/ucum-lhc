@@ -1716,10 +1716,7 @@ var UcumLhcUtils = /*#__PURE__*/function () {
         returnObj['msg'].push('No "from" unit expression specified.');
       }
 
-      if (fromVal === null || isNaN(fromVal) || typeof fromVal !== 'number' && !intUtils_.isNumericString(fromVal)) {
-        returnObj['status'] = 'error';
-        returnObj['msg'].push('No "from" value, or an invalid "from" value, ' + 'was specified.');
-      }
+      this._checkFromVal(fromVal, returnObj);
 
       if (toUnitCode) {
         toUnitCode = toUnitCode.trim();
@@ -1816,10 +1813,12 @@ var UcumLhcUtils = /*#__PURE__*/function () {
      * @param fromUnit the unit string to be converted to base units information
      * @param fromVal the number of "from" units to be converted
      * @returns an object with the properties:
-     *  'status' that will be: 'succeeded' if the conversion was successfully
-     *     calculated; 'invalid' if fromUnit is not a valid UCUM code; 'failed' if
-     *     the conversion could not be made (e.g., if it is an "arbitrary" unit);
-     *     or 'error' if an error occurred;
+     *  'status' indicates whether the result succeeded.  The value will be one of:
+     *    'succeeded':  the conversion was successfully calculated (which can be
+     *      true even even if it was already in base units);
+     *    'invalid':  fromUnit is not a valid UCUM code;
+     *    'failed':  the conversion could not be made (e.g., if it is an "arbitrary" unit);
+     *    'error':  if an error occurred (an input or programming error)
      *  'msg': an array of one or more messages, if the string is invalid or
      *        an error occurred, indicating the problem, or a suggestion of a
      *        substitution such as the substitution of 'G' for 'Gauss', or
@@ -1837,65 +1836,90 @@ var UcumLhcUtils = /*#__PURE__*/function () {
   }, {
     key: "convertToBaseUnits",
     value: function convertToBaseUnits(fromUnit, fromVal) {
-      var inputUnitLookup = this.getSpecifiedUnit(fromUnit, 'validate');
-      var retObj = {
-        status: inputUnitLookup.status == 'valid' ? 'succeeded' : inputUnitLookup.status
-      };
-      var unit = inputUnitLookup.unit;
-      retObj.msg = inputUnitLookup.retMsg || [];
+      var retObj = {};
 
-      if (!unit) {
-        var _inputUnitLookup$retM;
+      this._checkFromVal(fromVal, retObj);
 
-        if (((_inputUnitLookup$retM = inputUnitLookup.retMsg) === null || _inputUnitLookup$retM === void 0 ? void 0 : _inputUnitLookup$retM.length) == 0) retObj.msg.push('Could not find unit information for ' + fromUnit);
-      } else if (unit.isArbitrary_) {
-        retObj.msg.push('Arbitrary units cannot be converted to base units or other units.');
-        retObj.status = 'failed';
-      } else if (retObj.status == 'succeeded') {
-        var _unit$dim_;
+      if (!retObj.status) {
+        // could be set to 'error' by _checkFromVal
+        var inputUnitLookup = this.getSpecifiedUnit(fromUnit, 'validate');
+        retObj = {
+          status: inputUnitLookup.status == 'valid' ? 'succeeded' : inputUnitLookup.status
+        };
+        var unit = inputUnitLookup.unit;
+        retObj.msg = inputUnitLookup.retMsg || [];
 
-        var unitToExp = {};
-        var dimVec = (_unit$dim_ = unit.dim_) === null || _unit$dim_ === void 0 ? void 0 : _unit$dim_.dimVec_;
-        var baseUnitString = '1';
+        if (!unit) {
+          var _inputUnitLookup$retM;
 
-        if (dimVec) {
-          var dimVecIndexToBaseUnit = UnitTables.getInstance().dimVecIndexToBaseUnit_;
+          if (((_inputUnitLookup$retM = inputUnitLookup.retMsg) === null || _inputUnitLookup$retM === void 0 ? void 0 : _inputUnitLookup$retM.length) == 0) retObj.msg.push('Could not find unit information for ' + fromUnit);
+        } else if (unit.isArbitrary_) {
+          retObj.msg.push('Arbitrary units cannot be converted to base units or other units.');
+          retObj.status = 'failed';
+        } else if (retObj.status == 'succeeded') {
+          var _unit$dim_;
 
-          for (var i = 0, len = dimVec.length; i < len; ++i) {
-            var exp = dimVec[i];
+          var unitToExp = {};
+          var dimVec = (_unit$dim_ = unit.dim_) === null || _unit$dim_ === void 0 ? void 0 : _unit$dim_.dimVec_;
+          var baseUnitString = '1';
 
-            if (exp) {
-              unitToExp[dimVecIndexToBaseUnit[i]] = exp;
-              baseUnitString += '.' + dimVecIndexToBaseUnit[i] + exp;
+          if (dimVec) {
+            var dimVecIndexToBaseUnit = UnitTables.getInstance().dimVecIndexToBaseUnit_;
+
+            for (var i = 0, len = dimVec.length; i < len; ++i) {
+              var exp = dimVec[i];
+
+              if (exp) {
+                unitToExp[dimVecIndexToBaseUnit[i]] = exp;
+                baseUnitString += '.' + dimVecIndexToBaseUnit[i] + exp;
+              }
             }
-          }
-        } // The unit might have a conversion function, which has to be applied; we
-        // cannot just assume unit_.magnitude_ is the magnitude in base units.
+          } // The unit might have a conversion function, which has to be applied; we
+          // cannot just assume unit_.magnitude_ is the magnitude in base units.
 
 
-        var retUnitLookup = this.getSpecifiedUnit(baseUnitString, 'validate'); // There should not be any error in retUnitLookup, unless there is a bug.
+          var retUnitLookup = this.getSpecifiedUnit(baseUnitString, 'validate'); // There should not be any error in retUnitLookup, unless there is a bug.
 
-        var retUnit = retUnitLookup.unit;
+          var retUnit = retUnitLookup.unit;
 
-        if (retUnitLookup.status !== 'valid') {
-          retObj.msg.push('Unable construct base unit string; tried ' + baseUnitString);
-          retObj.status = 'error';
-        } else {
-          try {
-            retObj.magnitude = retUnit.convertFrom(fromVal, unit);
-          } catch (e) {
-            retObj.msg.push(e.toString());
+          if (retUnitLookup.status !== 'valid') {
+            retObj.msg.push('Unable construct base unit string; tried ' + baseUnitString);
             retObj.status = 'error';
-          }
+          } else {
+            try {
+              retObj.magnitude = retUnit.convertFrom(fromVal, unit);
+            } catch (e) {
+              retObj.msg.push(e.toString());
+              retObj.status = 'error';
+            }
 
-          if (retObj.status == 'succeeded') {
-            retObj.unitToExp = unitToExp;
-            retObj.fromUnitIsSpecial = unit.isSpecial_;
+            if (retObj.status == 'succeeded') {
+              retObj.unitToExp = unitToExp;
+              retObj.fromUnitIsSpecial = unit.isSpecial_;
+            }
           }
         }
       }
 
       return retObj;
+    }
+    /**
+     *  Checks the given value as to whether it is suitable as a "from" value in a
+     *  unit conversion.  If it is not, the responseObj will have its status set
+     *  to 'error' and a message added.
+     * @param fromVal The value to check
+     * @param responseObj the object that will be updated if the value is not
+     *  usable.
+     */
+
+  }, {
+    key: "_checkFromVal",
+    value: function _checkFromVal(fromVal, responseObj) {
+      if (fromVal === null || isNaN(fromVal) || typeof fromVal !== 'number' && !intUtils_.isNumericString(fromVal)) {
+        responseObj.status = 'error';
+        if (!responseObj.msg) responseObj.msg = [];
+        responseObj.msg.push('No "from" value, or an invalid "from" value, ' + 'was specified.');
+      }
     }
     /**
      * This method accepts a term and looks for units that include it as

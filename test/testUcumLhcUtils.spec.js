@@ -479,4 +479,14 @@ describe('convertToBaseUnits', ()=> {
     assert.equal(baseUnitData.fromUnitIsSpecial, undefined);
     assert.deepEqual(baseUnitData.unitToExp, undefined);
   });
+
+  it('should return an error message for if the amount is not specified', ()=>{
+    const baseUnitData = utils.convertToBaseUnits('zzz', undefined);
+    assert(baseUnitData.msg.length > 0);
+    assert.equal(baseUnitData.status, 'error');
+    assert.equal(baseUnitData.magnitude, undefined);
+    assert.equal(baseUnitData.fromUnitIsSpecial, undefined);
+    assert.deepEqual(baseUnitData.unitToExp, undefined);
+  });
+
 });
