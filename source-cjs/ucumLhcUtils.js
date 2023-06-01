@@ -331,7 +331,7 @@ class UcumLhcUtils {
    * @returns an object with the properties:
    *  'status' indicates whether the result succeeded.  The value will be one of:
    *    'succeeded':  the conversion was successfully calculated (which can be
-   *      true even even if it was already in base units);
+   *      true even if it was already in base units);
    *    'invalid':  fromUnit is not a valid UCUM code;
    *    'failed':  the conversion could not be made (e.g., if it is an "arbitrary" unit);
    *    'error':  if an error occurred (an input or programming error)
