@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] 2023-05-26
+### Changed
+- Breaking change to the new "convertToBaseUnits" API added in 4.2.0:  The
+  returned "msg" array can now contain messages even when the conversion is
+  successful.  The returned object now also contains a "status" field just like
+  the "convertUnitTo" API.
+### Fixed
+ - Certain annotation units were marked invalid if the same string existed as a
+   bracketed unit (e.g., {degF} and [degF]).  (This fixes the problem raised
+   in https://github.com/lhncbc/ucum-lhc/issues/45.)
+
 ## [4.2.0] 2023-04-11
 ### Added
 - Added a new API, convertToBaseUnits, to UcumLhcUtils.

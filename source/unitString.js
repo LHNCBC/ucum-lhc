@@ -1330,24 +1330,31 @@ export class UnitString {
       let tryBrackets = '[' + annoText.substring(1, annoText.length - 1) + ']';
       let mkUnitRet = this._makeUnit(tryBrackets, origString);
 
-      // If we got back a unit, assign it to the returned unit, and add
-      // a message to advise the user that brackets should enclose the code
+      // Nearly anything inside braces is valid, so we don't want to change the
+      // unit, but we can put the found unit in the message as a sort of
+      // warning.
       if (mkUnitRet[0]) {
-        retUnit = mkUnitRet[0];
-        origString = origString.replace(annoText, tryBrackets);
-        this.retMsg_.push(`${annoText} is not a valid unit expression, but ` +
-          `${tryBrackets} is.\n` + this.vcMsgStart_ +
-          `${tryBrackets} (${retUnit.name_})${this.vcMsgEnd_}`);
+        retUnit = uCode;
+        this.retMsg_.push(`${annoText} is a valid unit expression, but ` +
+          `did you mean ${tryBrackets} (${mkUnitRet[0].name_})?`);
       }
-      // Otherwise assume that this should be interpreted as a 1
       else {
         // remove error message generated for trybrackets
         if (this.retMsg_.length > msgLen) {
           this.retMsg_.pop();
         }
-        uCode = 1;
-        retUnit = 1;
       }
+
+      // This is the case where the string is only this annotation.
+      // Create and return a unit object, as we do for numeric units in
+      // parseString.
+      retUnit = new Unit({
+        'csCode_': annoText,
+        'ciCode_': annoText,
+        'magnitude_': 1,
+        'name_': annoText
+      });
+
     } // end if it's only an annotation
 
     else {
