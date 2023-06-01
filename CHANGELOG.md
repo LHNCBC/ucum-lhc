@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   returned "msg" array can now contain messages even when the conversion is
   successful.  The returned object now also contains a "status" field just like
   the "convertUnitTo" API.
+### Fixed
+ - Certain annotation units were marked invalid if the same string existed as a
+   bracketed unit (e.g., {degF} and [degF]).  (This fixes the problem raised
+   in https://github.com/lhncbc/ucum-lhc/issues/45.)
 
 ## [4.2.0] 2023-04-11
 ### Added
