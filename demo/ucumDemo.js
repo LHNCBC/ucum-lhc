@@ -605,7 +605,7 @@ export class UcumDemo {
             // Assemble the valid value message.  If there is a unit name,
             // use that.  If there's no name, just say that the code is valid.
             valMsg = `${parseResp['ucumCode']} `;
-            if (theUnit.name && theUnit.name != parseResp['ucumCode']) {
+            if (theUnit.name && theUnit.name != theUnit.code) {
               valMsg += `(${theUnit.name}) `;
             }
             valMsg += ' is a valid unit expression.';
@@ -631,7 +631,7 @@ export class UcumDemo {
           if (tabName === 'Converter') {
             this.setConvertValues(elementID, false);
             valMsg = `${escVal} `;
-            if (theUnit && theUnit.name && theUnit.name != valMsg) {
+            if (theUnit && theUnit.name && theUnit.name != theUnit.code) {
               valMsg += `(${theUnit.name}) `;
             }
             valMsg += ' is NOT a valid unit expression.';
