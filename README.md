@@ -27,7 +27,7 @@ concerned with importing and exporting the UCUM data, and in supporting the
 demo page (noted above).  If you are looking to include the ucum-lhc core code 
 in your application, download the code as an [npm](https://www.npmjs.com) package.
 
-#### Getting the code as an npm package
+### Getting the code as an npm package
 
 You can use the [npm](https://www.npmjs.com) package manager 
 to install the ucum-lhc npm package.  (npm is 
@@ -39,7 +39,7 @@ This will install the @lhncbc/ucum-lhc directory in your node_modules diretory.
 The dist subdirectory will contain ucum-lhc.js and ucum-lhc.min.js (minimized
 version of ucum-lhc.js).
 
-#### Getting the code as a bower package
+### Getting the code as a bower package
 
 You can use the [bower](https://bower.io) package manager to install the
 ucum-lhc bower package.   (If you do not have bower installed on your machine
@@ -52,7 +52,7 @@ This will install the ucum-lhc directory in your bower_components directory.
 The dist subdirectory will contain ucum-lhc.js and ucum-lhc.min.js (minimized
 version of ucum-lhc.js).
 
-### Using the code 
+## Using the code 
 
 The ucum-lhc.min.js file (which is the minimized version of the ucum-lhc.js 
 file) includes the source code you need for the validation, conversion and 
@@ -60,14 +60,14 @@ commensurable units functions as well as the ucum code definitions file.  We
 assume that your main motivation for including the ucum-lhc code is to have 
 those capabilities for units of measure on your system.  
 
-#### Server side
+### Server side
 To access those capabilities from your server side code, require the npm package
 and create a UcumLhcUtils object that contains those functions.
 
     var ucum = require('@lhncbc/ucum-lhc');
     var utils = ucum.UcumLhcUtils.getInstance();
   
-#### Client side
+### Client side
 
 To access those capabilities from your client side code, include the 
 ucum-lhc.min.js package in your html file.  
@@ -80,11 +80,15 @@ those functions via the ucumPkg object.  For example,
 
     var parseResp = ucumPkg.UcumLhcUtils.getInstance().validateUnitString(uStr, true);
         
-#### Function descriptions
+### Function descriptions
         
-Here are the function descriptions:
+Below is documentation for the public functions on the UcumLhcUtils instance.
+*  [validateUnitString](#validateUnitString)
+*  [convertUnitTo](#convertUnitTo)
+*  [checkSynonyms](#checkSynonyms)
+*  [
 
-**validateUnitString(uStr, suggest)**
+#### <a id=validateUnitString></a>validateUnitString(uStr, suggest)
 
 This method validates a unit string.  It first checks to see if the string passed 
 in is a unit code that is found in the unit codes table. If it is not found it 
@@ -155,7 +159,7 @@ of unit strings, and includes a link to the
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
 the full deal.
 
-**convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight)**
+#### <a id=convertUnitTo></a>convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight)
 
 This method converts a number of one type of unit to the equivalent number of
 another type of unit.  Note that the number returned is not trimmed or
@@ -251,7 +255,7 @@ If you want to know what unit types a particular unit can be converted to, the
 checkSynonyms function will provide a list of commensurable units for a specified
 unit expression.
 
-**checkSynonyms(theSyn)**
+#### <a id=checkSynonyms></a>checkSynonyms(theSyn)
 
 This method searches for units that include a single search term (theSyn) in the
 unit's synonyms data and/or the unit name.  It returns all units found with a 
@@ -290,6 +294,35 @@ of possible pound units.
       /* returnObj['status'] will be 'error' and returnObj['msg'] will indicate
          what the error was. */
       
+#### <a id=convertToBaseUnits></a>convertToBaseUnits(fromUnit, fromVal)
+
+Converts the given unit string into its base units, their exponents, and
+a magnitude, and returns that data.
+
+**Parameters**:
+1) fromUnit -  the unit string to be converted to base units information
+2) fromVal the number of "from" units to be converted
+
+**Returns**:  an object with the properties:
+* status: indicates whether the result succeeded.  The value will be one of:
+  * 'succeeded':  the conversion was successfully calculated (which can be
+     true even if it was already in base units);
+  * 'invalid':  fromUnit is not a valid UCUM code;
+  * 'failed':  the conversion could not be made (e.g., if it is an "arbitrary" unit);
+  * 'error':  if an error occurred (an input or programming error)
+* msg: an array of one or more messages, if the string is invalid or
+       an error occurred, indicating the problem, or a suggestion of a
+       substitution such as the substitution of 'G' for 'Gauss', or
+       an empty array if no messages were generated.  There can also be a
+       message that is just informational or warning.
+* magnitude: the new value when fromVal units of fromUnits is expressed in the base units.
+* fromUnitIsSpecial: whether the input unit fromUnit is a "special unit"
+        as defined in UCUM.  This means there is some function applied to convert
+        between fromUnit and the base units, so the returned magnitude is likely not
+        useful as a scale factor for other conversions (i.e., it only has validity
+        and usefulness for the input values that produced it).
+* unitToExp: a map of base units in uStr to their exponent
+
 
 ### Download the GitHub repository
 
