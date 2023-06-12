@@ -304,8 +304,8 @@ Converts the given unit string into its base units, their exponents, and
 a magnitude, and returns that data.
 
 **Parameters**:
-1) fromUnit -  the unit string to be converted to base units information
-2) fromVal the number of "from" units to be converted
+1) fromUnit: the unit string to be converted to base units information
+2) fromVal: the number of "from" units to be converted
 
 **Returns**:  an object with the properties:
 * status: indicates whether the result succeeded.  The value will be one of:
