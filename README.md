@@ -86,9 +86,10 @@ Below is documentation for the public functions on the UcumLhcUtils instance.
 *  [validateUnitString](#validateUnitString)
 *  [convertUnitTo](#convertUnitTo)
 *  [checkSynonyms](#checkSynonyms)
-*  [convertToBaseUnits][#convertToBaseUnits]
+*  [convertToBaseUnits](#convertToBaseUnits)
 
-#### <a id="validateUnitString"></a>validateUnitString(uStr, suggest)
+<a id="validateUnitString"></a>
+#### validateUnitString(uStr, suggest)
 
 This method validates a unit string.  It first checks to see if the string passed 
 in is a unit code that is found in the unit codes table. If it is not found it 
@@ -159,7 +160,8 @@ of unit strings, and includes a link to the
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
 the full deal.
 
-#### <a id="convertUnitTo"></a>convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight)
+<a id="convertUnitTo"></a>
+#### convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight)
 
 This method converts a number of one type of unit to the equivalent number of
 another type of unit.  Note that the number returned is not trimmed or
@@ -255,7 +257,8 @@ If you want to know what unit types a particular unit can be converted to, the
 checkSynonyms function will provide a list of commensurable units for a specified
 unit expression.
 
-#### <a id="checkSynonyms"></a>checkSynonyms(theSyn)
+<a id="checkSynonyms"></a>
+#### checkSynonyms(theSyn)
 
 This method searches for units that include a single search term (theSyn) in the
 unit's synonyms data and/or the unit name.  It returns all units found with a 
@@ -293,8 +296,9 @@ of possible pound units.
     else
       /* returnObj['status'] will be 'error' and returnObj['msg'] will indicate
          what the error was. */
-      
-#### <a id="convertToBaseUnits"></a>convertToBaseUnits(fromUnit, fromVal)
+
+<a id="convertToBaseUnits"></a>
+#### convertToBaseUnits(fromUnit, fromVal)
 
 Converts the given unit string into its base units, their exponents, and
 a magnitude, and returns that data.
