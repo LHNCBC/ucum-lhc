@@ -325,7 +325,7 @@ a magnitude, and returns that data.
         between fromUnit and the base units, so the returned magnitude is likely not
         useful as a scale factor for other conversions (i.e., it only has validity
         and usefulness for the input values that produced it).
-* unitToExp: a map of base units in uStr to their exponent
+* unitToExp: a map of base units in fromUnit to their exponent
 
 
 ### Download the GitHub repository
