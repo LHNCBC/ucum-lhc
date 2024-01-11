@@ -199,7 +199,7 @@
         "ZO",
         "zepto",
         "z",
-        1e-21,
+        1.0000000000000001e-21,
         "-21"
       ]
     ]
@@ -1058,7 +1058,7 @@
         "UCUM",
         "ElpotRat",
         "Clinical",
-        "unit of electric current equal to flow rate of electrons equal to 16.2415×10^18 elementary charges moving past a boundary in one second or 1 Coulomb/second",
+        "unit of electric current equal to flow rate of electrons equal to 6.2415×10^18 elementary charges moving past a boundary in one second or 1 Coulomb/second",
         "C/s",
         "C/S",
         "1",
@@ -2390,7 +2390,7 @@
         "UCUM",
         "Len",
         "Clinical",
-        "unit of length equal to 3.26 light years, nad used to measure large distances to objects outside our Solar System",
+        "unit of length equal to 3.26 light years, and used to measure large distances to objects outside our Solar System",
         "m",
         "M",
         "3.085678e16",
@@ -3087,7 +3087,7 @@
         "P",
         "P",
         "dynamic viscosity",
-        100,
+        100.00000000000001,
         [
           -1,
           -1,
@@ -3159,7 +3159,7 @@
         "St",
         "ST",
         "kinematic viscosity",
-        0.0001,
+        0.00009999999999999999,
         [
           2,
           -1,
@@ -3951,7 +3951,7 @@
         "[cin_i]",
         "[CIN_I]",
         "volume",
-        0.000016387064000000003,
+        0.000016387064000000006,
         [
           3,
           0,
@@ -4059,7 +4059,7 @@
         "[bf_i]",
         "[BF_I]",
         "volume",
-        0.002359737216,
+        0.0023597372160000006,
         [
           3,
           0,
@@ -5283,7 +5283,7 @@
         "[gal_us]",
         "[GAL_US]",
         "fluid volume",
-        0.0037854117840000006,
+        0.0037854117840000014,
         [
           3,
           0,
@@ -5319,7 +5319,7 @@
         "[bbl_us]",
         "[BBL_US]",
         "fluid volume",
-        0.158987294928,
+        0.15898729492800007,
         [
           3,
           0,
@@ -5355,7 +5355,7 @@
         "[qt_us]",
         "[QT_US]",
         "fluid volume",
-        0.0009463529460000001,
+        0.0009463529460000004,
         [
           3,
           0,
@@ -5391,7 +5391,7 @@
         "[pt_us]",
         "[PT_US]",
         "fluid volume",
-        0.00047317647300000007,
+        0.0004731764730000002,
         [
           3,
           0,
@@ -5427,7 +5427,7 @@
         "[gil_us]",
         "[GIL_US]",
         "fluid volume",
-        0.00011829411825000002,
+        0.00011829411825000005,
         [
           3,
           0,
@@ -5463,7 +5463,7 @@
         "[foz_us]",
         "[FOZ_US]",
         "fluid volume",
-        0.000029573529562500005,
+        0.00002957352956250001,
         [
           3,
           0,
@@ -5499,7 +5499,7 @@
         "[fdr_us]",
         "[FDR_US]",
         "fluid volume",
-        0.0000036966911953125006,
+        0.0000036966911953125014,
         [
           3,
           0,
@@ -5535,7 +5535,7 @@
         "[min_us]",
         "[MIN_US]",
         "fluid volume",
-        6.1611519921875e-8,
+        6.161151992187503e-8,
         [
           3,
           0,
@@ -5607,7 +5607,7 @@
         "[bu_us]",
         "[BU_US]",
         "dry volume",
-        0.03523907016688001,
+        0.035239070166880014,
         [
           3,
           0,
@@ -5643,7 +5643,7 @@
         "[gal_wi]",
         "[GAL_WI]",
         "dry volume",
-        0.004404883770860001,
+        0.004404883770860002,
         [
           3,
           0,
@@ -5679,7 +5679,7 @@
         "[pk_us]",
         "[PK_US]",
         "dry volume",
-        0.008809767541720002,
+        0.008809767541720004,
         [
           3,
           0,
@@ -5715,7 +5715,7 @@
         "[dqt_us]",
         "[DQT_US]",
         "dry volume",
-        0.0011012209427150002,
+        0.0011012209427150004,
         [
           3,
           0,
@@ -5751,7 +5751,7 @@
         "[dpt_us]",
         "[DPT_US]",
         "dry volume",
-        0.0005506104713575001,
+        0.0005506104713575002,
         [
           3,
           0,
@@ -5787,7 +5787,7 @@
         "[tbs_us]",
         "[TBS_US]",
         "volume",
-        0.000014786764781250002,
+        0.000014786764781250006,
         [
           3,
           0,
@@ -5823,7 +5823,7 @@
         "[tsp_us]",
         "[TSP_US]",
         "volume",
-        0.0000049289215937500005,
+        0.000004928921593750002,
         [
           3,
           0,
@@ -5859,7 +5859,7 @@
         "[cup_us]",
         "[CUP_US]",
         "volume",
-        0.00023658823650000004,
+        0.0002365882365000001,
         [
           3,
           0,
@@ -10611,7 +10611,7 @@
         "B[SPL]",
         "B[SPL]",
         "pressure level",
-        0.02,
+        0.019999999999999997,
         [
           -1,
           -2,
@@ -10638,7 +10638,7 @@
         "Pa",
         null,
         null,
-        0.00002,
+        0.000019999999999999998,
         false
       ],
       [
@@ -10886,7 +10886,7 @@
         "UCUM",
         "Vol",
         "Nonclinical",
-        "equal to one cubic meter, usually used for measuring firewoord",
+        "equal to one cubic meter, usually used for measuring firewood",
         "m3",
         "M3",
         "1",
@@ -10935,7 +10935,7 @@
         "b",
         "BRN",
         "action area",
-        9.999999999999999e-29,
+        1.0000000000000001e-28,
         [
           2,
           0,
@@ -10971,7 +10971,7 @@
         "att",
         "ATT",
         "pressure",
-        98066499.99999999,
+        98066500,
         [
           -1,
           -2,
@@ -11437,7 +11437,7 @@
         false,
         "per twelve hour",
         "/(12.h)",
-        "/HR",
+        "1/(12.HR)",
         "",
         0.000023148148148148147,
         [
@@ -11473,7 +11473,7 @@
         false,
         "per arbitrary unit",
         "/[arb'U]",
-        "/[ARB'U]",
+        "1/[ARB'U]",
         "",
         1,
         [
@@ -11509,7 +11509,7 @@
         false,
         "per high power field",
         "/[HPF]",
-        "/[HPF]",
+        "1/[HPF]",
         "",
         1,
         [
@@ -11545,7 +11545,7 @@
         false,
         "per international unit",
         "/[IU]",
-        "/[IU]",
+        "1/[IU]",
         "",
         1,
         [
@@ -11581,7 +11581,7 @@
         false,
         "per low power field",
         "/[LPF]",
-        "/[LPF]",
+        "1/[LPF]",
         "",
         1,
         [
@@ -11617,7 +11617,7 @@
         false,
         "per 10 billion  ",
         "/10*10",
-        "/10*10",
+        "1/(10*10)",
         "",
         1e-10,
         [
@@ -11653,7 +11653,7 @@
         false,
         "per trillion ",
         "/10*12",
-        "/10*12",
+        "1/(10*12)",
         "",
         1e-12,
         [
@@ -11689,7 +11689,7 @@
         false,
         "per thousand",
         "/10*3",
-        "/10*3",
+        "1/(10*3)",
         "",
         0.001,
         [
@@ -11725,7 +11725,7 @@
         false,
         "per million",
         "/10*6",
-        "/10*6",
+        "1/(10*6)",
         "",
         0.000001,
         [
@@ -11761,7 +11761,7 @@
         false,
         "per billion",
         "/10*9",
-        "/10*9",
+        "1/(10*9)",
         "",
         1e-9,
         [
@@ -11797,7 +11797,7 @@
         false,
         "per 100",
         "/100",
-        "",
+        "1/100",
         "",
         0.01,
         [
@@ -11833,7 +11833,7 @@
         false,
         "per 100 cells",
         "/100{cells}",
-        "",
+        "1/100",
         "",
         0.01,
         [
@@ -11869,7 +11869,7 @@
         false,
         "per 100 neutrophils",
         "/100{neutrophils}",
-        "",
+        "1/100",
         "",
         0.01,
         [
@@ -11905,7 +11905,7 @@
         false,
         "per 100 spermatozoa",
         "/100{spermatozoa}",
-        "",
+        "1/100",
         "",
         0.01,
         [
@@ -11941,7 +11941,7 @@
         false,
         "per 100 white blood cells",
         "/100{WBCs}",
-        "",
+        "1/100",
         "",
         0.01,
         [
@@ -11977,7 +11977,7 @@
         false,
         "per year",
         "/a",
-        "/ANN",
+        "1/ANN",
         "",
         3.168808781402895e-8,
         [
@@ -12013,7 +12013,7 @@
         false,
         "per centimeter of water",
         "/cm[H2O]",
-        "/CM[H2O]",
+        "1/CM[H2O]",
         "",
         0.000010197162129779282,
         [
@@ -12049,7 +12049,7 @@
         false,
         "per day",
         "/d",
-        "/D",
+        "1/D",
         "",
         0.000011574074074074073,
         [
@@ -12085,7 +12085,7 @@
         false,
         "per deciliter",
         "/dL",
-        "/DL",
+        "1/DL",
         "",
         10000,
         [
@@ -12121,7 +12121,7 @@
         false,
         "per gram",
         "/g",
-        "/G",
+        "1/G",
         "",
         1,
         [
@@ -12157,7 +12157,7 @@
         false,
         "per hour",
         "/h",
-        "/HR",
+        "1/HR",
         "",
         0.0002777777777777778,
         [
@@ -12193,7 +12193,7 @@
         false,
         "per kilogram",
         "/kg",
-        "/KG",
+        "1/KG",
         "",
         0.001,
         [
@@ -12229,7 +12229,7 @@
         false,
         "per liter",
         "/L",
-        "/L",
+        "1/L",
         "",
         1000,
         [
@@ -12265,7 +12265,7 @@
         false,
         "per square meter",
         "/m2",
-        "/M2",
+        "1/M2",
         "",
         1,
         [
@@ -12301,7 +12301,7 @@
         false,
         "per cubic meter",
         "/m3",
-        "/M3",
+        "1/M3",
         "",
         1,
         [
@@ -12337,7 +12337,7 @@
         false,
         "per milligram",
         "/mg",
-        "/MG",
+        "1/MG",
         "",
         1000,
         [
@@ -12373,7 +12373,7 @@
         false,
         "per minute",
         "/min",
-        "/MIN",
+        "1/MIN",
         "",
         0.016666666666666666,
         [
@@ -12409,7 +12409,7 @@
         false,
         "per milliliter",
         "/mL",
-        "/ML",
+        "1/ML",
         "",
         1000000,
         [
@@ -12445,7 +12445,7 @@
         false,
         "per millimeter",
         "/mm",
-        "/MM",
+        "1/MM",
         "",
         1000,
         [
@@ -12481,7 +12481,7 @@
         false,
         "per month",
         "/mo",
-        "/MO",
+        "1/MO",
         "",
         3.802570537683474e-7,
         [
@@ -12517,7 +12517,7 @@
         false,
         "per second",
         "/s",
-        "/S",
+        "1/S",
         "",
         1,
         [
@@ -12553,7 +12553,7 @@
         false,
         "per enzyme unit",
         "/U",
-        "/U",
+        "1/U",
         "",
         9.963241120049633e-17,
         [
@@ -12589,7 +12589,7 @@
         false,
         "per microliter",
         "/uL",
-        "/UL",
+        "1/UL",
         "",
         999999999.9999999,
         [
@@ -12625,7 +12625,7 @@
         false,
         "per week",
         "/wk",
-        "/WK",
+        "1/WK",
         "",
         0.0000016534391534391535,
         [
@@ -12877,7 +12877,7 @@
         false,
         "international unit per 2 hour",
         "[IU]/(2.h)",
-        "[IU]/HR",
+        "[IU]/(2.HR)",
         "arbitrary",
         0.0001388888888888889,
         [
@@ -12913,7 +12913,7 @@
         false,
         "international unit per 24 hour",
         "[IU]/(24.h)",
-        "[IU]/HR",
+        "[IU]/(24.HR)",
         "arbitrary",
         0.000011574074074074073,
         [
@@ -13309,7 +13309,7 @@
         false,
         "number per high power field",
         "{#}/[HPF]",
-        "/[HPF]",
+        "{#}/[HPF]",
         "",
         1,
         [
@@ -13345,7 +13345,7 @@
         false,
         "number per low power field",
         "{#}/[LPF]",
-        "/[LPF]",
+        "{#}/[LPF]",
         "",
         1,
         [
@@ -13381,7 +13381,7 @@
         false,
         "IgA antiphosphatidylserine unit ",
         "{APS'U}",
-        "",
+        "{APS'U}",
         "",
         1,
         [
@@ -13417,7 +13417,7 @@
         false,
         "EIA index",
         "{EIA_index}",
-        "",
+        "{EIA_index}",
         "",
         1,
         [
@@ -13453,7 +13453,7 @@
         false,
         "kaolin clotting time",
         "{KCT'U}",
-        "",
+        "{KCT'U}",
         "",
         1,
         [
@@ -13489,7 +13489,7 @@
         false,
         "IgM antiphosphatidylserine unit",
         "{MPS'U}",
-        "",
+        "{MPS'U}",
         "",
         1,
         [
@@ -13885,7 +13885,7 @@
         false,
         "million per 24 hour",
         "10*6/(24.h)",
-        "(10*6)/HR",
+        "(10*6)/(24.HR)",
         "number",
         11.574074074074074,
         [
@@ -14209,7 +14209,7 @@
         false,
         "10 liter per minute per square meter",
         "10.L/(min.m2)",
-        "L/(MIN.M2)",
+        "(10.L)/(MIN.M2)",
         "",
         0.00016666666666666666,
         [
@@ -14245,7 +14245,7 @@
         false,
         "10 liter per minute",
         "10.L/min",
-        "L/MIN",
+        "(10.L)/MIN",
         "",
         0.00016666666666666666,
         [
@@ -14281,7 +14281,7 @@
         false,
         "10 micronewton second per centimeter to the fifth power per square meter",
         "10.uN.s/(cm5.m2)",
-        "(UN.S)/(CM5.M2)",
+        "((10.UN).S)/(CM5.M2)",
         "",
         100000000,
         [
@@ -14317,7 +14317,7 @@
         false,
         "24 hour",
         "24.h",
-        "HR",
+        "24.HR",
         "",
         86400,
         [
@@ -14715,7 +14715,7 @@
         "cP",
         "CP",
         "dynamic viscosity",
-        1,
+        1.0000000000000002,
         [
           -1,
           -1,
@@ -14751,7 +14751,7 @@
         "cSt",
         "CST",
         "kinematic viscosity",
-        0.0000010000000000000002,
+        0.000001,
         [
           2,
           -1,
@@ -15613,7 +15613,7 @@
         false,
         "gram per 100 gram",
         "g/(100.g)",
-        "G/G",
+        "G/(100.G)",
         "mass",
         0.01,
         [
@@ -15649,7 +15649,7 @@
         false,
         "gram per 12 hour",
         "g/(12.h)",
-        "G/HR",
+        "G/(12.HR)",
         "mass",
         0.000023148148148148147,
         [
@@ -15685,7 +15685,7 @@
         false,
         "gram per 24 hour",
         "g/(24.h)",
-        "G/HR",
+        "G/(24.HR)",
         "mass",
         0.000011574074074074073,
         [
@@ -15721,7 +15721,7 @@
         false,
         "gram per 3 days",
         "g/(3.d)",
-        "G/D",
+        "G/(3.D)",
         "mass",
         0.000003858024691358025,
         [
@@ -15757,7 +15757,7 @@
         false,
         "gram per 4 hour",
         "g/(4.h)",
-        "G/HR",
+        "G/(4.HR)",
         "mass",
         0.00006944444444444444,
         [
@@ -15793,7 +15793,7 @@
         false,
         "gram per 48 hour",
         "g/(48.h)",
-        "G/HR",
+        "G/(48.HR)",
         "mass",
         0.000005787037037037037,
         [
@@ -15829,7 +15829,7 @@
         false,
         "gram per 5 hour",
         "g/(5.h)",
-        "G/HR",
+        "G/(5.HR)",
         "mass",
         0.00005555555555555556,
         [
@@ -15865,7 +15865,7 @@
         false,
         "gram per 6 hour",
         "g/(6.h)",
-        "G/HR",
+        "G/(6.HR)",
         "mass",
         0.000046296296296296294,
         [
@@ -15901,7 +15901,7 @@
         false,
         "gram per 72 hour",
         "g/(72.h)",
-        "G/HR",
+        "G/(72.HR)",
         "mass",
         0.000003858024691358025,
         [
@@ -16189,7 +16189,7 @@
         false,
         "gram per kilogram per 8 hour ",
         "g/kg/(8.h)",
-        "(G/KG)/HR",
+        "(G/KG)/(8.HR)",
         "mass",
         3.472222222222222e-8,
         [
@@ -16801,7 +16801,7 @@
         false,
         "kilocalorie per 24 hour",
         "kcal/(24.h)",
-        "KCAL/HR",
+        "KCAL/(24.HR)",
         "energy",
         48.425925925925924,
         [
@@ -16945,7 +16945,7 @@
         false,
         "kilocalorie per kilogram per 24 hour",
         "kcal/kg/(24.h)",
-        "(KCAL/KG)/HR",
+        "(KCAL/KG)/(24.HR)",
         "energy",
         0.04842592592592593,
         [
@@ -17629,7 +17629,7 @@
         false,
         "Liters per 24 hour",
         "L/(24.h)",
-        "L/HR",
+        "L/(24.HR)",
         "volume",
         1.1574074074074074e-8,
         [
@@ -17665,7 +17665,7 @@
         false,
         "Liters per 8 hour",
         "L/(8.h)",
-        "L/HR",
+        "L/(8.HR)",
         "volume",
         3.472222222222222e-8,
         [
@@ -18493,7 +18493,7 @@
         false,
         "milliequivalent per 2 hour",
         "meq/(2.h)",
-        "MEQ/HR",
+        "MEQ/(2.HR)",
         "amount of substance",
         83640787500000000,
         [
@@ -18529,7 +18529,7 @@
         false,
         "milliequivalent per 24 hour",
         "meq/(24.h)",
-        "MEQ/HR",
+        "MEQ/(24.HR)",
         "amount of substance",
         6970065625000000,
         [
@@ -18565,7 +18565,7 @@
         false,
         "milliequivalent per 8 hour",
         "meq/(8.h)",
-        "MEQ/HR",
+        "MEQ/(8.HR)",
         "amount of substance",
         20910196875000000,
         [
@@ -18997,7 +18997,7 @@
         false,
         "milligram per 10 hour",
         "mg/(10.h)",
-        "MG/HR",
+        "MG/(10.HR)",
         "mass",
         2.7777777777777777e-8,
         [
@@ -19033,7 +19033,7 @@
         false,
         "milligram per 12 hour",
         "mg/(12.h)",
-        "MG/HR",
+        "MG/(12.HR)",
         "mass",
         2.3148148148148148e-8,
         [
@@ -19069,7 +19069,7 @@
         false,
         "milligram per 2 hour",
         "mg/(2.h)",
-        "MG/HR",
+        "MG/(2.HR)",
         "mass",
         1.3888888888888888e-7,
         [
@@ -19105,7 +19105,7 @@
         false,
         "milligram per 24 hour",
         "mg/(24.h)",
-        "MG/HR",
+        "MG/(24.HR)",
         "mass",
         1.1574074074074074e-8,
         [
@@ -19141,7 +19141,7 @@
         false,
         "milligram per 6 hour",
         "mg/(6.h)",
-        "MG/HR",
+        "MG/(6.HR)",
         "mass",
         4.6296296296296295e-8,
         [
@@ -19177,7 +19177,7 @@
         false,
         "milligram per 72 hour",
         "mg/(72.h)",
-        "MG/HR",
+        "MG/(72.HR)",
         "mass",
         3.858024691358025e-9,
         [
@@ -19213,7 +19213,7 @@
         false,
         "milligram per 8 hour",
         "mg/(8.h)",
-        "MG/HR",
+        "MG/(8.HR)",
         "mass",
         3.472222222222222e-8,
         [
@@ -19429,7 +19429,7 @@
         false,
         "milligram per kilogram per 8 hour",
         "mg/kg/(8.h)",
-        "(MG/KG)/HR",
+        "(MG/KG)/(8.HR)",
         "mass",
         3.472222222222222e-11,
         [
@@ -19897,7 +19897,7 @@
         false,
         "milliliter per 10 hour",
         "mL/(10.h)",
-        "ML/HR",
+        "ML/(10.HR)",
         "volume",
         2.7777777777777777e-11,
         [
@@ -19933,7 +19933,7 @@
         false,
         "milliliter per 12 hour",
         "mL/(12.h)",
-        "ML/HR",
+        "ML/(12.HR)",
         "volume",
         2.3148148148148147e-11,
         [
@@ -19969,7 +19969,7 @@
         false,
         "milliliter per 2 hour",
         "mL/(2.h)",
-        "ML/HR",
+        "ML/(2.HR)",
         "volume",
         1.3888888888888888e-10,
         [
@@ -20005,7 +20005,7 @@
         false,
         "milliliter per 24 hour",
         "mL/(24.h)",
-        "ML/HR",
+        "ML/(24.HR)",
         "volume",
         1.1574074074074074e-11,
         [
@@ -20041,7 +20041,7 @@
         false,
         "milliliter per 4 hour",
         "mL/(4.h)",
-        "ML/HR",
+        "ML/(4.HR)",
         "volume",
         6.944444444444444e-11,
         [
@@ -20077,7 +20077,7 @@
         false,
         "milliliter per 5 hour",
         "mL/(5.h)",
-        "ML/HR",
+        "ML/(5.HR)",
         "volume",
         5.5555555555555553e-11,
         [
@@ -20113,7 +20113,7 @@
         false,
         "milliliter per 6 hour",
         "mL/(6.h)",
-        "ML/HR",
+        "ML/(6.HR)",
         "volume",
         4.6296296296296294e-11,
         [
@@ -20149,7 +20149,7 @@
         false,
         "milliliter per 72 hour",
         "mL/(72.h)",
-        "ML/HR",
+        "ML/(72.HR)",
         "volume",
         3.8580246913580245e-12,
         [
@@ -20185,7 +20185,7 @@
         false,
         "milliliter per 8 hour",
         "mL/(8.h)",
-        "ML/HR",
+        "ML/(8.HR)",
         "volume",
         3.472222222222222e-11,
         [
@@ -20221,7 +20221,7 @@
         false,
         "milliliter per 8 hour per kilogram",
         "mL/(8.h)/kg",
-        "(ML/HR)/KG",
+        "(ML/(8.HR))/KG",
         "volume",
         3.472222222222222e-14,
         [
@@ -20473,7 +20473,7 @@
         false,
         "milliliter per kilogram per 8 hour",
         "mL/kg/(8.h)",
-        "(ML/KG)/HR",
+        "(ML/KG)/(8.HR)",
         "volume",
         3.472222222222222e-14,
         [
@@ -21085,7 +21085,7 @@
         false,
         "millimole per 12 hour",
         "mmol/(12.h)",
-        "MMOL/HR",
+        "MMOL/(12.HR)",
         "amount of substance",
         13940131250000000,
         [
@@ -21121,7 +21121,7 @@
         false,
         "millimole per 2 hour",
         "mmol/(2.h)",
-        "MMOL/HR",
+        "MMOL/(2.HR)",
         "amount of substance",
         83640787500000000,
         [
@@ -21157,7 +21157,7 @@
         false,
         "millimole per 24 hour",
         "mmol/(24.h)",
-        "MMOL/HR",
+        "MMOL/(24.HR)",
         "amount of substance",
         6970065625000000,
         [
@@ -21193,7 +21193,7 @@
         false,
         "millimole per 5 hour",
         "mmol/(5.h)",
-        "MMOL/HR",
+        "MMOL/(5.HR)",
         "amount of substance",
         33456315000000000,
         [
@@ -21229,7 +21229,7 @@
         false,
         "millimole per 6 hour",
         "mmol/(6.h)",
-        "MMOL/HR",
+        "MMOL/(6.HR)",
         "amount of substance",
         27880262500000000,
         [
@@ -21265,7 +21265,7 @@
         false,
         "millimole per 8 hour",
         "mmol/(8.h)",
-        "MMOL/HR",
+        "MMOL/(8.HR)",
         "amount of substance",
         20910196875000000,
         [
@@ -21481,7 +21481,7 @@
         false,
         "millimole per kilogram per 8 hour",
         "mmol/kg/(8.h)",
-        "(MMOL/KG)/HR",
+        "(MMOL/KG)/(8.HR)",
         "amount of substance",
         20910196875000,
         [
@@ -22669,7 +22669,7 @@
         false,
         "nanogram per 24 hour",
         "ng/(24.h)",
-        "NG/HR",
+        "NG/(24.HR)",
         "mass",
         1.1574074074074075e-14,
         [
@@ -22705,7 +22705,7 @@
         false,
         "nanogram per 8 hour",
         "ng/(8.h)",
-        "NG/HR",
+        "NG/(8.HR)",
         "mass",
         3.4722222222222224e-14,
         [
@@ -22957,7 +22957,7 @@
         false,
         "nanogram per kilogram per 8 hour",
         "ng/kg/(8.h)",
-        "(NG/KG)/HR",
+        "(NG/KG)/(8.HR)",
         "mass",
         3.472222222222222e-17,
         [
@@ -23569,7 +23569,7 @@
         false,
         "nanomole per 24 hour",
         "nmol/(24.h)",
-        "NMOL/HR",
+        "NMOL/(24.HR)",
         "amount of substance",
         6970065625,
         [
@@ -24865,7 +24865,7 @@
         false,
         "picomole per 24 hour",
         "pmol/(24.h)",
-        "PMOL/HR",
+        "PMOL/(24.HR)",
         "amount of substance",
         6970065.625,
         [
@@ -25261,7 +25261,7 @@
         false,
         "enzyme unit per 12 hour",
         "U/(12.h)",
-        "U/HR",
+        "U/(12.HR)",
         "catalytic activity",
         232335520833.33334,
         [
@@ -25297,7 +25297,7 @@
         false,
         "enzyme unit per 2 hour",
         "U/(2.h)",
-        "U/HR",
+        "U/(2.HR)",
         "catalytic activity",
         1394013125000,
         [
@@ -25333,7 +25333,7 @@
         false,
         "enzyme unit per 24 hour",
         "U/(24.h)",
-        "U/HR",
+        "U/(24.HR)",
         "catalytic activity",
         116167760416.66667,
         [
@@ -25369,7 +25369,7 @@
         false,
         "enzyme unit per 10",
         "U/10",
-        "U",
+        "U/10",
         "catalytic activity",
         1003689450000000,
         [
@@ -26089,7 +26089,7 @@
         false,
         "microgram per 100 gram",
         "ug/(100.g)",
-        "UG/G",
+        "UG/(100.G)",
         "mass",
         1e-8,
         [
@@ -26125,7 +26125,7 @@
         false,
         "microgram per 24 hour",
         "ug/(24.h)",
-        "UG/HR",
+        "UG/(24.HR)",
         "mass",
         1.1574074074074074e-11,
         [
@@ -26161,7 +26161,7 @@
         false,
         "microgram per 8 hour",
         "ug/(8.h)",
-        "UG/HR",
+        "UG/(8.HR)",
         "mass",
         3.472222222222222e-11,
         [
@@ -26413,7 +26413,7 @@
         false,
         "microgram per kilogram per 8 hour",
         "ug/kg/(8.h)",
-        "(UG/KG)/HR",
+        "(UG/KG)/(8.HR)",
         "mass",
         3.472222222222222e-14,
         [
@@ -26593,7 +26593,7 @@
         false,
         "microgram per liter per 24 hour",
         "ug/L/(24.h)",
-        "(UG/L)/HR",
+        "(UG/L)/(24.HR)",
         "mass",
         1.1574074074074074e-8,
         [
@@ -26953,7 +26953,7 @@
         false,
         "microliter per 2 hour",
         "uL/(2.h)",
-        "UL/HR",
+        "UL/(2.HR)",
         "volume",
         1.388888888888889e-13,
         [
@@ -27133,7 +27133,7 @@
         false,
         "micromole per 2 hour",
         "umol/(2.h)",
-        "UMOL/HR",
+        "UMOL/(2.HR)",
         "amount of substance",
         83640787500000,
         [
@@ -27169,7 +27169,7 @@
         false,
         "micromole per 24 hour",
         "umol/(24.h)",
-        "UMOL/HR",
+        "UMOL/(24.HR)",
         "amount of substance",
         6970065625000,
         [
@@ -27205,7 +27205,7 @@
         false,
         "micromole per 8 hour",
         "umol/(8.h)",
-        "UMOL/HR",
+        "UMOL/(8.HR)",
         "amount of substance",
         20910196875000,
         [

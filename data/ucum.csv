@@ -293,7 +293,7 @@ Can be ambigous and would be better if the metric units was used directly. ",UCU
 10.uN.s/(cm5.m2),10 micronewton second per centimeter to the fifth power per square meter,Clinical,dyne seconds per centimeter5 and square meter; dyn.s/(cm5.m2); dyn.s/cm5/m2; cm^5; m^2,,unit to measure systemic vascular resistance per body surface area,LOINC
 10^,the number ten for arbitrary powers,Clinical,10*; 10 to the arbitrary power,Num,"10* by itself is the same as 10, but users can add digits after the *. For example, 10*3 = 1000.",UCUM
 24.h,24 hour,Clinical,24hrs; 24 hrs; 24 hours; days; dy,Time,,LOINC
-A,Ampere,Clinical,Amperes,ElpotRat,unit of electric current equal to flow rate of electrons equal to 16.2415×10^18 elementary charges moving past a boundary in one second or 1 Coulomb/second,UCUM
+A,Ampere,Clinical,Amperes,ElpotRat,unit of electric current equal to flow rate of electrons equal to 6.2415×10^18 elementary charges moving past a boundary in one second or 1 Coulomb/second,UCUM
 a,year,Clinical,"years; a; yr, yrs; annum",Time,,UCUM
 A/m,ampere per meter,Clinical,A/m; amp/meter; magnetic field strength; H; B; amperes per meter; metre,,unit of magnetic field strength,LOINC
 a_g,mean Gregorian year,Clinical,mean Gregorian yr; a gregorian; years,Time,has an average of 365.2425 days and is the most internationally used civil calendar.,UCUM
@@ -662,7 +662,7 @@ osm/L,osmole per liter,Clinical,osm per L; osmoles per liter; litre; osmols,Osmo
 P,Poise,Clinical,dynamic viscosity; poises,Visc,unit of dynamic viscosity where 1 Poise = 1/10 Pascal second,UCUM
 Pa,pascal,Clinical,pascals,Pres,standard unit of pressure equal to 1 newton per square meter (N/m2),UCUM
 pA,picoampere,Clinical,picoamperes,,equal to 10^-12 amperes,LOINC
-pc,parsec,Clinical,parsecs,Len,"unit of length equal to 3.26 light years, nad used to measure large distances to objects outside our Solar System",UCUM
+pc,parsec,Clinical,parsecs,Len,"unit of length equal to 3.26 light years, and used to measure large distances to objects outside our Solar System",UCUM
 pg,picogram,Clinical,picograms,Mass; EntMass,,LOINC
 pg/dL,picogram per deciliter,Clinical,pg per dL; picograms; decilitre,MCnc,,LOINC
 pg/L,picogram per liter,Clinical,pg per L; picograms; litre,MCnc,,LOINC
@@ -695,7 +695,7 @@ sb,stilb,Obsolete,stilbs,,unit of luminance; equal to and replaced by unit cande
 sph,spere - solid angle,Clinical,speres,Angle,equal to the solid angle of an entire sphere = 4πsr (sr = steradian) ,UCUM
 sr,steradian - solid angle,Clinical,square radian; rad2; rad^2,Angle,unit of solid angle in three-dimensional geometry analagous to radian; used in photometry which measures the perceived brightness of object by human eye (e.g. radiant intensity = watt/steradian),UCUM
 St,Stokes,Clinical,kinematic viscosity,Visc,unit of kimematic viscosity with units cm2/s,UCUM
-st,stere,Nonclinical,stère; m3; cubic meter; m^3; meters cubed; metre,Vol,"equal to one cubic meter, usually used for measuring firewoord",UCUM
+st,stere,Nonclinical,stère; m3; cubic meter; m^3; meters cubed; metre,Vol,"equal to one cubic meter, usually used for measuring firewood",UCUM
 Sv,sievert,Clinical,sieverts; radiation dose quantities; equivalent doses; effective dose; operational dose; committed dose,,SI unit for radiation dose equivalent equal to 1 Joule/kilogram.,UCUM
 T,tesla,Clinical,Teslas; magnetic field,,SI unit of magnetic field strength for magnetic field B equal to 1 Weber/square meter =  1 kg/(s2*A),UCUM
 t,metric ton,Nonclinical,tonnes; megagrams; tons,Mass,"equal to 1000 kg used in the US (recognized by NIST as metric ton), and internationally (recognized as tonne)",UCUM
