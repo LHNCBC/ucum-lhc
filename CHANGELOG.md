@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.1] 2024-01-18
+### Fixed
+- Some of the <sup> tags were wrongly closed with <.sup> in ucum-lhc.js.
+
 ## [5.0.0] 2023-05-26
 ### Changed
 - Breaking change to the new "convertToBaseUnits" API added in 4.2.0:  The
