@@ -752,7 +752,8 @@ class Unit {
 
   invertString(theString) {
     if (theString.length > 0) {
-      let stringRep = theString.replace('/', "!").replace('.', '/').replace("!", '.');
+      // replace('<!', '</') is here to make sure closing html tags like </sup> are intact. See LF-2830.
+      let stringRep = theString.replace('/', "!").replace('.', '/').replace('<!', '</').replace("!", '.');
 
       switch (stringRep.charAt(0)) {
         case '.':
