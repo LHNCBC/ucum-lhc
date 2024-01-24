@@ -1154,14 +1154,8 @@ export class UnitString {
         // mark the unit invalid. Otherwise, the "-1" part will be ignored
         // because parseInt("2-1") results in 2. See LF-2870.
         if (exp && isNaN(exp)) {
-          retUnit = null ;
-          // BUT if the user asked for suggestions, at least look for them
-          if (this.suggestions_) {
-            let suggestStat = this._getSuggestions(origCode);
-          }
-          else {
-            this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
-          }
+          retUnit = null;
+          this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
         }
         else {
           // If we still don't have a unit, separate out the prefix, if any,

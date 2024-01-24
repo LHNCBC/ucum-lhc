@@ -4327,13 +4327,8 @@ var UnitString = /*#__PURE__*/function () {
 
 
               if (exp && isNaN(exp)) {
-                retUnit = null; // BUT if the user asked for suggestions, at least look for them
-
-                if (this.suggestions_) {
-                  var suggestStat = this._getSuggestions(origCode);
-                } else {
-                  this.retMsg_.push("".concat(origCode, " is not a valid UCUM code."));
-                }
+                retUnit = null;
+                this.retMsg_.push("".concat(origCode, " is not a valid UCUM code."));
               } else {
                 // If we still don't have a unit, separate out the prefix, if any,
                 // and try without it.
@@ -4381,7 +4376,7 @@ var UnitString = /*#__PURE__*/function () {
                   retUnit = null; // BUT if the user asked for suggestions, at least look for them
 
                   if (this.suggestions_) {
-                    var _suggestStat2 = this._getSuggestions(origCode);
+                    var suggestStat = this._getSuggestions(origCode);
                   } else {
                     this.retMsg_.push("".concat(origCode, " is not a valid UCUM code."));
                   }
