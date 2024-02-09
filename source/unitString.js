@@ -878,11 +878,15 @@ export class UnitString {
       else {
 
         if (intUtils_.isNumericString(aftText)) {
-          pStr += aftText;
           retUnit = null;
-          this.retMsg_.push(`An exponent (${aftText}) following a parenthesis ` +
-            `is invalid as of revision 1.9 of the UCUM Specification.\n  ` +
-            this.vcMsgStart_ + pStr + this.vcMsgEnd_);
+          let msg = `An exponent (${aftText}) following a parenthesis ` +
+            `is invalid as of revision 1.9 of the UCUM Specification.`;
+          // Add the suggestion only if the string in the parenthesis don't end with a number.
+          if (!pStr.match(/\d$/)) {
+            pStr += aftText;
+            msg += '\n  ' + this.vcMsgStart_ + pStr + this.vcMsgEnd_;
+          }
+          this.retMsg_.push(msg);
           endProcessing = true;
         }
         // else the text after the parentheses is neither a number nor
