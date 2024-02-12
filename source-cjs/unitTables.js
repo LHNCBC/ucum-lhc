@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.UnitTables = void 0;
-
 /**
  * This class manages Hashtables that provide references to
  * defined units.
@@ -12,8 +11,8 @@ exports.UnitTables = void 0;
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
-var Ucum = require('./config.js').Ucum;
 
+var Ucum = require('./config.js').Ucum;
 class UnitTablesFactory {
   /**
    * Constructor.  This creates the empty unit tables (hashes) once. After the
@@ -44,6 +43,7 @@ class UnitTablesFactory {
      *              with the code = "s" and the unit with code = "'".
      */
     this.unitNames_ = {};
+
     /**
      * Tracks units by code using case-sensitive version.
      *
@@ -51,24 +51,24 @@ class UnitTablesFactory {
      *              value is the reference to the Unit object.  Codes must
      *              be unique.
      */
-
     this.unitCodes_ = {};
+
     /**
      * Keeps track of the order in which units are defined.  The order is
      * important because unit definitions build on previous definitions.
      *
      * @type {Array}
      */
-
     this.codeOrder_ = [];
+
     /**
      * Tracks units by unit strings, e.g., cm-1
      *
      * @type hash - key is the unit string
      *              value is an array of unit objects with that ciUnitString.
      */
-
     this.unitStrings_ = {};
+
     /**
      * Tracks units by Dimension vector
      *
@@ -79,8 +79,8 @@ class UnitTablesFactory {
      *              unit vector, and this can be used to provide a list
      *              of commensurable units.
      */
-
     this.unitDimensions_ = {};
+
     /**
      * Maps synonyms to units.   Not built until first requested.
      *
@@ -88,8 +88,8 @@ class UnitTablesFactory {
      *              value is an array of references to Unit objects that
      *              include that synonym.
      */
-
     this.unitSynonyms_ = {};
+
     /*
      * Holds onto the index of the index of the dimension vector flag for
      * the base mass unit (gram).  This is set when the base unit (gram) is
@@ -99,25 +99,24 @@ class UnitTablesFactory {
      *
      * @type integer
      */
-
     this.massDimIndex_ = 0;
+
     /**
      *  Map of indices in the dimension vector to base unit symbols.
      */
-
     this.dimVecIndexToBaseUnit_ = {};
   }
+
   /**
    * Provides the number of unit objects written to the tables, using the
    * codes table since codes must be unique.
    *
    * @returns count of the number of unit objects in the unitCodes_ table.
    */
-
-
   unitsCount() {
     return Object.keys(this.unitCodes_).length;
   }
+
   /**
    * Adds a Unit object to the tables.
    *
@@ -126,32 +125,25 @@ class UnitTablesFactory {
    * @throws passes on an error if one is thrown by the called functions for
    *  a problem with the unit code or unit name
    */
-
-
   addUnit(theUnit) {
     let uName = theUnit['name_'];
-
     if (uName) {
       this.addUnitName(theUnit);
     }
-
     this.addUnitCode(theUnit);
     this.addUnitString(theUnit);
-
     try {
       if (theUnit['dim_'].getProperty('dimVec_')) this.addUnitDimension(theUnit);
-    } catch (err) {// do nothing - throws error if the property is null
+    } catch (err) {
+      // do nothing - throws error if the property is null
       // and that's OK here.
     }
-
     if (theUnit.isBase_) {
       const dimVec = theUnit.dim_.dimVec_;
       let nonZeroIndex;
-
       for (let i = 0, len = dimVec.length; nonZeroIndex == undefined && i < len; ++i) {
         if (dimVec[i] != 0) nonZeroIndex = i;
       }
-
       this.dimVecIndexToBaseUnit_[nonZeroIndex] = theUnit.csCode_;
     }
   } // end addUnit
@@ -168,11 +160,8 @@ class UnitTablesFactory {
    * @returns nothing
    * @throws an error if the unit has no name
    */
-
-
   addUnitName(theUnit) {
     let uName = theUnit['name_'];
-
     if (uName) {
       if (this.unitNames_[uName]) this.unitNames_[uName].push(theUnit);else this.unitNames_[uName] = [theUnit];
     } else throw new Error('UnitTables.addUnitName called for a unit with no name.  ' + `Unit code = ${theUnit['csCode_']}.`);
@@ -188,22 +177,16 @@ class UnitTablesFactory {
    * @throws an error if the unitCodes_ table already contains a unit with
    *  the code
    */
-
-
   addUnitCode(theUnit) {
     let uCode = theUnit['csCode_'];
-
     if (uCode) {
       if (this.unitCodes_[uCode]) throw new Error(`UnitTables.addUnitCode called, already contains entry for ` + `unit with code = ${uCode}`);else {
         this.unitCodes_[uCode] = theUnit;
         this.codeOrder_.push(uCode);
-
         if (uCode == 'g') {
           let dimVec = theUnit.dim_.dimVec_;
           let d = 0;
-
           for (; d < dimVec.length && dimVec[d] < 1; d++);
-
           this.massDimIndex_ = d;
         }
       }
@@ -222,12 +205,9 @@ class UnitTablesFactory {
    * @param theUnit the unit to be added
    * @returns nothing
    */
-
-
   addUnitString(theUnit) {
     let uString = null;
     if (Ucum.caseSensitive_ == true) uString = theUnit['csUnitString_'];else uString = theUnit['ciUnitString_'];
-
     if (uString) {
       let uEntry = {
         mag: theUnit['baseFactorStr_'],
@@ -247,11 +227,8 @@ class UnitTablesFactory {
    * @returns nothing
    * @throws an error if the unit has no dimension
    */
-
-
   addUnitDimension(theUnit) {
     let uDim = theUnit['dim_'].getProperty('dimVec_');
-
     if (uDim) {
       if (this.unitDimensions_[uDim]) this.unitDimensions_[uDim].push(theUnit);else this.unitDimensions_[uDim] = [theUnit];
     } else throw new Error('UnitTables.addUnitDimension called for a unit with no dimension.  ' + `Unit code = ${theUnit['csCode_']}.`);
@@ -267,35 +244,29 @@ class UnitTablesFactory {
    *
    * @returns nothing
    */
-
-
   buildUnitSynonyms() {
     for (let code in this.unitCodes_) {
       let theUnit = this.unitCodes_[code];
-      let uSyns = theUnit.synonyms_; // If the current unit has synonyms, process each synonym (often multiples)
+      let uSyns = theUnit.synonyms_;
 
+      // If the current unit has synonyms, process each synonym (often multiples)
       if (uSyns) {
         let synsAry = uSyns.split(';');
-
         if (synsAry[0] !== '') {
           let aLen = synsAry.length;
-
           for (let a = 0; a < aLen; a++) {
-            let theSyn = synsAry[a].trim(); // call addSynonymCodes to process each word in the
-            // synonym, e.g., "British fluid ounces"
+            let theSyn = synsAry[a].trim();
 
+            // call addSynonymCodes to process each word in the
+            // synonym, e.g., "British fluid ounces"
             this.addSynonymCodes(code, theSyn);
           } // end do for each synonym
-
         } // end if the current unit has a non-null synonym attribute
-
       } // end if the unit has any synonyms
+
       // Now call addSynonymCodes to process each word in the unit's name
-
-
       this.addSynonymCodes(code, theUnit.name_);
     } // end do for each unit
-
   } // end buildUnitSynonyms
 
   /**
@@ -306,31 +277,28 @@ class UnitTablesFactory {
    * @param theSynonyms a string containing one or more words to be
    *  considered synonyms (and thus to be added to the unitSynonyms hash).
    */
-
-
   addSynonymCodes(theCode, theSynonyms) {
     let words = theSynonyms.split(' ');
     let wLen = words.length;
-
     for (let w = 0; w < wLen; w++) {
-      let word = words[w]; // if there is already a synonyms entry for the word,
+      let word = words[w];
+
+      // if there is already a synonyms entry for the word,
       // get the array of unit codes currently assigned to
       // the word and add the code for the current word to
       // the synonyms array if it's not already there.
-
       if (this.unitSynonyms_[word]) {
         let synCodes = this.unitSynonyms_[word];
-
         if (synCodes.indexOf(theCode) === -1) {
           this.unitSynonyms_[word].push(theCode);
         }
-      } // else there are no synonyms entry for the word.  Create a
+      }
+      // else there are no synonyms entry for the word.  Create a
       // synonyms array for the word, setting it to contain the unit code.
       else {
-          this.unitSynonyms_[word] = [theCode];
-        }
+        this.unitSynonyms_[word] = [theCode];
+      }
     } // end do for each word in the synonyms being processed
-
   } // end addSynonymCodes
 
   /**
@@ -340,17 +308,14 @@ class UnitTablesFactory {
    *  @param uCode the code of the unit to be returned
    *  @returns the unit object or null if it is not found
    */
-
-
   getUnitByCode(uCode) {
     let retUnit = null;
-
     if (uCode) {
       retUnit = this.unitCodes_[uCode];
     }
-
     return retUnit;
   }
+
   /**
    *  Returns a array of unit objects based on the unit's name.  Usually this
    *  will be an array of one, but there may be more, since unit names are
@@ -365,39 +330,27 @@ class UnitTablesFactory {
    *  of one object.
    *  @throws an error if no name is provided to search on
    */
-
-
   getUnitByName(uName) {
     if (uName === null || uName === undefined) {
       throw new Error('Unable to find unit by name because no name was provided.');
     }
-
     let sepPos = uName.indexOf(Ucum.codeSep_);
     let uCode = null;
-
     if (sepPos >= 1) {
       uCode = uName.substr(sepPos + Ucum.codeSep_.length);
       uName = uName.substr(0, sepPos);
     }
-
     let retUnits = this.unitNames_[uName];
-
     if (retUnits) {
       let uLen = retUnits.length;
-
       if (uCode && uLen > 1) {
         let i = 0;
-
         for (; retUnits[i].csCode_ !== uCode && i < uLen; i++);
-
         if (i < uLen) retUnits = [retUnits[i]];else {
           retUnits = null;
         }
       } // end if we need to find both a name and a code
-
     } // end if we got an array of units
-
-
     return retUnits;
   } // end getUnitByName
 
@@ -410,18 +363,15 @@ class UnitTablesFactory {
    *  @param name the name of the unit to be returned
    *  @returns the array of unit references or null if none were found
    */
-
-
   getUnitByString(uString) {
     let retAry = null;
-
     if (uString) {
       retAry = this.unitStrings_[uString];
       if (retAry === undefined) retAry = null;
     }
-
     return retAry;
   }
+
   /**
    *  Returns a array of unit objects based on the unit's dimension vector.
    *
@@ -432,21 +382,15 @@ class UnitTablesFactory {
    *  @throws an error if no vector is provided to search on
    *  logs an error to the console if no unit is found
    */
-
-
   getUnitsByDimension(uDim) {
     let unitsArray = null;
-
     if (uDim === null || uDim === undefined) {
       throw new Error('Unable to find unit by because no dimension ' + 'vector was provided.');
     }
-
     unitsArray = this.unitDimensions_[uDim];
-
     if (unitsArray === undefined || unitsArray === null) {
       console.log(`Unable to find unit with dimension = ${uDim}`);
     }
-
     return unitsArray;
   } // end getUnitsByDimension
 
@@ -462,37 +406,28 @@ class UnitTablesFactory {
    *   'units' any array of unit objects with the specified synonym will be
    *     returned for requests with status = succeeded
    */
-
-
   getUnitBySynonym(uSyn) {
     let retObj = {};
     let unitsArray = [];
-
     try {
       if (uSyn === null || uSyn === undefined) {
         retObj['status'] = 'error';
         throw new Error('Unable to find unit by synonym because no synonym ' + 'was provided.');
-      } // If this is the first request for a unit by synonym, build the hash map
-
-
+      }
+      // If this is the first request for a unit by synonym, build the hash map
       if (Object.keys(this.unitSynonyms_).length === 0) {
         this.buildUnitSynonyms();
       }
-
       let foundCodes = [];
       foundCodes = this.unitSynonyms_[uSyn];
-
       if (foundCodes) {
         retObj['status'] = 'succeeded';
         let fLen = foundCodes.length;
-
         for (let f = 0; f < fLen; f++) {
           unitsArray.push(this.unitCodes_[foundCodes[f]]);
         }
-
         retObj['units'] = unitsArray;
       }
-
       if (unitsArray.length === 0) {
         retObj['status'] = 'failed';
         retObj['msg'] = `Unable to find any units with synonym = ${uSyn}`;
@@ -500,7 +435,6 @@ class UnitTablesFactory {
     } catch (err) {
       retObj['msg'] = err.message;
     }
-
     return retObj;
   } // end getUnitBySynonym
 
@@ -509,8 +443,6 @@ class UnitTablesFactory {
    *
    * @returns an array of the unit names
    */
-
-
   getAllUnitNames() {
     return Object.keys(this.unitNames_);
   } // end getAllUnitNames
@@ -522,30 +454,25 @@ class UnitTablesFactory {
    *
    * @returns {Array}
    */
-
-
   getUnitNamesList() {
     let nameList = [];
     let codes = Object.keys(this.unitCodes_);
     codes.sort(this.compareCodes);
     let uLen = codes.length;
-
     for (let i = 0; i < uLen; i++) {
       nameList[i] = codes[i] + Ucum.codeSep_ + this.unitCodes_[codes[i]].name_;
     } // end do for each code
-
-
     return nameList;
   }
+
   /*
    * Returns the mass dimension index
    * @returns this.massDimIndex_
    */
-
-
   getMassDimensionIndex() {
     return this.massDimIndex_;
   }
+
   /**
    * This provides a sort function for unit codes so that sorting ignores
    * square brackets and case.
@@ -554,8 +481,6 @@ class UnitTablesFactory {
    * @param b second value
    * @returns -1 if a is should fall before b; otherwise 1.
    */
-
-
   compareCodes(a, b) {
     a = a.replace(/[\[\]]/g, '');
     a = a.toLowerCase();
@@ -563,13 +488,12 @@ class UnitTablesFactory {
     b = b.toLowerCase();
     return a < b ? -1 : 1;
   }
+
   /**
    * Gets a list of all unit codes in the Unit tables
    *
    * @returns an array of the unit names
    */
-
-
   getAllUnitCodes() {
     return Object.keys(this.unitCodes_);
   } // end getAllUnitNames
@@ -583,16 +507,12 @@ class UnitTablesFactory {
    * @returns an array containing all unit objects, ordered by definition
    * order
    */
-
-
   allUnitsByDef() {
     let unitsList = [];
     let uLen = this.codeOrder_.length;
-
     for (let u = 0; u < uLen; u++) {
       unitsList.push(this.getUnitByCode(this.codeOrder_[u]));
     }
-
     return unitsList;
   } // end allUnitsByDef
 
@@ -606,24 +526,18 @@ class UnitTablesFactory {
    * @returns a buffer containing all unit objects, ordered by name
    * order
    */
-
-
   allUnitsByName(cols, sep) {
     if (sep === undefined || sep === null) sep = '|';
     let unitBuff = '';
     let unitsList = this.getAllUnitNames();
     let uLen = unitsList.length;
     let cLen = cols.length;
-
     for (let i = 0; i < uLen; i++) {
       let nameRecs = this.getUnitByName(unitsList[i]);
-
       for (let u = 0; u < nameRecs.length; u++) {
         let rec = nameRecs[u];
-
         for (let c = 0; c < cLen; c++) {
           if (c > 0) unitBuff += sep;
-
           if (cols[c] === 'dim_') {
             if (rec.dim_ !== null && rec.dim_ !== undefined && rec.dim_.dimVec_ instanceof Array) unitBuff += '[' + rec.dim_.dimVec_.join(',') + ']';else unitBuff += '';
           } else {
@@ -631,13 +545,9 @@ class UnitTablesFactory {
             if (typeof cbuf === 'string') unitBuff += cbuf.replace(/[\n\r]/g, ' ');else unitBuff += cbuf;
           }
         } // end do for each column requested
-
-
         unitBuff += '\r\n';
       } // end do for each unit in the unit names array
-
     }
-
     return unitBuff;
   } // end allUnitsByName
 
@@ -654,68 +564,52 @@ class UnitTablesFactory {
    *  (Used to use ; but the synonyms use that extensively).
    * @returns {string} buffer containing all the listings
    */
-
-
   printUnits(doLong, sep) {
     if (doLong === undefined) doLong = false;
     if (sep === undefined) sep = '|';
     let codeList = '';
     let uLen = this.codeOrder_.length;
     let unitString = 'csCode' + sep;
-
     if (doLong) {
       unitString += 'ciCode' + sep;
     }
-
     unitString += 'name' + sep;
     if (doLong) unitString += 'isBase' + sep;
     unitString += 'magnitude' + sep + 'dimension' + sep + 'from unit(s)' + sep + 'value' + sep + 'function' + sep;
     if (doLong) unitString += 'property' + sep + 'printSymbol' + sep + 'synonyms' + sep + 'source' + sep + 'class' + sep + 'isMetric' + sep + 'variable' + sep + 'isSpecial' + sep + 'isAbitrary' + sep;
     unitString += 'comment';
     codeList = unitString + '\n';
-
     for (let u = 0; u < uLen; u++) {
       let curUnit = this.getUnitByCode(this.codeOrder_[u]);
       unitString = this.codeOrder_[u] + sep;
-
       if (doLong) {
         unitString += curUnit.getProperty('ciCode_') + sep;
       }
-
       unitString += curUnit.getProperty('name_') + sep;
-
       if (doLong) {
         if (curUnit.getProperty('isBase_')) unitString += 'true' + sep;else unitString += 'false' + sep;
       }
-
       unitString += curUnit.getProperty('magnitude_') + sep;
       let curDim = curUnit.getProperty('dim_');
-
       if (curDim) {
         unitString += curDim.dimVec_ + sep;
       } else {
         unitString += 'null' + sep;
       }
-
       if (curUnit.csUnitString_) unitString += curUnit.csUnitString_ + sep + curUnit.baseFactor_ + sep;else unitString += 'null' + sep + 'null' + sep;
       if (curUnit.cnv_) unitString += curUnit.cnv_ + sep;else unitString += 'null' + sep;
-
       if (doLong) {
         unitString += curUnit.getProperty('property_') + sep + curUnit.getProperty('printSymbol_') + sep + curUnit.getProperty('synonyms_') + sep + curUnit.getProperty('source_') + sep + curUnit.getProperty('class_') + sep + curUnit.getProperty('isMetric_') + sep + curUnit.getProperty('variable_') + sep + curUnit.getProperty('isSpecial_') + sep + curUnit.getProperty('isArbitrary_') + sep;
       }
-
       if (curUnit.defError_) unitString += 'problem parsing this one, deferred to later.';
       codeList += unitString + '\n';
     }
-
     return codeList;
   }
-
 } // end UnitTablesFactory
+
 // Create a singleton instance and (to preserve the existing API) an object that
 // provides that instance via getInstance().
-
-
 var unitTablesInstance = new UnitTablesFactory();
 const UnitTables = {
   getInstance: function () {
