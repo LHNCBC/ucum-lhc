@@ -120,8 +120,11 @@ class UcumXmlDocument {
       attrs["exp_"] = pValNode.childNamed('sup');
 
       if (attrs["exp_"] != null) {
-        attrs["exp_"] = attrs["exp_"].val;
-        attrs["value_"] = Math.pow(10, attrs["exp_"]);
+        attrs["exp_"] = attrs["exp_"].val; // Use parseFloat('1eSOMETHING') instead of Math.pow() to avoid
+        // small number changes like 1.0000000000000001e-21. See LF-2830.
+        // attrs["value_"] = Math.pow(10, attrs["exp_"]);
+
+        attrs["value_"] = parseFloat(`1e${attrs["exp_"]}`);
       } else {
         attrs["value_"] = pValNode.val;
         attrs["exp_"] = null;
