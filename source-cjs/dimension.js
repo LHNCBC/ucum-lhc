@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Dimension = void 0;
-
 /**
  * This class implements an object containing the vector of exponents for
  * a unit and its operations for addition, subtraction, and multiplication
@@ -18,9 +17,7 @@ exports.Dimension = void 0;
  * @author Lee Mericle, based on java version by Gunther Schadow
  */
 var UC = require('./config.js');
-
 var isInteger = require("is-integer");
-
 class Dimension {
   /**
    * Constructor.
@@ -46,28 +43,26 @@ class Dimension {
     if (UC.Ucum.dimLen_ === 0) {
       throw new Error('Dimension.setDimensionLen must be called before ' + 'Dimension constructor');
     }
-
     if (dimSetting === undefined || dimSetting === null) {
       this.assignZero();
     } else if (dimSetting instanceof Array) {
       if (dimSetting.length !== UC.Ucum.dimLen_) {
         throw new Error('Parameter error, incorrect length of vector passed to ' + `Dimension constructor, vector = ${JSON.stringify(dimSetting)}`);
       }
-
       this.dimVec_ = [];
-
       for (let d = 0; d < UC.Ucum.dimLen_; d++) this.dimVec_.push(dimSetting[d]);
-    } // In es6 this should be Number.isInteger(dimSetting).  But Babel
+    }
+
+    // In es6 this should be Number.isInteger(dimSetting).  But Babel
     // doesn't transpile that correctly, so we need to use the isInteger
     // module.  :0
     else if (isInteger(dimSetting)) {
-        if (dimSetting < 0 || dimSetting >= UC.Ucum.dimLen_) {
-          throw new Error('Parameter error, invalid element number specified for ' + 'Dimension constructor');
-        }
-
-        this.assignZero();
-        this.dimVec_[dimSetting] = 1;
+      if (dimSetting < 0 || dimSetting >= UC.Ucum.dimLen_) {
+        throw new Error('Parameter error, invalid element number specified for ' + 'Dimension constructor');
       }
+      this.assignZero();
+      this.dimVec_[dimSetting] = 1;
+    }
   } // end constructor
 
   /**
@@ -81,20 +76,17 @@ class Dimension {
    * @throws an exception if the specified position is invalid, i.e., not a
    *   number or is less than 0 or greater than Ucum.dimLen_
    **/
-
-
   setElementAt(indexPos, value) {
     if (!isInteger(indexPos) || indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
       throw new Error(`Dimension.setElementAt called with an invalid index ` + `position (${indexPos})`);
     }
-
     if (!this.dimVec_) {
       this.assignZero();
     }
-
     if (value === undefined || value === null) value = 1;
     this.dimVec_[indexPos] = value;
   }
+
   /**
    * Gets the value of the element at the specified position
    *
@@ -104,17 +96,15 @@ class Dimension {
    * @throws an exception if the specified position is invalid, i.e., not a
    *   number or is less than 0 or greater than Ucum.dimLen_
    **/
-
-
   getElementAt(indexPos) {
     if (!isInteger(indexPos) || indexPos < 0 || indexPos >= UC.Ucum.dimLen_) {
       throw new Error(`Dimension.getElementAt called with an invalid index ` + `position (${indexPos})`);
     }
-
     let ret = null;
     if (this.dimVec_) ret = this.dimVec_[indexPos];
     return ret;
   }
+
   /**
    * This returns the value of the property named by the parameter
    * passed in.  Although we currently only have one property, dimVec_,
@@ -127,8 +117,6 @@ class Dimension {
    * @return the requested property, if found for this Dimension
    * @throws an error if the property is not found for this Dimension
    */
-
-
   getProperty(propertyName) {
     let uProp = propertyName.charAt(propertyName.length - 1) === '_' ? propertyName : propertyName + '_';
     return this[uProp];
@@ -142,13 +130,12 @@ class Dimension {
    *         values are enclosed in square brackets, each separated
    *         by a comma and a space
    **/
-
-
   toString() {
     let ret = null;
     if (this.dimVec_) ret = '[' + this.dimVec_.join(', ') + ']';
     return ret;
   }
+
   /**
    * Adds the vector of the dimension object passed in to this
    * dimension object's vector.  This object's vector is changed.
@@ -159,19 +146,16 @@ class Dimension {
    * @return this object
    * @throws an exception if dim2 is not a Dimension object
    **/
-
-
   add(dim2) {
     if (!dim2 instanceof Dimension) {
       throw new Error(`Dimension.add called with an invalid parameter - ` + `${typeof dim2} instead of a Dimension object`);
     }
-
     if (this.dimVec_ && dim2.dimVec_) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++) this.dimVec_[i] += dim2.dimVec_[i];
     }
-
     return this;
   }
+
   /**
    * Subtracts the vector of the dimension object passed in from this
    * dimension object's vector.  This object's vector is changed.
@@ -181,19 +165,16 @@ class Dimension {
    * @return this object
    * @throws an exception if dim2 is not a Dimension object
    **/
-
-
   sub(dim2) {
     if (!dim2 instanceof Dimension) {
       throw new Error(`Dimension.sub called with an invalid parameter - ` + `${typeof dim2} instead of a Dimension object`);
     }
-
     if (this.dimVec_ && dim2.dimVec_) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++) this.dimVec_[i] -= dim2.dimVec_[i];
     }
-
     return this;
   }
+
   /**
    * Inverts this dimension object's vector (by multiplying each element
    * by negative 1).  This object's vector is changed - unless it is null,
@@ -201,15 +182,13 @@ class Dimension {
    *
    * @return this object
    **/
-
-
   minus() {
     if (this.dimVec_) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++) this.dimVec_[i] = -this.dimVec_[i];
     }
-
     return this;
   }
+
   /**
    * Multiplies this dimension object's vector with a scalar.  This is used
    * when a unit is raised to a power.  This object's vector is changed unless
@@ -219,19 +198,16 @@ class Dimension {
    * @return this object
    * @throws an exception if s is not a number
    */
-
-
   mul(s) {
     if (!isInteger(s)) {
       throw new Error(`Dimension.sub called with an invalid parameter - ` + `${typeof dim2} instead of a number`);
     }
-
     if (this.dimVec_) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++) this.dimVec_[i] *= s;
     }
-
     return this;
   }
+
   /**
    * Tests for equality of this dimension object's vector and that of
    * the dimension object passed in.  If the dimension vector for one of
@@ -242,24 +218,20 @@ class Dimension {
    * @return true if the two vectors are equal; false otherwise.
    * @throws an exception if dim2 is not a Dimension object
    */
-
-
   equals(dim2) {
     if (!dim2 instanceof Dimension) {
       throw new Error(`Dimension.equals called with an invalid parameter - ` + `${typeof dim2} instead of a Dimension object`);
     }
-
     let isEqual = true;
     let dimVec2 = dim2.dimVec_;
-
     if (this.dimVec_ && dimVec2) {
       for (let i = 0; isEqual && i < UC.Ucum.dimLen_; i++) isEqual = this.dimVec_[i] === dimVec2[i];
     } else {
       isEqual = this.dimVec_ === null && dimVec2 === null;
     }
-
     return isEqual;
   }
+
   /**
    * Assigns the contents of the vector belonging to the dimension object
    * passed in to this dimension's vector.  If this dimension vector is null
@@ -272,39 +244,33 @@ class Dimension {
    * @return this object (not sure why)
    * @throws an exception if dim2 is not a Dimension object
    */
-
-
   assignDim(dim2) {
     if (!dim2 instanceof Dimension) {
       throw new Error(`Dimension.assignDim called with an invalid parameter - ` + `${typeof dim2} instead of a Dimension object`);
     }
-
     if (dim2.dimVec_ === null) this.dimVec_ = null;else {
       if (this.dimVec_ === null) {
         this.dimVec_ = [];
       }
-
       for (let i = 0; i < UC.Ucum.dimLen_; i++) this.dimVec_[i] = dim2.dimVec_[i];
     }
     return this;
   }
+
   /**
    * Sets all elements of this dimension object's vector to zero.
    * If this object's vector is null, it is created as a zero-filled vector.
    *
    * @return this object (not sure why)
    */
-
-
   assignZero() {
     if (this.dimVec_ === null || this.dimVec_ === undefined) this.dimVec_ = [];
-
     for (let i = 0; i < UC.Ucum.dimLen_; i++) {
       this.dimVec_.push(0);
     }
-
     return this;
   }
+
   /**
    * Tests for a dimension vector set to all zeroes.
    *
@@ -312,43 +278,34 @@ class Dimension {
    * zero; false otherwise (including if the current vector is null).
    *
    */
-
-
   isZero() {
     let allZero = this.dimVec_ !== null;
-
     if (this.dimVec_) {
       for (let i = 0; allZero && i < UC.Ucum.dimLen_; i++) allZero = this.dimVec_[i] === 0;
     }
-
     return allZero;
   }
+
   /**
    * Tests for a Dimension object with no dimension vector (dimVec_ is null).
    *
    * @return true the dimension vector is null; false if it is not
    *
    */
-
-
   isNull() {
     return this.dimVec_ === null;
   }
+
   /**
    * Creates and returns a clone of this Dimension object
    *
    * @return the clone
    */
-
-
   clone() {
     let that = new Dimension();
     that.assignDim(this);
     return that;
   }
-
 } // end Dimension class
-
-
 exports.Dimension = Dimension;
 //# sourceMappingURL=dimension.js.map

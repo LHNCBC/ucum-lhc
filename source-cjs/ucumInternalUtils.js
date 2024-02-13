@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.isNumericString = isNumericString;
 exports.isIntegerUnit = isIntegerUnit;
 exports.getSynonyms = getSynonyms;
-
 /**
  * Internal utilities used by multiple UCUM classes.  For example,
  * isNumericString is used by both the UnitString and UcumLhcUtils
@@ -25,7 +24,9 @@ exports.getSynonyms = getSynonyms;
  * @author Lee Mericle, based on java version by Gunther Schadow
  *
  */
+
 var UnitTables = require('./unitTables.js').UnitTables;
+
 /**
  * This function tests a string to see if it contains only numbers (digits,
  * a period, leading - or +).  This code was taken from a stackoverflow
@@ -35,11 +36,8 @@ var UnitTables = require('./unitTables.js').UnitTables;
  * @params theString
  * @returns true if the string contains only numbers; false otherwise
  */
-
-
 function isNumericString(theString) {
   let num = "" + theString; //coerce num to be a string
-
   return !isNaN(num) && !isNaN(parseFloat(num));
 } // end isNumericString
 
@@ -52,11 +50,10 @@ function isNumericString(theString) {
  *  it is positive, but you can't measure anything in units of zero.
  * @param str the string to check
  */
-
-
 function isIntegerUnit(str) {
   return /^\d+$/.test(str);
 }
+
 /**
  * This method accepts a term and looks for units that include it as
  * a synonym - or that include the term in its name.
@@ -72,14 +69,13 @@ function isIntegerUnit(str) {
  *    the unit's csCode_, the unit's name_, and the unit's guidance_
  *
  */
-
-
 function getSynonyms(theSyn) {
   let retObj = {};
   let utab = UnitTables.getInstance();
   let resp = {};
-  resp = utab.getUnitBySynonym(theSyn); // If we didn't get any units, transfer the status and message
+  resp = utab.getUnitBySynonym(theSyn);
 
+  // If we didn't get any units, transfer the status and message
   if (!resp['units']) {
     retObj['status'] = resp['status'];
     retObj['msg'] = resp['msg'];
@@ -87,7 +83,6 @@ function getSynonyms(theSyn) {
     retObj['status'] = 'succeeded';
     let aLen = resp['units'].length;
     retObj['units'] = [];
-
     for (let a = 0; a < aLen; a++) {
       let theUnit = resp['units'][a];
       retObj['units'][a] = {
@@ -96,10 +91,7 @@ function getSynonyms(theSyn) {
         'guidance': theUnit.guidance_
       };
     } // end do for all units returned
-
   } // end if we got a units list
-
-
   return retObj;
 } // end getSynonyms
 //# sourceMappingURL=ucumInternalUtils.js.map
