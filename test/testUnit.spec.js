@@ -285,3 +285,10 @@ describe('Generated names for complex units', function() {
   });
 
 }) ; // end Test attempts to multiply/divide arbitrary units
+
+describe('Test invertString', function (){
+  it('should keep sup tags intact', function(){
+    var testUnit = new UnitObj();
+    assert.equal(testUnit.invertString('10<sup>9</sup>'), '/10<sup>9</sup>');
+  });
+});

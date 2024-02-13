@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Ucum = void 0;
-
 /*
  * This defines the namespace for the UCUM classes and provides
  * a place for the definition of global variables and constants.
@@ -12,6 +11,7 @@ exports.Ucum = void 0;
  * The javascript for this UCUM implementation uses syntax as
  * defined by the ECMAScript 6 standard
  */
+
 var Ucum = {
   /**
    *  Flag indicating whether or not we're using case sensitive labels
@@ -28,13 +28,11 @@ var Ucum = {
    *  set from that.
    */
   dimLen_: 7,
-
   /**
    *  The characters used as valid operators in a UCUM unit expression,
    *  where '.' is for multiplication and '/' is for division.
    */
   validOps_: ['.', '/'],
-
   /**
    * The string used to separate a unit code and unit name when they
    * are displayed together
@@ -45,48 +43,41 @@ var Ucum = {
   valMsgEnd_: '?',
   cnvMsgStart_: 'We assumed you meant ',
   cnvMsgEnd_: '.',
-
   /**
      * Default opening string used to emphasize portions of error messages.
      * Used when NOT displaying messages on a web site, i.e., for output
      * from the library methods or to a file.
      */
   openEmph_: ' ->',
-
   /**
    * Default closing string used to emphasize portions of error messages.
    * Used when NOT displaying messages on a web site, i.e., for output
    * from the library methods or to a file.
    */
   closeEmph_: '<- ',
-
   /**
    * Opening HTML used to emphasize portions of error messages.  Used when
    * displaying messages on a web site; should be blank when output is
    * to a file.
    */
   openEmphHTML_: ' <span class="emphSpan">',
-
   /**
    * Closing HTML used to emphasize portions of error messages.  Used when
    * displaying messages on a web site; should be blank when output is
    * to a file.
    */
   closeEmphHTML_: '</span> ',
-
   /**
    * Message that is displayed when annotations are included in a unit
    * string, to let the user know how they are interpreted.
    */
   bracesMsg_: 'FYI - annotations (text in curly braces {}) are ignored, ' + 'except that an annotation without a leading symbol implies ' + 'the default unit 1 (the unity).',
-
   /**
    * Message that is displayed or returned when a conversion is requested
    * for two units where (only) a mass<->moles conversion is appropriate
    * but no molecular weight was specified.
    */
   needMoleWeightMsg_: 'Did you wish to convert between mass and moles?  The ' + 'molecular weight of the substance represented by the ' + 'units is required to perform the conversion.',
-
   /**
    * Hash that matches unit column names to names used in the csv file
    * that is submitted to the data updater.
@@ -100,12 +91,10 @@ var Ucum = {
     'category': 'category_',
     'Guidance': 'guidance_'
   },
-
   /**
    * Name of the column in the csv file that serves as the key
    */
   inputKey_: 'case-sensitive code',
-
   /**
    * Special codes that contain operators within brackets.  The operator
    * within these codes causes them to parse incorrectly if they are preceded
