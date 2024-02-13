@@ -878,11 +878,16 @@ export class UnitString {
       else {
 
         if (intUtils_.isNumericString(aftText)) {
-          pStr += aftText;
-          retUnit = retUnit.power(Number(aftText));
-          this.retMsg_.push(`An exponent (${aftText}) following a parenthesis ` +
-            `is invalid as of revision 1.9 of the UCUM Specification.\n  ` +
-            this.vcMsgStart_ + pStr + this.vcMsgEnd_);
+          retUnit = null;
+          let msg = `An exponent (${aftText}) following a parenthesis ` +
+            `is invalid as of revision 1.9 of the UCUM Specification.`;
+          // Add the suggestion only if the string in the parenthesis don't end with a number.
+          if (!pStr.match(/\d$/)) {
+            pStr += aftText;
+            msg += '\n  ' + this.vcMsgStart_ + pStr + this.vcMsgEnd_;
+          }
+          this.retMsg_.push(msg);
+          endProcessing = true;
         }
         // else the text after the parentheses is neither a number nor
         // an annotation.  If suggestions were NOT requested, record an
@@ -1149,143 +1154,150 @@ export class UnitString {
           origUnit = this.utabs_.getUnitByCode(uCode);
         }
 
-
-        // If we still don't have a unit, separate out the prefix, if any,
-        // and try without it.
-        if (!origUnit) {
-          // Try for a single character prefix first.
-          pfxCode = uCode.charAt(0);
-          pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
-
-          // if we got a prefix, get its info and remove it from the unit code
-          if (pfxObj) {
-            pfxVal = pfxObj.getValue();
-            pfxExp = pfxObj.getExp();
-            let pCodeLen = pfxCode.length;
-            uCode = uCode.substr(pCodeLen);
-
-            // try again for the unit
-            origUnit = this.utabs_.getUnitByCode(uCode);
-
-            // If we still don't have a unit, see if the prefix could be the
-            // two character "da" (deka) prefix.  That's the only prefix with
-            // two characters, and without this check it's interpreted as "d"
-            // (deci) and the "a" is considered part of the unit code.
-
-            if (!origUnit && pfxCode == 'd' && uCode.substr(0, 1) == 'a') {
-              pfxCode = 'da';
-              pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
-              pfxVal = pfxObj.getValue();
-              uCode = uCode.substr(1);
-
-              // try one more time for the unit
-              origUnit = this.utabs_.getUnitByCode(uCode);
-            }
-
-            // Reject the unit we found if it might have another prefix.
-            // Such things are in our tables through the LOINC source_
-            // (ucum.csv) which has guidance and synonyms.  I think it should be
-            // safe to exclude anything whose source is LOINC from having a
-            // prefix.
-            if (origUnit && origUnit.source_ == 'LOINC')
-              origUnit = null;
-          } // end if we found a prefix
-        } // end if we didn't get a unit after removing an exponent
-
-        // If we still haven't found anything, we're done looking.
-        // (We tried with the full unit string, with the unit string
-        // without the exponent, the unit string without a prefix,
-        // common errors, etc. That's all we can try).
-        if (!origUnit) {
-          retUnit = null ;
-          // BUT if the user asked for suggestions, at least look for them
-          if (this.suggestions_) {
-            let suggestStat = this._getSuggestions(origCode);
-          }
-          else {
-            this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
-          }
+        // If an exponent is found but it's not a valid number, e.g. "2-1",
+        // mark the unit invalid. Otherwise, the "-1" part will be ignored
+        // because parseInt("2-1") results in 2. See LF-2870.
+        if (exp && isNaN(exp)) {
+          retUnit = null;
+          this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
         }
         else {
-          // Otherwise we found a unit object.  Clone it and then apply the
-          // prefix and exponent, if any, to it.  And remove the guidance.
-          retUnit = origUnit.clone();
-          // If we are here, this is only part of the full unit string, so it is
-          // not a base unit, and the synonyms will mostly likely not be correct for the full
-          // string.
-          retUnit.resetFieldsForDerivedUnit();
-          let theDim = retUnit.getProperty('dim_');
-          let theMag = retUnit.getProperty('magnitude_');
-          let theName = retUnit.getProperty('name_');
-          let theCiCode = retUnit.getProperty('ciCode_');
-          let thePrintSymbol = retUnit.getProperty('printSymbol_');
-          // If there is an exponent for the unit, apply it to the dimension
-          // and magnitude now
-          if (exp) {
-            exp = parseInt(exp);
-            let expMul = exp;
-            if (theDim)
-              theDim = theDim.mul(exp);
-            theMag = Math.pow(theMag, exp);
-            retUnit.assignVals({'magnitude_': theMag});
+          // If we still don't have a unit, separate out the prefix, if any,
+          // and try without it.
+          if (!origUnit) {
+            // Try for a single character prefix first.
+            pfxCode = uCode.charAt(0);
+            pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
 
-            // If there is also a prefix, apply the exponent to the prefix.
+            // if we got a prefix, get its info and remove it from the unit code
             if (pfxObj) {
+              pfxVal = pfxObj.getValue();
+              pfxExp = pfxObj.getExp();
+              let pCodeLen = pfxCode.length;
+              uCode = uCode.substr(pCodeLen);
 
-              // if the prefix base is 10 it will have an exponent.  Multiply
-              // the current prefix exponent by the exponent for the unit
-              // we're working with.  Then raise the prefix value to the level
-              // defined by the exponent.
-              if (pfxExp) {
-                expMul *= pfxObj.getExp();
-                pfxVal = Math.pow(10, expMul);
+              // try again for the unit
+              origUnit = this.utabs_.getUnitByCode(uCode);
+
+              // If we still don't have a unit, see if the prefix could be the
+              // two character "da" (deka) prefix.  That's the only prefix with
+              // two characters, and without this check it's interpreted as "d"
+              // (deci) and the "a" is considered part of the unit code.
+
+              if (!origUnit && pfxCode == 'd' && uCode.substr(0, 1) == 'a') {
+                pfxCode = 'da';
+                pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
+                pfxVal = pfxObj.getValue();
+                uCode = uCode.substr(1);
+
+                // try one more time for the unit
+                origUnit = this.utabs_.getUnitByCode(uCode);
               }
-              // If the prefix base is not 10, it won't have an exponent.
-              // At the moment I don't see any units using the prefixes
-              // that aren't base 10.   But if we get one the prefix value
-              // will be applied to the magnitude (below) if the unit does
-              // not have a conversion function, and to the conversion prefix
-              // if it does.
-            } // end if there's a prefix as well as the exponent
-          } // end if there's an exponent
 
-          // Now apply the prefix, if there is one, to the conversion
-          // prefix or the magnitude
-          if (pfxObj) {
-            if (retUnit.cnv_) {
-              retUnit.assignVals({'cnvPfx_': pfxVal});
+              // Reject the unit we found if it might have another prefix.
+              // Such things are in our tables through the LOINC source_
+              // (ucum.csv) which has guidance and synonyms.  I think it should be
+              // safe to exclude anything whose source is LOINC from having a
+              // prefix.
+              if (origUnit && origUnit.source_ == 'LOINC')
+                origUnit = null;
+            } // end if we found a prefix
+          } // end if we didn't get a unit after removing an exponent
+
+          // If we still haven't found anything, we're done looking.
+          // (We tried with the full unit string, with the unit string
+          // without the exponent, the unit string without a prefix,
+          // common errors, etc. That's all we can try).
+          if (!origUnit) {
+            retUnit = null ;
+            // BUT if the user asked for suggestions, at least look for them
+            if (this.suggestions_) {
+              let suggestStat = this._getSuggestions(origCode);
             }
             else {
-              theMag *= pfxVal;
-              retUnit.assignVals({'magnitude_': theMag})
+              this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
             }
           }
-          // if we have a prefix and/or an exponent, add them to the unit
-          // attributes - name, csCode, ciCode and print symbol
-          let theCode = retUnit.csCode_;
-          if (pfxObj) {
-            theName = pfxObj.getName() + theName;
-            theCode = pfxCode + theCode;
-            theCiCode = pfxObj.getCiCode() + theCiCode;
-            thePrintSymbol = pfxObj.getPrintSymbol() + thePrintSymbol;
-            retUnit.assignVals({
-              'name_': theName,
-              'csCode_': theCode,
-              'ciCode_': theCiCode,
-              'printSymbol_': thePrintSymbol
-            });
-          }
-          if (exp) {
-            let expStr = exp.toString();
-            retUnit.assignVals({
-              'name_': theName + '<sup>' + expStr + '</sup>',
-              'csCode_': theCode + expStr,
-              'ciCode_': theCiCode + expStr,
-              'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
-            });
-          }
-        } // end if an original unit was found (without prefix and/or exponent)
+          else {
+            // Otherwise we found a unit object.  Clone it and then apply the
+            // prefix and exponent, if any, to it.  And remove the guidance.
+            retUnit = origUnit.clone();
+            // If we are here, this is only part of the full unit string, so it is
+            // not a base unit, and the synonyms will mostly likely not be correct for the full
+            // string.
+            retUnit.resetFieldsForDerivedUnit();
+            let theDim = retUnit.getProperty('dim_');
+            let theMag = retUnit.getProperty('magnitude_');
+            let theName = retUnit.getProperty('name_');
+            let theCiCode = retUnit.getProperty('ciCode_');
+            let thePrintSymbol = retUnit.getProperty('printSymbol_');
+            // If there is an exponent for the unit, apply it to the dimension
+            // and magnitude now
+            if (exp) {
+              exp = parseInt(exp);
+              let expMul = exp;
+              if (theDim)
+                theDim = theDim.mul(exp);
+              theMag = Math.pow(theMag, exp);
+              retUnit.assignVals({'magnitude_': theMag});
 
+              // If there is also a prefix, apply the exponent to the prefix.
+              if (pfxObj) {
+
+                // if the prefix base is 10 it will have an exponent.  Multiply
+                // the current prefix exponent by the exponent for the unit
+                // we're working with.  Then raise the prefix value to the level
+                // defined by the exponent.
+                if (pfxExp) {
+                  expMul *= pfxObj.getExp();
+                  pfxVal = Math.pow(10, expMul);
+                }
+                // If the prefix base is not 10, it won't have an exponent.
+                // At the moment I don't see any units using the prefixes
+                // that aren't base 10.   But if we get one the prefix value
+                // will be applied to the magnitude (below) if the unit does
+                // not have a conversion function, and to the conversion prefix
+                // if it does.
+              } // end if there's a prefix as well as the exponent
+            } // end if there's an exponent
+
+            // Now apply the prefix, if there is one, to the conversion
+            // prefix or the magnitude
+            if (pfxObj) {
+              if (retUnit.cnv_) {
+                retUnit.assignVals({'cnvPfx_': pfxVal});
+              }
+              else {
+                theMag *= pfxVal;
+                retUnit.assignVals({'magnitude_': theMag})
+              }
+            }
+            // if we have a prefix and/or an exponent, add them to the unit
+            // attributes - name, csCode, ciCode and print symbol
+            let theCode = retUnit.csCode_;
+            if (pfxObj) {
+              theName = pfxObj.getName() + theName;
+              theCode = pfxCode + theCode;
+              theCiCode = pfxObj.getCiCode() + theCiCode;
+              thePrintSymbol = pfxObj.getPrintSymbol() + thePrintSymbol;
+              retUnit.assignVals({
+                'name_': theName,
+                'csCode_': theCode,
+                'ciCode_': theCiCode,
+                'printSymbol_': thePrintSymbol
+              });
+            }
+            if (exp) {
+              let expStr = exp.toString();
+              retUnit.assignVals({
+                'name_': theName + '<sup>' + expStr + '</sup>',
+                'csCode_': theCode + expStr,
+                'ciCode_': theCiCode + expStr,
+                'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
+              });
+            }
+          } // end if an original unit was found (without prefix and/or exponent)
+        } // end if an invalid exponent wasn't found
       } // end if we didn't get a unit for the full unit code (w/out modifiers)
     } // end if we didn't find the unit on the first try, before parsing
     return [retUnit, origString];

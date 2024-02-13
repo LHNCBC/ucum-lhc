@@ -49,6 +49,51 @@ for (let u=0; u < pkgs.length; u++) {
       });
     });
 
+    describe('Validate_g.m2-1', function () {
+      describe('Validation Return Object', function () {
+        var returnObj = utils.validateUnitString('g.m2-1');
+        it("should return status = invalid", function () {
+          assert.equal(returnObj['status'], "invalid");
+        });
+        it("should return a null ucumCode", function () {
+          assert.equal(returnObj['ucumCode'], null);
+        });
+        it("should return error message for 'g.m2-1'", function () {
+          assert.equal(returnObj['msg'][0], "m2-1 is not a valid UCUM code.");
+        });
+      });
+    });
+
+    describe('Validate_g.(m2)-1', function () {
+      describe('Validation Return Object', function () {
+        var returnObj = utils.validateUnitString('g.(m2)-1');
+        it("should return status = invalid", function () {
+          assert.equal(returnObj['status'], "invalid");
+        });
+        it("should return a null ucumCode", function () {
+          assert.equal(returnObj['ucumCode'], null);
+        });
+        it("should return error message for 'g.(m2)-1'", function () {
+          assert.equal(returnObj['msg'][0], "An exponent (-1) following a parenthesis is invalid as of revision 1.9 of the UCUM Specification.");
+        });
+      });
+    });
+
+    describe('Validate_g.(m)-1', function () {
+      describe('Validation Return Object', function () {
+        var returnObj = utils.validateUnitString('g.(m)-1');
+        it("should return status = invalid", function () {
+          assert.equal(returnObj['status'], "invalid");
+        });
+        it("should return a null ucumCode", function () {
+          assert.equal(returnObj['ucumCode'], null);
+        });
+        it("should return error message for 'g.(m)-1'", function () {
+          assert.equal(returnObj['msg'][0], "An exponent (-1) following a parenthesis is invalid as of revision 1.9 of the UCUM Specification.\n  Did you mean m-1?");
+        });
+      });
+    });
+
     describe('Convert fathoms to inches', function () {
       describe('Conversion Return Object', function () {
         var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]');
