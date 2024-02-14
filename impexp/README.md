@@ -7,8 +7,9 @@ Before you can use the tool you need to build it with the command:
 
     npm run build
 
-Then, to generate **ucumDefs.json**, run command:
+Then, to generate **ucumDefs.json**, cd into the "impexp" folder and run command:
 
+    cd impexp
     node updateDataBuild
 
 This runs the code that does two actions:

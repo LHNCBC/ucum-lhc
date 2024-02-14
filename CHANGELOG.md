@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.3] 2024-02-14
+### Fixed
+- Typos in ucum.csv.
+
 ## [5.0.2] 2024-02-13
 ### Fixed
 - Validator issues reported on github: g.m2-1 and g.(m2)-1 should be invalid.
