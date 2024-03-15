@@ -55,8 +55,8 @@
     "webpack-cli": "^5.0.1"
   },
   "scripts": {
-    "build": "source ./bashrc.ucum-lhc && grunt build && webpack",
-    "test": "source ./bashrc.ucum-lhc && grunt test"
+    "build": "grunt build && webpack",
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
