@@ -94,6 +94,21 @@ for (let u=0; u < pkgs.length; u++) {
       });
     });
 
+    describe('Validate_m(/s)', function () {
+      describe('Validation Return Object', function () {
+        var returnObj = utils.validateUnitString('m(/s)');
+        it("should return status = invalid", function () {
+          assert.equal(returnObj['status'], "invalid");
+        });
+        it("should return a null ucumCode", function () {
+          assert.equal(returnObj['ucumCode'], null);
+        });
+        it("should return error message for 'm(/s)'", function () {
+          assert.equal(returnObj['msg'][0], "Unary operator '/' is only allowed at the beginning of the main term, not inside a parenthesis.");
+        });
+      });
+    });
+
     describe('Convert fathoms to inches', function () {
       describe('Conversion Return Object', function () {
         var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]');
