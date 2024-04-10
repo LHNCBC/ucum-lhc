@@ -536,7 +536,7 @@ export class UnitString {
           if (parseResp[0] === null)
             stopProcessing = true;
           else if (uString[openPos + 1] === '/') {
-            // If the term inside the parenthesis starts with '/', fail the validation. See LF2854.
+            // If the term inside the parenthesis starts with '/', fail the validation. See LF-2854.
             this.retMsg_.push("Unary operator '/' is only allowed at the beginning of the main term, not inside a parenthesis.");
             stopProcessing = true;
           }
