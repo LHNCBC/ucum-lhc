@@ -488,7 +488,11 @@ class UnitString {
           closePos = c;
           uStrArray[uStrAryPos++] = this.parensFlag_ + pu.toString() + this.parensFlag_;
           let parseResp = this._parseTheString(uString.substring(openPos + 1, closePos - 1), origString);
-          if (parseResp[0] === null) stopProcessing = true;else {
+          if (parseResp[0] === null) stopProcessing = true;else if (uString[openPos + 1] === '/') {
+            // If the term inside the parenthesis starts with '/', fail the validation. See LF2854.
+            this.retMsg_.push("Unary operator '/' is only allowed at the beginning of the main term, not inside a parenthesis.");
+            stopProcessing = true;
+          } else {
             origString = parseResp[1];
             this.parensUnits_[pu++] = parseResp[0];
             uString = uString.substr(closePos);
