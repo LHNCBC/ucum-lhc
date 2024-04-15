@@ -148,6 +148,158 @@ export class UcumLhcUtils {
   /**
    * This method converts one unit to another
    *
+   * @param {string} fromUnitCode - the unit code/expression/string of the unit to be converted
+   * @param {number} fromVal - the number of "from" units to be converted to "to" units
+   * @param {string} toUnitCode - the unit code/expression/string of the unit that the from field is to be converted to
+   * @param {{
+   *   suggest?: boolean, 
+   *   molecularWeight?: number
+   * }} options
+   *  - suggest: a boolean to indicate whether or not suggestions are requested for a string that cannot be resolved to a valid unit;
+   *    true indicates suggestions are wanted; false indicates they are not, and is the default if the parameter is not specified;
+   *  - molecularWeight: the molecular weight of the substance in question when a conversion is being requested from mass to moles and vice versa.
+   *    This is required when one of the units represents a value in moles.  It is ignored if neither unit includes a measurement in moles.
+   * @returns {{
+   *   status: 'succeeded' | 'failed' | 'error',
+   *   toVal: number | null,
+   *   msg: string[],
+   *   suggestions: {
+   *     from: {
+   *       msg: string,
+   *       invalidUnit: string,
+   *       units: string[]
+   *     },
+   *     to: {
+   *       msg: string,
+   *       invalidUnit: string,
+   *       units: string[]
+   *     }
+   *   },
+   *  fromUnit: string,
+   *  toUnit: string
+   * }}
+   */
+  convertUnitTo(fromUnitCode, fromVal, toUnitCode, options = {}) {
+    let {suggest = false, molecularWeight = null} = options;
+
+    let returnObj = {'status' : 'failed',
+                     'toVal' : null,
+                     'msg' : []} ;
+
+    if (fromUnitCode) {
+      fromUnitCode = fromUnitCode.trim();
+    }
+    if (!fromUnitCode || fromUnitCode == '') {
+      returnObj['status'] = 'error';
+      returnObj['msg'].push('No "from" unit expression specified.');
+    }
+    this._checkFromVal(fromVal, returnObj);
+    if (toUnitCode) {
+      toUnitCode = toUnitCode.trim();
+    }
+    if (!toUnitCode || toUnitCode == '') {
+      returnObj['status'] = 'error';
+      returnObj['msg'].push('No "to" unit expression specified.');
+    }
+    if (returnObj['status'] !== 'error') {
+      try {
+        let fromUnit = null;
+
+        let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
+        fromUnit = parseResp['unit'];
+        if (parseResp['retMsg'])
+          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+        if (parseResp['suggestions']) {
+          returnObj['suggestions'] = {};
+          returnObj['suggestions']['from'] = parseResp['suggestions'];
+        }
+        if (!fromUnit) {
+          returnObj['msg'].push(`Unable to find a unit for ${fromUnitCode}, ` +
+            `so no conversion could be performed.`);
+        }
+
+        let toUnit = null;
+        parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
+        toUnit = parseResp['unit'];
+        if (parseResp['retMsg'])
+          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+        if (parseResp['suggestions']) {
+          if (!returnObj['suggestions'])
+            returnObj['suggestions'] = {} ;
+          returnObj['suggestions']['to'] = parseResp['suggestions'];
+        }
+        if (!toUnit) {
+          returnObj['msg'].push(`Unable to find a unit for ${toUnitCode}, ` +
+                                `so no conversion could be performed.`);
+        }
+
+        if (fromUnit && toUnit) {
+          try {
+            // if no molecular weight was specified perform a normal conversion
+            if (!molecularWeight) {
+              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+            }
+            else {
+              if (fromUnit.moleExp_ !== 0 && toUnit.moleExp_ !== 0) {
+                throw(new Error('A molecular weight was specified ' +
+                  'but a mass <-> mole conversion cannot be executed for two ' +
+                  'mole-based units.  No conversion was attempted.'));
+              }
+              if (fromUnit.moleExp_ === 0 && toUnit.moleExp_ === 0) {
+                throw(new Error('A molecular weight was specified ' +
+                  'but a mass <-> mole conversion cannot be executed when ' +
+                  'neither unit is mole-based.  No conversion was attempted.'));
+              }
+              if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+                throw(new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                  `converted to ${toUnitCode}.`));
+              }
+
+              // if the "from" unit is a mole-based unit, assume a mole to mass
+              // request
+              if (fromUnit.moleExp_ !== 0) {
+                returnObj['toVal'] =
+                  fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
+              }
+              // else the "to" unit must be the mole-based unit, so assume a
+              // mass to mole request
+              else {
+                returnObj['toVal'] =
+                  fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
+              }
+            } // end if a molecular weight was specified
+
+            // if an error hasn't been thrown - either from convertFrom or here,
+            // set the return object to show success
+            returnObj['status'] = 'succeeded';
+            returnObj['fromUnit'] = fromUnit;
+            returnObj['toUnit'] = toUnit;
+          }
+          catch (err) {
+            returnObj['status'] = 'failed';
+            returnObj['msg'].push(err.message);
+          }
+
+
+        }  // end if we have the from and to units
+      }
+      catch (err) {
+        if (err.message == Ucum.needMoleWeightMsg_)
+          returnObj['status'] = 'failed';
+        else
+          returnObj['status'] = 'error';
+        returnObj['msg'].push(err.message);
+      }
+    }
+
+    return returnObj ;
+
+  } // end convertUnitTo
+  
+  /**
+   * @deprecated - use convertUnitTo instead
+   * This method converts one unit to another
+   *
    * @param fromUnitCode the unit code/expression/string of the unit to be converted
    * @param fromVal the number of "from" units to be converted to "to" units
    * @param toUnitCode the unit code/expression/string of the unit that the from
@@ -203,7 +355,7 @@ export class UcumLhcUtils {
    *  'toUnit' the unit object for the toUnitCode passed in; returned
    *     in case it's needed for additional data from the object.
    */
-  convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight) {
+  convertUnitTo_legacy(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight) {
     if (suggest === undefined)
       suggest = false ;
 
@@ -322,8 +474,7 @@ export class UcumLhcUtils {
 
     return returnObj ;
 
-  } // end convertUnitTo
-
+  } // end convertUnitTo_legacy
 
   /**
    *  Converts the given unit string into its base units, their exponents, and
