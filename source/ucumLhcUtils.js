@@ -198,8 +198,8 @@ export class UcumLhcUtils {
    *    true indicates suggestions are wanted; false indicates they are not, and is the default if the parameter is not specified;
    *  - molecularWeight: the molecular weight of the substance in question when a conversion is being requested from mass to moles and vice versa.
    *    This is required when one of the units represents a value in moles.  It is ignored if neither unit includes a measurement in moles.
-   *  - valence: the valence of the substance in question when a conversion is being requested from mass to moles and vice versa.
-   * @returns {ConvertUnitResult} 
+   *  - valence: the valence of the substance in question when a conversion is being requested from mass/moles to eq and vice versa.
+   * @returns {ConvertUnitResult}
    * - a hash with six elements:
    *   - 'status' that will be: 'succeeded' if the conversion was successfully
    *     calculated; 'failed' if the conversion could not be made, e.g., if
