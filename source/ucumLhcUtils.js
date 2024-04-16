@@ -243,7 +243,7 @@ export class UcumLhcUtils {
    *   - 'toUnit' the unit object for the toUnitCode passed in; returned
    *     in case it's needed for additional data from the object.
    */
-  convertUnitTo = (fromUnitCode, fromVal, toUnitCode, options = {}) => {
+  convertUnitTo(fromUnitCode, fromVal, toUnitCode, options = {}) {
     let {
       suggest = false, 
       molecularWeight = null, 
@@ -344,19 +344,16 @@ export class UcumLhcUtils {
 
               // If both units are equivalent/mol based and molecular weight is specified, perform mole <-> equivalent conversion
               // Note that molecular weight is not used in this conversion, but we are handling the case where it is provided anyways
-              if (this.isEquivalentUnit(fromUnit) && this.isMolarUnit(toUnit) ) {
-                // If from unit is equivalent and to unit is moles, perform eq to mol conversion
-                if (this.isEquivalentUnit(fromUnit) && this.isMolarUnit(toUnit)) {
-                  returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
-                } 
-                // If from unit is moles and to unit is equivalent, perform mol to eq conversion
-                else if (this.isMolarUnit(fromUnit) && this.isEquivalentUnit(toUnit) ) {
-                  returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
-                }
+              // If from unit is equivalent and to unit is moles, perform eq to mol conversion
+              if (this.isEquivalentUnit(fromUnit) && this.isMolarUnit(toUnit)) {
+                returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
+              } 
+              // If from unit is moles and to unit is equivalent, perform mol to eq conversion
+              else if (this.isMolarUnit(fromUnit) && this.isEquivalentUnit(toUnit) ) {
+                returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
               }
-
               // Convert equivalent to mass if from unit is equivalent-based and to unit is not mol based
-              if (this.isEquivalentUnit(fromUnit) && this.isNonMolarUnit(toUnit)) {
+              else if (this.isEquivalentUnit(fromUnit) && this.isNonMolarUnit(toUnit)) {
                 returnObj.toVal = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
               }
               // Convert mass to equivalent if from unit is non-mol based and to unit is equivalent-based
