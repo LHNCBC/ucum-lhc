@@ -439,49 +439,49 @@ it("should return a message for invalid unit strings", function() {
   // end
 
   it("should return 3.4 for a request to convert 300.57 umol/L to mg/dL weight 113.1179", function() {
-    var resp5 = utils.convertUnitTo('umol/L', 300.57, 'mg/dL', {molecularWeight: 113.1179});
+    var resp5 = utils.convertUnitTo('umol/L', 300.57, 'mg/dL', { molecularWeight: 113.1179 });
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), 3.4, resp5.toVal);
   });
 
   it("should return 300.57 for a request to convert 3.4 mg/dL to umol/L weight 113.1179", function() {
-    var resp5 = utils.convertUnitTo('mg/dL', 3.4, 'umol/L', {molecularWeight: 113.1179});
+    var resp5 = utils.convertUnitTo('mg/dL', 3.4, 'umol/L', { molecularWeight: 113.1179 });
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(5), 300.57, resp5.toVal)
   });
 
   it("should return 6.7 for a request to convert 1.67 mmol/L to mg/dL weight 40.078", function() {
-    var resp5 = utils.convertUnitTo('mmol/L', 1.67, 'mg/dL', {molecularWeight: 40.078});
+    var resp5 = utils.convertUnitTo('mmol/L', 1.67, 'mg/dL', { molecularWeight: 40.078 });
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(2), 6.7, resp5.toVal);
   });
 
   it("should return 1.67 for a request to convert 6.7 mg/dL to mmol/L weight 40.078", function() {
-    var resp5 = utils.convertUnitTo('mg/dL', 6.7, 'mmol/L', {molecularWeight: 40.078});
+    var resp5 = utils.convertUnitTo('mg/dL', 6.7, 'mmol/L', { molecularWeight: 40.078 });
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), 1.67, resp5.toVal.toPrecision(3));
   });
 
   it("should return .001 for a request to convert 1 umol.L/g to mg.L/g weight 1", function() {
-    var resp5 = utils.convertUnitTo('umol.L/g', 1, 'mg.L/g', {molecularWeight: 1});
+    var resp5 = utils.convertUnitTo('umol.L/g', 1, 'mg.L/g', { molecularWeight: 1 });
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), .001, resp5.toVal.toPrecision(3));
   });
 
   it("should return .001 for a request to convert 1 mg.umol to mg2 weight 1", function() {
-    var resp5 = utils.convertUnitTo('mg.umol', 1, 'mg2', {molecularWeight: 1});
+    var resp5 = utils.convertUnitTo('mg.umol', 1, 'mg2', { molecularWeight: 1 });
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), .001, resp5.toVal.toPrecision(3));
   });
 
   it("should return an error for an attempt to translate 1 pmol to 1/g weight 1", function() {
-    var resp4 = utils.convertUnitTo('pmol', 1, '1/g', {molecularWeight: 1});
+    var resp4 = utils.convertUnitTo('pmol', 1, '1/g', { molecularWeight: 1 });
     assert.equal(resp4.status, 'failed', resp4.status);
     assert.equal(resp4.msg[0], 'Sorry.  pmol cannot be converted to 1/g.', resp4.msg[0]);
   });
 
   it("should return an error for an attempt to translate 1 pmol/g to mg/dL weight 1", function() {
-    var resp4 = utils.convertUnitTo('pmol/g', 1, 'mg/dL', {molecularWeight: 1});
+    var resp4 = utils.convertUnitTo('pmol/g', 1, 'mg/dL', { molecularWeight: 1 });
     assert.equal(resp4.status, 'failed', resp4.status);
     assert.equal(resp4.msg[0], 'Sorry.  pmol/g cannot be converted to mg/dL.', resp4.msg[0]);
   });
