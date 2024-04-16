@@ -661,7 +661,7 @@ export class Unit {
     // Retrieve the magnitude of the target mole unit
     let toMolesFactor = molToUnit.magnitude_ / avoNum ;
     // Calculate and return the amount in moles, taking into account the valence and the mole factors
-    return (eqFromVal * molesFactor * valence) / toMolesFactor;
+    return (eqFromVal * molesFactor ) / valence / toMolesFactor;
   }
 
   /**
@@ -682,7 +682,7 @@ export class Unit {
     // Retrieve the magnitude of the target equivalent unit
     let toEqFactor = eqToUnit.magnitude_ / avoNum ;
     // Calculate and return the amount in equivalent, taking into account the valance and the mole factors
-    return (molFromVal * molesFactor) / valance / toEqFactor;
+    return (molFromVal * molesFactor * valance) / toEqFactor;
   }
   
   /**

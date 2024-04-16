@@ -252,6 +252,9 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(2), 96, resp.toVal.toPrecision(2));
   });
 
+  // mol to eq conversion tests
+
+  // equivalents = moles * valence
   it("should return 1 for a request to convert 1 mol/L to eq/L with valance 1", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
       valence: 1
@@ -260,22 +263,48 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 1, resp.toVal.toPrecision(1));
   });
 
-  it("should return 0.5 for a request to convert 1 mol/L to eq/L with valance 2", function() {
+  it("should return 2 for a request to convert 1 mol/L to eq/L with valance 2", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
       valence: 2
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
-    assert.equal(resp.toVal.toPrecision(2), 0.5, resp.toVal.toPrecision(2));
+    assert.equal(resp.toVal.toPrecision(1), 2, resp.toVal.toPrecision(1));
   });
 
-  it("should return 0.33 for a request to convert 1 mol/L to eq/L with valance 3", function() {
+  it("should return 3 for a request to convert 1 mol/L to eq/L with valance 3", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
+      valence: 3
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(1), 3, resp.toVal.toPrecision(1));
+  });
+
+  // eq to mol conversion tests
+
+  // 1 equivalent equals 1/v moles, where v is the valence
+  it("should return 1 for a request to convert 1 eq/L to mol/L with valance 1", function() {
+    var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
+      valence: 1
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(1), 1, resp.toVal.toPrecision(1));
+  });
+
+  it("should return 0.5 for a request to convert 1 eq/L to mol/L with valance 2", function() {
+    var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
+      valence: 2
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(1), 0.5, resp.toVal.toPrecision(1));
+  });
+
+  it("should return 0.33 for a request to convert 1 eq/L to mol/L with valance 3", function() {
+    var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
       valence: 3
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(2), 0.33, resp.toVal.toPrecision(2));
   });
-  
 
   it("should return 3.4 for a request to convert 300.57 umol/L to mg/dL weight 113.1179", function() {
     var resp5 = utils.convertUnitTo('umol/L', 300.57, 'mg/dL', {molecularWeight: 113.1179});
