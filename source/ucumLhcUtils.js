@@ -706,17 +706,7 @@ export class UcumLhcUtils {
    *  requested for a string that cannot be resolved to a valid unit;
    *  true indicates suggestions are wanted; false indicates they are not,
    *  and is the default if the parameter is not specified;
-   * @returns {{
-   *  status: 'valid' | 'invalid' | 'error',
-   *  unit: Unit | null,
-   *  origString: string | null,
-   *  retMsg: string[],
-   *  suggestions: {
-   *    msg: string,
-   *    invalidUnit: string,
-   *    units: string[]
-   *  }[]
-   * }} a hash containing:
+   * @returns a hash containing:
    *   'status' will be 'valid' (uName is a valid UCUM code), 'invalid'
    *     (the uStr is not a valid UCUM code, and substitutions or
    *     suggestions may or may not be returned, depending on what was
