@@ -252,7 +252,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(2), 96, resp.toVal.toPrecision(2));
   });
 
-  /** mol to eq conversion tests
+  /** Mol to eq conversion tests
    * equivalents = moles * valence
    */
 
@@ -306,7 +306,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 5, resp.toVal.toPrecision(1));
   });
 
-  /** eq to mass conversion tests
+  /** Eq to mass conversion tests
    * 
    * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
    * https://www.britannica.com/science/equivalent-weight
@@ -452,6 +452,16 @@ it("should return a message for invalid unit strings", function() {
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(4), 333.3 , resp.toVal.toPrecision(4));
+  });
+
+  // mw should be ignored when converting between eq and mol
+  it("should return 0.33 for a request to convert 1 eq/L to mol/L with valance 3 and mw 1000", function() {
+    var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
+      valence: 3,
+      molecularWeight: 1000
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 0.33, resp.toVal.toPrecision(2));
   });
 
   // end
