@@ -185,7 +185,7 @@ using them in actual clinical settings.
       the mole-based unit must have a single mole unit in the numerator and the
       mass-based unit must have a single mass unit in the numerator.
   * 'valence' the valence of the substance in question when a conversion is being 
-      requested from mass/moles to eq and vice versa.
+      requested from mass/moles to equivalents and vice versa.
 * _@returns_ a hash with six elements:
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
