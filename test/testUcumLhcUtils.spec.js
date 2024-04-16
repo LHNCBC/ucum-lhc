@@ -287,7 +287,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 0.003 , resp.toVal.toPrecision(1));
   });
 
-  // eq to mass
+  // eq to mass conversion tests
 
   /**
    * KCL -> K+ + Cl-
@@ -311,7 +311,6 @@ it("should return a message for invalid unit strings", function() {
    * ∴ 1 mol of Ca = 2 eq of Ca
    * Equivalent mass of Ca2+ is its atomic mass divided by valence 2.
    * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
-   * https://www.wyzant.com/resources/answers/833747/the-concentration-of-ca2-ion-present-in-a-blood-sample-is-found-to-be-5-1-m#:~:text=The%20equivalent%20mass%20of%20Ca,Ca2+%20is%2020.05%20mg.
    */
   it("should return 20.04 for a request to convert 1 eq to g with valance 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('eq', 1, 'g', {
@@ -337,6 +336,42 @@ it("should return a message for invalid unit strings", function() {
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(4), 40.08, resp.toVal.toPrecision(4));
+  });
+
+  // eq to mass conversion tests
+
+  /**
+   * K+ -> K+ 
+   * K+ has a valence of 1 and a molecular weight of 39.09
+   * ∴ 1 mol of K = 1 eq of K
+   * Equivalent mass of K+ is its atomic mass divided by valence 1.
+   * Mass of potassium is 39.09 g/mole, so its equivalent mass is 39.09/1 =  39.09 g/equiv.
+   * But we are converting 39.09 g to eq, so the result should be 1 eq
+   */
+  it("should return 1 for a request to convert 39.09 g to eq with valance 1 and mw 39.09", function() {
+    var resp = utils.convertUnitTo('g', 39.09, 'eq', {
+      valence: 1,
+      molecularWeight: 39.09
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(1), 1, resp.toVal.toPrecision(1));
+  });
+
+  /**
+   * CaCl2 -> Ca2+ + 2 Cl-
+   * Ca2+ has a valence of 2 and a molecular weight of 40.08
+   * ∴ 1 mol of Ca = 2 eq of Ca
+   * Equivalent mass of Ca2+ is its atomic mass divided by valence 2.
+   * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
+   * But we are converting 40.08 g to eq, so the result should be 2 eq
+   */
+  it("should return 2 for a request to convert 40.08 g to eq with valance 2 and mw 40.08", function() {
+    var resp = utils.convertUnitTo('g', 40.08, 'eq', {
+      valence: 2,
+      molecularWeight: 40.08
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(1), 2, resp.toVal.toPrecision(1));
   });
 
   // eq to mol conversion tests

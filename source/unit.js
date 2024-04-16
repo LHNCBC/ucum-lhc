@@ -555,39 +555,6 @@ export class Unit {
 
   /**
    * Calculates the number of units that would result from converting a unit
-   * expressed in mass/grams to a unit expressed in moles.  The "this" unit is
-   * the unit expressed in some form of mass (g, mg, mmg, kg, whatever) and the
-   * target or "to" unit - the molUnit parameter - is a unit expressed in moles
-   * - mol, umol, mmol, etc.  The unit expressions surrounding the moles and
-   * mass must be convertible.  No validation of this requirement is performed.
-   *
-   * @param amt the quantity of this unit to be converted
-   * @param molUnit the target/to unit for which the converted # is wanted
-   * @param molecularWeight the molecular weight of the substance for which the
-   *  conversion is being made
-   * @param valance the valance of the substance for which the
-   *  conversion is being made
-   * @return the equivalent amount in molUnit
-   */
-  convertMassToEquivalentMol(amt, molUnit, molecularWeight, valance) {
-    // The prefix values that have been applied to this unit, which is the mass
-    // (grams) unit, are reflected in the magnitude.  So the number of moles
-    // represented by this unit equals the number of grams -- amount * magnitude
-    // divided by the molecular Weight
-    let molAmt = (this.magnitude_ * amt)/molecularWeight ;
-    // The molUnit's basic magnitude, before prefixes are applied,
-    // is avogadro's number, get that and divide it out of the current magnitude.
-    let tabs = this._getUnitTables();
-    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
-    let molesFactor = molUnit.magnitude_ / avoNum ;
-    // Adjust the mole amount by the valance and molesFactor to get the equivalent moles
-    let equivalentMolAmt = (molAmt * molesFactor) / valance;
-    // return the equivalentMolAmt as the number of equivalent moles for the molUnit
-    return equivalentMolAmt;
-  }
-
-  /**
-   * Calculates the number of units that would result from converting a unit
    * expressed in moles to a unit expressed in mass (grams).  The "this" unit
    * is the unit expressed in some form of moles, e.g., mol, umol, mmol, etc.,
    * and the target or "to" unit is a unit expressed in some form of mass, e.g.,
@@ -621,23 +588,26 @@ export class Unit {
     return massAmt / massUnit.magnitude_ ;
   }
 
-    /**
-     * Converts eq to mass.
-     * The calculation is done in two steps:
-     * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its valence.
-     *    For example, Ca2+ has a valence of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
-     * 2. Calculate the mass by dividing molecular mass by equivilants.
-     *
-     * @param {number} equivalents - The amount in equivalents to be converted.
-     * @param {object} targetUnit - The target/to unit for which the converted number is wanted.
-     * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
-     * @param {number} valence - The valence of the substance for which the conversion is being made.
-     * @returns {number} - The equivalent mass in the specified mass unit.
-     */
+  /**
+   * Converts eq to mass.
+   * The calculation is done in two steps:
+   * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its valence.
+   *    For example, Ca2+ has a valence of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
+   * 2. Calculate the mass by dividing molecular mass by valence.
+   * 
+   * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
+   * https://www.britannica.com/science/equivalent-weight
+   *
+   * @param {number} equivalents - The amount in equivalents to be converted.
+   * @param {object} targetUnit - The target/to unit for which the converted number is wanted.
+   * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
+   * @param {number} valence - The valence of the substance for which the conversion is being made.
+   * @returns {number} - The equivalent mass in the specified mass unit.
+   */
   convertEqToMass(equivalents, targetUnit, molecularWeight, valence) {
-    // Equivalent mass of a substance is its molecular weight divided by valence.
+    // Equivalent mass of a substance is its molecular weight divided by valence. This is the mass for 1 eq.
     let equivalentMass = molecularWeight / valence;
-    // Calculate mass by multiplying equivalents with equivalent mass.
+    // Calculate total mass by multiplying number of equivalents with equivalent mass.
     let mass = equivalents * equivalentMass;
     // Adjust the mass amount by the targetUnit magnitude to get the equivalent mass
     let adjustedMass = mass / targetUnit.magnitude_;
@@ -645,8 +615,30 @@ export class Unit {
     return adjustedMass;
   }
   
+  /**
+   * Converts mass to equivalents.
+   * The calculation is done in two steps:
+   * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its valence.
+   *    For example, Ca2+ has a valence of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
+   * 2. Calculate the equivalents by dividing the mass by the equivalent mass.
+   * 
+   * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
+   * https://www.britannica.com/science/equivalent-weight
+   *
+   * @param {number} mass - The mass to be converted.
+   * @param {object} eqUnit - The target/to unit for which the converted number is wanted.
+   * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
+   * @param {number} valence - The valence of the substance for which the conversion is being made.
+   * @returns {number} - The equivalent amount in the specified equivalent unit.
+   */
   convertMassToEq(mass, eqUnit, molecularWeight, valence) {
-    //TODO
+    let equivalentMass = molecularWeight / valence;
+    let equivalents = mass / equivalentMass;
+    let unitTables = this._getUnitTables();
+    let avogadroNumber = unitTables.getUnitByCode('mol').magnitude_ ;
+    let moleFactor = eqUnit.magnitude_ / avogadroNumber ;
+    let adjustedEquivalents = equivalents / moleFactor;
+    return adjustedEquivalents;
   }
 
   /**
