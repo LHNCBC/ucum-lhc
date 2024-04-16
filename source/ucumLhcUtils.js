@@ -287,10 +287,12 @@ export class UcumLhcUtils {
 
         if (fromUnit && toUnit) {
           try {
-            // if no molecular weight was specified perform a normal conversion
+            // if no molecular weight or valence was specified perform a normal conversion
             if (!molecularWeight && !valence) {
               returnObj.toVal = toUnit.convertFrom(fromVal, fromUnit);
-            } else if (valence && !molecularWeight) {
+            } 
+            // if a valence was specified, but not a molecular weight, assume a mole <-> equivalent conversion
+            else if (valence && !molecularWeight) {
               if (fromUnit.equivalentExp_ !== 0 && toUnit.equivalentExp_ !== 0) {
                 throw new Error('A valence was specified ' + 'but a mole <-> equivalent conversion cannot be executed for two ' + 'equivalent-based units.  No conversion was attempted.');
               }
@@ -305,8 +307,9 @@ export class UcumLhcUtils {
               else if (fromUnit.moleExp_ !== 0 && toUnit.equivalentExp_ !== 0) {
                 returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
               }
-            } else if (valence && molecularWeight) { 
-              //TODO: check this logic
+            } 
+            // if a valence and molecular weight was specified, assume a mass <-> equivalent conversion
+            else if (valence && molecularWeight) { 
               if (fromUnit.equivalentExp_ !== 0 && toUnit.equivalentExp_ !== 0) {
                 throw new Error('A valence and molecular weight was specified ' + 'but a mass <-> equivalent conversion cannot be executed for two ' + 'equivalent-based units.  No conversion was attempted.');
               }
@@ -326,7 +329,9 @@ export class UcumLhcUtils {
               ){
                 returnObj.toVal = fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, valence);
               }
-            } else if (molecularWeight) {
+            } 
+            // if only a molecular weight was specified, assume a mass <-> mole conversion
+            else if (molecularWeight) {
               if (fromUnit.moleExp_ !== 0 && toUnit.moleExp_ !== 0) {
                 throw(new Error('A molecular weight was specified ' +
                   'but a mass <-> mole conversion cannot be executed for two ' +
