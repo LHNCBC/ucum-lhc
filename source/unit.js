@@ -151,6 +151,11 @@ export class Unit {
      */
     this.moleExp_ = attrs['moleExp_'] || 0;
 
+    /**
+     * Flag indicating whether or not this is a equivalent mole unit
+     */
+    this.equivalentExp_ = attrs['equivalentExp_'] || 0;
+
     /*
      * Added when added LOINC list of units
      * synonyms are used by the autocompleter to enhance lookup capabilities
@@ -550,6 +555,39 @@ export class Unit {
 
   /**
    * Calculates the number of units that would result from converting a unit
+   * expressed in mass/grams to a unit expressed in moles.  The "this" unit is
+   * the unit expressed in some form of mass (g, mg, mmg, kg, whatever) and the
+   * target or "to" unit - the molUnit parameter - is a unit expressed in moles
+   * - mol, umol, mmol, etc.  The unit expressions surrounding the moles and
+   * mass must be convertible.  No validation of this requirement is performed.
+   *
+   * @param amt the quantity of this unit to be converted
+   * @param molUnit the target/to unit for which the converted # is wanted
+   * @param molecularWeight the molecular weight of the substance for which the
+   *  conversion is being made
+   * @param valance the valance of the substance for which the
+   *  conversion is being made
+   * @return the equivalent amount in molUnit
+   */
+  convertMassToEquivalentMol(amt, molUnit, molecularWeight, valance) {
+    // The prefix values that have been applied to this unit, which is the mass
+    // (grams) unit, are reflected in the magnitude.  So the number of moles
+    // represented by this unit equals the number of grams -- amount * magnitude
+    // divided by the molecular Weight
+    let molAmt = (this.magnitude_ * amt)/molecularWeight ;
+    // The molUnit's basic magnitude, before prefixes are applied,
+    // is avogadro's number, get that and divide it out of the current magnitude.
+    let tabs = this._getUnitTables();
+    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
+    let molesFactor = molUnit.magnitude_ / avoNum ;
+    // Adjust the mole amount by the valance and molesFactor to get the equivalent moles
+    let equivalentMolAmt = (molAmt * molesFactor) / valance;
+    // return the equivalentMolAmt as the number of equivalent moles for the molUnit
+    return equivalentMolAmt;
+  }
+
+  /**
+   * Calculates the number of units that would result from converting a unit
    * expressed in moles to a unit expressed in mass (grams).  The "this" unit
    * is the unit expressed in some form of moles, e.g., mol, umol, mmol, etc.,
    * and the target or "to" unit is a unit expressed in some form of mass, e.g.,
@@ -559,7 +597,7 @@ export class Unit {
    * @param amt the quantity of this unit to be converted
    * @param massUnit the target/to unit for which the converted # is wanted
    * @param molecularWeight the molecular weight of the substance for which the
-   *  conversion is being made
+   * conversion is being made
    * @return the equivalent amount in massUnit
    */
   convertMolToMass(amt, massUnit, molecularWeight) {
@@ -583,7 +621,70 @@ export class Unit {
     return massAmt / massUnit.magnitude_ ;
   }
 
+  convertMolToEquivalentMass(amt, massUnit, molecularWeight, valance) {
+    // A simple mole unit has a magnitude of avogadro's number.  Get that
+    // number now (since not everyone agrees on what it is, and what is
+    // being used in this system might change).
+    let tabs = this._getUnitTables();
+    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
+    // Determine what prefix values (mg or mg/dL, etc.) have been applied to
+    // this unit by dividing the simple mole unit magnitude out of the
+    // current mole unit magnitude.
+    let molesFactor = this.magnitude_ / avoNum ;
+    // The number of grams (mass) is equal to the number of moles (amt)
+    // times the molecular weight.  We also multiply that by the prefix values
+    // applied to the current unit (molesFactor) to get the grams for this
+    // particular unit.
+    let massAmt = (molesFactor * amt) * molecularWeight ;
+    // Adjust the mass amount by the valance and massUnit magnitude to get the equivalent mass
+    let equivalentMassAmt = (massAmt * massUnit.magnitude_) * valance;
+    // Finally, we return the equivalent mass amount/grams for this particular unit
+    return equivalentMassAmt;
+  }
 
+
+  /**
+   * This function converts equivalent amount to moles.
+   * 
+   * @param eqFromVal the equivalent amount for which the conversion is being made
+   * @param molToUnit the target/to unit for which the converted # is wanted
+   * @param valence the valence of the substance for which the conversion is being made
+   * @return the amount in moles
+   */
+  convertEqToMol(eqFromVal, molToUnit, valence){
+    // Retrieve the unit tables
+    let tabs = this._getUnitTables();
+    // Retrieve the magnitude of a simple mole unit (Avogadro's number)
+    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
+    // Calculate the factor by which the current mole unit magnitude exceeds the simple mole unit magnitude
+    let molesFactor = this.magnitude_ / avoNum ;
+    // Retrieve the magnitude of the target mole unit
+    let toMolesFactor = molToUnit.magnitude_ / avoNum ;
+    // Calculate and return the amount in moles, taking into account the valence and the mole factors
+    return (eqFromVal * molesFactor * valence) / toMolesFactor;
+  }
+
+  /**
+   * This function converts moles to equivalent amount.
+   * 
+   * @param molFromVal the mole amount for which the conversion is being made
+   * @param eqToUnit the target/to unit for which the converted # is wanted
+   * @param valance the valance of the substance for which the conversion is being made
+   * @return the amount in equivalent
+   */
+  convertMolToEq(molFromVal, eqToUnit, valance){
+    // Retrieve the unit tables
+    let tabs = this._getUnitTables();
+    // Retrieve the magnitude of a simple mole unit (Avogadro's number)
+    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
+    // Calculate the factor by which the current mole unit magnitude exceeds the simple mole unit magnitude
+    let molesFactor = this.magnitude_ / avoNum ;
+    // Retrieve the magnitude of the target equivalent unit
+    let toEqFactor = eqToUnit.magnitude_ / avoNum ;
+    // Calculate and return the amount in equivalent, taking into account the valance and the mole factors
+    return (molFromVal * molesFactor) / valance / toEqFactor;
+  }
+  
   /**
    * Mutates this unit into a unit on a ratio scale and converts a specified
    * number of units to an appropriate value for this converted unit

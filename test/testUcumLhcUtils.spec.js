@@ -240,6 +240,43 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp5.toVal.toPrecision(3), 5.33, resp5.toVal.toPrecision(3));
   });
 
+  it("should return 0.533 for a request to convert 96 g to mol with mw 180.156", function() {
+    var resp = utils.convertUnitTo('g', 96, 'mol', {molecularWeight: 180.156});
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(3), 0.533, resp.toVal.toPrecision(3));
+  });
+
+  it("should return 96 g for a request to convert 0.533 mol with mw 180.156", function() {
+    var resp = utils.convertUnitTo('mol', 0.533, 'g', {molecularWeight: 180.156});
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 96, resp.toVal.toPrecision(2));
+  });
+
+  it("should return 1 for a request to convert 1 mol/L to eq/L with valance 1", function() {
+    var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
+      valence: 1
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(1), 1, resp.toVal.toPrecision(1));
+  });
+
+  it("should return 0.5 for a request to convert 1 mol/L to eq/L with valance 2", function() {
+    var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
+      valence: 2
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 0.5, resp.toVal.toPrecision(2));
+  });
+
+  it("should return 0.33 for a request to convert 1 mol/L to eq/L with valance 3", function() {
+    var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
+      valence: 3
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 0.33, resp.toVal.toPrecision(2));
+  });
+  
+
   it("should return 3.4 for a request to convert 300.57 umol/L to mg/dL weight 113.1179", function() {
     var resp5 = utils.convertUnitTo('umol/L', 300.57, 'mg/dL', {molecularWeight: 113.1179});
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);

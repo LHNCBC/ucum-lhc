@@ -46,6 +46,7 @@ export class UcumXmlDocument {
     // the moleExp_ value from the base mole unit, but the ones defined in
     // this file will not necessarily do that.
     this.moleCodes_ = ['mol', 'eq', 'osm', 'kat', 'U' ];
+    this.equivCodes_ = ['eq'];
 
     // Make this a singleton.  See UnitTables constructor for details.
 
@@ -235,6 +236,10 @@ export class UcumXmlDocument {
         attrs['moleExp_'] = 1;
       else
         attrs['moleExp_'] = 0;
+      if (this.equivCodes_.indexOf(curUA.attr.Code) !== -1)
+        attrs['equivalentExp_'] = 1;
+      else
+        attrs['equivalentExp_'] = 0;
 
 
       // Process special units

@@ -145,21 +145,8 @@ export class UcumLhcUtils {
   } // end validateUnitString
 
 
-  /**
-   * This method converts one unit to another
-   *
-   * @param {string} fromUnitCode - the unit code/expression/string of the unit to be converted
-   * @param {number} fromVal - the number of "from" units to be converted to "to" units
-   * @param {string} toUnitCode - the unit code/expression/string of the unit that the from field is to be converted to
-   * @param {{
-   *   suggest?: boolean, 
-   *   molecularWeight?: number
-   * }} options
-   *  - suggest: a boolean to indicate whether or not suggestions are requested for a string that cannot be resolved to a valid unit;
-   *    true indicates suggestions are wanted; false indicates they are not, and is the default if the parameter is not specified;
-   *  - molecularWeight: the molecular weight of the substance in question when a conversion is being requested from mass to moles and vice versa.
-   *    This is required when one of the units represents a value in moles.  It is ignored if neither unit includes a measurement in moles.
-   * @returns {{
+  /** 
+   * @typedef {{
    *   status: 'succeeded' | 'failed' | 'error',
    *   toVal: number | null,
    *   msg: string[],
@@ -177,44 +164,111 @@ export class UcumLhcUtils {
    *   },
    *  fromUnit: string,
    *  toUnit: string
-   * }}
+   * }} ConvertUnitResult
+   */
+
+  /**
+   * This method converts one unit to another
+   *
+   * @param {string} fromUnitCode - the unit code/expression/string of the unit to be converted
+   * @param {number | string} fromVal - the number of "from" units to be converted to "to" units
+   * @param {string} toUnitCode - the unit code/expression/string of the unit that the from field is to be converted to
+   * @param {{
+   *   suggest?: boolean, 
+   *   molecularWeight?: number
+   *   valence?: number
+   * }} options
+   *  - suggest: a boolean to indicate whether or not suggestions are requested for a string that cannot be resolved to a valid unit;
+   *    true indicates suggestions are wanted; false indicates they are not, and is the default if the parameter is not specified;
+   *  - molecularWeight: the molecular weight of the substance in question when a conversion is being requested from mass to moles and vice versa.
+   *    This is required when one of the units represents a value in moles.  It is ignored if neither unit includes a measurement in moles.
+   *  - valence: the valence of the substance in question when a conversion is being requested from mass to moles and vice versa.
+   * @returns {ConvertUnitResult} 
+   * - a hash with six elements:
+   *   - 'status' that will be: 'succeeded' if the conversion was successfully
+   *     calculated; 'failed' if the conversion could not be made, e.g., if
+   *     the units are not commensurable; or 'error' if an error occurred;
+   *   - 'toVal' the numeric value indicating the conversion amount, or null
+   *     if the conversion failed (e.g., if the units are not commensurable);
+   *   - 'msg' is an array message, if the string is invalid or an error occurred,
+   *     indicating the problem, or an explanation of a substitution such as
+   *     the substitution of 'G' for 'Gauss', or an empty array if no
+   *     messages were generated;
+   *   - 'suggestions' if suggestions were requested and found, this is a hash
+   *     that contains at most two elements:
+   *     - 'from' which, if the fromUnitCode input parameter or one or more of
+   *       its components could not be found, is an array one or more hash
+   *       objects.  Each hash contains three elements:
+   *       - 'msg' which is a message indicating what unit expression the
+   *          suggestions are for;
+   *       - 'invalidUnit' which is the unit expression the suggestions
+   *          are for; and
+   *       - 'units' which is an array of data for each suggested unit found.
+   *          Each array will contain the unit code, the unit name and the
+   *          unit guidance (if any).
+   *       If no suggestions were found for the fromUnitCode this element
+   *       will not be included.
+   *     - 'to' which, if the "to" unit expression or one or more of its
+   *       components could not be found, is an array one or more hash objects.  Each hash
+   *       contains three elements:
+   *       - 'msg' which is a message indicating what toUnitCode input
+   *          parameter the suggestions are for;
+   *       - 'invalidUnit' which is the unit expression the suggestions
+   *          are for; and
+   *       - 'units' which is an array of data for each suggested unit found.
+   *          Each array will contain the unit code, the unit name and the
+   *          unit guidance (if any).
+   *       If no suggestions were found for the toUnitCode this element
+   *       will not be included.
+   *       No 'suggestions' element will be included in the returned hash
+   *       object if none were found, whether or not they were requested.
+   *   - 'fromUnit' the unit object for the fromUnitCode passed in; returned
+   *     in case it's needed for additional data from the object; and
+   *   - 'toUnit' the unit object for the toUnitCode passed in; returned
+   *     in case it's needed for additional data from the object.
    */
   convertUnitTo(fromUnitCode, fromVal, toUnitCode, options = {}) {
-    let {suggest = false, molecularWeight = null} = options;
+    let {
+      suggest = false, 
+      molecularWeight = null, 
+      valence = null
+    } = options;
 
+    console.log(options)
+
+    /** @type {ConvertUnitResult} */
     let returnObj = {'status' : 'failed',
                      'toVal' : null,
                      'msg' : []} ;
 
-    if (fromUnitCode) {
-      fromUnitCode = fromUnitCode.trim();
+    fromUnitCode = fromUnitCode ? fromUnitCode.trim() : '';
+    if (!fromUnitCode) {
+      returnObj.status = 'error';
+      returnObj.msg.push('No "from" unit expression specified.');
     }
-    if (!fromUnitCode || fromUnitCode == '') {
-      returnObj['status'] = 'error';
-      returnObj['msg'].push('No "from" unit expression specified.');
-    }
+
     this._checkFromVal(fromVal, returnObj);
-    if (toUnitCode) {
-      toUnitCode = toUnitCode.trim();
+
+    toUnitCode = toUnitCode ? toUnitCode.trim() : '';
+    if (!toUnitCode) {
+      returnObj.status = 'error';
+      returnObj.msg.push('No "to" unit expression specified.');
     }
-    if (!toUnitCode || toUnitCode == '') {
-      returnObj['status'] = 'error';
-      returnObj['msg'].push('No "to" unit expression specified.');
-    }
-    if (returnObj['status'] !== 'error') {
+    
+    if (returnObj.status !== 'error') {
       try {
         let fromUnit = null;
 
         let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
         fromUnit = parseResp['unit'];
         if (parseResp['retMsg'])
-          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+          returnObj.msg = returnObj.msg.concat(parseResp['retMsg']);
         if (parseResp['suggestions']) {
-          returnObj['suggestions'] = {};
-          returnObj['suggestions']['from'] = parseResp['suggestions'];
+          returnObj.suggestions = {};
+          returnObj.suggestions.from = parseResp['suggestions'];
         }
         if (!fromUnit) {
-          returnObj['msg'].push(`Unable to find a unit for ${fromUnitCode}, ` +
+          returnObj.msg.push(`Unable to find a unit for ${fromUnitCode}, ` +
             `so no conversion could be performed.`);
         }
 
@@ -222,24 +276,54 @@ export class UcumLhcUtils {
         parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
         toUnit = parseResp['unit'];
         if (parseResp['retMsg'])
-          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+          returnObj.msg = returnObj.msg.concat(parseResp['retMsg']);
         if (parseResp['suggestions']) {
-          if (!returnObj['suggestions'])
-            returnObj['suggestions'] = {} ;
-          returnObj['suggestions']['to'] = parseResp['suggestions'];
+          if (!returnObj.suggestions)
+            returnObj.suggestions = {};
+          returnObj.suggestions.to = parseResp['suggestions'];
         }
         if (!toUnit) {
-          returnObj['msg'].push(`Unable to find a unit for ${toUnitCode}, ` +
+          returnObj.msg.push(`Unable to find a unit for ${toUnitCode}, ` +
                                 `so no conversion could be performed.`);
         }
 
         if (fromUnit && toUnit) {
           try {
             // if no molecular weight was specified perform a normal conversion
-            if (!molecularWeight) {
-              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
-            }
-            else {
+            if (!molecularWeight && !valence) {
+              returnObj.toVal = toUnit.convertFrom(fromVal, fromUnit);
+            } else if (valence) {
+              if (fromUnit.equivalentExp_ !== 0 && toUnit.equivalentExp_ !== 0) {
+                throw new Error('A valence was specified ' + 'but a mass <-> equivalent conversion cannot be executed for two ' + 'equivalent-based units.  No conversion was attempted.');
+              }
+              if (fromUnit.equivalentExp_ === 0 && toUnit.equivalentExp_ === 0) {
+                throw new Error('A valence was specified ' + 'but a mass <-> equivalent conversion cannot be executed when ' + 'neither unit is equivalent-based.  No conversion was attempted.');
+              }
+              // if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+              //   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` + `converted to ${toUnitCode}.`);
+              // }
+
+  
+              // if from is equivalent and to is moles, assume eq to mol conversion
+              if (fromUnit.equivalentExp_ !== 0 && toUnit.moleExp_ !== 0) {
+                returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
+              } else if (fromUnit.moleExp_ !== 0 && toUnit.equivalentExp_ !== 0) {
+                returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
+              }
+              // if the "from" unit is a equivalent-based unit and the to is not a mol based unit, assume a equivalent to mass
+              // request
+              else if (fromUnit.equivalentExp_ !== 0 && toUnit.moleExp_ === 0) {
+                returnObj.toVal = fromUnit.convertEqToMass(fromVal, toUnit, valence);
+              }
+              // else if the "to" unit is an equivalent-based unit, and the from is a mol based unit so assume a
+              // mass to equivalent request
+              else if (
+                fromUnit.moleExp_ === 0 &&
+                toUnit.equivalentExp_ !== 0
+              ){
+                returnObj.toVal = fromUnit.convertMassToEq(fromVal, toUnit, valence);
+              }
+            } else {
               if (fromUnit.moleExp_ !== 0 && toUnit.moleExp_ !== 0) {
                 throw(new Error('A molecular weight was specified ' +
                   'but a mass <-> mole conversion cannot be executed for two ' +
@@ -295,7 +379,7 @@ export class UcumLhcUtils {
     return returnObj ;
 
   } // end convertUnitTo
-  
+
   /**
    * @deprecated - use convertUnitTo instead
    * This method converts one unit to another
@@ -622,7 +706,17 @@ export class UcumLhcUtils {
    *  requested for a string that cannot be resolved to a valid unit;
    *  true indicates suggestions are wanted; false indicates they are not,
    *  and is the default if the parameter is not specified;
-   * @returns a hash containing:
+   * @returns {{
+   *  status: 'valid' | 'invalid' | 'error',
+   *  unit: Unit | null,
+   *  origString: string | null,
+   *  retMsg: string[],
+   *  suggestions: {
+   *    msg: string,
+   *    invalidUnit: string,
+   *    units: string[]
+   *  }[]
+   * }} a hash containing:
    *   'status' will be 'valid' (uName is a valid UCUM code), 'invalid'
    *     (the uStr is not a valid UCUM code, and substitutions or
    *     suggestions may or may not be returned, depending on what was
