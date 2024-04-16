@@ -236,10 +236,9 @@ export class UcumXmlDocument {
         attrs['moleExp_'] = 1;
       else
         attrs['moleExp_'] = 0;
-      if (this.equivCodes_.indexOf(curUA.attr.Code) !== -1)
+      if (this.equivCodes_.indexOf(curUA.attr.Code) !== -1) {
         attrs['equivalentExp_'] = 1;
-      else
-        attrs['equivalentExp_'] = 0;
+      }
 
 
       // Process special units
