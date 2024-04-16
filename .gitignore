@@ -1,5 +1,6 @@
 node_modules
 .idea
+.vscode/
 # Files from build
 data/ucumEssenceVersion.txt
 impexp/updateDataBuild.js
