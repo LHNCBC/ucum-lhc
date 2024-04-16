@@ -632,22 +632,28 @@ export class Unit {
    * @returns {number} - The equivalent amount in the specified equivalent unit.
    */
   convertMassToEq(mass, eqUnit, molecularWeight, valence) {
+    // Calculate equivalent mass by dividing molecular weight by valence
     let equivalentMass = molecularWeight / valence;
+    // Calculate equivalents by dividing mass by equivalent mass
     let equivalents = mass / equivalentMass;
-    let unitTables = this._getUnitTables();
-    let avogadroNumber = unitTables.getUnitByCode('mol').magnitude_ ;
+    // Get Avogadro's number from the unit tables
+    let avogadroNumber =  this._getUnitTables().getUnitByCode('mol').magnitude_ ;
+    // Calculate mole factor by dividing the magnitude of the equivalent unit by Avogadro's number
+    // eqUnit may have a prefix (e.g. meq) and we need to adjust for that
     let moleFactor = eqUnit.magnitude_ / avogadroNumber ;
+    // Adjust equivalents by dividing by the mole factor
     let adjustedEquivalents = equivalents / moleFactor;
+    // Return the adjusted equivalents
     return adjustedEquivalents;
   }
 
   /**
    * This function converts equivalent amount to moles.
    * 
-   * @param eqFromVal the equivalent amount for which the conversion is being made
-   * @param molToUnit the target/to unit for which the converted # is wanted
-   * @param valence the valence of the substance for which the conversion is being made
-   * @return the amount in moles
+   * @param {number} eqFromVal - The equivalent amount for which the conversion is being made.
+   * @param {object} molToUnit - The target/to unit for which the converted number is wanted.
+   * @param {number} valence - The valence of the substance for which the conversion is being made.
+   * @return {number} - The amount in moles.
    */
   convertEqToMol(eqFromVal, molToUnit, valence){
     // Retrieve the unit tables
@@ -665,10 +671,10 @@ export class Unit {
   /**
    * This function converts moles to equivalent amount.
    * 
-   * @param molFromVal the mole amount for which the conversion is being made
-   * @param eqToUnit the target/to unit for which the converted # is wanted
-   * @param valance the valance of the substance for which the conversion is being made
-   * @return the amount in equivalent
+   * @param {number} molFromVal - The mole amount for which the conversion is being made
+   * @param {object} eqToUnit - The target/to unit for which the converted number is wanted
+   * @param {number} valance - The valance of the substance for which the conversion is being made
+   * @return {number} - The amount in equivalent
    */
   convertMolToEq(molFromVal, eqToUnit, valance){
     // Retrieve the unit tables

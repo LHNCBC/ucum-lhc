@@ -252,9 +252,10 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(2), 96, resp.toVal.toPrecision(2));
   });
 
-  // mol to eq conversion tests
+  /** mol to eq conversion tests
+   * equivalents = moles * valence
+   */
 
-  // equivalents = moles * valence
   it("should return 1 for a request to convert 1 mol/L to eq/L with valance 1", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
       valence: 1
@@ -287,7 +288,13 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 0.003 , resp.toVal.toPrecision(1));
   });
 
-  // eq to mass conversion tests
+  /** eq to mass conversion tests
+   * 
+   * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
+   * https://www.britannica.com/science/equivalent-weight
+   * 
+   * EW = MW / valence
+   */
 
   /**
    * KCL -> K+ + Cl-
@@ -338,7 +345,14 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(4), 40.08, resp.toVal.toPrecision(4));
   });
 
-  // eq to mass conversion tests
+  /** Mass to eq conversion tests
+   * 
+   * The equivalent weight (EW) of an element is calculated as its atomic mass divided by its valence.
+   * EW = molecular weight / valence
+   * 
+   * The number of equivalents is then calculated by dividing the given mass by the equivalent weight.
+   * eq = amtMassOfSubstance / EW
+   */
 
   /**
    * K+ -> K+ 
@@ -346,7 +360,7 @@ it("should return a message for invalid unit strings", function() {
    * ∴ 1 mol of K = 1 eq of K
    * Equivalent mass of K+ is its atomic mass divided by valence 1.
    * Mass of potassium is 39.09 g/mole, so its equivalent mass is 39.09/1 =  39.09 g/equiv.
-   * But we are converting 39.09 g to eq, so the result should be 1 eq
+   * But we are converting 39.09 g to eq, so the result should be 40.08g/40.08g = 1 eq
    */
   it("should return 1 for a request to convert 39.09 g to eq with valance 1 and mw 39.09", function() {
     var resp = utils.convertUnitTo('g', 39.09, 'eq', {
@@ -363,7 +377,7 @@ it("should return a message for invalid unit strings", function() {
    * ∴ 1 mol of Ca = 2 eq of Ca
    * Equivalent mass of Ca2+ is its atomic mass divided by valence 2.
    * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
-   * But we are converting 40.08 g to eq, so the result should be 2 eq
+   * But we are converting 40.08 g to eq, so the result should be 40.08g/20.04g = 2 eq
    */
   it("should return 2 for a request to convert 40.08 g to eq with valance 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('g', 40.08, 'eq', {
@@ -374,9 +388,14 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 2, resp.toVal.toPrecision(1));
   });
 
-  // eq to mol conversion tests
+  /** Eq to mol conversion tests
+   * 1 equivalent equals 1/v moles, where v is the valence
+   * if valence is 1, then 1 equivalent equals 1 mole
+   * if valence is 2, then 1 equivalent equals 0.5 moles
+   * if valence is 3, then 1 equivalent equals 0.33 moles
+   * etc. 
+   */
 
-  // 1 equivalent equals 1/v moles, where v is the valence
   it("should return 1 for a request to convert 1 eq/L to mol/L with valance 1", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
       valence: 1
@@ -416,6 +435,8 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(4), 333.3 , resp.toVal.toPrecision(4));
   });
+
+  // end
 
   it("should return 3.4 for a request to convert 300.57 umol/L to mg/dL weight 113.1179", function() {
     var resp5 = utils.convertUnitTo('umol/L', 300.57, 'mg/dL', {molecularWeight: 113.1179});
