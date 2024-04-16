@@ -288,6 +288,14 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 0.003 , resp.toVal.toPrecision(1));
   });
 
+  it("should return 5 for a request to convert 1 mmol/L to meq/L with valance 5", function() {
+    var resp = utils.convertUnitTo('mmol/L', 1, 'meq/L', {
+      valence: 5
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(1), 5, resp.toVal.toPrecision(1));
+  });
+
   /** eq to mass conversion tests
    * 
    * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
