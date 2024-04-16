@@ -234,8 +234,6 @@ export class UcumLhcUtils {
       valence = null
     } = options;
 
-    console.log(options)
-
     /** @type {ConvertUnitResult} */
     let returnObj = {'status' : 'failed',
                      'toVal' : null,
