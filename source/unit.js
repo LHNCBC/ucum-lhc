@@ -624,35 +624,27 @@ export class Unit {
     /**
      * Converts eq to mass.
      * The calculation is done in two steps:
-     * 1. Calculate equivalents by multiplying moles with valence.
-     * 2. Calculate mass by multiplying equivalents with molecular weight.
+     * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its valence.
+     *    For example, Ca2+ has a valence of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
+     * 2. Calculate the mass by dividing molecular mass by equivilants.
      *
-     * @param {number} moles - The amount in moles to be converted.
+     * @param {number} equivalents - The amount in equivalents to be converted.
      * @param {object} targetUnit - The target/to unit for which the converted number is wanted.
      * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
      * @param {number} valence - The valence of the substance for which the conversion is being made.
      * @returns {number} - The equivalent mass in the specified mass unit.
      */
-  convertEqToMass(moles, targetUnit, molecularWeight, valence) {
-    // A simple mole unit has a magnitude of avogadro's number.  Get that
-    // number now (since not everyone agrees on what it is, and what is
-    // being used in this system might change).
-    let unitTables = this._getUnitTables();
-    let avogadroNumber = unitTables.getUnitByCode('mol').magnitude_ ;
-    // Determine what prefix values (mg or mg/dL, etc.) have been applied to
-    // this unit by dividing the simple mole unit magnitude out of the
-    // current mole unit magnitude.
-    let moleFactor = this.magnitude_ / avogadroNumber ;
-    // Calculate equivalents by multiplying moles with valence.
-    let equivalents = moles * valence;
-    // Calculate mass by multiplying equivalents with molecular weight.
-    let mass = equivalents * molecularWeight;
-    // Adjust the mass amount by the moleFactor and targetUnit magnitude to get the equivalent mass
-    let equivalentMass = (mass * moleFactor) / targetUnit.magnitude_;
-    // Finally, we return the equivalent mass amount/grams for this particular unit
-    return equivalentMass;
+  convertEqToMass(equivalents, targetUnit, molecularWeight, valence) {
+    // Equivalent mass of a substance is its molecular weight divided by valence.
+    let equivalentMass = molecularWeight / valence;
+    // Calculate mass by multiplying equivalents with equivalent mass.
+    let mass = equivalents * equivalentMass;
+    // Adjust the mass amount by the targetUnit magnitude to get the equivalent mass
+    let adjustedMass = mass / targetUnit.magnitude_;
+    // Finally, we return the adjusted mass amount/grams for this particular unit
+    return adjustedMass;
   }
-
+  
   convertMassToEq(mass, eqUnit, molecularWeight, valence) {
     //TODO
   }

@@ -292,28 +292,33 @@ export class UcumLhcUtils {
             // if no molecular weight was specified perform a normal conversion
             if (!molecularWeight && !valence) {
               returnObj.toVal = toUnit.convertFrom(fromVal, fromUnit);
-            } else if (valence) {
+            } else if (valence && !molecularWeight) {
               if (fromUnit.equivalentExp_ !== 0 && toUnit.equivalentExp_ !== 0) {
-                throw new Error('A valence was specified ' + 'but a mass <-> equivalent conversion cannot be executed for two ' + 'equivalent-based units.  No conversion was attempted.');
+                throw new Error('A valence was specified ' + 'but a mole <-> equivalent conversion cannot be executed for two ' + 'equivalent-based units.  No conversion was attempted.');
               }
               if (fromUnit.equivalentExp_ === 0 && toUnit.equivalentExp_ === 0) {
-                throw new Error('A valence was specified ' + 'but a mass <-> equivalent conversion cannot be executed when ' + 'neither unit is equivalent-based.  No conversion was attempted.');
+                throw new Error('A valence was specified ' + 'but a mole <-> equivalent conversion cannot be executed when ' + 'neither unit is equivalent-based.  No conversion was attempted.');
               }
-              // if (!fromUnit.isMoleMassCommensurable(toUnit)) {
-              //   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` + `converted to ${toUnitCode}.`);
-              // }
-
-  
               // if from is equivalent and to is moles, assume eq to mol conversion
               if (fromUnit.equivalentExp_ !== 0 && toUnit.moleExp_ !== 0) {
                 returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
-              } else if (fromUnit.moleExp_ !== 0 && toUnit.equivalentExp_ !== 0) {
+              } 
+              // else if from is moles and to is equivalent, assume mol to eq conversion
+              else if (fromUnit.moleExp_ !== 0 && toUnit.equivalentExp_ !== 0) {
                 returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
+              }
+            } else if (valence && molecularWeight) { 
+              //TODO: check this logic
+              if (fromUnit.equivalentExp_ !== 0 && toUnit.equivalentExp_ !== 0) {
+                throw new Error('A valence and molecular weight was specified ' + 'but a mass <-> equivalent conversion cannot be executed for two ' + 'equivalent-based units.  No conversion was attempted.');
+              }
+              if (fromUnit.equivalentExp_ === 0 && toUnit.equivalentExp_ === 0) {
+                throw new Error('A valence and molecular weight was specified ' + 'but a mass <-> equivalent conversion cannot be executed when ' + 'neither unit is equivalent-based.  No conversion was attempted.');
               }
               // if the "from" unit is a equivalent-based unit and the to is not a mol based unit, assume a equivalent to mass
               // request
-              else if (fromUnit.equivalentExp_ !== 0 && toUnit.moleExp_ === 0) {
-                returnObj.toVal = fromUnit.convertEqToMass(fromVal, toUnit, valence);
+              if (fromUnit.equivalentExp_ !== 0 && toUnit.moleExp_ === 0) {
+                returnObj.toVal = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
               }
               // else if the "to" unit is an equivalent-based unit, and the from is a mol based unit so assume a
               // mass to equivalent request
@@ -321,9 +326,9 @@ export class UcumLhcUtils {
                 fromUnit.moleExp_ === 0 &&
                 toUnit.equivalentExp_ !== 0
               ){
-                returnObj.toVal = fromUnit.convertMassToEq(fromVal, toUnit, valence);
+                returnObj.toVal = fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, valence);
               }
-            } else {
+            } else if (molecularWeight) {
               if (fromUnit.moleExp_ !== 0 && toUnit.moleExp_ !== 0) {
                 throw(new Error('A molecular weight was specified ' +
                   'but a mass <-> mole conversion cannot be executed for two ' +

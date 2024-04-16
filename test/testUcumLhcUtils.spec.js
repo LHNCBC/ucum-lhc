@@ -229,25 +229,25 @@ it("should return a message for invalid unit strings", function() {
   });
 
   it("should return 96 for a request to convert 5.33 mmol/L to mg{molybdenum}/dL weight 180.156", function() {
-    var resp5 = utils.convertUnitTo('mmol/L', 5.33, 'mg{molybdenum}/dL', {molecularWeight: 180.156});
+    var resp5 = utils.convertUnitTo('mmol/L', 5.33, 'mg{molybdenum}/dL', { molecularWeight: 180.156 });
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(2), 96, resp5.toVal);
   });
 
   it("should return 5.33 for a request to convert 96 mg/dL to mmol/L weight 180.156", function() {
-    var resp5 = utils.convertUnitTo('mg/dL', 96, 'mmol/L', {molecularWeight: 180.156});
+    var resp5 = utils.convertUnitTo('mg/dL', 96, 'mmol/L', { molecularWeight: 180.156 });
     assert.equal(resp5.status, 'succeeded', resp5.status + resp5.msg);
     assert.equal(resp5.toVal.toPrecision(3), 5.33, resp5.toVal.toPrecision(3));
   });
 
   it("should return 0.533 for a request to convert 96 g to mol with mw 180.156", function() {
-    var resp = utils.convertUnitTo('g', 96, 'mol', {molecularWeight: 180.156});
+    var resp = utils.convertUnitTo('g', 96, 'mol', { molecularWeight: 180.156 });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(3), 0.533, resp.toVal.toPrecision(3));
   });
 
   it("should return 96 g for a request to convert 0.533 mol with mw 180.156", function() {
-    var resp = utils.convertUnitTo('mol', 0.533, 'g', {molecularWeight: 180.156});
+    var resp = utils.convertUnitTo('mol', 0.533, 'g', { molecularWeight: 180.156 });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(2), 96, resp.toVal.toPrecision(2));
   });
@@ -287,12 +287,56 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 0.003 , resp.toVal.toPrecision(1));
   });
 
-  it("should return 3000 for a request to convert 1 mol/L to meq/L with valance 3", function() {
-    var resp = utils.convertUnitTo('mol/L', 1, 'meq/L', {
-      valence: 3
+  // eq to mass
+
+  /**
+   * KCL -> K+ + Cl-
+   * K+ has a valence of 1 and a molecular weight of 39.09
+   * ∴ 1 mol of K = 1 eq of K
+   * Equivalent mass of K+ is its atomic mass divided by valence 1.
+   * Mass of potassium is 39.09 g/mole, so its equivalent mass is 39.09/1 =  39.09 g/equiv.
+   */
+  it("should return 39.09 for a request to convert 1 eq to g with valance 1 and mw 39.09", function() {
+    var resp = utils.convertUnitTo('eq', 1, 'g', {
+      valence: 1,
+      molecularWeight: 39.09
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
-    assert.equal(resp.toVal.toPrecision(1), 3000 , resp.toVal.toPrecision(1));
+    assert.equal(resp.toVal.toPrecision(4), 39.09, resp.toVal.toPrecision(4));
+  });
+
+  /**
+   * CaCl2 -> Ca2+ + 2 Cl-
+   * Ca2+ has a valence of 2 and a molecular weight of 40.08
+   * ∴ 1 mol of Ca = 2 eq of Ca
+   * Equivalent mass of Ca2+ is its atomic mass divided by valence 2.
+   * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
+   * https://www.wyzant.com/resources/answers/833747/the-concentration-of-ca2-ion-present-in-a-blood-sample-is-found-to-be-5-1-m#:~:text=The%20equivalent%20mass%20of%20Ca,Ca2+%20is%2020.05%20mg.
+   */
+  it("should return 20.04 for a request to convert 1 eq to g with valance 2 and mw 40.08", function() {
+    var resp = utils.convertUnitTo('eq', 1, 'g', {
+      valence: 2,
+      molecularWeight: 40.08
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(4), 20.04, resp.toVal.toPrecision(4));
+  });
+
+  /**
+   * CaCl2 -> Ca2+ + 2 Cl-
+   * Ca2+ has a valence of 2 and a molecular weight of 40.08
+   * ∴ 1 mol of Ca = 2 eq of Ca
+   * Equivalent mass of Ca2+ is its atomic mass divided by valence 2.
+   * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
+   * But we are converting 2 eq to g, so the result should be 40.08 g
+   */
+  it("should return 40.08 for a request to convert 2 eq to g with valance 2 and mw 40.08", function() {
+    var resp = utils.convertUnitTo('eq', 2, 'g', {
+      valence: 2,
+      molecularWeight: 40.08
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(4), 40.08, resp.toVal.toPrecision(4));
   });
 
   // eq to mol conversion tests
