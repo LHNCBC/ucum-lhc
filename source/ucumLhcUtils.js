@@ -190,12 +190,12 @@ export class UcumLhcUtils {
 
  
   /**
-     * This method converts one unit to another
-     *
-     * @param {string} fromUnitCode - the unit code/expression/string of the unit to be converted
-     * @param {number | string} fromVal - the number of "from" units to be converted to "to" units
-     * @param {string} toUnitCode - the unit code/expression/string of the unit that the from field is to be converted to
-     * @param {{
+   * This method converts one unit to another
+   *
+   * @param {string} fromUnitCode - the unit code/expression/string of the unit to be converted
+   * @param {number | string} fromVal - the number of "from" units to be converted to "to" units
+   * @param {string} toUnitCode - the unit code/expression/string of the unit that the from field is to be converted to
+   * @param {{
    *   suggest?: boolean,
    *   molecularWeight?: number
    *   valence?: number
@@ -361,11 +361,11 @@ export class UcumLhcUtils {
               }
               // Convert equivalent to mass if from unit is equivalent-based and to unit is not mol based
               else if (this.isEquivalentUnit(fromUnit) && !this.isMolarUnit(toUnit)) {
-                returnObj.toVal = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
+                returnObj["toVal"] = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
               }
               // Convert mass to equivalent if from unit is non-mol based and to unit is equivalent-based
               else if (!this.isMolarUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
-                returnObj.toVal = fromUnit.convertMassToEq( fromVal, toUnit, molecularWeight, valence);
+                returnObj["toVal"] = fromUnit.convertMassToEq( fromVal, toUnit, molecularWeight, valence);
               }
             }
             // if only a molecular weight was specified, assume a mass <-> mole conversion
