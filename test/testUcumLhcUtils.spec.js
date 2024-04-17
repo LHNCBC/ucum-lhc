@@ -254,7 +254,7 @@ it("should return a message for invalid unit strings", function() {
 
   // Test to raise error if valence is provided despite not converting to eq
   // e.g. converting between mol and g
-  it("should return error for a request to convert 1 mol to g with valance 2 and mw 40.08", function() {
+  it("should return error for a request to convert 1 mol to g with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('mol', 1, 'g', {
       valence: 2,
       molecularWeight: 40.08
@@ -273,7 +273,7 @@ it("should return a message for invalid unit strings", function() {
    * equivalents = moles * valence
    */
 
-  it("should return 1 for a request to convert 1 mol/L to eq/L with valance 1", function() {
+  it("should return 1 for a request to convert 1 mol/L to eq/L with valence 1", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
       valence: 1
     });
@@ -281,7 +281,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 1, resp.toVal.toPrecision(1));
   });
 
-  it("should return 2 eq for a request to convert 1 mol/L to eq/L with valance 2", function() {
+  it("should return 2 eq for a request to convert 1 mol/L to eq/L with valence 2", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
       valence: 2
     });
@@ -289,7 +289,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 2, resp.toVal.toPrecision(1));
   });
 
-  it("should return 3 for a request to convert 1 mol/L to eq/L with valance 3", function() {
+  it("should return 3 for a request to convert 1 mol/L to eq/L with valence 3", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
       valence: 3
     });
@@ -297,7 +297,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 3, resp.toVal.toPrecision(1));
   });
 
-  it("should return 0.003 for a request to convert 1 mmol/L to eq/L with valance 3", function() {
+  it("should return 0.003 for a request to convert 1 mmol/L to eq/L with valence 3", function() {
     var resp = utils.convertUnitTo('mmol/L', 1, 'eq/L', {
       valence: 3
     });
@@ -305,7 +305,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 0.003 , resp.toVal.toPrecision(1));
   });
 
-  it("should return 5 for a request to convert 1 mmol/L to meq/L with valance 5", function() {
+  it("should return 5 for a request to convert 1 mmol/L to meq/L with valence 5", function() {
     var resp = utils.convertUnitTo('mmol/L', 1, 'meq/L', {
       valence: 5
     });
@@ -315,7 +315,7 @@ it("should return a message for invalid unit strings", function() {
 
   // Test to ignore molecular weight if not converting to mass
   // e.g. converting between mol and eq
-  it("should return 5 for a request to convert 1 mmol/L to meq/L with valance 5 and mw 1000", function() {
+  it("should return 5 for a request to convert 1 mmol/L to meq/L with valence 5 and mw 1000", function() {
     var resp = utils.convertUnitTo('mmol/L', 1, 'meq/L', {
       valence: 5,
       molecularWeight: 1000
@@ -339,7 +339,7 @@ it("should return a message for invalid unit strings", function() {
    * Equivalent mass of K+ is its atomic mass divided by valence 1.
    * Mass of potassium is 39.09 g/mole, so its equivalent mass is 39.09/1 =  39.09 g/equiv.
    */
-  it("should return 39.09 for a request to convert 1 eq to g with valance 1 and mw 39.09", function() {
+  it("should return 39.09 for a request to convert 1 eq to g with valence 1 and mw 39.09", function() {
     var resp = utils.convertUnitTo('eq', 1, 'g', {
       valence: 1,
       molecularWeight: 39.09
@@ -355,7 +355,7 @@ it("should return a message for invalid unit strings", function() {
    * Equivalent mass of Ca++ is its atomic mass divided by valence 2.
    * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
    */
-  it("should return 20.04 for a request to convert 1 eq to g with valance 2 and mw 40.08", function() {
+  it("should return 20.04 for a request to convert 1 eq to g with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('eq', 1, 'g', {
       valence: 2,
       molecularWeight: 40.08
@@ -372,7 +372,7 @@ it("should return a message for invalid unit strings", function() {
    * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
    * But we are converting 2 eq to g, so the result should be 40.08 g
    */
-  it("should return 40.08 for a request to convert 2 eq to g with valance 2 and mw 40.08", function() {
+  it("should return 40.08 for a request to convert 2 eq to g with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('eq', 2, 'g', {
       valence: 2,
       molecularWeight: 40.08
@@ -382,7 +382,7 @@ it("should return a message for invalid unit strings", function() {
   });
 
   // test to return error if no molecular weight is provided for a conversion to mass
-  it("should return error for a request to convert eq to g with valance 2 and no mw", function() {
+  it("should return error for a request to convert eq to g with valence 2 and no mw", function() {
     var resp = utils.convertUnitTo('eq', 1, 'g', {
       valence: 2,
     });
@@ -394,7 +394,7 @@ it("should return a message for invalid unit strings", function() {
   });
 
   // test to return error if eq conversion is attempted without valence
-  it("should return error for a request to convert eq to g with no valance and mw 40.08", function() {
+  it("should return error for a request to convert eq to g with no valence and mw 40.08", function() {
     var resp = utils.convertUnitTo('eq', 1, 'g', {
       molecularWeight: 40.08,
     });
@@ -425,7 +425,7 @@ it("should return a message for invalid unit strings", function() {
    * Mass of potassium is 39.09 g/mole, so its equivalent mass is 39.09/1 =  39.09 g/equiv.
    * But we are converting 39.09 g to eq, so the result should be 40.08g/40.08g = 1 eq
    */
-  it("should return 1 for a request to convert 39.09 g to eq with valance 1 and mw 39.09", function() {
+  it("should return 1 for a request to convert 39.09 g to eq with valence 1 and mw 39.09", function() {
     var resp = utils.convertUnitTo('g', 39.09, 'eq', {
       valence: 1,
       molecularWeight: 39.09
@@ -442,7 +442,7 @@ it("should return a message for invalid unit strings", function() {
    * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
    * But we are converting 40.08 g to eq, so the result should be 40.08g/20.04g = 2 eq
    */
-  it("should return 2 for a request to convert 40.08 g to eq with valance 2 and mw 40.08", function() {
+  it("should return 2 for a request to convert 40.08 g to eq with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('g', 40.08, 'eq', {
       valence: 2,
       molecularWeight: 40.08
@@ -451,7 +451,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 2, resp.toVal.toPrecision(1));
   });
 
-  it("should return 2 for a request to convert 40.08 g to eq with valance 2 and mw 40.08", function() {
+  it("should return 2 for a request to convert 40.08 g to eq with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('g', 40.08, 'meq', {
       valence: 2,
       molecularWeight: 40.08
@@ -468,7 +468,7 @@ it("should return a message for invalid unit strings", function() {
    * etc. 
    */
 
-  it("should return 1 for a request to convert 1 eq/L to mol/L with valance 1", function() {
+  it("should return 1 for a request to convert 1 eq/L to mol/L with valence 1", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
       valence: 1
     });
@@ -476,7 +476,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 1, resp.toVal.toPrecision(1));
   });
 
-  it("should return 0.5 for a request to convert 1 eq/L to mol/L with valance 2", function() {
+  it("should return 0.5 for a request to convert 1 eq/L to mol/L with valence 2", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
       valence: 2
     });
@@ -484,7 +484,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 0.5, resp.toVal.toPrecision(1));
   });
 
-  it("should return 0.33 for a request to convert 1 eq/L to mol/L with valance 3", function() {
+  it("should return 0.33 for a request to convert 1 eq/L to mol/L with valence 3", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
       valence: 3
     });
@@ -492,7 +492,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(2), 0.33, resp.toVal.toPrecision(2));
   });
 
-  it("should return 0.00033 for a request to convert 1 meq/L to mol/L with valance 3", function() {
+  it("should return 0.00033 for a request to convert 1 meq/L to mol/L with valence 3", function() {
     var resp = utils.convertUnitTo('meq/L', 1, 'mol/L', {
       valence: 3
     });
@@ -500,7 +500,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(2), 0.00033 , resp.toVal.toPrecision(2));
   });
 
-  it("should return 330 for a request to convert 1 eq/L to mmol/L with valance 3", function() {
+  it("should return 330 for a request to convert 1 eq/L to mmol/L with valence 3", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mmol/L', {
       valence: 3
     });
@@ -509,7 +509,7 @@ it("should return a message for invalid unit strings", function() {
   });
 
   // mw should be ignored when converting between eq and mol
-  it("should return 0.33 for a request to convert 1 eq/L to mol/L with valance 3 and mw 1000", function() {
+  it("should return 0.33 for a request to convert 1 eq/L to mol/L with valence 3 and mw 1000", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
       valence: 3,
       molecularWeight: 1000

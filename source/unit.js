@@ -686,17 +686,17 @@ export class Unit {
    * 
    * @param {number} molFromVal - The mole amount for which the conversion is being made
    * @param {object} eqToUnit - The target/to unit for which the converted number is wanted
-   * @param {number} valance - The valance of the substance for which the conversion is being made
+   * @param {number} valence - The valence of the substance for which the conversion is being made
    * @return {number} - The amount in equivalent
    */
-  convertMolToEq(molFromVal, eqToUnit, valance){
+  convertMolToEq(molFromVal, eqToUnit, valence){
     // Check if eqToUnit is an equivalent unit and molFromVal is a molar unit
     if (!eqToUnit.isEquivalentUnit() || !this.isMolarUnit()){
       throw new Error("Invalid units for conversion of Mol to Eq. Please provide a molar and an equivalent unit.");
     }
     // The conversion from moles to equivalents is based on the principle that one equivalent is equal to 1/valence moles.
     // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (eqToUnit.magnitude_)
-    return molFromVal * valance * (this.magnitude_ / eqToUnit.magnitude_);
+    return molFromVal * valence * (this.magnitude_ / eqToUnit.magnitude_);
   }
   
   /**
