@@ -308,20 +308,18 @@ export class UcumLhcUtils {
           try {
             // if no molecular weight or valence was specified perform a normal conversion
             if (!molecularWeight && !valence) {
-              returnObj.toVal = toUnit.convertFrom(fromVal, fromUnit);
+              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
             }
             // if a valence was specified, but not a molecular weight, assume a mole <-> equivalent conversion
             else if (valence && !molecularWeight) {
               if (this.isEquivalentUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
-                throw new Error(
-                  "A valence was specified " +
+                throw new Error("A valence was specified " +
                     "but a mole <-> equivalent conversion cannot be executed for two " +
                     "equivalent-based units.  No conversion was attempted."
                 );
               }
               if (!this.isEquivalentUnit(fromUnit) && !this.isEquivalentUnit(toUnit)) {
-                throw new Error(
-                  "A valence was specified " +
+                throw new Error("A valence was specified " +
                     "but a mole <-> equivalent conversion cannot be executed when " +
                     "neither unit is equivalent-based.  No conversion was attempted."
                 );
@@ -339,15 +337,13 @@ export class UcumLhcUtils {
             // If both valence and molecular weight are specified, perform mass <-> equivalent conversion
             else if (valence && molecularWeight) {
               if (this.isEquivalentUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
-                throw new Error(
-                  "A valence and molecular weight was specified " +
+                throw new Error("A valence and molecular weight was specified " +
                     "but a mass <-> equivalent conversion cannot be executed " +
                     "for two equivalent-based units. No conversion was attempted."
                 );
               }
               if (!this.isEquivalentUnit(fromUnit) && !this.isEquivalentUnit(toUnit)) {
-                throw new Error(
-                  "A valence and molecular weight was specified " +
+                throw new Error("A valence and molecular weight was specified " +
                     "but a mass <-> equivalent conversion cannot be executed " +
                     "when neither unit is equivalent-based. No conversion was attempted."
                 );
@@ -412,12 +408,14 @@ export class UcumLhcUtils {
             returnObj['status'] = 'succeeded';
             returnObj['fromUnit'] = fromUnit;
             returnObj['toUnit'] = toUnit;
-          } catch (err) {
+          } 
+          catch (err) {
             returnObj['status'] = 'failed';
             returnObj['msg'].push(err.message);
           }
         } // end if we have the from and to units
-      } catch (err) {
+      } 
+      catch (err) {
         if (err.message == Ucum.needMoleWeightMsg_)
           returnObj['status'] = 'failed';
         else
@@ -430,7 +428,7 @@ export class UcumLhcUtils {
 
   } // end convertUnitTo
 
-  
+
   /**
    *  Converts the given unit string into its base units, their exponents, and
    *  a magnitude, and returns that data.
