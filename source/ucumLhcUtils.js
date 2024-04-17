@@ -247,55 +247,55 @@ export class UcumLhcUtils {
     let { suggest = false, molecularWeight = null, valence = null } = options;
 
     /** @type {ConvertUnitResult} */
-    let returnObj = { status: "failed", toVal: null, msg: [] };
+    let returnObj = {'status' : 'failed',
+                     'toVal' : null,
+                     'msg' : []} ;
 
-    fromUnitCode = fromUnitCode ? fromUnitCode.trim() : "";
-    if (!fromUnitCode) {
-      returnObj.status = "error";
-      returnObj.msg.push('No "from" unit expression specified.');
+    if (fromUnitCode) {
+      fromUnitCode = fromUnitCode.trim();
     }
-
+    if (!fromUnitCode || fromUnitCode == '') {
+      returnObj['status'] = 'error';
+      returnObj['msg'].push('No "from" unit expression specified.');
+    }
     this._checkFromVal(fromVal, returnObj);
-
-    toUnitCode = toUnitCode ? toUnitCode.trim() : "";
-    if (!toUnitCode) {
-      returnObj.status = "error";
-      returnObj.msg.push('No "to" unit expression specified.');
+    if (toUnitCode) {
+      toUnitCode = toUnitCode.trim();
     }
-
-    if (returnObj.status !== "error") {
+    if (!toUnitCode || toUnitCode == '') {
+      returnObj['status'] = 'error';
+      returnObj['msg'].push('No "to" unit expression specified.');
+    }
+    if (returnObj['status'] !== 'error') {
       try {
         let fromUnit = null;
 
-        let parseResp = this.getSpecifiedUnit(fromUnitCode, "convert", suggest);
-        fromUnit = parseResp["unit"];
-        if (parseResp["retMsg"])
-          returnObj.msg = returnObj.msg.concat(parseResp["retMsg"]);
-        if (parseResp["suggestions"]) {
-          returnObj.suggestions = {};
-          returnObj.suggestions.from = parseResp["suggestions"];
+        let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
+        fromUnit = parseResp['unit'];
+        if (parseResp['retMsg'])
+          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+        if (parseResp['suggestions']) {
+          returnObj['suggestions'] = {};
+          returnObj['suggestions']['from'] = parseResp['suggestions'];
         }
         if (!fromUnit) {
-          returnObj.msg.push(
-            `Unable to find a unit for ${fromUnitCode}, ` +
-              `so no conversion could be performed.`
-          );
+          returnObj['msg'].push(`Unable to find a unit for ${fromUnitCode}, ` +
+            `so no conversion could be performed.`);
         }
 
         let toUnit = null;
-        parseResp = this.getSpecifiedUnit(toUnitCode, "convert", suggest);
-        toUnit = parseResp["unit"];
-        if (parseResp["retMsg"])
-          returnObj.msg = returnObj.msg.concat(parseResp["retMsg"]);
-        if (parseResp["suggestions"]) {
-          if (!returnObj.suggestions) returnObj.suggestions = {};
-          returnObj.suggestions.to = parseResp["suggestions"];
+        parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
+        toUnit = parseResp['unit'];
+        if (parseResp['retMsg'])
+          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+        if (parseResp['suggestions']) {
+          if (!returnObj['suggestions'])
+            returnObj['suggestions'] = {} ;
+          returnObj['suggestions']['to'] = parseResp['suggestions'];
         }
         if (!toUnit) {
-          returnObj.msg.push(
-            `Unable to find a unit for ${toUnitCode}, ` +
-              `so no conversion could be performed.`
-          );
+          returnObj['msg'].push(`Unable to find a unit for ${toUnitCode}, ` +
+                                `so no conversion could be performed.`);
         }
 
         if (fromUnit && toUnit) {
@@ -306,20 +306,14 @@ export class UcumLhcUtils {
             }
             // if a valence was specified, but not a molecular weight, assume a mole <-> equivalent conversion
             else if (valence && !molecularWeight) {
-              if (
-                this.isEquivalentUnit(fromUnit) &&
-                this.isEquivalentUnit(toUnit)
-              ) {
+              if (this.isEquivalentUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
                 throw new Error(
                   "A valence was specified " +
                     "but a mole <-> equivalent conversion cannot be executed for two " +
                     "equivalent-based units.  No conversion was attempted."
                 );
               }
-              if (
-                this.isNotEquivalentUnit(fromUnit) &&
-                this.isNotEquivalentUnit(toUnit)
-              ) {
+              if (this.isNotEquivalentUnit(fromUnit) && this.isNotEquivalentUnit(toUnit)) {
                 throw new Error(
                   "A valence was specified " +
                     "but a mole <-> equivalent conversion cannot be executed when " +
@@ -329,40 +323,23 @@ export class UcumLhcUtils {
 
               // if from is equivalent and to is moles, assume eq to mol conversion
               if (this.isEquivalentUnit(fromUnit) && this.isMolarUnit(toUnit)) {
-                returnObj["toVal"] = fromUnit.convertEqToMol(
-                  fromVal,
-                  toUnit,
-                  valence
-                );
+                returnObj["toVal"] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
               }
               // else if from is moles and to is equivalent, assume mol to eq conversion
-              else if (
-                this.isMolarUnit(fromUnit) &&
-                this.isEquivalentUnit(toUnit)
-              ) {
-                returnObj["toVal"] = fromUnit.convertMolToEq(
-                  fromVal,
-                  toUnit,
-                  valence
-                );
+              else if (this.isMolarUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
+                returnObj["toVal"] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
               }
             }
             // If both valence and molecular weight are specified, perform mass <-> equivalent conversion
             else if (valence && molecularWeight) {
-              if (
-                this.isEquivalentUnit(fromUnit) &&
-                this.isEquivalentUnit(toUnit)
-              ) {
+              if (this.isEquivalentUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
                 throw new Error(
                   "A valence and molecular weight was specified " +
                     "but a mass <-> equivalent conversion cannot be executed " +
                     "for two equivalent-based units. No conversion was attempted."
                 );
               }
-              if (
-                this.isNotEquivalentUnit(fromUnit) &&
-                this.isNotEquivalentUnit(toUnit)
-              ) {
+              if (!this.isEquivalentUnit(fromUnit) && !this.isEquivalentUnit(toUnit)) {
                 throw new Error(
                   "A valence and molecular weight was specified " +
                     "but a mass <-> equivalent conversion cannot be executed " +
@@ -374,46 +351,19 @@ export class UcumLhcUtils {
               // Note that molecular weight is not used in this conversion, but we are handling the case where it is provided anyways
               // If from unit is equivalent and to unit is moles, perform eq to mol conversion
               if (this.isEquivalentUnit(fromUnit) && this.isMolarUnit(toUnit)) {
-                returnObj["toVal"] = fromUnit.convertEqToMol(
-                  fromVal,
-                  toUnit,
-                  valence
-                );
+                returnObj["toVal"] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
               }
               // If from unit is moles and to unit is equivalent, perform mol to eq conversion
-              else if (
-                this.isMolarUnit(fromUnit) &&
-                this.isEquivalentUnit(toUnit)
-              ) {
-                returnObj["toVal"] = fromUnit.convertMolToEq(
-                  fromVal,
-                  toUnit,
-                  valence
-                );
+              else if (this.isMolarUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
+                returnObj["toVal"] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
               }
               // Convert equivalent to mass if from unit is equivalent-based and to unit is not mol based
-              else if (
-                this.isEquivalentUnit(fromUnit) &&
-                this.isNonMolarUnit(toUnit)
-              ) {
-                returnObj.toVal = fromUnit.convertEqToMass(
-                  fromVal,
-                  toUnit,
-                  molecularWeight,
-                  valence
-                );
+              else if (this.isEquivalentUnit(fromUnit) && this.isNonMolarUnit(toUnit)) {
+                returnObj.toVal = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
               }
               // Convert mass to equivalent if from unit is non-mol based and to unit is equivalent-based
-              else if (
-                this.isNonMolarUnit(fromUnit) &&
-                this.isEquivalentUnit(toUnit)
-              ) {
-                returnObj.toVal = fromUnit.convertMassToEq(
-                  fromVal,
-                  toUnit,
-                  molecularWeight,
-                  valence
-                );
+              else if (this.isNonMolarUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
+                returnObj.toVal = fromUnit.convertMassToEq( fromVal, toUnit, molecularWeight, valence);
               }
             }
             // if only a molecular weight was specified, assume a mass <-> mole conversion
@@ -425,10 +375,7 @@ export class UcumLhcUtils {
                     "mole-based units.  No conversion was attempted."
                 );
               }
-              if (
-                this.isNonMolarUnit(fromUnit) &&
-                this.isNonMolarUnit(toUnit)
-              ) {
+              if (this.isNonMolarUnit(fromUnit) && this.isNonMolarUnit(toUnit)) {
                 throw new Error(
                   "A molecular weight was specified " +
                     "but a mass <-> mole conversion cannot be executed when " +
@@ -445,20 +392,12 @@ export class UcumLhcUtils {
               // if the "from" unit is a mole-based unit, assume a mole to mass
               // request
               if (this.isMolarUnit(fromUnit)) {
-                returnObj["toVal"] = fromUnit.convertMolToMass(
-                  fromVal,
-                  toUnit,
-                  molecularWeight
-                );
+                returnObj["toVal"] = fromUnit.convertMolToMass( fromVal, toUnit, molecularWeight);
               }
               // else the "to" unit must be the mole-based unit, so assume a
               // mass to mole request
               else if (this.isMolarUnit(toUnit)) {
-                returnObj["toVal"] = fromUnit.convertMassToMol(
-                  fromVal,
-                  toUnit,
-                  molecularWeight
-                );
+                returnObj["toVal"] = fromUnit.convertMassToMol( fromVal, toUnit, molecularWeight);
               }
             } // end if a molecular weight was specified
 
