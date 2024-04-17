@@ -592,7 +592,7 @@ export class Unit {
    * Converts eq to mass.
    * The calculation is done in two steps:
    * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its valence.
-   *    For example, Ca2+ has a valence of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
+   *    For example, Ca++ has a valence of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
    * 2. Calculate the mass by dividing molecular mass by valence.
    * 
    * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
@@ -605,21 +605,16 @@ export class Unit {
    * @returns {number} - The equivalent mass in the specified mass unit.
    */
   convertEqToMass(equivalents, targetUnit, molecularWeight, valence) {
-    // Equivalent mass of a substance is its molecular weight divided by valence. This is the mass for 1 eq.
-    let equivalentMass = molecularWeight / valence;
-    // Calculate total mass by multiplying number of equivalents with equivalent mass.
-    let mass = equivalents * equivalentMass;
-    // Adjust the mass amount by the targetUnit magnitude to get the equivalent mass
-    let adjustedMass = mass / targetUnit.magnitude_;
-    // Finally, we return the adjusted mass amount/grams for this particular unit
-    return adjustedMass;
+    let standardMoleUnit = this._getUnitTables().getUnitByCode('mol');
+    const molAmount = this.convertEqToMol(equivalents, standardMoleUnit, valence);
+    return this.convertMolToMass(molAmount, targetUnit, molecularWeight);
   }
   
   /**
    * Converts mass to equivalents.
    * The calculation is done in two steps:
    * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its valence.
-   *    For example, Ca2+ has a valence of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
+   *    For example, Ca++ has a valence of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
    * 2. Calculate the equivalents by dividing the mass by the equivalent mass.
    * 
    * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
@@ -657,7 +652,7 @@ export class Unit {
    */
   isEquivalentUnit() {
     return this.equivalentExp_ !== 0;
-  } 
+  } // end isEquivalentUnit
 
   /**
    * Checks if the given unit is a molar unit.
@@ -1136,7 +1131,22 @@ export class Unit {
     return commensurable ;
   }
 
-
+  /**
+   * This function tests this unit against the unit passed in to see if the
+   * two are eq to mass commensurable.  It assumes that one of the units
+   * is a eq-based unit and the other is a mass-based unit.  It also assumes
+   * that the eq-based unit has a single eq unit in the numerator and that
+   * the mass-based unit has a single mass unit in the numerator.  It does NOT
+   * check to validate those assumptions.
+   *
+   * The check is made by setting the dimension vector element corresponding
+   * to the base mass unit (gram) in the eq unit, and then comparing the
+   * two dimension vectors.  If they match, the units are commensurable.
+   * Otherwise they are not.
+   *
+   * @param {Unit} unit2 the unit to be compared to this one
+   * @returns {boolean} boolean indicating commensurability
+   */
   isEqMassCommensurable(unit2) {
     let tabs = this._getUnitTables();
     let d = tabs.getMassDimensionIndex();
@@ -1144,16 +1154,16 @@ export class Unit {
     if (this.equivalentExp_ === 1 && unit2.equivalentExp_ === 0) {
       let testDim = this.dim_.clone();
       let curVal = testDim.getElementAt(d);
-      testDim.setElementAt(d, (curVal + this.eqExp_));
+      testDim.setElementAt(d, (curVal + this.equivalentExp_));
       commensurable = (testDim.equals(unit2.dim_));
     }
     else if (unit2.equivalentExp_ === 1 && this.equivalentExp_ === 0) {
       let testDim = unit2.dim_.clone();
       let curVal = testDim.getElementAt(d);
-      testDim.setElementAt(d, (curVal + unit2.eqExp_));
+      testDim.setElementAt(d, (curVal + unit2.equivalentExp_));
       commensurable = (testDim.equals(this.dim_));
     }
-    return commensurable ;
+    return commensurable;
   }
 
 

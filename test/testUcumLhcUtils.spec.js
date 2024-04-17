@@ -331,10 +331,10 @@ it("should return a message for invalid unit strings", function() {
   });
 
   /**
-   * CaCl2 -> Ca2+ + 2 Cl-
-   * Ca2+ has a valence of 2 and a molecular weight of 40.08
+   * CaCl2 -> Ca++ + 2 Cl-
+   * Ca++ has a valence of 2 and a molecular weight of 40.08
    * ∴ 1 mol of Ca = 2 eq of Ca
-   * Equivalent mass of Ca2+ is its atomic mass divided by valence 2.
+   * Equivalent mass of Ca++ is its atomic mass divided by valence 2.
    * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
    */
   it("should return 20.04 for a request to convert 1 eq to g with valance 2 and mw 40.08", function() {
@@ -347,10 +347,10 @@ it("should return a message for invalid unit strings", function() {
   });
 
   /**
-   * CaCl2 -> Ca2+ + 2 Cl-
-   * Ca2+ has a valence of 2 and a molecular weight of 40.08
+   * CaCl2 -> Ca++ + 2 Cl-
+   * Ca++ has a valence of 2 and a molecular weight of 40.08
    * ∴ 1 mol of Ca = 2 eq of Ca
-   * Equivalent mass of Ca2+ is its atomic mass divided by valence 2.
+   * Equivalent mass of Ca++ is its atomic mass divided by valence 2.
    * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
    * But we are converting 2 eq to g, so the result should be 40.08 g
    */
@@ -391,9 +391,9 @@ it("should return a message for invalid unit strings", function() {
 
   /**
    * CaCl2 -> Ca<sup>2+</sup> + 2 Cl-
-   * Ca2+ has a valence of 2 and a molecular weight of 40.08
+   * Ca++ has a valence of 2 and a molecular weight of 40.08
    * ∴ 1 mol of Ca = 2 eq of Ca
-   * Equivalent mass of Ca2+ is its atomic mass divided by valence 2.
+   * Equivalent mass of Ca++ is its atomic mass divided by valence 2.
    * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
    * But we are converting 40.08 g to eq, so the result should be 40.08g/20.04g = 2 eq
    */
