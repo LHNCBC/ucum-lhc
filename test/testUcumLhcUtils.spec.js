@@ -390,7 +390,7 @@ it("should return a message for invalid unit strings", function() {
   });
 
   /**
-   * CaCl2 -> Ca2+ + 2 Cl-
+   * CaCl2 -> Ca<sup>2+</sup> + 2 Cl-
    * Ca2+ has a valence of 2 and a molecular weight of 40.08
    * ∴ 1 mol of Ca = 2 eq of Ca
    * Equivalent mass of Ca2+ is its atomic mass divided by valence 2.
@@ -404,6 +404,15 @@ it("should return a message for invalid unit strings", function() {
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(1), 2, resp.toVal.toPrecision(1));
+  });
+
+  it("should return 2 for a request to convert 40.08 g to eq with valance 2 and mw 40.08", function() {
+    var resp = utils.convertUnitTo('g', 40.08, 'meq', {
+      valence: 2,
+      molecularWeight: 40.08
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(1), 2000, resp.toVal.toPrecision(1));
   });
 
   /** Eq to mol conversion tests

@@ -180,7 +180,7 @@ using them in actual clinical settings.
       suggestions are wanted; false indicates they are not, and is the default
       if the parameter is not specified;
   * 'molecularWeight' the molecular weight of the substance in question when a
-      conversion is being requested from mass to moles and vice versa.  It is
+      conversion is being requested from mass to moles/equivalents and vice versa.  It is
       ignored if neither unit includes a measurement in moles.  In such cases
       the mole-based unit must have a single mole unit in the numerator and the
       mass-based unit must have a single mass unit in the numerator.

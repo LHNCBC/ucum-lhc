@@ -656,16 +656,9 @@ export class Unit {
    * @return {number} - The amount in moles.
    */
   convertEqToMol(eqFromVal, molToUnit, valence){
-    // Retrieve the unit tables
-    let tabs = this._getUnitTables();
-    // Retrieve the magnitude of a simple mole unit (Avogadro's number)
-    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
-    // Calculate the factor by which the current mole unit magnitude exceeds the simple mole unit magnitude
-    let molesFactor = this.magnitude_ / avoNum ;
-    // Retrieve the magnitude of the target mole unit
-    let toMolesFactor = molToUnit.magnitude_ / avoNum ;
-    // Calculate and return the amount in moles, taking into account the valence and the mole factors
-    return (eqFromVal * molesFactor ) / valence / toMolesFactor;
+    // The conversion from equivalents to moles is based on the principle that one equivalent is equal to 1/valence moles. 
+    // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (molToUnit.magnitude_)
+    return eqFromVal * (this.magnitude_ / molToUnit.magnitude_) / valence;
   }
 
   /**
@@ -677,16 +670,9 @@ export class Unit {
    * @return {number} - The amount in equivalent
    */
   convertMolToEq(molFromVal, eqToUnit, valance){
-    // Retrieve the unit tables
-    let tabs = this._getUnitTables();
-    // Retrieve the magnitude of a simple mole unit (Avogadro's number)
-    let avoNum = tabs.getUnitByCode('mol').magnitude_ ;
-    // Calculate the factor by which the current mole unit magnitude exceeds the simple mole unit magnitude
-    let molesFactor = this.magnitude_ / avoNum ;
-    // Retrieve the magnitude of the target equivalent unit
-    let toEqFactor = eqToUnit.magnitude_ / avoNum ;
-    // Calculate and return the amount in equivalent, taking into account the valance and the mole factors
-    return (molFromVal * molesFactor * valance) / toEqFactor;
+    // The conversion from moles to equivalents is based on the principle that one equivalent is equal to 1/valence moles.
+    // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (eqToUnit.magnitude_)
+    return molFromVal * valance * (this.magnitude_ / eqToUnit.magnitude_);
   }
   
   /**
