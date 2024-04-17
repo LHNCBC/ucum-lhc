@@ -605,6 +605,9 @@ export class Unit {
    * @returns {number} - The equivalent mass in the specified mass unit.
    */
   convertEqToMass(equivalents, targetUnit, molecularWeight, valence) {
+    if (this.isEqMassCommensurable(targetUnit)) {
+      throw new Error(Ucum.needEqWeightMsg_);
+    }
     // Equivalent mass of a substance is its molecular weight divided by valence. This is the mass for 1 eq.
     let equivalentMass = molecularWeight / valence;
     // Calculate total mass by multiplying number of equivalents with equivalent mass.
@@ -613,6 +616,9 @@ export class Unit {
     let adjustedMass = mass / targetUnit.magnitude_;
     // Finally, we return the adjusted mass amount/grams for this particular unit
     return adjustedMass;
+    // const mol = this.convertEqToMol(equivalents, targetUnit, valence);
+    // console.log('mol', mol)
+    // return this.convertMolToMass(mol, targetUnit, molecularWeight);
   }
   
   /**
@@ -648,6 +654,27 @@ export class Unit {
   }
 
   /**
+   * Checks if the given unit is an equivalent unit.
+   * 
+   * Note that equivalent units can also be molar units, so a unit can return true for 
+   * both isEquivalentUnit and isMolarUnit.
+   * 
+   * @returns {boolean} - Returns true if the unit is an equivalent unit, false otherwise.
+   */
+  isEquivalentUnit() {
+    return this.equivalentExp_ !== 0;
+  } 
+
+  /**
+   * Checks if the given unit is a molar unit.
+   * @returns {boolean} - Returns true if the unit is a molar unit, false otherwise.
+   */
+  isMolarUnit() {
+    return this.moleExp_ !== 0;
+  } // end isMolarUnit
+
+
+  /**
    * This function converts equivalent amount to moles.
    * 
    * @param {number} eqFromVal - The equivalent amount for which the conversion is being made.
@@ -656,6 +683,10 @@ export class Unit {
    * @return {number} - The amount in moles.
    */
   convertEqToMol(eqFromVal, molToUnit, valence){
+    // Check if molToUnit is a molar unit and eqFromVal is a eq unit
+    if (!molToUnit.isMolarUnit() || !this.isEquivalentUnit()){
+      throw new Error("Invalid units for conversion of Eq to Mol. Please provide an equivalent and a molar unit.");
+    }
     // The conversion from equivalents to moles is based on the principle that one equivalent is equal to 1/valence moles. 
     // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (molToUnit.magnitude_)
     return eqFromVal * (this.magnitude_ / molToUnit.magnitude_) / valence;
@@ -670,6 +701,10 @@ export class Unit {
    * @return {number} - The amount in equivalent
    */
   convertMolToEq(molFromVal, eqToUnit, valance){
+    // Check if eqToUnit is an equivalent unit and molFromVal is a molar unit
+    if (!eqToUnit.isEquivalentUnit() || !this.isMolarUnit()){
+      throw new Error("Invalid units for conversion of Mol to Eq. Please provide a molar and an equivalent unit.");
+    }
     // The conversion from moles to equivalents is based on the principle that one equivalent is equal to 1/valence moles.
     // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (eqToUnit.magnitude_)
     return molFromVal * valance * (this.magnitude_ / eqToUnit.magnitude_);
@@ -1102,6 +1137,26 @@ export class Unit {
       let testDim = unit2.dim_.clone();
       let curVal = testDim.getElementAt(d);
       testDim.setElementAt(d, (curVal + unit2.moleExp_));
+      commensurable = (testDim.equals(this.dim_));
+    }
+    return commensurable ;
+  }
+
+
+  isEqMassCommensurable(unit2) {
+    let tabs = this._getUnitTables();
+    let d = tabs.getMassDimensionIndex();
+    let commensurable = false ;
+    if (this.equivalentExp_ === 1 && unit2.equivalentExp_ === 0) {
+      let testDim = this.dim_.clone();
+      let curVal = testDim.getElementAt(d);
+      testDim.setElementAt(d, (curVal + this.eqExp_));
+      commensurable = (testDim.equals(unit2.dim_));
+    }
+    else if (unit2.equivalentExp_ === 1 && this.equivalentExp_ === 0) {
+      let testDim = unit2.dim_.clone();
+      let curVal = testDim.getElementAt(d);
+      testDim.setElementAt(d, (curVal + unit2.eqExp_));
       commensurable = (testDim.equals(this.dim_));
     }
     return commensurable ;
