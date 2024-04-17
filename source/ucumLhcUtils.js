@@ -293,51 +293,53 @@ export class UcumLhcUtils {
               if (fromUnit.isEquivalentUnit() && toUnit.isEquivalentUnit()) {
                 throw new Error("A valence was specified " +
                     "but a mole <-> equivalent conversion cannot be executed for two " +
-                    "equivalent-based units.  No conversion was attempted."
-                );
+                    "equivalent-based units.  No conversion was attempted.");
               }
               if (!fromUnit.isEquivalentUnit() && !toUnit.isEquivalentUnit()) {
                 throw new Error("A valence was specified " +
                     "but a mole <-> equivalent conversion cannot be executed when " +
-                    "neither unit is equivalent-based.  No conversion was attempted."
-                );
+                    "neither unit is equivalent-based.  No conversion was attempted.");
               }
 
-              // if from is equivalent and to is moles, assume eq to mol conversion
+              // if 'from' is equivalent and 'to' is moles, assume eq to mol conversion
               if (fromUnit.isEquivalentUnit() && toUnit.isMolarUnit()) {
                 returnObj["toVal"] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
               }
-              // else if from is moles and to is equivalent, assume mol to eq conversion
+              // else if 'from' is moles and 'to' is equivalent, assume mol to eq conversion
               else if (fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
                 returnObj["toVal"] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
               }
             }
-            // If both valence and molecular weight are specified, perform mass <-> equivalent conversion
+            // If both valence and molecular weight are specified, assume mass <-> equivalent conversion
             else if (valence && molecularWeight) {
               if (fromUnit.isEquivalentUnit() && toUnit.isEquivalentUnit()) {
                 throw new Error("A valence and molecular weight was specified " +
                     "but a mass <-> equivalent conversion cannot be executed " +
-                    "for two equivalent-based units. No conversion was attempted."
-                );
+                    "for two equivalent-based units. No conversion was attempted.");
               }
               if (!fromUnit.isEquivalentUnit() && !toUnit.isEquivalentUnit()) {
                 throw new Error("A valence and molecular weight was specified " +
                     "but a mass <-> equivalent conversion cannot be executed " +
-                    "when neither unit is equivalent-based. No conversion was attempted."
-                );
+                    "when neither unit is equivalent-based. No conversion was attempted.");
               }
 
-              // If both units are equivalent/mol based and molecular weight is specified, perform mole <-> equivalent conversion
-              // Note that molecular weight is not used in this conversion, but we are handling the case where it is provided anyways
-              // If from unit is equivalent and to unit is moles, perform eq to mol conversion
+              // If both units are equivalent/mol based and neither seem to be mass based, perform a 
+              // mole <-> equivalent conversion instead even though a molecular weight was provided.
+              // Note that the provided molecular weight will not used in this conversion, but we are 
+              // handling the case where a user has provided it anyways.
+
+              // If 'from' unit is equivalent and 'to' unit is moles, perform eq to mol conversion
               if (fromUnit.isEquivalentUnit() && toUnit.isMolarUnit()) {
                 returnObj["toVal"] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
               }
-              // If from unit is moles and to unit is equivalent, perform mol to eq conversion
+              // If 'from' unit is moles and 'to' unit is equivalent, perform mol to eq conversion
               else if (fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
                 returnObj["toVal"] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
               }
-              // Convert equivalent to mass if from unit is equivalent-based and to unit is not mol based
+
+              // Here at least one unit is mass based, so we will perform a mass <-> equivalent conversion
+
+              // Convert equivalent to mass if 'from' unit is equivalent-based and 'to' unit is not mol based
               else if (fromUnit.isEquivalentUnit() && !toUnit.isMolarUnit()) {
                 if (!fromUnit.isEqMassCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
@@ -345,7 +347,7 @@ export class UcumLhcUtils {
                 }
                 returnObj["toVal"] = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
               }
-              // Convert mass to equivalent if from unit is non-mol based and to unit is equivalent-based
+              // Convert mass to equivalent if 'from' unit is non-mol based and 'to' unit is equivalent-based
               else if (!fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
                 if (!fromUnit.isEqMassCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
@@ -360,15 +362,13 @@ export class UcumLhcUtils {
                 throw new Error(
                   "A molecular weight was specified " +
                     "but a mass <-> mole conversion cannot be executed for two " +
-                    "mole-based units.  No conversion was attempted."
-                );
+                    "mole-based units.  No conversion was attempted.");
               }
               if (!fromUnit.isMolarUnit() && !toUnit.isMolarUnit()) {
                 throw new Error(
                   "A molecular weight was specified " +
                     "but a mass <-> mole conversion cannot be executed when " +
-                    "neither unit is mole-based.  No conversion was attempted."
-                );
+                    "neither unit is mole-based.  No conversion was attempted.");
               }
               if (!fromUnit.isMoleMassCommensurable(toUnit)) {
                 throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
