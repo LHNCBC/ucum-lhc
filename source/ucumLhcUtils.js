@@ -389,45 +389,48 @@ export class UcumLhcUtils {
                 );
               }
               if (!fromUnit.isMoleMassCommensurable(toUnit)) {
-                throw new Error(
-                  `Sorry.  ${fromUnitCode} cannot be ` +
-                    `converted to ${toUnitCode}.`
-                );
+                throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                    `converted to ${toUnitCode}.`);
               }
 
               // if the "from" unit is a mole-based unit, assume a mole to mass
               // request
               if (this.isMolarUnit(fromUnit)) {
-                returnObj["toVal"] = fromUnit.convertMolToMass( fromVal, toUnit, molecularWeight);
+                returnObj['toVal'] =
+                  fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
               }
               // else the "to" unit must be the mole-based unit, so assume a
               // mass to mole request
               else if (this.isMolarUnit(toUnit)) {
-                returnObj["toVal"] = fromUnit.convertMassToMol( fromVal, toUnit, molecularWeight);
+                returnObj['toVal'] =
+                  fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
               }
             } // end if a molecular weight was specified
 
             // if an error hasn't been thrown - either from convertFrom or here,
             // set the return object to show success
-            returnObj["status"] = "succeeded";
-            returnObj["fromUnit"] = fromUnit;
-            returnObj["toUnit"] = toUnit;
+            returnObj['status'] = 'succeeded';
+            returnObj['fromUnit'] = fromUnit;
+            returnObj['toUnit'] = toUnit;
           } catch (err) {
-            returnObj["status"] = "failed";
-            returnObj["msg"].push(err.message);
+            returnObj['status'] = 'failed';
+            returnObj['msg'].push(err.message);
           }
         } // end if we have the from and to units
       } catch (err) {
         if (err.message == Ucum.needMoleWeightMsg_)
-          returnObj["status"] = "failed";
-        else returnObj["status"] = "error";
-        returnObj["msg"].push(err.message);
+          returnObj['status'] = 'failed';
+        else
+          returnObj['status'] = 'error';
+        returnObj['msg'].push(err.message);
       }
     }
 
-    return returnObj;
+    return returnObj ;
+
   } // end convertUnitTo
 
+  
   /**
    *  Converts the given unit string into its base units, their exponents, and
    *  a magnitude, and returns that data.
