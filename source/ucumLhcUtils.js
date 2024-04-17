@@ -339,10 +339,18 @@ export class UcumLhcUtils {
               }
               // Convert equivalent to mass if from unit is equivalent-based and to unit is not mol based
               else if (fromUnit.isEquivalentUnit() && !toUnit.isMolarUnit()) {
+                if (!fromUnit.isEqMassCommensurable(toUnit)) {
+                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                      `converted to ${toUnitCode}.`);
+                }
                 returnObj["toVal"] = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
               }
               // Convert mass to equivalent if from unit is non-mol based and to unit is equivalent-based
               else if (!fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
+                if (!fromUnit.isEqMassCommensurable(toUnit)) {
+                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                      `converted to ${toUnitCode}.`);
+                }
                 returnObj["toVal"] = fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, valence);
               }
             }

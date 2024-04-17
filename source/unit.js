@@ -605,9 +605,6 @@ export class Unit {
    * @returns {number} - The equivalent mass in the specified mass unit.
    */
   convertEqToMass(equivalents, targetUnit, molecularWeight, valence) {
-    if (this.isEqMassCommensurable(targetUnit)) {
-      throw new Error(Ucum.needEqWeightMsg_);
-    }
     // Equivalent mass of a substance is its molecular weight divided by valence. This is the mass for 1 eq.
     let equivalentMass = molecularWeight / valence;
     // Calculate total mass by multiplying number of equivalents with equivalent mass.
@@ -616,9 +613,6 @@ export class Unit {
     let adjustedMass = mass / targetUnit.magnitude_;
     // Finally, we return the adjusted mass amount/grams for this particular unit
     return adjustedMass;
-    // const mol = this.convertEqToMol(equivalents, targetUnit, valence);
-    // console.log('mol', mol)
-    // return this.convertMolToMass(mol, targetUnit, molecularWeight);
   }
   
   /**
