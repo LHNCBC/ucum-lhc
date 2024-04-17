@@ -144,21 +144,27 @@ export class UcumLhcUtils {
 
   } // end validateUnitString
 
+  /**
+   * Checks if the given unit is an equivalent unit.
+   * 
+   * Note that equivalent units can also be molar units, so a unit can return true for 
+   * both isEquivalentUnit and isMolarUnit.
+   * 
+   * @param {Object} unit - The unit to check.
+   * @returns {boolean} - Returns true if the unit is an equivalent unit, false otherwise.
+   */
   isEquivalentUnit(unit) {
     return unit && unit.equivalentExp_ !== 0;
   } // end isEquivalentUnit
 
+  /**
+   * Checks if the given unit is a molar unit.
+   * @param {Object} unit - The unit to check.
+   * @returns {boolean} - Returns true if the unit is a molar unit, false otherwise.
+   */
   isMolarUnit(unit) {
     return unit && unit.moleExp_ !== 0;
   } // end isMolarUnit
-
-  isNonMolarUnit(unit) {
-    return unit && unit.moleExp_ === 0;
-  } // end isNonMolarUnit
-
-  isNotEquivalentUnit(unit) {
-    return unit && unit.equivalentExp_ === 0;
-  } // end isNotEquivalentUnit
 
   /** 
    * @typedef {{
@@ -313,7 +319,7 @@ export class UcumLhcUtils {
                     "equivalent-based units.  No conversion was attempted."
                 );
               }
-              if (this.isNotEquivalentUnit(fromUnit) && this.isNotEquivalentUnit(toUnit)) {
+              if (!this.isEquivalentUnit(fromUnit) && !this.isEquivalentUnit(toUnit)) {
                 throw new Error(
                   "A valence was specified " +
                     "but a mole <-> equivalent conversion cannot be executed when " +
@@ -358,11 +364,11 @@ export class UcumLhcUtils {
                 returnObj["toVal"] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
               }
               // Convert equivalent to mass if from unit is equivalent-based and to unit is not mol based
-              else if (this.isEquivalentUnit(fromUnit) && this.isNonMolarUnit(toUnit)) {
+              else if (this.isEquivalentUnit(fromUnit) && !this.isMolarUnit(toUnit)) {
                 returnObj.toVal = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
               }
               // Convert mass to equivalent if from unit is non-mol based and to unit is equivalent-based
-              else if (this.isNonMolarUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
+              else if (!this.isMolarUnit(fromUnit) && this.isEquivalentUnit(toUnit)) {
                 returnObj.toVal = fromUnit.convertMassToEq( fromVal, toUnit, molecularWeight, valence);
               }
             }
@@ -375,7 +381,7 @@ export class UcumLhcUtils {
                     "mole-based units.  No conversion was attempted."
                 );
               }
-              if (this.isNonMolarUnit(fromUnit) && this.isNonMolarUnit(toUnit)) {
+              if (!this.isMolarUnit(fromUnit) && !this.isMolarUnit(toUnit)) {
                 throw new Error(
                   "A molecular weight was specified " +
                     "but a mass <-> mole conversion cannot be executed when " +
