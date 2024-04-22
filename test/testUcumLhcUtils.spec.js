@@ -105,7 +105,6 @@ describe('Test validateUnitString method', function() {
 
 }); // end validateUnitString tests
 
-
 describe('Test convertUnitTo method', function() {
 
   it("should return error messages for no unit strings supplied", function() {
@@ -286,7 +285,7 @@ it("should return a message for invalid unit strings", function() {
   it("should return error for a request to convert mol to eq with no nFactor and mw 40.08", function() {
     var resp = utils.convertUnitTo('mol', 1, 'eq');
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
-    assert.equal(resp.msg[0], Ucum.needEqValMsg_,
+    assert.equal(resp.msg[0], Ucum.needEqNFactorMsg_,
       resp.msg[0]);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
@@ -370,7 +369,7 @@ it("should return a message for invalid unit strings", function() {
       molecularWeight: 40.08,
     });
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
-    assert.equal(resp.msg[0], Ucum.needEqValMsg_, 
+    assert.equal(resp.msg[0], Ucum.needEqNFactorMsg_, 
       resp.msg[0]);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
@@ -441,7 +440,7 @@ it("should return a message for invalid unit strings", function() {
       molecularWeight: 40.08,
     });
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
-    assert.equal(resp.msg[0], Ucum.needEqValMsg_, 
+    assert.equal(resp.msg[0], Ucum.needEqNFactorMsg_, 
       resp.msg[0]);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
@@ -527,7 +526,7 @@ it("should return a message for invalid unit strings", function() {
       molecularWeight: 40.08,
     });
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
-    assert.equal(resp.msg[0], Ucum.needEqValMsg_,
+    assert.equal(resp.msg[0], Ucum.needEqNFactorMsg_,
       resp.msg[0]);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
@@ -673,6 +672,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.msg.length, 0);
   });
 }); // end convertUnitTo tests
+
 describe('Test getSynonyms method', function() {
 
   it("should return an error message for no synonym supplied", function() {
@@ -708,7 +708,6 @@ describe('Test getSynonyms method', function() {
   });
 
 }); // end checkSynonyms tests
-
 
 describe('convertToBaseUnits', ()=> {
   it('should convert cm2/ms3 to base units', ()=>{

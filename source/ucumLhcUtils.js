@@ -383,7 +383,7 @@ export class UcumLhcUtils {
                   throw new Error(Ucum.needEqWeightMsg_);
                 }
                 if (!nFactor) {
-                  throw new Error(Ucum.needEqValMsg_);
+                  throw new Error(Ucum.needEqNFactorMsg_);
                 }
                 if (!fromUnit.isEqMassCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
@@ -396,7 +396,7 @@ export class UcumLhcUtils {
                   throw new Error(Ucum.needEqWeightMsg_);
                 }
                 if (!nFactor) {
-                  throw new Error(Ucum.needEqValMsg_);
+                  throw new Error(Ucum.needEqNFactorMsg_);
                 }
                 if (!fromUnit.isEqMassCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
@@ -406,13 +406,13 @@ export class UcumLhcUtils {
                 break;
               case 'eq->mol':
                 if (!nFactor) {
-                  throw new Error(Ucum.needEqValMsg_);
+                  throw new Error(Ucum.needEqNFactorMsg_);
                 }
                 returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, nFactor);
                 break;
               case 'mol->eq':
                 if (!nFactor) {
-                  throw new Error(Ucum.needEqValMsg_);
+                  throw new Error(Ucum.needEqNFactorMsg_);
                 }
                 returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, nFactor);
                 break;
