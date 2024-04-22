@@ -642,6 +642,7 @@ export class Unit {
 
   /**
    * Checks if the given unit is a molar unit.
+   * 
    * @returns {boolean} - Returns true if the unit is a molar unit, false otherwise.
    */
   isMolarUnit() {
@@ -650,10 +651,10 @@ export class Unit {
 
 
   /**
-   * This function converts equivalent amount to moles.
+   * This function converts an equivalent amount to moles using the n-factor of the substance.
    * 
    * @param {number} eqFromVal - The equivalent amount for which the conversion is being made.
-   * @param {object} molToUnit - The target/to unit for which the converted number is wanted.
+   * @param {object} molToUnit - The target unit for which the converted number is wanted.
    * @param {number} nFactor - The n-factor of the substance for which the conversion is being made.
    * @return {number} - The amount in moles.
    */
@@ -668,10 +669,10 @@ export class Unit {
   } // end convertEqToMol
 
   /**
-   * This function converts moles to equivalent amount.
+   * This function converts moles to equivalent amount using the n-factor of the substance.
    * 
    * @param {number} molFromVal - The mole amount for which the conversion is being made
-   * @param {object} eqToUnit - The target/to unit for which the converted number is wanted
+   * @param {object} eqToUnit - The target unit for which the converted number is wanted
    * @param {number} nFactor - The n-factor of the substance for which the conversion is being made
    * @return {number} - The amount in equivalent
    */
