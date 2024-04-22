@@ -551,7 +551,7 @@ export class Unit {
     // return the molAmt divided by the molesFactor as the number of moles
     // for the molUnit
     return molAmt/molesFactor ;
-  }
+  } // end convertMassToMol
 
   /**
    * Calculates the number of units that would result from converting a unit
@@ -586,7 +586,7 @@ export class Unit {
     // divided by any effects of prefixes applied to the "to" unit, which
     // is assumed to be some form of a gram unit
     return massAmt / massUnit.magnitude_ ;
-  }
+  } // end convertMolToMass
 
   /**
    * Converts eq to mass.
@@ -608,7 +608,7 @@ export class Unit {
     let standardMoleUnit = this._getUnitTables().getUnitByCode('mol');
     const molAmount = this.convertEqToMol(equivalents, standardMoleUnit, nFactor);
     return this.convertMolToMass(molAmount, targetUnit, molecularWeight);
-  }
+  } // end convertEqToMass
   
   /**
    * Converts mass to equivalents.
@@ -640,7 +640,7 @@ export class Unit {
     let adjustedEquivalents = equivalents / moleFactor;
     // Return the adjusted equivalents
     return adjustedEquivalents;
-  }
+  } // end convertMassToEq
 
   /**
    * Checks if the given unit is an equivalent unit.
@@ -679,7 +679,7 @@ export class Unit {
     // The conversion from equivalents to moles is based on the principle that one equivalent is equal to 1/valencyFactor moles. 
     // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (molToUnit.magnitude_)
     return eqFromVal * (this.magnitude_ / molToUnit.magnitude_) / nFactor;
-  }
+  } // end convertEqToMol
 
   /**
    * This function converts moles to equivalent amount.
@@ -697,7 +697,7 @@ export class Unit {
     // The conversion from moles to equivalents is based on the principle that one equivalent is equal to 1/valencyFactor moles.
     // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (eqToUnit.magnitude_)
     return molFromVal * nFactor * (this.magnitude_ / eqToUnit.magnitude_);
-  }
+  } // end convertMolToEq
   
   /**
    * Mutates this unit into a unit on a ratio scale and converts a specified
