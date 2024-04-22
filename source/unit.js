@@ -589,15 +589,8 @@ export class Unit {
   } // end convertMolToMass
 
   /**
-   * Converts eq to mass.
-   * The calculation is done in two steps:
-   * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its n-factor.
-   *    For example, Ca++ has a n-factor of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
-   * 2. Calculate the mass by dividing molecular mass by n-factor.
+   * Converts equivalents to mass.
    * 
-   * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
-   * https://www.britannica.com/science/equivalent-weight
-   *
    * @param {number} equivalents - The amount in equivalents to be converted.
    * @param {object} targetUnit - The target/to unit for which the converted number is wanted.
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
@@ -612,14 +605,7 @@ export class Unit {
   
   /**
    * Converts mass to equivalents.
-   * The calculation is done in two steps:
-   * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its n-factor.
-   *    For example, Ca++ has a n-factor of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
-   * 2. Calculate the equivalents by dividing the mass by the equivalent mass.
    * 
-   * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
-   * https://www.britannica.com/science/equivalent-weight
-   *
    * @param {number} mass - The mass to be converted.
    * @param {object} eqUnit - The target/to unit for which the converted number is wanted.
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
@@ -645,7 +631,7 @@ export class Unit {
   /**
    * Checks if the given unit is an equivalent unit.
    * 
-   * Note that equivalent units can also be molar units, so a unit can return true for 
+   * Note: equivalent units are also be molar units, so a unit can return true for 
    * both isEquivalentUnit and isMolarUnit.
    * 
    * @returns {boolean} - Returns true if the unit is an equivalent unit, false otherwise.
