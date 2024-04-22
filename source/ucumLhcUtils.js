@@ -144,6 +144,71 @@ export class UcumLhcUtils {
 
   } // end validateUnitString
 
+
+
+/**
+ * @typedef {
+ *   'normal', 
+ *   'mol->mass', 
+ *   'mass->mol', 
+ *   'eq->mass', 
+ *   'mass->eq', 
+ *   'eq->mol', 
+ *   'mol->eq', 
+ *   'mol<->mol', 
+ *   'eq<->eq'
+ * } ConversionType
+ */
+
+  /**
+  * Detects the type of conversion between two units.
+  *
+  * @param {Object} fromUnit - The unit to convert from.
+  * @param {Object} toUnit - The unit to convert to.
+  * @returns {ConversionType} conversionType - The type of conversion as a string. Possible values are:
+  * 'normal', 'mol->mass', 'mass->mol', 'eq->mass', 'mass->eq', 'eq->mol', 'mol->eq', 'mol<->mol', 'eq<->eq'.
+  */
+
+  detectConversionType(fromUnit, toUnit) {
+    /** @type {ConversionType} */
+    let conversionType = 'normal';
+
+    // if neither unit is not a molar unit, return 'normal'
+    if (!(fromUnit.isMolarUnit() || toUnit.isMolarUnit())) {
+      return conversionType;
+    }
+     
+    // Otherwise, handle mol <-> eq <-> mass conversions
+    if (fromUnit.isMolarUnit() && toUnit.isMolarUnit() && !fromUnit.isEquivalentUnit() && !toUnit.isEquivalentUnit()) {
+      conversionType = 'mol<->mol';
+    } else if (fromUnit.isEquivalentUnit() && toUnit.isEquivalentUnit()) {
+      conversionType = 'eq<->eq';
+    }
+    // handle eq <-> mol/mass conversions
+    else if (fromUnit.isEquivalentUnit() || toUnit.isEquivalentUnit()) {
+      if (fromUnit.isEquivalentUnit() && toUnit.isMolarUnit()) {
+        conversionType = 'eq->mol';
+      } else if (fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
+        conversionType = 'mol->eq';
+      } else if (fromUnit.isEquivalentUnit() && !toUnit.isMolarUnit()) {
+        conversionType = 'eq->mass';
+      } else if (!fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
+        conversionType = 'mass->eq';
+      }
+    } 
+    // handle mol <-> mass conversions
+    else {
+      if (fromUnit.isMolarUnit() && !toUnit.isMolarUnit()) {
+        conversionType = 'mol->mass';
+      } else if (!fromUnit.isMolarUnit() && toUnit.isMolarUnit()) {
+        conversionType = 'mass->mol';
+      }
+    }
+
+    return conversionType;
+  } // end detectConversionType
+
+
   /** 
    * @typedef {{
    *   status: 'succeeded' | 'failed' | 'error',
@@ -284,102 +349,85 @@ export class UcumLhcUtils {
 
         if (fromUnit && toUnit) {
           try {
-            // if no molecular weight or valence was specified perform a normal conversion
-            if (!molecularWeight && !valence) {
-              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
-            }
-            // If a valence was specified, this should be a mole <-> equivalent conversion. 
-            // However, we need to check if the units are mass based in case the user has 
-            // provided a molecular weight even though it is not required
-            else if (valence) {
-              if (fromUnit.isEquivalentUnit() && toUnit.isEquivalentUnit()) {
-                throw new Error("A valence was specified " +
-                    "but a equivalent <-> mol conversion cannot be executed for two " +
-                    "equivalent-based units.  No conversion was attempted.");
-              }
-              if (!fromUnit.isEquivalentUnit() && !toUnit.isEquivalentUnit()) {
-                throw new Error("A valence was specified, however, " +
-                    "neither provided unit is equivalent-based.  No conversion was attempted.  " +
-                    "If you are not attempting a conversion to/from equivalents, " +
-                    "please remove the valence parameter.");
-              }
-              // Check if either 'from' and 'to' are NOT molar units (note equivalent units are also molar units)
-              // If NEITHER are molar units, user is trying to do a mass <-> equivalent conversion
-              if (!fromUnit.isMolarUnit() || !toUnit.isMolarUnit()) {
+            const convertType = this.detectConversionType(fromUnit, toUnit); 
+
+            switch (convertType) {
+              case 'normal':
+                returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+                break;
+              case 'mol->mass':
+                if (!molecularWeight) {
+                  throw new Error(Ucum.needMoleWeightMsg_);
+                }
+                if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                      `converted to ${toUnitCode}.`);
+                }
+                returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
+                break;
+              case 'mass->mol':
+                if (!molecularWeight) {
+                  throw new Error(Ucum.needMoleWeightMsg_);
+                }
+                if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                      `converted to ${toUnitCode}.`);
+                }
+                returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
+                break;
+              case 'eq->mass':
                 if (!molecularWeight) {
                   throw new Error(Ucum.needEqWeightMsg_);
+                }
+                if (!valence) {
+                  throw new Error(Ucum.needEqValMsg_);
                 }
                 if (!fromUnit.isEqMassCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
                       `converted to ${toUnitCode}.`);
                 }
-                // Convert equivalent to mass if 'from' unit is equivalent-based and 'to' unit is non-mol based
-                if (fromUnit.isEquivalentUnit() && !toUnit.isMolarUnit()) {
-                  returnObj["toVal"] = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
+                returnObj['toVal'] = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valence);
+                break;
+              case 'mass->eq':
+                if (!molecularWeight) {
+                  throw new Error(Ucum.needEqWeightMsg_);
                 }
-                // Convert mass to equivalent if 'from' unit is non-mol based and 'to' unit is equivalent-based
-                else if (!fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
-                  returnObj["toVal"] = fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, valence);
+                if (!valence) {
+                  throw new Error(Ucum.needEqValMsg_);
                 }
-              } 
-              // Otherwise, BOTH units are molar units, so we will perform a mole <-> equivalent conversion
-              else {
-                // if 'from' is equivalent and 'to' is moles, assume eq to mol conversion
-                if (fromUnit.isEquivalentUnit() && toUnit.isMolarUnit()) {
-                  returnObj["toVal"] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
+                if (!fromUnit.isEqMassCommensurable(toUnit)) {
+                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                      `converted to ${toUnitCode}.`);
                 }
-                // if 'from' is moles and 'to' is equivalent, assume mol to eq conversion
-                else if (fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
-                  returnObj["toVal"] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
+                returnObj['toVal'] = fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, valence);
+                break;
+              case 'eq->mol':
+                if (!valence) {
+                  throw new Error(Ucum.needEqValMsg_);
                 }
-              }
+                returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, valence);
+                break;
+              case 'mol->eq':
+                if (!valence) {
+                  throw new Error(Ucum.needEqValMsg_);
+                }
+                returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, valence);
+                break;
+              case 'mol<->mol':
+                throw new Error(`A mol <-> mol conversion cannot be executed for two mole-based units ${
+                  fromUnit.csCode_} and ${toUnit.csCode_}.  No conversion was attempted.`);
+              case 'eq<->eq':
+                throw new Error(`An eq <-> eq conversion cannot be executed for two equivalent-based units ${
+                  fromUnit.csCode_} and ${toUnit.csCode_}.  No conversion was attempted.`);
+              default:
+                throw new Error("Unknown conversion type.  No conversion was attempted.");
             }
-            // if a molecular weight was specified, assume a mass <-> mole conversion
-            else if (molecularWeight) {
-              // check to see if either unit is a eq unit, throw error since no valence was provided
-              if (fromUnit.isEquivalentUnit() || toUnit.isEquivalentUnit()) {
-                throw new Error("No valence was specified, however, " +
-                    "one of the provided units is equivalent-based.  No conversion was attempted.  " +
-                    "If you are attempting a conversion to/from equivalents, " +
-                    "please provide the valence parameter.");
-              }
-              if (fromUnit.isMolarUnit() && toUnit.isMolarUnit()) {
-                throw new Error(
-                  "A molecular weight was specified " +
-                    "but a mass <-> mole conversion cannot be executed for two " +
-                    "mole-based units.  No conversion was attempted.");
-              }
-              if (!fromUnit.isMolarUnit() && !toUnit.isMolarUnit()) {
-                throw new Error(
-                  "A molecular weight was specified " +
-                    "but a mass <-> mole conversion cannot be executed when " +
-                    "neither unit is mole-based.  No conversion was attempted.");
-              }
-              if (!fromUnit.isMoleMassCommensurable(toUnit)) {
-                throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
-                    `converted to ${toUnitCode}.`);
-              }
-
-              // if the "from" unit is a mole-based unit, assume a mole to mass
-              // request
-              if (fromUnit.isMolarUnit()) {
-                returnObj['toVal'] =
-                  fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
-              }
-              // else the "to" unit must be the mole-based unit, so assume a
-              // mass to mole request
-              else if (toUnit.isMolarUnit()) {
-                returnObj['toVal'] =
-                  fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
-              }
-            } // end if a molecular weight was specified
-
             // if an error hasn't been thrown - either from convertFrom or here,
             // set the return object to show success
             returnObj['status'] = 'succeeded';
             returnObj['fromUnit'] = fromUnit;
             returnObj['toUnit'] = toUnit;
-          } 
+          }
           catch (err) {
             returnObj['status'] = 'failed';
             returnObj['msg'].push(err.message);

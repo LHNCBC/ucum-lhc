@@ -90,9 +90,13 @@ export var Ucum = {
                        'molecular weight of the substance represented by the ' +
                        'units is required to perform the conversion.',
 
-  needEqWeightMsg_ : 'Did you wish to convert between mass and equivalents?  The ' +
-                      'equivalent weight of the substance represented by the ' +
-                      'units is required to perform the conversion.', 
+  needEqWeightMsg_ : 'Did you wish to convert with equivalents?  The ' +
+                      'molecular weight of the substance is required to perform ' + 
+                      'the conversion.', 
+
+  needEqValMsg_ : 'Did you wish to convert with equivalents?  The ' +
+                      'valence value of the substance is required to perform ' + 
+                      'the conversion.', 
 
   /**
    * Hash that matches unit column names to names used in the csv file

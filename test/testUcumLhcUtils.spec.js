@@ -203,7 +203,7 @@ it("should return a message for invalid unit strings", function() {
     var resp4 = utils.convertUnitTo('mol', 1, '78.4(mmol/L)/s');
     assert.equal(resp4.status, 'failed', resp4.status);
     assert.equal(resp4.msg[0], '4(mmol/L) is not a valid UCUM code.  We assumed you meant 4.(mmol/L).', resp4.msg[0]);
-    assert.equal(resp4.msg[1], 'Sorry.  mol cannot be converted to (78.(4.(mmol/L)))/s.', resp4.msg[1]);
+    assert.equal(resp4.msg[1], 'A mol <-> mol conversion cannot be executed for two mole-based units mol and (78.(4.(mmol/L)))/s.  No conversion was attempted.', resp4.msg[1]);
     assert.equal(resp4.toVal, null, resp4.toVal);
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
@@ -222,10 +222,36 @@ it("should return a message for invalid unit strings", function() {
   it("should return an error for an attempt to translate mmol/L to mol", function() {
     var resp4 = utils.convertUnitTo('mmol/L', 1, 'mol');
     assert.equal(resp4.status, 'failed', resp4.status);
-    assert.equal(resp4.msg[0], 'Sorry.  mmol/L cannot be converted to mol.', resp4.msg[0]);
+    assert.equal(resp4.msg[0], 'A mol <-> mol conversion cannot be executed for two mole-based units mmol/L and mol.  No conversion was attempted.', resp4.msg[0]);
     assert.equal(resp4.toVal, null, resp4.toVal);
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
+  });
+
+  /**
+   * Mol <-> mass conversion tests
+   */
+
+  // Should throw an error if no molecular weight is provided for a conversion to mass since mass is needed for the calculation
+  it("should return error for a request to convert mol to g with valence 2 and no mw", function() {
+    var resp = utils.convertUnitTo('mol', 1, 'g');
+    assert.equal(resp.status, 'failed', resp.status + resp.msg);
+    assert.equal(resp.msg[0], Ucum.needMoleWeightMsg_, resp.msg[0]);
+    assert.equal(resp.toVal, null, resp.toVal);
+    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
+    assert.equal(resp.toUnit, undefined, resp.toUnit);
+  });
+
+  // Ignore excess optional parameters if they are not needed for the conversion
+  // Do not raise error if valence is provided despite neither unit being an eq unit
+  // e.g. converting between mol and g
+  it("should return 40.08g for a request to convert 1 mol to g with valence 2 and mw 40.08", function() {
+    var resp = utils.convertUnitTo('mol', 1, 'g', {
+      valence: 2,
+      molecularWeight: 40.08
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(4), 40.08, resp.toVal.toPrecision(4));
   });
 
   it("should return 96 for a request to convert 5.33 mmol/L to mg{molybdenum}/dL weight 180.156", function() {
@@ -252,26 +278,20 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(2), 96, resp.toVal.toPrecision(2));
   });
 
-  // Test to raise error if valence is provided despite neither unit being an eq unit
-  // e.g. converting between mol and g
-  it("should return error for a request to convert 1 mol to g with valence 2 and mw 40.08", function() {
-    var resp = utils.convertUnitTo('mol', 1, 'g', {
-      valence: 2,
-      molecularWeight: 40.08
-    });
+  /** Mol to eq conversion tests
+   * equivalents = moles * valence
+   */
+
+  // Should throw an error if no valence is provided for a conversion to eq since valence is needed for the calculation
+  it("should return error for a request to convert mol to eq with no valence and mw 40.08", function() {
+    var resp = utils.convertUnitTo('mol', 1, 'eq');
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
-    assert.equal(resp.msg[0], "A valence was specified, however, " +
-      "neither provided unit is equivalent-based.  No conversion was attempted.  " +
-      "If you are not attempting a conversion to/from equivalents, " +
-      "please remove the valence parameter.", resp.msg[0]);
+    assert.equal(resp.msg[0], Ucum.needEqValMsg_,
+      resp.msg[0]);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
     assert.equal(resp.toUnit, undefined, resp.toUnit);
   });
-
-  /** Mol to eq conversion tests
-   * equivalents = moles * valence
-   */
 
   it("should return 1 for a request to convert 1 mol/L to eq/L with valence 1", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
@@ -332,6 +352,31 @@ it("should return a message for invalid unit strings", function() {
    * EW = MW / valence
    */
 
+  // test to return error if no molecular weight is provided for a conversion to mass since mass is needed for the calculation
+  it("should return error for a request to convert eq to g with valence 2 and no mw", function() {
+    var resp = utils.convertUnitTo('eq', 1, 'g', {
+      valence: 2,
+    });
+    assert.equal(resp.status, 'failed', resp.status + resp.msg);
+    assert.equal(resp.msg[0], Ucum.needEqWeightMsg_, resp.msg[0]);
+    assert.equal(resp.toVal, null, resp.toVal);
+    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
+    assert.equal(resp.toUnit, undefined, resp.toUnit);
+  });
+
+  // test to return error if eq conversion is attempted without valence since valence is needed for the calculation
+  it("should return error for a request to convert eq to g with no valence and mw 40.08", function() {
+    var resp = utils.convertUnitTo('eq', 1, 'g', {
+      molecularWeight: 40.08,
+    });
+    assert.equal(resp.status, 'failed', resp.status + resp.msg);
+    assert.equal(resp.msg[0], Ucum.needEqValMsg_, 
+      resp.msg[0]);
+    assert.equal(resp.toVal, null, resp.toVal);
+    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
+    assert.equal(resp.toUnit, undefined, resp.toUnit);
+  });
+
   /**
    * KCL -> K+ + Cl-
    * K+ has a valence of 1 and a molecular weight of 39.09
@@ -381,33 +426,6 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(4), 40.08, resp.toVal.toPrecision(4));
   });
 
-  // test to return error if no molecular weight is provided for a conversion to mass since mass is needed for the calculation
-  it("should return error for a request to convert eq to g with valence 2 and no mw", function() {
-    var resp = utils.convertUnitTo('eq', 1, 'g', {
-      valence: 2,
-    });
-    assert.equal(resp.status, 'failed', resp.status + resp.msg);
-    assert.equal(resp.msg[0], Ucum.needEqWeightMsg_, resp.msg[0]);
-    assert.equal(resp.toVal, null, resp.toVal);
-    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
-    assert.equal(resp.toUnit, undefined, resp.toUnit);
-  });
-
-  // test to return error if eq conversion is attempted without valence since valence is needed for the calculation
-  it("should return error for a request to convert eq to g with no valence and mw 40.08", function() {
-    var resp = utils.convertUnitTo('eq', 1, 'g', {
-      molecularWeight: 40.08,
-    });
-    assert.equal(resp.status, 'failed', resp.status + resp.msg);
-    assert.equal(resp.msg[0], "No valence was specified, however, " +
-      "one of the provided units is equivalent-based.  No conversion was attempted.  " +
-      "If you are attempting a conversion to/from equivalents, " +
-      "please provide the valence parameter.", resp.msg[0]);
-    assert.equal(resp.toVal, null, resp.toVal);
-    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
-    assert.equal(resp.toUnit, undefined, resp.toUnit);
-  });
-
   /** Mass to eq conversion tests
    * 
    * The equivalent weight (EW) of an element is calculated as its atomic mass divided by its valence.
@@ -416,6 +434,31 @@ it("should return a message for invalid unit strings", function() {
    * The number of equivalents is then calculated by dividing the given mass by the equivalent weight.
    * eq = amtMassOfSubstance / EW
    */
+  
+  // Should throw an error if no valence is provided for a conversion to eq since valence is needed for the calculation
+  it("should return error for a request to convert 40.08 g to eq with no valence and mw 40.08", function() {
+    var resp = utils.convertUnitTo('g', 40.08, 'eq', {
+      molecularWeight: 40.08,
+    });
+    assert.equal(resp.status, 'failed', resp.status + resp.msg);
+    assert.equal(resp.msg[0], Ucum.needEqValMsg_, 
+      resp.msg[0]);
+    assert.equal(resp.toVal, null, resp.toVal);
+    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
+    assert.equal(resp.toUnit, undefined, resp.toUnit);
+  });
+  
+  // Should throw an error if no molecular weight is provided for a conversion to eq since mass is needed for the calculation
+  it("should return error for a request to convert 40.08 g to eq with valence 2 and no mw", function() {
+    var resp = utils.convertUnitTo('g', 40.08, 'eq', {
+      valence: 2,
+    });
+    assert.equal(resp.status, 'failed', resp.status + resp.msg);
+    assert.equal(resp.msg[0], Ucum.needEqWeightMsg_, resp.msg[0]);
+    assert.equal(resp.toVal, null, resp.toVal);
+    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
+    assert.equal(resp.toUnit, undefined, resp.toUnit);
+  });
 
   /**
    * K+ -> K+ 
@@ -468,6 +511,29 @@ it("should return a message for invalid unit strings", function() {
    * etc. 
    */
 
+  // mw should be ignored when converting between eq and mol
+  it("should return 0.33 for a request to convert 1 eq/L to mol/L with valence 3 and mw 1000", function() {
+    var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
+      valence: 3,
+      molecularWeight: 1000
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 0.33, resp.toVal.toPrecision(2));
+  });
+
+  // Should throw an error if no valence is provided for a conversion to mol since valence is needed for the calculation
+  it("should return error for a request to convert eq to mol with no valence and mw 40.08", function() {
+    var resp = utils.convertUnitTo('eq', 1, 'mol', {
+      molecularWeight: 40.08,
+    });
+    assert.equal(resp.status, 'failed', resp.status + resp.msg);
+    assert.equal(resp.msg[0], Ucum.needEqValMsg_,
+      resp.msg[0]);
+    assert.equal(resp.toVal, null, resp.toVal);
+    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
+    assert.equal(resp.toUnit, undefined, resp.toUnit);
+  });  
+
   it("should return 1 for a request to convert 1 eq/L to mol/L with valence 1", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
       valence: 1
@@ -506,16 +572,6 @@ it("should return a message for invalid unit strings", function() {
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(4), 333.3 , resp.toVal.toPrecision(4));
-  });
-
-  // mw should be ignored when converting between eq and mol
-  it("should return 0.33 for a request to convert 1 eq/L to mol/L with valence 3 and mw 1000", function() {
-    var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
-      valence: 3,
-      molecularWeight: 1000
-    });
-    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
-    assert.equal(resp.toVal.toPrecision(2), 0.33, resp.toVal.toPrecision(2));
   });
 
   // end
