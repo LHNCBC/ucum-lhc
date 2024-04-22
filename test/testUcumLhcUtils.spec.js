@@ -247,7 +247,7 @@ it("should return a message for invalid unit strings", function() {
   // e.g. converting between mol and g
   it("should return 40.08g for a request to convert 1 mol to g with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('mol', 1, 'g', {
-      valence: 2,
+      nFactor: 2,
       molecularWeight: 40.08
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
@@ -295,7 +295,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 1 for a request to convert 1 mol/L to eq/L with valence 1", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
-      valence: 1
+      nFactor: 1
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(1), 1, resp.toVal.toPrecision(1));
@@ -303,7 +303,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 2 eq for a request to convert 1 mol/L to eq/L with valence 2", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
-      valence: 2
+      nFactor: 2
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(1), 2, resp.toVal.toPrecision(1));
@@ -311,7 +311,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 3 for a request to convert 1 mol/L to eq/L with valence 3", function() {
     var resp = utils.convertUnitTo('mol/L', 1, 'eq/L', {
-      valence: 3
+      nFactor: 3
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(1), 3, resp.toVal.toPrecision(1));
@@ -319,7 +319,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 0.003 for a request to convert 1 mmol/L to eq/L with valence 3", function() {
     var resp = utils.convertUnitTo('mmol/L', 1, 'eq/L', {
-      valence: 3
+      nFactor: 3
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(1), 0.003 , resp.toVal.toPrecision(1));
@@ -327,7 +327,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 5 for a request to convert 1 mmol/L to meq/L with valence 5", function() {
     var resp = utils.convertUnitTo('mmol/L', 1, 'meq/L', {
-      valence: 5
+      nFactor: 5
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(1), 5, resp.toVal.toPrecision(1));
@@ -337,7 +337,7 @@ it("should return a message for invalid unit strings", function() {
   // e.g. converting between mol and eq
   it("should return 5 for a request to convert 1 mmol/L to meq/L with valence 5 and mw 1000", function() {
     var resp = utils.convertUnitTo('mmol/L', 1, 'meq/L', {
-      valence: 5,
+      nFactor: 5,
       molecularWeight: 1000
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
@@ -355,7 +355,7 @@ it("should return a message for invalid unit strings", function() {
   // test to return error if no molecular weight is provided for a conversion to mass since mass is needed for the calculation
   it("should return error for a request to convert eq to g with valence 2 and no mw", function() {
     var resp = utils.convertUnitTo('eq', 1, 'g', {
-      valence: 2,
+      nFactor: 2,
     });
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
     assert.equal(resp.msg[0], Ucum.needEqWeightMsg_, resp.msg[0]);
@@ -386,7 +386,7 @@ it("should return a message for invalid unit strings", function() {
    */
   it("should return 39.09 for a request to convert 1 eq to g with valence 1 and mw 39.09", function() {
     var resp = utils.convertUnitTo('eq', 1, 'g', {
-      valence: 1,
+      nFactor: 1,
       molecularWeight: 39.09
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
@@ -402,7 +402,7 @@ it("should return a message for invalid unit strings", function() {
    */
   it("should return 20.04 for a request to convert 1 eq to g with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('eq', 1, 'g', {
-      valence: 2,
+      nFactor: 2,
       molecularWeight: 40.08
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
@@ -419,7 +419,7 @@ it("should return a message for invalid unit strings", function() {
    */
   it("should return 40.08 for a request to convert 2 eq to g with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('eq', 2, 'g', {
-      valence: 2,
+      nFactor: 2,
       molecularWeight: 40.08
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
@@ -451,7 +451,7 @@ it("should return a message for invalid unit strings", function() {
   // Should throw an error if no molecular weight is provided for a conversion to eq since mass is needed for the calculation
   it("should return error for a request to convert 40.08 g to eq with valence 2 and no mw", function() {
     var resp = utils.convertUnitTo('g', 40.08, 'eq', {
-      valence: 2,
+      nFactor: 2,
     });
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
     assert.equal(resp.msg[0], Ucum.needEqWeightMsg_, resp.msg[0]);
@@ -470,7 +470,7 @@ it("should return a message for invalid unit strings", function() {
    */
   it("should return 1 for a request to convert 39.09 g to eq with valence 1 and mw 39.09", function() {
     var resp = utils.convertUnitTo('g', 39.09, 'eq', {
-      valence: 1,
+      nFactor: 1,
       molecularWeight: 39.09
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
@@ -487,7 +487,7 @@ it("should return a message for invalid unit strings", function() {
    */
   it("should return 2 for a request to convert 40.08 g to eq with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('g', 40.08, 'eq', {
-      valence: 2,
+      nFactor: 2,
       molecularWeight: 40.08
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
@@ -496,7 +496,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 2 for a request to convert 40.08 g to eq with valence 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('g', 40.08, 'meq', {
-      valence: 2,
+      nFactor: 2,
       molecularWeight: 40.08
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
@@ -504,7 +504,7 @@ it("should return a message for invalid unit strings", function() {
   });
 
   /** Eq to mol conversion tests
-   * 1 equivalent equals 1/v moles, where v is the valence
+   * 1 equivalent equals 1/v moles, where v is the valency factor (=== valence for an element)
    * if valence is 1, then 1 equivalent equals 1 mole
    * if valence is 2, then 1 equivalent equals 0.5 moles
    * if valence is 3, then 1 equivalent equals 0.33 moles
@@ -514,7 +514,7 @@ it("should return a message for invalid unit strings", function() {
   // mw should be ignored when converting between eq and mol
   it("should return 0.33 for a request to convert 1 eq/L to mol/L with valence 3 and mw 1000", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
-      valence: 3,
+      nFactor: 3,
       molecularWeight: 1000
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
@@ -536,7 +536,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 1 for a request to convert 1 eq/L to mol/L with valence 1", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
-      valence: 1
+      nFactor: 1
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(1), 1, resp.toVal.toPrecision(1));
@@ -544,7 +544,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 0.5 for a request to convert 1 eq/L to mol/L with valence 2", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
-      valence: 2
+      nFactor: 2
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(1), 0.5, resp.toVal.toPrecision(1));
@@ -552,7 +552,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 0.33 for a request to convert 1 eq/L to mol/L with valence 3", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mol/L', {
-      valence: 3
+      nFactor: 3
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(2), 0.33, resp.toVal.toPrecision(2));
@@ -560,7 +560,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 0.00033 for a request to convert 1 meq/L to mol/L with valence 3", function() {
     var resp = utils.convertUnitTo('meq/L', 1, 'mol/L', {
-      valence: 3
+      nFactor: 3
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(2), 0.00033 , resp.toVal.toPrecision(2));
@@ -568,7 +568,7 @@ it("should return a message for invalid unit strings", function() {
 
   it("should return 330 for a request to convert 1 eq/L to mmol/L with valence 3", function() {
     var resp = utils.convertUnitTo('eq/L', 1, 'mmol/L', {
-      valence: 3
+      nFactor: 3
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
     assert.equal(resp.toVal.toPrecision(4), 333.3 , resp.toVal.toPrecision(4));

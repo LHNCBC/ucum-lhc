@@ -241,13 +241,13 @@ export class UcumLhcUtils {
    * @param {{
    *   suggest?: boolean,
    *   molecularWeight?: number
-   *   valenceFactor?: number
+   *   nFactor?: number
    * }} options
    *  - suggest: a boolean to indicate whether or not suggestions are requested for a string that cannot be resolved to a valid unit;
    *    true indicates suggestions are wanted; false indicates they are not, and is the default if the parameter is not specified;
    *  - molecularWeight: the molecular weight of the substance in question when a conversion is being requested from mass to moles and vice versa.
    *    This is required when one of the units represents a value in moles.  It is ignored if neither unit includes a measurement in moles.
-   *  - valenceFactor: the valence factor (a.k.a. n-factor) of the substance in question when a conversion is being requested from mass/moles to
+   *  - nFactor: the n-factor (a.k.a valency factor) of the substance in question when a conversion is being requested from mass/moles to
    *    equivalents and vice versa. The n-factor is the number of electrons exchanged. For an element, this is equal to the valency. For an ion, 
    *    this is equal to the |charge|. In a redox reaction, the n-factor is the number of electrons transferred in the reaction. It is required 
    *    when one of the units represents a value in equivalents and the other in mass or moles. It is ignored if neither unit includes an equivalent 
@@ -297,7 +297,7 @@ export class UcumLhcUtils {
    *     in case it's needed for additional data from the object.
    */
   convertUnitTo(fromUnitCode, fromVal, toUnitCode, options = {}) {
-    let { suggest = false, molecularWeight = null, valenceFactor = null } = options;
+    let { suggest = false, molecularWeight = null, nFactor = null } = options;
 
     /** @type {ConvertUnitResult} */
     let returnObj = {'status' : 'failed',
@@ -383,39 +383,39 @@ export class UcumLhcUtils {
                 if (!molecularWeight) {
                   throw new Error(Ucum.needEqWeightMsg_);
                 }
-                if (!valenceFactor) {
+                if (!nFactor) {
                   throw new Error(Ucum.needEqValMsg_);
                 }
                 if (!fromUnit.isEqMassCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
                       `converted to ${toUnitCode}.`);
                 }
-                returnObj['toVal'] = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, valenceFactor);
+                returnObj['toVal'] = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, nFactor);
                 break;
               case 'mass->eq':
                 if (!molecularWeight) {
                   throw new Error(Ucum.needEqWeightMsg_);
                 }
-                if (!valenceFactor) {
+                if (!nFactor) {
                   throw new Error(Ucum.needEqValMsg_);
                 }
                 if (!fromUnit.isEqMassCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
                       `converted to ${toUnitCode}.`);
                 }
-                returnObj['toVal'] = fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, valenceFactor);
+                returnObj['toVal'] = fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, nFactor);
                 break;
               case 'eq->mol':
-                if (!valenceFactor) {
+                if (!nFactor) {
                   throw new Error(Ucum.needEqValMsg_);
                 }
-                returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, valenceFactor);
+                returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, nFactor);
                 break;
               case 'mol->eq':
-                if (!valenceFactor) {
+                if (!nFactor) {
                   throw new Error(Ucum.needEqValMsg_);
                 }
-                returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, valenceFactor);
+                returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, nFactor);
                 break;
               case 'mol<->mol':
                 throw new Error(`A mol <-> mol conversion cannot be executed for two mole-based units ${

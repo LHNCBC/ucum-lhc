@@ -591,9 +591,9 @@ export class Unit {
   /**
    * Converts eq to mass.
    * The calculation is done in two steps:
-   * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its valency factor.
-   *    For example, Ca++ has a valency factor of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
-   * 2. Calculate the mass by dividing molecular mass by valency factor.
+   * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its n-factor.
+   *    For example, Ca++ has a n-factor of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
+   * 2. Calculate the mass by dividing molecular mass by n-factor.
    * 
    * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
    * https://www.britannica.com/science/equivalent-weight
@@ -601,20 +601,20 @@ export class Unit {
    * @param {number} equivalents - The amount in equivalents to be converted.
    * @param {object} targetUnit - The target/to unit for which the converted number is wanted.
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
-   * @param {number} valenceFactor - The n-factor of the substance for which the conversion is being made.
+   * @param {number} nFactor - The n-factor of the substance for which the conversion is being made.
    * @returns {number} - The equivalent mass in the specified mass unit.
    */
-  convertEqToMass(equivalents, targetUnit, molecularWeight, valenceFactor) {
+  convertEqToMass(equivalents, targetUnit, molecularWeight, nFactor) {
     let standardMoleUnit = this._getUnitTables().getUnitByCode('mol');
-    const molAmount = this.convertEqToMol(equivalents, standardMoleUnit, valenceFactor);
+    const molAmount = this.convertEqToMol(equivalents, standardMoleUnit, nFactor);
     return this.convertMolToMass(molAmount, targetUnit, molecularWeight);
   }
   
   /**
    * Converts mass to equivalents.
    * The calculation is done in two steps:
-   * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its valency factor.
-   *    For example, Ca++ has a valency factor of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
+   * 1. Calculate the equivalent mass of the substance by dividing its molecular weight by its n-factor.
+   *    For example, Ca++ has a n-factor of 2 and a molecular weight of 40.08 g/mole, so its equivalent mass is 40.08/2 = 20.04 g/equiv.
    * 2. Calculate the equivalents by dividing the mass by the equivalent mass.
    * 
    * "The equivalent weight of an element is its gram atomic weight divided by its valence (combining power)."
@@ -623,12 +623,12 @@ export class Unit {
    * @param {number} mass - The mass to be converted.
    * @param {object} eqUnit - The target/to unit for which the converted number is wanted.
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
-   * @param {number} valenceFactor - The n-factor of the substance for which the conversion is being made.
+   * @param {number} nFactor - The n-factor of the substance for which the conversion is being made.
    * @returns {number} - The equivalent amount in the specified equivalent unit.
    */
-  convertMassToEq(mass, eqUnit, molecularWeight, valenceFactor) {
-    // Calculate equivalent mass by dividing molecular weight by valency factor
-    let equivalentMass = molecularWeight / valenceFactor;
+  convertMassToEq(mass, eqUnit, molecularWeight, nFactor) {
+    // Calculate equivalent mass by dividing molecular weight by n-factor
+    let equivalentMass = molecularWeight / nFactor;
     // Calculate equivalents by dividing mass by equivalent mass
     let equivalents = mass / equivalentMass;
     // Get Avogadro's number from the unit tables
@@ -668,17 +668,17 @@ export class Unit {
    * 
    * @param {number} eqFromVal - The equivalent amount for which the conversion is being made.
    * @param {object} molToUnit - The target/to unit for which the converted number is wanted.
-   * @param {number} valenceFactor - The n-factor of the substance for which the conversion is being made.
+   * @param {number} nFactor - The n-factor of the substance for which the conversion is being made.
    * @return {number} - The amount in moles.
    */
-  convertEqToMol(eqFromVal, molToUnit, valenceFactor){
+  convertEqToMol(eqFromVal, molToUnit, nFactor){
     // Check if molToUnit is a molar unit and eqFromVal is a eq unit
     if (!molToUnit.isMolarUnit() || !this.isEquivalentUnit()){
       throw new Error("Invalid units for conversion of Eq to Mol. Please provide an equivalent and a molar unit.");
     }
     // The conversion from equivalents to moles is based on the principle that one equivalent is equal to 1/valencyFactor moles. 
     // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (molToUnit.magnitude_)
-    return eqFromVal * (this.magnitude_ / molToUnit.magnitude_) / valenceFactor;
+    return eqFromVal * (this.magnitude_ / molToUnit.magnitude_) / nFactor;
   }
 
   /**
@@ -686,17 +686,17 @@ export class Unit {
    * 
    * @param {number} molFromVal - The mole amount for which the conversion is being made
    * @param {object} eqToUnit - The target/to unit for which the converted number is wanted
-   * @param {number} valenceFactor - The n-factor of the substance for which the conversion is being made
+   * @param {number} nFactor - The n-factor of the substance for which the conversion is being made
    * @return {number} - The amount in equivalent
    */
-  convertMolToEq(molFromVal, eqToUnit, valenceFactor){
+  convertMolToEq(molFromVal, eqToUnit, nFactor){
     // Check if eqToUnit is an equivalent unit and molFromVal is a molar unit
     if (!eqToUnit.isEquivalentUnit() || !this.isMolarUnit()){
       throw new Error("Invalid units for conversion of Mol to Eq. Please provide a molar and an equivalent unit.");
     }
     // The conversion from moles to equivalents is based on the principle that one equivalent is equal to 1/valencyFactor moles.
     // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (eqToUnit.magnitude_)
-    return molFromVal * valenceFactor * (this.magnitude_ / eqToUnit.magnitude_);
+    return molFromVal * nFactor * (this.magnitude_ / eqToUnit.magnitude_);
   }
   
   /**
