@@ -184,11 +184,10 @@ using them in actual clinical settings.
       ignored if neither unit includes a measurement in moles.  In such cases
       the mole-based unit must have a single mole unit in the numerator and the
       mass-based unit must have a single mass unit in the numerator.
-  * 'nFactor' the n-factor (a.k.a valency factor) of the substance in question when a conversion is being requested from mass/moles to
-      equivalents and vice versa. The n-factor is the number of electrons exchanged. For an element, this is equal to the valency. For an ion, 
-      this is equal to the |charge|. In a redox reaction, the n-factor is the number of electrons transferred in the reaction. It is required 
-      when one of the units represents a value in equivalents and the other in mass or moles. It is ignored if neither unit includes an equivalent 
-      unit
+  * 'charge' the absolute value of the charge of the substance in question when a conversion 
+      is being requested from mass/moles to equivalents and vice versa. It is required 
+      when one of the units represents a value in equivalents and the other in mass or moles. 
+      It is ignored if neither unit includes an equivalent unit
 * _@returns_ a hash with six elements:
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if

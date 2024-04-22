@@ -594,12 +594,12 @@ export class Unit {
    * @param {number} equivalents - The amount in equivalents to be converted.
    * @param {object} targetUnit - The target/to unit for which the converted number is wanted.
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
-   * @param {number} nFactor - The n-factor of the substance for which the conversion is being made.
+   * @param {number} charge - The charge of the substance for which the conversion is being made.
    * @returns {number} - The equivalent mass in the specified mass unit.
    */
-  convertEqToMass(equivalents, targetUnit, molecularWeight, nFactor) {
+  convertEqToMass(equivalents, targetUnit, molecularWeight, charge) {
     let standardMoleUnit = this._getUnitTables().getUnitByCode('mol');
-    const molAmount = this.convertEqToMol(equivalents, standardMoleUnit, nFactor);
+    const molAmount = this.convertEqToMol(equivalents, standardMoleUnit, charge);
     return this.convertMolToMass(molAmount, targetUnit, molecularWeight);
   } // end convertEqToMass
   
@@ -609,12 +609,12 @@ export class Unit {
    * @param {number} mass - The mass to be converted.
    * @param {object} eqUnit - The target/to unit for which the converted number is wanted.
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
-   * @param {number} nFactor - The n-factor of the substance for which the conversion is being made.
+   * @param {number} charge - The charge of the substance for which the conversion is being made.
    * @returns {number} - The equivalent amount in the specified equivalent unit.
    */
-  convertMassToEq(mass, eqUnit, molecularWeight, nFactor) {
-    // Calculate equivalent mass by dividing molecular weight by n-factor
-    let equivalentMass = molecularWeight / nFactor;
+  convertMassToEq(mass, eqUnit, molecularWeight, charge) {
+    // Calculate equivalent mass by dividing molecular weight by charge
+    let equivalentMass = molecularWeight / charge;
     // Calculate equivalents by dividing mass by equivalent mass
     let equivalents = mass / equivalentMass;
     // Get Avogadro's number from the unit tables
@@ -651,39 +651,39 @@ export class Unit {
 
 
   /**
-   * This function converts an equivalent amount to moles using the n-factor of the substance.
+   * This function converts an equivalent amount to moles using the charge of the substance.
    * 
    * @param {number} eqFromVal - The equivalent amount for which the conversion is being made.
    * @param {object} molToUnit - The target unit for which the converted number is wanted.
-   * @param {number} nFactor - The n-factor of the substance for which the conversion is being made.
+   * @param {number} charge - The charge of the substance for which the conversion is being made.
    * @return {number} - The amount in moles.
    */
-  convertEqToMol(eqFromVal, molToUnit, nFactor){
+  convertEqToMol(eqFromVal, molToUnit, charge){
     // Check if molToUnit is a molar unit and eqFromVal is a eq unit
     if (!molToUnit.isMolarUnit() || !this.isEquivalentUnit()){
       throw new Error("Invalid units for conversion of Eq to Mol. Please provide an equivalent and a molar unit.");
     }
     // The conversion from equivalents to moles is based on the principle that one equivalent is equal to 1/valencyFactor moles. 
     // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (molToUnit.magnitude_)
-    return eqFromVal * (this.magnitude_ / molToUnit.magnitude_) / nFactor;
+    return eqFromVal * (this.magnitude_ / molToUnit.magnitude_) / charge;
   } // end convertEqToMol
 
   /**
-   * This function converts moles to equivalent amount using the n-factor of the substance.
+   * This function converts moles to equivalent amount using the charge of the substance.
    * 
    * @param {number} molFromVal - The mole amount for which the conversion is being made
    * @param {object} eqToUnit - The target unit for which the converted number is wanted
-   * @param {number} nFactor - The n-factor of the substance for which the conversion is being made
+   * @param {number} charge - The charge of the substance for which the conversion is being made
    * @return {number} - The amount in equivalent
    */
-  convertMolToEq(molFromVal, eqToUnit, nFactor){
+  convertMolToEq(molFromVal, eqToUnit, charge){
     // Check if eqToUnit is an equivalent unit and molFromVal is a molar unit
     if (!eqToUnit.isEquivalentUnit() || !this.isMolarUnit()){
       throw new Error("Invalid units for conversion of Mol to Eq. Please provide a molar and an equivalent unit.");
     }
     // The conversion from moles to equivalents is based on the principle that one equivalent is equal to 1/valencyFactor moles.
     // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (eqToUnit.magnitude_)
-    return molFromVal * nFactor * (this.magnitude_ / eqToUnit.magnitude_);
+    return molFromVal * charge * (this.magnitude_ / eqToUnit.magnitude_);
   } // end convertMolToEq
   
   /**

@@ -94,8 +94,8 @@ export var Ucum = {
                       'molecular weight of the substance is required to perform ' + 
                       'the conversion.', 
 
-  needEqNFactorMsg_ : 'Did you wish to convert with equivalents?  The ' +
-                      'n-factor value of the substance is required to perform ' + 
+  needEqChargeMsg_ : 'Did you wish to convert with equivalents?  The ' +
+                      'charge of the substance is required to perform ' + 
                       'the conversion.', 
 
   /**
