@@ -168,7 +168,6 @@ export class UcumLhcUtils {
   * @returns {ConversionType} conversionType - The type of conversion as a string. Possible values are:
   * 'normal', 'mol->mass', 'mass->mol', 'eq->mass', 'mass->eq', 'eq->mol', 'mol->eq', 'mol<->mol', 'eq<->eq'.
   */
-
   detectConversionType(fromUnit, toUnit) {
     /** @type {ConversionType} */
     let conversionType = 'normal';
