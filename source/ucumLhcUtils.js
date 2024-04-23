@@ -246,7 +246,7 @@ export class UcumLhcUtils {
    *    true indicates suggestions are wanted; false indicates they are not, and is the default if the parameter is not specified;
    *  - molecularWeight: the molecular weight of the substance in question when a conversion is being requested from mass to moles and vice versa.
    *    This is required when one of the units represents a value in moles.  It is ignored if neither unit includes a measurement in moles.
-   *  - charge: the charge of the substance in question when a conversion is being requested from mass/moles to
+   *  - charge: the absolute value of the charge of the substance in question when a conversion is being requested from mass/moles to
    *    equivalents and vice versa. It is required when one of the units represents a value in equivalents and the other in mass or moles. 
    *    It is ignored if neither unit includes an equivalent unit.
    * @returns {ConvertUnitResult}
