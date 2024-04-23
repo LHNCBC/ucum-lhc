@@ -594,7 +594,7 @@ export class Unit {
    * @param {number} equivalents - The amount in equivalents to be converted.
    * @param {object} targetUnit - The target/to unit for which the converted number is wanted.
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
-   * @param {number} charge - The charge of the substance for which the conversion is being made.
+   * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made.
    * @returns {number} - The equivalent mass in the specified mass unit.
    */
   convertEqToMass(equivalents, targetUnit, molecularWeight, charge) {
@@ -609,7 +609,7 @@ export class Unit {
    * @param {number} mass - The mass to be converted.
    * @param {object} eqUnit - The target/to unit for which the converted number is wanted.
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
-   * @param {number} charge - The charge of the substance for which the conversion is being made.
+   * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made.
    * @returns {number} - The equivalent amount in the specified equivalent unit.
    */
   convertMassToEq(mass, eqUnit, molecularWeight, charge) {
@@ -655,7 +655,7 @@ export class Unit {
    * 
    * @param {number} eqFromVal - The equivalent amount for which the conversion is being made.
    * @param {object} molToUnit - The target unit for which the converted number is wanted.
-   * @param {number} charge - The charge of the substance for which the conversion is being made.
+   * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made.
    * @return {number} - The amount in moles.
    */
   convertEqToMol(eqFromVal, molToUnit, charge){
@@ -673,7 +673,7 @@ export class Unit {
    * 
    * @param {number} molFromVal - The mole amount for which the conversion is being made
    * @param {object} eqToUnit - The target unit for which the converted number is wanted
-   * @param {number} charge - The charge of the substance for which the conversion is being made
+   * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made
    * @return {number} - The amount in equivalent
    */
   convertMolToEq(molFromVal, eqToUnit, charge){
