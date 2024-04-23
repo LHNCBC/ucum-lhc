@@ -237,16 +237,15 @@ export class UcumXmlDocument {
       let valNode = curUA.childNamed('value');
       // Note: This currently works as a boolean flag,
       // but it should be used to represent the dimensionality
-      // e.g. A dimension vector that keeps track of the power 
-      // of each base unit in the unit (e.g., something like 
-      // [2, -1] for m2/s)
+      // of the unit as an integer instead.
       if (this.moleCodes_.indexOf(curUA.attr.Code) !== -1)
         attrs['moleExp_'] = 1;
       else
         attrs['moleExp_'] = 0;
       // Adds a flag similar to how moleExp_ works, but for units 
       // that are equivalent. Note that ideally this should also
-      // be a dimension vector, but for now it is a boolean flag.
+      // take values other than 1 or 0, but for now it is a boolean 
+      // flag.
       if (this.equivCodes_.indexOf(curUA.attr.Code) !== -1) {
         attrs['equivalentExp_'] = 1;
       }
