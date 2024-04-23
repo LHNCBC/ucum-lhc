@@ -232,7 +232,7 @@ it("should return a message for invalid unit strings", function() {
    */
 
   // Should throw an error if no molecular weight is provided for a conversion to mass since mass is needed for the calculation
-  it("should return error for a request to convert mol to g with charge 2 and no mw", function() {
+  it("should return error for a request to convert mol to g with no mw", function() {
     var resp = utils.convertUnitTo('mol', 1, 'g');
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
     assert.equal(resp.msg[0], Ucum.needMoleWeightMsg_, resp.msg[0]);
