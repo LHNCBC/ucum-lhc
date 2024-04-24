@@ -166,6 +166,9 @@ export class UcumLhcUtils {
   * @returns {ConversionType} conversionType - The type of conversion as a string.
   */
   detectConversionType(fromUnit, toUnit) {
+    /** @type {ConversionType} */
+    let conversionType = 'normal';
+
     /** Note: 
      * isMolarUnit() will return true for both molar and equivalent units 
      * because equivalent units are a subset of molar units. When checking 
@@ -178,29 +181,29 @@ export class UcumLhcUtils {
 
     // if neither unit is a molar/eq unit, return 'normal'
     if (!(fromUnit.isMolarUnit() || toUnit.isMolarUnit())) {
-      return 'normal';
+      conversionType = 'normal';
     }
-     
-    // handle eq <-> eq conversions as normal
+
+    // handle eq <-> eq conversions
     if (fromUnit.isEquivalentUnit() && toUnit.isEquivalentUnit()) {
-      return 'normal';
+      conversionType = 'normal';
     }
     // handle eq <-> mol/mass conversions
     else if (fromUnit.isEquivalentUnit()) {
-      return toUnit.isMolarUnit() ? 'eq->mol' : 'eq->mass';
+      conversionType = toUnit.isMolarUnit() ? 'eq->mol' : 'eq->mass';
     } else if (toUnit.isEquivalentUnit()) {
-      return fromUnit.isMolarUnit() ? 'mol->eq' : 'mass->eq';
+      conversionType = fromUnit.isMolarUnit() ? 'mol->eq' : 'mass->eq';
     }
     // handle mol <-> mass conversions
     else if (fromUnit.isMolarUnit() && toUnit.isMolarUnit()) {
-      return 'normal';
+      conversionType = 'normal';
     } else if (fromUnit.isMolarUnit()) {
-      return 'mol->mass';
+      conversionType = 'mol->mass';
     } else if (toUnit.isMolarUnit()) {
-      return 'mass->mol';
+      conversionType = 'mass->mol';
     }
 
-    return 'normal';
+    return conversionType;
   } // end detectConversionType
 
 
