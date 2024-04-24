@@ -191,14 +191,10 @@ export class UcumLhcUtils {
       conversionType = 'eq<->eq';
     }
     // handle eq <-> mol/mass conversions
-    else if (fromUnit.isEquivalentUnit() && toUnit.isMolarUnit()) {
-      conversionType = 'eq->mol';
-    } else if (fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
-      conversionType = 'mol->eq';
-    } else if (fromUnit.isEquivalentUnit()) {
-      conversionType = 'eq->mass';
+    else if (fromUnit.isEquivalentUnit()) {
+      conversionType = toUnit.isMolarUnit() ? 'eq->mol' : 'eq->mass';
     } else if (toUnit.isEquivalentUnit()) {
-      conversionType = 'mass->eq';
+      conversionType = fromUnit.isMolarUnit() ? 'mol->eq' : 'mass->eq';
     }
     // handle mol <-> mass conversions
     else if (fromUnit.isMolarUnit() && toUnit.isMolarUnit()) {
