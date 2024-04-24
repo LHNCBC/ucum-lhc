@@ -390,12 +390,6 @@ export class UcumLhcUtils {
                   fromUnit.convertEqToMol(fromVal, toUnit, charge) :
                   fromUnit.convertMolToEq(fromVal, toUnit, charge);
                 break;
-              // case 'mol<->mol':
-              //   throw new Error(`A mol <-> mol conversion cannot be executed for two mole-based units, ${
-              //     fromUnit.csCode_} and ${toUnit.csCode_}.  No conversion was attempted.`);
-              // case 'eq<->eq':
-              //   throw new Error(`An eq <-> eq conversion cannot be executed for two equivalent-based units, ${
-              //     fromUnit.csCode_} and ${toUnit.csCode_}.  No conversion was attempted.`);
               default:
                 throw new Error("Unknown conversion type.  No conversion was attempted.");
             }
