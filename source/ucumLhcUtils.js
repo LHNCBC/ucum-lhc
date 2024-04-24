@@ -155,8 +155,6 @@ export class UcumLhcUtils {
  *   'mass->eq', 
  *   'eq->mol', 
  *   'mol->eq', 
- *   'mol<->mol', 
- *   'eq<->eq'
  * } ConversionType
  */
 
@@ -168,9 +166,6 @@ export class UcumLhcUtils {
   * @returns {ConversionType} conversionType - The type of conversion as a string.
   */
   detectConversionType(fromUnit, toUnit) {
-    /** @type {ConversionType} */
-    let conversionType = 'normal';
-
     /** Note: 
      * isMolarUnit() will return true for both molar and equivalent units 
      * because equivalent units are a subset of molar units. When checking 
@@ -183,29 +178,29 @@ export class UcumLhcUtils {
 
     // if neither unit is a molar/eq unit, return 'normal'
     if (!(fromUnit.isMolarUnit() || toUnit.isMolarUnit())) {
-      return conversionType;
+      return 'normal';
     }
      
-    // handle eq <-> eq conversions
+    // handle eq <-> eq conversions as normal
     if (fromUnit.isEquivalentUnit() && toUnit.isEquivalentUnit()) {
-      conversionType = 'eq<->eq';
+      return 'normal';
     }
     // handle eq <-> mol/mass conversions
     else if (fromUnit.isEquivalentUnit()) {
-      conversionType = toUnit.isMolarUnit() ? 'eq->mol' : 'eq->mass';
+      return toUnit.isMolarUnit() ? 'eq->mol' : 'eq->mass';
     } else if (toUnit.isEquivalentUnit()) {
-      conversionType = fromUnit.isMolarUnit() ? 'mol->eq' : 'mass->eq';
+      return fromUnit.isMolarUnit() ? 'mol->eq' : 'mass->eq';
     }
     // handle mol <-> mass conversions
     else if (fromUnit.isMolarUnit() && toUnit.isMolarUnit()) {
-      conversionType = 'mol<->mol';
+      return 'normal';
     } else if (fromUnit.isMolarUnit()) {
-      conversionType = 'mol->mass';
+      return 'mol->mass';
     } else if (toUnit.isMolarUnit()) {
-      conversionType = 'mass->mol';
+      return 'mass->mol';
     }
 
-    return conversionType;
+    return 'normal';
   } // end detectConversionType
 
 
@@ -395,12 +390,12 @@ export class UcumLhcUtils {
                   fromUnit.convertEqToMol(fromVal, toUnit, charge) :
                   fromUnit.convertMolToEq(fromVal, toUnit, charge);
                 break;
-              case 'mol<->mol':
-                throw new Error(`A mol <-> mol conversion cannot be executed for two mole-based units, ${
-                  fromUnit.csCode_} and ${toUnit.csCode_}.  No conversion was attempted.`);
-              case 'eq<->eq':
-                throw new Error(`An eq <-> eq conversion cannot be executed for two equivalent-based units, ${
-                  fromUnit.csCode_} and ${toUnit.csCode_}.  No conversion was attempted.`);
+              // case 'mol<->mol':
+              //   throw new Error(`A mol <-> mol conversion cannot be executed for two mole-based units, ${
+              //     fromUnit.csCode_} and ${toUnit.csCode_}.  No conversion was attempted.`);
+              // case 'eq<->eq':
+              //   throw new Error(`An eq <-> eq conversion cannot be executed for two equivalent-based units, ${
+              //     fromUnit.csCode_} and ${toUnit.csCode_}.  No conversion was attempted.`);
               default:
                 throw new Error("Unknown conversion type.  No conversion was attempted.");
             }

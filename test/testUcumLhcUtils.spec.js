@@ -202,7 +202,7 @@ it("should return a message for invalid unit strings", function() {
     var resp4 = utils.convertUnitTo('mol', 1, '78.4(mmol/L)/s');
     assert.equal(resp4.status, 'failed', resp4.status);
     assert.equal(resp4.msg[0], '4(mmol/L) is not a valid UCUM code.  We assumed you meant 4.(mmol/L).', resp4.msg[0]);
-    assert.equal(resp4.msg[1], 'A mol <-> mol conversion cannot be executed for two mole-based units, mol and (78.(4.(mmol/L)))/s.  No conversion was attempted.', resp4.msg[1]);
+    assert.equal(resp4.msg[1], 'Sorry.  mol cannot be converted to (78.(4.(mmol/L)))/s.', resp4.msg[1]);
     assert.equal(resp4.toVal, null, resp4.toVal);
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
@@ -218,22 +218,16 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
   });
 
-  it("should return an error for an attempt to translate mmol/L to mol", function() {
-    var resp4 = utils.convertUnitTo('mmol/L', 1, 'mol');
-    assert.equal(resp4.status, 'failed', resp4.status);
-    assert.equal(resp4.msg[0], 'A mol <-> mol conversion cannot be executed for two mole-based units, mmol/L and mol.  No conversion was attempted.', resp4.msg[0]);
-    assert.equal(resp4.toVal, null, resp4.toVal);
-    assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
-    assert.equal(resp4.toUnit, undefined, resp4.toUnit);
+  it("should return 0.001 for an attempt to translate mmol to mol", function() {
+    var resp4 = utils.convertUnitTo('mmol', 1, 'mol');
+    assert.equal(resp4.status, 'succeeded', resp4.status);
+    assert.equal(resp4.toVal, 0.001, resp4.toVal);
   });
 
-  it("should return an error for an attempt to translate eq to eq", function() {
-    var resp4 = utils.convertUnitTo('eq', 1, 'eq');
-    assert.equal(resp4.status, 'failed', resp4.status);
-    assert.equal(resp4.msg[0], 'An eq <-> eq conversion cannot be executed for two equivalent-based units, eq and eq.  No conversion was attempted.', resp4.msg[1]);
-    assert.equal(resp4.toVal, null, resp4.toVal);
-    assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
-    assert.equal(resp4.toUnit, undefined, resp4.toUnit);
+  it("should return 1000 for an attempt to translate eq to meq", function() {
+    var resp4 = utils.convertUnitTo('eq', 1, 'meq');
+    assert.equal(resp4.status, 'succeeded', resp4.status);
+    assert.equal(resp4.toVal, 1000, resp4.toVal);
   });
 
   /**
