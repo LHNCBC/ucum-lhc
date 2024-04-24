@@ -165,43 +165,48 @@ export class UcumLhcUtils {
   *
   * @param {Object} fromUnit - The unit to convert from.
   * @param {Object} toUnit - The unit to convert to.
-  * @returns {ConversionType} conversionType - The type of conversion as a string. Possible values are:
-  * 'normal', 'mol->mass', 'mass->mol', 'eq->mass', 'mass->eq', 'eq->mol', 'mol->eq', 'mol<->mol', 'eq<->eq'.
+  * @returns {ConversionType} conversionType - The type of conversion as a string.
   */
   detectConversionType(fromUnit, toUnit) {
     /** @type {ConversionType} */
     let conversionType = 'normal';
 
-    // if neither unit is not a molar unit, return 'normal'
+    /** Note: 
+     * isMolarUnit() will return true for both molar and equivalent units 
+     * because equivalent units are a subset of molar units. When checking 
+     * for eq<->mol conversions, we need explicitly check that one unit is
+     * an equivalent unit and the other is a molar unit.
+     * 
+     * For this reason, the order of the below checks matters and we need to
+     * check for eq<->mol conversions before mol<->mol conversions.
+     */ 
+
+    // if neither unit is a molar/eq unit, return 'normal'
     if (!(fromUnit.isMolarUnit() || toUnit.isMolarUnit())) {
       return conversionType;
     }
      
-    // Otherwise, handle mol <-> eq <-> mass conversions
-    if (fromUnit.isMolarUnit() && toUnit.isMolarUnit() && !fromUnit.isEquivalentUnit() && !toUnit.isEquivalentUnit()) {
-      conversionType = 'mol<->mol';
-    } else if (fromUnit.isEquivalentUnit() && toUnit.isEquivalentUnit()) {
+    // handle eq <-> eq conversions
+    if (fromUnit.isEquivalentUnit() && toUnit.isEquivalentUnit()) {
       conversionType = 'eq<->eq';
     }
     // handle eq <-> mol/mass conversions
-    else if (fromUnit.isEquivalentUnit() || toUnit.isEquivalentUnit()) {
-      if (fromUnit.isEquivalentUnit() && toUnit.isMolarUnit()) {
-        conversionType = 'eq->mol';
-      } else if (fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
-        conversionType = 'mol->eq';
-      } else if (fromUnit.isEquivalentUnit() && !toUnit.isMolarUnit()) {
-        conversionType = 'eq->mass';
-      } else if (!fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
-        conversionType = 'mass->eq';
-      }
-    } 
+    else if (fromUnit.isEquivalentUnit() && toUnit.isMolarUnit()) {
+      conversionType = 'eq->mol';
+    } else if (fromUnit.isMolarUnit() && toUnit.isEquivalentUnit()) {
+      conversionType = 'mol->eq';
+    } else if (fromUnit.isEquivalentUnit()) {
+      conversionType = 'eq->mass';
+    } else if (toUnit.isEquivalentUnit()) {
+      conversionType = 'mass->eq';
+    }
     // handle mol <-> mass conversions
-    else {
-      if (fromUnit.isMolarUnit() && !toUnit.isMolarUnit()) {
-        conversionType = 'mol->mass';
-      } else if (!fromUnit.isMolarUnit() && toUnit.isMolarUnit()) {
-        conversionType = 'mass->mol';
-      }
+    else if (fromUnit.isMolarUnit() && toUnit.isMolarUnit()) {
+      conversionType = 'mol<->mol';
+    } else if (fromUnit.isMolarUnit()) {
+      conversionType = 'mol->mass';
+    } else if (toUnit.isMolarUnit()) {
+      conversionType = 'mass->mol';
     }
 
     return conversionType;
@@ -357,15 +362,6 @@ export class UcumLhcUtils {
                 returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
                 break;
               case 'mol->mass':
-                if (!molecularWeight) {
-                  throw new Error(Ucum.needMoleWeightMsg_);
-                }
-                if (!fromUnit.isMoleMassCommensurable(toUnit)) {
-                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
-                      `converted to ${toUnitCode}.`);
-                }
-                returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
-                break;
               case 'mass->mol':
                 if (!molecularWeight) {
                   throw new Error(Ucum.needMoleWeightMsg_);
@@ -374,21 +370,11 @@ export class UcumLhcUtils {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
                       `converted to ${toUnitCode}.`);
                 }
-                returnObj['toVal'] = fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
+                returnObj['toVal'] = convertType === "mol->mass" ?
+                  fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight) :
+                  fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
                 break;
               case 'eq->mass':
-                if (!molecularWeight) {
-                  throw new Error(Ucum.needEqWeightMsg_);
-                }
-                if (!charge) {
-                  throw new Error(Ucum.needEqChargeMsg_);
-                }
-                if (!fromUnit.isEqMassCommensurable(toUnit)) {
-                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
-                      `converted to ${toUnitCode}.`);
-                }
-                returnObj['toVal'] = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, charge);
-                break;
               case 'mass->eq':
                 if (!molecularWeight) {
                   throw new Error(Ucum.needEqWeightMsg_);
@@ -400,19 +386,18 @@ export class UcumLhcUtils {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
                       `converted to ${toUnitCode}.`);
                 }
-                returnObj['toVal'] = fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, charge);
+                returnObj['toVal'] = convertType === "eq->mass" ?
+                  fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, charge) :
+                  fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, charge);
                 break;
               case 'eq->mol':
-                if (!charge) {
-                  throw new Error(Ucum.needEqChargeMsg_);
-                }
-                returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, charge);
-                break;
               case 'mol->eq':
                 if (!charge) {
                   throw new Error(Ucum.needEqChargeMsg_);
                 }
-                returnObj['toVal'] = fromUnit.convertMolToEq(fromVal, toUnit, charge);
+                returnObj['toVal'] = convertType === "eq->mol" ?
+                  fromUnit.convertEqToMol(fromVal, toUnit, charge) :
+                  fromUnit.convertMolToEq(fromVal, toUnit, charge);
                 break;
               case 'mol<->mol':
                 throw new Error(`A mol <-> mol conversion cannot be executed for two mole-based units, ${
