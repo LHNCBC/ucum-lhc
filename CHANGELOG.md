@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.0] 2024-04-25
+### Changed
+- convertUnitTo now supports specifying the charge of the substance when
+  converting between eq and mol (or eq and g).
+- Specifying the charge when converting between eq and mol (or g) is now
+  required.  Previously it assumed the charge is 1, which is not always the
+  case.
+- convertUnitTo now takes an "options" parameter into which the former
+  parameters "suggestions" and "molecularWeight" have been moved, and which
+  contains a new option "charge" for specifying the charge of the substance.
+- Specifying a molecularWeight value when none is needed is no longer treated as
+  an error.
+
 ## [5.0.4] 2024-03-15
 ### Fixed
 - Validator issue reported on github: m(/s) should be invalid.

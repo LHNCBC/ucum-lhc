@@ -46,7 +46,11 @@ class UcumXmlDocument {
     // Creation of unit objects after this file is processed will pick up
     // the moleExp_ value from the base mole unit, but the ones defined in
     // this file will not necessarily do that.
-    this.moleCodes_ = ['mol', 'eq', 'osm', 'kat', 'U'];
+    this.moleCodes_ = ['mol', 'osm', 'kat', 'U'];
+    // Works similarly to the moleCodes_ array, but for units that represents
+    // equivalent units. For unit codes in the equivCodes_ array, an equivalentExp_ 
+    // attribute flag will be set to 1. 
+    this.equivCodes_ = ['eq'];
 
     // Make this a singleton.  See UnitTables constructor for details.
 
@@ -211,7 +215,17 @@ class UcumXmlDocument {
         attrs['class_'] = curUA.attr.class;
       }
       let valNode = curUA.childNamed('value');
+      // Note: This currently works as a boolean flag,
+      // but it should be used to represent the dimensionality
+      // of the unit as an integer instead.
       if (this.moleCodes_.indexOf(curUA.attr.Code) !== -1) attrs['moleExp_'] = 1;else attrs['moleExp_'] = 0;
+      // Adds a flag similar to how moleExp_ works, but for units 
+      // that are equivalent. Note that ideally this should also
+      // take values other than 1 or 0, but for now it is a boolean 
+      // flag.
+      if (this.equivCodes_.indexOf(curUA.attr.Code) !== -1) {
+        attrs['equivalentExp_'] = 1;
+      }
 
       // Process special units
       if (curUA.attr.isSpecial) {
