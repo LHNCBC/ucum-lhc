@@ -770,3 +770,69 @@ describe('convertToBaseUnits', ()=> {
   });
 
 });
+
+
+describe('Test detectConversionType method', ()=> {
+  it("should return 'normal' for a request to detect conversion type for g to mg", function() {
+    let to = utils.getSpecifiedUnit('g', 'convert').unit;
+    let from = utils.getSpecifiedUnit('mg', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'normal', resp);
+  });
+
+  it("should return 'normal' for a request to detect conversion type for mol to mol", function() {
+    let to = utils.getSpecifiedUnit('mol', 'convert').unit;
+    let from = utils.getSpecifiedUnit('mol', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'normal', resp);
+  });
+
+  it("should return 'normal' for a request to detect conversion type for eq to eq", function() {
+    let to = utils.getSpecifiedUnit('eq', 'convert').unit;
+    let from = utils.getSpecifiedUnit('eq', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'normal', resp);
+  });
+
+  it("should return 'mass->mol' for a request to detect conversion type for g to mol", function() {
+    let to = utils.getSpecifiedUnit('g', 'convert').unit;
+    let from = utils.getSpecifiedUnit('mol', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'mass->mol', resp);
+  });
+
+  it("should return 'mol->mass' for a request to detect conversion type for mol to g", function() {
+    let to = utils.getSpecifiedUnit('mol', 'convert').unit;
+    let from = utils.getSpecifiedUnit('g', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'mol->mass', resp);
+  });
+
+  it("should return 'mass->eq' for a request to detect conversion type for g to eq", function() {
+    let to = utils.getSpecifiedUnit('g', 'convert').unit;
+    let from = utils.getSpecifiedUnit('eq', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'mass->eq', resp);
+  });
+
+  it("should return 'eq->mass' for a request to detect conversion type for eq to g", function() {
+    let to = utils.getSpecifiedUnit('eq', 'convert').unit;
+    let from = utils.getSpecifiedUnit('g', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'eq->mass', resp);
+  });
+
+  it("should return 'eq->mol' for a request to detect conversion type for eq to mol", function() {
+    let to = utils.getSpecifiedUnit('eq', 'convert').unit;
+    let from = utils.getSpecifiedUnit('mol', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'eq->mol', resp);
+  });
+
+  it("should return 'mol->eq' for a request to detect conversion type for mol to eq", function() {
+    let to = utils.getSpecifiedUnit('mol', 'convert').unit;
+    let from = utils.getSpecifiedUnit('eq', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'mol->eq', resp);
+  });
+});

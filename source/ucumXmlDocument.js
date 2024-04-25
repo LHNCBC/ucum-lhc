@@ -45,7 +45,7 @@ export class UcumXmlDocument {
     // Creation of unit objects after this file is processed will pick up
     // the moleExp_ value from the base mole unit, but the ones defined in
     // this file will not necessarily do that.
-    this.moleCodes_ = ['mol', 'eq', 'osm', 'kat', 'U' ];
+    this.moleCodes_ = ['mol', 'osm', 'kat', 'U' ];
     // Works similarly to the moleCodes_ array, but for units that represents
     // equivalent units. For unit codes in the equivCodes_ array, an equivalentExp_ 
     // attribute flag will be set to 1. 

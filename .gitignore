@@ -8,3 +8,4 @@ impexp/UnitsList.txt
 # Files from build on gh-pages branch
 demo-test/
 docs/
+.DS_Store
