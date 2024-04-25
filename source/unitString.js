@@ -1156,7 +1156,12 @@ export class UnitString {
         if (codeAndExp) {
           uCode = codeAndExp[0];
           exp = codeAndExp[1];
-          origUnit = this.utabs_.getUnitByCode(uCode);
+          origUnit = intUtils_.isIntegerUnit(uCode) ?
+            new Unit({'csCode_' : uCode,
+              'ciCode_' : uCode,
+              'magnitude_' : Number(uCode),
+              'name_' : uCode}) :
+            this.utabs_.getUnitByCode(uCode);
         }
 
         // If an exponent is found but it's not a valid number, e.g. "2-1",

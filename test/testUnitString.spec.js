@@ -1079,5 +1079,12 @@ describe('Test _isCodeWithExponent method', function() {
     assert.equal(retArray, null);
   });
 
+  it("should return ['2', '-21'] for '2-21'", function() {
+    var uString = UnitString.getInstance();
+    var retArray = uString._isCodeWithExponent('2-21');
+    assert.equal(retArray[0], '2');
+    assert.equal(retArray[1], '-21');
+  });
+
 }); // end test _isCodeWithExponent method
 
