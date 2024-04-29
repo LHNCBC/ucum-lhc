@@ -1153,10 +1153,12 @@ export class UnitString {
         // Look first for an exponent.  If we got one, separate it out and
         // try to get the unit again
         let codeAndExp = this._isCodeWithExponent(uCode);
+        let isIntegerUnitWithExp = false;
         if (codeAndExp) {
           uCode = codeAndExp[0];
           exp = codeAndExp[1];
-          origUnit = intUtils_.isIntegerUnit(uCode) ?
+          isIntegerUnitWithExp = intUtils_.isIntegerUnit(uCode);
+          origUnit = isIntegerUnitWithExp ?
             new Unit({'csCode_' : uCode,
               'ciCode_' : uCode,
               'magnitude_' : Number(uCode),
@@ -1299,10 +1301,11 @@ export class UnitString {
             }
             if (exp) {
               let expStr = exp.toString();
+              const intergerUnitExpSign = isIntegerUnitWithExp && exp > 0 ? '+' : '';
               retUnit.assignVals({
                 'name_': theName + '<sup>' + expStr + '</sup>',
-                'csCode_': theCode + expStr,
-                'ciCode_': theCiCode + expStr,
+                'csCode_': theCode + intergerUnitExpSign + expStr,
+                'ciCode_': theCiCode + intergerUnitExpSign + expStr,
                 'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
               });
             }
