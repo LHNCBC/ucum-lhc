@@ -685,8 +685,8 @@ export class UcumDemo {
       } // end if there's a message from the parse request
 
       // If there's a message to be displayed (and it's not a repeat of
-      // the last displayed message) do it now
-      if (retMsg !== '' && retMsg !== lastDispMsg) {
+      // the last displayed message on the converter tab), do it now.
+      if (retMsg !== '' && (tabName !== 'Converter' || retMsg !== lastDispMsg)) {
         if (uStr !== escVal && uStr !== '') {
           retMsg = this._multipleReplace(retMsg, uStr, escVal);
         }
