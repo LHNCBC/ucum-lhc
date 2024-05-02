@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.1] 2024-05-02
+### Fixed
+- Keep annotation and remove leading "1" in CiCode.
+
 ## [6.0.0] 2024-04-25
 ### Changed
 - convertUnitTo now supports specifying the charge of the substance when
