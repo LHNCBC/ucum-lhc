@@ -689,6 +689,29 @@ describe('Test parseString method', function() {
     });
   });
 
+  describe('test for unit string /100{cells}', function() {
+    const uString = UnitString.getInstance();
+    const expectedUnit = new UnitObj({
+      'csCode_' : '1/100',
+      'ciCode_' : '1/100{CELLS}',
+      'magnitude_' : 0.01,
+      'name_': '1/100'
+    });
+    const resp = uString.parseString('/100{cells}', 'validate');
+    const retUnit = resp[0];
+    const retOrig = resp[1];
+    const respMsg = resp[2];
+    it('should keep annotation in ciCode_', function() {
+      assert.equal(retUnit['ciCode_'], '1/100{CELLS}');
+    });
+    it('should keep original string', function() {
+      assert.equal('/100{cells}', retOrig);
+    });
+    it('should return no message', function() {
+      assert.equal(0, respMsg.length);
+    });
+  });
+
 }); // end test ParseString method
 
 
