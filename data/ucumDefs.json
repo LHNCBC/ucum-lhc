@@ -12156,7 +12156,7 @@
         false,
         "per 100 cells",
         "/100{cells}",
-        "1/100{CELLS}",
+        "/100{CELLS}",
         "",
         0.01,
         [
@@ -12193,7 +12193,7 @@
         false,
         "per 100 neutrophils",
         "/100{neutrophils}",
-        "1/100{NEUTROPHILS}",
+        "/100{NEUTROPHILS}",
         "",
         0.01,
         [
@@ -12230,7 +12230,7 @@
         false,
         "per 100 spermatozoa",
         "/100{spermatozoa}",
-        "1/100{SPERMATOZOA}",
+        "/100{SPERMATOZOA}",
         "",
         0.01,
         [
@@ -12267,7 +12267,7 @@
         false,
         "per 100 white blood cells",
         "/100{WBCs}",
-        "1/100{WBCS}",
+        "/100{WBCS}",
         "",
         0.01,
         [
