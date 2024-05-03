@@ -29,6 +29,16 @@ describe('UCUM Demo page tests', function(){
       // but it was there before this update.
       cy.get('#validationString').should('have.text', 'cm (centimeter)  is a valid unit expression.');
     });
+
+    it('should preserve error message on second validation', function() {
+      cy.visit('docs/demo.html');
+      cy.get("#valString").should('be.visible').type('acr').type('{enter}');
+      cy.get('#validationString').should('contain.text', 'acr is not a valid UCUM code.');
+      cy.get("#valString").clear().type('/acr').type('{enter}');
+      cy.get('#validationString').should('contain.text', 'acr is not a valid UCUM code.');
+      cy.get("#valString").clear().type('{enter}');
+      cy.get('#validationString').should('be.empty');
+    });
   });
 
   describe('Conversion', function() {
