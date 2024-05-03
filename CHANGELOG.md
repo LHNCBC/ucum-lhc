@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.1] 2024-05-03
+### Fixed
+- Validator issue: 2+10 should be invalid.
+
 ## [6.0.0] 2024-04-25
 ### Changed
 - convertUnitTo now supports specifying the charge of the substance when

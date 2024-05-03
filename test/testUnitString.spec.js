@@ -811,7 +811,47 @@ describe('Test makeUnit method', function() {
     });
     it("should return a unit with blank guidance text", function() {
       assert.equal(retUnit['guidance_'], '');
-    })
+    });
+  });
+
+  describe('Test makeUnit for unit code 2+10', function () {
+    var uString = UnitString.getInstance();
+    var origString = '2+10';
+    var resp = uString._makeUnit(origString, origString);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    it("should return a unit with a csCode_ of 2+10", function () {
+      assert.equal(retUnit['csCode_'], '2+10');
+    });
+    it("should return a unit with a ciCode_ of 2+10", function () {
+      assert.equal(retUnit['ciCode_'], '2+10');
+    });
+    it("should return a unit with a magnitude_ = 1024", function () {
+      assert.equal(retUnit['magnitude_'], 1024, `Expected ${retUnit['magnitude_']} to equal 1024.`);
+    });
+    it("should return a unit with a name_ of 2<sup>10</sup>", function () {
+      assert.equal('2<sup>10</sup>', retUnit['name_']);
+    });
+  });
+
+  describe('Test makeUnit for unit code 2-10', function () {
+    var uString = UnitString.getInstance();
+    var origString = '2-10';
+    var resp = uString._makeUnit(origString, origString);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    it("should return a unit with a csCode_ of 2-10", function () {
+      assert.equal(retUnit['csCode_'], '2-10');
+    });
+    it("should return a unit with a ciCode_ of 2-10", function () {
+      assert.equal(retUnit['ciCode_'], '2-10');
+    });
+    it("should return a unit with a magnitude_ = 0.0009765625", function () {
+      assert.equal(retUnit['magnitude_'],0.0009765625, `Expected ${retUnit['magnitude_']} to equal 0.0009765625.`);
+    });
+    it("should return a unit with a name_ of 2<sup>-10</sup>", function () {
+      assert.equal('2<sup>-10</sup>', retUnit['name_']);
+    });
   });
 
 }); // end test makeUnit method
@@ -1077,6 +1117,13 @@ describe('Test _isCodeWithExponent method', function() {
     var uString = UnitString.getInstance();
     var retArray = uString._isCodeWithExponent('m[H2O]23X');
     assert.equal(retArray, null);
+  });
+
+  it("should return ['2', '-21'] for '2-21'", function() {
+    var uString = UnitString.getInstance();
+    var retArray = uString._isCodeWithExponent('2-21');
+    assert.equal(retArray[0], '2');
+    assert.equal(retArray[1], '-21');
   });
 
 }); // end test _isCodeWithExponent method
