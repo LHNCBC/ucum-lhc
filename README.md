@@ -161,7 +161,7 @@ of unit strings, and includes a link to the
 the full deal.
 
 <a id="convertUnitTo"></a>
-#### convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight)
+#### convertUnitTo(fromUnitCode, fromVal, toUnitCode, options)
 
 This method converts a number of one type of unit to the equivalent number of
 another type of unit.  Note that the number returned is not trimmed or
@@ -174,15 +174,20 @@ using them in actual clinical settings.
 * _@param_ fromVal the number of "from" units to be converted to "to" units;
 * _@param_ toUnitCode the unit code/expression/string of the unit that the from 
   field is to be converted to;
-* _@param_ suggest a boolean to indicate whether or not suggestions are
-   requested for a string that cannot be resolved to a valid unit;
-   true indicates suggestions are wanted; false indicates they are not,
-   and is the default if the parameter is not specified;
-* _@param_ molecularWeight the molecular weight of the substance in question
-   when a conversion is being requested from mass to moles and vice versa.
-   It is ignored if neither unit includes a measurement in moles.  In such cases
-   the mole-based unit must have a single mole unit in the numerator and the
-   mass-based unit must have a single mass unit in the numerator.  
+* _@param_ options an optional hash of options that can be passed in:
+  * 'suggestions' a boolean to indicate whether or not suggestions are wanted
+      for a string that cannot be resolved to a valid unit; true indicates
+      suggestions are wanted; false indicates they are not, and is the default
+      if the parameter is not specified;
+  * 'molecularWeight' the molecular weight of the substance in question when a
+      conversion is being requested from mass to moles/equivalents and vice versa.  It is
+      ignored if neither unit includes a measurement in moles.  In such cases
+      the mole-based unit must have a single mole unit in the numerator and the
+      mass-based unit must have a single mass unit in the numerator.
+  * 'charge' the absolute value of the charge of the substance in question when a conversion 
+      is being requested from mass/moles to equivalents and vice versa. It is required 
+      when one of the units represents a value in equivalents and the other in mass or moles. 
+      It is ignored if neither unit includes an equivalent unit
 * _@returns_ a hash with six elements:
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if

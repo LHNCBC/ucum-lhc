@@ -145,71 +145,143 @@ export class UcumLhcUtils {
   } // end validateUnitString
 
 
+
+/**
+ * @typedef {
+ *   'normal', 
+ *   'mol->mass',
+ *   'mass->mol',
+ *   'eq->mass',
+ *   'mass->eq',
+ *   'eq->mol',
+ *   'mol->eq',
+ * } ConversionType
+ */
+
+  /**
+  * Detects the type of conversion between two units.
+  *
+  * @param {Object} fromUnit - The unit to convert from.
+  * @param {Object} toUnit - The unit to convert to.
+  * @returns {ConversionType} conversionType - The type of conversion as a string.
+  */
+  detectConversionType(fromUnit, toUnit) {
+    /** @type {ConversionType} */
+    let conversionType = 'normal';
+
+    // detect mol <-> mass conversions and eq <-> eq conversions,
+    // and non-mol <-> eq <-> mass conversions
+    if ((fromUnit.isMolarUnit() && toUnit.isMolarUnit()) || 
+        (fromUnit.isEquivalentUnit() && toUnit.isEquivalentUnit()) ||
+        (!(fromUnit.isMolarUnit() || toUnit.isMolarUnit()) && 
+        !(fromUnit.isEquivalentUnit() || toUnit.isEquivalentUnit()))) {
+      conversionType = 'normal';
+    }
+    // handle eq <-> mol/mass conversions
+    else if (fromUnit.isEquivalentUnit()) {
+      conversionType = toUnit.isMolarUnit() ? 'eq->mol' : 'eq->mass';
+    } else if (toUnit.isEquivalentUnit()) {
+      conversionType = fromUnit.isMolarUnit() ? 'mol->eq' : 'mass->eq';
+    }
+    // handle mol <-> mass conversions
+    else if (fromUnit.isMolarUnit()) {
+      conversionType = 'mol->mass';
+    } else if (toUnit.isMolarUnit()) {
+      conversionType = 'mass->mol';
+    }
+
+    return conversionType;
+  } // end detectConversionType
+
+  /** 
+   * @typedef {{
+   *   status: 'succeeded' | 'failed' | 'error',
+   *   toVal: number | null,
+   *   msg: string[],
+   *   suggestions: {
+   *     from: {
+   *       msg: string,
+   *       invalidUnit: string,
+   *       units: string[]
+   *     },
+   *     to: {
+   *       msg: string,
+   *       invalidUnit: string,
+   *       units: string[]
+   *     }
+   *   },
+   *  fromUnit: string,
+   *  toUnit: string
+   * }} ConvertUnitResult
+   */
+
+ 
   /**
    * This method converts one unit to another
    *
-   * @param fromUnitCode the unit code/expression/string of the unit to be converted
-   * @param fromVal the number of "from" units to be converted to "to" units
-   * @param toUnitCode the unit code/expression/string of the unit that the from
-   *  field is to be converted to
-   * @param suggest a boolean to indicate whether or not suggestions are
-   *  requested for a string that cannot be resolved to a valid unit;
-   *  true indicates suggestions are wanted; false indicates they are not,
-   *  and is the default if the parameter is not specified;
-   * @param molecularWeight the molecular weight of the substance in question
-   *  when a conversion is being requested from mass to moles and vice versa.
-   *  This is required when one of the units represents a value in moles.  It is
-   *  ignored if neither unit includes a measurement in moles.
-   * @returns a hash with six elements:
-   *  'status' that will be: 'succeeded' if the conversion was successfully
+   * @param {string} fromUnitCode - the unit code/expression/string of the unit to be converted
+   * @param {number | string} fromVal - the number of "from" units to be converted to "to" units
+   * @param {string} toUnitCode - the unit code/expression/string of the unit that the from field is to be converted to
+   * @param {{
+   *   suggest?: boolean,
+   *   molecularWeight?: number
+   *   charge?: number
+   * }} options
+   *  - suggest: a boolean to indicate whether or not suggestions are requested for a string that cannot be resolved to a valid unit;
+   *    true indicates suggestions are wanted; false indicates they are not, and is the default if the parameter is not specified;
+   *  - molecularWeight: the molecular weight of the substance in question when a conversion is being requested from mass to moles and vice versa.
+   *    This is required when one of the units represents a value in moles.  It is ignored if neither unit includes a measurement in moles.
+   *  - charge: the absolute value of the charge of the substance in question when a conversion is being requested from mass/moles to
+   *    equivalents and vice versa. It is required when one of the units represents a value in equivalents and the other in mass or moles. 
+   *    It is ignored if neither unit includes an equivalent unit.
+   * @returns {ConvertUnitResult}
+   * - a hash with six elements:
+   *   - 'status' that will be: 'succeeded' if the conversion was successfully
    *     calculated; 'failed' if the conversion could not be made, e.g., if
    *     the units are not commensurable; or 'error' if an error occurred;
-   *  'toVal' the numeric value indicating the conversion amount, or null
+   *   - 'toVal' the numeric value indicating the conversion amount, or null
    *     if the conversion failed (e.g., if the units are not commensurable);
-   *  'msg' is an array message, if the string is invalid or an error occurred,
-   *        indicating the problem, or an explanation of a substitution such as
-   *        the substitution of 'G' for 'Gauss', or an empty array if no
-   *        messages were generated;
-   *  'suggestions' if suggestions were requested and found, this is a hash
+   *   - 'msg' is an array message, if the string is invalid or an error occurred,
+   *     indicating the problem, or an explanation of a substitution such as
+   *     the substitution of 'G' for 'Gauss', or an empty array if no
+   *     messages were generated;
+   *   - 'suggestions' if suggestions were requested and found, this is a hash
    *     that contains at most two elements:
-   *     'from' which, if the fromUnitCode input parameter or one or more of
+   *     - 'from' which, if the fromUnitCode input parameter or one or more of
    *       its components could not be found, is an array one or more hash
    *       objects.  Each hash contains three elements:
-   *         'msg' which is a message indicating what unit expression the
-   *            suggestions are for;
-   *         'invalidUnit' which is the unit expression the suggestions
-   *            are for; and
-   *         'units' which is an array of data for each suggested unit found.
-   *            Each array will contain the unit code, the unit name and the
-   *            unit guidance (if any).
+   *       - 'msg' which is a message indicating what unit expression the
+   *          suggestions are for;
+   *       - 'invalidUnit' which is the unit expression the suggestions
+   *          are for; and
+   *       - 'units' which is an array of data for each suggested unit found.
+   *          Each array will contain the unit code, the unit name and the
+   *          unit guidance (if any).
    *       If no suggestions were found for the fromUnitCode this element
    *       will not be included.
-   *     'to' which, if the "to" unit expression or one or more of its
+   *     - 'to' which, if the "to" unit expression or one or more of its
    *       components could not be found, is an array one or more hash objects.  Each hash
    *       contains three elements:
-   *         'msg' which is a message indicating what toUnitCode input
-   *            parameter the suggestions are for;
-   *         'invalidUnit' which is the unit expression the suggestions
-   *            are for; and
-   *         'units' which is an array of data for each suggested unit found.
-   *            Each array will contain the unit code, the unit name and the
-   *            unit guidance (if any).
+   *       - 'msg' which is a message indicating what toUnitCode input
+   *          parameter the suggestions are for;
+   *       - 'invalidUnit' which is the unit expression the suggestions
+   *          are for; and
+   *       - 'units' which is an array of data for each suggested unit found.
+   *          Each array will contain the unit code, the unit name and the
+   *          unit guidance (if any).
    *       If no suggestions were found for the toUnitCode this element
    *       will not be included.
-   *    No 'suggestions' element will be included in the returned hash
-   *    object if none were found, whether or not they were requested.
-   *  'fromUnit' the unit object for the fromUnitCode passed in; returned
+   *       No 'suggestions' element will be included in the returned hash
+   *       object if none were found, whether or not they were requested.
+   *   - 'fromUnit' the unit object for the fromUnitCode passed in; returned
    *     in case it's needed for additional data from the object; and
-   *  'toUnit' the unit object for the toUnitCode passed in; returned
+   *   - 'toUnit' the unit object for the toUnitCode passed in; returned
    *     in case it's needed for additional data from the object.
    */
-  convertUnitTo(fromUnitCode, fromVal, toUnitCode, suggest, molecularWeight) {
-    if (suggest === undefined)
-      suggest = false ;
+  convertUnitTo(fromUnitCode, fromVal, toUnitCode, options = {}) {
+    let { suggest = false, molecularWeight = null, charge = null } = options;
 
-    if (molecularWeight === undefined)
-      molecularWeight = null ;
-
+    /** @type {ConvertUnitResult} */
     let returnObj = {'status' : 'failed',
                      'toVal' : null,
                      'msg' : []} ;
@@ -263,40 +335,53 @@ export class UcumLhcUtils {
 
         if (fromUnit && toUnit) {
           try {
-            // if no molecular weight was specified perform a normal conversion
-            if (!molecularWeight) {
-              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
-            }
-            else {
-              if (fromUnit.moleExp_ !== 0 && toUnit.moleExp_ !== 0) {
-                throw(new Error('A molecular weight was specified ' +
-                  'but a mass <-> mole conversion cannot be executed for two ' +
-                  'mole-based units.  No conversion was attempted.'));
-              }
-              if (fromUnit.moleExp_ === 0 && toUnit.moleExp_ === 0) {
-                throw(new Error('A molecular weight was specified ' +
-                  'but a mass <-> mole conversion cannot be executed when ' +
-                  'neither unit is mole-based.  No conversion was attempted.'));
-              }
-              if (!fromUnit.isMoleMassCommensurable(toUnit)) {
-                throw(new Error(`Sorry.  ${fromUnitCode} cannot be ` +
-                  `converted to ${toUnitCode}.`));
-              }
+            const convertType = this.detectConversionType(fromUnit, toUnit); 
 
-              // if the "from" unit is a mole-based unit, assume a mole to mass
-              // request
-              if (fromUnit.moleExp_ !== 0) {
-                returnObj['toVal'] =
-                  fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
-              }
-              // else the "to" unit must be the mole-based unit, so assume a
-              // mass to mole request
-              else {
-                returnObj['toVal'] =
+            switch (convertType) {
+              case 'normal':
+                returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+                break;
+              case 'mol->mass':
+              case 'mass->mol':
+                if (!molecularWeight) {
+                  throw new Error(Ucum.needMoleWeightMsg_);
+                }
+                if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                      `converted to ${toUnitCode}.`);
+                }
+                returnObj['toVal'] = convertType === "mol->mass" ?
+                  fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight) :
                   fromUnit.convertMassToMol(fromVal, toUnit, molecularWeight);
-              }
-            } // end if a molecular weight was specified
-
+                break;
+              case 'eq->mass':
+              case 'mass->eq':
+                if (!molecularWeight) {
+                  throw new Error(Ucum.needEqWeightMsg_);
+                }
+                if (!charge) {
+                  throw new Error(Ucum.needEqChargeMsg_);
+                }
+                if (!fromUnit.isEqMassCommensurable(toUnit)) {
+                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
+                      `converted to ${toUnitCode}.`);
+                }
+                returnObj['toVal'] = convertType === "eq->mass" ?
+                  fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, charge) :
+                  fromUnit.convertMassToEq(fromVal, toUnit, molecularWeight, charge);
+                break;
+              case 'eq->mol':
+              case 'mol->eq':
+                if (!charge) {
+                  throw new Error(Ucum.needEqChargeMsg_);
+                }
+                returnObj['toVal'] = convertType === "eq->mol" ?
+                  fromUnit.convertEqToMol(fromVal, toUnit, charge) :
+                  fromUnit.convertMolToEq(fromVal, toUnit, charge);
+                break;
+              default:
+                throw new Error("Unknown conversion type.  No conversion was attempted.");
+            }
             // if an error hasn't been thrown - either from convertFrom or here,
             // set the return object to show success
             returnObj['status'] = 'succeeded';
@@ -307,10 +392,8 @@ export class UcumLhcUtils {
             returnObj['status'] = 'failed';
             returnObj['msg'].push(err.message);
           }
-
-
-        }  // end if we have the from and to units
-      }
+        } // end if we have the from and to units
+      } 
       catch (err) {
         if (err.message == Ucum.needMoleWeightMsg_)
           returnObj['status'] = 'failed';

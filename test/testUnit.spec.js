@@ -208,6 +208,40 @@ describe('Test requests to multiply/divide arbitrary units', function() {
     });
   });
 
+  describe("Text unit detection methods for mole and equivalent units", function() {
+    it("equivalent should have only equivalentExp_ set", function(){
+      var eqUnit = uTabs.getUnitByCode('eq');
+      assert.equal(eqUnit.moleExp_, 0);
+      assert.equal(eqUnit.equivalentExp_, 1);
+    });
+    it("mole should have moleExp_ set but not equivalentExp_", function(){
+      var molUnit = uTabs.getUnitByCode('mol');
+      assert.equal(molUnit.moleExp_, 1);
+      assert.equal(molUnit.equivalentExp_, 0);
+    });
+    it("isMolarUnit should return true for mol", function(){
+      var molUnit = uTabs.getUnitByCode('mol');
+      assert.equal(molUnit.isMolarUnit(), true);
+    });
+    it("isMolarUnit should return false for eq", function(){
+      var eqUnit = uTabs.getUnitByCode('eq');
+      assert.equal(eqUnit.isMolarUnit(), false);
+    });
+    it("isEquivalentUnit should return true for eq", function(){
+      var eqUnit = uTabs.getUnitByCode('eq');
+      assert.equal(eqUnit.isEquivalentUnit(), true);
+    });
+    it("isEquivalentUnit should return false for mol", function(){
+      var molUnit = uTabs.getUnitByCode('mol');
+      assert.equal(molUnit.isEquivalentUnit(), false);
+    });
+    it("both isMolarUnit and isEquivalentUnit should return true for equivalent/millimole (eq/mmol)", function(){
+      var eqmmolUnit = uTabs.getUnitByCode('eq/mmol');
+      assert.equal(eqmmolUnit.isMolarUnit(), true);
+      assert.equal(eqmmolUnit.isEquivalentUnit(), true);
+    });
+  });
+
   describe('Test multiplication of mole units', function (){
     var molUnit = uTabs.getUnitByCode('mol');
     var cfuUnit = uTabs.getUnitByCode('[CFU]');

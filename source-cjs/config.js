@@ -79,6 +79,18 @@ var Ucum = {
    */
   needMoleWeightMsg_: 'Did you wish to convert between mass and moles?  The ' + 'molecular weight of the substance represented by the ' + 'units is required to perform the conversion.',
   /**
+   * Message that is returned when a mass<->eq conversion is requested 
+   * (which requires a molecular weight to calculate), but no molecular 
+   * weight was provided by the user.
+   */
+  needEqWeightMsg_: 'Did you wish to convert with equivalents?  The ' + 'molecular weight of the substance is required to perform ' + 'the conversion.',
+  /**
+   * Message that is returned when a mass<->eq or a mol<->eq conversion 
+   * is requested (which requires a charge to calculate), but no charge
+   * was provided by the user.
+   */
+  needEqChargeMsg_: 'Did you wish to convert with equivalents?  The ' + 'charge of the substance is required to perform ' + 'the conversion.',
+  /**
    * Hash that matches unit column names to names used in the csv file
    * that is submitted to the data updater.
    */

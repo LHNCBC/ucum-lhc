@@ -152,6 +152,11 @@ class Unit {
      */
     this.moleExp_ = attrs['moleExp_'] || 0;
 
+    /**
+     * Flag indicating whether or not this is a equivalent mole unit
+     */
+    this.equivalentExp_ = attrs['equivalentExp_'] || 0;
+
     /*
      * Added when added LOINC list of units
      * synonyms are used by the autocompleter to enhance lookup capabilities
@@ -480,7 +485,7 @@ class Unit {
     // return the molAmt divided by the molesFactor as the number of moles
     // for the molUnit
     return molAmt / molesFactor;
-  }
+  } // end convertMassToMol
 
   /**
    * Calculates the number of units that would result from converting a unit
@@ -493,7 +498,7 @@ class Unit {
    * @param amt the quantity of this unit to be converted
    * @param massUnit the target/to unit for which the converted # is wanted
    * @param molecularWeight the molecular weight of the substance for which the
-   *  conversion is being made
+   * conversion is being made
    * @return the equivalent amount in massUnit
    */
   convertMolToMass(amt, massUnit, molecularWeight) {
@@ -515,7 +520,104 @@ class Unit {
     // divided by any effects of prefixes applied to the "to" unit, which
     // is assumed to be some form of a gram unit
     return massAmt / massUnit.magnitude_;
-  }
+  } // end convertMolToMass
+
+  /**
+   * Converts equivalents to mass.
+   * 
+   * @param {number} equivalents - The amount in equivalents to be converted.
+   * @param {object} targetUnit - The target/to unit for which the converted number is wanted.
+   * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
+   * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made.
+   * @returns {number} - The equivalent mass in the specified mass unit.
+   */
+  convertEqToMass(equivalents, targetUnit, molecularWeight, charge) {
+    let standardMoleUnit = this._getUnitTables().getUnitByCode('mol');
+    const molAmount = this.convertEqToMol(equivalents, standardMoleUnit, charge);
+    return this.convertMolToMass(molAmount, targetUnit, molecularWeight);
+  } // end convertEqToMass
+
+  /**
+   * Converts mass to equivalents.
+   * 
+   * @param {number} mass - The mass to be converted.
+   * @param {object} eqUnit - The target/to unit for which the converted number is wanted.
+   * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
+   * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made.
+   * @returns {number} - The equivalent amount in the specified equivalent unit.
+   */
+  convertMassToEq(mass, eqUnit, molecularWeight, charge) {
+    // Calculate equivalent mass by dividing molecular weight by charge
+    let equivalentMass = molecularWeight / charge;
+    // Calculate equivalents by dividing mass by equivalent mass
+    let equivalents = mass / equivalentMass;
+    // Get Avogadro's number from the unit tables
+    let avogadroNumber = this._getUnitTables().getUnitByCode('mol').magnitude_;
+    // Calculate mole factor by dividing the magnitude of the equivalent unit by Avogadro's number
+    // eqUnit may have a prefix (e.g. meq) and we need to adjust for that
+    let moleFactor = eqUnit.magnitude_ / avogadroNumber;
+    // Adjust equivalents by dividing by the mole factor
+    let adjustedEquivalents = equivalents / moleFactor;
+    // Return the adjusted equivalents
+    return adjustedEquivalents;
+  } // end convertMassToEq
+
+  /**
+   * Checks if the given unit is an equivalent unit.
+   * 
+   * Note: equivalent units are also be molar units, so a unit can return true for 
+   * both isEquivalentUnit and isMolarUnit.
+   * 
+   * @returns {boolean} - Returns true if the unit is an equivalent unit, false otherwise.
+   */
+  isEquivalentUnit() {
+    return this.equivalentExp_ !== 0;
+  } // end isEquivalentUnit
+
+  /**
+   * Checks if the given unit is a molar unit.
+   * 
+   * @returns {boolean} - Returns true if the unit is a molar unit, false otherwise.
+   */
+  isMolarUnit() {
+    return this.moleExp_ !== 0;
+  } // end isMolarUnit
+
+  /**
+   * This function converts an equivalent amount to moles using the charge of the substance.
+   * 
+   * @param {number} eqFromVal - The equivalent amount for which the conversion is being made.
+   * @param {object} molToUnit - The target unit for which the converted number is wanted.
+   * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made.
+   * @return {number} - The amount in moles.
+   */
+  convertEqToMol(eqFromVal, molToUnit, charge) {
+    // Check if molToUnit is a molar unit and eqFromVal is a eq unit
+    if (!molToUnit.isMolarUnit() || !this.isEquivalentUnit()) {
+      throw new Error("Invalid units for conversion of Eq to Mol. Please provide an equivalent and a molar unit.");
+    }
+    // The conversion from equivalents to moles is based on the principle that one equivalent is equal to 1/valencyFactor moles. 
+    // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (molToUnit.magnitude_)
+    return eqFromVal * (this.magnitude_ / molToUnit.magnitude_) / charge;
+  } // end convertEqToMol
+
+  /**
+   * This function converts moles to equivalent amount using the charge of the substance.
+   * 
+   * @param {number} molFromVal - The mole amount for which the conversion is being made
+   * @param {object} eqToUnit - The target unit for which the converted number is wanted
+   * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made
+   * @return {number} - The amount in equivalent
+   */
+  convertMolToEq(molFromVal, eqToUnit, charge) {
+    // Check if eqToUnit is an equivalent unit and molFromVal is a molar unit
+    if (!eqToUnit.isEquivalentUnit() || !this.isMolarUnit()) {
+      throw new Error("Invalid units for conversion of Mol to Eq. Please provide a molar and an equivalent unit.");
+    }
+    // The conversion from moles to equivalents is based on the principle that one equivalent is equal to 1/valencyFactor moles.
+    // The relative magnitude is accounted for via the current unit's magnitude (this.magnitude_) and the target unit's magnitude (eqToUnit.magnitude_)
+    return molFromVal * charge * (this.magnitude_ / eqToUnit.magnitude_);
+  } // end convertMolToEq
 
   /**
    * Mutates this unit into a unit on a ratio scale and converts a specified
@@ -855,6 +957,40 @@ class Unit {
       let testDim = unit2.dim_.clone();
       let curVal = testDim.getElementAt(d);
       testDim.setElementAt(d, curVal + unit2.moleExp_);
+      commensurable = testDim.equals(this.dim_);
+    }
+    return commensurable;
+  }
+
+  /**
+   * This function tests this unit against the unit passed in to see if the
+   * two are eq to mass commensurable.  It assumes that one of the units
+   * is a eq-based unit and the other is a mass-based unit.  It also assumes
+   * that the eq-based unit has a single eq unit in the numerator and that
+   * the mass-based unit has a single mass unit in the numerator.  It does NOT
+   * check to validate those assumptions.
+   *
+   * The check is made by setting the dimension vector element corresponding
+   * to the base mass unit (gram) in the eq unit, and then comparing the
+   * two dimension vectors.  If they match, the units are commensurable.
+   * Otherwise they are not.
+   *
+   * @param {Unit} unit2 the unit to be compared to this one
+   * @returns {boolean} boolean indicating commensurability
+   */
+  isEqMassCommensurable(unit2) {
+    let tabs = this._getUnitTables();
+    let d = tabs.getMassDimensionIndex();
+    let commensurable = false;
+    if (this.equivalentExp_ === 1 && unit2.equivalentExp_ === 0) {
+      let testDim = this.dim_.clone();
+      let curVal = testDim.getElementAt(d);
+      testDim.setElementAt(d, curVal + this.equivalentExp_);
+      commensurable = testDim.equals(unit2.dim_);
+    } else if (unit2.equivalentExp_ === 1 && this.equivalentExp_ === 0) {
+      let testDim = unit2.dim_.clone();
+      let curVal = testDim.getElementAt(d);
+      testDim.setElementAt(d, curVal + unit2.equivalentExp_);
       commensurable = testDim.equals(this.dim_);
     }
     return commensurable;
