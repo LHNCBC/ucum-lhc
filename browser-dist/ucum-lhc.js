@@ -4153,10 +4153,17 @@ var UnitString = /*#__PURE__*/function () {
           // Look first for an exponent.  If we got one, separate it out and
           // try to get the unit again
           var codeAndExp = this._isCodeWithExponent(uCode);
+          var isIntegerUnitWithExp = false;
           if (codeAndExp) {
             uCode = codeAndExp[0];
             exp = codeAndExp[1];
-            origUnit = this.utabs_.getUnitByCode(uCode);
+            isIntegerUnitWithExp = intUtils_.isIntegerUnit(uCode);
+            origUnit = isIntegerUnitWithExp ? new Unit({
+              'csCode_': uCode,
+              'ciCode_': uCode,
+              'magnitude_': Number(uCode),
+              'name_': uCode
+            }) : this.utabs_.getUnitByCode(uCode);
           }
 
           // If an exponent is found but it's not a valid number, e.g. "2-1",
@@ -4293,10 +4300,11 @@ var UnitString = /*#__PURE__*/function () {
               }
               if (exp) {
                 var expStr = exp.toString();
+                var intergerUnitExpSign = isIntegerUnitWithExp && exp > 0 ? '+' : '';
                 retUnit.assignVals({
                   'name_': theName + '<sup>' + expStr + '</sup>',
-                  'csCode_': theCode + expStr,
-                  'ciCode_': theCiCode + expStr,
+                  'csCode_': theCode + intergerUnitExpSign + expStr,
+                  'ciCode_': theCiCode + intergerUnitExpSign + expStr,
                   'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
                 });
               }
