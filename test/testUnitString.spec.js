@@ -691,12 +691,6 @@ describe('Test parseString method', function() {
 
   describe('test for unit string /100{cells}', function() {
     const uString = UnitString.getInstance();
-    const expectedUnit = new UnitObj({
-      'csCode_' : '1/100',
-      'ciCode_' : '1/100{CELLS}',
-      'magnitude_' : 0.01,
-      'name_': '1/100'
-    });
     const resp = uString.parseString('/100{cells}', 'validate');
     const retUnit = resp[0];
     const retOrig = resp[1];
