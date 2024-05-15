@@ -1391,10 +1391,10 @@ export class UnitString {
         // /100{cells}.  But f it is a number, just set the return unit to
         // the number.
         if (intUtils_.isIntegerUnit(befAnnoText)) {
-          retUnit = new Unit({'csCode_' : befAnnoText,
+          retUnit = new Unit({'csCode_' : befAnnoText + annoText,
             'ciCode_' : befAnnoText + annoText.toUpperCase(),
             'magnitude_' : Number(befAnnoText),
-            'name_': befAnnoText});
+            'name_': befAnnoText + annoText});
         }
         // Otherwise try to find a unit
         else {

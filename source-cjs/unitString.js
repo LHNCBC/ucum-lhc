@@ -1286,10 +1286,10 @@ class UnitString {
         // the number.
         if (intUtils_.isIntegerUnit(befAnnoText)) {
           retUnit = new Unit({
-            'csCode_': befAnnoText,
+            'csCode_': befAnnoText + annoText,
             'ciCode_': befAnnoText + annoText.toUpperCase(),
             'magnitude_': Number(befAnnoText),
-            'name_': befAnnoText
+            'name_': befAnnoText + annoText
           });
         }
         // Otherwise try to find a unit
