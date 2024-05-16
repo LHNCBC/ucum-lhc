@@ -162,9 +162,12 @@ export class UcumDataUpdater {
     if (newUnit) {
       // Transfer the csv column data to the unit created by parseString
       // (or for a return of "1")
-
       for (var colName in Ucum.csvCols_) {
         newUnit[Ucum.csvCols_[colName]] = inputRec[colName];
+      }
+      // If the ciCode fits the pattern "1/100{cells}", remove the preceding "1".
+      if (/^1\/\d+{[a-zA-Z]+}$/.test(newUnit['ciCode_'])) {
+        newUnit['ciCode_'] = newUnit['ciCode_'].substring(1);
       }
       var utab = UnitTables.getInstance();
       utab.addUnit(newUnit);
