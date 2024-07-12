@@ -322,10 +322,10 @@ class UcumLhcUtils {
                 if (!molecularWeight) {
                   throw new Error(Ucum.needMoleWeightMsg_);
                 }
-                if (!fromUnit.isMoleMassCommensurable(toUnit)) {
+                if (!fromUnit.isMolMassCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` + `converted to ${toUnitCode}.`);
                 }
-                returnObj['toVal'] = fromUnit.convertMolToMass(fromVal, toUnit, molecularWeight);
+                returnObj['toVal'] = fromUnit.convertMolMass(fromVal, toUnit, molecularWeight);
                 break;
               case 'eq|mass':
                 if (!molecularWeight) {
@@ -337,16 +337,16 @@ class UcumLhcUtils {
                 if (!fromUnit.isEqMassCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` + `converted to ${toUnitCode}.`);
                 }
-                returnObj['toVal'] = fromUnit.convertEqToMass(fromVal, toUnit, molecularWeight, charge);
+                returnObj['toVal'] = fromUnit.convertEqMass(fromVal, toUnit, molecularWeight, charge);
                 break;
               case 'eq|mol':
-                if (!fromUnit.isEqMoleCommensurable(toUnit)) {
+                if (!fromUnit.isEqMolCommensurable(toUnit)) {
                   throw new Error(`Sorry.  ${fromUnitCode} cannot be ` + `converted to ${toUnitCode}.`);
                 }
                 if (!charge) {
                   throw new Error(Ucum.needEqChargeMsg_);
                 }
-                returnObj['toVal'] = fromUnit.convertEqToMol(fromVal, toUnit, charge);
+                returnObj['toVal'] = fromUnit.convertEqMol(fromVal, toUnit, charge);
                 break;
               case 'eq|mol|mass':
                 if (!molecularWeight) {

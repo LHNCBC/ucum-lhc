@@ -373,22 +373,22 @@ describe('Test invertString', function (){
   });
 });
 
-describe('isMoleMassCommensurable(unit2)', ()=> {
+describe('isMolMassCommensurable(unit2)', ()=> {
   it('should return true if one unit has mol and the other has the same power mass', ()=>{
     var molUnit = uTabs.getUnitByCode('mol');
     var massUnit = uTabs.getUnitByCode('kg');
-    assert(molUnit.isMoleMassCommensurable(massUnit));
-    assert(massUnit.isMoleMassCommensurable(molUnit));
-    assert(molUnit.power(2).isMoleMassCommensurable(massUnit.power(2)));
-    assert(molUnit.power(2).invert().isMoleMassCommensurable(massUnit.power(2).invert()),
+    assert(molUnit.isMolMassCommensurable(massUnit));
+    assert(massUnit.isMolMassCommensurable(molUnit));
+    assert(molUnit.power(2).isMolMassCommensurable(massUnit.power(2)));
+    assert(molUnit.power(2).invert().isMolMassCommensurable(massUnit.power(2).invert()),
       `mol-2=${JSON.stringify(molUnit.power(2).invert())}; kg-2=${JSON.stringify(massUnit.power(2).invert())}`);
   });
 
   it('should return false if one unit has a different power of mass/mol', ()=>{
     var molUnit = uTabs.getUnitByCode('mol');
     var massUnit = uTabs.getUnitByCode('kg');
-    assert(molUnit.power(2).isMoleMassCommensurable(massUnit.power(3)) == false);
-    assert(massUnit.power(2).invert().isMoleMassCommensurable(molUnit.power(3).invert()) == false);
+    assert(molUnit.power(2).isMolMassCommensurable(massUnit.power(3)) == false);
+    assert(massUnit.power(2).invert().isMolMassCommensurable(molUnit.power(3).invert()) == false);
   });
 });
 
