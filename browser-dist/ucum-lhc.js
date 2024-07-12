@@ -1930,9 +1930,11 @@ var UcumLhcUtils = /*#__PURE__*/function () {
     /**
      * This method retrieves a list of units commensurable, i.e., that can be
      * converted from and to, a specified unit.  Returns an error if the "from"
-     * unit cannot be found.
+     * unit cannot be found. If necessary, you can filter the list of units by
+     * specifying a list of unit categories that should be in the resulting list.
      *
-     * @param fromName the name/unit string of the "from" unit
+     * @param {string} fromName - the name/unit string of the "from" unit
+     * @param {string[] | null} [categoryList] - the list of unit categories
      * @returns an array containing two elements;
      *   first element is the list of commensurable units if any were found
      *   second element is an error message if the "from" unit is not found
@@ -1940,6 +1942,7 @@ var UcumLhcUtils = /*#__PURE__*/function () {
   }, {
     key: "commensurablesList",
     value: function commensurablesList(fromName) {
+      var categoryList = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var retMsg = [];
       var commUnits = null;
       var parseResp = this.getSpecifiedUnit(fromName, 'validate', false);
@@ -1962,6 +1965,11 @@ var UcumLhcUtils = /*#__PURE__*/function () {
           if (dimVec) {
             var utab = UnitTables.getInstance();
             commUnits = utab.getUnitsByDimension(dimVec);
+            if (categoryList) {
+              commUnits = commUnits.filter(function (item) {
+                return categoryList.indexOf(item.category_) !== -1;
+              });
+            }
           }
         } // end if the from unit has a dimension vector
       } // end if we found a "from" unit

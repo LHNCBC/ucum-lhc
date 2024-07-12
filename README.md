@@ -87,6 +87,7 @@ Below is documentation for the public functions on the UcumLhcUtils instance.
 *  [convertUnitTo](#convertUnitTo)
 *  [checkSynonyms](#checkSynonyms)
 *  [convertToBaseUnits](#convertToBaseUnits)
+*  [commensurablesList](#commensurablesList)
 
 <a id="validateUnitString"></a>
 #### validateUnitString(uStr, suggest)
@@ -331,6 +332,27 @@ a magnitude, and returns that data.
         useful as a scale factor for other conversions (i.e., it only has validity
         and usefulness for the input values that produced it).
 * unitToExp: a map of base units in fromUnit to their exponent
+
+<a id="commensurablesList"></a>
+#### commensurablesList(fromUnit[, categoryList])
+
+Retrieves a list of units commensurable, i.e., that can be converted from and
+to, a specified unit.  Returns an error if the "from" unit cannot be found.
+If necessary, you can filter the list of units by specifying a list of unit
+ categories that should be in the resulting list.
+
+**Parameters**:
+1) fromUnit: the name/unit string
+2) categoryList:  optional parameter - the list of unit categories
+
+**Returns**: an array containing two elements:
+* 0: an array of commensurable units if any were found, each of which is an
+     object with the properties:
+  * name_: unit name;
+  * csCode_: unit code;
+  * other properties are currently undocumented and their existence should not
+    be relied upon.
+* 1: an error message if the "from" unit is not found.
 
 
 ### Download the GitHub repository

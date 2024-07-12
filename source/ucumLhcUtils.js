@@ -640,14 +640,16 @@ export class UcumLhcUtils {
   /**
    * This method retrieves a list of units commensurable, i.e., that can be
    * converted from and to, a specified unit.  Returns an error if the "from"
-   * unit cannot be found.
+   * unit cannot be found. If necessary, you can filter the list of units by
+   * specifying a list of unit categories that should be in the resulting list.
    *
-   * @param fromName the name/unit string of the "from" unit
+   * @param {string} fromName - the name/unit string of the "from" unit
+   * @param {string[] | null} [categoryList] - the list of unit categories
    * @returns an array containing two elements;
    *   first element is the list of commensurable units if any were found
    *   second element is an error message if the "from" unit is not found
    */
-  commensurablesList(fromName) {
+  commensurablesList(fromName, categoryList = null) {
 
     let retMsg = [];
     let commUnits = null ;
@@ -677,6 +679,11 @@ export class UcumLhcUtils {
         if (dimVec) {
           let utab = UnitTables.getInstance();
           commUnits = utab.getUnitsByDimension(dimVec);
+          if (categoryList) {
+            commUnits = commUnits.filter((item) => {
+              return categoryList.indexOf(item.category_) !== -1;
+            });
+          }
         }
       } // end if the from unit has a dimension vector
     } // end if we found a "from" unit
