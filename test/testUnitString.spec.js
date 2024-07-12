@@ -706,6 +706,15 @@ describe('Test parseString method', function() {
     });
   });
 
+
+  it('should set flags for exponents on mol and eq', ()=>{
+    const uString = UnitString.getInstance();
+    let resp = uString.parseString('mol3', 'validate');
+    assert.equal(resp[0].moleExp_, 3);
+    resp = uString.parseString('eq4', 'validate');
+    assert.equal(resp[0].equivalentExp_, 4);
+  });
+
 }); // end test ParseString method
 
 

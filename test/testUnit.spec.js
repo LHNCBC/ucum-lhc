@@ -207,56 +207,103 @@ describe('Test requests to multiply/divide arbitrary units', function() {
       assert.equal(retUnit.moleExp_, -1);
     });
   });
-
-  describe("Text unit detection methods for mole and equivalent units", function() {
-    it("equivalent should have only equivalentExp_ set", function(){
-      var eqUnit = uTabs.getUnitByCode('eq');
-      assert.equal(eqUnit.moleExp_, 0);
-      assert.equal(eqUnit.equivalentExp_, 1);
-    });
-    it("mole should have moleExp_ set but not equivalentExp_", function(){
-      var molUnit = uTabs.getUnitByCode('mol');
-      assert.equal(molUnit.moleExp_, 1);
-      assert.equal(molUnit.equivalentExp_, 0);
-    });
-    it("isMolarUnit should return true for mol", function(){
-      var molUnit = uTabs.getUnitByCode('mol');
-      assert.equal(molUnit.isMolarUnit(), true);
-    });
-    it("isMolarUnit should return false for eq", function(){
-      var eqUnit = uTabs.getUnitByCode('eq');
-      assert.equal(eqUnit.isMolarUnit(), false);
-    });
-    it("isEquivalentUnit should return true for eq", function(){
-      var eqUnit = uTabs.getUnitByCode('eq');
-      assert.equal(eqUnit.isEquivalentUnit(), true);
-    });
-    it("isEquivalentUnit should return false for mol", function(){
-      var molUnit = uTabs.getUnitByCode('mol');
-      assert.equal(molUnit.isEquivalentUnit(), false);
-    });
-    it("both isMolarUnit and isEquivalentUnit should return true for equivalent/millimole (eq/mmol)", function(){
-      var eqmmolUnit = uTabs.getUnitByCode('eq/mmol');
-      assert.equal(eqmmolUnit.isMolarUnit(), true);
-      assert.equal(eqmmolUnit.isEquivalentUnit(), true);
-    });
-  });
-
-  describe('Test multiplication of mole units', function (){
-    var molUnit = uTabs.getUnitByCode('mol');
-    var cfuUnit = uTabs.getUnitByCode('[CFU]');
-    var errMsg = null;
-    try {
-      var retUnit = cfuUnit.multiplyThese(molUnit);
-    }
-    catch(err) {
-      errMsg = err.message;
-    };
-    it('should return a unit with moleExp_ set to 1', function(){
-      assert.equal(retUnit.moleExp_, 1);
-    });
-  });
 }) ; // end Test requests to multiply/divide arbitrary units
+
+describe("Test unit detection methods for mole and equivalent units", function() {
+  it("equivalent should have only equivalentExp_ set", function(){
+    var eqUnit = uTabs.getUnitByCode('eq');
+    assert.equal(eqUnit.moleExp_, 0);
+    assert.equal(eqUnit.equivalentExp_, 1);
+  });
+  it("mole should have moleExp_ set but not equivalentExp_", function(){
+    var molUnit = uTabs.getUnitByCode('mol');
+    assert.equal(molUnit.moleExp_, 1);
+    assert.equal(molUnit.equivalentExp_, 0);
+  });
+  it("isMolarUnit should return true for mol", function(){
+    var molUnit = uTabs.getUnitByCode('mol');
+    assert.equal(molUnit.isMolarUnit(), true);
+  });
+  it("isMolarUnit should return false for eq", function(){
+    var eqUnit = uTabs.getUnitByCode('eq');
+    assert.equal(eqUnit.isMolarUnit(), false);
+  });
+  it("isEquivalentUnit should return true for eq", function(){
+    var eqUnit = uTabs.getUnitByCode('eq');
+    assert.equal(eqUnit.isEquivalentUnit(), true);
+  });
+  it("isEquivalentUnit should return false for mol", function(){
+    var molUnit = uTabs.getUnitByCode('mol');
+    assert.equal(molUnit.isEquivalentUnit(), false);
+  });
+  it("both isMolarUnit and isEquivalentUnit should return true for equivalent/millimole (eq/mmol)", function(){
+    var eqmmolUnit = uTabs.getUnitByCode('eq/mmol');
+    assert.equal(eqmmolUnit.isMolarUnit(), true);
+    assert.equal(eqmmolUnit.isEquivalentUnit(), true);
+  });
+});
+
+describe('Test multiplication, division, and powers of mole/eq units', function (){
+  describe('mol.osm', function() {
+    var molUnit = uTabs.getUnitByCode('mol');
+    var cfuUnit = uTabs.getUnitByCode('osm');
+    var errMsg = null;
+    var retUnit = cfuUnit.multiplyThese(molUnit);
+    it('should return a unit with moleExp_ set to 2', function(){
+      assert.equal(retUnit.moleExp_, 2);
+    });
+  });
+
+  describe('eq.eq', function() {
+    it('should return a unit with equivalentExp_ set to 2', function() {
+      var eqUnit = uTabs.getUnitByCode('eq');
+      var retUnit = eqUnit.multiplyThese(eqUnit);
+      assert.equal(retUnit.equivalentExp_, 2);
+    });
+  });
+
+  describe('mol.eq/mol.eq', function() {
+    it('should return a unit with and moleExp_ and equivalentExp_ set to 0', function() {
+      var molUnit = uTabs.getUnitByCode('mol');
+      var eqUnit = uTabs.getUnitByCode('eq');
+      var retUnit = molUnit.multiplyThese(eqUnit).divide(molUnit).divide(eqUnit);
+      assert.equal(retUnit.moleExp_, 0, 'moleExp_');
+      assert.equal(retUnit.equivalentExp_, 0, 'equivalentExp_');
+    });
+  });
+
+  describe('mol2/eq3', function() {
+    it('should return a unit with and moleExp_ of 2 and equivalentExp_ of -3', function() {
+      var molUnit = uTabs.getUnitByCode('mol');
+      var eqUnit = uTabs.getUnitByCode('eq');
+      var retUnit = molUnit.power(2).divide(eqUnit.power(3));
+      assert.equal(retUnit.moleExp_, 2, 'moleExp_');
+      assert.equal(retUnit.equivalentExp_, -3, 'equivalentExp_');
+    });
+  });
+
+  describe('invert()', ()=>{
+    it('should change the sign of the values of moleExp_ and equivalentExp_', ()=>{
+      var molUnit = uTabs.getUnitByCode('mol');
+      var eqUnit = uTabs.getUnitByCode('eq');
+      var retUnit = molUnit.power(2).divide(eqUnit.power(3));
+      retUnit = retUnit.invert();
+      assert.equal(retUnit.moleExp_, -2, 'moleExp_');
+      assert.equal(retUnit.equivalentExp_, 3, 'equivalentExp_');
+    });
+  });
+
+  describe('power(n)', ()=>{
+    it('should multiply the values of moleExp_ and equivalentExp_', ()=>{
+      var molUnit = uTabs.getUnitByCode('mol');
+      var eqUnit = uTabs.getUnitByCode('eq');
+      var retUnit = molUnit.power(2).divide(eqUnit.power(3));
+      retUnit = retUnit.power(2);
+      assert.equal(retUnit.moleExp_, 4, 'moleExp_');
+      assert.equal(retUnit.equivalentExp_, -6, 'equivalentExp_');
+    });
+  });
+});
 
 describe('Test attempts to convert arbitrary units', function() {
   it('should throw an error on attempt to convert 5 iu to cfu', function(){
@@ -317,8 +364,7 @@ describe('Generated names for complex units', function() {
     assert.equal(unit.csCode_, '2');
     assert.equal(unit.ciCode_, '2');
   });
-
-}) ; // end Test attempts to multiply/divide arbitrary units
+});
 
 describe('Test invertString', function (){
   it('should keep sup tags intact', function(){
@@ -326,3 +372,41 @@ describe('Test invertString', function (){
     assert.equal(testUnit.invertString('10<sup>9</sup>'), '/10<sup>9</sup>');
   });
 });
+
+describe('isMoleMassCommensurable(unit2)', ()=> {
+  it('should return true if one unit has mol and the other has the same power mass', ()=>{
+    var molUnit = uTabs.getUnitByCode('mol');
+    var massUnit = uTabs.getUnitByCode('kg');
+    assert(molUnit.isMoleMassCommensurable(massUnit));
+    assert(massUnit.isMoleMassCommensurable(molUnit));
+    assert(molUnit.power(2).isMoleMassCommensurable(massUnit.power(2)));
+    assert(molUnit.power(2).invert().isMoleMassCommensurable(massUnit.power(2).invert()),
+      `mol-2=${JSON.stringify(molUnit.power(2).invert())}; kg-2=${JSON.stringify(massUnit.power(2).invert())}`);
+  });
+
+  it('should return false if one unit has a different power of mass/mol', ()=>{
+    var molUnit = uTabs.getUnitByCode('mol');
+    var massUnit = uTabs.getUnitByCode('kg');
+    assert(molUnit.power(2).isMoleMassCommensurable(massUnit.power(3)) == false);
+    assert(massUnit.power(2).invert().isMoleMassCommensurable(molUnit.power(3).invert()) == false);
+  });
+});
+
+describe('isEqMassCommensurable(unit2)', ()=> {
+  it('should return true if one unit has eq and the other has the same power mass', ()=> {
+    var eqUnit = uTabs.getUnitByCode('eq');
+    var massUnit = uTabs.getUnitByCode('kg');
+    assert(eqUnit.isEqMassCommensurable(massUnit));
+    assert(massUnit.isEqMassCommensurable(eqUnit));
+    assert(eqUnit.power(2).isEqMassCommensurable(massUnit.power(2)));
+    assert(eqUnit.power(2).invert().isEqMassCommensurable(massUnit.power(2).invert()));
+  });
+
+  it('should return false if one unit has a different power of mass/eq', ()=>{
+    var eqUnit = uTabs.getUnitByCode('eq');
+    var massUnit = uTabs.getUnitByCode('kg');
+    assert(eqUnit.power(2).isEqMassCommensurable(massUnit.power(3)) == false);
+    assert(massUnit.power(2).invert().isEqMassCommensurable(eqUnit.power(3).invert()) == false);
+  });
+});
+
