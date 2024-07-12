@@ -1121,12 +1121,6 @@ export class Unit {
    * @param unit2 the unit to be compared to this one
    * @returns boolean indicating commensurability
    */
-  // One unit must have a power of a mass, and the other must have the same
-  // power of mol.  The Java API allows conversion between units with matching
-  // powers of mass & mol, and also allows kg.mol to be converted to kg2 but not
-  // to mol2.  Example:  from/kg2.mol3/to/kg5/MOLWEIGHT/0.5 works, but
-  // /from/kg2.mol3/to/kg4.mol/MOLWEIGHT/0.5 does not.  I suppose converting
-  // only some of the mass or mols factors is a bit much.
   isMolMassCommensurable(unit2) {
     let tabs = this._getUnitTables();
     let d = tabs.getMassDimensionIndex();
