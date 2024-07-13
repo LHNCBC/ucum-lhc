@@ -600,7 +600,7 @@ export class Unit {
   /**
    *  Converts a unit with eq/mol/mass to another unit with eq/mol/mass.  It
    *  assumes the units an commensurable, which can be checked via
-   *  isEqMolMassCommensurable.  It is assuming that the powers of eq/mol/mass
+   *  isEqMolMassCommensurable.  It also assumes that the powers of eq/mol/mass
    *  are different between the two units; otherwise it would be more efficient
    *  to call one of the other convert... functions.
    *
