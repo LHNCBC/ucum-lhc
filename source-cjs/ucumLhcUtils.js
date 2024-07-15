@@ -589,9 +589,11 @@ class UcumLhcUtils {
    * specifying a list of unit categories that should be in the resulting list.
    *
    * @param {string} fromName - the name/unit string of the "from" unit
-   * @param {string[] | null} [categoryList] - the list of unit categories
+   * @param {string[] | null} [categoryList] - the list of unit categories;
+   *   this parameter is optional, defaults to null if not specified;
+   *   possible list values: 'Clinical', 'Nonclinical', 'Obsolete', 'Constant'
    * @returns an array containing two elements;
-   *   first element is the list of commensurable units if any were found
+   *   first element is the list of commensurable units if any were found;
    *   second element is an error message if the "from" unit is not found
    */
   commensurablesList(fromName, categoryList = null) {

@@ -105,12 +105,14 @@ return, if requested, a list of suggested units in the suggestions array
 that is returned.  Suggestions are based on matching the expression with
 unit names and synonyms.
 
-* _@param_ uStr the string to be validated;
-* _@param_ suggest a boolean to indicate whether or not suggestions are
+**Parameters**:
+1) uStr: the string to be validated;
+2) suggest: a boolean to indicate whether or not suggestions are
     requested for a string that cannot be resolved to a valid unit;
     true indicates suggestions are wanted; false indicates they are not,
     and is the default if the parameter is not specified;
-* _@returns_ an object with five properties:
+
+**Returns**: an object with five properties:
    * 'status' will be 'valid' (the uStr is a valid UCUM code), 'invalid'
         (the uStr is not a valid UCUM code, and substitutions or
         suggestions may or may not be returned, depending on what was
@@ -171,11 +173,12 @@ rounded to any particular precision or significant digits.
 Disclaimer:  Conversion results should be verified independently before
 using them in actual clinical settings.
 
-* _@param_ fromUnitCode the unit code/expression/string of the unit to be converted;
-* _@param_ fromVal the number of "from" units to be converted to "to" units;
-* _@param_ toUnitCode the unit code/expression/string of the unit that the from 
+**Parameters**:
+1) fromUnitCode: the unit code/expression/string of the unit to be converted;
+2) fromVal: the number of "from" units to be converted to "to" units;
+3) toUnitCode: the unit code/expression/string of the unit that the from 
   field is to be converted to;
-* _@param_ options an optional hash of options that can be passed in:
+4) options: an optional hash of options that can be passed in:
   * 'suggestions' a boolean to indicate whether or not suggestions are wanted
       for a string that cannot be resolved to a valid unit; true indicates
       suggestions are wanted; false indicates they are not, and is the default
@@ -189,7 +192,8 @@ using them in actual clinical settings.
       is being requested from mass/moles to equivalents and vice versa. It is required 
       when one of the units represents a value in equivalents and the other in mass or moles. 
       It is ignored if neither unit includes an equivalent unit
-* _@returns_ a hash with six elements:
+
+**Returns**: a hash with six elements:
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
       the units are not commensurable; or 'error' if an error occurred;
@@ -273,8 +277,10 @@ submitting the term "pound" to the _validUnitString_ method will result in a
 "not found" response.   Submitting it to this method will return with a list 
 of possible pound units.
 
-* _@param_ theSyn the term to search for
-* _@returns_ a hash with three elements:
+**Parameters**:
+1) theSyn: the term to search for
+
+**Returns**: a hash with three elements:
    * 'status' contains the status of the request, which can be 'error',
       'failed' or 'succeeded'; 
    * 'msg' contains a message for an error or if no units were found; and 
@@ -339,11 +345,12 @@ a magnitude, and returns that data.
 Retrieves a list of units commensurable, i.e., that can be converted from and
 to, a specified unit.  Returns an error if the "from" unit cannot be found.
 If necessary, you can filter the list of units by specifying a list of unit
- categories that should be in the resulting list.
+categories that should be in the resulting list.
 
 **Parameters**:
 1) fromUnit: the name/unit string
-2) categoryList:  optional parameter - the list of unit categories
+2) categoryList:  optional parameter - the list of unit categories; possible
+   list values: 'Clinical', 'Nonclinical', 'Obsolete', 'Constant'
 
 **Returns**: an array containing two elements:
 * 0: an array of commensurable units if any were found, each of which is an
