@@ -83,13 +83,12 @@ those functions via the ucumPkg object.  For example,
 ### Function descriptions
         
 Below is documentation for the public functions on the UcumLhcUtils instance.
-*  [validateUnitString](#validateUnitString)
-*  [convertUnitTo](#convertUnitTo)
-*  [checkSynonyms](#checkSynonyms)
-*  [convertToBaseUnits](#convertToBaseUnits)
-*  [commensurablesList](#commensurablesList)
+*  [validateUnitString](#validateunitstringustr-suggest)
+*  [convertUnitTo](#convertunittofromunitcode-fromval-tounitcode-options)
+*  [checkSynonyms](#checksynonymsthesyn)
+*  [convertToBaseUnits](#converttobaseunitsfromunit-fromval)
+*  [commensurablesList](#commensurableslistfromunit-categorylist)
 
-<a id="validateUnitString"></a>
 #### validateUnitString(uStr, suggest)
 
 This method validates a unit string.  It first checks to see if the string passed 
@@ -163,7 +162,6 @@ of unit strings, and includes a link to the
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
 the full deal.
 
-<a id="convertUnitTo"></a>
 #### convertUnitTo(fromUnitCode, fromVal, toUnitCode, options)
 
 This method converts a number of one type of unit to the equivalent number of
@@ -179,16 +177,16 @@ using them in actual clinical settings.
 3) toUnitCode: the unit code/expression/string of the unit that the from 
   field is to be converted to;
 4) options: an optional hash of options that can be passed in:
-  * 'suggestions' a boolean to indicate whether or not suggestions are wanted
+   * 'suggestions' a boolean to indicate whether or not suggestions are wanted
       for a string that cannot be resolved to a valid unit; true indicates
       suggestions are wanted; false indicates they are not, and is the default
       if the parameter is not specified;
-  * 'molecularWeight' the molecular weight of the substance in question when a
+   * 'molecularWeight' the molecular weight of the substance in question when a
       conversion is being requested from mass to moles/equivalents and vice versa.  It is
       ignored if neither unit includes a measurement in moles.  In such cases
       the mole-based unit must have a single mole unit in the numerator and the
       mass-based unit must have a single mass unit in the numerator.
-  * 'charge' the absolute value of the charge of the substance in question when a conversion 
+   * 'charge' the absolute value of the charge of the substance in question when a conversion 
       is being requested from mass/moles to equivalents and vice versa. It is required 
       when one of the units represents a value in equivalents and the other in mass or moles. 
       It is ignored if neither unit includes an equivalent unit
@@ -267,7 +265,6 @@ If you want to know what unit types a particular unit can be converted to, the
 checkSynonyms function will provide a list of commensurable units for a specified
 unit expression.
 
-<a id="checkSynonyms"></a>
 #### checkSynonyms(theSyn)
 
 This method searches for units that include a single search term (theSyn) in the
@@ -309,7 +306,6 @@ of possible pound units.
       /* returnObj['status'] will be 'error' and returnObj['msg'] will indicate
          what the error was. */
 
-<a id="convertToBaseUnits"></a>
 #### convertToBaseUnits(fromUnit, fromVal)
 
 Converts the given unit string into its base units, their exponents, and
@@ -339,7 +335,6 @@ a magnitude, and returns that data.
         and usefulness for the input values that produced it).
 * unitToExp: a map of base units in fromUnit to their exponent
 
-<a id="commensurablesList"></a>
 #### commensurablesList(fromUnit[, categoryList])
 
 Retrieves a list of units commensurable, i.e., that can be converted from and
