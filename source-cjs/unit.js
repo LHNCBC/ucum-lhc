@@ -469,7 +469,7 @@ class Unit {
    * conversion is being made
    * @return the equivalent amount in toUnit
    */
-  convertMolMass(amt, massUnit, molecularWeight) {
+  convertMolMass(amt, toUnit, molecularWeight) {
     // In the calculations below we are treating "molecularWeight" (measured in
     // a.m.u) as the molar weight (measured in g/mol).  The values are the same,
     // though the units differ.
@@ -477,7 +477,7 @@ class Unit {
     // Determine the number of powers of mol we have to convert to mass.
     // Typically this will be just 1, or -1, but not necessarily.  If it is a
     // negative number, then we are really converting mass to moles.
-    const molPowersToConvert = this.moleExp_ - massUnit.moleExp_;
+    const molPowersToConvert = this.moleExp_ - toUnit.moleExp_;
     // A simple mole unit has a magnitude of avogadro's number.  Get that
     // number now (since not everyone agrees on what it is, and what is
     // being used in this system might change).
@@ -489,8 +489,8 @@ class Unit {
     // avoNum, of which we are thus getting rid of some).
     let moleUnitFactor = Math.pow(molecularWeight / avoNum, molPowersToConvert);
     // The new value is proportional to this.magnitude_, amt, and
-    // moleUnitFactor, and inversely proportional to massUnit_.magnitude.
-    return this.magnitude_ / massUnit.magnitude_ * moleUnitFactor * amt;
+    // moleUnitFactor, and inversely proportional to toUnit_.magnitude.
+    return this.magnitude_ / toUnit.magnitude_ * moleUnitFactor * amt;
   } // end convertMolMass
 
   /**

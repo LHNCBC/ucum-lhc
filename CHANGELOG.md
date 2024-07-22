@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.0] 2024-05-08
+### Added
+- Support for handling eq/mol/mass conversions when there are powers of those
+  units.
+
 ## [6.0.2] 2024-05-07
 ### Fixed
 - Keep annotation and remove leading "1" in CiCode.

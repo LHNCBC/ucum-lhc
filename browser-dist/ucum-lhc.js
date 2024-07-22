@@ -1481,6 +1481,8 @@ var UcumLhcUtils = /*#__PURE__*/function () {
       retObj['msg'] = resp['retMsg'];
       return retObj;
     } // end validateUnitString
+    // Note that below when the value of ConversionType is mol|mass, it refers to
+    // either a conversion from mol to mass or from mass to mol.
     /**
      * @typedef {
      *   'normal',
@@ -1503,14 +1505,32 @@ var UcumLhcUtils = /*#__PURE__*/function () {
       /** @type {ConversionType} */
       var conversionType;
       if (fromUnit.moleExp_ == toUnit.moleExp_ && fromUnit.equivalentExp_ == toUnit.equivalentExp_) {
+        // Since the powers of the equivalents and mole in the units are the same in both
+        // units, no conversion is going to happen between mass, mol, and eq.
+        // There is the possibility that someone is trying to convert 'g' to 'g2',
+        // but we will handle that as the "normal" case (and later find it invalid).
         conversionType = 'normal';
       } else if (fromUnit.equivalentExp_ == toUnit.equivalentExp_) {
+        // In this case, the units have the same power of equivalents, so (because
+        // it is not the first case) the units have different powers of mol and mass,
+        // so this must be a conversion between mol and mass.
         conversionType = 'mol|mass';
       } else if (fromUnit.moleExp_ == toUnit.moleExp_) {
+        // In this case, the units have the same power of mol, so (because
+        // it is not the first case) the units have different powers of equivalents and mass,
+        // so this must be a conversion between equivalents and mass.
         conversionType = 'eq|mass';
       } else if (fromUnit.dim_.getElementAt(this.massDimIndex_) == toUnit.dim_.getElementAt(this.massDimIndex_)) {
+        // In this case, the units have the same power of mass, so (because
+        // it is not the first case) the units have different powers of equivalents and mol,
+        // so this must be a conversion between equivalents and moles.
         conversionType = 'eq|mol';
-      } else conversionType = 'eq|mol|mass';
+      } else {
+        // In this case, the units have different powers of mass, mol, and
+        // equivalents, so there is a conversion between mass, mol, and
+        // equivalents.
+        conversionType = 'eq|mol|mass';
+      }
       return conversionType;
     } // end detectConversionType
     /**
@@ -2507,7 +2527,7 @@ var Unit = /*#__PURE__*/function () {
      */
   }, {
     key: "convertMolMass",
-    value: function convertMolMass(amt, massUnit, molecularWeight) {
+    value: function convertMolMass(amt, toUnit, molecularWeight) {
       // In the calculations below we are treating "molecularWeight" (measured in
       // a.m.u) as the molar weight (measured in g/mol).  The values are the same,
       // though the units differ.
@@ -2515,7 +2535,7 @@ var Unit = /*#__PURE__*/function () {
       // Determine the number of powers of mol we have to convert to mass.
       // Typically this will be just 1, or -1, but not necessarily.  If it is a
       // negative number, then we are really converting mass to moles.
-      var molPowersToConvert = this.moleExp_ - massUnit.moleExp_;
+      var molPowersToConvert = this.moleExp_ - toUnit.moleExp_;
       // A simple mole unit has a magnitude of avogadro's number.  Get that
       // number now (since not everyone agrees on what it is, and what is
       // being used in this system might change).
@@ -2527,8 +2547,8 @@ var Unit = /*#__PURE__*/function () {
       // avoNum, of which we are thus getting rid of some).
       var moleUnitFactor = Math.pow(molecularWeight / avoNum, molPowersToConvert);
       // The new value is proportional to this.magnitude_, amt, and
-      // moleUnitFactor, and inversely proportional to massUnit_.magnitude.
-      return this.magnitude_ / massUnit.magnitude_ * moleUnitFactor * amt;
+      // moleUnitFactor, and inversely proportional to toUnit_.magnitude.
+      return this.magnitude_ / toUnit.magnitude_ * moleUnitFactor * amt;
     } // end convertMolMass
     /**
      * This function converts between equivalants and mass (in either direction)
