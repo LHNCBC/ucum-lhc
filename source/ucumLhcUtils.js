@@ -147,7 +147,8 @@ export class UcumLhcUtils {
   } // end validateUnitString
 
 
-
+// Note that below when the value of ConversionType is mol|mass, it refers to
+// either a conversion from mol to mass or from mass to mol.
 /**
  * @typedef {
  *   'normal',
@@ -170,20 +171,37 @@ export class UcumLhcUtils {
     let conversionType;
     if (fromUnit.moleExp_ == toUnit.moleExp_ &&
         fromUnit.equivalentExp_ == toUnit.equivalentExp_) {
+      // Since the powers of the equivalents and mole in the units are the same in both
+      // units, no conversion is going to happen between mass, mol, and eq.
+      // There is the possibility that someone is trying to convert 'g' to 'g2',
+      // but we will handle that as the "normal" case (and later find it invalid).
       conversionType = 'normal';
     }
     else if (fromUnit.equivalentExp_ == toUnit.equivalentExp_) {
+      // In this case, the units have the same power of equivalents, so (because
+      // it is not the first case) the units have different powers of mol and mass,
+      // so this must be a conversion between mol and mass.
       conversionType = 'mol|mass';
     }
     else if (fromUnit.moleExp_ == toUnit.moleExp_) {
+      // In this case, the units have the same power of mol, so (because
+      // it is not the first case) the units have different powers of equivalents and mass,
+      // so this must be a conversion between equivalents and mass.
       conversionType = 'eq|mass';
     }
     else if (fromUnit.dim_.getElementAt(this.massDimIndex_) ==
           toUnit.dim_.getElementAt(this.massDimIndex_)) {
+      // In this case, the units have the same power of mass, so (because
+      // it is not the first case) the units have different powers of equivalents and mol,
+      // so this must be a conversion between equivalents and moles.
       conversionType = 'eq|mol';
     }
-    else
+    else {
+      // In this case, the units have different powers of mass, mol, and
+      // equivalents, so there is a conversion between mass, mol, and
+      // equivalents.
       conversionType = 'eq|mol|mass';
+    }
 
     return conversionType;
   } // end detectConversionType
