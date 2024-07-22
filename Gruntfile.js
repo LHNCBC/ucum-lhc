@@ -86,6 +86,9 @@ module.exports = function(grunt) {
       options: { sourceMap: true, compress: true },
       browser: {
         options: {
+          sourceMap: {
+            includeSources: true
+          },
           sourceMapIn: './browser-dist/ucum-lhc.js.map'
         },
         files: {
