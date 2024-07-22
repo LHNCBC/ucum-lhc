@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.0.0] 2024-07-19
+### Changed
+- Removed bower support
+- Fixed the sourcemap for browser-dist/ucum-lhc.min.js.
+- In the npm package, replace browser-dist/ucum-lhc.js with ucum-lhc.min.js and
+  its sourcemap.
+
 ## [6.0.3] 2024-07-16
 ### Fixed
 - Removed unneeded dependency.

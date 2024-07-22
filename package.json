@@ -8,7 +8,7 @@
     "test": "test"
   },
   "files": [
-    "browser-dist/ucum-lhc.js",
+    "browser-dist/ucum-lhc.min.*",
     "source-cjs/*",
     "source/*",
     "data/ucumDefs.min.json"
