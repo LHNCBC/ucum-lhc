@@ -1,4 +1,3 @@
-# Note:  Be sure to update .npmignore as well
 node_modules
 .idea
 .vscode/

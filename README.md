@@ -36,16 +36,15 @@ to install the ucum-lhc npm package.  (npm is
     npm install @lhncbc/ucum-lhc --save
 
 This will install the @lhncbc/ucum-lhc directory in your node_modules diretory. 
-The browser-dist subdirectory will contain ucum-lhc.js and ucum-lhc.min.js (minimized
-version of ucum-lhc.js) for use directly in a browser.
+The browser-dist subdirectory will contain ucum-lhc.min.js for use directly in a
+browser.
 
 ## Using the code 
 
-The ucum-lhc.min.js file (which is the minimized version of the ucum-lhc.js 
-file) includes the source code you need for the validation, conversion and 
-commensurable units functions as well as the ucum code definitions file.  We 
-assume that your main motivation for including the ucum-lhc code is to have 
-those capabilities for units of measure on your system.  
+The ucum-lhc.min.js file includes the source code you need for the validation,
+conversion and commensurable units functions as well as the ucum code
+definitions file.  We assume that your main motivation for including the
+ucum-lhc code is to have those capabilities for units of measure on your system.  
 
 ### Server side
 To access those capabilities from your server side code (or from client side
