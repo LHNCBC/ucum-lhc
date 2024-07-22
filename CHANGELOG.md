@@ -11,9 +11,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - In the npm package, replace browser-dist/ucum-lhc.js with ucum-lhc.min.js and
   its sourcemap.
 
-## [6.0.3] 2024-07-16
+## [6.1.1] 2024-07-16
 ### Fixed
 - Removed unneeded dependency.
+
+## [6.1.0] 2024-07-12
+### Added
+- Support for handling eq/mol/mass conversions when there are powers of those
+  units.
 
 ## [6.0.2] 2024-05-07
 ### Fixed
