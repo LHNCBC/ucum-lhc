@@ -9,3 +9,6 @@ impexp/UnitsList.txt
 demo-test/
 docs/
 .DS_Store
+# Files we want to ignore in git, but not from the npm package.
+browser-dist
+source-cjs

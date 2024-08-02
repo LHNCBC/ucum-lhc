@@ -1,12 +1,9 @@
-var serveStatic = require('serve-static');
-
 module.exports = function(grunt) {
 
   // Load grunt tasks automatically as needed ("jit")
   require('jit-grunt')(grunt, {
     babel: 'grunt-babel',
     clean: 'grunt-contrib-clean',
-    connect: 'grunt-contrib-connect',
     cssmin: 'grunt-contrib-cssmin',
     extract_sourcemap: 'grunt-extract-sourcemap',
     mochaTest: 'grunt-mocha-test',
@@ -86,6 +83,9 @@ module.exports = function(grunt) {
       options: { sourceMap: true, compress: true },
       browser: {
         options: {
+          sourceMap: {
+            includeSources: true
+          },
           sourceMapIn: './browser-dist/ucum-lhc.js.map'
         },
         files: {
