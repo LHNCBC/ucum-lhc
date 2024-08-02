@@ -39,7 +39,6 @@
     "grunt-browserify": "^6.0.0",
     "grunt-cli": "^1.4.3",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^5.2.2",
     "grunt-extract-sourcemap": "^0.1.19",
