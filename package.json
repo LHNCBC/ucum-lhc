@@ -1,6 +1,6 @@
 {
   "name": "@lhncbc/ucum-lhc",
-  "version": "6.1.0",
+  "version": "7.1.0",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "source-cjs/ucumPkg.js",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
@@ -8,7 +8,7 @@
     "test": "test"
   },
   "files": [
-    "browser-dist/ucum-lhc.js",
+    "browser-dist/ucum-lhc.min.*",
     "source-cjs/*",
     "source/*",
     "data/ucumDefs.min.json"
@@ -20,7 +20,6 @@
     "escape-html": "^1.0.3",
     "is-integer": "^1.0.6",
     "jsonfile": "^2.2.3",
-    "stream": "0.0.2",
     "stream-transform": "^0.1.1",
     "string-to-stream": "^1.1.0",
     "xmldoc": "^0.4.0"
@@ -34,14 +33,12 @@
     "@babel/register": "^7.6.2",
     "babel-loader": "^8.0.6",
     "babelify": "^10.0.0",
-    "bootstrap": "^4.3.1",
     "bower": "^1.8.8",
     "grunt": "^1.5.3",
     "grunt-babel": "^8.0.0",
     "grunt-browserify": "^6.0.0",
     "grunt-cli": "^1.4.3",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^5.2.2",
     "grunt-extract-sourcemap": "^0.1.19",

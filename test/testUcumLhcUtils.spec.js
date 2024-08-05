@@ -117,17 +117,17 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp1.msg[2], 'No "to" unit expression specified.', resp1.msg[2]);
   });
 
-it("should return a message for invalid unit strings", function() {
+  it("should return a message for invalid unit strings", function() {
 
-  var resp2 = utils.convertUnitTo('good', 2017, 'bad');
-  assert.equal(resp2.status, 'failed', resp2.status);
-  assert.equal(resp2.msg[0], 'good is not a valid UCUM code.', resp2.msg[0]);
-  assert.equal(resp2.msg[1], 'Unable to find a unit for good, so no ' +
-                             'conversion could be performed.', resp2.msg[1]);
-  assert.equal(resp2.msg[2], 'bad is not a valid UCUM code.', resp2.msg[2]);
-  assert.equal(resp2.msg[3], 'Unable to find a unit for bad, so no ' +
-                             'conversion could be performed.', resp2.msg[3]);
-});
+    var resp2 = utils.convertUnitTo('good', 2017, 'bad');
+    assert.equal(resp2.status, 'failed', resp2.status);
+    assert.equal(resp2.msg[0], 'good is not a valid UCUM code.', resp2.msg[0]);
+    assert.equal(resp2.msg[1], 'Unable to find a unit for good, so no ' +
+                               'conversion could be performed.', resp2.msg[1]);
+    assert.equal(resp2.msg[2], 'bad is not a valid UCUM code.', resp2.msg[2]);
+    assert.equal(resp2.msg[3], 'Unable to find a unit for bad, so no ' +
+                               'conversion could be performed.', resp2.msg[3]);
+  });
 
   it("should return a valid conversion value and units for grams to metric carats", function() {
     var resp3 = utils.convertUnitTo('g', 56, '[car_m]');
@@ -280,6 +280,77 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(2), 96, resp.toVal.toPrecision(2));
   });
 
+  it("should return 25 g2 for a request to convert 0.25 mol2 with mw 10", function() {
+    var resp = utils.convertUnitTo('mol2', 0.25, 'g2', { molecularWeight: 10 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 25);
+  });
+
+  it("should return 0.25 mol2 for a request to convert 25 g2 with mw 10", function() {
+    var resp = utils.convertUnitTo('g2', 25, 'mol2', { molecularWeight: 10 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 0.25);
+  });
+
+  it("should return 250000 kg.mol2 for a request to convert 25 kg3 with mw 10", function() {
+    var resp = utils.convertUnitTo('kg3', 25, 'kg.mol2', { molecularWeight: 10 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 250000);
+  });
+
+  it("should return 2500 kg.mol2 for a request to convert 25 mol.kg2 with mw 10", function() {
+    var resp = utils.convertUnitTo('mol.kg2', 25, 'kg.mol2', { molecularWeight: 10 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 2500);
+  });
+
+
+  /**
+   *  Eq/Mol/Mass tests
+   */
+  it('should return 1 eq.mol3.g2 from 1 eq2.mol.g3 with mw 1 and charge 1', ()=>{
+    var resp = utils.convertUnitTo('eq2.mol.g3', 1, 'eq.mol3.g2',
+      {molecularWeight: 1, charge: 1 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 1);
+  });
+
+  it('should return 1000 eq.mol3.kg2 from 1 eq2.mol.kg3 with mw 1 and charge 1', ()=>{
+    var resp = utils.convertUnitTo('eq2.mol.kg3', 1, 'eq.mol3.kg2',
+      {molecularWeight: 1, charge: 1 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 1000);
+  });
+
+  it('should return 1e9 eq.mol3.g2 from 1 eq2.mol.kg3 with mw 1 and charge 1', ()=>{
+    var resp = utils.convertUnitTo('eq2.mol.kg3', 1, 'eq.mol3.g2',
+      {molecularWeight: 1, charge: 1 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 1e9);
+  });
+
+  it('should return 1000 meq.mol3.g2 from 1 eq2.mol.g3 with mw 1 and charge 1', ()=>{
+    var resp = utils.convertUnitTo('eq2.mol.g3', 1, 'meq.mol3.g2',
+      {molecularWeight: 1, charge: 1 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 1000);
+  });
+
+  it('should return 0.2 eq.mol3.g2 from 2 eq2.mol.g3 with mw 10 and charge 1', ()=>{
+    var resp = utils.convertUnitTo('eq2.mol.g3', 2, 'eq.mol3.g2',
+      {molecularWeight: 10, charge: 1 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 0.2);
+  });
+
+  it('should return 1 eq.mol3.g2 from 2 eq2.mol.g3 with mw 1 and charge 2', ()=>{
+    var resp = utils.convertUnitTo('eq2.mol.g3', 2, 'eq.mol3.g2',
+      {molecularWeight: 1, charge: 2 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 1);
+  });
+
+
   /** Mol to eq conversion tests
    * equivalents = moles * charge
    */
@@ -311,6 +382,22 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 0.003 , resp.toVal.toPrecision(1));
   });
 
+  it("should return 9 for a request to convert 36 eq2/L to mol2/L with charge 2", function() {
+    var resp = utils.convertUnitTo('eq2/L', 36, 'mol2/L', {
+      charge: 2
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(1), 9);
+  });
+
+  it("should return 36 for a request to convert 9 mol2/L to eq2/L with charge 2", function() {
+    var resp = utils.convertUnitTo('mol2/L', 9, 'eq2/L', {
+      charge: 2
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 36);
+  });
+
   // Test to ignore molecular weight if not converting to mass
   // e.g. converting between mol and eq
   it("should return 5 for a request to convert 1 mmol/L to meq/L with charge 5 and mw 1000", function() {
@@ -322,11 +409,30 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 5, resp.toVal.toPrecision(1));
   });
 
+  // Test inverting units
+  it('should return 2 for a request to convert 1/eq to 1/mol with charge 2', ()=>{
+    var resp = utils.convertUnitTo('1/eq', 1, '1/mol', {
+      charge: 2
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 2);
+  });
+
+  // Test inverting units with a power
+  it('should return 4 for a request to convert 1/eq2 to 1/mol2 with charge 2', ()=>{
+    var resp = utils.convertUnitTo('1/eq2', 1, '1/mol2', {
+      charge: 2
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(2), 4);
+  });
+
+
   /** Eq to mass conversion tests
-   * 
+   *
    * "The equivalent weight of an *element* is its gram atomic weight divided by its valence (combining power)."
    * https://www.britannica.com/science/equivalent-weight
-   * 
+   *
    * EW = MW / charge
    */
 
@@ -348,7 +454,7 @@ it("should return a message for invalid unit strings", function() {
       molecularWeight: 40.08,
     });
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
-    assert.equal(resp.msg[0], Ucum.needEqChargeMsg_, 
+    assert.equal(resp.msg[0], Ucum.needEqChargeMsg_,
       resp.msg[0]);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
@@ -368,7 +474,7 @@ it("should return a message for invalid unit strings", function() {
       molecularWeight: 39.09
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
-    assert.equal(resp.toVal.toPrecision(4), 39.09, resp.toVal.toPrecision(4));
+    assert.equal(resp.toVal.toPrecision(4), 39.09);
   });
 
   /**
@@ -376,7 +482,7 @@ it("should return a message for invalid unit strings", function() {
    * Ca++ has a valence of 2 and a molecular weight of 40.08
    * ∴ 1 mol of Ca = 2 eq of Ca
    * Equivalent mass of Ca++ is its atomic mass divided by valence 2.
-   * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
+   * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.
    */
   it("should return 20.04 for a request to convert 1 eq to g with charge 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('eq', 1, 'g', {
@@ -384,7 +490,7 @@ it("should return a message for invalid unit strings", function() {
       molecularWeight: 40.08
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
-    assert.equal(resp.toVal.toPrecision(4), 20.04, resp.toVal.toPrecision(4));
+    assert.equal(resp.toVal.toPrecision(4), 20.04);
   });
 
   /**
@@ -392,7 +498,7 @@ it("should return a message for invalid unit strings", function() {
    * Ca++ has a valence of 2 and a molecular weight of 40.08
    * ∴ 1 mol of Ca = 2 eq of Ca
    * Equivalent mass of Ca++ is its atomic mass divided by valence 2.
-   * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
+   * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.
    * But we are converting 2 eq to g, so the result should be 40.08 g
    */
   it("should return 40.08 for a request to convert 2 eq to g with charge 2 and mw 40.08", function() {
@@ -401,31 +507,40 @@ it("should return a message for invalid unit strings", function() {
       molecularWeight: 40.08
     });
     assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
-    assert.equal(resp.toVal.toPrecision(4), 40.08, resp.toVal.toPrecision(4));
+    assert.equal(resp.toVal.toPrecision(4), 40.08);
+  });
+
+  it("should return 225 for a request to convert 100 eq2 to g2 with charge 3 and mw 2", function() {
+    var resp = utils.convertUnitTo('eq2', 226, 'g2', {
+      charge: 3,
+      molecularWeight: 2
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(3), 100);
   });
 
   /** Mass to eq conversion tests
-   * 
+   *
    * The equivalent weight (EW) of an element is calculated as its atomic mass divided by its valence.
    * EW = molecular weight / valence
-   * 
+   *
    * The number of equivalents is then calculated by dividing the given mass by the equivalent weight.
    * eq = amtMassOfSubstance / EW
    */
-  
+
   // Should throw an error if no charge is provided for a conversion to eq since charge is needed for the calculation
   it("should return error for a request to convert 40.08 g to eq with no charge and mw 40.08", function() {
     var resp = utils.convertUnitTo('g', 40.08, 'eq', {
       molecularWeight: 40.08,
     });
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
-    assert.equal(resp.msg[0], Ucum.needEqChargeMsg_, 
+    assert.equal(resp.msg[0], Ucum.needEqChargeMsg_,
       resp.msg[0]);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
     assert.equal(resp.toUnit, undefined, resp.toUnit);
   });
-  
+
   // Should throw an error if no molecular weight is provided for a conversion to eq since mass is needed for the calculation
   it("should return error for a request to convert 40.08 g to eq with charge 2 and no mw", function() {
     var resp = utils.convertUnitTo('g', 40.08, 'eq', {
@@ -439,7 +554,7 @@ it("should return a message for invalid unit strings", function() {
   });
 
   /**
-   * K+ -> K+ 
+   * K+ -> K+
    * K+ has a valence of 1 and a molecular weight of 39.09
    * ∴ 1 mol of K = 1 eq of K
    * Equivalent mass of K+ is its atomic mass divided by valence 1.
@@ -460,7 +575,7 @@ it("should return a message for invalid unit strings", function() {
    * Ca++ has a valence of 2 and a molecular weight of 40.08
    * ∴ 1 mol of Ca = 2 eq of Ca
    * Equivalent mass of Ca++ is its atomic mass divided by valence 2.
-   * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.  
+   * Mass of calcium is 40.08 g/mole, so its equivalent mass is 40.08/2 =  20.04 g/equiv.
    * But we are converting 40.08 g to eq, so the result should be 40.08g/20.04g = 2 eq
    */
   it("should return 2 for a request to convert 40.08 g to eq with charge 2 and mw 40.08", function() {
@@ -472,7 +587,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 2, resp.toVal.toPrecision(1));
   });
 
-  it("should return 2 for a request to convert 40.08 g to eq with charge 2 and mw 40.08", function() {
+  it("should return 2000 for a request to convert 40.08 g to meq with charge 2 and mw 40.08", function() {
     var resp = utils.convertUnitTo('g', 40.08, 'meq', {
       charge: 2,
       molecularWeight: 40.08
@@ -481,12 +596,21 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal.toPrecision(1), 2000, resp.toVal.toPrecision(1));
   });
 
+  it("should return 225 for a request to convert 100 g2 to eq2 with charge 3 and mw 2", function() {
+    var resp = utils.convertUnitTo('g2', 100, 'eq2', {
+      charge: 3,
+      molecularWeight: 2
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.toVal.toPrecision(3), 225);
+  });
+
   /** Eq to mol conversion tests
    * 1 equivalent equals 1/v moles, where v is the valency factor (=== valence for an element)
    * if valence is 1, then 1 equivalent equals 1 mole
    * if valence is 2, then 1 equivalent equals 0.5 moles
    * if valence is 3, then 1 equivalent equals 0.33 moles
-   * etc. 
+   * etc.
    */
 
   // mw should be ignored when converting between eq and mol
@@ -510,7 +634,7 @@ it("should return a message for invalid unit strings", function() {
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
     assert.equal(resp.toUnit, undefined, resp.toUnit);
-  });  
+  });
 
   it("should return 0.00033 for a request to convert 1 meq/L to mol/L with charge 3", function() {
     var resp = utils.convertUnitTo('meq/L', 1, 'mol/L', {
@@ -794,47 +918,55 @@ describe('Test detectConversionType method', ()=> {
     assert.equal(resp, 'normal', resp);
   });
 
-  it("should return 'mass->mol' for a request to detect conversion type for g to mol", function() {
+  it("should return 'mol|mass' for a request to detect conversion type for g to mol", function() {
     let to = utils.getSpecifiedUnit('g', 'convert').unit;
     let from = utils.getSpecifiedUnit('mol', 'convert').unit;
     let resp = utils.detectConversionType(to, from);
-    assert.equal(resp, 'mass->mol', resp);
+    assert.equal(resp, 'mol|mass', resp);
   });
 
-  it("should return 'mol->mass' for a request to detect conversion type for mol to g", function() {
+  it("should return 'mol|mass' for a request to detect conversion type for mol to g", function() {
     let to = utils.getSpecifiedUnit('mol', 'convert').unit;
     let from = utils.getSpecifiedUnit('g', 'convert').unit;
     let resp = utils.detectConversionType(to, from);
-    assert.equal(resp, 'mol->mass', resp);
+    assert.equal(resp, 'mol|mass', resp);
   });
 
-  it("should return 'mass->eq' for a request to detect conversion type for g to eq", function() {
+  it("should return 'eq|mass' for a request to detect conversion type for g to eq", function() {
     let to = utils.getSpecifiedUnit('g', 'convert').unit;
     let from = utils.getSpecifiedUnit('eq', 'convert').unit;
     let resp = utils.detectConversionType(to, from);
-    assert.equal(resp, 'mass->eq', resp);
+    assert.equal(resp, 'eq|mass', resp);
   });
 
-  it("should return 'eq->mass' for a request to detect conversion type for eq to g", function() {
+  it("should return 'eq|mass' for a request to detect conversion type for eq to g", function() {
     let to = utils.getSpecifiedUnit('eq', 'convert').unit;
     let from = utils.getSpecifiedUnit('g', 'convert').unit;
     let resp = utils.detectConversionType(to, from);
-    assert.equal(resp, 'eq->mass', resp);
+    assert.equal(resp, 'eq|mass', resp);
   });
 
-  it("should return 'eq->mol' for a request to detect conversion type for eq to mol", function() {
+  it("should return 'eq|mol' for a request to detect conversion type for eq to mol", function() {
     let to = utils.getSpecifiedUnit('eq', 'convert').unit;
     let from = utils.getSpecifiedUnit('mol', 'convert').unit;
     let resp = utils.detectConversionType(to, from);
-    assert.equal(resp, 'eq->mol', resp);
+    assert.equal(resp, 'eq|mol', resp);
   });
 
-  it("should return 'mol->eq' for a request to detect conversion type for mol to eq", function() {
+  it("should return 'eq|mol' for a request to detect conversion type for mol to eq", function() {
     let to = utils.getSpecifiedUnit('mol', 'convert').unit;
     let from = utils.getSpecifiedUnit('eq', 'convert').unit;
     let resp = utils.detectConversionType(to, from);
-    assert.equal(resp, 'mol->eq', resp);
+    assert.equal(resp, 'eq|mol', resp);
   });
+
+  it("should return 'eq|mol|mass' for when all three exponents differ", ()=>{
+    let to = utils.getSpecifiedUnit('eq3.mol2.g', 'convert').unit;
+    let from = utils.getSpecifiedUnit('eq2.mol.g3', 'convert').unit;
+    let resp = utils.detectConversionType(to, from);
+    assert.equal(resp, 'eq|mol|mass', resp);
+  });
+
 });
 
 describe('Test commensurablesList method', function() {

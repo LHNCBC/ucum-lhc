@@ -4,9 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [6.1.0] 2024-05-07
+## [7.1.0] 2024-08-05
 ### Added
 - Published a new API, commensurablesList, to UcumLhcUtils.
+
+## [7.0.0] 2024-07-19
+### Changed
+- Removed bower support
+- Fixed the sourcemap for browser-dist/ucum-lhc.min.js.
+- In the npm package, replace browser-dist/ucum-lhc.js with ucum-lhc.min.js and
+  its sourcemap.
+
+## [6.1.1] 2024-07-16
+### Fixed
+- Removed unneeded dependency.
+
+## [6.1.0] 2024-07-12
+### Added
+- Support for handling eq/mol/mass conversions when there are powers of those
+  units.
 
 ## [6.0.2] 2024-05-07
 ### Fixed
@@ -52,9 +68,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   successful.  The returned object now also contains a "status" field just like
   the "convertUnitTo" API.
 ### Fixed
- - Certain annotation units were marked invalid if the same string existed as a
-   bracketed unit (e.g., {degF} and [degF]).  (This fixes the problem raised
-   in https://github.com/lhncbc/ucum-lhc/issues/45.)
+- Certain annotation units were marked invalid if the same string existed as a
+  bracketed unit (e.g., {degF} and [degF]).  (This fixes the problem raised
+  in https://github.com/lhncbc/ucum-lhc/issues/45.)
 
 ## [4.2.0] 2023-04-11
 ### Added

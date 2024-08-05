@@ -16,9 +16,9 @@ functions described below.  You might want to try that out first.
 
 ## Get the code
 
-The ucum-lhc code is written in the ECMAScript 6 version of Javascript.
-Since that version is not yet universally supported, the code is compiled to 
-standard Javascript using the [Babel](https://babeljs.io) compiler. 
+The ucum-lhc code is written as ES6 modules, but the npm package (see below)
+also contains CommonJS modules, as well as a "browser-dist" directory with files
+ready to use in a web browser.
 
 Currently we have code to serve multiple purposes.  The core code supports
 the validation and conversion of UCUM unit expressions as well as a function
@@ -36,43 +36,31 @@ to install the ucum-lhc npm package.  (npm is
     npm install @lhncbc/ucum-lhc --save
 
 This will install the @lhncbc/ucum-lhc directory in your node_modules diretory. 
-The dist subdirectory will contain ucum-lhc.js and ucum-lhc.min.js (minimized
-version of ucum-lhc.js).
-
-### Getting the code as a bower package
-
-You can use the [bower](https://bower.io) package manager to install the
-ucum-lhc bower package.   (If you do not have bower installed on your machine
-you can install it using npm.  See https://bower.io).  Install the ucum-lhc
-package using the bower install command
-
-    bower install ucum-lhc
-    
-This will install the ucum-lhc directory in your bower_components directory.
-The dist subdirectory will contain ucum-lhc.js and ucum-lhc.min.js (minimized
-version of ucum-lhc.js).
+The browser-dist subdirectory will contain ucum-lhc.min.js for use directly in a
+browser.
 
 ## Using the code 
 
-The ucum-lhc.min.js file (which is the minimized version of the ucum-lhc.js 
-file) includes the source code you need for the validation, conversion and 
-commensurable units functions as well as the ucum code definitions file.  We 
-assume that your main motivation for including the ucum-lhc code is to have 
-those capabilities for units of measure on your system.  
+The ucum-lhc.min.js file includes the source code you need for the validation,
+conversion and commensurable units functions as well as the ucum code
+definitions file.  We assume that your main motivation for including the
+ucum-lhc code is to have those capabilities for units of measure on your system.  
 
 ### Server side
-To access those capabilities from your server side code, require the npm package
+To access those capabilities from your server side code (or from client side
+code that goes through a build system), require the npm package
 and create a UcumLhcUtils object that contains those functions.
 
-    var ucum = require('@lhncbc/ucum-lhc');
-    var utils = ucum.UcumLhcUtils.getInstance();
-  
+    const ucum = require('@lhncbc/ucum-lhc');
+    const utils = ucum.UcumLhcUtils.getInstance();
+
+ 
 ### Client side
 
 To access those capabilities from your client side code, include the 
 ucum-lhc.min.js package in your html file.  
 
-    <script src="path-to-installed-package/dist/ucum-lhc.min.js"></script>
+    <script src="path-to-installed-package/browser-dist/ucum-lhc.min.js"></script>
 
 The validation, conversion and commensurable units functions are available from 
 the _ucumPkg.UcumLhcUtils_ class.  In your client side javascript code access 

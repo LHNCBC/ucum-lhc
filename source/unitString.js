@@ -1250,6 +1250,8 @@ export class UnitString {
               let expMul = exp;
               if (theDim)
                 theDim = theDim.mul(exp);
+              retUnit.equivalentExp_ *= exp;
+              retUnit.moleExp_ *= exp;
               theMag = Math.pow(theMag, exp);
               retUnit.assignVals({'magnitude_': theMag});
 
