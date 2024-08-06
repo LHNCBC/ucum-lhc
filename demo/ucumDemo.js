@@ -942,7 +942,10 @@ export class UcumDemo {
     let moleWeightVal = weightField.value ;
 
     let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
-                                                true, moleWeightVal);
+      {
+        suggest: true,
+        molecularWeight: moleWeightVal
+      });
 
     if (resultObj['status'] === 'succeeded') {
       let toVal = resultObj['toVal'];
