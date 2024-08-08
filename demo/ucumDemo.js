@@ -1022,17 +1022,20 @@ export class UcumDemo {
           else
             resultMsg = '';
         } else {
-          let idxCharge = resultObj['msg'].indexOf(Ucum.needEqChargeMsg_);
-          if (idxCharge >= 0) {
-            this._requestCharge();
-            resultObj['msg'].splice(idxCharge, 1);
-            if (resultObj['msg'].length > 0)
-              resultMsg = resultObj['msg'].join('<BR>');
-            else
-              resultMsg = '';
-          } else {
-            resultMsg = resultObj['msg'].join('<BR>');
+          let idxEqWeight = resultObj['msg'].indexOf(Ucum.needEqWeightMsg_);
+          if (idxEqWeight >= 0) {
+            this._requestMolecularWeight();
+            resultObj['msg'].splice(idxEqWeight, 1);
           }
+          let idxEqCharge = resultObj['msg'].indexOf(Ucum.needEqChargeMsg_);
+          if (idxEqCharge >= 0) {
+            this._requestCharge();
+            resultObj['msg'].splice(idxEqCharge, 1);
+          }
+          if (resultObj['msg'].length > 0)
+            resultMsg = resultObj['msg'].join('<BR>');
+          else
+            resultMsg = '';
         }
       }
       // if suggestions were found, output the suggestions to the suggestions
