@@ -317,11 +317,14 @@ export class UcumDemo {
 
 
   /**
-   * This method is run when the Converter tab is displayed, to reset the
-   * variables that track the validity of the three inputs ("from" unit code,
-   * "from" value, and "to" unit code) that must be correct to attempt a
-   * conversion as well as to reset the molecular weight division to hidden
+   * This method is run when the Converter tab is displayed.
+   * It resets the variables that track the validity of the three inputs
+   * ("from" unit code, "from" value, and "to" unit code) that must be
+   * correct to attempt a conversion.
+   * It resets the molecular weight division to hidden
    * status and the associated moleWeight input field to null.
+   * It resets the charge division to hidden
+   * status and the associated charge input field to null.
    */
   showConvertTab(){
     this.convFrom_ = false ;
@@ -360,9 +363,13 @@ export class UcumDemo {
 
     let mWeightDiv = document.getElementById('molecular-weight');
     mWeightDiv.style.visibility = 'hidden';
-
     let mWeightFld = document.getElementById('moleWeight');
-    mWeightFld.value = null ;
+    mWeightFld.value = null;
+
+    let chargeDiv = document.getElementById('charge-div');
+    chargeDiv.style.visibility = 'hidden';
+    let chargeFld = document.getElementById('charge');
+    chargeFld.value = null;
 
     if (window.location.hash !== '#converter' &&
         window.location.hash !== '') {
@@ -502,12 +509,16 @@ export class UcumDemo {
       suggsField.innerHTML = '';
       suggsField.style.display = 'none';
       // This is called by a change to one of the unit fields, so
-      // hide the molecular weight division, clear the moleWeight input
+      // hide the molecular weight and charge divisions, clear the moleWeight and charge input
       // value, and clear the value of the last result field, if any
       let mWeightDiv = document.getElementById('molecular-weight');
       mWeightDiv.style.visibility = 'hidden';
       let mWeightFld = document.getElementById('moleWeight');
-      mWeightFld.value = null ;
+      mWeightFld.value = null;
+      let chargeDiv = document.getElementById('charge-div');
+      chargeDiv.style.visibility = 'hidden';
+      let chargeFld = document.getElementById('charge');
+      chargeFld.value = null;
       /*
       if (this.lastResultFld_) {
         let rf = document.getElementById(this.lastResultFld_);
@@ -799,7 +810,7 @@ export class UcumDemo {
 
 
   /**
-   * This method checks a number of units value or the moleWeight value to make
+   * This method checks a number of units value or the moleWeight/charge value to make
    * it's a valid number.  It calls setConvertValues to set the validity state
    * flag for the number of units field as appropriate.
    *
@@ -810,7 +821,7 @@ export class UcumDemo {
 
     let checkFld = document.getElementById(numField);
     let checkVal = escapeHtml(checkFld.value);
-    if (numField === 'moleWeight')
+    if (numField === 'moleWeight' || numField === 'charge')
       var resFld = document.getElementById(this.lastResultFld_) ;
     else {
       resFld = numField === 'convertFromNum' ?
@@ -939,12 +950,15 @@ export class UcumDemo {
     suggsField.style.display = 'none';
 
     let weightField = document.getElementById("moleWeight");
-    let moleWeightVal = weightField.value ;
+    let moleWeightVal = weightField.value;
+    let chargeField = document.getElementById('charge');
+    let chargeVal = chargeField.value;
 
     let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
       {
         suggest: true,
-        molecularWeight: moleWeightVal
+        molecularWeight: moleWeightVal,
+        charge: chargeVal
       });
 
     if (resultObj['status'] === 'succeeded') {
@@ -993,9 +1007,10 @@ export class UcumDemo {
         'perform the conversion.';
     }
 
-    // Else result status was failed.  Either a molecular weight is needed
-    // for a mass<->moles conversion or 1 or more invalid unit expressions
-    // were found (status = 'failed')
+    // Else result status was failed. It could be:
+    // A molecular weight is needed for a mass<->moles conversion.
+    // A charge is needed for from mass/moles to equivalents and vice versa.
+    // 1 or more invalid unit expressions were found (status = 'failed').
     else {
       if (resultObj['msg']) {
         let idx = resultObj['msg'].indexOf(Ucum.needMoleWeightMsg_);
@@ -1007,7 +1022,17 @@ export class UcumDemo {
           else
             resultMsg = '';
         } else {
-          resultMsg = resultObj['msg'].join('<BR>');
+          let idxCharge = resultObj['msg'].indexOf(Ucum.needEqChargeMsg_);
+          if (idxCharge >= 0) {
+            this._requestCharge();
+            resultObj['msg'].splice(idxCharge, 1);
+            if (resultObj['msg'].length > 0)
+              resultMsg = resultObj['msg'].join('<BR>');
+            else
+              resultMsg = '';
+          } else {
+            resultMsg = resultObj['msg'].join('<BR>');
+          }
         }
       }
       // if suggestions were found, output the suggestions to the suggestions
@@ -1338,6 +1363,16 @@ export class UcumDemo {
   _requestMolecularWeight() {
     let weightDiv = document.getElementById('molecular-weight');
     weightDiv.style.visibility = 'visible';
+  }
+
+
+  /**
+   * This makes the division with the request for charge visible.
+   * @private
+   */
+  _requestCharge() {
+    let chargeDiv = document.getElementById('charge-div');
+    chargeDiv.style.visibility = 'visible';
   }
 
 } // end class UcumDemo

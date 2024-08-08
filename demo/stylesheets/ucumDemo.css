@@ -212,14 +212,14 @@ button {
   display: none;
 }
 
-#molecular-weight {
+#molecular-weight, #charge-div {
   text-align: center;
   padding-top: 2px;
   padding-bottom: 6px;
   visibility: hidden;
 }
 
-#moleWeight {
+#moleWeight, #charge {
   width: 80px;
 }
 /*  tried this so that I could make the moleWeight input field a number
