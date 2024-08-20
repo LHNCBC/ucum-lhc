@@ -968,3 +968,32 @@ describe('Test detectConversionType method', ()=> {
   });
 
 });
+
+describe('Test commensurablesList method', function() {
+  it("should filter a list of units by categories", function() {
+    var resp = utils.commensurablesList('kg', ['Clinical'])[0];
+    assert.deepEqual([
+        'gram',
+        'unified atomic mass unit',
+        'pound',
+        'ounce',
+        'Dram mass unit',
+        'short ton - US',
+        'ounce - metric',
+        'centigram',
+        'decigram',
+        'femtogram',
+        'gram per millimole',
+        'kilogram',
+        'kilogram per mole',
+        'milligram',
+        'milligram per millimole',
+        'nanogram',
+        'nanogram per million',
+        'picogram',
+        'microgram',
+        'microgram per millimole'
+      ],
+      resp.map(i => i.name_));
+  });
+});

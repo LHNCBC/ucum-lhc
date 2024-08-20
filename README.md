@@ -71,12 +71,12 @@ those functions via the ucumPkg object.  For example,
 ### Function descriptions
         
 Below is documentation for the public functions on the UcumLhcUtils instance.
-*  [validateUnitString](#validateUnitString)
-*  [convertUnitTo](#convertUnitTo)
-*  [checkSynonyms](#checkSynonyms)
-*  [convertToBaseUnits](#convertToBaseUnits)
+*  [validateUnitString](#validateunitstringustr-suggest)
+*  [convertUnitTo](#convertunittofromunitcode-fromval-tounitcode-options)
+*  [checkSynonyms](#checksynonymsthesyn)
+*  [convertToBaseUnits](#converttobaseunitsfromunit-fromval)
+*  [commensurablesList](#commensurableslistfromunit-categorylist)
 
-<a id="validateUnitString"></a>
 #### validateUnitString(uStr, suggest)
 
 This method validates a unit string.  It first checks to see if the string passed 
@@ -92,12 +92,14 @@ return, if requested, a list of suggested units in the suggestions array
 that is returned.  Suggestions are based on matching the expression with
 unit names and synonyms.
 
-* _@param_ uStr the string to be validated;
-* _@param_ suggest a boolean to indicate whether or not suggestions are
+**Parameters**:
+1) uStr: the string to be validated;
+2) suggest: a boolean to indicate whether or not suggestions are
     requested for a string that cannot be resolved to a valid unit;
     true indicates suggestions are wanted; false indicates they are not,
     and is the default if the parameter is not specified;
-* _@returns_ an object with five properties:
+
+**Returns**: an object with five properties:
    * 'status' will be 'valid' (the uStr is a valid UCUM code), 'invalid'
         (the uStr is not a valid UCUM code, and substitutions or
         suggestions may or may not be returned, depending on what was
@@ -148,7 +150,6 @@ of unit strings, and includes a link to the
 [UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
 the full deal.
 
-<a id="convertUnitTo"></a>
 #### convertUnitTo(fromUnitCode, fromVal, toUnitCode, options)
 
 This method converts a number of one type of unit to the equivalent number of
@@ -158,25 +159,27 @@ rounded to any particular precision or significant digits.
 Disclaimer:  Conversion results should be verified independently before
 using them in actual clinical settings.
 
-* _@param_ fromUnitCode the unit code/expression/string of the unit to be converted;
-* _@param_ fromVal the number of "from" units to be converted to "to" units;
-* _@param_ toUnitCode the unit code/expression/string of the unit that the from 
+**Parameters**:
+1) fromUnitCode: the unit code/expression/string of the unit to be converted;
+2) fromVal: the number of "from" units to be converted to "to" units;
+3) toUnitCode: the unit code/expression/string of the unit that the from 
   field is to be converted to;
-* _@param_ options an optional hash of options that can be passed in:
-  * 'suggestions' a boolean to indicate whether or not suggestions are wanted
+4) options: an optional hash of options that can be passed in:
+   * 'suggestions' a boolean to indicate whether or not suggestions are wanted
       for a string that cannot be resolved to a valid unit; true indicates
       suggestions are wanted; false indicates they are not, and is the default
       if the parameter is not specified;
-  * 'molecularWeight' the molecular weight of the substance in question when a
+   * 'molecularWeight' the molecular weight of the substance in question when a
       conversion is being requested from mass to moles/equivalents and vice versa.  It is
       ignored if neither unit includes a measurement in moles.  In such cases
       the mole-based unit must have a single mole unit in the numerator and the
       mass-based unit must have a single mass unit in the numerator.
-  * 'charge' the absolute value of the charge of the substance in question when a conversion 
+   * 'charge' the absolute value of the charge of the substance in question when a conversion 
       is being requested from mass/moles to equivalents and vice versa. It is required 
       when one of the units represents a value in equivalents and the other in mass or moles. 
       It is ignored if neither unit includes an equivalent unit
-* _@returns_ a hash with six elements:
+
+**Returns**: a hash with six elements:
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
       the units are not commensurable; or 'error' if an error occurred;
@@ -250,7 +253,6 @@ If you want to know what unit types a particular unit can be converted to, the
 checkSynonyms function will provide a list of commensurable units for a specified
 unit expression.
 
-<a id="checkSynonyms"></a>
 #### checkSynonyms(theSyn)
 
 This method searches for units that include a single search term (theSyn) in the
@@ -260,8 +262,10 @@ submitting the term "pound" to the _validUnitString_ method will result in a
 "not found" response.   Submitting it to this method will return with a list 
 of possible pound units.
 
-* _@param_ theSyn the term to search for
-* _@returns_ a hash with three elements:
+**Parameters**:
+1) theSyn: the term to search for
+
+**Returns**: a hash with three elements:
    * 'status' contains the status of the request, which can be 'error',
       'failed' or 'succeeded'; 
    * 'msg' contains a message for an error or if no units were found; and 
@@ -290,7 +294,6 @@ of possible pound units.
       /* returnObj['status'] will be 'error' and returnObj['msg'] will indicate
          what the error was. */
 
-<a id="convertToBaseUnits"></a>
 #### convertToBaseUnits(fromUnit, fromVal)
 
 Converts the given unit string into its base units, their exponents, and
@@ -319,6 +322,27 @@ a magnitude, and returns that data.
         useful as a scale factor for other conversions (i.e., it only has validity
         and usefulness for the input values that produced it).
 * unitToExp: a map of base units in fromUnit to their exponent
+
+#### commensurablesList(fromUnit[, categoryList])
+
+Retrieves a list of units commensurable, i.e., that can be converted from and
+to, a specified unit.  Returns an error if the "from" unit cannot be found.
+If necessary, you can filter the list of units by specifying a list of unit
+categories that should be in the resulting list.
+
+**Parameters**:
+1) fromUnit: the name/unit string
+2) categoryList:  optional parameter - the list of unit categories; possible
+   list values: 'Clinical', 'Nonclinical', 'Obsolete', 'Constant'
+
+**Returns**: an array containing two elements:
+* 0: an array of commensurable units if any were found, each of which is an
+     object with the properties:
+  * name_: unit name;
+  * csCode_: unit code;
+  * other properties are currently undocumented and their existence should not
+    be relied upon.
+* 1: an error message if the "from" unit is not found.
 
 
 ### Download the GitHub repository
