@@ -49,6 +49,20 @@ describe('UCUM Demo page tests', function(){
       cy.get('#convertTo').type('cm{enter}');
       cy.get('#convertToNum').should('have.value', '100');
     });
+
+    it('should show the weight and charge fields if needed', function() {
+      cy.visit('docs/demo.html#converter');
+      cy.get('#convertToNum').clear();
+      cy.get('#convertFromNum').clear().type('1');
+      cy.get('#convertFrom').clear().type('eq2.mol.g3{enter}');
+      cy.get('#convertTo').clear().type('eq.mol3.g2{enter}');
+      cy.get('#moleWeight').should('be.visible');
+      cy.get('#moleWeight').type('1{enter}');
+      cy.get('#charge').should('be.visible');
+      cy.get('#charge').type('1{enter}');
+      cy.get('#convertToNum').should('have.value', '1');
+    });
+
   });
 
   describe('Batch validation', function() {
