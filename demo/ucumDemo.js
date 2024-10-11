@@ -950,9 +950,9 @@ export class UcumDemo {
     suggsField.style.display = 'none';
 
     let weightField = document.getElementById("moleWeight");
-    let moleWeightVal = weightField.value;
+    let moleWeightVal = weightField.value || null;
     let chargeField = document.getElementById('charge');
-    let chargeVal = chargeField.value;
+    let chargeVal = chargeField.value || null;
 
     let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
       {
@@ -1366,6 +1366,9 @@ export class UcumDemo {
   _requestMolecularWeight() {
     let weightDiv = document.getElementById('molecular-weight');
     weightDiv.style.visibility = 'visible';
+    // Blank out the number field of the result side, while we wait for user input.
+    let resFld = document.getElementById(this.lastResultFld_);
+    resFld.value = null;
   }
 
 
@@ -1376,6 +1379,9 @@ export class UcumDemo {
   _requestCharge() {
     let chargeDiv = document.getElementById('charge-div');
     chargeDiv.style.visibility = 'visible';
+    // Blank out the number field of the result side, while we wait for user input.
+    let resFld = document.getElementById(this.lastResultFld_);
+    resFld.value = null;
   }
 
 } // end class UcumDemo
