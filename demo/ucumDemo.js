@@ -1358,14 +1358,24 @@ export class UcumDemo {
 
 
   /**
+   * Announce a field with the screen reader.
+   */
+  _announceField(fieldName) {
+    const liveRegion = document.getElementById("liveRegion");
+    liveRegion.textContent = `${fieldName} has appeared.`;
+  }
+
+
+  /**
    * This makes the division with the request for molecular weight
    * visible.
-   *
    * @private
    */
   _requestMolecularWeight() {
     let weightDiv = document.getElementById('molecular-weight');
     weightDiv.style.visibility = 'visible';
+    // Announce the appearance of the field.
+    this._announceField("Molecular weight field");
     // Blank out the number field of the result side, while we wait for user input.
     let resFld = document.getElementById(this.lastResultFld_);
     resFld.value = null;
@@ -1379,6 +1389,8 @@ export class UcumDemo {
   _requestCharge() {
     let chargeDiv = document.getElementById('charge-div');
     chargeDiv.style.visibility = 'visible';
+    // Announce the appearance of the field.
+    this._announceField("Charge field");
     // Blank out the number field of the result side, while we wait for user input.
     let resFld = document.getElementById(this.lastResultFld_);
     resFld.value = null;
