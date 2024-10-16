@@ -1376,6 +1376,8 @@ export class UcumDemo {
     weightDiv.style.visibility = 'visible';
     // Announce the appearance of the field.
     this._announceField("Molecular weight field");
+    // Focus the newly appeared field.
+    document.getElementById('moleWeight').focus();
     // Blank out the number field of the result side, while we wait for user input.
     let resFld = document.getElementById(this.lastResultFld_);
     resFld.value = null;
@@ -1391,6 +1393,8 @@ export class UcumDemo {
     chargeDiv.style.visibility = 'visible';
     // Announce the appearance of the field.
     this._announceField("Charge field");
+    // Focus the newly appeared field.
+    document.getElementById('charge').focus();
     // Blank out the number field of the result side, while we wait for user input.
     let resFld = document.getElementById(this.lastResultFld_);
     resFld.value = null;
