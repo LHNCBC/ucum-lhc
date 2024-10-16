@@ -124,6 +124,7 @@
                 </label>
               </div>
               <span id="advSearchOpts" type="button" class="standalone-button"
+                    tabindex="0"
                     onclick="demoPkg.UcumDemo.getInstance().toggleDisplay(
                                 'advancedSearchCnv','toggleAdvancedSearchCnvB',
                                 'Hide', 'Show')">advanced options</span>
@@ -141,6 +142,7 @@
               <li> You can enter other commensurate units that are not on the
                   UCUM Code lists.</li>
               <li><span id="toggleCnvHints" type="button"
+                        tabindex="0"
                         onclick="
                   demoPkg.UcumDemo.getInstance().toggleDisplay('cnvHints',
                                                                'toggleCnvHints',
@@ -281,6 +283,48 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
      crossorigin="anonymous"></script>
+    <script>
+      const advSearchOpts = document.getElementById('advSearchOpts');
+      advSearchOpts.addEventListener('keydown', (event) => {
+        if (event.key === ' ' || event.key === 'Spacebar') {
+          // Prevent default SPACE behavior of scrolling.
+          event.preventDefault();
+          demoPkg.UcumDemo.getInstance().toggleDisplay(
+                  'advancedSearchCnv','toggleAdvancedSearchCnvB',
+                  'Hide', 'Show');
+        }
+      });
+      const toggleCnvHints = document.getElementById('toggleCnvHints');
+      toggleCnvHints.addEventListener('keydown', (event) => {
+        if (event.key === ' ' || event.key === 'Spacebar') {
+          // Prevent default SPACE behavior of scrolling.
+          event.preventDefault();
+          demoPkg.UcumDemo.getInstance().toggleDisplay('cnvHints',
+                  'toggleCnvHints',
+                  'Hide', 'Show');
+        }
+      });
+      const advValSearchOpts = document.getElementById('advValSearchOpts');
+      advValSearchOpts.addEventListener('keydown', (event) => {
+        if (event.key === ' ' || event.key === 'Spacebar') {
+          // Prevent default SPACE behavior of scrolling.
+          event.preventDefault();
+          demoPkg.UcumDemo.getInstance().toggleDisplay(
+                  'advancedSearchVal','toggleAdvancedSearchValB',
+                  'Hide', 'Show');
+        }
+      });
+      const toggleValHints = document.getElementById('toggleValHints');
+      toggleValHints.addEventListener('keydown', (event) => {
+        if (event.key === ' ' || event.key === 'Spacebar') {
+          // Prevent default SPACE behavior of scrolling.
+          event.preventDefault();
+          demoPkg.UcumDemo.getInstance().toggleDisplay('valHints',
+                  'toggleValHints',
+                  'Hide', 'Show');
+        }
+      });
+    </script>
 
     <!--An invisible element for announcing stuff with the screen reader.-->
     <div id="liveRegion" aria-live="polite" aria-atomic="true" style="position: absolute; left: -1000px;"></div>
