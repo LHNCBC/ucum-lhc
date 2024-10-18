@@ -792,7 +792,7 @@ export class UcumDemo {
 
     // if both code fields are valid, and the number field that is not
     // being calculated is valid, perform the conversion
-    if (this.convFrom_ === true && this.convTo_ === true) {
+    if (this.convFrom_ === true && this.convTo_ === true && valid) {
       if (resultSide === 'from' && this.convToNum_) {
         this.convertUnit('convertTo',
                          'convertToNum',
@@ -836,6 +836,7 @@ export class UcumDemo {
       let parsedNum = "" + checkVal;
       if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
         resultString.innerHTML = `${checkVal} is not a valid number.`;
+        this._announce(`${checkVal} is not a valid number.`);
         this.setConvertValues(numField, false);
       }
       else {
@@ -954,12 +955,12 @@ export class UcumDemo {
     let chargeField = document.getElementById('charge');
     let chargeVal = chargeField.value || null;
 
-    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
-      {
-        suggest: true,
-        molecularWeight: moleWeightVal,
-        charge: chargeVal
-      });
+    const convertOptions = { suggest: true };
+    if (moleWeightVal)
+      convertOptions.molecularWeight = moleWeightVal;
+    if (chargeVal)
+      convertOptions.charge = chargeVal;
+    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, convertOptions);
 
     if (resultObj['status'] === 'succeeded') {
       let toVal = resultObj['toVal'];
@@ -1155,9 +1156,9 @@ export class UcumDemo {
    *  is currently not displayed (before being toggled).
    * @param noneText the text that shows on the button when the target element
    *  is currently displayed (before being toggled).
-   *
+   * @param sectionName the name of the section being toggled.
    */
-  toggleDisplay(elementID, buttonID, blockText, noneText) {
+  toggleDisplay(elementID, buttonID, blockText, noneText, sectionName) {
 
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
@@ -1177,6 +1178,7 @@ export class UcumDemo {
         if (theButton)
           theButton.innerText = theButton.innerText.replace(blockText, noneText);
       }
+      this._announce(`Toggled display of ${sectionName} section.`);
     } // end if we got the target element
   } // end toggleDisplay
 
@@ -1360,9 +1362,9 @@ export class UcumDemo {
   /**
    * Announce a field with the screen reader.
    */
-  _announceField(fieldName) {
+  _announce(msg) {
     const liveRegion = document.getElementById("liveRegion");
-    liveRegion.textContent = `${fieldName} has appeared.`;
+    liveRegion.textContent = msg;
   }
 
 
@@ -1375,7 +1377,7 @@ export class UcumDemo {
     let weightDiv = document.getElementById('molecular-weight');
     weightDiv.style.visibility = 'visible';
     // Announce the appearance of the field.
-    this._announceField("Molecular weight field");
+    this._announce("Molecular weight field has appeared.");
     // Focus the newly appeared field.
     document.getElementById('moleWeight').focus();
     // Blank out the number field of the result side, while we wait for user input.
@@ -1392,7 +1394,7 @@ export class UcumDemo {
     let chargeDiv = document.getElementById('charge-div');
     chargeDiv.style.visibility = 'visible';
     // Announce the appearance of the field.
-    this._announceField("Charge field");
+    this._announce("Charge field has appeared.");
     // Focus the newly appeared field.
     document.getElementById('charge').focus();
     // Blank out the number field of the result side, while we wait for user input.

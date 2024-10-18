@@ -99,7 +99,7 @@
                   <div>
                     <input type="text" id="convertFromNum"
                       class="input-field input-number"
-                           aria-label="convert from number"
+                           aria-label="left number"
                       onchange=
                       "demoPkg.UcumDemo.getInstance().checkNumVal('convertFromNum')">
                   </div>
@@ -109,7 +109,7 @@
                     <div>
                     <span class="input-field">
                       <input type="text" id="convertFrom" class="input-field"
-                             aria-label="convert from unit"
+                             aria-label="left unit"
                         placeholder="Enter UCUM code ...">
                     </span>
                     <div id="convertFromName" class="unit-name" wrap="soft"></div>
@@ -124,7 +124,7 @@
                   <div>
                     <input type="text" id="convertToNum"
                       class="input-field input-number"
-                           aria-label="convert to number"
+                           aria-label="right number"
                       onchange=
                       "demoPkg.UcumDemo.getInstance().checkNumVal('convertToNum')">
                   </div>
@@ -134,7 +134,7 @@
                   <div>
                     <span class="input-field">
                       <input type="text" id="convertTo" class="input-field"
-                             aria-label="convert to unit"
+                             aria-label="right unit"
                         placeholder="Enter UCUM code ...">
                     </span>
                     <div id="convertToName" class="unit-name" wrap="soft"></div>
@@ -170,7 +170,7 @@
                     tabindex="0"
                     onclick="demoPkg.UcumDemo.getInstance().toggleDisplay(
                                 'advancedSearchCnv','toggleAdvancedSearchCnvB',
-                                'Hide', 'Show')">advanced options</span>
+                                'Hide', 'Show', 'advanced options')">advanced options</span>
               <div id="advancedSearchCnv" style="display: none">
                 <!-- this section is built in the demo code when the page is loaded -->
               </div> <!-- advancedSearchCnv division -->
@@ -189,7 +189,7 @@
                         onclick="
                   demoPkg.UcumDemo.getInstance().toggleDisplay('cnvHints',
                                                                'toggleCnvHints',
-                                                               'Hide', 'Show')">
+                                                               'Hide', 'Show', ' syntax rules')">
               syntax rules</span>
               </li>
             </ul>
@@ -257,13 +257,13 @@
                   tabindex="0"
                     onclick="demoPkg.UcumDemo.getInstance().toggleDisplay(
                                   'advancedSearchVal','toggleAdvancedSearchValB',
-                                  'Hide', 'Show')">advanced options</span>
+                                  'Hide', 'Show', 'advanced options')">advanced options</span>
             <span id="toggleValHints" type="button" class="standalone-button"
                   tabindex="0"
                     onclick="
                     demoPkg.UcumDemo.getInstance().toggleDisplay('valHints',
                                                                  'toggleValHints',
-                                                                 'Hide', 'Show')">
+                                                                 'Hide', 'Show', 'syntax rules')">
                     syntax rules</span>
             </div>
             <div id="advancedSearchVal" style="display: none">
@@ -404,7 +404,7 @@
           event.preventDefault();
           demoPkg.UcumDemo.getInstance().toggleDisplay(
                   'advancedSearchCnv','toggleAdvancedSearchCnvB',
-                  'Hide', 'Show');
+                  'Hide', 'Show', 'advanced options');
         }
       });
       const toggleCnvHints = document.getElementById('toggleCnvHints');
@@ -414,7 +414,7 @@
           event.preventDefault();
           demoPkg.UcumDemo.getInstance().toggleDisplay('cnvHints',
                   'toggleCnvHints',
-                  'Hide', 'Show');
+                  'Hide', 'Show', 'syntax rules');
         }
       });
       const advValSearchOpts = document.getElementById('advValSearchOpts');
@@ -424,7 +424,7 @@
           event.preventDefault();
           demoPkg.UcumDemo.getInstance().toggleDisplay(
                   'advancedSearchVal','toggleAdvancedSearchValB',
-                  'Hide', 'Show');
+                  'Hide', 'Show', 'advanced options');
         }
       });
       const toggleValHints = document.getElementById('toggleValHints');
@@ -434,7 +434,7 @@
           event.preventDefault();
           demoPkg.UcumDemo.getInstance().toggleDisplay('valHints',
                   'toggleValHints',
-                  'Hide', 'Show');
+                  'Hide', 'Show', 'syntax rules');
         }
       });
     </script>

@@ -219,6 +219,10 @@ button {
   visibility: hidden;
 }
 
+#molecular-weight label, #charge-div label {
+  font-weight: normal;
+}
+
 #moleWeight, #charge {
   width: 80px;
 }
