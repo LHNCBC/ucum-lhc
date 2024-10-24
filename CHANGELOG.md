@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.1] 2024-10-24
+### Changed
+- Return "cannot convert" message even if molecular weight and charge fields
+  are provided, if the convert cannot happen between the units.
+- Return both "require molecular weight" and "require charge" messages at
+  the same time, if both are required in convertUnitTo().
+
 ## [7.1.0] 2024-08-05
 ### Added
 - Published a new API, commensurablesList, to UcumLhcUtils.
