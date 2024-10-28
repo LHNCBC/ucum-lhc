@@ -166,11 +166,11 @@
                        onchange="demoPkg.UcumDemo.getInstance().checkNumVal('charge')">
                 </label>
               </div>
-              <span id="advSearchOpts" type="button" class="standalone-button"
+              <a id="advSearchOpts"
                     tabindex="0"
                     onclick="demoPkg.UcumDemo.getInstance().toggleDisplay(
                                 'advancedSearchCnv','toggleAdvancedSearchCnvB',
-                                'Hide', 'Show', 'advanced options')">advanced options</span>
+                                'Hide', 'Show', 'advanced options')">advanced options</a>
               <div id="advancedSearchCnv" style="display: none">
                 <!-- this section is built in the demo code when the page is loaded -->
               </div> <!-- advancedSearchCnv division -->
@@ -184,13 +184,13 @@
               <li> UCUM codes are <b>case-sensitive</b>.</li>
               <li> You can enter other commensurate units that are not on the
                   UCUM Code lists.</li>
-              <li><span id="toggleCnvHints" type="button"
+              <li><a id="toggleCnvHints"
                         tabindex="0"
                         onclick="
                   demoPkg.UcumDemo.getInstance().toggleDisplay('cnvHints',
                                                                'toggleCnvHints',
                                                                'Hide', 'Show', ' syntax rules')">
-              syntax rules</span>
+              syntax rules</a>
               </li>
             </ul>
             <div id="cnvHints" class="limitWidth" style="display: none">
@@ -253,18 +253,18 @@
                 <div id="validationString">&nbsp;&nbsp;</div>
               </div> <!-- valStringDiv -->
             <div id="valButtonLinks">
-            <span id="advValSearchOpts" type="button" class="standalone-button"
+            <a id="advValSearchOpts"
                   tabindex="0"
                     onclick="demoPkg.UcumDemo.getInstance().toggleDisplay(
                                   'advancedSearchVal','toggleAdvancedSearchValB',
-                                  'Hide', 'Show', 'advanced options')">advanced options</span>
-            <span id="toggleValHints" type="button" class="standalone-button"
+                                  'Hide', 'Show', 'advanced options')">advanced options</a>
+            <a id="toggleValHints"
                   tabindex="0"
                     onclick="
                     demoPkg.UcumDemo.getInstance().toggleDisplay('valHints',
                                                                  'toggleValHints',
                                                                  'Hide', 'Show', 'syntax rules')">
-                    syntax rules</span>
+                    syntax rules</a>
             </div>
             <div id="advancedSearchVal" style="display: none">
               <!-- this section is built in the demo code when the page is loaded -->

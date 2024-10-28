@@ -835,8 +835,8 @@ export class UcumDemo {
       resFld.value = '';
       let parsedNum = "" + checkVal;
       if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
-        resultString.innerHTML = `${checkVal} is not a valid number.`;
-        this._announce(`${checkVal} is not a valid number.`);
+        resultString.innerHTML = `"${checkVal}" is not a valid number.`;
+        this._announce(`"${checkVal}" is not a valid number.`);
         this.setConvertValues(numField, false);
       }
       else {
@@ -1170,15 +1170,16 @@ export class UcumDemo {
     if (theElement) {
       if (theElement.style.display === "none") {
         theElement.style.display = "block";
+        this._announce(`Showing ${sectionName} section.`);
         if (theButton)
           theButton.innerText = theButton.innerText.replace(noneText, blockText);
       }
       else {
         theElement.style.display = "none";
+        this._announce(`Hiding ${sectionName} section.`);
         if (theButton)
           theButton.innerText = theButton.innerText.replace(blockText, noneText);
       }
-      this._announce(`Toggled display of ${sectionName} section.`);
     } // end if we got the target element
   } // end toggleDisplay
 
