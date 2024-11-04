@@ -356,10 +356,6 @@ export class UcumLhcUtils {
             try {
               returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
             } catch (err) {
-              if (err.message == Ucum.needMoleWeightMsg_)
-                returnObj['status'] = 'failed';
-              else
-                returnObj['status'] = 'error';
               returnObj['msg'].push(err.message);
             }
             break;

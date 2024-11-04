@@ -761,6 +761,13 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp.toVal, 6);
     assert.equal(resp.msg.length, 0);
   });
+
+  it('should return failed status for an arbitrary unit', () => {
+    const resp = utils.convertUnitTo('[iU]', 1, 'g');
+    assert.equal(resp.status, 'failed');
+    assert.equal(resp.toVal, null);
+    assert.equal(resp.msg[0], 'Attempt to convert arbitrary unit "[iU]"');
+  });
 }); // end convertUnitTo tests
 
 describe('Test getSynonyms method', function() {
