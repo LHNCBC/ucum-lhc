@@ -461,6 +461,19 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp.toUnit, undefined, resp.toUnit);
   });
 
+  // test to return both error messages if eq conversion is attempted without charge or mw
+  it("should return two error messages for a request to convert eq to g with no charge and no mw", function() {
+    var resp = utils.convertUnitTo('eq', 1, 'g');
+    assert.equal(resp.status, 'failed', resp.status + resp.msg);
+    assert.equal(resp.msg[0], Ucum.needEqWeightMsg_,
+      resp.msg[0]);
+    assert.equal(resp.msg[1], Ucum.needEqChargeMsg_,
+      resp.msg[1]);
+    assert.equal(resp.toVal, null, resp.toVal);
+    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
+    assert.equal(resp.toUnit, undefined, resp.toUnit);
+  });
+
   /**
    * KCL -> K+ + Cl-
    * K+ has a valence of 1 and a molecular weight of 39.09
@@ -688,6 +701,12 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp4.msg[0], 'Sorry.  pmol cannot be converted to 1/g.', resp4.msg[0]);
   });
 
+  it("should return 'cannot convert' message for an attempt to translate 1 pmol to 1/g weight 1 without molecular weight provided", function() {
+    var resp4 = utils.convertUnitTo('pmol', 1, '1/g');
+    assert.equal(resp4.status, 'failed', resp4.status);
+    assert.equal(resp4.msg[0], 'Sorry.  pmol cannot be converted to 1/g.', resp4.msg[0]);
+  });
+
   it("should return an error for an attempt to translate 1 pmol/g to mg/dL weight 1", function() {
     var resp4 = utils.convertUnitTo('pmol/g', 1, 'mg/dL', { molecularWeight: 1 });
     assert.equal(resp4.status, 'failed', resp4.status);
@@ -741,6 +760,13 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp.status, 'succeeded');
     assert.equal(resp.toVal, 6);
     assert.equal(resp.msg.length, 0);
+  });
+
+  it('should return failed status for an arbitrary unit', () => {
+    const resp = utils.convertUnitTo('[iU]', 1, 'g');
+    assert.equal(resp.status, 'failed');
+    assert.equal(resp.toVal, null);
+    assert.equal(resp.msg[0], 'Attempt to convert arbitrary unit "[iU]"');
   });
 }); // end convertUnitTo tests
 

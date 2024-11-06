@@ -293,12 +293,14 @@ export class UcumLhcUtils {
    *     in case it's needed for additional data from the object.
    */
   convertUnitTo(fromUnitCode, fromVal, toUnitCode, options = {}) {
-    let { suggest = false, molecularWeight = null, charge = null } = options;
+    let {suggest = false, molecularWeight = null, charge = null} = options;
 
     /** @type {ConvertUnitResult} */
-    let returnObj = {'status' : 'failed',
-                     'toVal' : null,
-                     'msg' : []} ;
+    let returnObj = {
+      'status': 'failed',
+      'toVal': null,
+      'msg': []
+    };
 
     if (fromUnitCode) {
       fromUnitCode = fromUnitCode.trim();
@@ -316,116 +318,120 @@ export class UcumLhcUtils {
       returnObj['msg'].push('No "to" unit expression specified.');
     }
     if (returnObj['status'] !== 'error') {
-      try {
-        let fromUnit = null;
+      let fromUnit = null;
 
-        let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
-        fromUnit = parseResp['unit'];
-        if (parseResp['retMsg'])
-          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
-        if (parseResp['suggestions']) {
+      let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
+      fromUnit = parseResp['unit'];
+      if (parseResp['retMsg'])
+        returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+      if (parseResp['suggestions']) {
+        returnObj['suggestions'] = {};
+        returnObj['suggestions']['from'] = parseResp['suggestions'];
+      }
+      if (!fromUnit) {
+        returnObj['msg'].push(`Unable to find a unit for ${fromUnitCode}, ` +
+          `so no conversion could be performed.`);
+      }
+
+      let toUnit = null;
+      parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
+      toUnit = parseResp['unit'];
+      if (parseResp['retMsg'])
+        returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
+      if (parseResp['suggestions']) {
+        if (!returnObj['suggestions'])
           returnObj['suggestions'] = {};
-          returnObj['suggestions']['from'] = parseResp['suggestions'];
-        }
-        if (!fromUnit) {
-          returnObj['msg'].push(`Unable to find a unit for ${fromUnitCode}, ` +
-            `so no conversion could be performed.`);
-        }
+        returnObj['suggestions']['to'] = parseResp['suggestions'];
+      }
+      if (!toUnit) {
+        returnObj['msg'].push(`Unable to find a unit for ${toUnitCode}, ` +
+          `so no conversion could be performed.`);
+      }
 
-        let toUnit = null;
-        parseResp = this.getSpecifiedUnit(toUnitCode, 'convert', suggest);
-        toUnit = parseResp['unit'];
-        if (parseResp['retMsg'])
-          returnObj['msg'] = returnObj['msg'].concat(parseResp['retMsg']);
-        if (parseResp['suggestions']) {
-          if (!returnObj['suggestions'])
-            returnObj['suggestions'] = {} ;
-          returnObj['suggestions']['to'] = parseResp['suggestions'];
-        }
-        if (!toUnit) {
-          returnObj['msg'].push(`Unable to find a unit for ${toUnitCode}, ` +
-                                `so no conversion could be performed.`);
-        }
-
-        if (fromUnit && toUnit) {
-          try {
-            const convertType = this.detectConversionType(fromUnit, toUnit);
-
-            switch (convertType) {
-              case 'normal':
-                returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
-                break;
-              case 'mol|mass':
-                if (!molecularWeight) {
-                  throw new Error(Ucum.needMoleWeightMsg_);
-                }
-                if (!fromUnit.isMolMassCommensurable(toUnit)) {
-                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
-                      `converted to ${toUnitCode}.`);
-                }
-                returnObj['toVal'] = fromUnit.convertMolMass(fromVal, toUnit, molecularWeight);
-                break;
-              case 'eq|mass':
-                if (!molecularWeight) {
-                  throw new Error(Ucum.needEqWeightMsg_);
-                }
-                if (!charge) {
-                  throw new Error(Ucum.needEqChargeMsg_);
-                }
-                if (!fromUnit.isEqMassCommensurable(toUnit)) {
-                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
-                      `converted to ${toUnitCode}.`);
-                }
-                returnObj['toVal'] = fromUnit.convertEqMass(fromVal, toUnit, molecularWeight, charge);
-                break;
-              case 'eq|mol':
-                if (!fromUnit.isEqMolCommensurable(toUnit)) {
-                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
-                      `converted to ${toUnitCode}.`);
-                }
-                if (!charge) {
-                  throw new Error(Ucum.needEqChargeMsg_);
-                }
-                returnObj['toVal'] = fromUnit.convertEqMol(fromVal, toUnit, charge);
-                break;
-              case 'eq|mol|mass':
-                if (!molecularWeight) {
-                  throw new Error(Ucum.needEqWeightMsg_);
-                }
-                if (!charge) {
-                  throw new Error(Ucum.needEqChargeMsg_);
-                }
-                if (!fromUnit.isEqMolMassCommensurable(toUnit)) {
-                  throw new Error(`Sorry.  ${fromUnitCode} cannot be ` +
-                      `converted to ${toUnitCode}.`);
-                }
-                returnObj['toVal'] = fromUnit.convertEqMolMass(fromVal, toUnit, molecularWeight, charge);
-                break;
-              default:
-                throw new Error("Unknown conversion type.  No conversion was attempted.");
+      if (fromUnit && toUnit) {
+        const convertType = this.detectConversionType(fromUnit, toUnit);
+        const msgCountBeforeConvert = returnObj['msg'].length;
+        switch (convertType) {
+          case 'normal':
+            try {
+              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+            } catch (err) {
+              returnObj['msg'].push(err.message);
             }
-            // if an error hasn't been thrown - either from convertFrom or here,
-            // set the return object to show success
-            returnObj['status'] = 'succeeded';
-            returnObj['fromUnit'] = fromUnit;
-            returnObj['toUnit'] = toUnit;
-          }
-          catch (err) {
-            returnObj['status'] = 'failed';
-            returnObj['msg'].push(err.message);
-          }
-        } // end if we have the from and to units
-      }
-      catch (err) {
-        if (err.message == Ucum.needMoleWeightMsg_)
+            break;
+          case 'mol|mass':
+            if (!fromUnit.isMolMassCommensurable(toUnit)) {
+              returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be ` +
+                `converted to ${toUnitCode}.`);
+              break;
+            }
+            if (!molecularWeight) {
+              returnObj['msg'].push(Ucum.needMoleWeightMsg_);
+              break;
+            }
+            returnObj['toVal'] = fromUnit.convertMolMass(fromVal, toUnit, molecularWeight);
+            break;
+          case 'eq|mass':
+            if (!fromUnit.isEqMassCommensurable(toUnit)) {
+              returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be ` +
+                `converted to ${toUnitCode}.`);
+              break;
+            }
+            if (!molecularWeight) {
+              returnObj['msg'].push(Ucum.needEqWeightMsg_);
+            }
+            if (!charge) {
+              returnObj['msg'].push(Ucum.needEqChargeMsg_);
+            }
+            if (!returnObj['msg'].length) {
+              returnObj['toVal'] = fromUnit.convertEqMass(fromVal, toUnit, molecularWeight, charge);
+            }
+            break;
+          case 'eq|mol':
+            if (!fromUnit.isEqMolCommensurable(toUnit)) {
+              returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be ` +
+                `converted to ${toUnitCode}.`);
+              break;
+            }
+            if (!charge) {
+              returnObj['msg'].push(Ucum.needEqChargeMsg_);
+              break;
+            }
+            returnObj['toVal'] = fromUnit.convertEqMol(fromVal, toUnit, charge);
+            break;
+          case 'eq|mol|mass':
+            if (!fromUnit.isEqMolMassCommensurable(toUnit)) {
+              returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be ` +
+                `converted to ${toUnitCode}.`);
+              break;
+            }
+            if (!molecularWeight) {
+              returnObj['msg'].push(Ucum.needEqWeightMsg_);
+            }
+            if (!charge) {
+              returnObj['msg'].push(Ucum.needEqChargeMsg_);
+            }
+            if (!returnObj['msg'].length) {
+              returnObj['toVal'] = fromUnit.convertEqMolMass(fromVal, toUnit, molecularWeight, charge);
+            }
+            break;
+          default:
+            returnObj['msg'].push("Unknown conversion type.  No conversion was attempted.");
+        }
+        if (returnObj['msg'].length > msgCountBeforeConvert) {
+          // If one or more failure messages are pushed into returnObj['msg']
+          // in the switch statement, mark the status as 'failed'.
           returnObj['status'] = 'failed';
-        else
-          returnObj['status'] = 'error';
-        returnObj['msg'].push(err.message);
-      }
+        } else {
+          // Set the return object to show success.
+          returnObj['status'] = 'succeeded';
+          returnObj['fromUnit'] = fromUnit;
+          returnObj['toUnit'] = toUnit;
+        }
+      } // end if we have the from and to units
     }
 
-    return returnObj ;
+    return returnObj;
 
   } // end convertUnitTo
 
