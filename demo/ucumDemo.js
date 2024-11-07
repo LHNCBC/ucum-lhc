@@ -1014,29 +1014,37 @@ export class UcumDemo {
     // 1 or more invalid unit expressions were found (status = 'failed').
     else {
       if (resultObj['msg']) {
+        let announceMsg = '';
         let idx = resultObj['msg'].indexOf(Ucum.needMoleWeightMsg_);
         if (idx >= 0) {
           this._requestMolecularWeight();
+          announceMsg += ' Molecular weight field has appeared.';
           resultObj['msg'].splice(idx, 1);
           if (resultObj['msg'].length > 0)
             resultMsg = resultObj['msg'].join('<BR>');
           else
             resultMsg = '';
         } else {
-          let idxEqWeight = resultObj['msg'].indexOf(Ucum.needEqWeightMsg_);
-          if (idxEqWeight >= 0) {
-            this._requestMolecularWeight();
-            resultObj['msg'].splice(idxEqWeight, 1);
-          }
           let idxEqCharge = resultObj['msg'].indexOf(Ucum.needEqChargeMsg_);
           if (idxEqCharge >= 0) {
             this._requestCharge();
+            announceMsg += ' Charge field has appeared.';
             resultObj['msg'].splice(idxEqCharge, 1);
           }
-          if (resultObj['msg'].length > 0)
+          let idxEqWeight = resultObj['msg'].indexOf(Ucum.needEqWeightMsg_);
+          if (idxEqWeight >= 0) {
+            this._requestMolecularWeight();
+            announceMsg += ' Molecular weight field has appeared.';
+            resultObj['msg'].splice(idxEqWeight, 1);
+          }
+          // Announce the appearance of the field.
+          this._announce(announceMsg);
+          if (resultObj['msg'].length > 0) {
             resultMsg = resultObj['msg'].join('<BR>');
-          else
+            this._announce(resultMsg);
+          } else {
             resultMsg = '';
+          }
         }
       }
       // if suggestions were found, output the suggestions to the suggestions
@@ -1377,8 +1385,6 @@ export class UcumDemo {
   _requestMolecularWeight() {
     let weightDiv = document.getElementById('molecular-weight');
     weightDiv.style.visibility = 'visible';
-    // Announce the appearance of the field.
-    this._announce("Molecular weight field has appeared.");
     // Focus the newly appeared field.
     document.getElementById('moleWeight').focus();
     // Blank out the number field of the result side, while we wait for user input.
@@ -1394,8 +1400,6 @@ export class UcumDemo {
   _requestCharge() {
     let chargeDiv = document.getElementById('charge-div');
     chargeDiv.style.visibility = 'visible';
-    // Announce the appearance of the field.
-    this._announce("Charge field has appeared.");
     // Focus the newly appeared field.
     document.getElementById('charge').focus();
     // Blank out the number field of the result side, while we wait for user input.
