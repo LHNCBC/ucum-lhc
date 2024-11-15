@@ -1037,8 +1037,6 @@ export class UcumDemo {
             announceMsg += ' Molecular weight field has appeared.';
             resultObj['msg'].splice(idxEqWeight, 1);
           }
-          // Announce the appearance of the field.
-          this._announce(announceMsg);
           if (resultObj['msg'].length > 0) {
             resultMsg = resultObj['msg'].join('<BR>');
             this._announce(resultMsg);
@@ -1046,6 +1044,9 @@ export class UcumDemo {
             resultMsg = '';
           }
         }
+        console.log('haha');
+        // Announce the appearance of the field.
+        this._announce(announceMsg);
       }
       // if suggestions were found, output the suggestions to the suggestions
       // field
@@ -1373,6 +1374,13 @@ export class UcumDemo {
    */
   _announce(msg) {
     const liveRegion = document.getElementById("liveRegion");
+    // ARIA live region will not announce if the content didn't change.
+    // One way around this would be to first clear all the contents of the live region
+    // and then inject the new content (with settimeout), but this is unreliable.
+    // Adding a '.' when the content didn't change works best.
+    if (liveRegion.textContent === msg) {
+      msg += '.';
+    }
     liveRegion.textContent = msg;
   }
 
