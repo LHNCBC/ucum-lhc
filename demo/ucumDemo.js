@@ -1044,7 +1044,6 @@ export class UcumDemo {
             resultMsg = '';
           }
         }
-        console.log('haha');
         // Announce the appearance of the field.
         this._announce(announceMsg);
       }
