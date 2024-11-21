@@ -114,6 +114,8 @@ export class UcumDemo {
     let self = this ;
     UcumDemo.getInstance = function(){return self} ;
 
+    // Message string to be put in the "liveRegion" for screen readers.
+    this.announceMsg_ = '';
     // This is only used to keep broswer focus on the input element when
     // user tab out of a unit field and results in charge and/or molecular
     // weight field being created, so that the screen reader has predictable
@@ -1020,11 +1022,12 @@ export class UcumDemo {
     // 1 or more invalid unit expressions were found (status = 'failed').
     else {
       if (resultObj['msg']) {
-        let announceMsg = '';
+        this.newFieldCreated_ = false;
+        this.announceMsg_ = '';
         let idx = resultObj['msg'].indexOf(Ucum.needMoleWeightMsg_);
         if (idx >= 0) {
           this._requestMolecularWeight();
-          announceMsg += ' Molecular weight field has appeared.';
+          this.announceMsg_ += ' Molecular weight field has appeared.';
           resultObj['msg'].splice(idx, 1);
           if (resultObj['msg'].length > 0)
             resultMsg = resultObj['msg'].join('<BR>');
@@ -1034,13 +1037,13 @@ export class UcumDemo {
           let idxEqCharge = resultObj['msg'].indexOf(Ucum.needEqChargeMsg_);
           if (idxEqCharge >= 0) {
             this._requestCharge();
-            announceMsg += ' Charge field has appeared.';
+            this.announceMsg_ += ' Charge field has appeared.';
             resultObj['msg'].splice(idxEqCharge, 1);
           }
           let idxEqWeight = resultObj['msg'].indexOf(Ucum.needEqWeightMsg_);
           if (idxEqWeight >= 0) {
             this._requestMolecularWeight();
-            announceMsg += ' Molecular weight field has appeared.';
+            this.announceMsg_ += ' Molecular weight field has appeared.';
             resultObj['msg'].splice(idxEqWeight, 1);
           }
           if (resultObj['msg'].length > 0) {
@@ -1051,7 +1054,9 @@ export class UcumDemo {
           }
         }
         // Announce the appearance of the field.
-        this._announce(announceMsg);
+        if (this.newFieldCreated_) {
+          this._announce(this.announceMsg_);
+        }
       }
       // if suggestions were found, output the suggestions to the suggestions
       // field
@@ -1397,11 +1402,13 @@ export class UcumDemo {
    */
   _requestMolecularWeight() {
     let weightDiv = document.getElementById('molecular-weight');
-    weightDiv.style.visibility = 'visible';
-    this.newFieldCreated_ = true;
-    // Blank out the number field of the result side, while we wait for user input.
-    let resFld = document.getElementById(this.lastResultFld_);
-    resFld.value = null;
+    if (weightDiv.style.visibility !== 'visible') {
+      weightDiv.style.visibility = 'visible';
+      this.newFieldCreated_ = true;
+      // Blank out the number field of the result side, while we wait for user input.
+      let resFld = document.getElementById(this.lastResultFld_);
+      resFld.value = null;
+    }
   }
 
 
@@ -1411,11 +1418,13 @@ export class UcumDemo {
    */
   _requestCharge() {
     let chargeDiv = document.getElementById('charge-div');
-    chargeDiv.style.visibility = 'visible';
-    this.newFieldCreated_ = true;
-    // Blank out the number field of the result side, while we wait for user input.
-    let resFld = document.getElementById(this.lastResultFld_);
-    resFld.value = null;
+    if (chargeDiv.style.visibility !== 'visible') {
+      chargeDiv.style.visibility = 'visible';
+      this.newFieldCreated_ = true;
+      // Blank out the number field of the result side, while we wait for user input.
+      let resFld = document.getElementById(this.lastResultFld_);
+      resFld.value = null;
+    }
   }
 
 } // end class UcumDemo
