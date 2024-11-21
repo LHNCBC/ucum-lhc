@@ -324,14 +324,29 @@
                   'Hide', 'Show', 'syntax rules');
         }
       });
-      function getNextFocusableElement(element) {
+
+      /**
+       * Get the next visible, focusable element.
+       * @param element current focused element
+       * @param reverse if true, traverse backwards (in the case of 'SHIFT+TAB'
+       */
+      function getNextFocusableElement(element, reverse = false) {
         const focusableElements = 'input, [tabindex]:not([tabindex="-1"])';
         const allFocusable = Array.from(document.querySelectorAll(focusableElements));
         const currentIndex = allFocusable.indexOf(element);
-        for (let i = currentIndex + 1; i < allFocusable.length; i++) {
-          const element = allFocusable[i];
-          if (element.offsetParent !== null) { // Check if element is visible
-            return element;
+        if (reverse) {
+          for (let i = currentIndex - 1; i >= 0; i--) {
+            const element = allFocusable[i];
+            if (element.offsetParent !== null) { // Check if element is visible
+              return element;
+            }
+          }
+        } else {
+          for (let i = currentIndex + 1; i < allFocusable.length; i++) {
+            const element = allFocusable[i];
+            if (element.offsetParent !== null) { // Check if element is visible
+              return element;
+            }
           }
         }
       }
@@ -344,10 +359,10 @@
               demoPkg.UcumDemo.getInstance().newFieldCreated_ = false;
             } else {
               // Restore default behavior of TAB key, if no new fields were created.
-              const nextElement = getNextFocusableElement(document.activeElement);
+              const nextElement = getNextFocusableElement(document.activeElement, event.shiftKey);
               nextElement?.focus();
             }
-          }, 100);
+          }, 0);
         }
       });
       const convertTo = document.getElementById('convertTo');
@@ -358,10 +373,10 @@
             if (demoPkg.UcumDemo.getInstance().newFieldCreated_) {
               demoPkg.UcumDemo.getInstance().newFieldCreated_ = false;
             } else {
-              const nextElement = getNextFocusableElement(document.activeElement);
+              const nextElement = getNextFocusableElement(document.activeElement, event.shiftKey);
               nextElement?.focus();
             }
-          }, 100);
+          }, 0);
         }
       });
     </script>
