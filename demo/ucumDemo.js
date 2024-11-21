@@ -113,6 +113,12 @@ export class UcumDemo {
 
     let self = this ;
     UcumDemo.getInstance = function(){return self} ;
+
+    // This is only used to keep broswer focus on the input element when
+    // user tab out of a unit field and results in charge and/or molecular
+    // weight field being created, so that the screen reader has predictable
+    // behavior.
+    this.newFieldCreated_ = false;
   }
 
   /**
@@ -1376,9 +1382,9 @@ export class UcumDemo {
     // ARIA live region will not announce if the content didn't change.
     // One way around this would be to first clear all the contents of the live region
     // and then inject the new content (with settimeout), but this is unreliable.
-    // Adding a '.' when the content didn't change works best.
+    // Replacing '.' with ',' and vice versa when the content didn't change works best.
     if (liveRegion.textContent === msg) {
-      msg += '.';
+      msg = msg.replace(/\.|,/g, match => (match === '.' ? ',' : '.'));
     }
     liveRegion.textContent = msg;
   }
@@ -1392,8 +1398,7 @@ export class UcumDemo {
   _requestMolecularWeight() {
     let weightDiv = document.getElementById('molecular-weight');
     weightDiv.style.visibility = 'visible';
-    // Focus the newly appeared field.
-    document.getElementById('moleWeight').focus();
+    this.newFieldCreated_ = true;
     // Blank out the number field of the result side, while we wait for user input.
     let resFld = document.getElementById(this.lastResultFld_);
     resFld.value = null;
@@ -1407,8 +1412,7 @@ export class UcumDemo {
   _requestCharge() {
     let chargeDiv = document.getElementById('charge-div');
     chargeDiv.style.visibility = 'visible';
-    // Focus the newly appeared field.
-    document.getElementById('charge').focus();
+    this.newFieldCreated_ = true;
     // Blank out the number field of the result side, while we wait for user input.
     let resFld = document.getElementById(this.lastResultFld_);
     resFld.value = null;

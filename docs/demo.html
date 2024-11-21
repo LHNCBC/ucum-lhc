@@ -437,6 +437,46 @@
                   'Hide', 'Show', 'syntax rules');
         }
       });
+      function getNextFocusableElement(element) {
+        const focusableElements = 'input, [tabindex]:not([tabindex="-1"])';
+        const allFocusable = Array.from(document.querySelectorAll(focusableElements));
+        const currentIndex = allFocusable.indexOf(element);
+        for (let i = currentIndex + 1; i < allFocusable.length; i++) {
+          const element = allFocusable[i];
+          if (element.offsetParent !== null) { // Check if element is visible
+            return element;
+          }
+        }
+      }
+      const convertFrom = document.getElementById('convertFrom');
+      convertFrom.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') {
+          event.preventDefault();
+          setTimeout(() => {
+            if (demoPkg.UcumDemo.getInstance().newFieldCreated_) {
+              demoPkg.UcumDemo.getInstance().newFieldCreated_ = false;
+            } else {
+              // Restore default behavior of TAB key, if no new fields were created.
+              const nextElement = getNextFocusableElement(document.activeElement);
+              nextElement?.focus();
+            }
+          }, 100);
+        }
+      });
+      const convertTo = document.getElementById('convertTo');
+      convertTo.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') {
+          event.preventDefault();
+          setTimeout(() => {
+            if (demoPkg.UcumDemo.getInstance().newFieldCreated_) {
+              demoPkg.UcumDemo.getInstance().newFieldCreated_ = false;
+            } else {
+              const nextElement = getNextFocusableElement(document.activeElement);
+              nextElement?.focus();
+            }
+          }, 100);
+        }
+      });
     </script>
 
     <!--An invisible element for announcing stuff with the screen reader.-->
