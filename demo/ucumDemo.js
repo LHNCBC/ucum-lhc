@@ -1427,6 +1427,32 @@ export class UcumDemo {
     }
   }
 
+  /**
+   * Get the next visible, focusable element.
+   * @param element current focused element
+   * @param reverse if true, traverse backwards (in the case of 'SHIFT+TAB'
+   */
+  getNextFocusableElement(element, reverse = false) {
+    const focusableElements = 'input, [tabindex]:not([tabindex="-1"])';
+    const allFocusable = Array.from(document.querySelectorAll(focusableElements));
+    const currentIndex = allFocusable.indexOf(element);
+    if (reverse) {
+      for (let i = currentIndex - 1; i >= 0; i--) {
+        const element = allFocusable[i];
+        if (element.offsetParent !== null) { // Check if element is visible
+          return element;
+        }
+      }
+    } else {
+      for (let i = currentIndex + 1; i < allFocusable.length; i++) {
+        const element = allFocusable[i];
+        if (element.offsetParent !== null) { // Check if element is visible
+          return element;
+        }
+      }
+    }
+  }
+
 } // end class UcumDemo
 
 

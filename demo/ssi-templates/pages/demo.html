@@ -324,61 +324,25 @@
                   'Hide', 'Show', 'syntax rules');
         }
       });
-
-      /**
-       * Get the next visible, focusable element.
-       * @param element current focused element
-       * @param reverse if true, traverse backwards (in the case of 'SHIFT+TAB'
-       */
-      function getNextFocusableElement(element, reverse = false) {
-        const focusableElements = 'input, [tabindex]:not([tabindex="-1"])';
-        const allFocusable = Array.from(document.querySelectorAll(focusableElements));
-        const currentIndex = allFocusable.indexOf(element);
-        if (reverse) {
-          for (let i = currentIndex - 1; i >= 0; i--) {
-            const element = allFocusable[i];
-            if (element.offsetParent !== null) { // Check if element is visible
-              return element;
+      function unitFieldKeyDownHandler(event) {
+        if (event.key === 'Tab') {
+          event.preventDefault();
+          setTimeout(() => {
+            const instance = demoPkg.UcumDemo.getInstance();
+            if (instance.newFieldCreated_) {
+              instance.newFieldCreated_ = false;
+            } else {
+              // Restore default behavior of TAB key, if no new fields were created.
+              const nextElement = instance.getNextFocusableElement(document.activeElement, event.shiftKey);
+              nextElement?.focus();
             }
-          }
-        } else {
-          for (let i = currentIndex + 1; i < allFocusable.length; i++) {
-            const element = allFocusable[i];
-            if (element.offsetParent !== null) { // Check if element is visible
-              return element;
-            }
-          }
+          }, 0);
         }
       }
       const convertFrom = document.getElementById('convertFrom');
-      convertFrom.addEventListener('keydown', (event) => {
-        if (event.key === 'Tab') {
-          event.preventDefault();
-          setTimeout(() => {
-            if (demoPkg.UcumDemo.getInstance().newFieldCreated_) {
-              demoPkg.UcumDemo.getInstance().newFieldCreated_ = false;
-            } else {
-              // Restore default behavior of TAB key, if no new fields were created.
-              const nextElement = getNextFocusableElement(document.activeElement, event.shiftKey);
-              nextElement?.focus();
-            }
-          }, 0);
-        }
-      });
+      convertFrom.addEventListener('keydown', unitFieldKeyDownHandler);
       const convertTo = document.getElementById('convertTo');
-      convertTo.addEventListener('keydown', (event) => {
-        if (event.key === 'Tab') {
-          event.preventDefault();
-          setTimeout(() => {
-            if (demoPkg.UcumDemo.getInstance().newFieldCreated_) {
-              demoPkg.UcumDemo.getInstance().newFieldCreated_ = false;
-            } else {
-              const nextElement = getNextFocusableElement(document.activeElement, event.shiftKey);
-              nextElement?.focus();
-            }
-          }, 0);
-        }
-      });
+      convertTo.addEventListener('keydown', unitFieldKeyDownHandler);
     </script>
 
     <!--An invisible element for announcing stuff with the screen reader.-->
