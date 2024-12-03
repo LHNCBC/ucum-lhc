@@ -1427,6 +1427,15 @@ export class UcumDemo {
     }
   }
 
+
+  /**
+   * Check whether an element is hidden in DOM.
+   * @param element a DOM element we'd like to test for visibility
+   */
+  isElementHidden(element) {
+    return (element.offsetParent === null || window.getComputedStyle(element).visibility === 'hidden');
+  }
+
   /**
    * Get the next visible, focusable element.
    * @param element current focused element
@@ -1439,14 +1448,14 @@ export class UcumDemo {
     if (reverse) {
       for (let i = currentIndex - 1; i >= 0; i--) {
         const element = allFocusable[i];
-        if (element.offsetParent !== null) { // Check if element is visible
+        if (!this.isElementHidden(element)) { // Check if element is visible
           return element;
         }
       }
     } else {
       for (let i = currentIndex + 1; i < allFocusable.length; i++) {
         const element = allFocusable[i];
-        if (element.offsetParent !== null) { // Check if element is visible
+        if (!this.isElementHidden(element)) { // Check if element is visible
           return element;
         }
       }
