@@ -113,6 +113,14 @@ export class UcumDemo {
 
     let self = this ;
     UcumDemo.getInstance = function(){return self} ;
+
+    // Message string to be put in the "liveRegion" for screen readers.
+    this.announceMsg_ = '';
+    // This is only used to keep broswer focus on the input element when
+    // user tab out of a unit field and results in charge and/or molecular
+    // weight field being created, so that the screen reader has predictable
+    // behavior.
+    this.newFieldCreated_ = false;
   }
 
   /**
@@ -317,11 +325,14 @@ export class UcumDemo {
 
 
   /**
-   * This method is run when the Converter tab is displayed, to reset the
-   * variables that track the validity of the three inputs ("from" unit code,
-   * "from" value, and "to" unit code) that must be correct to attempt a
-   * conversion as well as to reset the molecular weight division to hidden
+   * This method is run when the Converter tab is displayed.
+   * It resets the variables that track the validity of the three inputs
+   * ("from" unit code, "from" value, and "to" unit code) that must be
+   * correct to attempt a conversion.
+   * It resets the molecular weight division to hidden
    * status and the associated moleWeight input field to null.
+   * It resets the charge division to hidden
+   * status and the associated charge input field to null.
    */
   showConvertTab(){
     this.convFrom_ = false ;
@@ -360,9 +371,13 @@ export class UcumDemo {
 
     let mWeightDiv = document.getElementById('molecular-weight');
     mWeightDiv.style.visibility = 'hidden';
-
     let mWeightFld = document.getElementById('moleWeight');
-    mWeightFld.value = null ;
+    mWeightFld.value = null;
+
+    let chargeDiv = document.getElementById('charge-div');
+    chargeDiv.style.visibility = 'hidden';
+    let chargeFld = document.getElementById('charge');
+    chargeFld.value = null;
 
     if (window.location.hash !== '#converter' &&
         window.location.hash !== '') {
@@ -502,12 +517,16 @@ export class UcumDemo {
       suggsField.innerHTML = '';
       suggsField.style.display = 'none';
       // This is called by a change to one of the unit fields, so
-      // hide the molecular weight division, clear the moleWeight input
+      // hide the molecular weight and charge divisions, clear the moleWeight and charge input
       // value, and clear the value of the last result field, if any
       let mWeightDiv = document.getElementById('molecular-weight');
       mWeightDiv.style.visibility = 'hidden';
       let mWeightFld = document.getElementById('moleWeight');
-      mWeightFld.value = null ;
+      mWeightFld.value = null;
+      let chargeDiv = document.getElementById('charge-div');
+      chargeDiv.style.visibility = 'hidden';
+      let chargeFld = document.getElementById('charge');
+      chargeFld.value = null;
       /*
       if (this.lastResultFld_) {
         let rf = document.getElementById(this.lastResultFld_);
@@ -781,7 +800,7 @@ export class UcumDemo {
 
     // if both code fields are valid, and the number field that is not
     // being calculated is valid, perform the conversion
-    if (this.convFrom_ === true && this.convTo_ === true) {
+    if (this.convFrom_ === true && this.convTo_ === true && valid) {
       if (resultSide === 'from' && this.convToNum_) {
         this.convertUnit('convertTo',
                          'convertToNum',
@@ -799,7 +818,7 @@ export class UcumDemo {
 
 
   /**
-   * This method checks a number of units value or the moleWeight value to make
+   * This method checks a number of units value or the moleWeight/charge value to make
    * it's a valid number.  It calls setConvertValues to set the validity state
    * flag for the number of units field as appropriate.
    *
@@ -810,7 +829,7 @@ export class UcumDemo {
 
     let checkFld = document.getElementById(numField);
     let checkVal = escapeHtml(checkFld.value);
-    if (numField === 'moleWeight')
+    if (numField === 'moleWeight' || numField === 'charge')
       var resFld = document.getElementById(this.lastResultFld_) ;
     else {
       resFld = numField === 'convertFromNum' ?
@@ -824,7 +843,8 @@ export class UcumDemo {
       resFld.value = '';
       let parsedNum = "" + checkVal;
       if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
-        resultString.innerHTML = `${checkVal} is not a valid number.`;
+        resultString.innerHTML = `"${checkVal}" is not a valid number.`;
+        this._announce(`"${checkVal}" is not a valid number.`);
         this.setConvertValues(numField, false);
       }
       else {
@@ -939,10 +959,16 @@ export class UcumDemo {
     suggsField.style.display = 'none';
 
     let weightField = document.getElementById("moleWeight");
-    let moleWeightVal = weightField.value ;
+    let moleWeightVal = weightField.value || null;
+    let chargeField = document.getElementById('charge');
+    let chargeVal = chargeField.value || null;
 
-    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName,
-                                                true, moleWeightVal);
+    const convertOptions = { suggest: true };
+    if (moleWeightVal)
+      convertOptions.molecularWeight = moleWeightVal;
+    if (chargeVal)
+      convertOptions.charge = chargeVal;
+    let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, convertOptions);
 
     if (resultObj['status'] === 'succeeded') {
       let toVal = resultObj['toVal'];
@@ -990,21 +1016,46 @@ export class UcumDemo {
         'perform the conversion.';
     }
 
-    // Else result status was failed.  Either a molecular weight is needed
-    // for a mass<->moles conversion or 1 or more invalid unit expressions
-    // were found (status = 'failed')
+    // Else result status was failed. It could be:
+    // A molecular weight is needed for a mass<->moles conversion.
+    // A charge is needed for from mass/moles to equivalents and vice versa.
+    // 1 or more invalid unit expressions were found (status = 'failed').
     else {
       if (resultObj['msg']) {
+        this.newFieldCreated_ = false;
+        this.announceMsg_ = '';
         let idx = resultObj['msg'].indexOf(Ucum.needMoleWeightMsg_);
         if (idx >= 0) {
           this._requestMolecularWeight();
+          this.announceMsg_ += ' Molecular weight field has appeared.';
           resultObj['msg'].splice(idx, 1);
           if (resultObj['msg'].length > 0)
             resultMsg = resultObj['msg'].join('<BR>');
           else
             resultMsg = '';
         } else {
-          resultMsg = resultObj['msg'].join('<BR>');
+          let idxEqCharge = resultObj['msg'].indexOf(Ucum.needEqChargeMsg_);
+          if (idxEqCharge >= 0) {
+            this._requestCharge();
+            this.announceMsg_ += ' Charge field has appeared.';
+            resultObj['msg'].splice(idxEqCharge, 1);
+          }
+          let idxEqWeight = resultObj['msg'].indexOf(Ucum.needEqWeightMsg_);
+          if (idxEqWeight >= 0) {
+            this._requestMolecularWeight();
+            this.announceMsg_ += ' Molecular weight field has appeared.';
+            resultObj['msg'].splice(idxEqWeight, 1);
+          }
+          if (resultObj['msg'].length > 0) {
+            resultMsg = resultObj['msg'].join('<BR>');
+            this._announce(resultMsg);
+          } else {
+            resultMsg = '';
+          }
+        }
+        // Announce the appearance of the field.
+        if (this.newFieldCreated_) {
+          this._announce(this.announceMsg_);
         }
       }
       // if suggestions were found, output the suggestions to the suggestions
@@ -1124,9 +1175,9 @@ export class UcumDemo {
    *  is currently not displayed (before being toggled).
    * @param noneText the text that shows on the button when the target element
    *  is currently displayed (before being toggled).
-   *
+   * @param sectionName the name of the section being toggled.
    */
-  toggleDisplay(elementID, buttonID, blockText, noneText) {
+  toggleDisplay(elementID, buttonID, blockText, noneText, sectionName) {
 
     this.utils_.useHTMLInMessages(true);
     this.utils_.useBraceMsgForEachString(true);
@@ -1138,11 +1189,13 @@ export class UcumDemo {
     if (theElement) {
       if (theElement.style.display === "none") {
         theElement.style.display = "block";
+        this._announce(`Showing ${sectionName} section.`);
         if (theButton)
           theButton.innerText = theButton.innerText.replace(noneText, blockText);
       }
       else {
         theElement.style.display = "none";
+        this._announce(`Hiding ${sectionName} section.`);
         if (theButton)
           theButton.innerText = theButton.innerText.replace(blockText, noneText);
       }
@@ -1327,14 +1380,86 @@ export class UcumDemo {
 
 
   /**
+   * Announce a field with the screen reader.
+   */
+  _announce(msg) {
+    const liveRegion = document.getElementById("liveRegion");
+    // ARIA live region will not announce if the content didn't change.
+    // One way around this would be to first clear all the contents of the live region
+    // and then inject the new content (with settimeout), but this is unreliable.
+    // Replacing '.' with ',' and vice versa when the content didn't change works best.
+    if (liveRegion.textContent === msg) {
+      msg = msg.replace(/\.|,/g, match => (match === '.' ? ',' : '.'));
+    }
+    liveRegion.textContent = msg;
+  }
+
+
+  /**
    * This makes the division with the request for molecular weight
    * visible.
-   *
    * @private
    */
   _requestMolecularWeight() {
     let weightDiv = document.getElementById('molecular-weight');
-    weightDiv.style.visibility = 'visible';
+    if (weightDiv.style.visibility !== 'visible') {
+      weightDiv.style.visibility = 'visible';
+      this.newFieldCreated_ = true;
+      // Blank out the number field of the result side, while we wait for user input.
+      let resFld = document.getElementById(this.lastResultFld_);
+      resFld.value = null;
+    }
+  }
+
+
+  /**
+   * This makes the division with the request for charge visible.
+   * @private
+   */
+  _requestCharge() {
+    let chargeDiv = document.getElementById('charge-div');
+    if (chargeDiv.style.visibility !== 'visible') {
+      chargeDiv.style.visibility = 'visible';
+      this.newFieldCreated_ = true;
+      // Blank out the number field of the result side, while we wait for user input.
+      let resFld = document.getElementById(this.lastResultFld_);
+      resFld.value = null;
+    }
+  }
+
+
+  /**
+   * Check whether an element is hidden in DOM.
+   * @param element a DOM element we'd like to test for visibility
+   */
+  isElementHidden(element) {
+    return (element.offsetParent === null || window.getComputedStyle(element).visibility === 'hidden');
+  }
+
+  /**
+   * Get the next visible, focusable element.
+   * @param element current focused element
+   * @param reverse if true, traverse backwards (in the case of 'SHIFT+TAB'
+   */
+  getNextFocusableElement(element, reverse = false) {
+    const focusableElements = 'input, [tabindex]:not([tabindex="-1"])';
+    const allFocusable = Array.from(document.querySelectorAll(focusableElements));
+    const currentIndex = allFocusable.indexOf(element);
+    if (reverse) {
+      for (let i = currentIndex - 1; i >= 0; i--) {
+        const element = allFocusable[i];
+        if (!this.isElementHidden(element)) { // Check if element is visible
+          return element;
+        }
+      }
+    } else {
+      for (let i = currentIndex + 1; i < allFocusable.length; i++) {
+        const element = allFocusable[i];
+        if (!this.isElementHidden(element)) { // Check if element is visible
+          return element;
+        }
+      }
+    }
   }
 
 } // end class UcumDemo
