@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
      crossorigin="anonymous" />
     <!--#include file="../common-head-tags.shtml" -->
     <link rel="canonical" href="https://ucum.nlm.nih.gov/ucum-lhc/demo.html" />
@@ -30,14 +29,14 @@
 
       <!-- navigator/converter tabs -->
       <ul class="tab nav nav-tabs">
-        <li class="active">
-            <a id="validation-link" href="#validation" class="tablinks"
-               data-toggle="tab"
+        <li class="nav-item">
+            <a id="validation-link" href="#validation" class="nav-link active"
+               data-bs-toggle="tab"
                onclick="demoPkg.UcumDemo.getInstance().showValidateTab()">
                Validator</a></li>
-        <li>
-            <a id="conversion-link" href="#conversion" class="tablinks"
-               data-toggle="tab"
+        <li class="nav-item">
+            <a id="conversion-link" href="#conversion" class="nav-link"
+               data-bs-toggle="tab"
                onclick="demoPkg.UcumDemo.getInstance().showConvertTab()">
                Converter</a></li>
       </ul>
@@ -162,7 +161,7 @@
         </div> <!-- end Converter tab -->
 
         <!-- Validator tab -->
-        <div id="validation" class="tabcontent tab-pane fade in active">
+        <div id="validation" class="tabcontent tab-pane fade show active">
           <h2>UCUM Unit Expression Validation</h2>
           <div id="singleString" class="section">
             <h3>Validate unit expressions one at a time</h3>
@@ -280,8 +279,7 @@
      integrity="sha384-y5lNC4qz9o7wG9yIIQQNcxxqEkWqnPit6/VnEJ9jag/gFgocblckjXdkE4NWh+0U"
      crossorigin="anonymous"></script>
     <script src="./ucum-demo.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
      crossorigin="anonymous"></script>
     <script>
       const advSearchOpts = document.getElementById('advSearchOpts');
