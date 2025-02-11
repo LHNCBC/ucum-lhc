@@ -248,8 +248,8 @@ button {
 }
 
 a {
-  color:  #17317a;
-  text-decoration: underline ;
+  color:  #17317a !important;
+  text-decoration: underline !important;
 }
 
 .emphSpan {
