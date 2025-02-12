@@ -248,8 +248,16 @@ button {
 }
 
 a {
-  color:  #17317a !important;
-  text-decoration: underline !important;
+  color: #17317a;
+  text-decoration: underline;
+}
+
+.nav-link {
+  color: #17317a;
+}
+
+.nav-link.active {
+  color: #555 !important;
 }
 
 .emphSpan {
