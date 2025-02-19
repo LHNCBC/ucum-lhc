@@ -67,6 +67,7 @@
                     <span class="input-field">
                       <input type="text" id="convertFrom" class="input-field"
                              aria-label="left unit"
+                             spellcheck="false"
                         placeholder="Enter UCUM code ...">
                     </span>
                     <div id="convertFromName" class="unit-name" wrap="soft"></div>
@@ -92,6 +93,7 @@
                     <span class="input-field">
                       <input type="text" id="convertTo" class="input-field"
                              aria-label="right unit"
+                             spellcheck="false"
                         placeholder="Enter UCUM code ...">
                     </span>
                     <div id="convertToName" class="unit-name" wrap="soft"></div>
@@ -171,7 +173,8 @@
                    autocompleter for this field, in the demo.js constructor -->
               <div class="flex-container" id="valStringDiv">
                 <div>
-                  <input type="text" id="valString" placeholder="Enter UCUM expression ...">&nbsp; &nbsp;
+                  <input type="text" id="valString" placeholder="Enter UCUM expression ..."
+                         spellcheck="false">&nbsp; &nbsp;
                 </div>
                 <div id="validationString">&nbsp;&nbsp;</div>
               </div> <!-- valStringDiv -->
