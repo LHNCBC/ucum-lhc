@@ -53,6 +53,9 @@ module.exports = function(grunt) {
         files: [ {
           src: ['./demo/stylesheets/ucumDemo.css'],
           dest: './docs/ucumDemo.min.css'
+        }, {
+          src: ['./node_modules/bootstrap/dist/css/bootstrap.css'],
+          dest: './docs/bootstrap.min.css'
         }]
       }
     } ,
@@ -72,13 +75,22 @@ module.exports = function(grunt) {
 
     // use uglify to minify the javascript files
     uglify: {
-      options: { sourceMap: true, compress: true },
+      options: { compress: true },
       demo: {
         options: {
+          sourceMap: true,
           sourceMapIn: './docs/ucum-demo.js.map'
         },
         files: {
           './docs/ucum-demo.min.js' : ['./docs/ucum-demo.js']
+        }
+      },
+      bootstrap: {
+        options: {
+          sourceMap: false
+        },
+        files: {
+          './docs/bootstrap.bundle.min.js' : ['./node_modules/bootstrap/dist/js/bootstrap.bundle.js']
         }
       }
     } ,
@@ -122,6 +134,7 @@ module.exports = function(grunt) {
                                     "browserify:demo",
                                     "extract_sourcemap:demo",
                                     "cssmin",
-                                    "uglify:demo"]);
+                                    "uglify:demo",
+                                    "uglify:bootstrap"]);
   grunt.registerTask("build", ["build:demo"]);
 };

@@ -15,7 +15,7 @@ describe('UCUM Demo page tests', function(){
   it('should start out displaying the validation tab by default', function(){
     cy.visit('docs/demo.html');
     // verify that the validator tab page is initially active
-    cy.get('.tab.nav.nav-tabs li:first-child').should('have.class', 'active');
+    cy.get('.tab.nav.nav-tabs li:first-child a').should('have.class', 'active');
   });
 
 

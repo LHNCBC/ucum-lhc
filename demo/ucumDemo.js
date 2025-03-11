@@ -5,6 +5,8 @@
  * populating the autocompleter unit lists.
  */
 
+import { Tab as Tab } from 'bootstrap';
+
 var escapeHtml = require('escape-html');
 
 var ucumPkg = require('@lhncbc/ucum-lhc');
