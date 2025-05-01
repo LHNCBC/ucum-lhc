@@ -784,7 +784,7 @@ export class UnitString {
     let psIdx = pStr.indexOf(this.parensFlag_);
     let befText = null;
     if (psIdx > 0) {
-      befText = pStr.substr(0, psIdx - 1);
+      befText = pStr.substring(0, psIdx);
     }
     let peIdx = pStr.lastIndexOf(this.parensFlag_);
     let aftText = null;
