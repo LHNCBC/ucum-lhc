@@ -203,7 +203,6 @@ describe('Test parseString method', function() {
     });
   }) ;
 
-
   describe('Test for unit string with double operators', function() {
     var uString = UnitString.getInstance();
     var retMsg = [];
@@ -360,7 +359,6 @@ describe('Test parseString method', function() {
     });
   }) ;
 
-
   describe('test for unit string {degF}', function() {
     var uString = UnitString.getInstance();
     var retMsg = [];
@@ -384,7 +382,6 @@ describe('Test parseString method', function() {
         `respMsg = ${JSON.stringify(respMsg)}`);
     });
   }) ;
-
 
   describe('test for unit string in_i', function() {
     var uString = UnitString.getInstance();
@@ -706,13 +703,30 @@ describe('Test parseString method', function() {
     });
   });
 
-
   it('should set flags for exponents on mol and eq', ()=>{
     const uString = UnitString.getInstance();
     let resp = uString.parseString('mol3', 'validate');
     assert.equal(resp[0].moleExp_, 3);
     resp = uString.parseString('eq4', 'validate');
     assert.equal(resp[0].equivalentExp_, 4);
+  });
+
+  describe('test for unit expression lg([iU])/mL with suggestions', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('lg([iU])/mL', 'validate', true);
+    var respMsg = resp[2] ;
+    it("should return an error message", function() {
+      assert.equal(respMsg, 'lg preceding the unit code [iU] is invalid.  Unable to make a substitution.');
+    });
+  });
+
+  describe('test for a unit before a parenthesized unit, with suggestions', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('l([iU])', 'validate', true);
+    var respMsg = resp[2] ;
+    it("should return an error message", function() {
+      assert.equal(respMsg, 'l preceding the unit code [iU] is invalid.  Unable to make a substitution.');
+    });
   });
 
 }); // end test ParseString method
