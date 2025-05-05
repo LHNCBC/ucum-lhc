@@ -843,18 +843,11 @@ export class UnitString {
             `code is invalid.\n` + this.vcMsgStart_ + pStr + this.vcMsgEnd_);
         }
         // else the text before the parentheses is neither a number nor
-        // an annotation.  If suggestions were NOT requested, record an
-        // error.
-        else if (!this.suggestions_) {
+        // an annotation. Record an error.
+        else {
           this.retMsg_.push(`${befText} preceding the unit code ${pStr} ` +
             `is invalid.  Unable to make a substitution.`);
           endProcessing = true;
-        }
-        // otherwise try for suggestions
-        else {
-          let suggestStat = this._getSuggestions(befText);
-          endProcessing =  (suggestStat !== 'succeeded');
-
         } // end if a brace was found or, if not, suggestions were not or
           // were requested
       } // end if text preceding the parentheses was not a number
@@ -895,17 +888,11 @@ export class UnitString {
           endProcessing = true;
         }
         // else the text after the parentheses is neither a number nor
-        // an annotation.  If suggestions were NOT requested, record an
-        // error.
-        else if (!this.suggestions_) {
+        // an annotation. Record an error.
+        else {
           this.retMsg_.push(`Text ${aftText} following the unit code ${pStr} ` +
             `is invalid.  Unable to make a substitution.`);
           endProcessing = true;
-        }
-        // otherwise try for suggestions
-        else {
-          let suggestStat = this._getSuggestions(befText);
-          endProcessing =  (suggestStat !== 'succeeded');
         } // end if text following the parentheses not an exponent
       } // end if text following the parentheses is not an annotation
     } // end if there is text following the parentheses
