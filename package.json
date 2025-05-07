@@ -3,7 +3,7 @@
   "main": "demo.html",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
   "dependencies": {
-    "@lhncbc/ucum-lhc": "^7.1.1",
+    "@lhncbc/ucum-lhc": "^7.1.3",
     "csv-parse": "^4.4.6",
     "csv-stringify": "^1.0.4",
     "escape-html": "^1.0.3",
