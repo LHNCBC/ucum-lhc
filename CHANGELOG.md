@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.3] 2025-05-05
+### Fixed
+- A unit before/after a parenthesized unit was falsely reported as valid,
+  when suggest=true.
+
 ## [7.1.2] 2024-12-19
 ### Changed
 - Upgraded to nodejs version 22.
