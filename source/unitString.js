@@ -848,8 +848,7 @@ export class UnitString {
           this.retMsg_.push(`${befText} preceding the unit code ${pStr} ` +
             `is invalid.  Unable to make a substitution.`);
           endProcessing = true;
-        } // end if a brace was found or, if not, suggestions were not or
-          // were requested
+        } // end if a brace was found
       } // end if text preceding the parentheses was not a number
     } // end if there was text before the parentheses
 

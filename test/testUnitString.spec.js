@@ -729,6 +729,15 @@ describe('Test parseString method', function() {
     });
   });
 
+  describe('test for a unit after a parenthesized unit, with suggestions', function() {
+    var uString = UnitString.getInstance();
+    var resp = uString.parseString('(m)s', 'validate', true);
+    var respMsg = resp[2] ;
+    it("should return an error message", function() {
+      assert.equal(respMsg, 'Text s following the unit code m is invalid.  Unable to make a substitution.');
+    });
+  });
+
 }); // end test ParseString method
 
 
