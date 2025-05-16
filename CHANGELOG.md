@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2025-05-16
+### Fixed
+- CDN fallback worked on Chrome but not on Firefox.
+
 ## [demo-1.0.1] 2024-05-03
 ### Fixed
 - An issue where the error message disappears the second time you validate
