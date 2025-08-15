@@ -364,13 +364,13 @@ If you wish to modify or update either of the source data files (ucum-essence.xm
 ### Testing
 Tests can be run with:
 
-   npm run test
+    npm run test
 
-Although package does not directly use UCUM "Functional Tests"
+Although package does not directly use the UCUM "Functional Tests"
 (https://ucum.org/docs/functional-tests and
 https://github.com/FHIR/Ucum-java/blob/master/src/test/resources/UcumFunctionalTests.xml),
 we have run those tests using ucum-lhc, and we found that all but two tests pass.
 The two tests that do not pass are checking for rounding of values at the right
 number of signifant digits.  The package does not round to significant digits,
-since if you do that rounding too early in a calculation, you can lose accuracy.
+since if you round too early in a calculation, you can lose accuracy.
 
