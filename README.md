@@ -183,7 +183,8 @@ using them in actual clinical settings.
    * 'status' the will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
       the units are not commensurable; or 'error' if an error occurred;
-   * 'toVal' the numeric value indicating the conversion amount, or null
+   * 'toVal' the numeric value indicating the conversion amount (without any
+      rounding for significant digits), or null
       if the conversion failed (e.g., the units are not commensurable);
    * 'msg' is an array of messages, if the string is invalid or an
       error occurred, indicating the problem, or an explanation of a
@@ -359,3 +360,17 @@ If you wish to modify the code, the build process is simply:
     npm run build
 
 If you wish to modify or update either of the source data files (ucum-essence.xml or ucum.csv), see impexp/README.md for instructions on build steps for data changes.
+
+### Testing
+Tests can be run with:
+
+    npm run test
+
+Although package does not directly use the UCUM "Functional Tests"
+(https://ucum.org/docs/functional-tests and
+https://github.com/FHIR/Ucum-java/blob/master/src/test/resources/UcumFunctionalTests.xml),
+we have run those tests using ucum-lhc, and we found that all but two tests pass.
+The two tests that do not pass are checking for rounding of values at the right
+number of signifant digits.  The package does not round to significant digits,
+since if you round too early in a calculation, you can lose accuracy.
+
