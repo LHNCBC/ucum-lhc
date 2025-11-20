@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2025-09-29
+### Fixed
+- Additional UCUM URLs were found and updated.
+
 ## 2025-08-29
 ### Fixed
 - The URLs to the UCUM site stopped working, because unitsofmeasure.org no
