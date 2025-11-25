@@ -3,6 +3,7 @@
   "version": "7.1.3",
   "description": "Implements Unified Code for Units of Measure (UCUM) functions in a javascript library",
   "main": "source-cjs/ucumPkg.js",
+  "types": "types/index.d.ts",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
   "directories": {
     "test": "test"
@@ -11,7 +12,8 @@
     "browser-dist/ucum-lhc.min.*",
     "source-cjs/*",
     "source/*",
-    "data/ucumDefs.min.json"
+    "data/ucumDefs.min.json",
+    "types/*"
   ],
   "dependencies": {
     "coffeescript": "^2.7.0",
@@ -48,6 +50,7 @@
     "path": "^0.12.7",
     "semver": "^5.5.1",
     "time-grunt": "^1.4.0",
+    "typescript": "^5.8.2",
     "webpack": "^5.20.2",
     "webpack-cli": "^5.0.1"
   },
