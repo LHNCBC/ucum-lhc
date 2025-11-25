@@ -1,6 +1,6 @@
 # ucum-lhc
 This is the LHC implementation of validation and conversion services based on
-the [Unified Code for Units of Measure](http://unitsofmeasure.org) (UCUM) code
+the [Unified Code for Units of Measure](https://ucum.org) (UCUM) code
 system created by the Regenstrief Institute, Inc.  
 
 See our [overview page](https://ucum.nlm.nih.gov/ucum-lhc) for
@@ -146,9 +146,7 @@ utils object as described above):
 For information on unit string formatting, look at the _Ucum Unit Expression 
 Validation_ section on the [demo page](https://ucum.nlm.nih.gov/ucum-lhc/demo.html).  
 There is a button labeled "Show entry hints".  That will give you a short description 
-of unit strings, and includes a link to the 
-[UCUM Specification](http://unitsofmeasure.org/ucum.html), where you can find 
-the full deal.
+of unit strings, and includes a link to the [UCUM Specification](https://ucum.org/ucum).
 
 #### convertUnitTo(fromUnitCode, fromVal, toUnitCode, options)
 

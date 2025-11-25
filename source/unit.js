@@ -160,7 +160,7 @@ export class Unit {
      * Added when added LOINC list of units
      * synonyms are used by the autocompleter to enhance lookup capabilities
      * while source says where the unit first shows up.  Current sources are
-     * UCUM - which are units from the unitsofmeasure.org list and LOINC -
+     * UCUM - which are units from the https://ucum.org/ucum specification and LOINC -
      * which are units from the LOINC data.
      */
     this.synonyms_ = attrs['synonyms_'] || null ;

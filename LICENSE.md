@@ -23,14 +23,13 @@ If this product includes all or a portion of the UCUM table, UCUM codes, and
 UCUM definitions or is derived from it, it is subject to a license from 
 Regenstrief Institute, Inc. and The UCUM Organization. Your use of the UCUM table, 
 UCUM codes, UCUM definitions also is subject to this license, a copy of which is 
-available at http://unitsofmeasure.org. The current complete UCUM table, UCUM 
-Specification are available for download at http://unitsofmeasure.org. The UCUM 
+available at https://ucum.org/license. The current complete UCUM table and UCUM 
+Specification are available for download at https://ucum.org. The UCUM 
 table and UCUM codes are copyright &#169; 1995-2009, Regenstrief Institute, Inc. 
 and the Unified Codes for Units of Measures (UCUM) Organization. All rights reserved. 
 
 If UCUM content is included, this software is distributed under the conditions 
-set forth at http://unitsofmeasure.org/trac/wiki/TermsOfUse and the following 
-terms and conditions.
+set forth at https://ucum.org/license and the following terms and conditions.
 
 The following terms and conditions are based on the BSD open-source license.
 
