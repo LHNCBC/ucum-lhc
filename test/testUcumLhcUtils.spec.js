@@ -768,6 +768,21 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp.toVal, null);
     assert.equal(resp.msg[0], 'Attempt to convert arbitrary unit "[iU]"');
   });
+
+  it('should correctly handle two-letter prefixes with exponents- case 1: "da2"', ()=>{
+    const resp = utils.convertUnitTo('dag2', 2, 'cg2');
+    assert.equal(resp.status, 'succeeded');
+    assert.equal(resp.toVal, 2000000);
+    assert.equal(resp.msg.length, 0);
+  });
+
+  it('should correctly handle two-letter prefixes with exponents- case 2: "Kig2"', ()=>{
+    const resp = utils.convertUnitTo('Kig2', 2, 'cg2');
+    assert.equal(resp.status, 'succeeded');
+    assert.equal(resp.toVal, 20971520000);
+    assert.equal(resp.msg.length, 0);
+  });
+
 }); // end convertUnitTo tests
 
 describe('Test getSynonyms method', function() {

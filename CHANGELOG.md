@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.4] 2026-01-22
+### Fixed
+- Two-letter prefixes like "Ki" are now supported.  Previously "da" was the only
+  supported two-letter prefix.  I think perhaps when the code was written, "da"
+  was the only two-letter prefex, and some new ones were added with an update
+  to the UCUM definitions file.
+
 ## [7.1.3] 2025-05-05
 ### Fixed
 - A unit before/after a parenthesized unit was falsely reported as valid,

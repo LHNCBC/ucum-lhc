@@ -1165,41 +1165,41 @@ export class UnitString {
           if (!origUnit) {
             // Try for a single character prefix first.
             pfxCode = uCode.charAt(0);
+            uCode = uCode.substr(1);
             pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
 
             // if we got a prefix, get its info and remove it from the unit code
             if (pfxObj) {
               pfxVal = pfxObj.getValue();
               pfxExp = pfxObj.getExp();
-              let pCodeLen = pfxCode.length;
-              uCode = uCode.substr(pCodeLen);
 
               // try again for the unit
               origUnit = this.utabs_.getUnitByCode(uCode);
+            }
 
-              // If we still don't have a unit, see if the prefix could be the
-              // two character "da" (deka) prefix.  That's the only prefix with
-              // two characters, and without this check it's interpreted as "d"
-              // (deci) and the "a" is considered part of the unit code.
-
-              if (!origUnit && pfxCode == 'd' && uCode.substr(0, 1) == 'a') {
-                pfxCode = 'da';
-                pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
+            // If we still don't have a unit, see if the prefix could be the
+            // two character prefix.
+            if (!origUnit) {
+              pfxCode = pfxCode + uCode.charAt(0);
+              pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
+              // if we got a prefix, get its info and remove it from the unit code
+              if (pfxObj) {
                 pfxVal = pfxObj.getValue();
+                pfxExp = pfxObj.getExp();
                 uCode = uCode.substr(1);
 
                 // try one more time for the unit
                 origUnit = this.utabs_.getUnitByCode(uCode);
               }
+            }
 
-              // Reject the unit we found if it might have another prefix.
-              // Such things are in our tables through the LOINC source_
-              // (ucum.csv) which has guidance and synonyms.  I think it should be
-              // safe to exclude anything whose source is LOINC from having a
-              // prefix.
-              if (origUnit && origUnit.source_ == 'LOINC')
-                origUnit = null;
-            } // end if we found a prefix
+            // Reject the unit we found if it might have another prefix.  (??)
+            // Such things are in our tables through the LOINC source_
+            // (ucum.csv) which has guidance and synonyms.  I think it should be
+            // safe to exclude anything whose source is LOINC from having a
+            // prefix.
+            if (origUnit && origUnit.source_ == 'LOINC')
+              origUnit = null;
           } // end if we didn't get a unit after removing an exponent
 
           // If we still haven't found anything, we're done looking.
@@ -1233,7 +1233,6 @@ export class UnitString {
             // and magnitude now
             if (exp) {
               exp = parseInt(exp);
-              let expMul = exp;
               if (theDim)
                 theDim = theDim.mul(exp);
               retUnit.equivalentExp_ *= exp;
@@ -1243,22 +1242,10 @@ export class UnitString {
 
               // If there is also a prefix, apply the exponent to the prefix.
               if (pfxObj) {
-
-                // if the prefix base is 10 it will have an exponent.  Multiply
-                // the current prefix exponent by the exponent for the unit
-                // we're working with.  Then raise the prefix value to the level
-                // defined by the exponent.
-                if (pfxExp) {
-                  expMul *= pfxObj.getExp();
-                  pfxVal = Math.pow(10, expMul);
-                }
-                // If the prefix base is not 10, it won't have an exponent.
-                // At the moment I don't see any units using the prefixes
-                // that aren't base 10.   But if we get one the prefix value
-                // will be applied to the magnitude (below) if the unit does
-                // not have a conversion function, and to the conversion prefix
-                // if it does.
-              } // end if there's a prefix as well as the exponent
+                // We don't need to consider pfxObj.getExp(), because when
+                // present that is reflected in the pfxVal.
+                pfxVal = Math.pow(pfxVal, exp);
+              }
             } // end if there's an exponent
 
             // Now apply the prefix, if there is one, to the conversion
