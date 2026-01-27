@@ -1134,7 +1134,6 @@ export class UnitString {
         let pfxCode = null;
         let pfxObj = null;
         let pfxVal = null;
-        let pfxExp = null;
 
         // Look first for an exponent.  If we got one, separate it out and
         // try to get the unit again
@@ -1163,35 +1162,18 @@ export class UnitString {
           // If we still don't have a unit, separate out the prefix, if any,
           // and try without it.
           if (!origUnit) {
-            // Try for a single character prefix first.
-            pfxCode = uCode.charAt(0);
-            uCode = uCode.substr(1);
-            pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
-
-            // if we got a prefix, get its info and remove it from the unit code
-            if (pfxObj) {
-              pfxVal = pfxObj.getValue();
-              pfxExp = pfxObj.getExp();
-
-              // try again for the unit
-              origUnit = this.utabs_.getUnitByCode(uCode);
-            }
-
-            // If we still don't have a unit, see if the prefix could be the
-            // two character prefix.
-            if (!origUnit) {
-              pfxCode = pfxCode + uCode.charAt(0);
+            // Try for a single character prefix first, then for a two-digit prefix
+            pfxCode = '';
+            do {
+              pfxCode += uCode.charAt(0);
+              uCode = uCode.substr(1);
               pfxObj = this.pfxTabs_.getPrefixByCode(pfxCode);
-              // if we got a prefix, get its info and remove it from the unit code
               if (pfxObj) {
                 pfxVal = pfxObj.getValue();
-                pfxExp = pfxObj.getExp();
-                uCode = uCode.substr(1);
-
-                // try one more time for the unit
+                // try again for the unit
                 origUnit = this.utabs_.getUnitByCode(uCode);
               }
-            }
+            } while (!origUnit && pfxCode.length < 2)
 
             // Reject the unit we found if it might have another prefix.  (??)
             // Such things are in our tables through the LOINC source_

@@ -911,6 +911,7 @@ describe('Test makeUnit method', function() {
     var retOrig = resp[1];
     assert.ok(retUnit);
     assert.equal(retUnit['csCode_'], 'Kig');
+    assert.equal(retUnit['magnitude_'], 1024);
   });
 
 }); // end test makeUnit method
