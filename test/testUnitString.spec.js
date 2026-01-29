@@ -903,6 +903,17 @@ describe('Test makeUnit method', function() {
     });
   });
 
+  it('should handle two-character prefixes like Ki', function() {
+    var uString = UnitString.getInstance();
+    var origString = 'Kig';
+    var resp = uString._makeUnit(origString, origString);
+    var retUnit = resp[0];
+    var retOrig = resp[1];
+    assert.ok(retUnit);
+    assert.equal(retUnit['csCode_'], 'Kig');
+    assert.equal(retUnit['magnitude_'], 1024);
+  });
+
 }); // end test makeUnit method
 
 describe('Test the processParens method', function() {
@@ -1174,6 +1185,7 @@ describe('Test _isCodeWithExponent method', function() {
     assert.equal(retArray[0], '2');
     assert.equal(retArray[1], '-21');
   });
+
 
 }); // end test _isCodeWithExponent method
 
