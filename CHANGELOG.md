@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.6] 2026-01-30
+### Fixed
+- An infinite loop for single-character invalid units.
+
 ## [7.1.5] 2026-01-22
 ### Fixed
 - Two-letter prefixes like "Ki" are now supported.  Previously "da" was the only

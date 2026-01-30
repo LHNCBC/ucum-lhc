@@ -1161,7 +1161,7 @@ export class UnitString {
         else {
           // If we still don't have a unit, separate out the prefix, if any,
           // and try without it.
-          if (!origUnit) {
+          if (!origUnit && uCode.length > 1) {
             // Try for a single character prefix first, then for a two-digit prefix
             pfxCode = '';
             do {
@@ -1173,7 +1173,7 @@ export class UnitString {
                 // try again for the unit
                 origUnit = this.utabs_.getUnitByCode(uCode);
               }
-            } while (!origUnit && pfxCode.length < 2)
+            } while (!origUnit && pfxCode.length < 2 && uCode.length > 1)
 
             // Reject the unit we found if it might have another prefix.  (??)
             // Such things are in our tables through the LOINC source_
