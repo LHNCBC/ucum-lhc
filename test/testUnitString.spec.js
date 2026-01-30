@@ -915,7 +915,7 @@ describe('Test makeUnit method', function() {
   });
 
   it('should handle single-character invalid units', function() {
-    // This was in infinite loop issue.
+    // This was infinite loop issue.
     var uString = UnitString.getInstance();
     var origString = '&';
     var resp = uString._makeUnit(origString, origString);
