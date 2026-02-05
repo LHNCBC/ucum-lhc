@@ -1161,7 +1161,7 @@ export class UnitString {
         else {
           // If we still don't have a unit, separate out the prefix, if any,
           // and try without it.
-          if (!origUnit) {
+          if (!origUnit && uCode.length > 1) {
             // Try for a single character prefix first, then for a two-digit prefix
             pfxCode = '';
             do {
@@ -1173,7 +1173,7 @@ export class UnitString {
                 // try again for the unit
                 origUnit = this.utabs_.getUnitByCode(uCode);
               }
-            } while (!origUnit && pfxCode.length < 2)
+            } while (!origUnit && pfxCode.length < 2 && uCode.length > 1)
 
             // Reject the unit we found if it might have another prefix.  (??)
             // Such things are in our tables through the LOINC source_
@@ -1225,8 +1225,22 @@ export class UnitString {
               // If there is also a prefix, apply the exponent to the prefix.
               if (pfxObj) {
                 // We don't need to consider pfxObj.getExp(), because when
-                // present that is reflected in the pfxVal.
-                pfxVal = Math.pow(pfxVal, exp);
+                // present that is reflected in the pfxVal.  However, in some
+                // cases one can avoid floating-point math inaccuracies by using
+                // that exponent instead of relying on pfxVal.  For example:
+                // 1e-66 = Math.pow(10, -3*22) =  Math.pow(0.001, 22) = 1.0000000000000005e-66
+                // (This is the from the test case of the unit mg% raised to the 22nd power (mg%22).)
+                // This does not help in all cases, but it does help the above
+                // test case (which is in our web API service test code).
+                let pfxExp = pfxObj.getExp();
+                if (pfxExp) {
+                  // This is relying on the fact that pfxExp is null when
+                  // the prefix base is not 10.
+                  pfxVal = Math.pow(10, exp * pfxExp);
+                }
+                else {
+                  pfxVal = Math.pow(pfxVal, exp);
+                }
               }
             } // end if there's an exponent
 

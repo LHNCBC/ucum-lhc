@@ -914,6 +914,15 @@ describe('Test makeUnit method', function() {
     assert.equal(retUnit['magnitude_'], 1024);
   });
 
+  it('should handle single-character invalid units', function() {
+    // This was infinite loop issue.
+    var uString = UnitString.getInstance();
+    var origString = '&';
+    var resp = uString._makeUnit(origString, origString);
+    var retUnit = resp[0];
+    assert.ok(!retUnit);
+  });
+
 }); // end test makeUnit method
 
 describe('Test the processParens method', function() {
