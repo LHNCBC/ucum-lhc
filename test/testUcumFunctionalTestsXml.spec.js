@@ -72,8 +72,8 @@ function toBool(value) {
  * @returns {number}
  */
 function parseNumber(value) {
-  if (typeof value === 'number') return value;
-  if (typeof value !== 'string') return NaN;
+  if (!isFinite(value))
+    throw "Invalid value " + value;
   return parseFloat(value);
 }
 
