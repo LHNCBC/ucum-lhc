@@ -73,7 +73,7 @@ function toBool(value) {
  */
 function parseNumber(value) {
   if (!isFinite(value))
-    throw "Invalid value " + value;
+    throw new Error("Invalid value " + value);
   return parseFloat(value);
 }
 

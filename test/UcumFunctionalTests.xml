@@ -1,36 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>  
+<?xml version="1.0" encoding="UTF-8"?>
 <ucumTests>
 <!--
-  Ucum Functional Tests. 
-  
+  Ucum Functional Tests.
+
   This file is maintained by Grahame Grieve (grahameg@gmail.com).
   Contributions/Corrections are welcome, and are best made through
   the trac system at unitsofmeasure.org
-  
+
   Conformance:
-    You may declare conformance to these UCUM functional tests if 
-	your implementation accepts this file as an input, and passes 
-	all the test cases below. You should always quote the most 
-	recent date from the history entries below when claiming 
+    You may declare conformance to these UCUM functional tests if
+	your implementation accepts this file as an input, and passes
+	all the test cases below. You should always quote the most
+	recent date from the history entries below when claiming
 	conformance.
-	
+
 	You may qualify the conformance to particular kinds of cases if your
 	functionality does not cover all the tests.
-	
-	Note that conformance to these tests does not equate to 
-	conformance to UCUM itself - though one could reasonably 
+
+	Note that conformance to these tests does not equate to
+	conformance to UCUM itself - though one could reasonably
 	claim to be compliant with UCUM if one is conformant to these
 	tests.
 
-  This file is copyright © 2008 - 2009 Grahame Grieve and other 
+  This file is copyright © 2008 - 2009 Grahame Grieve and other
   contributers:
     * Gunther Schadow
 	* Lloyd Mackenzie
     * Vladimir Alexiev
- 
-  This source is licensed for public use under the Eclipse Public License 
-  (http://www.eclipse.org/legal/epl-v10.html). 
-  
+
+  This source is licensed for public use under the Eclipse Public License
+  (http://www.eclipse.org/legal/epl-v10.html).
+
 -->
   <history>
      <entry date="3-Feb 2021" author="VladimirAlexiev">Add test 4-103 for github #19: division of comparable units should produce unity</entry>
@@ -43,21 +43,21 @@
   <!-- Note: all tests use case sensitive codes -->
   <validation>
 
-    <!-- 
-	  These tests check that ucum validation code is working correctly. 
+    <!--
+	  These tests check that ucum validation code is working correctly.
 	  Each case has a unit, and whether the specified unit is valid or not
-	  No particular error is specified, but a hint is provided for why the 
+	  No particular error is specified, but a hint is provided for why the
 	  unit is not valid
 	 -->
     <case id="1-101" unit="m" valid="true"/>
 	<case id="1-102" unit="m/" valid="false" reason="/ is not followed by a term"/>
 <!--
-  strictly, "" is not a valid unit expression. But the v3 data types say 
-  it is the default to use if not units are provided. Testing this isn't 
+  strictly, "" is not a valid unit expression. But the v3 data types say
+  it is the default to use if not units are provided. Testing this isn't
   really a parser test, so it's commented out
-  
+
 	<case id="1-103" unit="" valid="false" reason="empty string is not a valid term"/>
--->  
+-->
 	<case id="1-104" unit="/m" valid="true"/>
 	<case id="1-105" unit="10*3/ul" valid="true"/>
 	<case id="1-106" unit="10*-3/ul" valid="true"/>
@@ -72,18 +72,18 @@
 	<!-- test that the parser supports both {} inserts, but not unicode characters too, while we're at it -->
   <case id="1-115" unit="rad2{a}" valid="true"/>
   <case id="1-115a" unit="rad2{錠}" valid="false" reason="Unicode is not allowed"/>
-  <case id="1-116" unit="{a}.rad2{b}" valid="true"/>    
-  <case id="1-116a" unit="{a}rad2{b}" valid="false" reason="Cannot start a symbol with an annodation"/>    
+  <case id="1-116" unit="{a}.rad2{b}" valid="true"/>
+  <case id="1-116a" unit="{a}rad2{b}" valid="false" reason="Cannot start a symbol with an annodation"/>
 	<case id="1-117" unit="1{c}" valid="true"/>
 	<case id="1-118" unit="{|}1" valid="false" reason="Cannot start a symbol with an annodation"/>
 	<case id="1-119" unit="{e}" valid="true"/>
 	<case id="1-120" unit="%" valid="true"/>
   <case id="1-120a" unit="dB[10.nV]" valid="true"/>
-	
-	<!-- 
-	  These codes are taken from the first draft of a proposed Canadian UCUM subset. 
+
+	<!--
+	  These codes are taken from the first draft of a proposed Canadian UCUM subset.
 	  (the subset was subsequently corrected after being tested) -->
-	  
+
 	<case id="1-121" unit="[cup_us]" valid="true"/>
 	<case id="1-122" unit="[foz_br]" valid="true"/>
 	<case id="1-123" unit="[ft_i]" valid="true"/>
@@ -322,7 +322,7 @@
 	<case id="1-350" unit="umol/umol" valid="true"/>
 	<case id="1-351" unit="wk" valid="true"/>
 
-	<!-- 
+	<!--
 	  These codes are taken from Keith's draft list of ICO/UCUM codes,
       at http://motorcycleguy.blogspot.com/2009/11/iso-to-ucum-mapping-table.html
 	  -->
@@ -341,7 +341,7 @@
     <case id="k=1=012" unit="mm/h" valid="true"/>
     <case id="k=1=013" unit="cal" valid="true"/>
     <case id="k=1=014" unit="cm[H2O].s/L" valid="true"/>
-    <case id="k=1=015" unit="kg/m2" valid="true"/> 
+    <case id="k=1=015" unit="kg/m2" valid="true"/>
     <case id="k=1=016" unit="mmol/(8.h.kg)" valid="true"/>
     <case id="k=1=017" unit="{cfu}" valid="true"/>
     <case id="k=1=018" unit="cm[H2O]/(s.m)" valid="true"/>
@@ -594,19 +594,19 @@
     <case id="k=1=265" unit="ng/kg" valid="true"/>
     <case id="k=1=266" unit="t" valid="true"/>
     <case id="k=1=267" unit="Wb" valid="true"/>
-    
+
     <!--  source - see FHIR gForge #19308  -->
     <case id="k=1=268" unit="/{LPF}" valid="true"/>
     <case id="k=1=269" unit="/[LPF]" valid="true"/>
     <case id="k=1=270" unit="[drp]/{HPF}" valid="true"/>
     <case id="k=1=271" unit="[M'U]" valid="false"/>
-  </validation>	
-  
+  </validation>
+
   <displayNameGeneration>
-    <!-- 
-	  This is a somewhat trivial concept, but here to encourage standard practice 
-	  where it matters - the ability to take a code and produce a (slightly) more 
-	  human readable long form (might correspond to the HL7 v3 / ISO data types 
+    <!--
+	  This is a somewhat trivial concept, but here to encourage standard practice
+	  where it matters - the ability to take a code and produce a (slightly) more
+	  human readable long form (might correspond to the HL7 v3 / ISO data types
 	  concept of display name)
 	-->
     <case id="2-101" unit="" display="(unity)"/>
@@ -618,23 +618,23 @@
 	<case id="2-107" unit="m3.kg-1.s-2" display="(meter ^ 3) * (kilogram ^ -1) * (second ^ -2)"/>
 	<case id="2-108" unit="4.[pi].10*-7.N/A2" display="4 * (the number pi) * (the number ten for arbitrary powers ^ -7) * (newton) / (amp&#232;re ^ 2)"/>
   <case id="2-109" unit="Pa" display="(pascal)"/>
-  </displayNameGeneration>		
+  </displayNameGeneration>
 
-  
+
   <conversion>
     <!--
 	  Conversion Tests
 	  given value/srcUnit, what is the value in dstUnit?
-	  
+
 	  Note that we don't check directly what the canonical unit is. In fact,
 	  no particular form is actually defined for UCUM - it's up the implementor
 	  to define their own. However these tests check that the chosen canonical
-	  form is working correctly as they work, since it's required to perform 
+	  form is working correctly as they work, since it's required to perform
 	  these conversions
-	  
+
 	  note that the outcome is also not necessarily fixed to the given representation.
 	  for instance, 0.001 or 1e-3 are both acceptable
-	  
+
 	  the precision for the [mu_0] related tests is that derived by long hand maintenance
 	  of the precision for [pi] given in the ucum definitions. Implementations do not need
 	  to maintain this precision
@@ -651,21 +651,21 @@
     <case id="3-110" value="6.3"      srcUnit="s/mm/g"      dstUnit="s.m-1.g-1"       outcome="6300"/>
     <case id="3-111" value="6.3"      srcUnit="s/m/mg"      dstUnit="s.m-1.g-1"       outcome="6300"/>
     <case id="3-111a" value="6.3"      srcUnit="s/m.mg"      dstUnit="s.m-1.g"       outcome="0.0063"/>
-    <case id="3-112" value="6.3"      srcUnit="ms/m"        dstUnit="s/m"           outcome="0.0063"/> 
+    <case id="3-112" value="6.3"      srcUnit="ms/m"        dstUnit="s/m"           outcome="0.0063"/>
     <case id="3-113" value="6.3"      srcUnit="4.s/m"       dstUnit="s/m"           outcome="25"/>
     <case id="3-114" value="6.30"     srcUnit="4.s/m"       dstUnit="s/m"           outcome="25.2"/>
     <case id="3-115" value="6.3"      srcUnit="s/4/m"       dstUnit="s/m"           outcome="1.6"/>
     <case id="3-116"  value="6.3"      srcUnit="s/mm"        dstUnit="s/m"           outcome="6300"/>
     <case id="3-117"  value="6.3"      srcUnit="ms/mm"       dstUnit="s/m"           outcome="6.3"/>
 	<case id="3-118"  value="6.30"     srcUnit="[in_i]"      dstUnit="m"             outcome="0.160"/>
-	<case id="3-119"  value="6.300"    srcUnit="[in_i]"      dstUnit="cm"            outcome="16.0"/> 
+	<case id="3-119"  value="6.300"    srcUnit="[in_i]"      dstUnit="cm"            outcome="16.0"/>
 	<case id="3-120" value="6.3"      srcUnit="g.m.s-2.A-2" dstUnit="g.m.C-2"       outcome="6.3"/>
-	<case id="3-121" value="1"      srcUnit="10*-7.s"       dstUnit="s"       outcome="1e-7"/> 
+	<case id="3-121" value="1"      srcUnit="10*-7.s"       dstUnit="s"       outcome="1e-7"/>
 	<case id="3-122" value="1"      srcUnit="4.[pi].10*-7.s"  dstUnit="s"       outcome="0.00000125663706143591729538506"/>
-	<case id="3-123" value="1"      srcUnit="4.[pi].10*-7.N"  dstUnit="N"       outcome="0.00000125663706143591729538506"/> 
-	<case id="3-124" value="1"      srcUnit="[mu_0]" dstUnit="g.m.C-2"       outcome="0.00125663706143591729538506"/> 	
+	<case id="3-123" value="1"      srcUnit="4.[pi].10*-7.N"  dstUnit="N"       outcome="0.00000125663706143591729538506"/>
+	<case id="3-124" value="1"      srcUnit="[mu_0]" dstUnit="g.m.C-2"       outcome="0.00125663706143591729538506"/>
 	<case id="3-125"  value="1"      srcUnit="m[Hg]"  dstUnit="g.s-2.m-1"     outcome="133322000"/>
-	<case id="3-126"  value="1"      srcUnit="S"      dstUnit="g-1.m-2.C2.s"  outcome="0.001"/> 
+	<case id="3-126"  value="1"      srcUnit="S"      dstUnit="g-1.m-2.C2.s"  outcome="0.001"/>
 	<!--
      Seiverts Canonicalisation (conceptual example):
       S  1
@@ -692,28 +692,28 @@
   </conversion>
 
   <multiplication>
-    <!-- 
+    <!--
 	  Given v1:u1, and v2:u2, multiply them together - should get something that is canonically equal
-	  to vRes/uRes. Note that it doesn't have to be the same as vRes/uRes: the units 
-	  reported may differ in order or some other form, and the value may consequently 
+	  to vRes/uRes. Note that it doesn't have to be the same as vRes/uRes: the units
+	  reported may differ in order or some other form, and the value may consequently
 	  be different, but the result must convert to the stated value
 	-->
     <case id="4-101" v1="1.5" u1="g" v2="2" u2="m" vRes="3.0" uRes="g.m"/>
     <case id="4-102" v2="1.5" u2="g" v1="2" u1="m" vRes="3.0" uRes="g.m"/>
   </multiplication>
-  
+
   <division>
-    <!-- 
+    <!--
 	  Given v1:u1, and v2:u2, divide them - should get something that is canonically equal
-	  to vRes:uRes. Note that it doesn't have to be the same as vRes:uRes: the units 
-	  reported may differ in order or some other form, and the value may consequently 
+	  to vRes:uRes. Note that it doesn't have to be the same as vRes:uRes: the units
+	  reported may differ in order or some other form, and the value may consequently
 	  be different, but the result must convert to the stated value
 	-->
     <case id="4-101" v1="1.5" u1="g" v2="2" u2="m" vRes="0.75" uRes="g.m-1"/>
     <case id="4-102" v2="1.5" u2="g" v1="2" u1="m" vRes="1.3" uRes="g-1.m"/>
     <case id="4-103" v1="1"   u1="[lb_av]/h" v2="1"   u2="kg/s" vRes="0.000125997880555555555555556" uRes=""/>  <!-- #19: u1, u2 are comparable, so uRes is unity  -->
   </division>
-  
-    
+
+
 </ucumTests>
-  
+
