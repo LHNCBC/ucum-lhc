@@ -32,6 +32,7 @@ function asArray(value) {
   return Array.isArray(value) ? value : [value];
 }
 
+
 /**
  * Parses the UCUM XML functional test file into a JS object.
  *
@@ -50,6 +51,7 @@ function parseXmlTestFile() {
   return parser.parse(xml);
 }
 
+
 /**
  * Coerces common XML boolean representations to a boolean.
  *
@@ -62,6 +64,7 @@ function toBool(value) {
   return Boolean(value);
 }
 
+
 /**
  * Parses a numeric value from an XML attribute string.
  *
@@ -73,6 +76,7 @@ function parseNumber(value) {
   if (typeof value !== 'string') return NaN;
   return parseFloat(value);
 }
+
 
 /**
  * Determines an absolute/relative tolerance for an expected numeric literal.
@@ -117,6 +121,7 @@ function toleranceFromLiteral(literal) {
   return { absTol: 0, relTol: 1e-12 };
 }
 
+
 /**
  * Asserts two numbers are approximately equal using a tolerance derived from
  * the expected literal.
@@ -153,6 +158,7 @@ function assertApproxEqual(actual, expected, literalForTol, contextMsg) {
   }
 }
 
+
 /**
  * Parses a UCUM unit expression into a Unit object.
  *
@@ -170,6 +176,7 @@ function parseUnitOrUnity(unitString) {
   }
   return UnitString.getInstance().parseString(u, 'convert')[0];
 }
+
 
 describe('UcumFunctionalTests.xml (validation/conversion/arithmetic)', function () {
   const doc = parseXmlTestFile();
