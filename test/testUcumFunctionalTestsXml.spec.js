@@ -72,9 +72,17 @@ function toBool(value) {
  * @returns {number}
  */
 function parseNumber(value) {
-  if (!isFinite(value))
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value))
+      throw new Error("Invalid value " + value);
+    return value;
+  }
+  if (typeof value !== 'string' || value.trim() === '')
     throw new Error("Invalid value " + value);
-  return parseFloat(value);
+  const n = Number(value);
+  if (!Number.isFinite(n))
+    throw new Error("Invalid value " + value);
+  return n;
 }
 
 
