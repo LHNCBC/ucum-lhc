@@ -68,10 +68,11 @@ function toBool(value) {
 /**
  * Parses a numeric value from an XML attribute string.
  *
- * @param {unknown} value
+ * @param value The string value to parse
  * @returns {number}
  */
 function parseNumber(value) {
+  // value should be a string, but just in case...
   if (typeof value === 'number') {
     if (!Number.isFinite(value))
       throw new Error("Invalid value " + value);
