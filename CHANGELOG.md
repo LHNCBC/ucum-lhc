@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.7] 2026-03-11
+### Added
+- Tests based on UcumFunctionalTests.xml (from
+  https://github.com/FHIR/Ucum-java/tree/master/src/test/resources)
+
 ## [7.1.6] 2026-01-30
 ### Fixed
 - An infinite loop for single-character invalid units.
