@@ -45,7 +45,7 @@
     "grunt-extract-sourcemap": "^0.1.19",
     "grunt-mocha-test": "^0.13.2",
     "jit-grunt": "^0.10.0",
-    "mocha": "^10.2.0",
+    "mocha": "^11.7.5",
     "path": "^0.12.7",
     "semver": "^5.5.1",
     "time-grunt": "^1.4.0",
