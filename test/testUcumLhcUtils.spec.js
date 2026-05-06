@@ -40,6 +40,12 @@ describe('Test validateUnitString method', function() {
     assert.equal(resp.status, 'invalid', resp.status);
   });
 
+  it('should return invalid for Cel2 (special unit with exponent)', () => {
+    const resp = utils.validateUnitString('Cel2');
+    assert.equal(resp.status, 'invalid',
+      `Expected validateUnitString("Cel2") to be invalid but got ${resp.status}`);
+  });
+
   it("should return a message for 'Gauss'", function() {
     var resp3 = utils.validateUnitString('Gauss');
     assert.equal(resp3.status, 'invalid', resp3.status);

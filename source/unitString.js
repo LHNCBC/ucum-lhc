@@ -1214,71 +1214,80 @@ export class UnitString {
             // If there is an exponent for the unit, apply it to the dimension
             // and magnitude now
             if (exp) {
-              exp = parseInt(exp);
-              if (theDim)
-                theDim = theDim.mul(exp);
-              retUnit.equivalentExp_ *= exp;
-              retUnit.moleExp_ *= exp;
-              theMag = Math.pow(theMag, exp);
-              retUnit.assignVals({'magnitude_': theMag});
-
-              // If there is also a prefix, apply the exponent to the prefix.
-              if (pfxObj) {
-                // We don't need to consider pfxObj.getExp(), because when
-                // present that is reflected in the pfxVal.  However, in some
-                // cases one can avoid floating-point math inaccuracies by using
-                // that exponent instead of relying on pfxVal.  For example:
-                // 1e-66 = Math.pow(10, -3*22) =  Math.pow(0.001, 22) = 1.0000000000000005e-66
-                // (This is the from the test case of the unit mg% raised to the 22nd power (mg%22).)
-                // This does not help in all cases, but it does help the above
-                // test case (which is in our web API service test code).
-                let pfxExp = pfxObj.getExp();
-                if (pfxExp) {
-                  // This is relying on the fact that pfxExp is null when
-                  // the prefix base is not 10.
-                  pfxVal = Math.pow(10, exp * pfxExp);
-                }
-                else {
-                  pfxVal = Math.pow(pfxVal, exp);
-                }
-              }
-            } // end if there's an exponent
-
-            // Now apply the prefix, if there is one, to the conversion
-            // prefix or the magnitude
-            if (pfxObj) {
-              if (retUnit.cnv_) {
-                retUnit.assignVals({'cnvPfx_': pfxVal});
+              // Special units cannot be raised to a power
+              if (retUnit.isSpecial_) {
+                this.retMsg_.push(`Special units like ${retUnit.name_} cannot be raised to a power.`);
+                retUnit = null;
               }
               else {
-                theMag *= pfxVal;
-                retUnit.assignVals({'magnitude_': theMag})
+                exp = parseInt(exp);
+                if (theDim)
+                  theDim = theDim.mul(exp);
+                retUnit.equivalentExp_ *= exp;
+                retUnit.moleExp_ *= exp;
+                theMag = Math.pow(theMag, exp);
+                retUnit.assignVals({'magnitude_': theMag});
+
+                // If there is also a prefix, apply the exponent to the prefix.
+                if (pfxObj) {
+                  // We don't need to consider pfxObj.getExp(), because when
+                  // present that is reflected in the pfxVal.  However, in some
+                  // cases one can avoid floating-point math inaccuracies by using
+                  // that exponent instead of relying on pfxVal.  For example:
+                  // 1e-66 = Math.pow(10, -3*22) =  Math.pow(0.001, 22) = 1.0000000000000005e-66
+                  // (This is the from the test case of the unit mg% raised to the 22nd power (mg%22).)
+                  // This does not help in all cases, but it does help the above
+                  // test case (which is in our web API service test code).
+                  let pfxExp = pfxObj.getExp();
+                  if (pfxExp) {
+                    // This is relying on the fact that pfxExp is null when
+                    // the prefix base is not 10.
+                    pfxVal = Math.pow(10, exp * pfxExp);
+                  }
+                  else {
+                    pfxVal = Math.pow(pfxVal, exp);
+                  }
+                }
+              } // end else - prefix and exponent handling for non-special units
+            } // end if there's an exponent
+
+            if (retUnit) {
+              // Now apply the prefix, if there is one, to the conversion
+              // prefix or the magnitude
+              if (pfxObj) {
+                if (retUnit.cnv_) {
+                  retUnit.assignVals({'cnvPfx_': pfxVal});
+                }
+                else {
+                  theMag *= pfxVal;
+                  retUnit.assignVals({'magnitude_': theMag})
+                }
               }
-            }
-            // if we have a prefix and/or an exponent, add them to the unit
-            // attributes - name, csCode, ciCode and print symbol
-            let theCode = retUnit.csCode_;
-            if (pfxObj) {
-              theName = pfxObj.getName() + theName;
-              theCode = pfxCode + theCode;
-              theCiCode = pfxObj.getCiCode() + theCiCode;
-              thePrintSymbol = pfxObj.getPrintSymbol() + thePrintSymbol;
-              retUnit.assignVals({
-                'name_': theName,
-                'csCode_': theCode,
-                'ciCode_': theCiCode,
-                'printSymbol_': thePrintSymbol
-              });
-            }
-            if (exp) {
-              let expStr = exp.toString();
-              const intergerUnitExpSign = isIntegerUnitWithExp && exp > 0 ? '+' : '';
-              retUnit.assignVals({
-                'name_': theName + '<sup>' + expStr + '</sup>',
-                'csCode_': theCode + intergerUnitExpSign + expStr,
-                'ciCode_': theCiCode + intergerUnitExpSign + expStr,
-                'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
-              });
+              // if we have a prefix and/or an exponent, add them to the unit
+              // attributes - name, csCode, ciCode and print symbol
+              let theCode = retUnit.csCode_;
+              if (pfxObj) {
+                theName = pfxObj.getName() + theName;
+                theCode = pfxCode + theCode;
+                theCiCode = pfxObj.getCiCode() + theCiCode;
+                thePrintSymbol = pfxObj.getPrintSymbol() + thePrintSymbol;
+                retUnit.assignVals({
+                  'name_': theName,
+                  'csCode_': theCode,
+                  'ciCode_': theCiCode,
+                  'printSymbol_': thePrintSymbol
+                });
+              }
+              if (exp) {
+                let expStr = exp.toString();
+                const intergerUnitExpSign = isIntegerUnitWithExp && exp > 0 ? '+' : '';
+                retUnit.assignVals({
+                  'name_': theName + '<sup>' + expStr + '</sup>',
+                  'csCode_': theCode + intergerUnitExpSign + expStr,
+                  'ciCode_': theCiCode + intergerUnitExpSign + expStr,
+                  'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
+                });
+              }
             }
           } // end if an original unit was found (without prefix and/or exponent)
         } // end if an invalid exponent wasn't found

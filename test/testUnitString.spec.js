@@ -711,6 +711,14 @@ describe('Test parseString method', function() {
     assert.equal(resp[0].equivalentExp_, 4);
   });
 
+  it('should return error when trying to parse Cel2 (special unit with exponent)', ()=>{
+    const uString = UnitString.getInstance();
+    const parseResp = uString.parseString('Cel2', 'validate');
+    const parseRespMsg = parseResp[2];
+    assert(parseRespMsg.length > 0,
+      'Expected parseString to return an error message for Cel2.');
+  });
+
   describe('test for unit expression lg([iU])/mL with suggestions', function() {
     var uString = UnitString.getInstance();
     var resp = uString.parseString('lg([iU])/mL', 'validate', true);
