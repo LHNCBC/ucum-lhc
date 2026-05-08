@@ -5,10 +5,8 @@ module.exports = function(grunt) {
     babel: 'grunt-babel',
     clean: 'grunt-contrib-clean',
     cssmin: 'grunt-contrib-cssmin',
-    extract_sourcemap: 'grunt-extract-sourcemap',
     mochaTest: 'grunt-mocha-test',
-    protractor: 'grunt-protractor-runner',
-    uglify: 'grunt-contrib-uglify'
+    protractor: 'grunt-protractor-runner'
   });
 
   // Time how long tasks take.  Just for fun
@@ -50,50 +48,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // use browserify to prepare the files for client-side use
-    // This is now also used for the npm package.  We need to transpile
-    // for server-side use because of the use of ES6 modules.
-    browserify: {
-      browser: {
-        options: {
-          browserifyOptions: {
-            debug: true,
-            standalone: "ucumPkg"
-          },
-          transform: [["babelify", { "presets": ["@babel/preset-env"],
-            plugins: ["@babel/plugin-transform-modules-commonjs", "@babel/plugin-proposal-class-properties"] }]]
-        },
-        debug: true,
-        files: [{dest: "./browser-dist/ucum-lhc.js",
-                 src: ["./source/ucumPkg.js"]}
-        ]
-      }
-    },
-
-    extract_sourcemap: {
-      browser: {
-        files: {
-          'browser-dist': ['browser-dist/ucum-lhc.js']
-        }
-      }
-    },
-
-    // use uglify to minify the javascript files
-    uglify: {
-      options: { sourceMap: true, compress: true },
-      browser: {
-        options: {
-          sourceMap: {
-            includeSources: true
-          },
-          sourceMapIn: './browser-dist/ucum-lhc.js.map'
-        },
-        files: {
-          './browser-dist/ucum-lhc.min.js' : [ './browser-dist/ucum-lhc.js']
-        }
-      }
-    } ,
-
     // using mocha for the tests
     mochaTest: {
       options: {
@@ -108,13 +62,38 @@ module.exports = function(grunt) {
 
   // load and register the tasks
   grunt.loadNpmTasks("grunt-babel");
-  grunt.loadNpmTasks("grunt-browserify");
+
+  grunt.registerTask("webpack", "Run webpack builds", function() {
+    const done = this.async();
+    const webpack = require('webpack');
+    const webpackConfig = require('./webpack.config.js');
+
+    webpack(webpackConfig, function(err, stats) {
+      if (err) {
+        grunt.log.error(err);
+        done(false);
+        return;
+      }
+
+      if (stats.hasErrors()) {
+        grunt.log.error(stats.toString({colors: false}));
+        done(false);
+        return;
+      }
+
+      grunt.log.writeln(stats.toString({
+        assets: true,
+        chunks: false,
+        colors: false,
+        modules: false
+      }));
+      done();
+    });
+  });
 
   grunt.registerTask("build:npm", ["clean:npm", "babel:npm"]);
   grunt.registerTask("build:browser", ["clean:browser",
-                                       "browserify:browser",
-                                       "extract_sourcemap:browser",
-                                       "uglify:browser"]);
+                                       "webpack"]);
   grunt.registerTask("build", ["build:browser",
                                "build:npm"]);
   grunt.registerTask("test", ['build',
