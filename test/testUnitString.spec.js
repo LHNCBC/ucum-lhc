@@ -43,6 +43,42 @@ describe('Test parseString method', function() {
     assert(!retUnit.synonyms_);
   });
 
+  describe('Test pH ambiguity between pico-Henry and bracketed pH', function() {
+    it('should parse pH as pico-Henry', function() {
+      let uString = UnitString.getInstance();
+      let henryUnit = uTabs.getUnitByCode('H');
+      let resp = uString.parseString('pH', 'validate');
+      let retUnit = resp[0];
+      assert(retUnit instanceof UnitObj, `retUnit = ${JSON.stringify(retUnit)}`);
+      assert.equal(retUnit.csCode_, 'pH');
+      assert.equal(retUnit.name_, 'picohenry');
+      assert.equal(retUnit.magnitude_, henryUnit.magnitude_ * 1e-12);
+      assert.equal(retUnit.isSpecial_, false);
+      assert.deepEqual(resp[2], [], `respMsg = ${JSON.stringify(resp[2])}`);
+    });
+
+    it('should still parse [pH] as the special pH unit', function() {
+      let uString = UnitString.getInstance();
+      let resp = uString.parseString('[pH]', 'validate');
+      let retUnit = resp[0];
+      assert(retUnit instanceof UnitObj, `retUnit = ${JSON.stringify(retUnit)}`);
+      assert.equal(retUnit.csCode_, '[pH]');
+      assert.equal(retUnit.name_, 'pH');
+      assert.equal(retUnit.isSpecial_, true);
+      assert.deepEqual(resp[2], [], `respMsg = ${JSON.stringify(resp[2])}`);
+    });
+
+    it('should still suggest brackets when no prefixed unit is valid', function() {
+      let uString = UnitString.getInstance();
+      let resp = uString.parseString('degF', 'validate');
+      assert.equal(resp[0].csCode_, '[degF]');
+      assert.equal(resp[1], '[degF]');
+      assert.equal(resp[2].length, 1, `respMsg = ${JSON.stringify(resp[2])}`);
+      assert.equal(resp[2][0], 'degF is not a valid unit expression, but ' +
+        '[degF] is.\nDid you mean [degF] (degrees Fahrenheit)?');
+    });
+  });
+
   describe('Test valid single unit string (cal)', function() {
     var uString = UnitString.getInstance();
     var calUnit = uTabs.getUnitByCode('cal');

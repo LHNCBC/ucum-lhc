@@ -1076,40 +1076,6 @@ export class UnitString {
           retUnit.ciCode_ = retUnit.ciCode_.replace('*', '^');
         }
       }
-      // If that didn't work, check to see if it should have brackets
-      // around it (uCode = degF when it should be [degF]
-      if (!retUnit) {
-        let addBrackets = '[' + uCode + ']' ;
-        retUnit = this.utabs_.getUnitByCode(addBrackets);
-        if (retUnit) {
-          retUnit = retUnit.clone();
-          origString = origString.replace(uCode, addBrackets);
-          this.retMsg_.push(`${uCode} is not a valid unit expression, but ` +
-            `${addBrackets} is.\n` + this.vcMsgStart_ +
-            `${addBrackets} (${retUnit.name_})${this.vcMsgEnd_}`);
-        } // end if we found the unit after adding brackets
-      } // end trying to add brackets
-
-      // If we didn't find it, try it as a name
-      if (!retUnit) {
-        let retUnitAry = this.utabs_.getUnitByName(uCode);
-        if (retUnitAry && retUnitAry.length > 0) {
-          retUnit = retUnitAry[0].clone();
-          let mString = 'The UCUM code for ' + uCode + ' is ' +
-            retUnit.csCode_ + '.\n' + this.vcMsgStart_ +
-            retUnit.csCode_ + this.vcMsgEnd_;
-          let dupMsg = false;
-          for (let r = 0; r < this.retMsg_.length && !dupMsg; r++)
-            dupMsg = this.retMsg_[r] === mString;
-          if (!dupMsg)
-            this.retMsg_.push(mString);
-          let rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
-          let res = origString.match(rStr);
-          origString = origString.replace(rStr, res[1] + retUnit.csCode_ + res[3]);
-          uCode = retUnit.csCode_;
-        }
-      }
-
       // If we still don't have a unit, try assuming a modifier (prefix and/or
       // exponent) and look for a unit without the modifier
       if (!retUnit) {
@@ -1189,13 +1155,22 @@ export class UnitString {
           // without the exponent, the unit string without a prefix,
           // common errors, etc. That's all we can try).
           if (!origUnit) {
-            retUnit = null ;
-            // BUT if the user asked for suggestions, at least look for them
-            if (this.suggestions_) {
-              let suggestStat = this._getSuggestions(origCode);
-            }
-            else {
-              this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
+            let bracketRet = this._getUnitAfterAddingBrackets(origCode, origString);
+            retUnit = bracketRet[0];
+            origString = bracketRet[1];
+            if (!retUnit) {
+              let nameRet = this._getUnitByName(origCode, origString);
+              retUnit = nameRet[0];
+              origString = nameRet[1];
+              if (!retUnit) {
+                // BUT if the user asked for suggestions, at least look for them
+                if (this.suggestions_) {
+                  let suggestStat = this._getSuggestions(origCode);
+                }
+                else {
+                  this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
+                }
+              }
             }
           }
           else {
@@ -1295,6 +1270,59 @@ export class UnitString {
     } // end if we didn't find the unit on the first try, before parsing
     return [retUnit, origString];
   } // end _makeUnit
+
+
+  /**
+   * Checks whether an otherwise unresolved unit code matches a unit name.
+   *
+   * @param uCode the unit code or name to check
+   * @param origString the original full string submitted to parseString
+   * @returns an array containing the unit object found, or null, and origString
+   */
+  _getUnitByName(uCode, origString) {
+
+    let retUnit = null;
+    let retUnitAry = this.utabs_.getUnitByName(uCode);
+    if (retUnitAry && retUnitAry.length > 0) {
+      retUnit = retUnitAry[0].clone();
+      let mString = 'The UCUM code for ' + uCode + ' is ' +
+        retUnit.csCode_ + '.\n' + this.vcMsgStart_ +
+        retUnit.csCode_ + this.vcMsgEnd_;
+      let dupMsg = false;
+      for (let r = 0; r < this.retMsg_.length && !dupMsg; r++)
+        dupMsg = this.retMsg_[r] === mString;
+      if (!dupMsg)
+        this.retMsg_.push(mString);
+      let rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
+      let res = origString.match(rStr);
+      origString = origString.replace(rStr, res[1] + retUnit.csCode_ + res[3]);
+    }
+    return [retUnit, origString];
+  } // end _getUnitByName
+
+
+  /**
+   * Checks whether an otherwise unresolved unit code can be found after adding
+   * square brackets, e.g., degF -> [degF].
+   *
+   * @param uCode the unit code to check
+   * @param origString the original full string submitted to parseString
+   * @returns an array containing the unit object found, or null, and origString
+   */
+  _getUnitAfterAddingBrackets(uCode, origString) {
+
+    let retUnit = null;
+    let addBrackets = '[' + uCode + ']' ;
+    let bracketUnit = this.utabs_.getUnitByCode(addBrackets);
+    if (bracketUnit) {
+      retUnit = bracketUnit.clone();
+      origString = origString.replace(uCode, addBrackets);
+      this.retMsg_.push(`${uCode} is not a valid unit expression, but ` +
+        `${addBrackets} is.\n` + this.vcMsgStart_ +
+        `${addBrackets} (${retUnit.name_})${this.vcMsgEnd_}`);
+    }
+    return [retUnit, origString];
+  } // end _getUnitAfterAddingBrackets
 
 
   /**
