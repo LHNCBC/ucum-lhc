@@ -442,6 +442,42 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('test bracket suggestions in longer unit strings', function() {
+    it('should only replace the suggested unit at unit string boundaries', function() {
+      let uString = UnitString.getInstance();
+      let resp = uString.parseString('[cin_i]/in_i', 'validate');
+      assert.equal(resp[0].csCode_, '[cin_i]/[in_i]');
+      assert.equal(resp[1], '[cin_i]/[in_i]');
+      assert.equal(resp[2].length, 1, `respMsg = ${JSON.stringify(resp[2])}`);
+      assert.equal(resp[2][0], 'in_i is not a valid unit expression, but [in_i] is.\n' +
+        'Did you mean [in_i] (inch)?');
+    });
+
+    it('should replace suggested units next to parentheses boundaries', function() {
+      let uString = UnitString.getInstance();
+      let resp = uString.parseString('(in_i)/[cin_i]', 'validate');
+      assert.equal(resp[0].csCode_, '[in_i]/[cin_i]');
+      assert.equal(resp[1], '([in_i])/[cin_i]');
+      assert.equal(resp[2].length, 1, `respMsg = ${JSON.stringify(resp[2])}`);
+      assert.equal(resp[2][0], 'in_i is not a valid unit expression, but [in_i] is.\n' +
+        'Did you mean [in_i] (inch)?');
+    });
+
+    it('should treat exponent numbers as unit string boundaries', function() {
+      let uString = new UnitString();
+      let resp = uString._getUnitAfterAddingBrackets('in_i', 'in_i2/[cin_i]');
+      assert.equal(resp[0].csCode_, '[in_i]');
+      assert.equal(resp[1], '[in_i]2/[cin_i]');
+    });
+
+    it('should append a note if the suggested replacement cannot be applied', function() {
+      let uString = new UnitString();
+      let resp = uString._getUnitAfterAddingBrackets('in_i', 'cin_i');
+      assert.equal(resp[0].csCode_, '[in_i]');
+      assert.equal(resp[1], 'cin_i  (Unable to update the unit expression with the suggested replacement.)');
+    });
+  }) ;
+
   describe('test for unit string {creatine}mol', function() {
     var uString = UnitString.getInstance();
     var molUnit = uTabs.getUnitByCode('mol');

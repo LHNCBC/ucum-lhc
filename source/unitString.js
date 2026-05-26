@@ -1303,20 +1303,33 @@ export class UnitString {
 
   /**
    * Checks whether an otherwise unresolved unit code can be found after adding
-   * square brackets, e.g., degF -> [degF].
+   * square brackets, e.g., degF -> [degF].  If a bracketed unit is found,
+   * origString is modified to include the suggested replacement.
    *
    * @param uCode the unit code to check
    * @param origString the original full string submitted to parseString
-   * @returns an array containing the unit object found, or null, and origString
+   * @returns an array containing the unit object found, or null, and the possibly
+   *  modified origString
    */
   _getUnitAfterAddingBrackets(uCode, origString) {
 
     let retUnit = null;
-    let addBrackets = '[' + uCode + ']' ;
-    let bracketUnit = this.utabs_.getUnitByCode(addBrackets);
+    const addBrackets = '[' + uCode + ']' ;
+    const bracketUnit = this.utabs_.getUnitByCode(addBrackets);
     if (bracketUnit) {
       retUnit = bracketUnit.clone();
-      origString = origString.replace(uCode, addBrackets);
+      const escapedCode = uCode.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const leadingUnitBoundary = '(^|[.\\/()]|\\d)';
+      const trailingUnitBoundary = '($|[.\\/()]|\\d)';
+      const rStr = new RegExp(leadingUnitBoundary + '(' + escapedCode + ')' +
+        trailingUnitBoundary);
+      const updatedOrigString = origString.replace(rStr, '$1' + addBrackets + '$3');
+      if (updatedOrigString == origString) {
+        origString += '  (Unable to update the unit expression with the suggested replacement.)';
+      }
+      else {
+        origString = updatedOrigString;
+      }
       this.retMsg_.push(`${uCode} is not a valid unit expression, but ` +
         `${addBrackets} is.\n` + this.vcMsgStart_ +
         `${addBrackets} (${retUnit.name_})${this.vcMsgEnd_}`);
