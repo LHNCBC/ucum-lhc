@@ -1293,7 +1293,8 @@ export class UnitString {
         dupMsg = this.retMsg_[r] === mString;
       if (!dupMsg)
         this.retMsg_.push(mString);
-      let rStr = new RegExp('(^|[./(])(' + uCode + ')($|[./)-\\d])');
+      const escapedCode = uCode.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      let rStr = new RegExp('(^|[./(])(' + escapedCode + ')($|[./)-\\d])');
       let res = origString.match(rStr);
       origString = origString.replace(rStr, res[1] + retUnit.csCode_ + res[3]);
     }
