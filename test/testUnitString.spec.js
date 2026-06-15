@@ -476,6 +476,16 @@ describe('Test parseString method', function() {
       assert.equal(resp[0].csCode_, '[in_i]');
       assert.equal(resp[1], 'cin_i  (Unable to update the unit expression with the suggested replacement.)');
     });
+
+    it('should not throw for annotation before a unit name', function() {
+      let uString = UnitString.getInstance();
+      assert.doesNotThrow(() => uString.parseString('{foo}inch', 'validate'));
+    });
+
+    it('should not throw for annotation after a unit name', function() {
+      let uString = UnitString.getInstance();
+      assert.doesNotThrow(() => uString.parseString('inch{foo}', 'validate'));
+    });
   }) ;
 
   describe('test for unit string {creatine}mol', function() {
