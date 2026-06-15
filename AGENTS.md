@@ -21,3 +21,9 @@ npm run build
 ```
 
 This regenerates the built CommonJS files under `source-cjs/` that the test suite uses.  If you are running "npm run test", then "npm run build" is not necessary because that test task also runs the build.
+
+## Build Artifacts
+
+Files under `source-cjs/` are generated build artifacts created from `source/`.
+Do not edit files in `source-cjs/` directly.
+Make code changes in `source/`, then run `npm run build` to regenerate `source-cjs/`.
