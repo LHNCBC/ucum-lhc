@@ -10,7 +10,7 @@ source bashrc.ucum-lhc
 
 This sets up the correct Node.js version, PATH, and other required environment variables for the project.
 
-Do not assume that `rg` is available as a command; check first or use a portable alternative when needed.
+Treat `rg` as unavailable in this project environment. Use portable alternatives such as `grep`/`find` unless availability has been explicitly verified.
 
 ## Testing
 
