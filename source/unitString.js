@@ -1294,7 +1294,7 @@ export class UnitString {
       if (!dupMsg)
         this.retMsg_.push(mString);
       const escapedCode = uCode.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      let rStr = new RegExp('(^|[./(])(' + escapedCode + ')($|[./)-\\d])');
+      let rStr = new RegExp('(^|[./(])(' + escapedCode + ')($|[./)\\-\\d])');
       let res = origString.match(rStr);
       origString = origString.replace(rStr, res[1] + retUnit.csCode_ + res[3]);
     }
@@ -1321,7 +1321,7 @@ export class UnitString {
       retUnit = bracketUnit.clone();
       const escapedCode = uCode.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const leadingUnitBoundary = '(^|[./(])';
-      const trailingUnitBoundary = '($|[./)-\\d])';
+      const trailingUnitBoundary = '($|[./)\\-\\d])';
       const rStr = new RegExp(leadingUnitBoundary + '(' + escapedCode + ')' +
         trailingUnitBoundary);
       const updatedOrigString = origString.replace(rStr, '$1' + addBrackets + '$3');
