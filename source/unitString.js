@@ -1297,6 +1297,11 @@ export class UnitString {
       let rStr = new RegExp('(^|[./(])(' + escapedCode + ')($|[./)\\-\\d{])');
       const updatedOrigString = origString.replace(rStr, '$1' + retUnit.csCode_ + '$3');
       if (updatedOrigString == origString) {
+        // This should not happen, if the processing has been correct.  However, if it does happen, we
+        // still have to change origString to signal that the input unit is invalid.
+        // There is a test present to make sure this message does not appear from the top-level APIs in
+        // ucumLhcUtils.js.
+        // Ideally, this problem would be signalled some other way, but that would be a bigger change.
         origString += '  (Unable to update the unit expression with a suggested replacement.)';
       }
       else {
@@ -1331,6 +1336,11 @@ export class UnitString {
         trailingUnitBoundary);
       const updatedOrigString = origString.replace(rStr, '$1' + addBrackets + '$3');
       if (updatedOrigString == origString) {
+        // This should not happen, if the processing has been correct.  However, if it does happen, we
+        // still have to change origString to signal that the input unit is invalid.
+        // There is a test present to make sure this message does not appear from the top-level APIs in
+        // ucumLhcUtils.js.
+        // Ideally, this problem would be signalled some other way, but that would be a bigger change.
         origString += '  (Unable to update the unit expression with a suggested replacement.)';
       }
       else {
