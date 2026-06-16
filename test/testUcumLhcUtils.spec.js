@@ -40,6 +40,12 @@ describe('Test validateUnitString method', function() {
     assert.equal(resp.status, 'invalid', resp.status);
   });
 
+  it('should return invalid for Cel2 (special unit with exponent)', () => {
+    const resp = utils.validateUnitString('Cel2');
+    assert.equal(resp.status, 'invalid',
+      `Expected validateUnitString("Cel2") to be invalid but got ${resp.status}`);
+  });
+
   it("should return a message for 'Gauss'", function() {
     var resp3 = utils.validateUnitString('Gauss');
     assert.equal(resp3.status, 'invalid', resp3.status);
@@ -100,6 +106,37 @@ describe('Test validateUnitString method', function() {
     const result = utils.validateUnitString('{g}');
     assert.equal(result.status, 'valid');
     assert(result.msg.length > 0);
+  });
+
+  it('should not expose internal replacement-guard messages in API responses', function() {
+    const guardText = 'Unable to update the unit expression with a suggested replacement.';
+    const inputs = [
+      'xinch', '{foo}inch', 'xinchx',
+      'cin_i', '{foo}in_i', 'xin_i',
+      'inch{foo}', 'in_i{foo}'
+    ];
+
+    for (const input of inputs) {
+      const validateResp = utils.validateUnitString(input, false, 'validate');
+      assert.equal(JSON.stringify(validateResp).indexOf(guardText), -1,
+        `validateUnitString response leaked guard text for ${input}: ` +
+        JSON.stringify(validateResp));
+
+      const convertResp = utils.convertUnitTo(input, 1, 'm', {suggest: false});
+      assert.equal(JSON.stringify(convertResp).indexOf(guardText), -1,
+        `convertUnitTo response leaked guard text for ${input}: ` +
+        JSON.stringify(convertResp));
+
+      const baseResp = utils.convertToBaseUnits(input, 1);
+      assert.equal(JSON.stringify(baseResp).indexOf(guardText), -1,
+        `convertToBaseUnits response leaked guard text for ${input}: ` +
+        JSON.stringify(baseResp));
+
+      const specifiedResp = utils.getSpecifiedUnit(input, 'validate', false);
+      assert.equal(JSON.stringify(specifiedResp).indexOf(guardText), -1,
+        `getSpecifiedUnit response leaked guard text for ${input}: ` +
+        JSON.stringify(specifiedResp));
+    }
   });
 
 

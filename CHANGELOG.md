@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.8] 2026-05-11
+### Fixed
+- "Special" units (e.g. Cel) with exponents are now recognized as invalid.
+- Units like "pH" which are valid without brackets (in this case as
+  "pico-Henry") but for which there is a another unit with a different meaning
+  that have brackets (e.g, "[pH]") now correctly validate.
+
 ## [7.1.7] 2026-03-11
 ### Added
 - Tests based on UcumFunctionalTests.xml (from

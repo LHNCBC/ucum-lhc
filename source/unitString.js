@@ -1076,40 +1076,6 @@ export class UnitString {
           retUnit.ciCode_ = retUnit.ciCode_.replace('*', '^');
         }
       }
-      // If that didn't work, check to see if it should have brackets
-      // around it (uCode = degF when it should be [degF]
-      if (!retUnit) {
-        let addBrackets = '[' + uCode + ']' ;
-        retUnit = this.utabs_.getUnitByCode(addBrackets);
-        if (retUnit) {
-          retUnit = retUnit.clone();
-          origString = origString.replace(uCode, addBrackets);
-          this.retMsg_.push(`${uCode} is not a valid unit expression, but ` +
-            `${addBrackets} is.\n` + this.vcMsgStart_ +
-            `${addBrackets} (${retUnit.name_})${this.vcMsgEnd_}`);
-        } // end if we found the unit after adding brackets
-      } // end trying to add brackets
-
-      // If we didn't find it, try it as a name
-      if (!retUnit) {
-        let retUnitAry = this.utabs_.getUnitByName(uCode);
-        if (retUnitAry && retUnitAry.length > 0) {
-          retUnit = retUnitAry[0].clone();
-          let mString = 'The UCUM code for ' + uCode + ' is ' +
-            retUnit.csCode_ + '.\n' + this.vcMsgStart_ +
-            retUnit.csCode_ + this.vcMsgEnd_;
-          let dupMsg = false;
-          for (let r = 0; r < this.retMsg_.length && !dupMsg; r++)
-            dupMsg = this.retMsg_[r] === mString;
-          if (!dupMsg)
-            this.retMsg_.push(mString);
-          let rStr = new RegExp('(^|[.\/({])(' + uCode + ')($|[.\/)}])');
-          let res = origString.match(rStr);
-          origString = origString.replace(rStr, res[1] + retUnit.csCode_ + res[3]);
-          uCode = retUnit.csCode_;
-        }
-      }
-
       // If we still don't have a unit, try assuming a modifier (prefix and/or
       // exponent) and look for a unit without the modifier
       if (!retUnit) {
@@ -1189,13 +1155,22 @@ export class UnitString {
           // without the exponent, the unit string without a prefix,
           // common errors, etc. That's all we can try).
           if (!origUnit) {
-            retUnit = null ;
-            // BUT if the user asked for suggestions, at least look for them
-            if (this.suggestions_) {
-              let suggestStat = this._getSuggestions(origCode);
-            }
-            else {
-              this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
+            let bracketRet = this._getUnitAfterAddingBrackets(origCode, origString);
+            retUnit = bracketRet[0];
+            origString = bracketRet[1];
+            if (!retUnit) {
+              let nameRet = this._getUnitByName(origCode, origString);
+              retUnit = nameRet[0];
+              origString = nameRet[1];
+              if (!retUnit) {
+                // BUT if the user asked for suggestions, at least look for them
+                if (this.suggestions_) {
+                  let suggestStat = this._getSuggestions(origCode);
+                }
+                else {
+                  this.retMsg_.push(`${origCode} is not a valid UCUM code.`);
+                }
+              }
             }
           }
           else {
@@ -1214,71 +1189,80 @@ export class UnitString {
             // If there is an exponent for the unit, apply it to the dimension
             // and magnitude now
             if (exp) {
-              exp = parseInt(exp);
-              if (theDim)
-                theDim = theDim.mul(exp);
-              retUnit.equivalentExp_ *= exp;
-              retUnit.moleExp_ *= exp;
-              theMag = Math.pow(theMag, exp);
-              retUnit.assignVals({'magnitude_': theMag});
-
-              // If there is also a prefix, apply the exponent to the prefix.
-              if (pfxObj) {
-                // We don't need to consider pfxObj.getExp(), because when
-                // present that is reflected in the pfxVal.  However, in some
-                // cases one can avoid floating-point math inaccuracies by using
-                // that exponent instead of relying on pfxVal.  For example:
-                // 1e-66 = Math.pow(10, -3*22) =  Math.pow(0.001, 22) = 1.0000000000000005e-66
-                // (This is the from the test case of the unit mg% raised to the 22nd power (mg%22).)
-                // This does not help in all cases, but it does help the above
-                // test case (which is in our web API service test code).
-                let pfxExp = pfxObj.getExp();
-                if (pfxExp) {
-                  // This is relying on the fact that pfxExp is null when
-                  // the prefix base is not 10.
-                  pfxVal = Math.pow(10, exp * pfxExp);
-                }
-                else {
-                  pfxVal = Math.pow(pfxVal, exp);
-                }
-              }
-            } // end if there's an exponent
-
-            // Now apply the prefix, if there is one, to the conversion
-            // prefix or the magnitude
-            if (pfxObj) {
-              if (retUnit.cnv_) {
-                retUnit.assignVals({'cnvPfx_': pfxVal});
+              // Special units cannot be raised to a power
+              if (retUnit.isSpecial_) {
+                this.retMsg_.push(`Special units like ${retUnit.name_} cannot be raised to a power.`);
+                retUnit = null;
               }
               else {
-                theMag *= pfxVal;
-                retUnit.assignVals({'magnitude_': theMag})
+                exp = parseInt(exp);
+                if (theDim)
+                  theDim = theDim.mul(exp);
+                retUnit.equivalentExp_ *= exp;
+                retUnit.moleExp_ *= exp;
+                theMag = Math.pow(theMag, exp);
+                retUnit.assignVals({'magnitude_': theMag});
+
+                // If there is also a prefix, apply the exponent to the prefix.
+                if (pfxObj) {
+                  // We don't need to consider pfxObj.getExp(), because when
+                  // present that is reflected in the pfxVal.  However, in some
+                  // cases one can avoid floating-point math inaccuracies by using
+                  // that exponent instead of relying on pfxVal.  For example:
+                  // 1e-66 = Math.pow(10, -3*22) =  Math.pow(0.001, 22) = 1.0000000000000005e-66
+                  // (This is the from the test case of the unit mg% raised to the 22nd power (mg%22).)
+                  // This does not help in all cases, but it does help the above
+                  // test case (which is in our web API service test code).
+                  let pfxExp = pfxObj.getExp();
+                  if (pfxExp) {
+                    // This is relying on the fact that pfxExp is null when
+                    // the prefix base is not 10.
+                    pfxVal = Math.pow(10, exp * pfxExp);
+                  }
+                  else {
+                    pfxVal = Math.pow(pfxVal, exp);
+                  }
+                }
+              } // end else - prefix and exponent handling for non-special units
+            } // end if there's an exponent
+
+            if (retUnit) {
+              // Now apply the prefix, if there is one, to the conversion
+              // prefix or the magnitude
+              if (pfxObj) {
+                if (retUnit.cnv_) {
+                  retUnit.assignVals({'cnvPfx_': pfxVal});
+                }
+                else {
+                  theMag *= pfxVal;
+                  retUnit.assignVals({'magnitude_': theMag})
+                }
               }
-            }
-            // if we have a prefix and/or an exponent, add them to the unit
-            // attributes - name, csCode, ciCode and print symbol
-            let theCode = retUnit.csCode_;
-            if (pfxObj) {
-              theName = pfxObj.getName() + theName;
-              theCode = pfxCode + theCode;
-              theCiCode = pfxObj.getCiCode() + theCiCode;
-              thePrintSymbol = pfxObj.getPrintSymbol() + thePrintSymbol;
-              retUnit.assignVals({
-                'name_': theName,
-                'csCode_': theCode,
-                'ciCode_': theCiCode,
-                'printSymbol_': thePrintSymbol
-              });
-            }
-            if (exp) {
-              let expStr = exp.toString();
-              const intergerUnitExpSign = isIntegerUnitWithExp && exp > 0 ? '+' : '';
-              retUnit.assignVals({
-                'name_': theName + '<sup>' + expStr + '</sup>',
-                'csCode_': theCode + intergerUnitExpSign + expStr,
-                'ciCode_': theCiCode + intergerUnitExpSign + expStr,
-                'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
-              });
+              // if we have a prefix and/or an exponent, add them to the unit
+              // attributes - name, csCode, ciCode and print symbol
+              let theCode = retUnit.csCode_;
+              if (pfxObj) {
+                theName = pfxObj.getName() + theName;
+                theCode = pfxCode + theCode;
+                theCiCode = pfxObj.getCiCode() + theCiCode;
+                thePrintSymbol = pfxObj.getPrintSymbol() + thePrintSymbol;
+                retUnit.assignVals({
+                  'name_': theName,
+                  'csCode_': theCode,
+                  'ciCode_': theCiCode,
+                  'printSymbol_': thePrintSymbol
+                });
+              }
+              if (exp) {
+                let expStr = exp.toString();
+                const intergerUnitExpSign = isIntegerUnitWithExp && exp > 0 ? '+' : '';
+                retUnit.assignVals({
+                  'name_': theName + '<sup>' + expStr + '</sup>',
+                  'csCode_': theCode + intergerUnitExpSign + expStr,
+                  'ciCode_': theCiCode + intergerUnitExpSign + expStr,
+                  'printSymbol_': thePrintSymbol + '<sup>' + expStr + '</sup>'
+                });
+              }
             }
           } // end if an original unit was found (without prefix and/or exponent)
         } // end if an invalid exponent wasn't found
@@ -1286,6 +1270,88 @@ export class UnitString {
     } // end if we didn't find the unit on the first try, before parsing
     return [retUnit, origString];
   } // end _makeUnit
+
+
+  /**
+   * Checks whether an otherwise unresolved unit code matches a unit name.
+   *
+   * @param uCode the unit code or name to check
+   * @param origString the original full string submitted to parseString
+   * @returns an array containing the unit object found, or null, and origString
+   */
+  _getUnitByName(uCode, origString) {
+
+    let retUnit = null;
+    let retUnitAry = this.utabs_.getUnitByName(uCode);
+    if (retUnitAry && retUnitAry.length > 0) {
+      retUnit = retUnitAry[0].clone();
+      let mString = 'The UCUM code for ' + uCode + ' is ' +
+        retUnit.csCode_ + '.\n' + this.vcMsgStart_ +
+        retUnit.csCode_ + this.vcMsgEnd_;
+      let dupMsg = false;
+      for (let r = 0; r < this.retMsg_.length && !dupMsg; r++)
+        dupMsg = this.retMsg_[r] === mString;
+      if (!dupMsg)
+        this.retMsg_.push(mString);
+      const escapedCode = uCode.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      let rStr = new RegExp('(^|[./(])(' + escapedCode + ')($|[./)\\-\\d{])');
+      const updatedOrigString = origString.replace(rStr, '$1' + retUnit.csCode_ + '$3');
+      if (updatedOrigString == origString) {
+        // This should not happen, if the processing has been correct.  However, if it does happen, we
+        // still have to change origString to signal that the input unit is invalid.
+        // There is a test present to make sure this message does not appear from the top-level APIs in
+        // ucumLhcUtils.js.
+        // Ideally, this problem would be signalled some other way, but that would be a bigger change.
+        origString += '  (Unable to update the unit expression with a suggested replacement.)';
+      }
+      else {
+        origString = updatedOrigString;
+      }
+    }
+    return [retUnit, origString];
+  } // end _getUnitByName
+
+
+  /**
+   * Checks whether an otherwise unresolved unit code can be found after adding
+   * square brackets, e.g., degF -> [degF].  If a bracketed unit is found,
+   * origString is modified to include the suggested replacement.
+   *
+   * @param uCode the unit code to check
+   * @param origString the original full string submitted to parseString
+   * @returns an array containing the unit object found, or null, and the possibly
+   *  modified origString
+   */
+  _getUnitAfterAddingBrackets(uCode, origString) {
+
+    let retUnit = null;
+    const addBrackets = '[' + uCode + ']' ;
+    const bracketUnit = this.utabs_.getUnitByCode(addBrackets);
+    if (bracketUnit) {
+      retUnit = bracketUnit.clone();
+      const escapedCode = uCode.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const leadingUnitBoundary = '(^|[./(])';
+      const trailingUnitBoundary = '($|[./)\\-\\d{])';
+      const rStr = new RegExp(leadingUnitBoundary + '(' + escapedCode + ')' +
+        trailingUnitBoundary);
+      const updatedOrigString = origString.replace(rStr, '$1' + addBrackets + '$3');
+      if (updatedOrigString == origString) {
+        // This should not happen, if the processing has been correct.  However, if it does happen, we
+        // still have to change origString to signal that the input unit is invalid.
+        // There is a test present to make sure this message does not appear from the top-level APIs in
+        // ucumLhcUtils.js.
+        // Ideally, this problem would be signalled some other way, but that would be a bigger change.
+        origString += '  (Unable to update the unit expression with a suggested replacement.)';
+      }
+      else {
+        origString = updatedOrigString;
+      }
+      this.retMsg_.push(`${uCode} is not a valid unit expression, but ` +
+        `${addBrackets} is.\n` + this.vcMsgStart_ +
+        `${addBrackets} (${retUnit.name_})${this.vcMsgEnd_}`);
+    }
+    return [retUnit, origString];
+  } // end _getUnitAfterAddingBrackets
 
 
   /**

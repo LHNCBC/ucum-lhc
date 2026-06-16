@@ -43,6 +43,42 @@ describe('Test parseString method', function() {
     assert(!retUnit.synonyms_);
   });
 
+  describe('Test pH ambiguity between pico-Henry and bracketed pH', function() {
+    it('should parse pH as pico-Henry', function() {
+      let uString = UnitString.getInstance();
+      let henryUnit = uTabs.getUnitByCode('H');
+      let resp = uString.parseString('pH', 'validate');
+      let retUnit = resp[0];
+      assert(retUnit instanceof UnitObj, `retUnit = ${JSON.stringify(retUnit)}`);
+      assert.equal(retUnit.csCode_, 'pH');
+      assert.equal(retUnit.name_, 'picohenry');
+      assert.equal(retUnit.magnitude_, henryUnit.magnitude_ * 1e-12);
+      assert.equal(retUnit.isSpecial_, false);
+      assert.deepEqual(resp[2], [], `respMsg = ${JSON.stringify(resp[2])}`);
+    });
+
+    it('should still parse [pH] as the special pH unit', function() {
+      let uString = UnitString.getInstance();
+      let resp = uString.parseString('[pH]', 'validate');
+      let retUnit = resp[0];
+      assert(retUnit instanceof UnitObj, `retUnit = ${JSON.stringify(retUnit)}`);
+      assert.equal(retUnit.csCode_, '[pH]');
+      assert.equal(retUnit.name_, 'pH');
+      assert.equal(retUnit.isSpecial_, true);
+      assert.deepEqual(resp[2], [], `respMsg = ${JSON.stringify(resp[2])}`);
+    });
+
+    it('should still suggest brackets when no prefixed unit is valid', function() {
+      let uString = UnitString.getInstance();
+      let resp = uString.parseString('degF', 'validate');
+      assert.equal(resp[0].csCode_, '[degF]');
+      assert.equal(resp[1], '[degF]');
+      assert.equal(resp[2].length, 1, `respMsg = ${JSON.stringify(resp[2])}`);
+      assert.equal(resp[2][0], 'degF is not a valid unit expression, but ' +
+        '[degF] is.\nDid you mean [degF] (degrees Fahrenheit)?');
+    });
+  });
+
   describe('Test valid single unit string (cal)', function() {
     var uString = UnitString.getInstance();
     var calUnit = uTabs.getUnitByCode('cal');
@@ -406,6 +442,52 @@ describe('Test parseString method', function() {
     });
   }) ;
 
+  describe('test bracket suggestions in longer unit strings', function() {
+    it('should only replace the suggested unit at unit string boundaries', function() {
+      let uString = UnitString.getInstance();
+      let resp = uString.parseString('[cin_i]/in_i', 'validate');
+      assert.equal(resp[0].csCode_, '[cin_i]/[in_i]');
+      assert.equal(resp[1], '[cin_i]/[in_i]');
+      assert.equal(resp[2].length, 1, `respMsg = ${JSON.stringify(resp[2])}`);
+      assert.equal(resp[2][0], 'in_i is not a valid unit expression, but [in_i] is.\n' +
+        'Did you mean [in_i] (inch)?');
+    });
+
+    it('should replace suggested units next to parentheses boundaries', function() {
+      let uString = UnitString.getInstance();
+      let resp = uString.parseString('(in_i)/[cin_i]', 'validate');
+      assert.equal(resp[0].csCode_, '[in_i]/[cin_i]');
+      assert.equal(resp[1], '([in_i])/[cin_i]');
+      assert.equal(resp[2].length, 1, `respMsg = ${JSON.stringify(resp[2])}`);
+      assert.equal(resp[2][0], 'in_i is not a valid unit expression, but [in_i] is.\n' +
+        'Did you mean [in_i] (inch)?');
+    });
+
+    it('should treat exponent numbers as unit string boundaries', function() {
+      let uString = new UnitString();
+      let resp = uString._getUnitAfterAddingBrackets('in_i', 'in_i2/[cin_i]');
+      assert.equal(resp[0].csCode_, '[in_i]');
+      assert.equal(resp[1], '[in_i]2/[cin_i]');
+    });
+
+    it('should append a note if the suggested replacement cannot be applied', function() {
+      let uString = new UnitString();
+      let resp = uString._getUnitAfterAddingBrackets('in_i', 'cin_i');
+      assert.equal(resp[0].csCode_, '[in_i]');
+      assert.equal(resp[1], 'cin_i  (Unable to update the unit expression with a suggested replacement.)');
+    });
+
+    it('should not throw for annotation before a unit name', function() {
+      let uString = UnitString.getInstance();
+      assert.doesNotThrow(() => uString.parseString('{foo}inch', 'validate'));
+    });
+
+    it('should not throw for annotation after a unit name', function() {
+      let uString = UnitString.getInstance();
+      assert.doesNotThrow(() => uString.parseString('inch{foo}', 'validate'));
+    });
+  }) ;
+
   describe('test for unit string {creatine}mol', function() {
     var uString = UnitString.getInstance();
     var molUnit = uTabs.getUnitByCode('mol');
@@ -709,6 +791,14 @@ describe('Test parseString method', function() {
     assert.equal(resp[0].moleExp_, 3);
     resp = uString.parseString('eq4', 'validate');
     assert.equal(resp[0].equivalentExp_, 4);
+  });
+
+  it('should return error when trying to parse Cel2 (special unit with exponent)', ()=>{
+    const uString = UnitString.getInstance();
+    const parseResp = uString.parseString('Cel2', 'validate');
+    const parseRespMsg = parseResp[2];
+    assert(parseRespMsg.length > 0,
+      'Expected parseString to return an error message for Cel2.');
   });
 
   describe('test for unit expression lg([iU])/mL with suggestions', function() {
