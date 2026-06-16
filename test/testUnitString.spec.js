@@ -474,7 +474,7 @@ describe('Test parseString method', function() {
       let uString = new UnitString();
       let resp = uString._getUnitAfterAddingBrackets('in_i', 'cin_i');
       assert.equal(resp[0].csCode_, '[in_i]');
-      assert.equal(resp[1], 'cin_i  (Unable to update the unit expression with the suggested replacement.)');
+      assert.equal(resp[1], 'cin_i  (Unable to update the unit expression with a suggested replacement.)');
     });
 
     it('should not throw for annotation before a unit name', function() {

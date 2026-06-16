@@ -50,7 +50,8 @@
   },
   "scripts": {
     "build": "grunt build",
-    "test": "grunt test"
+    "test": "grunt test",
+    "scan": "rm source.zip; zip -r source source"
   },
   "repository": {
     "type": "git",
