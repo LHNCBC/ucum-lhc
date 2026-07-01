@@ -1,8 +1,8 @@
 # ucum-lhc
 This package provides APIs for validation and conversion of unit strings in
 the [Unified Code for Units of Measure](https://ucum.org) (UCUM) code
-system created by the Regenstrief Institute, Inc.  It created by the Lister Hill
-Center (LHC) at the U.S. National Library of Medicine.
+system created by the Regenstrief Institute, Inc.  ucum-lhc was created by the
+Lister Hill Center (LHC) at the U.S. National Library of Medicine.
 
 See our [overview page](https://ucum.nlm.nih.gov/ucum-lhc) for
 general information.
@@ -20,18 +20,16 @@ functions described below.  You might want to try that out first.
 
 ## Get the code
 
-The ucum-lhc code is written as ES6 modules, but the npm package (see below)
+The ucum-lhc code is written as ES6 modules, but the npm package 
 also contains CommonJS modules, as well as a "browser-dist" directory with files
 ready to use in a web browser.
-
-### Getting the code as an npm package
 
 You can use the [npm](https://www.npmjs.com) package manager 
 to install the ucum-lhc npm package.  (npm is automatically installed with Node.js.)
 
     npm install @lhncbc/ucum-lhc --save
 
-This will install the @lhncbc/ucum-lhc directory in your node_modules diretory. 
+This will install the @lhncbc/ucum-lhc directory in your node_modules directory. 
 The browser-dist subdirectory will contain ucum-lhc.min.js for use directly in a
 browser.
 
@@ -64,7 +62,7 @@ those functions via the ucumPkg object.  For example,
 
     var parseResp = ucumPkg.UcumLhcUtils.getInstance().validateUnitString(uStr, true);
         
-### Function descriptions
+### API reference
         
 Below is documentation for the public functions on the UcumLhcUtils instance.
 *  [validateUnitString](#validateunitstringustr-suggest)
@@ -113,7 +111,8 @@ unit names and synonyms.
      * 'name' is the unit's name (Gauss in the above example); and
      * 'guidance' is the unit's guidance/description data.
    * 'suggestions' if suggestions were requested and found, this is an array
-         of one or more hash objects.  Each hash contains three elements:
+         of one or more hash objects.  (Otherwise, it will not be present.)
+         Each hash contains three elements:
      * 'msg' which is a message indicating what part of the uStr input
          parameter the suggestions are for;
      * 'invalidUnit' which is the unit expression the suggestions are
@@ -121,8 +120,6 @@ unit names and synonyms.
      * 'units' which is an array of data for each suggested unit found.
           Each array will contain the unit code, the unit name and the
           unit guidance (if any).
-        If no suggestions were requested and found, this property is not
-        returned.
 
 For example, to validate a unit string of m2/g4 (assuming you have created a
 utils object as described above):
@@ -132,12 +129,12 @@ utils object as described above):
        /* the string is valid; returnObj['ucumCode'] will contain the valid 
           ucum code (may differ from what was entered), returnObj['msg'] may 
           contain a message or messages describing substitution(s) for the
-          code entered, and retObj['unit'] will contain 3 pieces of data for the 
+          code entered, and returnObj['unit'] will contain 3 pieces of data for the 
           unit - code, name and guidance (provides information about the unit, 
           such as how the unit is used, etc.)*/
      else
        /* returnObj['status'] will be 'invalid' and */
-       /* returnOb['msg'] will have a message describing the problem */
+       /* returnObj['msg'] will have a message describing the problem */
        
 For information on unit string formatting, look at the _Ucum Unit Expression 
 Validation_ section on the [demo page](https://ucum.nlm.nih.gov/ucum-lhc/demo.html).  
@@ -174,7 +171,7 @@ using them in actual clinical settings.
       It is ignored if neither unit includes an equivalent unit
 
 **Returns**: a hash with six elements:
-   * 'status' the will be: 'succeeded' if the conversion was successfully
+   * 'status' will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
       the units are not commensurable; or 'error' if an error occurred;
    * 'toVal' the numeric value indicating the conversion amount (without any
@@ -236,7 +233,7 @@ created a utils object as described above):
          returnObj['fromUnit'] will be null
          returnObj['toUnit'] will be null
        */
-    else (returnObj['status'] === 'error)
+    else (returnObj['status'] === 'error')
       /* the conversion encountered an error
          returnObj['toVal'] will be null
          returnObj['msg'] will contain a message describing the error
@@ -280,7 +277,7 @@ of possible pound units.
 
     var returnObj = utils.checkSynonyms('pound');
     if (returnObj['status'] === 'succeeded')
-      /* one or more units was found.  returnObj['msg'] will be null and the
+      /* one or more units were found.  returnObj['msg'] will be null and the
          returnObj['units'] array will contain the data listed above */
     else if (returnObj['status'] === 'failed')
       /* no units were found and the returnObj['msg'] string will indicate that
@@ -310,7 +307,7 @@ a magnitude, and returns that data.
        substitution such as the substitution of 'G' for 'Gauss', or
        an empty array if no messages were generated.  There can also be a
        message that is just informational or warning.
-* magnitude: the new value when fromVal units of fromUnits is expressed in the base units.
+* magnitude: the new value when fromVal units of fromUnit is expressed in the base units.
 * fromUnitIsSpecial: whether the input unit fromUnit is a "special unit"
         as defined in UCUM.  This means there is some function applied to convert
         between fromUnit and the base units, so the returned magnitude is likely not
@@ -320,10 +317,10 @@ a magnitude, and returns that data.
 
 #### commensurablesList(fromUnit[, categoryList])
 
-Retrieves a list of units commensurable, i.e., that can be converted from and
-to, a specified unit.  Returns an error if the "from" unit cannot be found.
-If necessary, you can filter the list of units by specifying a list of unit
-categories that should be in the resulting list.
+Retrieves a list of units that are commensurable with, i.e., that can be
+converted from and to, a specified unit.  Returns an error if the "from" unit
+cannot be found.  If necessary, you can filter the list of units by specifying a
+list of unit categories that should be in the resulting list.
 
 **Parameters**:
 1) fromUnit: the name/unit string
