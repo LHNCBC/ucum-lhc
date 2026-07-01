@@ -106,13 +106,13 @@ unit names and synonyms.
         error occurred, indicating the problem, or an explanation of a
         substitution such as the substitution of 'G' for 'Gauss', or
         an empty array if no messages were generated ;
-   * 'unit' which is null if no unit is found, or a hash for a unit found:
+   * 'unit' which is null if no unit is found, or an object for a unit found:
      * 'code' is the unit's ucum code (G in the above example);
      * 'name' is the unit's name (Gauss in the above example); and
      * 'guidance' is the unit's guidance/description data.
    * 'suggestions' if suggestions were requested and found, this is an array
-         of one or more hash objects.  (Otherwise, it will not be present.)
-         Each hash contains three elements:
+         of one or more objects.  (Otherwise, it will not be present.)
+         Each object contains three elements:
      * 'msg' which is a message indicating what part of the uStr input
          parameter the suggestions are for;
      * 'invalidUnit' which is the unit expression the suggestions are
@@ -155,7 +155,7 @@ using them in actual clinical settings.
 2) fromVal: the number of "from" units to be converted to "to" units;
 3) toUnitCode: the unit code/expression/string of the unit that the from 
   field is to be converted to;
-4) options: an optional hash of options that can be passed in:
+4) options: an optional object of options that can be passed in:
    * 'suggestions' a boolean to indicate whether or not suggestions are wanted
       for a string that cannot be resolved to a valid unit; true indicates
       suggestions are wanted; false indicates they are not, and is the default
@@ -170,7 +170,7 @@ using them in actual clinical settings.
       when one of the units represents a value in equivalents and the other in mass or moles. 
       It is ignored if neither unit includes an equivalent unit
 
-**Returns**: a hash with six elements:
+**Returns**: an object with six properties:
    * 'status' will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
       the units are not commensurable; or 'error' if an error occurred;
@@ -181,11 +181,13 @@ using them in actual clinical settings.
       error occurred, indicating the problem, or an explanation of a
       substitution such as the substitution of 'G' for 'Gauss', or
       an empty array if no messages were generated;
-   * 'suggestions' if suggestions were requested and found, this is a hash
-        that contains at most two elements:
+   * 'suggestions' if suggestions were requested and found, this is an object
+        that contains at most the following two properties.  (If suggestions
+        were not requsted of found, the 'suggestions' property will not be
+        set.):
      * 'from' which, if the fromUnitCode input parameter or one or more of
-         its components could not be found, is an array one or more hash
-         objects.  Each hash contains three elements:
+         its components could not be found, is an array of one or more
+         objects.  Each object contains three elements:
        * 'msg' which is a message indicating what unit expression the
            suggestions are for;
        * 'invalidUnit' which is the unit expression the suggestions are
@@ -196,8 +198,8 @@ using them in actual clinical settings.
          If no suggestions were found for the fromUnitCode this element
          will not be included.
      * 'to' which, if the "to" unit expression or one or more of its
-         components could not be found, is an array one or more hash
-         objects.  Each hash contains three elements:
+         components could not be found, is an array of one or more
+         objects.  Each object contains three elements:
        * 'msg' which is a message indicating what part of the toUnitCode
            input parameter the suggestions are for;
        * 'invalidUnit' which is the unit expression the suggestions
@@ -207,8 +209,6 @@ using them in actual clinical settings.
            unit guidance (if any).
          If no suggestions were found for the toUnitCode this element will
          not be included.
-       No 'suggestions' element will be included in the returned hash
-       object if none were found, whether or not they were requested.
    * 'fromUnit' the unit object for the fromUnitCode passed in; returned
       in case it's needed for additional data from the object; and
    * 'toUnit' the unit object for the toUnitCode passed in; returned
@@ -257,11 +257,11 @@ of possible pound units.
 **Parameters**:
 1) theSyn: the term to search for
 
-**Returns**: a hash with three elements:
+**Returns**: an object with three properties:
    * 'status' contains the status of the request, which can be 'error',
       'failed' or 'succeeded'; 
    * 'msg' contains a message for an error or if no units were found; and 
-   * 'units' which is an array that contains one hash for each unit found:
+   * 'units' which is an array that contains one object for each unit found:
      * 'code' is the unit's code;
      * 'name' is the unit's name; and
      * 'guidance' is the guidance, or description, for the unit.
