@@ -1,12 +1,16 @@
 # ucum-lhc
-This is the LHC implementation of validation and conversion services based on
+This package provides APIs for validation and conversion of unit strings in
 the [Unified Code for Units of Measure](https://ucum.org) (UCUM) code
-system created by the Regenstrief Institute, Inc.  
+system created by the Regenstrief Institute, Inc.  It created by the Lister Hill
+Center (LHC) at the U.S. National Library of Medicine.
 
 See our [overview page](https://ucum.nlm.nih.gov/ucum-lhc) for
 general information.
 
-This is a work in progress so more capabilities will probably be introduced.
+In addition to using this package from a JavaScript program, there is also a [web
+service](https://ucum.nlm.nih.gov/ucum-service.html) which uses this library, so
+you can send HTTPS requests to validate and convert units if that is more
+convenient.
 
 ## Check out the Demo page
 
@@ -20,18 +24,10 @@ The ucum-lhc code is written as ES6 modules, but the npm package (see below)
 also contains CommonJS modules, as well as a "browser-dist" directory with files
 ready to use in a web browser.
 
-Currently we have code to serve multiple purposes.  The core code supports
-the validation and conversion of UCUM unit expressions as well as a function
-to search for commensurable units for a specified unit expression.  Other code is 
-concerned with importing and exporting the UCUM data, and in supporting the
-demo page (noted above).  If you are looking to include the ucum-lhc core code 
-in your application, download the code as an [npm](https://www.npmjs.com) package.
-
 ### Getting the code as an npm package
 
 You can use the [npm](https://www.npmjs.com) package manager 
-to install the ucum-lhc npm package.  (npm is 
-[automatically installed](https://www.npmjs.com/get-npm) with Node.js.)
+to install the ucum-lhc npm package.  (npm is automatically installed with Node.js.)
 
     npm install @lhncbc/ucum-lhc --save
 
@@ -349,7 +345,6 @@ categories that should be in the resulting list.
 The code available here on GitHub includes functions and scripts to perform
 additional functions, mainly to convert ucum data from various formats to 
 the data used by our code as well as the code that supports the demo page.
-Click on the green "Code" button above to download the repository.
 
     
 ### Building the code and data
@@ -364,11 +359,10 @@ Tests can be run with:
 
     npm run test
 
-Although package does not directly use the UCUM "Functional Tests"
+This will include tests from the UCUM "Functional Tests"
 (https://ucum.org/docs/functional-tests and
 https://github.com/FHIR/Ucum-java/blob/master/src/test/resources/UcumFunctionalTests.xml),
-we have run those tests using ucum-lhc, and we found that all but two tests pass.
-The two tests that do not pass are checking for rounding of values at the right
-number of signifant digits.  The package does not round to significant digits,
-since if you round too early in a calculation, you can lose accuracy.
-
+which pass with the exception of rounding differences.  That is, ucum-lhc does
+not round, while the UCUM Functional Tests assume rounding, which is not a part
+of the UCUM specification.  The reason this package does not round is that if
+you round too early in a calculation, you can lose accuracy.
