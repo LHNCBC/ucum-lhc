@@ -125,16 +125,16 @@ For example, to validate a unit string of m2/g4 (assuming you have created a
 utils object as described above):
 
      var returnObj = utils.validateUnitString('m2/g4');
-     if (returnObj['status'] === 'valid')
-       /* the string is valid; returnObj['ucumCode'] will contain the valid 
-          ucum code (may differ from what was entered), returnObj['msg'] may 
+     if (returnObj.status === 'valid')
+       /* the string is valid; returnObj.ucumCode will contain the valid 
+          ucum code (may differ from what was entered), returnObj.msg may 
           contain a message or messages describing substitution(s) for the
-          code entered, and returnObj['unit'] will contain 3 pieces of data for the 
+          code entered, and returnObj.unit will contain 3 pieces of data for the 
           unit - code, name and guidance (provides information about the unit, 
           such as how the unit is used, etc.)*/
      else
-       /* returnObj['status'] will be 'invalid' and */
-       /* returnObj['msg'] will have a message describing the problem */
+       /* returnObj.status will be 'invalid' and */
+       /* returnObj.msg will have a message describing the problem */
        
 For information on unit string formatting, look at the _Ucum Unit Expression 
 Validation_ section on the [demo page](https://ucum.nlm.nih.gov/ucum-lhc/demo.html).  
@@ -218,27 +218,27 @@ For example, to convert 27 U.S. fathoms to U.S. inches (assuming you have
 created a utils object as described above): 
  
     var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]');
-    if (returnObj['status'] === 'succeeded')
+    if (returnObj.status === 'succeeded')
       /* the conversion was successful.
-         returnObj['toVal'] will contain the conversion result
+         returnObj.toVal will contain the conversion result
            (~1943.9999999999998 - number, not formatted string)
-         returnObj['msg'] will be null
-         returnObj['fromUnit'] will contain the unit object for [fth_us]
-         returnObj['toUnit'] will contain the unit object for [in_us]
+         returnObj.msg will be null
+         returnObj.fromUnit will contain the unit object for [fth_us]
+         returnObj.toUnit will contain the unit object for [in_us]
        */
-    else if (returnObj['status'] === 'failed')
+    else if (returnObj.status === 'failed')
       /* the conversion could not be made.
-         returnObj['toVal'] will be null
-         returnObj['msg'] will contain a message describing the failure
-         returnObj['fromUnit'] will be null
-         returnObj['toUnit'] will be null
+         returnObj.toVal will be null
+         returnObj.msg will contain a message describing the failure
+         returnObj.fromUnit will be null
+         returnObj.toUnit will be null
        */
-    else (returnObj['status'] === 'error')
+    else if (returnObj.status === 'error')
       /* the conversion encountered an error
-         returnObj['toVal'] will be null
-         returnObj['msg'] will contain a message describing the error
-         returnObj['fromUnit'] will be null
-         returnObj['toUnit'] will be null
+         returnObj.toVal will be null
+         returnObj.msg will contain a message describing the error
+         returnObj.fromUnit will be null
+         returnObj.toUnit will be null
        */
       
 If you want to know what unit types a particular unit can be converted to, the 
@@ -276,14 +276,14 @@ of possible pound units.
 (assuming you have created a utils object as described above):
 
     var returnObj = utils.checkSynonyms('pound');
-    if (returnObj['status'] === 'succeeded')
-      /* one or more units were found.  returnObj['msg'] will be null and the
-         returnObj['units'] array will contain the data listed above */
-    else if (returnObj['status'] === 'failed')
-      /* no units were found and the returnObj['msg'] string will indicate that
+    if (returnObj.status === 'succeeded')
+      /* one or more units were found.  returnObj.msg will be null and the
+         returnObj.units array will contain the data listed above */
+    else if (returnObj.status === 'failed')
+      /* no units were found and the returnObj.msg string will indicate that
       */
     else
-      /* returnObj['status'] will be 'error' and returnObj['msg'] will indicate
+      /* returnObj.status will be 'error' and returnObj.msg will indicate
          what the error was. */
 
 #### convertToBaseUnits(fromUnit, fromVal)
