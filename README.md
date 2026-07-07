@@ -8,62 +8,59 @@ See our [overview page](https://ucum.nlm.nih.gov/ucum-lhc) for
 general information.
 
 In addition to using this package from a JavaScript program, there is also a [web
-service](https://ucum.nlm.nih.gov/ucum-service.html) which uses this library, so
+API service](https://ucum.nlm.nih.gov/ucum-service.html) which uses this library, so
 you can send HTTPS requests to validate and convert units if that is more
 convenient.
 
 ## Check out the Demo page
 
-We have a [demo page](https://ucum.nlm.nih.gov/ucum-lhc/demo.html) that 
+We have a [demo page](https://ucum.nlm.nih.gov/ucum-lhc/demo.html) that
 shows various capabilities.  That includes the validation and conversion
 functions described below.  You might want to try that out first.
 
 ## Get the code
 
-The ucum-lhc code is written as ES6 modules, but the npm package 
-also contains CommonJS modules, as well as a "browser-dist" directory with files
-ready to use in a web browser.
-
-You can use the [npm](https://www.npmjs.com) package manager 
+You can use the [npm](https://www.npmjs.com) package manager
 to install the ucum-lhc npm package.  (npm is automatically installed with Node.js.)
 
     npm install @lhncbc/ucum-lhc --save
 
-This will install the @lhncbc/ucum-lhc directory in your node_modules directory. 
-The browser-dist subdirectory will contain ucum-lhc.min.js for use directly in a
-browser.
+This will install the @lhncbc/ucum-lhc directory in your node_modules directory.
+If you are not building the code along with an app, you can use the
+browser-dist/ucum-lhc.min.js file which is already built for use directly in a
+browser without building.
 
-## Using the code 
+The ucum-lhc code is written as ES6 modules, but the npm package
+also contains CommonJS modules, which are used by default if you "require" or
+"import" the package.
 
-The ucum-lhc.min.js file includes the source code you need for the validation,
-conversion and commensurable units functions as well as the ucum code
-definitions file.  We assume that your main motivation for including the
-ucum-lhc code is to have those capabilities for units of measure on your system.  
+
+## Using the code
 
 ### Server side
-To access those capabilities from your server side code (or from client side
-code that goes through a build system), require the npm package
-and create a UcumLhcUtils object that contains those functions.
+Require (or import) the npm package and create a UcumLhcUtils object that
+contains those functions.
 
     const ucum = require('@lhncbc/ucum-lhc');
     const utils = ucum.UcumLhcUtils.getInstance();
 
- 
+See the API reference section below for the APIs on the utils object.
+
 ### Client side
 
-To access those capabilities from your client side code, include the 
-ucum-lhc.min.js package in your html file.  
+To access those capabilities from your client side code without building, include the
+pre-built ucum-lhc.min.js file in your HTML file.
 
     <script src="path-to-installed-package/browser-dist/ucum-lhc.min.js"></script>
 
-The validation, conversion and commensurable units functions are available from 
-the _ucumPkg.UcumLhcUtils_ class.  In your client side javascript code access 
-those functions via the ucumPkg object.  For example, 
+The validation, conversion and commensurable units functions are available from
+the _ucumPkg.UcumLhcUtils_ class.  In your client side JavaScript code access
+those functions via the ucumPkg object.  For example,
 
     var parseResp = ucumPkg.UcumLhcUtils.getInstance().validateUnitString(uStr, true);
-        
+
 ### API reference
-        
+
 Below is documentation for the public functions on the UcumLhcUtils instance.
 *  [validateUnitString](#validateunitstringustr-suggest)
 *  [convertUnitTo](#convertunittofromunitcode-fromval-tounitcode-options)
@@ -73,8 +70,8 @@ Below is documentation for the public functions on the UcumLhcUtils instance.
 
 #### validateUnitString(uStr, suggest)
 
-This method validates a unit string.  It first checks to see if the string passed 
-in is a unit code that is found in the unit codes table. If it is not found it 
+This method validates a unit string.  It first checks to see if the string passed
+in is a unit code that is found in the unit codes table. If it is not found it
 parses the string to see if it resolves to a valid unit string.
 
 If a valid unit cannot be found, the string is tested for some common errors,
@@ -101,12 +98,12 @@ unit names and synonyms.
         occurred);
    * 'ucumCode' the valid ucum code, which may differ from what was passed
         in (e.g., if 'Gauss' is passed in, this will contain 'G') OR null if
-        the string was flagged as invalid or an error occurred; 
+        the string was flagged as invalid or an error occurred;
    * 'msg' is an array of messages, if the string is invalid or an
         error occurred, indicating the problem, or an explanation of a
         substitution such as the substitution of 'G' for 'Gauss', or
-        an empty array if no messages were generated ;
-   * 'unit' which is null if no unit is found, or an object for a unit found:
+        an empty array if no messages were generated;
+   * 'unit' which is null if no unit is found, or an object representing the found unit:
      * 'code' is the unit's ucum code (G in the above example);
      * 'name' is the unit's name (Gauss in the above example); and
      * 'guidance' is the unit's guidance/description data.
@@ -126,19 +123,19 @@ utils object as described above):
 
      var returnObj = utils.validateUnitString('m2/g4');
      if (returnObj.status === 'valid')
-       /* the string is valid; returnObj.ucumCode will contain the valid 
-          ucum code (may differ from what was entered), returnObj.msg may 
+       /* the string is valid; returnObj.ucumCode will contain the valid
+          ucum code (may differ from what was entered), returnObj.msg may
           contain a message or messages describing substitution(s) for the
-          code entered, and returnObj.unit will contain 3 pieces of data for the 
-          unit - code, name and guidance (provides information about the unit, 
+          code entered, and returnObj.unit will contain 3 pieces of data for the
+          unit - code, name and guidance (provides information about the unit,
           such as how the unit is used, etc.)*/
      else
        /* returnObj.status will be 'invalid' and */
        /* returnObj.msg will have a message describing the problem */
-       
-For information on unit string formatting, look at the _Ucum Unit Expression 
-Validation_ section on the [demo page](https://ucum.nlm.nih.gov/ucum-lhc/demo.html).  
-There is a button labeled "Show entry hints".  That will give you a short description 
+
+For information on unit string formatting, look at the _Ucum Unit Expression
+Validation_ section on the [demo page](https://ucum.nlm.nih.gov/ucum-lhc/demo.html).
+There is a button labeled "Show entry hints".  That will give you a short description
 of unit strings, and includes a link to the [UCUM Specification](https://ucum.org/ucum).
 
 #### convertUnitTo(fromUnitCode, fromVal, toUnitCode, options)
@@ -153,7 +150,7 @@ using them in actual clinical settings.
 **Parameters**:
 1) fromUnitCode: the unit code/expression/string of the unit to be converted;
 2) fromVal: the number of "from" units to be converted to "to" units;
-3) toUnitCode: the unit code/expression/string of the unit that the from 
+3) toUnitCode: the unit code/expression/string of the unit that the from
   field is to be converted to;
 4) options: an optional object of options that can be passed in:
    * 'suggestions' a boolean to indicate whether or not suggestions are wanted
@@ -165,9 +162,9 @@ using them in actual clinical settings.
       ignored if neither unit includes a measurement in moles.  In such cases
       the mole-based unit must have a single mole unit in the numerator and the
       mass-based unit must have a single mass unit in the numerator.
-   * 'charge' the absolute value of the charge of the substance in question when a conversion 
-      is being requested from mass/moles to equivalents and vice versa. It is required 
-      when one of the units represents a value in equivalents and the other in mass or moles. 
+   * 'charge' the absolute value of the charge of the substance in question when a conversion
+      is being requested from mass/moles to equivalents and vice versa. It is required
+      when one of the units represents a value in equivalents and the other in mass or moles.
       It is ignored if neither unit includes an equivalent unit
 
 **Returns**: an object with six properties:
@@ -183,7 +180,7 @@ using them in actual clinical settings.
       an empty array if no messages were generated;
    * 'suggestions' if suggestions were requested and found, this is an object
         that contains at most the following two properties.  (If suggestions
-        were not requsted of found, the 'suggestions' property will not be
+        were not requsted or found, the 'suggestions' property will not be
         set.):
      * 'from' which, if the fromUnitCode input parameter or one or more of
          its components could not be found, is an array of one or more
@@ -214,9 +211,9 @@ using them in actual clinical settings.
    * 'toUnit' the unit object for the toUnitCode passed in; returned
       in case it's needed for additional data from the object.
 
-For example, to convert 27 U.S. fathoms to U.S. inches (assuming you have 
-created a utils object as described above): 
- 
+For example, to convert 27 U.S. fathoms to U.S. inches (assuming you have
+created a utils object as described above):
+
     var returnObj = utils.convertUnitTo('[fth_us]', 27, '[in_us]');
     if (returnObj.status === 'succeeded')
       /* the conversion was successful.
@@ -240,18 +237,18 @@ created a utils object as described above):
          returnObj.fromUnit will be null
          returnObj.toUnit will be null
        */
-      
-If you want to know what unit types a particular unit can be converted to, the 
+
+If you want to know what unit types a particular unit can be converted to, the
 checkSynonyms function will provide a list of commensurable units for a specified
 unit expression.
 
 #### checkSynonyms(theSyn)
 
 This method searches for units that include a single search term (theSyn) in the
-unit's synonyms data and/or the unit name.  It returns all units found with a 
+unit's synonyms data and/or the unit name.  It returns all units found with a
 match.  This is useful when an exact match for a term is not found.  For example,
-submitting the term "pound" to the _validUnitString_ method will result in a 
-"not found" response.   Submitting it to this method will return with a list 
+submitting the term "pound" to the _validateUnitString_ method will result in a
+"not found" response.   Submitting it to this method will return a list
 of possible pound units.
 
 **Parameters**:
@@ -259,8 +256,8 @@ of possible pound units.
 
 **Returns**: an object with three properties:
    * 'status' contains the status of the request, which can be 'error',
-      'failed' or 'succeeded'; 
-   * 'msg' contains a message for an error or if no units were found; and 
+      'failed' or 'succeeded';
+   * 'msg' contains a message for an error or if no units were found; and
    * 'units' which is an array that contains one object for each unit found:
      * 'code' is the unit's code;
      * 'name' is the unit's name; and
@@ -340,10 +337,10 @@ list of unit categories that should be in the resulting list.
 ### Download the GitHub repository
 
 The code available here on GitHub includes functions and scripts to perform
-additional functions, mainly to convert ucum data from various formats to 
+additional functions, mainly to convert ucum data from various formats to
 the data used by our code as well as the code that supports the demo page.
 
-    
+
 ### Building the code and data
 If you wish to modify the code, the build process is simply:
 
