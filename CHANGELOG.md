@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.9] 2026-07-21
+### Fixed
+- Invalid parameters passed to Dimension methods now produce the documented
+  errors.
+- Unit.assignVals now accepts property names without trailing underscores, as
+  documented.
+
 ## [7.1.8] 2026-05-11
 ### Fixed
 - "Special" units (e.g. Cel) with exponents are now recognized as invalid.

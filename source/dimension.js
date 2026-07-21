@@ -166,7 +166,7 @@ export class Dimension {
    * @throws an exception if dim2 is not a Dimension object
    **/
   add(dim2) {
-    if (!dim2 instanceof Dimension) {
+    if (!(dim2 instanceof Dimension)) {
       throw(new Error(`Dimension.add called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`));
     }
@@ -188,7 +188,7 @@ export class Dimension {
    * @throws an exception if dim2 is not a Dimension object
    **/
   sub(dim2) {
-    if (!dim2 instanceof Dimension) {
+    if (!(dim2 instanceof Dimension)) {
       throw(new Error(`Dimension.sub called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`));
     }
@@ -221,14 +221,14 @@ export class Dimension {
    * when a unit is raised to a power.  This object's vector is changed unless
    * the vector is null, in which case it stays that way.
    *
-   * @param s the scalar to use
+   * @param s the integer scalar to use
    * @return this object
-   * @throws an exception if s is not a number
+   * @throws an exception if s is not an integer
    */
   mul(s) {
     if (!isInteger(s)) {
-      throw(new Error(`Dimension.sub called with an invalid parameter - ` +
-      `${typeof dim2} instead of a number`));
+      throw(new Error(`Dimension.mul called with an invalid parameter - ` +
+      `${typeof s} instead of an integer`));
     }
     if (this.dimVec_) {
       for (let i = 0; i < UC.Ucum.dimLen_; i++)
@@ -249,7 +249,7 @@ export class Dimension {
    * @throws an exception if dim2 is not a Dimension object
    */
   equals(dim2) {
-    if (!dim2 instanceof Dimension) {
+    if (!(dim2 instanceof Dimension)) {
       throw(new Error(`Dimension.equals called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`));
     }
@@ -280,7 +280,7 @@ export class Dimension {
    */
   assignDim(dim2) {
 
-    if (!dim2 instanceof Dimension) {
+    if (!(dim2 instanceof Dimension)) {
       throw(new Error(`Dimension.assignDim called with an invalid parameter - ` +
       `${typeof dim2} instead of a Dimension object`));
     }
