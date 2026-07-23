@@ -14,6 +14,29 @@ ucumJsonDefs.loadJsonDefs();
 var uString = UnitString.getInstance();
 
 
+describe('Test Unit assignVals method', function() {
+  it('should accept property names without trailing underscores', function() {
+    var unit = new UnitObj();
+    unit.assignVals({name: 'updated name'});
+    assert.equal(unit.name_, 'updated name');
+  });
+
+  it('should accept property names with trailing underscores', function() {
+    var unit = new UnitObj();
+    unit.assignVals({name_: 'updated name'});
+    assert.equal(unit.name_, 'updated name');
+  });
+
+  it('should reject unknown properties', function() {
+    var unit = new UnitObj();
+    assert.throws(
+      () => unit.assignVals({unknown: 'value'}),
+      /Parameter error; unknown is not a property of a Unit/
+    );
+  });
+});
+
+
 describe('Test Unit Power method', function() {
   describe('Test invalid Power request', function() {
     var fahrUnit = uTabs.getUnitByCode('[degF]');
@@ -409,4 +432,3 @@ describe('isEqMassCommensurable(unit2)', ()=> {
     assert(massUnit.power(2).invert().isEqMassCommensurable(eqUnit.power(3).invert()) == false);
   });
 });
-

@@ -243,7 +243,7 @@ export class Unit {
    */
   assignVals(vals) {
     for (let key in vals) {
-      let uKey = !(key.charAt(key.length - 1)) === '_' ? key + '_' : key ;
+      let uKey = key.charAt(key.length - 1) !== '_' ? key + '_' : key ;
       if (this.hasOwnProperty(uKey))
         this[uKey] = vals[key];
       else
