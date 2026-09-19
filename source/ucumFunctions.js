@@ -32,10 +32,12 @@ class UcumFunctions {
     // calling code in the Units class is set up (in the convertFrom method),
     // what is given here as the convertTo function is actually the convert
     // from method and vice versa.
-    //this.funcs['degre'] = {cnvTo   : function(x){return x + 273.15;},
-    //                    cnvFrom : function(x){return x - 273.15;}};
-    this.funcs['degre'] = {cnvTo   : function(x){return x - 273.15;},
-                        cnvFrom : function(x){return x + 273.15;}};
+    // The offset is the one the UCUM spec gives for Reaumur (section 22,
+    // f_Re^-1(x) = 5/4 (x + 218.52)); the 5/4 is carried by the unit itself.
+    //this.funcs['degre'] = {cnvTo   : function(x){return x + 218.52;},
+    //                    cnvFrom : function(x){return x - 218.52;}};
+    this.funcs['degre'] = {cnvTo   : function(x){return x - 218.52;},
+                        cnvFrom : function(x){return x + 218.52;}};
 
     // pH - convert to pH from moles per liter and from moles per liter to pH
     // where a mole is an amount of a substance (a count of particles)
