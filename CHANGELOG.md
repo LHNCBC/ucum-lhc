@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.10] 2026-09-19
+### Fixed
+- Conversions involving `[degRe]` (degree Reaumur) used the Celsius offset of
+  273.15 instead of the 218.52 the UCUM specification gives for Reaumur, so
+  they returned a wrong temperature with no error. 0 [degRe] now converts to
+  0 Cel rather than 68.2875.
+
 ## [7.1.9] 2026-07-21
 ### Fixed
 - Invalid parameters passed to Dimension methods now produce the documented

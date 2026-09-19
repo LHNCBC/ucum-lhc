@@ -191,6 +191,25 @@ describe('Test convertUnitTo method', function() {
   });
 
 
+  it("should return a valid conversion value and units for 0 Reaumur to Celsius", function() {
+    var resp3 = utils.convertUnitTo('[degRe]', 0, 'Cel');
+    assert.equal(resp3.status, 'succeeded', resp3.status);
+    assert.equal(Math.round(resp3.toVal*100), 0, resp3.toVal);
+    assert.equal(resp3.toUnit.name_, 'degree Celsius', JSON.stringify(resp3.toUnit));
+  });
+
+  it("should return a valid conversion value and units for 80 Reaumur to Celsius", function() {
+    var resp3 = utils.convertUnitTo('[degRe]', 80, 'Cel');
+    assert.equal(resp3.status, 'succeeded', resp3.status);
+    assert.equal(Math.round(resp3.toVal*100), 10000, resp3.toVal);
+  });
+
+  it("should return a valid conversion value and units for 100 Celsius to Reaumur", function() {
+    var resp3 = utils.convertUnitTo('Cel', 100, '[degRe]');
+    assert.equal(resp3.status, 'succeeded', resp3.status);
+    assert.equal(Math.round(resp3.toVal*100), 8000, resp3.toVal);
+  });
+
   it("should return an error for an attempt to translate g to /g", function() {
     var resp4 = utils.convertUnitTo('g', 847, '/g');
     assert.equal(resp4.status, 'failed', resp4.status);
