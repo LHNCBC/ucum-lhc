@@ -208,8 +208,16 @@ export class UcumLhcUtils {
 
 
   /**
+   * @typedef {'invalid-input' | 'unknown-unit' | 'incommensurable' |
+   *   'arbitrary-unit' | 'missing-molecular-weight' | 'missing-charge' |
+   *   'missing-molecular-weight-and-charge' | 'out-of-range'} ConvertUnitResultCode
+   */
+
+
+  /**
    * @typedef {{
    *   status: 'succeeded' | 'failed' | 'error',
+   *   code?: ConvertUnitResultCode,
    *   toVal: number | null,
    *   msg: string[],
    *   suggestions: {
@@ -238,21 +246,42 @@ export class UcumLhcUtils {
    * @param {string} toUnitCode - the unit code/expression/string of the unit that the from field is to be converted to
    * @param {{
    *   suggest?: boolean,
-   *   molecularWeight?: number
-   *   charge?: number
-   * }} options
+   *   molecularWeight?: number | string,
+   *   charge?: number | string
+   * } | null} [options]
    *  - suggest: a boolean to indicate whether or not suggestions are requested for a string that cannot be resolved to a valid unit;
    *    true indicates suggestions are wanted; false indicates they are not, and is the default if the parameter is not specified;
    *  - molecularWeight: the molecular weight of the substance in question when a conversion is being requested from mass to moles and vice versa.
    *    This is required when one of the units represents a value in moles.  It is ignored if neither unit includes a measurement in moles.
+   *    When used, it must be a finite number (or numeric string) greater than 0.
    *  - charge: the absolute value of the charge of the substance in question when a conversion is being requested from mass/moles to
    *    equivalents and vice versa. It is required when one of the units represents a value in equivalents and the other in mass or moles.
-   *    It is ignored if neither unit includes an equivalent unit.
+   *    It is ignored if neither unit includes an equivalent unit.  When used, it must be a finite number (or numeric string) greater than 0;
+   *    otherwise the result has the status 'error' and the code 'invalid-input'.
    * @returns {ConvertUnitResult}
-   * - a hash with six elements:
+   * - a hash with up to seven elements:
    *   - 'status' that will be: 'succeeded' if the conversion was successfully
    *     calculated; 'failed' if the conversion could not be made, e.g., if
    *     the units are not commensurable; or 'error' if an error occurred;
+   *   - 'code' a machine-readable reason for the outcome, present only when
+   *     'status' is 'failed' or 'error'.  It will be one of:
+   *     - 'invalid-input' (status 'error'): the "from" unit or the "to" unit
+   *       is missing, the "from" value is missing or invalid (including a
+   *       non-finite "from" value), or a molecularWeight or charge option
+   *       required by the conversion is not a finite number greater than 0;
+   *     - 'unknown-unit': the "from" and/or "to" unit is not a valid UCUM
+   *       expression or could not be found;
+   *     - 'incommensurable': the units cannot be converted to each other;
+   *     - 'arbitrary-unit': one of the units is an arbitrary unit, which
+   *       cannot be converted;
+   *     - 'missing-molecular-weight': the conversion requires the
+   *       molecularWeight option, which was not specified;
+   *     - 'missing-charge': the conversion requires the charge option,
+   *       which was not specified;
+   *     - 'missing-molecular-weight-and-charge': the conversion requires both
+   *       the molecularWeight and charge options, and neither was specified;
+   *     - 'out-of-range': the conversion result is not a finite number
+   *       (e.g., when converting -1 W to B[W]);
    *   - 'toVal' the numeric value indicating the conversion amount, or null
    *     if the conversion failed (e.g., if the units are not commensurable);
    *   - 'msg' is an array message, if the string is invalid or an error occurred,
@@ -293,7 +322,7 @@ export class UcumLhcUtils {
    *     in case it's needed for additional data from the object.
    */
   convertUnitTo(fromUnitCode, fromVal, toUnitCode, options = {}) {
-    let {suggest = false, molecularWeight = null, charge = null} = options;
+    let {suggest = false, molecularWeight = null, charge = null} = options ?? {};
 
     /** @type {ConvertUnitResult} */
     let returnObj = {
@@ -309,7 +338,19 @@ export class UcumLhcUtils {
       returnObj['status'] = 'error';
       returnObj['msg'].push('No "from" unit expression specified.');
     }
-    this._checkFromVal(fromVal, returnObj);
+    if (this._checkFromVal(fromVal, returnObj)) {
+      // Convert a numeric string to a number only once; the number is reused
+      // by the conversion below.
+      fromVal = Number(fromVal);
+      // _checkFromVal accepts non-finite values such as Infinity and
+      // 'Infinity', which cannot be converted.  Reject them here (rather than
+      // in _checkFromVal, which is also used by convertToBaseUnits).
+      if (!Number.isFinite(fromVal)) {
+        returnObj['status'] = 'error';
+        returnObj['msg'].push('No "from" value, or an invalid "from" value, ' +
+          'was specified.');
+      }
+    }
     if (toUnitCode) {
       toUnitCode = toUnitCode.trim();
     }
@@ -317,7 +358,10 @@ export class UcumLhcUtils {
       returnObj['status'] = 'error';
       returnObj['msg'].push('No "to" unit expression specified.');
     }
-    if (returnObj['status'] !== 'error') {
+    if (returnObj['status'] === 'error') {
+      returnObj['code'] = 'invalid-input';
+    }
+    else {
       let fromUnit = null;
 
       let parseResp = this.getSpecifiedUnit(fromUnitCode, 'convert', suggest);
@@ -347,81 +391,106 @@ export class UcumLhcUtils {
         returnObj['msg'].push(`Unable to find a unit for ${toUnitCode}, ` +
           `so no conversion could be performed.`);
       }
+      if (!fromUnit || !toUnit) {
+        returnObj['code'] = 'unknown-unit';
+      }
 
       if (fromUnit && toUnit) {
         const convertType = this.detectConversionType(fromUnit, toUnit);
-        const msgCountBeforeConvert = returnObj['msg'].length;
         switch (convertType) {
           case 'normal':
             try {
               returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
             } catch (err) {
               returnObj['msg'].push(err.message);
+              // Unit.convertFrom can also throw Ucum.needMoleWeightMsg_, but
+              // not here: both units have the same mole exponent, so they
+              // are mol/mass commensurable only if their dimensions are
+              // equal, in which case that error is not thrown.
+              if (fromUnit.isArbitrary_ || toUnit.isArbitrary_) {
+                returnObj['code'] = 'arbitrary-unit';
+              } else {
+                returnObj['code'] = 'incommensurable';
+              }
             }
             break;
-          case 'mol|mass':
+          case 'mol|mass': {
             if (!fromUnit.isMolMassCommensurable(toUnit)) {
-              returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be ` +
-                `converted to ${toUnitCode}.`);
+              this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
               break;
             }
-            if (!molecularWeight) {
+            const molWeight =
+              this._checkConversionOption(returnObj, 'molecularWeight', molecularWeight);
+            if (molWeight === null) {
               returnObj['msg'].push(Ucum.needMoleWeightMsg_);
+              returnObj['code'] = 'missing-molecular-weight';
+            }
+            if (!(molWeight > 0)) { // missing (null) or invalid (NaN)
               break;
             }
-            returnObj['toVal'] = fromUnit.convertMolMass(fromVal, toUnit, molecularWeight);
+            returnObj['toVal'] = fromUnit.convertMolMass(fromVal, toUnit, molWeight);
             break;
-          case 'eq|mass':
+          }
+          case 'eq|mass': {
             if (!fromUnit.isEqMassCommensurable(toUnit)) {
-              returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be ` +
-                `converted to ${toUnitCode}.`);
+              this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
               break;
             }
-            if (!molecularWeight) {
-              returnObj['msg'].push(Ucum.needEqWeightMsg_);
-            }
-            if (!charge) {
-              returnObj['msg'].push(Ucum.needEqChargeMsg_);
-            }
-            if (!returnObj['msg'].length) {
-              returnObj['toVal'] = fromUnit.convertEqMass(fromVal, toUnit, molecularWeight, charge);
+            const molWeight =
+              this._checkConversionOption(returnObj, 'molecularWeight', molecularWeight);
+            const eqCharge = this._checkConversionOption(returnObj, 'charge', charge);
+            if (this._checkEqConversionOptions(returnObj, molWeight, eqCharge)) {
+              returnObj['toVal'] = fromUnit.convertEqMass(fromVal, toUnit, molWeight, eqCharge);
             }
             break;
-          case 'eq|mol':
+          }
+          case 'eq|mol': {
             if (!fromUnit.isEqMolCommensurable(toUnit)) {
-              returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be ` +
-                `converted to ${toUnitCode}.`);
+              this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
               break;
             }
-            if (!charge) {
+            const eqCharge = this._checkConversionOption(returnObj, 'charge', charge);
+            if (eqCharge === null) {
               returnObj['msg'].push(Ucum.needEqChargeMsg_);
+              returnObj['code'] = 'missing-charge';
+            }
+            if (!(eqCharge > 0)) { // missing (null) or invalid (NaN)
               break;
             }
-            returnObj['toVal'] = fromUnit.convertEqMol(fromVal, toUnit, charge);
+            returnObj['toVal'] = fromUnit.convertEqMol(fromVal, toUnit, eqCharge);
             break;
-          case 'eq|mol|mass':
+          }
+          case 'eq|mol|mass': {
             if (!fromUnit.isEqMolMassCommensurable(toUnit)) {
-              returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be ` +
-                `converted to ${toUnitCode}.`);
+              this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
               break;
             }
-            if (!molecularWeight) {
-              returnObj['msg'].push(Ucum.needEqWeightMsg_);
-            }
-            if (!charge) {
-              returnObj['msg'].push(Ucum.needEqChargeMsg_);
-            }
-            if (!returnObj['msg'].length) {
-              returnObj['toVal'] = fromUnit.convertEqMolMass(fromVal, toUnit, molecularWeight, charge);
+            const molWeight =
+              this._checkConversionOption(returnObj, 'molecularWeight', molecularWeight);
+            const eqCharge = this._checkConversionOption(returnObj, 'charge', charge);
+            if (this._checkEqConversionOptions(returnObj, molWeight, eqCharge)) {
+              returnObj['toVal'] = fromUnit.convertEqMolMass(fromVal, toUnit, molWeight, eqCharge);
             }
             break;
+          }
           default:
-            returnObj['msg'].push("Unknown conversion type.  No conversion was attempted.");
+            // detectConversionType always returns one of the types handled
+            // above, so this indicates a programming error.
+            throw new Error(`Unexpected conversion type: ${convertType}`);
         }
-        if (returnObj['msg'].length > msgCountBeforeConvert) {
-          // If one or more failure messages are pushed into returnObj['msg']
-          // in the switch statement, mark the status as 'failed'.
+        if (returnObj['code'] === 'invalid-input') {
+          // An option required by the conversion had an invalid value.
+          returnObj['status'] = 'error';
+        } else if (returnObj['code']) {
+          // A failure code was set in the switch statement, so mark the
+          // status as 'failed'.
           returnObj['status'] = 'failed';
+        } else if (returnObj['toVal'] !== null && !Number.isFinite(returnObj['toVal'])) {
+          returnObj['status'] = 'failed';
+          returnObj['code'] = 'out-of-range';
+          returnObj['toVal'] = null;
+          returnObj['msg'].push(`Sorry.  ${fromVal} ${fromUnitCode} cannot be ` +
+            `converted to ${toUnitCode}; the result is not a finite number.`);
         } else {
           // Set the return object to show success.
           returnObj['status'] = 'succeeded';
@@ -523,10 +592,14 @@ export class UcumLhcUtils {
   /**
    *  Checks the given value as to whether it is suitable as a "from" value in a
    *  unit conversion.  If it is not, the responseObj will have its status set
-   *  to 'error' and a message added.
-   * @param fromVal The value to check
-   * @param responseObj the object that will be updated if the value is not
-   *  usable.
+   *  to 'error' and a message added.  Note that non-finite values such as
+   *  Infinity and 'Infinity' are considered suitable here.
+   * @param {*} fromVal the value to check.
+   * @param {Object} responseObj the object that will be updated if the value
+   *  is not usable.
+   * @returns {boolean} true if the value is a number, or a value whose string
+   *  form is numeric (e.g., '5', new Number(5), or [5]); false otherwise.
+   * @private
    */
   _checkFromVal(fromVal, responseObj) {
     if (fromVal === null || isNaN(fromVal) || (typeof fromVal !== 'number' &&
@@ -536,9 +609,104 @@ export class UcumLhcUtils {
         responseObj.msg = [];
       responseObj.msg.push('No "from" value, or an invalid "from" value, ' +
                          'was specified.');
+      return false;
     }
+    return true;
   }
 
+
+  /**
+   *  Checks whether the options required for a conversion involving
+   *  equivalents and mass (with or without moles) were specified.  The
+   *  options must already have been checked by _checkConversionOption, which
+   *  adds a message and sets the 'invalid-input' code for an invalid value.
+   *  For each missing option, a message is added to the returnObj, and its
+   *  'code' is set unless it is already 'invalid-input' (an invalid option
+   *  takes precedence over a missing one).
+   * @param {ConvertUnitResult} returnObj the convertUnitTo response object to
+   *  be updated if a required option is missing.
+   * @param {number|null} molecularWeight the molecular weight of the substance,
+   *  as returned by _checkConversionOption: a finite number greater than 0,
+   *  null if it was not specified, or NaN if it was invalid.
+   * @param {number|null} charge the absolute value of the charge of the
+   *  substance, as returned by _checkConversionOption: a finite number greater
+   *  than 0, null if it was not specified, or NaN if it was invalid.
+   * @returns {boolean} true if both the molecular weight and charge were
+   *  specified with valid values (so the conversion can proceed), false
+   *  otherwise.
+   * @private
+   */
+  _checkEqConversionOptions(returnObj, molecularWeight, charge) {
+    const missingMolecularWeight = molecularWeight === null;
+    const missingCharge = charge === null;
+    if (missingMolecularWeight) {
+      returnObj['msg'].push(Ucum.needEqWeightMsg_);
+    }
+    if (missingCharge) {
+      returnObj['msg'].push(Ucum.needEqChargeMsg_);
+    }
+    // An 'invalid-input' code set by _checkConversionOption takes precedence.
+    if (returnObj['code'] !== 'invalid-input') {
+      if (missingMolecularWeight && missingCharge) {
+        returnObj['code'] = 'missing-molecular-weight-and-charge';
+      } else if (missingMolecularWeight) {
+        returnObj['code'] = 'missing-molecular-weight';
+      } else if (missingCharge) {
+        returnObj['code'] = 'missing-charge';
+      }
+    }
+    // Both comparisons are false for null and NaN.
+    return molecularWeight > 0 && charge > 0;
+  }
+
+
+  /**
+   *  Checks a numeric conversion option (molecularWeight or charge) that is
+   *  required by the conversion being performed, and converts it to a number.
+   *  A value of null or undefined is considered missing.  Any other value
+   *  must be numeric, as determined by intUtils_.isNumericString (the same
+   *  check used for the "from" value), and finite and greater than 0;
+   *  otherwise a message is added to the returnObj and its 'code' is set to
+   *  'invalid-input'.  For example, booleans, empty or blank strings, and
+   *  strings such as '12abc' are rejected.
+   * @param {ConvertUnitResult} returnObj the convertUnitTo response object to
+   *  be updated if the option value is invalid.
+   * @param {string} name the name of the option (used in the message).
+   * @param {*} value the option value to check.
+   * @returns {number|null} the option value as a finite number greater than
+   *  0 if it is valid; null if it is missing; or NaN if it is invalid.
+   * @private
+   */
+  _checkConversionOption(returnObj, name, value) {
+    if (value === null || value === undefined) {
+      return null;
+    }
+    const numValue = intUtils_.isNumericString(value) ? Number(value) : NaN;
+    // Both comparisons are false for NaN.
+    if (numValue > 0 && numValue < Infinity) {
+      return numValue;
+    }
+    returnObj['msg'].push(`An invalid "${name}" value was specified.`);
+    returnObj['code'] = 'invalid-input';
+    return NaN;
+  }
+
+
+  /**
+   * Adds a message to the returnObj indicating that the two units are not
+   * commensurable, and sets its 'code' to 'incommensurable'.
+   * @param {ConvertUnitResult} returnObj the convertUnitTo response object to
+   *  which the message and code are added.
+   * @param {string} fromUnitCode - the unit code/expression/string of the unit
+   *  to be converted.
+   * @param {string} toUnitCode - the unit code/expression/string of the unit
+   *  that the from field is to be converted to.
+   * @private
+   */
+  _addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode) {
+    returnObj['code'] = 'incommensurable';
+    returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be converted to ${toUnitCode}.`);
+  }
 
   /**
    * This method accepts a term and looks for units that include it as

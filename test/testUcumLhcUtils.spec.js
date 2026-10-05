@@ -152,6 +152,168 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp1.msg[1], 'No "from" value, or an invalid "from" value, ' +
                                'was specified.', resp1.msg[1]);
     assert.equal(resp1.msg[2], 'No "to" unit expression specified.', resp1.msg[2]);
+    assert.equal(resp1.code, 'invalid-input', resp1.code);
+  });
+
+  it("should return an error with code 'invalid-input' for a non-numeric from value", function() {
+    var resp = utils.convertUnitTo('g', 'abc', 'mg');
+    assert.equal(resp.status, 'error', resp.status);
+    assert.equal(resp.code, 'invalid-input', resp.code);
+    assert.equal(resp.toVal, null, resp.toVal);
+    assert.equal(resp.msg[0], 'No "from" value, or an invalid "from" value, ' +
+                              'was specified.', resp.msg[0]);
+  });
+
+  it("should not return a code for a successful conversion", function() {
+    var resp = utils.convertUnitTo('g', 1, 'mg');
+    assert.equal(resp.status, 'succeeded', resp.status);
+    assert.equal(resp.code, undefined, resp.code);
+  });
+
+  [
+    // [fromUnit, fromVal, toUnit, options, raw (non-finite) result]
+    ['W', -1, 'B[W]', {}, 'NaN'],
+    ['W', 0, 'B[W]', {}, '-Infinity'],
+    ['m', 1e308, 'nm', {}, 'Infinity'],
+    // A string "from" value is reported as the parsed number in the message.
+    ['m', '1e308', 'nm', {}, 'Infinity'],
+    ['mol', 1e308, 'g', {molecularWeight: 1e10}, 'Infinity']
+  ].forEach(([fromUnit, fromVal, toUnit, options, rawResult]) => {
+    it(`should fail with code 'out-of-range' for ${JSON.stringify(fromVal)} ${fromUnit} ` +
+       `to ${toUnit} with options ${JSON.stringify(options)} (${rawResult})`, function() {
+      var resp = utils.convertUnitTo(fromUnit, fromVal, toUnit, options);
+      assert.equal(resp.status, 'failed', resp.status);
+      assert.equal(resp.code, 'out-of-range', resp.code);
+      assert.strictEqual(resp.toVal, null, resp.toVal);
+      assert.equal(resp.msg[0], `Sorry.  ${Number(fromVal)} ${fromUnit} cannot be ` +
+        `converted to ${toUnit}; the result is not a finite number.`, resp.msg[0]);
+      assert.equal(resp.fromUnit, undefined, resp.fromUnit);
+      assert.equal(resp.toUnit, undefined, resp.toUnit);
+    });
+  });
+
+  [
+    // [fromUnit, fromVal, toUnit, options, expected toVal]
+    ['m', '98.6', 'cm', {}, 9860],
+    ['mol', 1, 'g', {molecularWeight: '40.08'}, 40.08],
+    ['eq', 1, 'g', {molecularWeight: '10', charge: '1'}, 10],
+    ['eq', 2, 'mol', {charge: '2'}, 1],
+    // Values whose string form is numeric are accepted for options, as for
+    // the "from" value.
+    ['mol', 1, 'g', {molecularWeight: new Number(40.08)}, 40.08],
+    ['mol', 1, 'g', {molecularWeight: [40.08]}, 40.08]
+  ].forEach(([fromUnit, fromVal, toUnit, options, expectedVal]) => {
+    it(`should convert ${JSON.stringify(fromVal)} ${fromUnit} to ${toUnit} ` +
+       `with numeric values and options ${JSON.stringify(options)}`, function() {
+      var resp = utils.convertUnitTo(fromUnit, fromVal, toUnit, options);
+      assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+      assert.equal(resp.code, undefined, resp.code);
+      assert.equal(resp.msg.length, 0, resp.msg);
+      assert.equal(resp.toVal.toPrecision(12), expectedVal.toPrecision(12), resp.toVal);
+    });
+  });
+
+  const invalidFromValMsg = 'No "from" value, or an invalid "from" value, ' +
+    'was specified.';
+  const invalidOptionMsg = (name) => `An invalid "${name}" value was specified.`;
+  [
+    // [fromUnit, fromVal, toUnit, options, expected messages]
+    ['m', Infinity, 'cm', {}, [invalidFromValMsg]],
+    ['m', 'Infinity', 'cm', {}, [invalidFromValMsg]],
+    ['m', -Infinity, 'cm', {}, [invalidFromValMsg]],
+    ['m', '1e400', 'cm', {}, [invalidFromValMsg]],
+    ['mol', 1, 'g', {molecularWeight: 'abc'}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: ''}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: ' '}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: '12abc'}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: '1e400'}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: true}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: {}}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: [1, 2]}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: Infinity}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: 0}, [invalidOptionMsg('molecularWeight')]],
+    ['mol', 1, 'g', {molecularWeight: -1}, [invalidOptionMsg('molecularWeight')]],
+    ['eq', 1, 'mol', {charge: 0}, [invalidOptionMsg('charge')]],
+    ['eq', 1, 'mol', {charge: ''}, [invalidOptionMsg('charge')]],
+    ['eq', 1, 'g', {molecularWeight: 'abc', charge: 1}, [invalidOptionMsg('molecularWeight')]],
+    ['eq', 1, 'g', {molecularWeight: 10, charge: 0}, [invalidOptionMsg('charge')]],
+    ['eq', 1, 'g', {molecularWeight: 0, charge: 0},
+      [invalidOptionMsg('molecularWeight'), invalidOptionMsg('charge')]],
+    // An invalid option takes precedence over a missing one.
+    ['eq', 1, 'g', {molecularWeight: -1},
+      [invalidOptionMsg('molecularWeight'), Ucum.needEqChargeMsg_]],
+    // eq|mol|mass conversions
+    ['eq2.mol.g3', 1, 'eq.mol3.g2', {molecularWeight: 1, charge: 'abc'},
+      [invalidOptionMsg('charge')]],
+    ['eq2.mol.g3', 1, 'eq.mol3.g2', {molecularWeight: -1},
+      [invalidOptionMsg('molecularWeight'), Ucum.needEqChargeMsg_]]
+  ].forEach(([fromUnit, fromVal, toUnit, options, expectedMsgs]) => {
+    it(`should return an error with code 'invalid-input' for ${String(fromVal)} ` +
+       `${fromUnit} to ${toUnit} with options ${JSON.stringify(options)}`, function() {
+      var resp = utils.convertUnitTo(fromUnit, fromVal, toUnit, options);
+      assert.equal(resp.status, 'error', resp.status);
+      assert.equal(resp.code, 'invalid-input', resp.code);
+      assert.strictEqual(resp.toVal, null, resp.toVal);
+      assert.deepEqual(resp.msg, expectedMsgs);
+    });
+  });
+
+  [
+    // [fromUnit, fromVal, toUnit, options, expected toVal]
+    // normal conversions use neither option
+    ['g', 1, 'mg', {charge: 'abc', molecularWeight: -1}, 1000],
+    ['eq/L', 1, 'meq/L', {charge: 0, molecularWeight: 'abc'}, 1000],
+    // mol|mass conversions do not use charge
+    ['mol', 1, 'g', {molecularWeight: 10, charge: 'abc'}, 10],
+    // eq|mol conversions do not use molecularWeight
+    ['eq', 1, 'mol', {charge: 2, molecularWeight: -1}, 0.5]
+  ].forEach(([fromUnit, fromVal, toUnit, options, expectedVal]) => {
+    it(`should ignore invalid options not used by the conversion of ${fromVal} ` +
+       `${fromUnit} to ${toUnit} with options ${JSON.stringify(options)}`, function() {
+      var resp = utils.convertUnitTo(fromUnit, fromVal, toUnit, options);
+      assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+      assert.equal(resp.code, undefined, resp.code);
+      assert.equal(resp.msg.length, 0, resp.msg);
+      assert.equal(resp.toVal.toPrecision(12), expectedVal.toPrecision(12), resp.toVal);
+    });
+  });
+
+  it("should accept null options", function() {
+    var resp = utils.convertUnitTo('m', 1, 'cm', null);
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.code, undefined, resp.code);
+    assert.equal(resp.toVal, 100, resp.toVal);
+  });
+
+  [
+    // [fromUnit, toUnit, options, expected code]
+    ['g', '[iU]', {}, 'arbitrary-unit'],
+    ['mol', 'g/L', {molecularWeight: 10}, 'incommensurable'],
+    ['eq', 'mol/L', {charge: 1}, 'incommensurable'],
+    ['eq2.mol.g3', 'eq.mol3.g', {molecularWeight: 1, charge: 1}, 'incommensurable'],
+    // Incommensurable units take precedence over an invalid option.
+    ['mol', 'g/L', {molecularWeight: 'abc'}, 'incommensurable'],
+    ['bad', 'g', {}, 'unknown-unit'],
+    // Syntactically invalid unit expressions
+    ['g//', 'mg', {}, 'unknown-unit'],
+    ['g', 'm(', {}, 'unknown-unit']
+  ].forEach(([fromUnit, toUnit, options, expectedCode]) => {
+    it(`should fail with code '${expectedCode}' for ${fromUnit} to ${toUnit} ` +
+       `with options ${JSON.stringify(options)}`, function() {
+      var resp = utils.convertUnitTo(fromUnit, 1, toUnit, options);
+      assert.equal(resp.status, 'failed', resp.status + resp.msg);
+      assert.equal(resp.code, expectedCode, resp.code);
+      assert.strictEqual(resp.toVal, null, resp.toVal);
+      assert.ok(resp.msg.length > 0, resp.msg);
+    });
+  });
+
+  it("should return 0 for a request to convert 1 W to B[W]", function() {
+    var resp = utils.convertUnitTo('W', 1, 'B[W]');
+    assert.equal(resp.status, 'succeeded', resp.status);
+    assert.equal(resp.toVal, 0, resp.toVal);
+    assert.equal(resp.code, undefined, resp.code);
+    assert.equal(resp.msg.length, 0, resp.msg);
   });
 
   it("should return a message for invalid unit strings", function() {
@@ -164,6 +326,7 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp2.msg[2], 'bad is not a valid UCUM code.', resp2.msg[2]);
     assert.equal(resp2.msg[3], 'Unable to find a unit for bad, so no ' +
                                'conversion could be performed.', resp2.msg[3]);
+    assert.equal(resp2.code, 'unknown-unit', resp2.code);
   });
 
   it("should return a valid conversion value and units for grams to metric carats", function() {
@@ -195,6 +358,7 @@ describe('Test convertUnitTo method', function() {
     var resp4 = utils.convertUnitTo('g', 847, '/g');
     assert.equal(resp4.status, 'failed', resp4.status);
     assert.equal(resp4.msg[0], 'Sorry.  g cannot be converted to /g.', resp4.msg[0]);
+    assert.equal(resp4.code, 'incommensurable', resp4.code);
     assert.equal(resp4.toVal, null, resp4.toVal);
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
@@ -250,6 +414,7 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp4.status, 'failed', resp4.status);
     assert.equal(resp4.msg[0], '4(ug/g) is not a valid UCUM code.  We assumed you meant 4.(ug/g).', resp4.msg[0]);
     assert.equal(resp4.msg[1], Ucum.needMoleWeightMsg_);
+    assert.equal(resp4.code, 'missing-molecular-weight', resp4.code);
     assert.equal(resp4.toVal, null, resp4.toVal);
     assert.equal(resp4.fromUnit, undefined, resp4.fromUnit);
     assert.equal(resp4.toUnit, undefined, resp4.toUnit);
@@ -276,6 +441,7 @@ describe('Test convertUnitTo method', function() {
     var resp = utils.convertUnitTo('mol', 1, 'g');
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
     assert.equal(resp.msg[0], Ucum.needMoleWeightMsg_, resp.msg[0]);
+    assert.equal(resp.code, 'missing-molecular-weight', resp.code);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
     assert.equal(resp.toUnit, undefined, resp.toUnit);
@@ -387,6 +553,26 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp.toVal.toPrecision(2), 1);
   });
 
+  it('should return two error messages and code \'missing-molecular-weight-and-charge\' for eq2.mol.g3 to eq.mol3.g2 with no mw and no charge', ()=>{
+    var resp = utils.convertUnitTo('eq2.mol.g3', 1, 'eq.mol3.g2');
+    assert.equal(resp.status, 'failed', resp.status + resp.msg);
+    assert.equal(resp.code, 'missing-molecular-weight-and-charge', resp.code);
+    assert.equal(resp.msg[0], Ucum.needEqWeightMsg_, resp.msg[0]);
+    assert.equal(resp.msg[1], Ucum.needEqChargeMsg_, resp.msg[1]);
+    assert.equal(resp.toVal, null, resp.toVal);
+  });
+
+  it('should return 0.5 for 1 eq2.mol.g3 to 2(eq).mol3.g2 with mw 1 and charge 1 despite a substitution message', ()=>{
+    var resp = utils.convertUnitTo('eq2.mol.g3', 1, '2(eq).mol3.g2',
+      {molecularWeight: 1, charge: 1 });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.code, undefined, resp.code);
+    assert.equal(resp.msg.length, 1, resp.msg);
+    assert.equal(resp.msg[0], '2(eq) is not a valid UCUM code.  ' +
+      'We assumed you meant 2.(eq).', resp.msg[0]);
+    assert.equal(resp.toVal.toPrecision(2), 0.5, resp.toVal);
+  });
+
 
   /** Mol to eq conversion tests
    * equivalents = moles * charge
@@ -398,6 +584,7 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
     assert.equal(resp.msg[0], Ucum.needEqChargeMsg_,
       resp.msg[0]);
+    assert.equal(resp.code, 'missing-charge', resp.code);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
     assert.equal(resp.toUnit, undefined, resp.toUnit);
@@ -480,6 +667,7 @@ describe('Test convertUnitTo method', function() {
     });
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
     assert.equal(resp.msg[0], Ucum.needEqWeightMsg_, resp.msg[0]);
+    assert.equal(resp.code, 'missing-molecular-weight', resp.code);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
     assert.equal(resp.toUnit, undefined, resp.toUnit);
@@ -493,6 +681,7 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp.status, 'failed', resp.status + resp.msg);
     assert.equal(resp.msg[0], Ucum.needEqChargeMsg_,
       resp.msg[0]);
+    assert.equal(resp.code, 'missing-charge', resp.code);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
     assert.equal(resp.toUnit, undefined, resp.toUnit);
@@ -506,9 +695,31 @@ describe('Test convertUnitTo method', function() {
       resp.msg[0]);
     assert.equal(resp.msg[1], Ucum.needEqChargeMsg_,
       resp.msg[1]);
+    assert.equal(resp.code, 'missing-molecular-weight-and-charge', resp.code);
     assert.equal(resp.toVal, null, resp.toVal);
     assert.equal(resp.fromUnit, undefined, resp.fromUnit);
     assert.equal(resp.toUnit, undefined, resp.toUnit);
+  });
+
+  it("should return 5 for a request to convert 1 eq to 2(g) with charge 1 and mw 10 despite a substitution message", function() {
+    var resp = utils.convertUnitTo('eq', 1, '2(g)', {
+      charge: 1,
+      molecularWeight: 10
+    });
+    assert.equal(resp.status, 'succeeded', resp.status + resp.msg);
+    assert.equal(resp.code, undefined, resp.code);
+    assert.equal(resp.msg.length, 1, resp.msg);
+    assert.equal(resp.msg[0], '2(g) is not a valid UCUM code.  ' +
+      'We assumed you meant 2.(g).', resp.msg[0]);
+    assert.equal(resp.toVal.toPrecision(1), 5, resp.toVal);
+  });
+
+  it("should return code 'incommensurable' for a request to convert meq to g/L", function() {
+    var resp = utils.convertUnitTo('meq', 1, 'g/L');
+    assert.equal(resp.status, 'failed', resp.status + resp.msg);
+    assert.equal(resp.code, 'incommensurable', resp.code);
+    assert.equal(resp.msg[0], 'Sorry.  meq cannot be converted to g/L.', resp.msg[0]);
+    assert.equal(resp.toVal, null, resp.toVal);
   });
 
   /**
@@ -804,6 +1015,7 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp.status, 'failed');
     assert.equal(resp.toVal, null);
     assert.equal(resp.msg[0], 'Attempt to convert arbitrary unit "[iU]"');
+    assert.equal(resp.code, 'arbitrary-unit', resp.code);
   });
 
   it('should correctly handle two-letter prefixes with exponents- case 1: "da2"', ()=>{

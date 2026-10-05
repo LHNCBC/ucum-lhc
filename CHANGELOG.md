@@ -4,6 +4,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.0.0] 2026-10-05
+### Added
+- convertUnitTo now returns a 'code' property when the status is 'failed' or
+  'error', giving a machine-readable reason for the outcome: 'invalid-input',
+  'unknown-unit', 'incommensurable', 'arbitrary-unit',
+  'missing-molecular-weight', 'missing-charge',
+  'missing-molecular-weight-and-charge', or 'out-of-range'.
+### Changed
+- **⚠ Behavior change:** convertUnitTo now returns the status 'error' with
+  the code 'invalid-input' when the "from" value is not finite (e.g.,
+  Infinity or 'Infinity'), or when a 'molecularWeight' or 'charge' option
+  required by the conversion is not a finite number greater than 0.  Callers
+  that check 'status' may now receive 'error' where they previously received
+  'failed' or 'succeeded'.  Previously, values such as 0, '', or false were
+  treated as if the option had not been specified (status 'failed'), values
+  such as true were treated as 1, and other invalid values (e.g., negative
+  numbers) produced a meaningless result.  An option value must now be a
+  number or a value whose string form is numeric (the same check used for
+  the "from" value), so booleans and non-numeric values are rejected.
+  Options that are not used by the conversion are still ignored.
+- convertUnitTo now converts a numeric string "from" value, 'molecularWeight',
+  or 'charge' to a number only once, which makes conversions with numeric
+  string values faster.
+### Fixed
+- convertUnitTo no longer reports success with a non-finite result (e.g.,
+  NaN when converting -1 W to B[W]). It now returns the status 'failed'
+  with an explanatory message and the code 'out-of-range'.
+- convertUnitTo no longer skips conversions between equivalents and mass
+  (with or without moles) when the unit parsing produced informational
+  messages (e.g., a substitution notice), which previously resulted in the
+  status 'succeeded' with a null toVal.
+- convertUnitTo no longer throws a TypeError when the options argument is
+  null.
+- The README now documents the convertUnitTo option as 'suggest' (it was
+  incorrectly listed as 'suggestions').
+
 ## [7.1.10] 2026-09-25
 ### Fixed
 - npm package vulnerabilities reported by `npm audit` (in csv-parse, and in
