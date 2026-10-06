@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.10] 2026-09-25
+### Fixed
+- npm package vulnerabilities reported by `npm audit` (in csv-parse, and in
+  diff and serialize-javascript via mocha).
+
 ## [7.1.9] 2026-07-21
 ### Fixed
 - Invalid parameters passed to Dimension methods now produce the documented

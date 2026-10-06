@@ -19,7 +19,7 @@
  */
 var fs = require('fs');
 var stream = require('stream');
-var parse = require('csv-parse') ;
+var parse = require('csv-parse').parse ;
 var transform = require('stream-transform');
 var stringify = require('csv-stringify');
 var str = require('string-to-stream') ;
