@@ -664,11 +664,14 @@ export class UcumLhcUtils {
    *  Checks a numeric conversion option (molecularWeight or charge) that is
    *  required by the conversion being performed, and converts it to a number.
    *  A value of null or undefined is considered missing.  Any other value
-   *  must be numeric, as determined by intUtils_.isNumericString (the same
-   *  check used for the "from" value), and finite and greater than 0;
-   *  otherwise a message is added to the returnObj and its 'code' is set to
-   *  'invalid-input'.  For example, booleans, empty or blank strings, and
-   *  strings such as '12abc' are rejected.
+   *  must be numeric, and finite and greater than 0; otherwise a message is
+   *  added to the returnObj and its 'code' is set to 'invalid-input'.  The
+   *  accepted values are the same as for intUtils_.isNumericString (the
+   *  check used for the "from" value), but numbers and strings are checked
+   *  directly to avoid converting a number to a string and back, and to
+   *  parse a string only once; other values (e.g., new Number(5) or [5]) are
+   *  checked with intUtils_.isNumericString.  For example, booleans, empty
+   *  or blank strings, and strings such as '12abc' are rejected.
    * @param {ConvertUnitResult} returnObj the convertUnitTo response object to
    *  be updated if the option value is invalid.
    * @param {string} name the name of the option (used in the message).
@@ -681,7 +684,13 @@ export class UcumLhcUtils {
     if (value === null || value === undefined) {
       return null;
     }
-    const numValue = intUtils_.isNumericString(value) ? Number(value) : NaN;
+    const type = typeof value;
+    // For a string, Number() alone is enough: a string that is not numeric
+    // gives NaN, and an empty or blank string gives 0, so both fail the
+    // "greater than 0" check below, as they would fail isNumericString.
+    const numValue = type === 'number' ? value :
+      type === 'string' ? Number(value) :
+        intUtils_.isNumericString(value) ? Number(value) : NaN;
     // Both comparisons are false for NaN.
     if (numValue > 0 && numValue < Infinity) {
       return numValue;
