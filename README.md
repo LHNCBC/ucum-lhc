@@ -187,12 +187,14 @@ using them in actual clinical settings.
      * 'invalid-input' (status 'error'): the "from" unit or the "to" unit is
          missing, the "from" value is missing or invalid (including a
          non-finite "from" value), or a 'molecularWeight' or 'charge' option
-         required by the conversion is not a finite number greater than 0;
+         required by the conversion is not a finite number greater than 0
+         (options are not checked if one of the units is an arbitrary unit);
      * 'unknown-unit': the "from" and/or "to" unit is not a valid UCUM
          expression or could not be found;
      * 'incommensurable': the units cannot be converted to each other;
      * 'arbitrary-unit': one of the units is an arbitrary unit, which cannot
-         be converted;
+         be converted.  This is checked before the commensurability of the
+         units and the 'molecularWeight' and 'charge' options;
      * 'missing-molecular-weight': the conversion requires the
          'molecularWeight' option, which was not specified;
      * 'missing-charge': the conversion requires the 'charge' option, which

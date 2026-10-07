@@ -24,6 +24,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   number or a value whose string form is numeric (the same check used for
   the "from" value), so booleans and non-numeric values are rejected.
   Options that are not used by the conversion are still ignored.
+- **⚠ Behavior change:** convertUnitTo now rejects arbitrary units (e.g.,
+  [IU]) in conversions between mol and mass or involving equivalents, as it
+  already did for other conversions.  Such conversions now return the
+  status 'failed' with the code 'arbitrary-unit'.  Previously they returned
+  the status 'succeeded': with a meaningless value when the units contained
+  different arbitrary units (e.g., [arb'U]/mol to [IU]/g), and also when
+  the same arbitrary unit appeared in both units (e.g., [IU]/mmol to
+  [IU]/mg).  The arbitrary unit check is now performed before the
+  commensurability and 'molecularWeight'/'charge' option checks, so, e.g.,
+  [IU] to mol now reports that an arbitrary unit cannot be converted
+  (rather than that the units are not commensurable), and an invalid
+  'molecularWeight' or 'charge' option is ignored (status 'failed' rather
+  than 'error').  The message for any conversion involving an arbitrary
+  unit, including conversions not involving mol, mass, or equivalents, now
+  names the unit expressions as passed in (like the message for
+  incommensurable units), rather than the unit codes produced by parsing
+  them (e.g., g to ([iU]) now reports "([iU])" rather than "[iU]").
+- **⚠ Behavior change:** The Unit mol/mass and equivalent conversion
+  methods (convertMolMass, convertEqMass, convertEqMol, and
+  convertEqMolMass) now throw an error for arbitrary units, as convertFrom
+  does, rather than returning a meaningless value.  This affects code that
+  calls these methods directly on Unit objects (e.g., obtained from
+  UnitTables or from the 'fromUnit' and 'toUnit' properties of a
+  convertUnitTo result).
 - convertUnitTo now converts a numeric string "from" value, 'molecularWeight',
   or 'charge' to a number only once, which makes conversions with numeric
   string values faster.

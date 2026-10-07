@@ -286,8 +286,25 @@ describe('Test convertUnitTo method', function() {
   });
 
   [
-    // [fromUnit, toUnit, options, expected code]
+    // [fromUnit, toUnit, options, expected code, expected conversion type
+    //  (optional; checked to ensure the intended conversion path is tested)]
     ['g', '[iU]', {}, 'arbitrary-unit'],
+    // Arbitrary units cannot be converted, whatever the conversion type,
+    // even if both units contain the same arbitrary unit.
+    ["[arb'U]/mol", '[IU]/g', {molecularWeight: 10}, 'arbitrary-unit', 'mol|mass'],
+    ['[IU]/mol', '[IU]/g', {molecularWeight: 10}, 'arbitrary-unit', 'mol|mass'],
+    ["[arb'U]/meq", '[IU]/mmol', {charge: 2}, 'arbitrary-unit', 'eq|mol'],
+    ["[arb'U]/meq", '[IU]/g', {molecularWeight: 10, charge: 2}, 'arbitrary-unit',
+      'eq|mass'],
+    ["[arb'U].eq2.mol.g3", '[IU].eq.mol3.g2', {molecularWeight: 10, charge: 2},
+      'arbitrary-unit', 'eq|mol|mass'],
+    // Arbitrary units take precedence over incommensurable units and over
+    // missing or invalid options.
+    ['[IU]', 'mol', {molecularWeight: 10}, 'arbitrary-unit'],
+    ['[IU]/mol', '[IU]/g', {}, 'arbitrary-unit', 'mol|mass'],
+    ['[IU]/mol', '[IU]/g', {molecularWeight: 'abc'}, 'arbitrary-unit', 'mol|mass'],
+    ['[IU]/meq', '[IU]/g', {molecularWeight: 10, charge: 'x'}, 'arbitrary-unit',
+      'eq|mass'],
     ['mol', 'g/L', {molecularWeight: 10}, 'incommensurable'],
     ['eq', 'mol/L', {charge: 1}, 'incommensurable'],
     ['eq2.mol.g3', 'eq.mol3.g', {molecularWeight: 1, charge: 1}, 'incommensurable'],
@@ -297,9 +314,14 @@ describe('Test convertUnitTo method', function() {
     // Syntactically invalid unit expressions
     ['g//', 'mg', {}, 'unknown-unit'],
     ['g', 'm(', {}, 'unknown-unit']
-  ].forEach(([fromUnit, toUnit, options, expectedCode]) => {
+  ].forEach(([fromUnit, toUnit, options, expectedCode, expectedType]) => {
     it(`should fail with code '${expectedCode}' for ${fromUnit} to ${toUnit} ` +
        `with options ${JSON.stringify(options)}`, function() {
+      if (expectedType) {
+        var from = utils.getSpecifiedUnit(fromUnit, 'convert').unit;
+        var to = utils.getSpecifiedUnit(toUnit, 'convert').unit;
+        assert.equal(utils.detectConversionType(from, to), expectedType);
+      }
       var resp = utils.convertUnitTo(fromUnit, 1, toUnit, options);
       assert.equal(resp.status, 'failed', resp.status + resp.msg);
       assert.equal(resp.code, expectedCode, resp.code);
@@ -1015,6 +1037,62 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp.status, 'failed');
     assert.equal(resp.toVal, null);
     assert.equal(resp.msg[0], 'Attempt to convert arbitrary unit "[iU]"');
+    assert.equal(resp.code, 'arbitrary-unit', resp.code);
+  });
+
+  it('should return failed status for a mol/mass conversion with an arbitrary unit', () => {
+    const resp = utils.convertUnitTo("[arb'U]/mol", 1, '[IU]/g', {molecularWeight: 10});
+    assert.equal(resp.status, 'failed');
+    assert.equal(resp.toVal, null);
+    assert.deepEqual(resp.msg, ['Attempt to convert to arbitrary unit "[IU]/g"']);
+    assert.equal(resp.code, 'arbitrary-unit', resp.code);
+    assert.equal(resp.fromUnit, undefined, resp.fromUnit);
+  });
+
+  it('should use the unit expressions as passed in for the arbitrary unit message', () => {
+    // Ensure that the parsed unit code differs from the unit expression.
+    const toUnit = utils.getSpecifiedUnit('([IU])/g', 'convert').unit;
+    assert.notEqual(toUnit.csCode_, '([IU])/g');
+
+    const resp = utils.convertUnitTo("[arb'U]/mol", 1, ' ([IU])/g ', {molecularWeight: 10});
+    assert.equal(resp.status, 'failed');
+    assert.equal(resp.code, 'arbitrary-unit', resp.code);
+    assert.deepEqual(resp.msg, ['Attempt to convert to arbitrary unit "([IU])/g"']);
+  });
+
+  it('should use the unit expressions as passed in for the arbitrary unit message in a normal conversion', () => {
+    // Ensure that the parsed unit code differs from the unit expression, and
+    // that this is not a mol/mass or equivalent conversion.
+    const fromUnit = utils.getSpecifiedUnit('g', 'convert').unit;
+    const toUnit = utils.getSpecifiedUnit('([iU])', 'convert').unit;
+    assert.notEqual(toUnit.csCode_, '([iU])');
+    assert.equal(utils.detectConversionType(fromUnit, toUnit), 'normal');
+
+    const resp = utils.convertUnitTo('g', 1, ' ([iU]) ');
+    assert.equal(resp.status, 'failed');
+    assert.equal(resp.code, 'arbitrary-unit', resp.code);
+    assert.deepEqual(resp.msg, ['Attempt to convert to arbitrary unit "([iU])"']);
+  });
+
+  it('should report an arbitrary unit rather than incommensurable units for [arb\'U]/meq to mmol', () => {
+    const resp = utils.convertUnitTo("[arb'U]/meq", 1, 'mmol', {charge: 2});
+    assert.equal(resp.status, 'failed');
+    assert.equal(resp.toVal, null);
+    assert.deepEqual(resp.msg, ['Attempt to convert arbitrary unit "[arb\'U]/meq"']);
+    assert.equal(resp.code, 'arbitrary-unit', resp.code);
+  });
+
+  it('should return failed status for an eq/mol conversion between commensurable arbitrary units', () => {
+    const fromUnit = utils.getSpecifiedUnit("[arb'U]/meq", 'convert').unit;
+    const toUnit = utils.getSpecifiedUnit("[arb'U]/mmol", 'convert').unit;
+    // Ensure that the units would otherwise be converted as eq|mol.
+    assert.equal(utils.detectConversionType(fromUnit, toUnit), 'eq|mol');
+    assert.strictEqual(fromUnit.isEqMolCommensurable(toUnit), true);
+
+    const resp = utils.convertUnitTo("[arb'U]/meq", 1, "[arb'U]/mmol", {charge: 2});
+    assert.equal(resp.status, 'failed');
+    assert.equal(resp.toVal, null);
+    assert.deepEqual(resp.msg, ['Attempt to convert to arbitrary unit "[arb\'U]/mmol"']);
     assert.equal(resp.code, 'arbitrary-unit', resp.code);
   });
 
