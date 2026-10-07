@@ -149,7 +149,8 @@ using them in actual clinical settings.
 
 **Parameters**:
 1) fromUnitCode: the unit code/expression/string of the unit to be converted;
-2) fromVal: the number of "from" units to be converted to "to" units;
+2) fromVal: the number of "from" units to be converted to "to" units.  It
+  must be a finite number (or numeric string);
 3) toUnitCode: the unit code/expression/string of the unit that the from
   field is to be converted to;
 4) options: an optional object of options that can be passed in:
@@ -169,11 +170,15 @@ using them in actual clinical settings.
       It is ignored if neither unit includes an equivalent unit.  When used, it
       must be a finite number (or numeric string) greater than 0.
 
-   ⚠ Since 8.0.0, an invalid 'molecularWeight' or 'charge' value used by the
-   conversion results in status 'error' with code 'invalid-input' (previously,
-   values such as 0 or '' were treated as not specified).
+   ⚠ Since 8.0.0, the following result in status 'error' with code
+   'invalid-input':
+   * a non-finite "from" value, such as Infinity, 'Infinity', or '1e400'
+      (previously, the conversion reported status 'succeeded' with a
+      non-finite 'toVal');
+   * an invalid 'molecularWeight' or 'charge' value used by the conversion
+      (previously, values such as 0 or '' were treated as not specified).
 
-**Returns**: an object with up to seven properties:
+**Returns**: an object that can contain the following properties:
    * 'status' will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
       the units are not commensurable; or 'error' if an error occurred;

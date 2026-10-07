@@ -215,25 +215,31 @@ export class UcumLhcUtils {
 
 
   /**
+   * A set of suggestions for a unit expression that could not be found.
+   * Each element of 'units' is an array of the unit code, the unit name and
+   * the unit guidance (null if there is none).
+   * @typedef {{
+   *   msg: string,
+   *   invalidUnit: string,
+   *   units: Array<[string, string, string | null]>
+   * }} UnitSuggestion
+   */
+
+
+  /**
+   * The 'fromUnit' and 'toUnit' properties are only present when the status
+   * is 'succeeded'.
    * @typedef {{
    *   status: 'succeeded' | 'failed' | 'error',
    *   code?: ConvertUnitResultCode,
    *   toVal: number | null,
    *   msg: string[],
-   *   suggestions: {
-   *     from: {
-   *       msg: string,
-   *       invalidUnit: string,
-   *       units: string[]
-   *     },
-   *     to: {
-   *       msg: string,
-   *       invalidUnit: string,
-   *       units: string[]
-   *     }
+   *   suggestions?: {
+   *     from?: UnitSuggestion[],
+   *     to?: UnitSuggestion[]
    *   },
-   *  fromUnit: string,
-   *  toUnit: string
+   *   fromUnit?: import('./unit.js').Unit,
+   *   toUnit?: import('./unit.js').Unit
    * }} ConvertUnitResult
    */
 
@@ -241,25 +247,37 @@ export class UcumLhcUtils {
   /**
    * This method converts one unit to another
    *
-   * @param {string} fromUnitCode - the unit code/expression/string of the unit to be converted
-   * @param {number | string} fromVal - the number of "from" units to be converted to "to" units
-   * @param {string} toUnitCode - the unit code/expression/string of the unit that the from field is to be converted to
+   * @param {string} fromUnitCode - the unit code/expression/string of the unit
+   *  to be converted.
+   * @param {number | string} fromVal - the number of "from" units to be
+   *  converted to "to" units; it must be a finite number (or numeric string),
+   *  otherwise the result has the status 'error' and the code 'invalid-input'
+   * @param {string} toUnitCode - the unit code/expression/string of the unit
+   *  that the from field is to be converted to
    * @param {{
    *   suggest?: boolean,
    *   molecularWeight?: number | string,
    *   charge?: number | string
    * } | null} [options]
-   *  - suggest: a boolean to indicate whether or not suggestions are requested for a string that cannot be resolved to a valid unit;
-   *    true indicates suggestions are wanted; false indicates they are not, and is the default if the parameter is not specified;
-   *  - molecularWeight: the molecular weight of the substance in question when a conversion is being requested from mass to moles and vice versa.
-   *    This is required when one of the units represents a value in moles.  It is ignored if neither unit includes a measurement in moles.
-   *    When used, it must be a finite number (or numeric string) greater than 0.
-   *  - charge: the absolute value of the charge of the substance in question when a conversion is being requested from mass/moles to
-   *    equivalents and vice versa. It is required when one of the units represents a value in equivalents and the other in mass or moles.
-   *    It is ignored if neither unit includes an equivalent unit.  When used, it must be a finite number (or numeric string) greater than 0;
+   *  - suggest: a boolean to indicate whether or not suggestions are requested
+   *    for a string that cannot be resolved to a valid unit; true indicates
+   *    suggestions are wanted; false indicates they are not, and is the default
+   *    if the parameter is not specified;
+   *  - molecularWeight: the molecular weight of the substance in question when
+   *    a conversion is being requested from mass to moles and vice versa.
+   *    This is required when one of the units represents a value in moles.
+   *    It is ignored if neither unit includes a measurement in moles.
+   *    When used, it must be a finite number (or numeric string) greater than 0;
    *    otherwise the result has the status 'error' and the code 'invalid-input'.
+   *  - charge: the absolute value of the charge of the substance in question
+   *    when a conversion is being requested from mass/moles to equivalents and
+   *    vice versa. It is required when one of the units represents a value in
+   *    equivalents and the other in mass or moles. It is ignored if neither
+   *    unit includes an equivalent unit. When used, it must be a finite number
+   *    (or numeric string) greater than 0; otherwise the result has the status
+   *    'error' and the code 'invalid-input'.
    * @returns {ConvertUnitResult}
-   * - a hash with up to seven elements:
+   * - a hash that can contain the following elements:
    *   - 'status' that will be: 'succeeded' if the conversion was successfully
    *     calculated; 'failed' if the conversion could not be made, e.g., if
    *     the units are not commensurable; or 'error' if an error occurred;
@@ -317,9 +335,11 @@ export class UcumLhcUtils {
    *       No 'suggestions' element will be included in the returned hash
    *       object if none were found, whether or not they were requested.
    *   - 'fromUnit' the unit object for the fromUnitCode passed in; returned
-   *     in case it's needed for additional data from the object; and
+   *     (only when 'status' is 'succeeded') in case it's needed for additional
+   *     data from the object; and
    *   - 'toUnit' the unit object for the toUnitCode passed in; returned
-   *     in case it's needed for additional data from the object.
+   *     (only when 'status' is 'succeeded') in case it's needed for additional
+   *     data from the object.
    */
   convertUnitTo(fromUnitCode, fromVal, toUnitCode, options = {}) {
     let {suggest = false, molecularWeight = null, charge = null} = options ?? {};
