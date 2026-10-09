@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   number or a value whose string form is numeric (the same check used for
   the "from" value), so booleans and non-numeric values are rejected.
   Options that are not used by the conversion are still ignored.
-- **⚠ Behavior change:** convertUnitTo now rejects arbitrary units (e.g.,
+- **Behavior change:** convertUnitTo now rejects arbitrary units (e.g.,
   [IU]) in conversions between mol and mass or involving equivalents, as it
   already did for other conversions.  Such conversions now return the
   status 'failed' with the code 'arbitrary-unit'.  Previously they returned
@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   names the unit expressions as passed in (like the message for
   incommensurable units), rather than the unit codes produced by parsing
   them (e.g., g to ([iU]) now reports "([iU])" rather than "[iU]").
-- **⚠ Behavior change:** The Unit mol/mass and equivalent conversion
+- **Behavior change:** The Unit mol/mass and equivalent conversion
   methods (convertMolMass, convertEqMass, convertEqMol, and
   convertEqMolMass) now throw an error for arbitrary units, as convertFrom
   does, rather than returning a meaningless value.  This affects code that
