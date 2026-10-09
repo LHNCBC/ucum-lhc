@@ -170,7 +170,7 @@ using them in actual clinical settings.
       It is ignored if neither unit includes an equivalent unit.  When used, it
       must be a finite number (or numeric string) greater than 0.
 
-   ⚠ Since 8.0.0, the following result in status 'error' with code
+   Since 8.0.0, the following result in status 'error' with code
    'invalid-input':
    * a non-finite "from" value, such as Infinity, 'Infinity', or '1e400'
       (previously, the conversion reported status 'succeeded' with a

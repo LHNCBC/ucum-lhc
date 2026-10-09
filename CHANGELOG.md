@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   'missing-molecular-weight', 'missing-charge',
   'missing-molecular-weight-and-charge', or 'out-of-range'.
 ### Changed
-- **⚠ Behavior change:** convertUnitTo now returns the status 'error' with
+- **Behavior change:** convertUnitTo now returns the status 'error' with
   the code 'invalid-input' when the "from" value is not finite (e.g.,
   Infinity or 'Infinity'), or when a 'molecularWeight' or 'charge' option
   required by the conversion is not a finite number greater than 0.  Callers

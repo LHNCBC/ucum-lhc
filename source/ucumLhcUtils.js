@@ -365,7 +365,9 @@ export class UcumLhcUtils {
       // _checkFromVal accepts non-finite values such as Infinity and
       // 'Infinity', which cannot be converted.  Reject them here (rather than
       // in _checkFromVal, which is also used by convertToBaseUnits).
-      if (!Number.isFinite(fromVal)) {
+      // The global isFinite is used because Number.isFinite is not available
+      // in IE 11; fromVal is already a number, so its coercion has no effect.
+      if (!isFinite(fromVal)) {
         returnObj['status'] = 'error';
         returnObj['msg'].push('No "from" value, or an invalid "from" value, ' +
           'was specified.');
@@ -505,7 +507,9 @@ export class UcumLhcUtils {
           // A failure code was set in the switch statement, so mark the
           // status as 'failed'.
           returnObj['status'] = 'failed';
-        } else if (returnObj['toVal'] !== null && !Number.isFinite(returnObj['toVal'])) {
+        } else if (returnObj['toVal'] !== null && !isFinite(returnObj['toVal'])) {
+          // toVal is a number here (null is excluded above).  The global
+          // isFinite is used because Number.isFinite is not available in IE 11.
           returnObj['status'] = 'failed';
           returnObj['code'] = 'out-of-range';
           returnObj['toVal'] = null;
