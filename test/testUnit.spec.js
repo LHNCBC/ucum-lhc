@@ -356,6 +356,69 @@ describe('Test attempts to convert arbitrary units', function() {
     assert.equal('Attempt to convert arbitrary unit "[IU]"',
       errMsg);
   });
+
+  describe('arbitraryConversionMsg', function() {
+    var iuUnit = uTabs.getUnitByCode('[IU]');
+    var cfuUnit = uTabs.getUnitByCode('[CFU]');
+    var gUnit = uTabs.getUnitByCode('g');
+
+    it('should refer to the "from" unit if only it is arbitrary', function() {
+      assert.equal(UnitObj.arbitraryConversionMsg(iuUnit, gUnit),
+        'Attempt to convert arbitrary unit "[IU]"');
+    });
+
+    it('should refer to the "to" unit if only it is arbitrary', function() {
+      assert.equal(UnitObj.arbitraryConversionMsg(gUnit, cfuUnit),
+        'Attempt to convert to arbitrary unit "[CFU]"');
+    });
+
+    it('should refer to the "to" unit if both units are arbitrary', function() {
+      assert.equal(UnitObj.arbitraryConversionMsg(iuUnit, cfuUnit),
+        'Attempt to convert to arbitrary unit "[CFU]"');
+    });
+
+    [['[IU]', 'g'], ['g', '[CFU]'], ['[IU]', '[CFU]']].forEach(([from, to]) => {
+      it(`should match the error thrown by convertFrom for ${from} to ${to}`, function() {
+        var fromUnit = uTabs.getUnitByCode(from);
+        var toUnit = uTabs.getUnitByCode(to);
+        assert.throws(() => toUnit.convertFrom(1, fromUnit),
+          {message: UnitObj.arbitraryConversionMsg(fromUnit, toUnit)});
+      });
+    });
+
+    it('should use the given "from" unit code instead of csCode_', function() {
+      assert.equal(UnitObj.arbitraryConversionMsg(iuUnit, gUnit, '([IU])', 'g'),
+        'Attempt to convert arbitrary unit "([IU])"');
+    });
+
+    it('should use the given "to" unit code instead of csCode_', function() {
+      assert.equal(UnitObj.arbitraryConversionMsg(gUnit, cfuUnit, 'g', '([CFU])'),
+        'Attempt to convert to arbitrary unit "([CFU])"');
+    });
+  });
+
+  describe('mol/mass and equivalent conversion methods', function() {
+    // [method name, "from" unit, "to" unit, extra arguments after toUnit]
+    [
+      ['convertMolMass', '[IU]/mol', 'g', [10]],
+      ['convertMolMass', 'mol', '[IU]/g', [10]],
+      ['convertEqMass', '[IU]/eq', 'g', [10, 2]],
+      ['convertEqMass', 'eq', '[IU]/g', [10, 2]],
+      ['convertEqMolMass', '[IU].eq2.mol.g3', 'eq.mol3.g2', [10, 2]],
+      ['convertEqMolMass', 'eq2.mol.g3', '[IU].eq.mol3.g2', [10, 2]],
+      ['convertEqMol', '[IU]/eq', 'mol', [2]],
+      ['convertEqMol', 'eq', '[IU]/mol', [2]]
+    ].forEach(([method, from, to, args]) => {
+      it(`${method} should throw for ${from} to ${to}`, function() {
+        var fromUnit = uString.parseString(from)[0];
+        var toUnit = uString.parseString(to)[0];
+        assert.ok(fromUnit.isArbitrary_ || toUnit.isArbitrary_,
+          'test setup: one of the units should be arbitrary');
+        assert.throws(() => fromUnit[method](1, toUnit, ...args),
+          {message: UnitObj.arbitraryConversionMsg(fromUnit, toUnit)});
+      });
+    });
+  });
 }) ; // end Test attempts to multiply/divide arbitrary units
 
 describe('Generated names for complex units', function() {

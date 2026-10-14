@@ -8,6 +8,7 @@ var Ucum = require('./config.js').Ucum;
 import {ucumJsonDefs} from './ucumJsonDefs.js';
 var UnitTables = require('./unitTables.js').UnitTables;
 var UnitString = require('./unitString.js').UnitString;
+var Unit = require('./unit.js').Unit;
 
 import * as intUtils_ from "./ucumInternalUtils.js";
 
@@ -286,12 +287,15 @@ export class UcumLhcUtils {
    *     - 'invalid-input' (status 'error'): the "from" unit or the "to" unit
    *       is missing, the "from" value is missing or invalid (including a
    *       non-finite "from" value), or a molecularWeight or charge option
-   *       required by the conversion is not a finite number greater than 0;
+   *       required by the conversion is not a finite number greater than 0
+   *       (options are not checked if one of the units is an arbitrary
+   *       unit);
    *     - 'unknown-unit': the "from" and/or "to" unit is not a valid UCUM
    *       expression or could not be found;
    *     - 'incommensurable': the units cannot be converted to each other;
    *     - 'arbitrary-unit': one of the units is an arbitrary unit, which
-   *       cannot be converted;
+   *       cannot be converted.  This is checked before the commensurability
+   *       of the units and the molecularWeight and charge options;
    *     - 'missing-molecular-weight': the conversion requires the
    *       molecularWeight option, which was not specified;
    *     - 'missing-charge': the conversion requires the charge option,
@@ -418,94 +422,99 @@ export class UcumLhcUtils {
       }
 
       if (fromUnit && toUnit) {
-        const convertType = this.detectConversionType(fromUnit, toUnit);
-        switch (convertType) {
-          case 'normal':
-            try {
-              returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
-            } catch (err) {
-              returnObj['msg'].push(err.message);
-              // Unit.convertFrom can also throw Ucum.needMoleWeightMsg_, but
-              // not here: both units have the same mole exponent, so they
-              // are mol/mass commensurable only if their dimensions are
-              // equal, in which case that error is not thrown.
-              if (fromUnit.isArbitrary_ || toUnit.isArbitrary_) {
-                returnObj['code'] = 'arbitrary-unit';
-              } else {
+        if (fromUnit.isArbitrary_ || toUnit.isArbitrary_) {
+          // Arbitrary units cannot be converted, whatever the conversion
+          // type.  This check takes precedence over the commensurability and
+          // option checks below.
+          this._addArbitraryUnitMsg(returnObj, fromUnit, toUnit, fromUnitCode,
+            toUnitCode);
+        } else {
+          const convertType = this.detectConversionType(fromUnit, toUnit);
+          switch (convertType) {
+            case 'normal':
+              try {
+                returnObj['toVal'] = toUnit.convertFrom(fromVal, fromUnit);
+              } catch (err) {
+                returnObj['msg'].push(err.message);
+                // Arbitrary units were rejected above, so the units are not
+                // commensurable.  Unit.convertFrom can also throw
+                // Ucum.needMoleWeightMsg_, but not here: both units have the
+                // same mole exponent, so they are mol/mass commensurable only
+                // if their dimensions are equal, in which case that error is
+                // not thrown.
                 returnObj['code'] = 'incommensurable';
               }
-            }
-            break;
-          case 'mol|mass': {
-            if (!fromUnit.isMolMassCommensurable(toUnit)) {
-              this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
+              break;
+            case 'mol|mass': {
+              if (!fromUnit.isMolMassCommensurable(toUnit)) {
+                this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
+                break;
+              }
+              const molWeight =
+                this._checkConversionOption(returnObj, 'molecularWeight', molecularWeight);
+              if (molWeight === null) {
+                returnObj['msg'].push(Ucum.needMoleWeightMsg_);
+                returnObj['code'] = 'missing-molecular-weight';
+              }
+              if (!(molWeight > 0)) { // missing (null) or invalid (NaN)
+                break;
+              }
+              returnObj['toVal'] = fromUnit.convertMolMass(fromVal, toUnit, molWeight);
               break;
             }
-            const molWeight =
-              this._checkConversionOption(returnObj, 'molecularWeight', molecularWeight);
-            if (molWeight === null) {
-              returnObj['msg'].push(Ucum.needMoleWeightMsg_);
-              returnObj['code'] = 'missing-molecular-weight';
-            }
-            if (!(molWeight > 0)) { // missing (null) or invalid (NaN)
+            case 'eq|mass': {
+              if (!fromUnit.isEqMassCommensurable(toUnit)) {
+                this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
+                break;
+              }
+              const molWeight =
+                this._checkConversionOption(returnObj, 'molecularWeight', molecularWeight);
+              const eqCharge = this._checkConversionOption(returnObj, 'charge', charge);
+              if (this._checkEqConversionOptions(returnObj, molWeight, eqCharge)) {
+                returnObj['toVal'] = fromUnit.convertEqMass(fromVal, toUnit, molWeight, eqCharge);
+              }
               break;
             }
-            returnObj['toVal'] = fromUnit.convertMolMass(fromVal, toUnit, molWeight);
-            break;
+            case 'eq|mol': {
+              if (!fromUnit.isEqMolCommensurable(toUnit)) {
+                this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
+                break;
+              }
+              const eqCharge = this._checkConversionOption(returnObj, 'charge', charge);
+              if (eqCharge === null) {
+                returnObj['msg'].push(Ucum.needEqChargeMsg_);
+                returnObj['code'] = 'missing-charge';
+              }
+              if (!(eqCharge > 0)) { // missing (null) or invalid (NaN)
+                break;
+              }
+              returnObj['toVal'] = fromUnit.convertEqMol(fromVal, toUnit, eqCharge);
+              break;
+            }
+            case 'eq|mol|mass': {
+              if (!fromUnit.isEqMolMassCommensurable(toUnit)) {
+                this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
+                break;
+              }
+              const molWeight =
+                this._checkConversionOption(returnObj, 'molecularWeight', molecularWeight);
+              const eqCharge = this._checkConversionOption(returnObj, 'charge', charge);
+              if (this._checkEqConversionOptions(returnObj, molWeight, eqCharge)) {
+                returnObj['toVal'] = fromUnit.convertEqMolMass(fromVal, toUnit, molWeight, eqCharge);
+              }
+              break;
+            }
+            default:
+              // detectConversionType always returns one of the types handled
+              // above, so this indicates a programming error.
+              throw new Error(`Unexpected conversion type: ${convertType}`);
           }
-          case 'eq|mass': {
-            if (!fromUnit.isEqMassCommensurable(toUnit)) {
-              this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
-              break;
-            }
-            const molWeight =
-              this._checkConversionOption(returnObj, 'molecularWeight', molecularWeight);
-            const eqCharge = this._checkConversionOption(returnObj, 'charge', charge);
-            if (this._checkEqConversionOptions(returnObj, molWeight, eqCharge)) {
-              returnObj['toVal'] = fromUnit.convertEqMass(fromVal, toUnit, molWeight, eqCharge);
-            }
-            break;
-          }
-          case 'eq|mol': {
-            if (!fromUnit.isEqMolCommensurable(toUnit)) {
-              this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
-              break;
-            }
-            const eqCharge = this._checkConversionOption(returnObj, 'charge', charge);
-            if (eqCharge === null) {
-              returnObj['msg'].push(Ucum.needEqChargeMsg_);
-              returnObj['code'] = 'missing-charge';
-            }
-            if (!(eqCharge > 0)) { // missing (null) or invalid (NaN)
-              break;
-            }
-            returnObj['toVal'] = fromUnit.convertEqMol(fromVal, toUnit, eqCharge);
-            break;
-          }
-          case 'eq|mol|mass': {
-            if (!fromUnit.isEqMolMassCommensurable(toUnit)) {
-              this._addIncommensurableMsg(returnObj, fromUnitCode, toUnitCode);
-              break;
-            }
-            const molWeight =
-              this._checkConversionOption(returnObj, 'molecularWeight', molecularWeight);
-            const eqCharge = this._checkConversionOption(returnObj, 'charge', charge);
-            if (this._checkEqConversionOptions(returnObj, molWeight, eqCharge)) {
-              returnObj['toVal'] = fromUnit.convertEqMolMass(fromVal, toUnit, molWeight, eqCharge);
-            }
-            break;
-          }
-          default:
-            // detectConversionType always returns one of the types handled
-            // above, so this indicates a programming error.
-            throw new Error(`Unexpected conversion type: ${convertType}`);
         }
         if (returnObj['code'] === 'invalid-input') {
           // An option required by the conversion had an invalid value.
           returnObj['status'] = 'error';
         } else if (returnObj['code']) {
-          // A failure code was set in the switch statement, so mark the
-          // status as 'failed'.
+          // A failure code was set above, so mark the status as 'failed'.
           returnObj['status'] = 'failed';
         } else if (returnObj['toVal'] !== null && !isFinite(returnObj['toVal'])) {
           // toVal is a number here (null is excluded above).  The global
@@ -740,6 +749,32 @@ export class UcumLhcUtils {
     returnObj['code'] = 'incommensurable';
     returnObj['msg'].push(`Sorry.  ${fromUnitCode} cannot be converted to ${toUnitCode}.`);
   }
+
+
+  /**
+   * Adds a message to the returnObj indicating that an arbitrary unit cannot
+   * be converted, and sets its 'code' to 'arbitrary-unit'.  The message is
+   * built by Unit.arbitraryConversionMsg (which is also used for the error
+   * thrown by Unit.convertFrom), using the unit expressions as passed in by
+   * the caller, as is done for the other convertUnitTo failure messages.
+   * @param {ConvertUnitResult} returnObj the convertUnitTo response object to
+   *  which the message and code are added.
+   * @param {import('./unit.js').Unit} fromUnit the unit to be converted.
+   * @param {import('./unit.js').Unit} toUnit the unit that the "from" unit is
+   *  to be converted to.  At least one of fromUnit and toUnit must be an
+   *  arbitrary unit.
+   * @param {string} fromUnitCode - the unit code/expression/string of the unit
+   *  to be converted.
+   * @param {string} toUnitCode - the unit code/expression/string of the unit
+   *  that the from field is to be converted to.
+   * @private
+   */
+  _addArbitraryUnitMsg(returnObj, fromUnit, toUnit, fromUnitCode, toUnitCode) {
+    returnObj['code'] = 'arbitrary-unit';
+    returnObj['msg'].push(
+      Unit.arbitraryConversionMsg(fromUnit, toUnit, fromUnitCode, toUnitCode));
+  }
+
 
   /**
    * This method accepts a term and looks for units that include it as

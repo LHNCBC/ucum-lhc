@@ -364,6 +364,47 @@ export class Unit {
 
 
   /**
+   * Returns the message explaining that an arbitrary unit cannot be
+   * converted.  If the "to" unit is arbitrary, the message refers to it;
+   * otherwise it refers to the "from" unit.
+   *
+   * @param {Unit} fromUnit the unit to be converted.
+   * @param {Unit} toUnit the unit that the "from" unit is to be converted to.
+   *  At least one of fromUnit and toUnit should be an arbitrary unit.
+   * @param {string} [fromUnitCode] the unit expression to use in the message
+   *  for the "from" unit (e.g., as entered by the caller).  Defaults to the
+   *  csCode_ of fromUnit.
+   * @param {string} [toUnitCode] the unit expression to use in the message
+   *  for the "to" unit (e.g., as entered by the caller).  Defaults to the
+   *  csCode_ of toUnit.
+   * @return {string} the message.
+   */
+  static arbitraryConversionMsg(fromUnit, toUnit,
+                                fromUnitCode = fromUnit.csCode_,
+                                toUnitCode = toUnit.csCode_) {
+    return toUnit.isArbitrary_ ?
+      `Attempt to convert to arbitrary unit "${toUnitCode}"` :
+      `Attempt to convert arbitrary unit "${fromUnitCode}"`;
+  }
+
+
+  /**
+   * Throws an error if either of the given units is an arbitrary unit, since
+   * arbitrary units cannot be converted.
+   *
+   * @param {Unit} fromUnit the unit to be converted.
+   * @param {Unit} toUnit the unit that the "from" unit is to be converted to.
+   * @throws {Error} an error with the message returned by
+   *  arbitraryConversionMsg if fromUnit or toUnit is an arbitrary unit.
+   * @private
+   */
+  static _throwIfArbitrary(fromUnit, toUnit) {
+    if (fromUnit.isArbitrary_ || toUnit.isArbitrary_)
+      throw (new Error(Unit.arbitraryConversionMsg(fromUnit, toUnit)));
+  }
+
+
+  /**
    * Takes a measurement consisting of a number of units and a unit and returns
    * the equivalent number of this unit.  So, 15 mL would translate
    * to 1 tablespoon if this object is a tablespoon.
@@ -385,10 +426,7 @@ export class Unit {
   convertFrom(num, fromUnit) {
     let newNum = 0.0 ;
 
-    if (this.isArbitrary_)
-      throw (new Error(`Attempt to convert to arbitrary unit "${this.csCode_}"`));
-    if (fromUnit.isArbitrary_)
-      throw (new Error(`Attempt to convert arbitrary unit "${fromUnit.csCode_}"`));
+    Unit._throwIfArbitrary(fromUnit, this);
 
     // reject request if both units have dimensions that are not equal
     if (fromUnit.dim_ && this.dim_ && !(fromUnit.dim_.equals(this.dim_))) {
@@ -534,8 +572,10 @@ export class Unit {
    * @param molecularWeight the molecular weight of the substance for which the
    * conversion is being made
    * @return the equivalent amount in toUnit
+   * @throws {Error} if this unit or toUnit is an arbitrary unit
    */
   convertMolMass(amt, toUnit, molecularWeight) {
+    Unit._throwIfArbitrary(this, toUnit);
     // In the calculations below we are treating "molecularWeight" (measured in
     // a.m.u) as the molar weight (measured in g/mol).  The values are the same,
     // though the units differ.
@@ -571,8 +611,10 @@ export class Unit {
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
    * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made.
    * @returns {number} - The amount in the specified toUnit.
+   * @throws {Error} if this unit or toUnit is an arbitrary unit.
    */
   convertEqMass(amt, toUnit, molecularWeight, charge) {
+    Unit._throwIfArbitrary(this, toUnit);
     // Determine the number of powers of mass we have to convert to equivalents.
     // Typically this will be just 1, or -1, but not necessarily.  If it is a
     // negative number, then we are converting in the opposite direciton.
@@ -609,8 +651,10 @@ export class Unit {
    * @param {number} molecularWeight - The molecular weight of the substance for which the conversion is being made.
    * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made.
    * @returns {number} - The equivalent amount in the specified equivalent unit.
+   * @throws {Error} if this unit or toUnit is an arbitrary unit.
    */
   convertEqMolMass(amt, toUnit, molecularWeight, charge) {
+    Unit._throwIfArbitrary(this, toUnit);
     // Handle the equivalent differences.  It important for the following
     // calculations (for consistency) that we consider the difference in
     // equivalent powers and not mol powers, so we are not calling
@@ -668,8 +712,10 @@ export class Unit {
    * @param {object} toUnit - The target unit for which the converted number is wanted.
    * @param {number} charge - The absolute value of the charge of the substance for which the conversion is being made.
    * @return {number} - The amount in molToUnit.
+   * @throws {Error} if this unit or toUnit is an arbitrary unit.
    */
   convertEqMol(amt, toUnit, charge) {
+    Unit._throwIfArbitrary(this, toUnit);
     // Determine the number of powers of eq we have to convert to mol.
     // Typically this will be just 1, or -1, but not necessarily.  If it is a
     // negative number, then we are really converting mol to eq.
