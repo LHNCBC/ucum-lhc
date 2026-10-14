@@ -149,11 +149,12 @@ using them in actual clinical settings.
 
 **Parameters**:
 1) fromUnitCode: the unit code/expression/string of the unit to be converted;
-2) fromVal: the number of "from" units to be converted to "to" units;
+2) fromVal: the number of "from" units to be converted to "to" units.  It
+  must be a finite number (or numeric string);
 3) toUnitCode: the unit code/expression/string of the unit that the from
   field is to be converted to;
 4) options: an optional object of options that can be passed in:
-   * 'suggestions' a boolean to indicate whether or not suggestions are wanted
+   * 'suggest' a boolean to indicate whether or not suggestions are wanted
       for a string that cannot be resolved to a valid unit; true indicates
       suggestions are wanted; false indicates they are not, and is the default
       if the parameter is not specified;
@@ -161,16 +162,45 @@ using them in actual clinical settings.
       conversion is being requested from mass to moles/equivalents and vice versa.  It is
       ignored if neither unit includes a measurement in moles.  In such cases
       the mole-based unit must have a single mole unit in the numerator and the
-      mass-based unit must have a single mass unit in the numerator.
+      mass-based unit must have a single mass unit in the numerator.  When
+      used, it must be a finite number (or numeric string) greater than 0.
    * 'charge' the absolute value of the charge of the substance in question when a conversion
       is being requested from mass/moles to equivalents and vice versa. It is required
       when one of the units represents a value in equivalents and the other in mass or moles.
-      It is ignored if neither unit includes an equivalent unit
+      It is ignored if neither unit includes an equivalent unit.  When used, it
+      must be a finite number (or numeric string) greater than 0.
 
-**Returns**: an object with six properties:
+   Since 8.0.0, the following result in status 'error' with code
+   'invalid-input':
+   * a non-finite "from" value, such as Infinity, 'Infinity', or '1e400'
+      (previously, the conversion reported status 'succeeded' with a
+      non-finite 'toVal');
+   * an invalid 'molecularWeight' or 'charge' value used by the conversion
+      (previously, values such as 0 or '' were treated as not specified).
+
+**Returns**: an object that can contain the following properties:
    * 'status' will be: 'succeeded' if the conversion was successfully
       calculated; 'failed' if the conversion could not be made, e.g., if
       the units are not commensurable; or 'error' if an error occurred;
+   * 'code' a machine-readable reason for the outcome, present only when
+      'status' is 'failed' or 'error'.  It will be one of:
+     * 'invalid-input' (status 'error'): the "from" unit or the "to" unit is
+         missing, the "from" value is missing or invalid (including a
+         non-finite "from" value), or a 'molecularWeight' or 'charge' option
+         required by the conversion is not a finite number greater than 0;
+     * 'unknown-unit': the "from" and/or "to" unit is not a valid UCUM
+         expression or could not be found;
+     * 'incommensurable': the units cannot be converted to each other;
+     * 'arbitrary-unit': one of the units is an arbitrary unit, which cannot
+         be converted;
+     * 'missing-molecular-weight': the conversion requires the
+         'molecularWeight' option, which was not specified;
+     * 'missing-charge': the conversion requires the 'charge' option, which
+         was not specified;
+     * 'missing-molecular-weight-and-charge': the conversion requires both the
+         'molecularWeight' and 'charge' options, and neither was specified;
+     * 'out-of-range': the conversion result is not a finite number (e.g.,
+         when converting -1 W to B[W]);
    * 'toVal' the numeric value indicating the conversion amount (without any
       rounding for significant digits), or null
       if the conversion failed (e.g., the units are not commensurable);
