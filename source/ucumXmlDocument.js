@@ -15,8 +15,9 @@ var jsonfile = require('jsonfile');
 
 var xmldoc = require('xmldoc');
 var fs = require('fs');
+var path = require('path');
 
-var essenceFile_ = '../data/ucum-essence.xml';
+var essenceFile_ = path.join(__dirname, '..', 'data', 'ucum-essence.xml');
 
 /**
  * The full xml document
@@ -24,7 +25,7 @@ var essenceFile_ = '../data/ucum-essence.xml';
  */
 var xmlInput_ = null;
 
-export class UcumXmlDocument {
+class UcumXmlDocumentFactory {
 
 
   /**
@@ -38,6 +39,10 @@ export class UcumXmlDocument {
     // read the XML file and create an xmlDocument object from it.
     let data = fs.readFileSync(essenceFile_);
     xmlInput_ = new xmldoc.XmlDocument(data);
+    // Retain the raw XML text for position-based slicing of mixed-content
+    // elements like <printSymbol>, where xmldoc's parsed representation
+    // strips text nodes between child elements (see extractPrintSymbol).
+    this.xmlText_ = data.toString();
 
     // Array of unit codes in the ucum-essence.xml file that indicate a
     // mole based unit.  The moleExp_ attribute for these units needs to be
@@ -47,23 +52,60 @@ export class UcumXmlDocument {
     // this file will not necessarily do that.
     this.moleCodes_ = ['mol', 'osm', 'kat', 'U' ];
     // Works similarly to the moleCodes_ array, but for units that represents
-    // equivalent units. For unit codes in the equivCodes_ array, an equivalentExp_ 
-    // attribute flag will be set to 1. 
+    // equivalent units. For unit codes in the equivCodes_ array, an equivalentExp_
+    // attribute flag will be set to 1.
     this.equivCodes_ = ['eq'];
+  }
 
-    // Make this a singleton.  See UnitTables constructor for details.
-
-    let holdThis = UcumXmlDocument.prototype;
-    UcumXmlDocument = function () {
-      throw (new Error('UcumXmlDocument is a Singleton.  ' +
-          'Use UcumXmlDocument.getInstance() instead.'));
-    };
-    if (exports)
-      exports.UcumXmlDocument = UcumXmlDocument;
-    UcumXmlDocument.prototype = holdThis;
-
-    let self = this ;
-    UcumXmlDocument.getInstance = function(){return self} ;
+  /**
+   * Extract the inner markup of a <printSymbol> element, preserving the
+   * interleaving of text and child elements (<sub>, <sup>, <r>, <i>).
+   *
+   * The naive approach — reading .val for text and appending child
+   * elements' toString() — doesn't work: xmldoc only exposes element
+   * children on .children (text nodes are gone), and .val concatenates
+   * all text runs with their original positions lost. For
+   *   <printSymbol>cm&#160;H<sub><r>2</r></sub>O</printSymbol>
+   * .val returns "cm HO" and .children returns just [<sub>], so a
+   * naive "val + <sub>.toString()" yields "cm HO<sub><r>2</r></sub>"
+   * (reading as `cm HO₂`, hydroperoxyl) instead of
+   * "cm H<sub><r>2</r></sub>O" (`cm H₂O`, water).
+   *
+   * Fix: slice the raw inner markup out of the source XML using
+   * xmldoc's `position` offset (start of content, just after the
+   * opening tag) and search for the closing tag. Self-closing form
+   * (<printSymbol/>) is detected and returns an empty string.
+   */
+  extractPrintSymbol(parentEl) {
+    const sym = parentEl.childNamed('printSymbol');
+    if (!sym) return null;
+    // Self-closing form: no children + empty .val.
+    if (sym.children.length === 0 && (!sym.val || sym.val.trim() === '')) {
+      return '';
+    }
+    const start = sym.position;
+    const closeTag = '</printSymbol>';
+    const end = this.xmlText_.indexOf(closeTag, start);
+    if (end < 0) return null;
+    let inner = this.xmlText_.slice(start, end);
+    // Guard against pathological case where we scanned past a sibling
+    // <printSymbol/> whose self-closing form wasn't recognised above.
+    if (inner.includes('<printSymbol')) return '';
+    // Collapse the XML formatter's whitespace (indent + newlines between
+    // tags). Preserves &#160; (nbsp) because that's an entity, not a
+    // literal whitespace char at this stage.
+    inner = inner.replace(/>\s+</g, '><').replace(/\s+/g, ' ').trim();
+    // Decode the handful of XML entities that appear in UCUM print
+    // symbols (nbsp, degree sign, etc.).
+    inner = inner
+      .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(parseInt(n, 10)))
+      .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&apos;/g, "'");
+    return inner;
   }
 
 
@@ -167,7 +209,8 @@ export class UcumXmlDocument {
       attrs['ciCode_'] = curBUnit.attr.CODE ;
       attrs['property_'] = curBUnit.childNamed('property').val;
       attrs['variable_'] = curBUnit.attr.dim ;
-      attrs['printSymbol_'] = curBUnit.childNamed('printSymbol').val;
+      const basePrintSymbol = this.extractPrintSymbol(curBUnit);
+      if (basePrintSymbol !== null) attrs['printSymbol_'] = basePrintSymbol;
       attrs['dim_'] = b ;
       attrs['source_'] = 'UCUM';
       let newUnit = new Unit(attrs);
@@ -205,24 +248,12 @@ export class UcumXmlDocument {
       else
         attrs['ciCode_'] = curUA.attr.Code.toUpperCase();
       attrs['property_'] = curUA.childNamed('property').val;
-      if (curUA.childNamed('printSymbol')) {
-        let sym = curUA.childNamed('printSymbol') ;
-        let symVal = sym.val;
-        symVal = symVal.replace(/\n/g, "");
-        symVal = symVal.trim();
-        let symI = sym.childNamed('i');
-        if (symI)
-          //symVal = '<i>' + symI.val + '</>';
-          symVal = symI.toString({compressed:true});
-        let sub = sym.childNamed('sub');
-        let sup = sym.childNamed('sup');
-        if (sub)
-          symVal += sub.toString({compressed:true});
-        if (sup)
-          symVal += sup.toString({compressed:true});
-
-        attrs['printSymbol_'] = symVal;
+      
+      const printSymbol = this.extractPrintSymbol(curUA);
+      if (printSymbol !== null && printSymbol !== '') {
+        attrs['printSymbol_'] = printSymbol;
       }
+
       if (curUA.attr.isMetric === "yes")
         attrs['isMetric_'] = true ;
       else
@@ -516,24 +547,19 @@ export class UcumXmlDocument {
       versionText, {encoding: 'utf8', mode: 0o644, flag: 'w'});
   } // end writeVersionText
 
-} // end UcumXmlDocument
+} // end UcumXmlDocumentFactory
 
 
-/**
- *  This function exists ONLY until the original UcumXmlDocument constructor
- *  is called for the first time.  It's defined here in case getInstance
- *  is called before the constructor.   This calls the constructor.
- *
- *  The constructor redefines the getInstance function to return the
- *  singleton UcumXmlDocument object.  This is based on the UnitTables singleton
- *  implementation; see more detail in the UnitTables constructor description.
- *
- *  @return the singleton UcumXmlDocument object.
- */
-UcumXmlDocument.getInstance = function(){
-  return new UcumXmlDocument();
-}
-
-// Perform the first request for the document object, to get the
-// getInstance method set.
-UcumXmlDocument.getInstance();
+// Lazy singleton: the first getInstance() call reads and parses the XML.
+// This mirrors the UnitTables factory pattern — see unitTables.js — and
+// avoids the self-reassigning constructor trick, which doesn't work with
+// ES class declarations (the inner class binding is const).
+var ucumXmlDocumentInstance_ = null;
+export const UcumXmlDocument = {
+  getInstance: function() {
+    if (!ucumXmlDocumentInstance_) {
+      ucumXmlDocumentInstance_ = new UcumXmlDocumentFactory();
+    }
+    return ucumXmlDocumentInstance_;
+  }
+};

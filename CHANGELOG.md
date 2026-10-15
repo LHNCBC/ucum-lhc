@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.11] 2026-10-15
+### Fixed
+- printSymbol extraction for mixed-content XML elements (e.g. `m[H2O]`,
+  `[in_i'H2O]`) now preserves the ordering of text and child elements so
+  that H₂O renders correctly instead of as HO₂.
+- UcumXmlDocument's singleton pattern no longer relies on reassigning the
+  class binding (which fails under ES class semantics) and the essence
+  file path is now resolved relative to the module rather than the
+  current working directory.
+
 ## [7.1.10] 2026-09-25
 ### Fixed
 - npm package vulnerabilities reported by `npm audit` (in csv-parse, and in
