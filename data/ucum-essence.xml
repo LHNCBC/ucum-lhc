@@ -1509,6 +1509,7 @@
      "rad".  The original xml used Unit="deg", which conflicts with the
      declared value "100tan(1 rad)" and caused degree values to be
      treated as radians in conversions.
+     See also: https://github.com/ucum-org/ucum/issues/261
 -->
    <unit Code="%[slope]" CODE="%[SLOPE]" isMetric="no" isSpecial="yes" class="clinical">
       <name>percent of slope</name>
