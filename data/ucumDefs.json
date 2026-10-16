@@ -8606,7 +8606,7 @@
         "%[slope]",
         "%[SLOPE]",
         "slope",
-        0.017453292519943295,
+        1,
         [
           0,
           0,
@@ -8631,7 +8631,7 @@
         "VelFr; ElpotRatFr; VelRtoFr; AccelFr",
         "Clinical",
         "",
-        "deg",
+        "rad",
         null,
         null,
         1,

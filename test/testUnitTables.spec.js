@@ -70,4 +70,19 @@ describe('Test getUnitByCode method', function() {
       assert.equal(null, retObj);
     });
   });
+
+  describe('Test the %[slope] unit definition', function () {
+
+    var retObj = uTabs.getUnitByCode('%[slope]');
+    it("should be defined as 100tan of 1 rad (not deg)", function() {
+      assert.notEqual(null, retObj);
+      assert.equal('percent of slope', retObj['name_']);
+      assert.equal('100tan', retObj['cnv_']);
+      assert.equal(1, retObj['cnvPfx_']);
+      assert.equal('rad', retObj['csUnitString_']);
+      assert.equal(1, retObj['magnitude_']);
+      // Dimension is plane angle only
+      assert.deepEqual([0, 0, 0, 1, 0, 0, 0], retObj['dim_']['dimVec_']);
+    });
+  });
 });  // end of getUnitByCode tests

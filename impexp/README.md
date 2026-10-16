@@ -32,3 +32,13 @@ This runs the code that does two actions:
    You can skip this step by passing parameter *--skip-ucum-csv*
    
        node updateDataBuild --skip-ucum-csv
+
+## Local modifications
+
+*"../data/ucum-essence.xml"* is not an unmodified copy of the UCUM essence
+file.  It contains local changes (e.g., reordered unit definitions, the added
+"Torr" unit, and the corrected function unit for "%[slope]"), each marked with
+an XML comment.  When replacing it with a new version from unitsofmeasure.org,
+re-apply any of these changes that are still needed, then regenerate
+ucumDefs.json and run the tests.
+

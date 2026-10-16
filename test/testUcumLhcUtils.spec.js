@@ -375,6 +375,80 @@ describe('Test convertUnitTo method', function() {
     assert.equal(resp3.toUnit.name_, 'degrees Fahrenheit', JSON.stringify(resp3.toUnit));
   });
 
+  describe("conversions between angles, %[slope], and [p'diop]", function() {
+    // %[slope] and [p'diop] are both defined as 100tan(1 rad), so the angle
+    // must be scaled to radians (not degrees) before the tangent is applied.
+    const EPSILON = 1e-9;
+    const angleSlopeCases = [
+      // [fromUnit, fromVal, toUnit, expectedToVal]
+      // Regression: with the old %[slope] definition, degree values were
+      // treated as radians, so 45 deg converted to ~161.98 %[slope] and
+      // 100 %[slope] converted to ~0.785 deg.
+      ['deg', 45, '%[slope]', 100],
+      ['%[slope]', 100, 'deg', 45],
+      ['deg', 30, '%[slope]', 100 * Math.tan(Math.PI / 6)],
+      ['%[slope]', 100 * Math.tan(Math.PI / 6), 'deg', 30],
+      ['deg', -45, '%[slope]', -100],
+      ['%[slope]', -100, 'deg', -45],
+      ['deg', 0, '%[slope]', 0],
+      ['%[slope]', 0, 'deg', 0],
+      ['rad', 1, '%[slope]', 100 * Math.tan(1)],
+      ['%[slope]', 50, 'rad', Math.atan(0.5)],
+      ['rad', Math.PI / 4, '%[slope]', 100],
+      ['%[slope]', 100, 'rad', Math.PI / 4],
+      // [p'diop] uses the tanTimes100 function, an alias of 100tan.
+      ['%[slope]', 100, "[p'diop]", 100],
+      ['deg', 45, "[p'diop]", 100],
+      ["[p'diop]", 100, 'deg', 45]
+    ];
+
+    angleSlopeCases.forEach(function([fromUnit, fromVal, toUnit, expected]) {
+      it(`should convert ${+fromVal.toPrecision(8)} ${fromUnit} to ` +
+         `${+expected.toPrecision(8)} ${toUnit}`, function() {
+        const resp = utils.convertUnitTo(fromUnit, fromVal, toUnit);
+        assert.equal(resp.status, 'succeeded', JSON.stringify(resp.msg));
+        assert.ok(Math.abs(resp.toVal - expected) < EPSILON,
+          `Expected ${expected} but got ${resp.toVal}`);
+      });
+    });
+  });
+
+  describe('conversions of homeopathic potency units', function() {
+    // [hp'_X], [hp'_C], [hp'_M] and [hp'_Q] are the negative logarithms of
+    // a dilution ratio in base 10, 100, 1000 and 50000, respectively.
+    const EPSILON = 1e-9;
+    const hpCases = [
+      // [fromUnit, fromVal, toUnit, expectedToVal]
+      ["[hp'_X]", 1, '1', 0.1],
+      ['1', 0.1, "[hp'_X]", 1],
+      ["[hp'_X]", 2, "[hp'_C]", 1],
+      ["[hp'_C]", 1, "[hp'_X]", 2],
+      ["[hp'_X]", 3, "[hp'_M]", 1],
+      ["[hp'_M]", 1, "[hp'_X]", 3],
+      ["[hp'_Q]", 1, '1', 2e-5],
+      ['1', 2e-5, "[hp'_Q]", 1],
+      ["[hp'_C]", 3, "[hp'_M]", 2]
+    ];
+
+    hpCases.forEach(function([fromUnit, fromVal, toUnit, expected]) {
+      it(`should convert ${fromVal} ${fromUnit} to ${expected} ${toUnit}`,
+        function() {
+          const resp = utils.convertUnitTo(fromUnit, fromVal, toUnit);
+          assert.equal(resp.status, 'succeeded', JSON.stringify(resp.msg));
+          assert.ok(Math.abs(resp.toVal - expected) <= EPSILON * Math.abs(expected),
+            `Expected ${expected} but got ${resp.toVal}`);
+        });
+    });
+
+    it("should return 'out-of-range' for a ratio of 0 converted to [hp'_X]",
+      function() {
+        const resp = utils.convertUnitTo('1', 0, "[hp'_X]");
+        assert.equal(resp.status, 'failed', JSON.stringify(resp));
+        assert.equal(resp.code, 'out-of-range', JSON.stringify(resp));
+        assert.equal(resp.toVal, null);
+      });
+  });
+
 
   it("should return an error for an attempt to translate g to /g", function() {
     var resp4 = utils.convertUnitTo('g', 847, '/g');

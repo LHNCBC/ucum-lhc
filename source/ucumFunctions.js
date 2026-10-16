@@ -16,7 +16,7 @@ class UcumFunctions {
   constructor() {
 
     // Create the hash containing the function pairs
-    this.funcs = {};
+    this.funcs = Object.create(null);
 
     // Celsius - convert to Celsius from kelvin and from Celsius to kelvin
     // where kelvin is the base unit for temperature
@@ -69,8 +69,9 @@ class UcumFunctions {
     // tan - tangent
     this.funcs['100tan'] = {cnvTo : function(x){return Math.tan(x) * 100;},
                          cnvFrom : function(x){return Math.atan(x/100);}};
-    // the xml essence ucum file uses both 100tan and tanTimes100
-    this.funcs['tanTimes100'] = this.funcs['100tan'] ;
+    // The xml essence ucum file uses both 100tan and tanTimes100.  Keys must
+    // be lowercase because forName and isDefined lowercase the name.
+    this.funcs['tantimes100'] = this.funcs['100tan'] ;
 
     // sqrt - square root
     this.funcs['sqrt'] = {cnvTo : function(x){return Math.sqrt(x);},
@@ -80,52 +81,59 @@ class UcumFunctions {
     this.funcs['inv'] = {cnvTo : function(x){return 1.0 / x;},
                       cnvFrom : function(x){return 1.0 / x;}};
 
+    // Pre-compute the natural logarithms of 10, 100, 1000, and 50000 for use in
+    // the homeopathic potency functions
+    const LN10 = Math.LN10;
+    const LN100 = Math.log(100);
+    const LN1000 = Math.log(1000);
+    const LN50000 = Math.log(50000);
+
     // homeopathic potency functions
-    this.funcs['hpX'] = {cnvTo : function(x){return -(this.funcs['lg'](x));},
+    this.funcs['hpx'] = {cnvTo : function(x){return -Math.log(x) / LN10;},
                       cnvFrom : function(x){return Math.pow(10, -x);}};
 
-    this.funcs['hpC'] = {cnvTo : function(x){
-                              return -(this.func['ln'](x))/this.funcs['ln'](100);},
+    this.funcs['hpc'] = {cnvTo : function(x){return -Math.log(x) / LN100;},
                        cnvFrom : function(x){return Math.pow(100, -x);}};
 
-    this.funcs['hpM'] = {cnvTo : function(x){
-                              return -(this.funcs['ln'](x))/this.funcs['ln'](1000);},
+    this.funcs['hpm'] = {cnvTo : function(x){return -Math.log(x) / LN1000;},
                       cnvFrom : function(x){return Math.pow(1000, -x);}};
 
-    this.funcs['hpQ'] = {cnvTo : function(x){
-                              return -(this.funcs['ln'](x))/this.funcs['ln'](50000);},
+    this.funcs['hpq'] = {cnvTo : function(x){return -Math.log(x) / LN50000;},
                       cnvFrom : function(x){return Math.pow(50000, -x);}};
 
   } // end of constructor
 
 
   /**
-   * Returns the function with the name specified
+   * Returns the pair of conversion functions with the specified name.
    *
-   * @param fname name of the function to be returned
-   * @return the function with the specified name
-   * @throws an error message if the function is not found
+   * @param {string} fname - the name of the function pair to be returned,
+   *  e.g., "Cel" or "tanTimes100"; the name is case-insensitive
+   * @returns {{cnvTo: function(number): number,
+   *   cnvFrom: function(number): number}} the function pair, where cnvTo
+   *  converts a value on the ratio scale to the special unit's scale and
+   *  cnvFrom converts it back
+   * @throws {Error} if no function pair with the specified name is defined
    */
   forName(fname) {
-    fname = fname.toLowerCase();
-
-    let f = this.funcs[fname] ;
-    if (f === null)
+    let f = this.funcs[fname.toLowerCase()] ;
+    if (f === undefined)
       throw(new Error(`Requested function ${fname} is not defined`));
     return f;
   }
 
 
   /**
-   * Returns a flag indicating whether or not the function has been
+   * Returns a flag indicating whether or not the function pair has been
    * defined.
    *
-   * @param fname name of the function in question
-   * @return true if it has been defined; false if not
+   * @param {string} fname - the name of the function pair in question; the
+   *  name is case-insensitive
+   * @returns {boolean} true if it has been defined; false if not
    */
   isDefined(fname) {
     fname = fname.toLowerCase();
-    return this.funcs[fname] !== null;
+    return this.funcs[fname] !== undefined;
   }
 
 } // end of UcumFunctions class
