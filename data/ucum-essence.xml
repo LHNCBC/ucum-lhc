@@ -1505,12 +1505,18 @@
          <function name="tanTimes100" value="1" Unit="rad"/>
       </value>
    </unit>
+<!-- the function unit for "%[slope]" has been changed from "deg" to
+     "rad".  The original xml used Unit="deg", which conflicts with the
+     declared value "100tan(1 rad)" and caused degree values to be
+     treated as radians in conversions.
+     See also: https://github.com/ucum-org/ucum/issues/261
+-->
    <unit Code="%[slope]" CODE="%[SLOPE]" isMetric="no" isSpecial="yes" class="clinical">
       <name>percent of slope</name>
       <printSymbol>%</printSymbol>
       <property>slope</property>
       <value Unit="100tan(1 rad)" UNIT="100TAN(1 RAD)">
-         <function name="100tan" value="1" Unit="deg"/>
+         <function name="100tan" value="1" Unit="rad"/>
       </value>
    </unit>
    <unit Code="[mesh_i]" CODE="[MESH_I]" isMetric="no" class="clinical">

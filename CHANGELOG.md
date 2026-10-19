@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.0.1] 2026-10-16
+### Fixed
+- Conversions between angles (e.g., deg or rad) and %[slope] now produce
+  correct values. The %[slope] definition applied the tangent function to
+  the angle without converting it from degrees to radians, so, e.g., 45 deg
+  converted to about 161.98 %[slope] instead of 100, and 100 %[slope]
+  converted to about 0.785 deg instead of 45.  This is a local correction to
+  the official UCUM ucum-essence.xml file, which defines the %[slope]
+  function with the unit deg.
+- Conversions to or from [p'diop] (prism diopter) no longer fail with a
+  TypeError ("Cannot read properties of undefined").
+- Conversions to or from the homeopathic potency units [hp'_X], [hp'_C],
+  [hp'_M], and [hp'_Q] now work.  They previously failed with a TypeError
+  because their conversion functions could not be found and were
+  incorrectly implemented.
+- A unit conversion function that is not defined now produces the error
+  "Requested function ... is not defined" rather than a TypeError, and
+  UcumFunctions.isDefined now returns false for undefined functions (it
+  previously always returned true). All units defined in ucumDefs.json now
+  have a defined conversion function.
+
 ## [8.0.0] 2026-10-05
 ### Added
 - convertUnitTo now returns a 'code' property when the status is 'failed' or
