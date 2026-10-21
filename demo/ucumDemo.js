@@ -1011,14 +1011,9 @@ export class UcumDemo {
         resultMsg = resultObj['msg'].join('<BR>');
       }
     }
-    // Else if an error was signalled, transfer the error message to
-    // the result field
-    else if (resultObj['status'] === 'error') {
-      resultMsg = 'Sorry - an error occurred while trying to ' +
-        'perform the conversion.';
-    }
-
-    // Else result status was failed. It could be:
+    // Else the conversion failed (status = 'failed') or an error was
+    // signaled (status = 'error', which since ucum-lhc 8.0.0 always comes
+    // with the code 'invalid-input').  It could be:
     // A molecular weight is needed for a mass<->moles conversion.
     // A charge is needed for from mass/moles to equivalents and vice versa.
     // 1 or more invalid unit expressions were found (status = 'failed').

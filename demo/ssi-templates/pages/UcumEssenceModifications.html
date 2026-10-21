@@ -59,6 +59,28 @@
           &lt;value Unit="Pa" UNIT="PAL" value="133.322"&gt;133.322&lt;/value&gt;
        &lt;/unit&gt;
     </pre>
+    <BR>
+    <h3>Corrections</h3>
+
+    <p>The function unit in the definition of <b>%[slope]</b> (percent of
+        slope) was changed from <b>deg</b> to <b>rad</b>.  The original
+        definition used <b>Unit="deg"</b>, which conflicts with the declared
+        value <b>100tan(1 rad)</b> and caused degree values to be treated as
+        radians in conversions (e.g., 45 <b>deg</b> was converted to about
+        161.98 <b>%[slope]</b> instead of 100).  See
+        <a href="https://github.com/ucum-org/ucum/issues/261">UCUM issue 261</a>.
+        The corrected definition is as follows:
+    </p>
+    <pre>
+       &lt;unit Code="%[slope]" CODE="%[SLOPE]" isMetric="no" isSpecial="yes" class="clinical"&gt;
+          &lt;name&gt;percent of slope&lt;/name&gt;
+          &lt;printSymbol&gt;%&lt;/printSymbol&gt;
+          &lt;property&gt;slope&lt;/property&gt;
+          &lt;value Unit="100tan(1 rad)" UNIT="100TAN(1 RAD)"&gt;
+             &lt;function name="100tan" value="1" Unit="rad"/&gt;
+          &lt;/value&gt;
+       &lt;/unit&gt;
+    </pre>
     </div> <!-- pageText -->
   </div> <!-- content -->
 

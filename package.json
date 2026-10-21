@@ -1,9 +1,10 @@
 {
   "description": "Demo of @lhncbc/ucum-lhc",
+  "name": "ucum-demo",
   "main": "demo.html",
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
   "dependencies": {
-    "@lhncbc/ucum-lhc": "^7.1.9",
+    "@lhncbc/ucum-lhc": "^8.0.1",
     "csv-parse": "^4.4.6",
     "csv-stringify": "^1.0.4",
     "escape-html": "^1.0.3",
