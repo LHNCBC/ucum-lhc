@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   -1 W to B[W]) is reported instead of being displayed as NaN; and
   arbitrary units are rejected in conversions between mol, mass, and
   equivalents.
+- csv-parse was updated to 7.0.3 to fix a moderate severity vulnerability
+  (GHSA-8cw4-87c7-c6xx).
 
 ## 2026-07-23
 ### Updated

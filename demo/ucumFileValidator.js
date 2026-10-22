@@ -6,7 +6,7 @@
  *
  */
 var stream = require('stream');
-var parse = require('csv-parse') ;
+var { parse } = require('csv-parse') ;
 var transform = require('stream-transform');
 var stringify = require('csv-stringify');
 var str = require('string-to-stream') ;
@@ -84,7 +84,6 @@ export class UcumFileValidator {
       }
       else {
         let uStr = record[sourceCol];
-        let parseResp = [];
         record[unitTestedCol] = uStr;
 
         try {
@@ -137,7 +136,6 @@ export class UcumFileValidator {
     // object from the data string and an Object URL for the Blob.  Then pass
     // the URL to the function that will actually save the blob to a file.
     var blob = '';
-    var bUrl = null;
     outStream.on('finish', function () {
       blob = new Blob([this.data], {type: 'text/csv'});
       fileSaveFunction(blob);
@@ -147,7 +145,7 @@ export class UcumFileValidator {
     // the data).
     var intSet = setInterval(pipeFunc, 10);
     function pipeFunc() {
-      if (reader.readyState == FileReader.DONE) {
+      if (reader.readyState === FileReader.DONE) {
         clearInterval(intSet);
         str(reader.result)
             .on('error', function (err){msgHandler('inputStream', err)})
@@ -156,7 +154,7 @@ export class UcumFileValidator {
             .pipe(stringifier).on('error', function (err){msgHandler('stringifier', err)})
             .pipe(outStream).on('error', function (err){msgHandler('outStream', err)});
       }
-    }; // end pipeFunc
+    } // end pipeFunc
   } // end validateFile
 
 } // end UcumFileValidator

@@ -5,7 +5,7 @@
   "homepage": "https://lhncbc.github.io/ucum-lhc/",
   "dependencies": {
     "@lhncbc/ucum-lhc": "^8.0.1",
-    "csv-parse": "^4.4.6",
+    "csv-parse": "^7.0.3",
     "csv-stringify": "^1.0.4",
     "escape-html": "^1.0.3",
     "file-saver": "^2.0.5",
