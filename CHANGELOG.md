@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2026-10-21
+## 2026-10-22
 ### Updated
 - ucum-lhc was updated to 8.0.1 (a new major version).
 - The "Modifications made to the ucum-essence.xml file" page now describes
