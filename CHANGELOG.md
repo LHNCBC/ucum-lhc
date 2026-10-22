@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2026-10-22
+### Updated
+- ucum-lhc was updated to 8.0.1 (a new major version).
+- The "Modifications made to the ucum-essence.xml file" page now describes
+  the correction of the %[slope] function unit (deg changed to rad).
+### Fixed
+- With ucum-lhc 8.0.x, conversions involving %[slope], [p'diop], and the
+  homeopathic potency units now work correctly; a non-finite result (e.g.,
+  -1 W to B[W]) is reported instead of being displayed as NaN; and
+  arbitrary units are rejected in conversions between mol, mass, and
+  equivalents.
+- csv-parse was updated to 7.0.3 to fix a moderate severity vulnerability
+  (GHSA-8cw4-87c7-c6xx).
+
 ## 2026-07-23
 ### Updated
 - ucum-lhc was updated to 7.1.9.
