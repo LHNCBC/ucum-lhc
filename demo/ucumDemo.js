@@ -5,8 +5,6 @@
  * populating the autocompleter unit lists.
  */
 
-import { Tab as Tab } from 'bootstrap';
-
 var escapeHtml = require('escape-html');
 
 var ucumPkg = require('@lhncbc/ucum-lhc');
@@ -79,6 +77,10 @@ export class UcumDemo {
     this.convFromNum_ = true ;
     this.convTo_ = false ;
     this.convToNum_ = true ;
+
+    // Flags indicating validity of the molecular weight and charge fields on
+    // the conversion tab (a blank value is considered valid; it is not used).
+    this.convOptValid_ = {moleWeight: true, charge: true};
 
     // Flag used to track a first entry on the converter tab.   This is needed
     // to know when to blank out the "to" number field if the user first enters
@@ -371,15 +373,7 @@ export class UcumDemo {
     this._sizeNameDivs();
     this.firstConvEntry_ = true ;
 
-    let mWeightDiv = document.getElementById('molecular-weight');
-    mWeightDiv.style.visibility = 'hidden';
-    let mWeightFld = document.getElementById('moleWeight');
-    mWeightFld.value = null;
-
-    let chargeDiv = document.getElementById('charge-div');
-    chargeDiv.style.visibility = 'hidden';
-    let chargeFld = document.getElementById('charge');
-    chargeFld.value = null;
+    this._resetOptionFields();
 
     if (window.location.hash !== '#converter' &&
         window.location.hash !== '') {
@@ -521,14 +515,7 @@ export class UcumDemo {
       // This is called by a change to one of the unit fields, so
       // hide the molecular weight and charge divisions, clear the moleWeight and charge input
       // value, and clear the value of the last result field, if any
-      let mWeightDiv = document.getElementById('molecular-weight');
-      mWeightDiv.style.visibility = 'hidden';
-      let mWeightFld = document.getElementById('moleWeight');
-      mWeightFld.value = null;
-      let chargeDiv = document.getElementById('charge-div');
-      chargeDiv.style.visibility = 'hidden';
-      let chargeFld = document.getElementById('charge');
-      chargeFld.value = null;
+      this._resetOptionFields();
       /*
       if (this.lastResultFld_) {
         let rf = document.getElementById(this.lastResultFld_);
@@ -540,14 +527,8 @@ export class UcumDemo {
       // displayed, blank out the number field of the opposite number/code set.
       if (this.firstConvEntry_) {
         this.firstConvEntry_ = false ;
-        if (elementID === 'convertFrom') {
-          let clrFld = document.getElementById('convertToNum');
-          clrFld.value = '';
-        }
-        else {
-          let clrFld = document.getElementById('convertFromNum');
-          clrFld.value = '';
-        }
+        this._clearNumField(elementID === 'convertFrom' ?
+          'convertToNum' : 'convertFromNum');
       }
     }
 
@@ -736,11 +717,13 @@ export class UcumDemo {
 
   /**
    * This method sets the appropriate validity variable and display attributes
-   * (via the "invalid" class attribute) for one of the three inputs that
-   * must be correct to allow the user to request conversion.
+   * (via the "invalid" class attribute) for one of the converter inputs: the
+   * "from" and "to" unit codes, the "from" and "to" numbers of units, the
+   * molecular weight and the charge.
    *
-   * This also checks to see if all three are correct and if they are, it
-   * invokes the convertUnit function.
+   * If the unit codes and the number of units that is not being calculated
+   * are valid, it invokes the convertUnit function, unless the molecular
+   * weight or the charge is invalid (see _reportInvalidConvOption).
    *
    * @param elementID ID of the field that caused this to be called.
    * @param valid true indicates that the value is valid; false means it's not.
@@ -783,7 +766,9 @@ export class UcumDemo {
       this.convToNum_ = valid;
       resultSide = 'from';
     }
-    else { // assume moleWeight
+    else { // moleWeight or charge
+      // A blank value is not used for a conversion, so it is not invalid.
+      this.convOptValid_[elementID] = valid || clear;
       if (this.lastResultFld_ === 'convertFromNum')
         resultSide = 'from';
       else
@@ -800,53 +785,58 @@ export class UcumDemo {
       msgField.classList.remove("invalid");
     }
 
-    // if both code fields are valid, and the number field that is not
-    // being calculated is valid, perform the conversion
+    // if both code fields are valid, the number field that is not being
+    // calculated is valid, and the molecular weight and charge (if specified)
+    // are valid, perform the conversion
     if (this.convFrom_ === true && this.convTo_ === true && valid) {
       if (resultSide === 'from' && this.convToNum_) {
-        this.convertUnit('convertTo',
-                         'convertToNum',
-                         'convertFrom',
-                         'convertFromNum');
+        if (!this._reportInvalidConvOption('convertFromNum')) {
+          this.convertUnit('convertTo',
+                           'convertToNum',
+                           'convertFrom',
+                           'convertFromNum');
+        }
       }
       else if (resultSide === 'to' && this.convFromNum_) {
-        this.convertUnit('convertFrom',
-                         'convertFromNum',
-                         'convertTo',
-                         'convertToNum');
+        if (!this._reportInvalidConvOption('convertToNum')) {
+          this.convertUnit('convertFrom',
+                           'convertFromNum',
+                           'convertTo',
+                           'convertToNum');
+        }
       }
     }
   } // end setConvertValues
 
 
   /**
-   * This method checks a number of units value or the moleWeight/charge value to make
-   * it's a valid number.  It calls setConvertValues to set the validity state
-   * flag for the number of units field as appropriate.
+   * This method checks a number of units value or the moleWeight/charge value
+   * (see _getNumValError) when it is changed.  If the value is invalid, a
+   * message is shown and announced, and setConvertValues highlights the
+   * field and prevents a conversion.  If it is valid, setConvertValues
+   * performs the conversion if there is enough data for it.  A blank value
+   * marks the field as not usable for a conversion, without highlighting it.
    *
-   * @param numField the name of the input field to check
-   *
+   * @param {string} numField the ID of the input field that was changed
+   *  ('convertFromNum', 'convertToNum', 'moleWeight' or 'charge').
    */
   checkNumVal(numField) {
 
     let checkFld = document.getElementById(numField);
-    let checkVal = escapeHtml(checkFld.value);
+    let resFldId;
     if (numField === 'moleWeight' || numField === 'charge')
-      var resFld = document.getElementById(this.lastResultFld_) ;
-    else {
-      resFld = numField === 'convertFromNum' ?
-        document.getElementById('convertToNum') :
-        document.getElementById('convertFromNum');
-    }
+      resFldId = this.lastResultFld_;
+    else
+      resFldId = numField === 'convertFromNum' ? 'convertToNum' : 'convertFromNum';
     let resultString = document.getElementById('convMsg');
     resultString.innerHTML = '';
 
-    if (checkVal !== '') {
-      resFld.value = '';
-      let parsedNum = "" + checkVal;
-      if (isNaN(parsedNum) || isNaN(parseFloat(parsedNum))) {
-        resultString.innerHTML = `"${checkVal}" is not a valid number.`;
-        this._announce(`"${checkVal}" is not a valid number.`);
+    if (checkFld.value !== '') {
+      this._clearNumField(resFldId);
+      const errMsg = this._getNumValError(numField);
+      if (errMsg) {
+        resultString.innerHTML = escapeHtml(errMsg);
+        this._announce(errMsg);
         this.setConvertValues(numField, false);
       }
       else {
@@ -949,7 +939,7 @@ export class UcumDemo {
 
     let fromName = document.getElementById(fromField).value ;
     let escFromName = escapeHtml(fromName);
-    let fromVal = parseFloat(escapeHtml(document.getElementById(fromNumField).value));
+    let fromVal = this._parseDecimal(document.getElementById(fromNumField).value);
     let toName = document.getElementById(toField).value;
     let escToName = escapeHtml(toName);
 
@@ -961,15 +951,16 @@ export class UcumDemo {
     suggsField.style.display = 'none';
 
     let weightField = document.getElementById("moleWeight");
-    let moleWeightVal = weightField.value || null;
     let chargeField = document.getElementById('charge');
-    let chargeVal = chargeField.value || null;
 
+    // Pass the molecular weight and charge as numbers parsed the same way as
+    // when they were checked (see _getNumValError), so that ucum-lhc does not
+    // interpret them differently (e.g., "0x10").
     const convertOptions = { suggest: true };
-    if (moleWeightVal)
-      convertOptions.molecularWeight = moleWeightVal;
-    if (chargeVal)
-      convertOptions.charge = chargeVal;
+    if (weightField.value)
+      convertOptions.molecularWeight = this._parseDecimal(weightField.value);
+    if (chargeField.value)
+      convertOptions.charge = this._parseDecimal(chargeField.value);
     let resultObj = this.utils_.convertUnitTo(fromName, fromVal, toName, convertOptions);
 
     if (resultObj['status'] === 'succeeded') {
@@ -997,6 +988,9 @@ export class UcumDemo {
       // otherwise don't.   Only modify last result value
       let precVal = parseFloat(toVal.toPrecision(UcumDemoConfig.defaultPrecision_)) ;
       toNumFld.value = precVal;
+      // The field may have been highlighted for a previously entered invalid
+      // value, which has now been replaced by the result.
+      toNumFld.classList.remove('invalid');
 
       // The precision chooser is on hold.  Don't display.
       //if (precVal !== toVal) {
@@ -1016,7 +1010,11 @@ export class UcumDemo {
     // with the code 'invalid-input').  It could be:
     // A molecular weight is needed for a mass<->moles conversion.
     // A charge is needed for from mass/moles to equivalents and vice versa.
-    // 1 or more invalid unit expressions were found (status = 'failed').
+    // An invalid molecular weight, charge or "from" value was specified
+    // (status = 'error'), e.g., a non-finite "from" value.
+    // 1 or more invalid unit expressions were found, the units are not
+    // commensurable, an arbitrary unit cannot be converted, or the result
+    // is not a finite number (status = 'failed').
     else {
       if (resultObj['msg']) {
         this.newFieldCreated_ = false;
@@ -1393,6 +1391,125 @@ export class UcumDemo {
 
 
   /**
+   * Parses a decimal number entered in a converter number field: an optional
+   * sign, digits with an optional decimal point, and an optional exponent
+   * (e.g., "-1.5e3" or ".5"), with optional surrounding whitespace.  Other
+   * notations accepted by Number() or parseFloat() (e.g., "0x10", "Infinity"
+   * or "12abc") are rejected.
+   * @param {string} str the string to parse.
+   * @return {number} the parsed number (which may be non-finite if the
+   *  exponent is too large), or NaN if the string is not a decimal number.
+   * @private
+   */
+  _parseDecimal(str) {
+    return /^\s*[+-]?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?\s*$/i.test(str) ?
+      Number(str) : NaN;
+  }
+
+
+  /**
+   * Checks the value of a converter number field (the number of "from" or
+   * "to" units, the molecular weight or the charge).  The value must be a
+   * decimal number (see _parseDecimal).  The number of units must be finite;
+   * the molecular weight must be finite and greater than 0; the charge must
+   * be a positive integer.
+   * @param {string} numField the ID of the field to check ('convertFromNum',
+   *  'convertToNum', 'moleWeight' or 'charge').
+   * @return {string|null} a message describing why the value is invalid, or
+   *  null if it is valid.
+   * @private
+   */
+  _getNumValError(numField) {
+    const checkVal = document.getElementById(numField).value;
+    const parsedNum = this._parseDecimal(checkVal);
+    if (isNaN(parsedNum) ||
+        (!isFinite(parsedNum) &&
+         (numField === 'convertFromNum' || numField === 'convertToNum'))) {
+      return `"${checkVal}" is not a valid number.`;
+    }
+    if (numField === 'moleWeight' && !(isFinite(parsedNum) && parsedNum > 0))
+      return 'The molecular weight must be a finite number greater than 0.';
+    // Number.isInteger is not available in IE 11.
+    if (numField === 'charge' &&
+        !(isFinite(parsedNum) && parsedNum > 0 && parsedNum % 1 === 0))
+      return 'The charge must be a positive integer.';
+    return null;
+  }
+
+
+  /**
+   * Checks whether the molecular weight or the charge field contains a value
+   * that was found invalid when it was entered (see setConvertValues).  If
+   * so, the field's message is shown and announced again, the field is
+   * highlighted, and the number field that would receive the conversion
+   * result is cleared, so that no conversion is performed with the invalid
+   * value.  That field is recorded as the last result field, so that the
+   * conversion is performed in the same direction once the value is
+   * corrected (see checkNumVal).
+   * @param {string} resultNumField the ID of the number field that would
+   *  receive the conversion result ('convertFromNum' or 'convertToNum').
+   * @return {boolean} true if an invalid value was found (and the conversion
+   *  must not be performed); false otherwise.
+   * @private
+   */
+  _reportInvalidConvOption(resultNumField) {
+    // Array.prototype.find is not available in IE 11.
+    const invalidFieldId = Object.keys(this.convOptValid_)
+      .filter(fieldId => !this.convOptValid_[fieldId])[0];
+    if (!invalidFieldId)
+      return false;
+    const errMsg = this._getNumValError(invalidFieldId);
+    const msgField = document.getElementById('convMsg');
+    msgField.innerHTML = escapeHtml(errMsg);
+    msgField.classList.add('invalid');
+    this._announce(errMsg);
+    document.getElementById(invalidFieldId).classList.add('invalid');
+    this._clearNumField(resultNumField);
+    this.lastResultFld_ = resultNumField;
+    return true;
+  }
+
+
+  /**
+   * Clears a converter number field ("from" or "to" number of units) that
+   * is cleared by the program rather than by the user (e.g., while waiting
+   * for a conversion result).  Since the field no longer contains a number,
+   * its validity flag is set to false so that it is not used as the source
+   * of a conversion, and its "invalid" highlighting is removed.
+   * @param {string} numField the ID of the field to clear ('convertFromNum'
+   *  or 'convertToNum').
+   * @private
+   */
+  _clearNumField(numField) {
+    const field = document.getElementById(numField);
+    field.value = '';
+    field.classList.remove('invalid');
+    if (numField === 'convertFromNum')
+      this.convFromNum_ = false;
+    else
+      this.convToNum_ = false;
+  }
+
+
+  /**
+   * Resets the molecular weight and charge fields of the converter: hides
+   * their divisions, clears their values, removes their "invalid"
+   * highlighting, and marks them as valid (blank values are not used).
+   * @private
+   */
+  _resetOptionFields() {
+    [['molecular-weight', 'moleWeight'], ['charge-div', 'charge']].forEach(
+      ([divId, fieldId]) => {
+        document.getElementById(divId).style.visibility = 'hidden';
+        const field = document.getElementById(fieldId);
+        field.value = null;
+        field.classList.remove('invalid');
+      });
+    this.convOptValid_ = {moleWeight: true, charge: true};
+  }
+
+
+  /**
    * This makes the division with the request for molecular weight
    * visible.
    * @private
@@ -1403,8 +1520,7 @@ export class UcumDemo {
       weightDiv.style.visibility = 'visible';
       this.newFieldCreated_ = true;
       // Blank out the number field of the result side, while we wait for user input.
-      let resFld = document.getElementById(this.lastResultFld_);
-      resFld.value = null;
+      this._clearNumField(this.lastResultFld_);
     }
   }
 
@@ -1419,8 +1535,7 @@ export class UcumDemo {
       chargeDiv.style.visibility = 'visible';
       this.newFieldCreated_ = true;
       // Blank out the number field of the result side, while we wait for user input.
-      let resFld = document.getElementById(this.lastResultFld_);
-      resFld.value = null;
+      this._clearNumField(this.lastResultFld_);
     }
   }
 

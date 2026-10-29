@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2026-10-23
+### Added
+- AGENTS.md with guidance for AI coding agents.
+### Fixed
+- The converter's number, molecular weight, and charge fields now accept
+  only decimal numbers (with an optional sign, decimal point, and
+  exponent), so values such as Infinity or 0x10 are rejected instead of
+  being converted with a different meaning (e.g., 0x10 as 0).
+- The molecular weight must be a finite number greater than 0, and the
+  charge must be a positive integer.
+- An invalid value is reported and highlighted, and no conversion is
+  performed with it.  An invalid molecular weight or charge left in place
+  also prevents conversions triggered by changes to other fields, and its
+  message is shown again.
+- A number field that was cleared by the converter (e.g., when the first
+  unit is entered) is no longer used as the source of a conversion, which
+  reported a missing "from" value and highlighted the empty field.
+- The molecular weight and charge fields no longer remain highlighted as
+  invalid after they are reset (e.g., when a unit is changed).
+- A number field that was highlighted as invalid is no longer left
+  highlighted after it is filled with the result of a successful conversion
+  (e.g., when a valid number is then entered in the other number field).
+
 ## 2026-10-22
 ### Updated
 - ucum-lhc was updated to 8.0.1 (a new major version).
